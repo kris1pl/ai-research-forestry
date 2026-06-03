@@ -22,33 +22,30 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Enable GitHub Pages (workflow source)
+      - name: Check GitHub Pages is enabled
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          set -e
           api="https://api.github.com/repos/${GITHUB_REPOSITORY}/pages"
           code=$(curl -sS -o /tmp/pages.json -w "%{http_code}" \
             -H "Authorization: Bearer ${GITHUB_TOKEN}" \
             -H "Accept: application/vnd.github+json" \
             "$api")
           if [ "$code" = "200" ]; then
-            echo "GitHub Pages already enabled"
+            echo "GitHub Pages is enabled"
+            cat /tmp/pages.json
             exit 0
           fi
-          code=$(curl -sS -o /tmp/pages.json -w "%{http_code}" \
-            -X POST \
-            -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-            -H "Accept: application/vnd.github+json" \
-            "$api" \
-            -d '{"build_type":"workflow"}')
-          cat /tmp/pages.json
-          if [ "$code" = "201" ] || [ "$code" = "200" ]; then
-            echo "GitHub Pages enabled (HTTP $code)"
-          else
-            echo "::error::Enable Pages failed (HTTP $code)"
-            exit 1
-          fi
+          echo "::error::GitHub Pages nie są włączone (HTTP ${code})."
+          echo ""
+          echo "Jednorazowo na swoim komputerze (wymaga gh CLI + uprawnień admina repo):"
+          echo "  gh auth login"
+          echo "  gh api --method POST repos/${GITHUB_REPOSITORY}/pages -f build_type=workflow"
+          echo ""
+          echo "Następnie: Settings → Actions → Workflow permissions → Read and write"
+          echo "Potem: Actions → Deploy Forestry Wiki → Re-run all jobs"
+          cat /tmp/pages.json || true
+          exit 1
 
       - name: Link wiki as Quartz content
         run: ln -sfn ../wiki content

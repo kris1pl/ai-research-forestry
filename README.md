@@ -66,25 +66,34 @@ Przykładowe polecenia:
 
 ## Publikacja (GitHub Pages)
 
-Po pushu na `main`:
+### Jednorazowa konfiguracja (obowiązkowa)
 
-1. **Settings → Actions → General → Workflow permissions** → *Read and write permissions* → Save (wymagane m.in. dla `pages: write`).
-2. **Actions** → *Deploy Forestry Wiki (Quartz)* → **Re-run all jobs** (workflow sam włącza Pages przy pierwszym runie, krok *Enable GitHub Pages*).
+Token Actions **nie może** utworzyć strony Pages — musisz włączyć ją raz z komputera (konto admin repo):
 
-   Jeśli `deploy` nadal pada: ręcznie (jednorazowo):
-   ```bash
-   gh auth login
-   gh api --method POST repos/kris1pl/ai-research-forestry/pages -f build_type=workflow
-   ```
-   oraz **Settings → Environments → github-pages** — wyłącz wymóg ręcznej akceptacji deployów (jeśli włączone).
+```bash
+# Zainstaluj: https://cli.github.com/
+gh auth login
+chmod +x scripts/enable-github-pages.sh
+./scripts/enable-github-pages.sh
+# lub:
+gh api --method POST repos/kris1pl/ai-research-forestry/pages -f build_type=workflow
+```
 
-Workflow [`.github/workflows/deploy-quartz.yml`](.github/workflows/deploy-quartz.yml) buduje `site/public` i wdraża.
+Potem w GitHub:
 
-**404 „There isn't a GitHub Pages site here”** — deploy się nie udał (sprawdź czerwony job `deploy`; `build` musi być zielony).
+1. **Settings → Actions → General → Workflow permissions** → **Read and write permissions** → Save.
+2. **Settings → Environments → github-pages** — wyłącz *Required reviewers* (jeśli jest).
+3. **Actions** → *Deploy Forestry Wiki (Quartz)* → **Re-run all jobs**.
 
-**Build fail na `configure-pages`** — Pages nie były włączone; ten krok nie jest w workflow — najpierw krok 2 powyżej.
+### Kolejne deploye
 
-**URL (domyślny):** https://kris1pl.github.io/ai-research-forestry/
+Push na `main` → workflow buduje `site/public` i wdraża automatycznie.
+
+**URL:** https://kris1pl.github.io/ai-research-forestry/
+
+**Build fail na *Check GitHub Pages is enabled*** — nie wykonano jednorazowego `gh api` powyżej.
+
+**404 w przeglądarce** — `deploy` się nie udał; oba joby muszą być zielone w Actions.
 
 Jeśli forkujesz repo, zmień `baseUrl` w [`site/quartz.config.ts`](site/quartz.config.ts) na `twoj-user.github.io/nazwa-repo`.
 
