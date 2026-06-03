@@ -1,5 +1,5 @@
 ---
-title: Merge detekcji
+title: Detection merge
 type: method
 tags: [merge, nms, detection]
 status: active
@@ -8,16 +8,16 @@ updated: 2026-06-03
 
 # Merge local maxima + CHM
 
-Łączenie detekcji z [[local-maxima]] i ścieżki CHM/DEIMv2 w finalny zestaw drzew per AREA.
+Combine detections from [[local-maxima]] and the CHM/DEIMv2 path into a final tree set per AREA.
 
-## Reguły
+## Rules
 
-_(NMS, priorytety, dystanse — uzupełnij zgodnie z kodem produkcyjnym)_
+_(NMS, priorities, distances — align with production code)_
 
-## Znane problemy
+## Known issues
 
-_(nakładające się detekcje, duplikaty na granicy okien)_
+_(overlapping detections, duplicates at window boundaries)_
 
-## Literatura / źródła
+## Literature / sources
 
-_(po ingest)_
+_(after ingest)_

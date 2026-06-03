@@ -1,5 +1,5 @@
 ---
-title: CHM i detekcja na warstwach wysokości
+title: CHM and height-layer detection
 type: method
 tags: [chm, lidar, detection]
 status: active
@@ -8,16 +8,16 @@ updated: 2026-06-03
 
 # Canopy Height Model (CHM)
 
-CHM z modelu 3D i **ground model** (dane laserowe). Detekcja obiektów na warstwach wysokościowych (małe / duże drzewa) — w produkcji z modelem **DEIMv2** ([[deimv2-canopy]]).
+CHM from the 3D model and **ground model** (laser data). Object detection on height layers (small / large trees) — in production with **DEIMv2** ([[deimv2-canopy]]).
 
-## W pipeline
+## In the pipeline
 
-Wejście do [[merge-detections]] razem z [[local-maxima]].
+Feeds [[merge-detections]] together with [[local-maxima]].
 
-## Parametry produkcyjne
+## Production parameters
 
-_(progi wysokości, rozdzielczość CHM)_
+_(height thresholds, CHM resolution)_
 
-## Literatura / źródła
+## Literature / sources
 
-_(po ingest)_
+_(after ingest)_

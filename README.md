@@ -1,13 +1,15 @@
 # Forestry Research LLM Wiki
 
-Baza wiedzy zespołu o metodologii analizy obszarów leśnych — wzorzec [LLM Wiki](llm_wiki.md) (Andrej Karpathy): agent kompiluje źródła do trwałego wiki w Markdown, zamiast odkrywać je od zera przy każdym pytaniu.
+Team knowledge base for forest area analysis methodology — [LLM Wiki](llm_wiki.md) pattern (Andrej Karpathy): the agent compiles sources into a persistent Markdown wiki instead of rediscovering them on every question.
+
+**Vault language: English.** All pages in `conifervision/` and agent-written updates follow [`AGENTS.md`](AGENTS.md).
 
 ## Struktura
 
 | Katalog | Opis |
 |---------|------|
 | [`raw/`](raw/) | Niezmienne źródła: PDF, clipy web, obrazy (`assets/`) |
-| [`conifervision/`](conifervision/) | Vault **Obsidian** (nazwa projektu; wcześniej planowane `wiki/`) — strony publikowane przez Quartz |
+| [`conifervision/`](conifervision/) | **Obsidian** vault (English) — published via Quartz |
 | [`site/`](site/) | Quartz 4 — build statycznej strony |
 | [`tools/`](tools/) | Python: ekstrakcja tekstu z PDF |
 | [`AGENTS.md`](AGENTS.md) | Schema dla agenta: ingest / query / lint |
@@ -58,13 +60,13 @@ Jeśli widzisz **RSS/XML zamiast strony** — deploy zbudował się bez treści 
 
 ### 4. Praca z agentem
 
-W Cursor (lub innym agencie) wskaż repozytorium i przeczytaj [`AGENTS.md`](AGENTS.md).
+In Cursor (or another agent), point at the repo and read [`AGENTS.md`](AGENTS.md) (English wiki only).
 
-Przykładowe polecenia:
+Example prompts:
 
-- *„Ingest PDF z `raw/papers/foo.pdf` — zaktualizuj wiki według AGENTS.md.”*
-- *„Query: jakie metody merge local maxima z CHM opisuje literatura w wiki?”*
-- *„Lint wiki — sprzeczności względem `conifervision/project/pipeline-overview.md`.”*
+- *“Ingest `raw/papers/foo.pdf` — update the wiki per AGENTS.md (English).”*
+- *“Query: what does the wiki say about merging local maxima with CHM detections?”*
+- *“Lint the wiki against `conifervision/project/pipeline-overview.md`.”*
 
 ## Publikacja (GitHub Pages)
 

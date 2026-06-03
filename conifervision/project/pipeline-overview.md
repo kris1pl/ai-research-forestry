@@ -1,5 +1,5 @@
 ---
-title: Pipeline — przegląd
+title: Pipeline overview
 type: project
 tags: [pipeline, production]
 status: active
@@ -12,40 +12,40 @@ related_methods:
   - methods/dinov3-classification
 ---
 
-# Pipeline analizy obszarów leśnych (AREA)
+# Forest area analysis pipeline (AREA)
 
-**Status:** opis referencyjny — aktualizuj przy każdej zmianie metodologii w produkcji. Lint porównuje tę stronę z kodem i stronami `methods/`.
+**Status:** reference description — update whenever production methodology changes. Lint compares this page against code and `methods/` pages.
 
-## 1. Pozyskanie danych
+## 1. Data acquisition
 
-- Zdjęcia z dronów dla wybranych obszarów **AREA**.
-- Budowa **orthophoto** dla danego AREA.
+- Drone imagery for selected **AREA** units.
+- Build an **orthophoto** for each AREA.
 
-## 2. Detekcja drzew (geometria + CHM + AI)
+## 2. Tree detection (geometry + CHM + AI)
 
-1. **Local maxima** ze sliding window na modelu 3D — czubki drzew, wysokości.
-2. **Canopy Height Model (CHM)** z modelu 3D i danych laserowych (ground model).
-3. **Detekcja obiektów** modelem **DEIMv2** na kilku warstwach wysokościowych (małe / duże drzewa).
-4. **Merge** detekcji local maxima + CHM → finalne detekcje drzew.
+1. **Local maxima** with a sliding window on the 3D model — tree tops and heights.
+2. **Canopy Height Model (CHM)** from the 3D model and laser data (ground model).
+3. **Object detection** with **DEIMv2** on multiple height layers (small / large trees).
+4. **Merge** local maxima + CHM detections → final tree detections.
 
-## 3. Klasyfikacja gatunków
+## 3. Species classification
 
-1. **DINOv3** — detekcja obiektów, crop, wektory cech.
-2. **Klastrowanie** — specjalista grupuje klastry wg przeważającego gatunku.
-3. **Rejestr obiektów** (Delta Lake) — `weak_label` z klastrowania.
-4. Trening klasyfikatora DINOv3 na ground truth + weak labels.
-5. Klasyfikacja wykrytych drzew modelem wytrenowanym.
+1. **DINOv3** — object detection, crops, feature vectors.
+2. **Clustering** — specialist groups clusters by dominant species.
+3. **Object registry** (Delta Lake) — `weak_label` from clustering.
+4. Train DINOv3 classifier on ground truth + weak labels.
+5. Classify detected trees with the trained model.
 
-## Powiązania zewnętrzne
+## External integrations
 
-- Dane operacyjne i etykiety: **Delta Lake** (poza tym repo) — wiki linkuje metryki i wersje, nie duplikuje tabel.
+- Operational data and labels: **Delta Lake** (outside this repo) — the wiki links metrics and versions; it does not duplicate tables.
 
-## Metody (wiki)
+## Methods (wiki)
 
-| Etap | Strona wiki |
-|------|-------------|
+| Stage | Wiki page |
+|-------|-----------|
 | Local maxima | [[methods/local-maxima]] |
-| CHM + detekcja | [[methods/chm-detection]] |
+| CHM + detection | [[methods/chm-detection]] |
 | DEIMv2 | [[methods/deimv2-canopy]] |
 | Merge | [[methods/merge-detections]] |
 | DINOv3 | [[methods/dinov3-classification]] |

@@ -8,18 +8,19 @@ import * as Plugin from "./quartz/plugins"
  */
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "Forestry Research Wiki",
+    pageTitle: "Conifervision Research Wiki",
     pageTitleSuffix: "",
     enableSPA: true,
     enablePopovers: true,
     analytics: null,
-    locale: "pl-PL",
+    locale: "en-US",
     baseUrl: "kris1pl.github.io/ai-research-forestry",
     ignorePatterns: [
       "private",
       ".templates",
       ".obsidian",
       "**/.gitkeep",
+      "conifervision/**",
     ],
     defaultDateType: "modified",
     theme: {

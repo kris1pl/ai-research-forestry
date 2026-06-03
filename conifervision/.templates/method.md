@@ -10,10 +10,10 @@ sources: []
 
 # {{title}}
 
-## Opis
+## Description
 
-## W pipeline
+## In the pipeline
 
-## Parametry produkcyjne
+## Production parameters
 
-## Literatura / źródła
+## Literature / sources

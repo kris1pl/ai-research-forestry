@@ -1,22 +1,22 @@
 ---
-title: DINOv3 — klasyfikacja gatunków
+title: DINOv3 — species classification
 type: method
 tags: [dinov3, classification, weak-labels]
 status: active
 updated: 2026-06-03
 ---
 
-# DINOv3 klasyfikacja
+# DINOv3 classification
 
-1. Detekcja obiektów modelem DINOv3, crop, wektory cech.
-2. Klastrowanie + etykiety od specjalisty → **weak labels** w Delta Lake.
-3. Trening klasyfikatora na ground truth + weak labels.
-4. Klasyfikacja wykrytych drzew.
+1. Object detection with DINOv3, crops, feature vectors.
+2. Clustering + specialist labels → **weak labels** in Delta Lake.
+3. Train classifier on ground truth + weak labels.
+4. Classify detected trees.
 
-## Powiązane koncepty
+## Related concepts
 
-- Weak labels: strona `concepts/weak-labels` _(do utworzenia przy ingest)_
+- Weak labels: `concepts/weak-labels` page _(create on ingest)_
 
-## Literatura / źródła
+## Literature / sources
 
-_(po ingest)_
+_(after ingest)_

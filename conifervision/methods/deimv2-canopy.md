@@ -1,5 +1,5 @@
 ---
-title: DEIMv2 — detekcja w koronie
+title: DEIMv2 — canopy detection
 type: method
 tags: [deimv2, detection, ai]
 status: active
@@ -8,16 +8,16 @@ updated: 2026-06-03
 
 # DEIMv2
 
-Detekcja drzew modelem **DEIMv2** na kilku warstwach wysokościowych CHM (małe vs duże drzewa).
+Tree detection with **DEIMv2** on multiple CHM height layers (small vs large trees).
 
-## W pipeline
+## In the pipeline
 
-Zob. [[chm-detection]], [[merge-detections]].
+See [[chm-detection]], [[merge-detections]].
 
-## Wersje modelu / checkpoint
+## Model versions / checkpoints
 
-_(link do rejestru eksperymentów / MLflow)_
+_(link to experiment registry / MLflow)_
 
-## Literatura / źródła
+## Literature / sources
 
-_(po ingest)_
+_(after ingest)_

@@ -8,16 +8,16 @@ updated: 2026-06-03
 
 # Local maxima
 
-Wykrywanie czubków drzew modelem 3D ze **sliding window** w celu oszacowania wysokości i wsparcia detekcji drzew.
+Detect tree tops from a 3D model using a **sliding window** to estimate height and support tree detection.
 
-## W pipeline
+## In the pipeline
 
-Część ścieżki merge — zob. [[merge-detections]], [[project/pipeline-overview]].
+Part of the merge path — see [[merge-detections]], [[project/pipeline-overview]].
 
-## Parametry produkcyjne
+## Production parameters
 
-_(uzupełnij: rozmiar okna, rozdzielczość, progi)_
+_(fill in: window size, resolution, thresholds)_
 
-## Literatura / źródła
+## Literature / sources
 
-_(linki `[[sources/...]]` po ingest PDF)_
+_(link `[[sources/...]]` after PDF ingest)_

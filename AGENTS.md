@@ -1,46 +1,55 @@
-# AGENTS.md — Forestry Research LLM Wiki
+# AGENTS.md — Conifervision Research LLM Wiki
 
-Schema dla agentów (Cursor, Codex, Claude Code) utrzymujących tę bazę wiedzy. Wzorzec: [llm_wiki.md](llm_wiki.md).
+Schema for agents (Cursor, Codex, Claude Code) maintaining this knowledge base. Pattern: [llm_wiki.md](llm_wiki.md).
 
-## Cel
+## Language (required)
 
-Research i dokumentacja **metodologii analizy obszarów leśnych (AREA)**:
+**All wiki work is in English.**
 
-- Orthophoto z dronów, local maxima (sliding window), CHM, DEIMv2, merge detekcji
-- Klasyfikacja: DINOv3, klastrowanie, weak labels, Delta Lake (dane operacyjne poza repo)
+- New and updated pages in `conifervision/`: **English only** (body, titles, frontmatter `title` / `description`, ADRs, log entries).
+- Agent replies to the user may be in the user’s language; **files committed to the vault are always English**.
+- Source papers may be any language; summaries and integration into the wiki are **English**. Original quotes may stay in the source language with an English gloss if needed.
+- Commit messages: **English**, imperative mood (e.g. `ingest: Smith 2024 CHM detection review`).
 
-Wiki **kompiluje** wiedzę z PDF, artykułów web i wyników eksperymentów — nie zastępuje pipeline’u produkcyjnego ani Delta Lake.
+## Purpose
 
-## Struktura repozytorium
+Research and documentation of **forest area (AREA) analysis methodology**:
 
-| Ścieżka | Rola | Agent |
-|---------|------|--------|
-| `raw/papers/` | PDF (immutable, często gitignored) | **tylko czyta** |
-| `raw/web/` | Markdown z clipów / scrapów | **tylko czyta** |
-| `raw/assets/` | Obrazy załączników | **tylko czyta** |
-| `conifervision/` | Vault Obsidian — strony wiki | **tworzy i edytuje** |
-| `site/` | Quartz (build → GitHub Pages) | **nie zmienia** bez prośby |
-| `tools/` | Skrypty Python (ekstrakcja PDF) | ostrożnie, zgodnie z README |
+- Drone orthophotos, local maxima (sliding window), CHM, DEIMv2, detection merge
+- Classification: DINOv3, clustering, weak labels, Delta Lake (operational data outside this repo)
 
-## Typy stron (`conifervision/`)
+The wiki **compiles** knowledge from PDFs, web articles, and experiment results — it does not replace the production pipeline or Delta Lake.
 
-| `type` (frontmatter) | Folder | Zawartość |
+## Repository layout
+
+| Path | Role | Agent |
+|------|------|--------|
+| `raw/papers/` | PDFs (immutable, often gitignored) | **read only** |
+| `raw/web/` | Markdown from clips / scrapes | **read only** |
+| `raw/assets/` | Attachment images | **read only** |
+| `conifervision/` | Obsidian vault — wiki pages | **create and edit** |
+| `site/` | Quartz (build → GitHub Pages) | **do not change** unless asked |
+| `tools/` | Python scripts (PDF extract) | careful, per README |
+
+## Page types (`conifervision/`)
+
+| `type` (frontmatter) | Folder | Content |
 |----------------------|--------|-----------|
-| `project` | `project/` | Pipeline, ADR |
-| `method` | `methods/` | Etapy pipeline + literatura |
-| `concept` | `concepts/` | Pojęcia (CHM, weak labels, …) |
-| `experiment` | `experiments/` | Hipoteza, metryki, wnioski |
-| `source` | `sources/` | Streszczenie jednego PDF/artykułu |
+| `project` | `project/` | Pipeline, ADRs |
+| `method` | `methods/` | Pipeline stages + literature |
+| `concept` | `concepts/` | Concepts (CHM, weak labels, …) |
+| `experiment` | `experiments/` | Hypothesis, metrics, conclusions |
+| `source` | `sources/` | Single PDF/article summary |
 
-Szablony: `conifervision/.templates/`.
+Templates: `conifervision/.templates/`.
 
 ## Frontmatter (YAML)
 
-Wymagane na każdej stronie wiki:
+Required on every wiki page:
 
 ```yaml
 ---
-title: "Czytelny tytuł"
+title: "Human-readable title (English)"
 type: method | concept | experiment | source | project
 tags: [tag1, tag2]
 status: active | candidate | superseded | draft
@@ -48,72 +57,69 @@ updated: YYYY-MM-DD
 ---
 ```
 
-Opcjonalne:
+Optional:
 
-- `area` — identyfikator AREA
-- `related_methods` — lista slugów metod
-- `sources` — lista `sources/slug`
-- `metrics` — obiekt (np. `f1`, `dataset`)
-- `hypothesis`, `source_file`, `authors`, `year` — wg typu
+- `area` — AREA identifier
+- `related_methods` — method slugs
+- `sources` — list of `sources/slug`
+- `metrics` — object (e.g. `f1`, `dataset`)
+- `hypothesis`, `source_file`, `authors`, `year` — by type
 
-Strony z `status: draft` są pomijane przez Quartz (`RemoveDrafts`).
+Pages with `status: draft` are skipped by Quartz (`RemoveDrafts`).
 
-## Konwencje linków
+## Link conventions
 
-- Wikilinki Obsidian: `[[slug]]` lub `[[folder/slug]]` — format **shortest** (zgodny z vault i Quartz).
-- Każda teza z literatury: `[[sources/nazwa]]` + cytat lub numer strony w tekście.
-- Nie linkuj do plików poza `conifervision/` wikilinkami (np. `raw/` podawaj ścieżką w tekście lub w frontmatter `source_file`).
+- Obsidian wikilinks: `[[slug]]` or `[[folder/slug]]` — **shortest** format (matches vault and Quartz).
+- Every literature claim: `[[sources/name]]` + quote or page number in the text.
+- Do not wikilink outside `conifervision/` (use plain paths for `raw/`, or `source_file` in frontmatter).
 
-## Operacja: Ingest
+## Operation: Ingest
 
-**Wejście:** nowy plik w `raw/` (lub ścieżka podana przez użytkownika).
+**Input:** new file in `raw/` (or path provided by the user).
 
-**Kroki:**
+**Steps:**
 
-1. Przeczytaj źródło (PDF: opcjonalnie `make extract-pdf FILE=...` → `.txt` obok PDF).
-2. Omów z użytkownikiem kluczowe wnioski (jeśli sesja interaktywna).
-3. Utwórz/ zaktualizuj `conifervision/sources/<slug>.md` (streszczenie, tezy, implikacje dla pipeline).
-4. Zaktualizuj powiązane strony `methods/`, `concepts/` (typowo 5–15 plików).
-5. Zaktualizuj `conifervision/index.md` (katalog) i dopisz wpis do `conifervision/log.md`:
-   `## [YYYY-MM-DD] ingest | Tytuł źródła`
-6. Oznacz sprzeczności względem istniejących stron (sekcja „Sprzeczności” lub adnotacja przy tezie).
-7. Proponuj commit: `ingest: krótki opis źródła`.
+1. Read the source (PDF: optional `make extract-pdf FILE=...` → `.txt` beside the PDF).
+2. Discuss key takeaways with the user when the session is interactive.
+3. Create/update `conifervision/sources/<slug>.md` (summary, claims, pipeline implications) **in English**.
+4. Update related `methods/`, `concepts/` pages (typically 5–15 files).
+5. Update `conifervision/index.md` and append to `conifervision/log.md`:
+   `## [YYYY-MM-DD] ingest | Source title`
+6. Flag contradictions with existing pages (“Contradictions” section or inline note).
+7. Suggest commit: `ingest: short English description`.
 
-**Nie modyfikuj** plików w `raw/` poza tym, co użytkownik sam doda.
+**Do not modify** files in `raw/` except what the user adds.
 
-## Operacja: Query
+## Operation: Query
 
-1. Czytaj `conifervision/index.md`, potem relevantne strony.
-2. Odpowiadaj z cytatami do stron wiki (`[[...]]`).
-3. Jeśli odpowiedź jest trwałą wartością (porównanie metod, synteza) — zapisz nową stronę w `conifervision/` (np. `concepts/` lub `experiments/`) i zaktualizuj `log.md`.
+1. Read `conifervision/index.md`, then relevant pages.
+2. Answer with citations to wiki pages (`[[...]]`).
+3. If the answer is durable (method comparison, synthesis) — save a new page under `conifervision/` (e.g. `concepts/` or `experiments/`) **in English** and update `log.md`.
 
-## Operacja: Lint
+## Operation: Lint
 
-Okresowo (lub na prośbę):
+Periodically (or on request):
 
-- Sprzeczności między stronami i vs `conifervision/project/pipeline-overview.md`
-- Strony `status: active` z przestarzałymi claimami
-- Orphan pages (brak linków przychodzących)
-- Koncepty wspomniane bez własnej strony
-- Brakujące `sources/` dla metod opartych na literaturze
-- Luki do uzupełnienia (web search / nowe PDF)
+- Contradictions between pages and vs `conifervision/project/pipeline-overview.md`
+- `status: active` pages with stale claims
+- Orphan pages (no inbound links)
+- Concepts mentioned without a dedicated page
+- Missing `sources/` for literature-backed methods
+- Non-English prose in the vault (flag for translation)
 
-Wynik lint: lista w czacie + opcjonalnie wpis w `log.md`: `## [date] lint | ...`
+Lint output: list in chat + optional `log.md` entry: `## [date] lint | ...`
 
-## Czego agent NIE robi
+## What the agent must not do
 
-- Nie commituje bez prośby użytkownika.
-- Nie umieszcza sekretów, kluczy API, ścieżek wewnętrznych z PII.
-- Nie zmienia `site/quartz.config.ts` / workflow CI bez prośby.
-- Nie zmienia parametrów ryzyka w kodzie produkcyjnym trading/forestry pipeline (inne repo) bez wyraźnej instrukcji.
+- Commit without user request.
+- Store secrets, API keys, or internal paths with PII.
+- Change `site/quartz.config.ts` / CI workflows without request.
+- Change production risk parameters in the forestry/trading pipeline repo without explicit instruction.
+- Add or leave **Polish (or other non-English) body text** in `conifervision/` except inside quoted source excerpts.
 
-## Publikacja (Quartz)
+## Publishing (Quartz)
 
-- Build: `make build-wiki` (treść z `conifervision/`; CI kopiuje do `site/content`).
-- Ignorowane przy build: `.obsidian`, `.templates`, `private`, pliki draft.
-- `baseUrl`: `kris1pl.github.io/ai-research-forestry` — po fork zmień w `site/quartz.config.ts`.
-
-## Język
-
-- Treść wiki: **polski** (chyba że źródło angielskie — wtedy streszczenie PL, cytaty mogą być EN).
-- Commity: polski lub angielski, spójnie w ramach PR.
+- Build: `make build-wiki` (content from `conifervision/`; CI copies to `site/content`).
+- Ignored at build: `.obsidian`, `.templates`, `private`, draft pages.
+- `baseUrl`: `kris1pl.github.io/ai-research-forestry` — change in `site/quartz.config.ts` after fork.
+- UI locale: `en-US` in `site/quartz.config.ts`.

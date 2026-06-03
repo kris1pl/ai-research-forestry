@@ -11,12 +11,12 @@ year:
 
 # {{title}}
 
-## Streszczenie
+## Summary
 
-## Kluczowe tezy
+## Key claims
 
-## Implikacje dla naszego pipeline
+## Implications for our pipeline
 
-## Cytaty
+## Quotes
 
-## Powiązane strony
+## Related pages
