@@ -68,7 +68,7 @@ Przykładowe polecenia:
 
 Po pushu na `main`:
 
-1. **Settings → Actions → General → Workflow permissions** → *Read and write permissions* → Save.
+1. **Settings → Actions → General → Workflow permissions** → *Read and write permissions* → Save (wymagane m.in. dla `pages: write`).
 2. **Actions** → *Deploy Forestry Wiki (Quartz)* → **Re-run all jobs** (workflow sam włącza Pages przy pierwszym runie, krok *Enable GitHub Pages*).
 
    Jeśli `deploy` nadal pada: ręcznie (jednorazowo):

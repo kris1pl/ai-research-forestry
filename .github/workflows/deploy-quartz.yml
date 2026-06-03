@@ -5,6 +5,11 @@ on:
     branches: [main, master]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -12,26 +17,37 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      administration: write
-      id-token: write
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # Pages must exist before deploy-pages; UI often shows only "Add domain" until this runs once.
       - name: Enable GitHub Pages (workflow source)
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if gh api "repos/${GITHUB_REPOSITORY}/pages" --silent 2>/dev/null; then
+          set -e
+          api="https://api.github.com/repos/${GITHUB_REPOSITORY}/pages"
+          code=$(curl -sS -o /tmp/pages.json -w "%{http_code}" \
+            -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            "$api")
+          if [ "$code" = "200" ]; then
             echo "GitHub Pages already enabled"
+            exit 0
+          fi
+          code=$(curl -sS -o /tmp/pages.json -w "%{http_code}" \
+            -X POST \
+            -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            "$api" \
+            -d '{"build_type":"workflow"}')
+          cat /tmp/pages.json
+          if [ "$code" = "201" ] || [ "$code" = "200" ]; then
+            echo "GitHub Pages enabled (HTTP $code)"
           else
-            echo "Creating GitHub Pages site (build_type=workflow)..."
-            gh api --method POST "repos/${GITHUB_REPOSITORY}/pages" -f build_type=workflow
+            echo "::error::Enable Pages failed (HTTP $code)"
+            exit 1
           fi
 
       - name: Link wiki as Quartz content
@@ -59,9 +75,6 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
