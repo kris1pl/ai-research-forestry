@@ -69,12 +69,20 @@ Przykładowe polecenia:
 Po pushu na `main`:
 
 1. **Settings → Actions → General → Workflow permissions** → *Read and write permissions* → Save.
-2. **Settings → Pages** — jeśli jest **Source**, wybierz **GitHub Actions** (czasem widać dopiero po pierwszym deployu; wtedy wystarczy krok 3).
-3. **Actions** → *Deploy Forestry Wiki (Quartz)* → **Re-run all jobs** (po zmianie repo na public lub po poprawce workflow).
+2. **Jednorazowo włącz GitHub Pages** (jeśli w Settings → Pages widać tylko *Add domain*):
+   - Zainstaluj [GitHub CLI](https://cli.github.com/) i zaloguj: `gh auth login`
+   - Uruchom:
+     ```bash
+     gh api --method POST repos/kris1pl/ai-research-forestry/pages -f build_type=workflow
+     ```
+   - Oczekiwany wynik: JSON z `"build_type": "workflow"` (nie błąd 404).
+3. **Actions** → *Deploy Forestry Wiki (Quartz)* → **Re-run all jobs**.
 
 Workflow [`.github/workflows/deploy-quartz.yml`](.github/workflows/deploy-quartz.yml) buduje `site/public` i wdraża.
 
-**404 „There isn't a GitHub Pages site here”** — zwykle deploy się nie udał: sprawdź czerwony job `deploy` w Actions (build może być zielony).
+**404 „There isn't a GitHub Pages site here”** — deploy się nie udał (sprawdź czerwony job `deploy`; `build` musi być zielony).
+
+**Build fail na `configure-pages`** — Pages nie były włączone; ten krok nie jest w workflow — najpierw krok 2 powyżej.
 
 **URL (domyślny):** https://kris1pl.github.io/ai-research-forestry/
 
