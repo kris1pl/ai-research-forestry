@@ -68,8 +68,13 @@ Przykładowe polecenia:
 
 Po pushu na `main`:
 
-1. W GitHub: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-2. Workflow [`.github/workflows/deploy-quartz.yml`](.github/workflows/deploy-quartz.yml) buduje `site/public` i wdraża.
+1. **Settings → Actions → General → Workflow permissions** → *Read and write permissions* → Save.
+2. **Settings → Pages** — jeśli jest **Source**, wybierz **GitHub Actions** (czasem widać dopiero po pierwszym deployu; wtedy wystarczy krok 3).
+3. **Actions** → *Deploy Forestry Wiki (Quartz)* → **Re-run all jobs** (po zmianie repo na public lub po poprawce workflow).
+
+Workflow [`.github/workflows/deploy-quartz.yml`](.github/workflows/deploy-quartz.yml) buduje `site/public` i wdraża.
+
+**404 „There isn't a GitHub Pages site here”** — zwykle deploy się nie udał: sprawdź czerwony job `deploy` w Actions (build może być zielony).
 
 **URL (domyślny):** https://kris1pl.github.io/ai-research-forestry/
 
