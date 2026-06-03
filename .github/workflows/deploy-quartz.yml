@@ -15,11 +15,24 @@ jobs:
     permissions:
       contents: read
       pages: write
+      administration: write
       id-token: write
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      # Pages must exist before deploy-pages; UI often shows only "Add domain" until this runs once.
+      - name: Enable GitHub Pages (workflow source)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if gh api "repos/${GITHUB_REPOSITORY}/pages" --silent 2>/dev/null; then
+            echo "GitHub Pages already enabled"
+          else
+            echo "Creating GitHub Pages site (build_type=workflow)..."
+            gh api --method POST "repos/${GITHUB_REPOSITORY}/pages" -f build_type=workflow
+          fi
 
       - name: Link wiki as Quartz content
         run: ln -sfn ../wiki content

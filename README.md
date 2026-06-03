@@ -69,14 +69,14 @@ Przykładowe polecenia:
 Po pushu na `main`:
 
 1. **Settings → Actions → General → Workflow permissions** → *Read and write permissions* → Save.
-2. **Jednorazowo włącz GitHub Pages** (jeśli w Settings → Pages widać tylko *Add domain*):
-   - Zainstaluj [GitHub CLI](https://cli.github.com/) i zaloguj: `gh auth login`
-   - Uruchom:
-     ```bash
-     gh api --method POST repos/kris1pl/ai-research-forestry/pages -f build_type=workflow
-     ```
-   - Oczekiwany wynik: JSON z `"build_type": "workflow"` (nie błąd 404).
-3. **Actions** → *Deploy Forestry Wiki (Quartz)* → **Re-run all jobs**.
+2. **Actions** → *Deploy Forestry Wiki (Quartz)* → **Re-run all jobs** (workflow sam włącza Pages przy pierwszym runie, krok *Enable GitHub Pages*).
+
+   Jeśli `deploy` nadal pada: ręcznie (jednorazowo):
+   ```bash
+   gh auth login
+   gh api --method POST repos/kris1pl/ai-research-forestry/pages -f build_type=workflow
+   ```
+   oraz **Settings → Environments → github-pages** — wyłącz wymóg ręcznej akceptacji deployów (jeśli włączone).
 
 Workflow [`.github/workflows/deploy-quartz.yml`](.github/workflows/deploy-quartz.yml) buduje `site/public` i wdraża.
 
