@@ -1,0 +1,37 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# Quartz
+site/node_modules/
+site/public/
+site/.quartz-cache/
+
+# Obsidian (per-user UI state)
+**/.obsidian/workspace.json
+**/.obsidian/workspace-mobile.json
+**/.obsidian/graph.json
+
+# Raw sources (large binaries — keep locally or on shared storage)
+raw/**/*.pdf
+raw/**/*.PDF
+
+# Secrets
+.env
+.env.*
+*.pem
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+*.swp
+
+# Temp
+_quartz_tmp/
