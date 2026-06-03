@@ -113,3 +113,4 @@ Pliki `raw/**/*.pdf` są w [`.gitignore`](.gitignore) (rozmiar). Zespół może:
 
 - [llm_wiki.md](llm_wiki.md) — opis wzorca
 - Pipeline produkcyjny (kod) — osobne repozytorium; wiki opisuje metodologię w [`wiki/project/pipeline-overview.md`](wiki/project/pipeline-overview.md)
+
