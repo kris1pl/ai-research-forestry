@@ -18,11 +18,11 @@ Wiki **kompiluje** wiedzę z PDF, artykułów web i wyników eksperymentów — 
 | `raw/papers/` | PDF (immutable, często gitignored) | **tylko czyta** |
 | `raw/web/` | Markdown z clipów / scrapów | **tylko czyta** |
 | `raw/assets/` | Obrazy załączników | **tylko czyta** |
-| `wiki/` | Vault Obsidian — strony wiki | **tworzy i edytuje** |
+| `conifervision/` | Vault Obsidian — strony wiki | **tworzy i edytuje** |
 | `site/` | Quartz (build → GitHub Pages) | **nie zmienia** bez prośby |
 | `tools/` | Skrypty Python (ekstrakcja PDF) | ostrożnie, zgodnie z README |
 
-## Typy stron (`wiki/`)
+## Typy stron (`conifervision/`)
 
 | `type` (frontmatter) | Folder | Zawartość |
 |----------------------|--------|-----------|
@@ -32,7 +32,7 @@ Wiki **kompiluje** wiedzę z PDF, artykułów web i wyników eksperymentów — 
 | `experiment` | `experiments/` | Hipoteza, metryki, wnioski |
 | `source` | `sources/` | Streszczenie jednego PDF/artykułu |
 
-Szablony: `wiki/.templates/`.
+Szablony: `conifervision/.templates/`.
 
 ## Frontmatter (YAML)
 
@@ -62,7 +62,7 @@ Strony z `status: draft` są pomijane przez Quartz (`RemoveDrafts`).
 
 - Wikilinki Obsidian: `[[slug]]` lub `[[folder/slug]]` — format **shortest** (zgodny z vault i Quartz).
 - Każda teza z literatury: `[[sources/nazwa]]` + cytat lub numer strony w tekście.
-- Nie linkuj do plików poza `wiki/` wikilinkami (np. `raw/` podawaj ścieżką w tekście lub w frontmatter `source_file`).
+- Nie linkuj do plików poza `conifervision/` wikilinkami (np. `raw/` podawaj ścieżką w tekście lub w frontmatter `source_file`).
 
 ## Operacja: Ingest
 
@@ -72,9 +72,9 @@ Strony z `status: draft` są pomijane przez Quartz (`RemoveDrafts`).
 
 1. Przeczytaj źródło (PDF: opcjonalnie `make extract-pdf FILE=...` → `.txt` obok PDF).
 2. Omów z użytkownikiem kluczowe wnioski (jeśli sesja interaktywna).
-3. Utwórz/ zaktualizuj `wiki/sources/<slug>.md` (streszczenie, tezy, implikacje dla pipeline).
+3. Utwórz/ zaktualizuj `conifervision/sources/<slug>.md` (streszczenie, tezy, implikacje dla pipeline).
 4. Zaktualizuj powiązane strony `methods/`, `concepts/` (typowo 5–15 plików).
-5. Zaktualizuj `wiki/index.md` (katalog) i dopisz wpis do `wiki/log.md`:
+5. Zaktualizuj `conifervision/index.md` (katalog) i dopisz wpis do `conifervision/log.md`:
    `## [YYYY-MM-DD] ingest | Tytuł źródła`
 6. Oznacz sprzeczności względem istniejących stron (sekcja „Sprzeczności” lub adnotacja przy tezie).
 7. Proponuj commit: `ingest: krótki opis źródła`.
@@ -83,15 +83,15 @@ Strony z `status: draft` są pomijane przez Quartz (`RemoveDrafts`).
 
 ## Operacja: Query
 
-1. Czytaj `wiki/index.md`, potem relevantne strony.
+1. Czytaj `conifervision/index.md`, potem relevantne strony.
 2. Odpowiadaj z cytatami do stron wiki (`[[...]]`).
-3. Jeśli odpowiedź jest trwałą wartością (porównanie metod, synteza) — zapisz nową stronę w `wiki/` (np. `concepts/` lub `experiments/`) i zaktualizuj `log.md`.
+3. Jeśli odpowiedź jest trwałą wartością (porównanie metod, synteza) — zapisz nową stronę w `conifervision/` (np. `concepts/` lub `experiments/`) i zaktualizuj `log.md`.
 
 ## Operacja: Lint
 
 Okresowo (lub na prośbę):
 
-- Sprzeczności między stronami i vs `wiki/project/pipeline-overview.md`
+- Sprzeczności między stronami i vs `conifervision/project/pipeline-overview.md`
 - Strony `status: active` z przestarzałymi claimami
 - Orphan pages (brak linków przychodzących)
 - Koncepty wspomniane bez własnej strony
@@ -109,7 +109,7 @@ Wynik lint: lista w czacie + opcjonalnie wpis w `log.md`: `## [date] lint | ...`
 
 ## Publikacja (Quartz)
 
-- Build: `make build-wiki` (katalog `site/`, treść z `wiki/` przez `site/content` → `../wiki`).
+- Build: `make build-wiki` (treść z `conifervision/`; CI kopiuje do `site/content`).
 - Ignorowane przy build: `.obsidian`, `.templates`, `private`, pliki draft.
 - `baseUrl`: `kris1pl.github.io/ai-research-forestry` — po fork zmień w `site/quartz.config.ts`.
 

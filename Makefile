@@ -1,4 +1,4 @@
-.PHONY: venv install extract-pdf build-wiki build-wiki-docker serve-wiki serve-wiki-docker
+.PHONY: venv install extract-pdf build-wiki build-wiki-docker serve-wiki serve-wiki-docker prepare-content
 
 VENV := .venv
 PYTHON := $(VENV)/bin/python
@@ -29,8 +29,11 @@ serve-wiki:
 # Build przez Docker (Node 22) — gdy lokalny Node jest za stary
 build-wiki-docker:
 	docker run --rm -v "$(REPO_ROOT):/repo" -w /repo/site $(DOCKER_NODE) \
-		bash -c "ln -sfn ../wiki content && npm ci && npx quartz build"
+		bash -c "rm -rf content && cp -a ../conifervision content && npm ci && npx quartz build"
 
 serve-wiki-docker:
 	docker run --rm -p 8080:8080 -v "$(REPO_ROOT):/repo" -w /repo/site $(DOCKER_NODE) \
-		bash -c "ln -sfn ../wiki content && npm ci && npx quartz build --serve --port 8080"
+		bash -c "rm -rf content && cp -a ../conifervision content && npm ci && npx quartz build --serve --port 8080"
+
+prepare-content:
+	rm -rf site/content && cp -a conifervision site/content

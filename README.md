@@ -7,7 +7,7 @@ Baza wiedzy zespołu o metodologii analizy obszarów leśnych — wzorzec [LLM W
 | Katalog | Opis |
 |---------|------|
 | [`raw/`](raw/) | Niezmienne źródła: PDF, clipy web, obrazy (`assets/`) |
-| [`wiki/`](wiki/) | Vault **Obsidian** — strony wiki (publikowane przez Quartz) |
+| [`conifervision/`](conifervision/) | Vault **Obsidian** (nazwa projektu; wcześniej planowane `wiki/`) — strony publikowane przez Quartz |
 | [`site/`](site/) | Quartz 4 — build statycznej strony |
 | [`tools/`](tools/) | Python: ekstrakcja tekstu z PDF |
 | [`AGENTS.md`](AGENTS.md) | Schema dla agenta: ingest / query / lint |
@@ -17,7 +17,7 @@ Baza wiedzy zespołu o metodologii analizy obszarów leśnych — wzorzec [LLM W
 ### 1. Obsidian (lokalnie)
 
 1. Zainstaluj [Obsidian](https://obsidian.md/).
-2. **Open folder as vault** → wybierz katalog `wiki/` w tym repozytorium.
+2. **Open folder as vault** → wybierz katalog `conifervision/` w tym repozytorium.
 3. Opcjonalnie: [Web Clipper](https://obsidian.md/clipper) → zapisuj artykuły do `raw/web/`.
 4. Opcjonalnie: plugin **Dataview** — tabele po polach YAML w frontmatter.
 
@@ -52,7 +52,9 @@ Tylko build (lokalnie):
 make build-wiki
 ```
 
-Treść builda: symlink `site/content` → `wiki/`. Katalog `raw/` **nie** trafia na stronę publiczną.
+Treść builda: katalog `conifervision/` (w CI kopiowany do `site/content`). Katalog `raw/` **nie** trafia na stronę publiczną.
+
+Jeśli widzisz **RSS/XML zamiast strony** — deploy zbudował się bez treści (zły folder vault). Po poprawce zrób push i **Re-run** workflow.
 
 ### 4. Praca z agentem
 
@@ -62,7 +64,7 @@ Przykładowe polecenia:
 
 - *„Ingest PDF z `raw/papers/foo.pdf` — zaktualizuj wiki według AGENTS.md.”*
 - *„Query: jakie metody merge local maxima z CHM opisuje literatura w wiki?”*
-- *„Lint wiki — sprzeczności względem `wiki/project/pipeline-overview.md`.”*
+- *„Lint wiki — sprzeczności względem `conifervision/project/pipeline-overview.md`.”*
 
 ## Publikacja (GitHub Pages)
 
@@ -121,5 +123,5 @@ Pliki `raw/**/*.pdf` są w [`.gitignore`](.gitignore) (rozmiar). Zespół może:
 ## Powiązane
 
 - [llm_wiki.md](llm_wiki.md) — opis wzorca
-- Pipeline produkcyjny (kod) — osobne repozytorium; wiki opisuje metodologię w [`wiki/project/pipeline-overview.md`](wiki/project/pipeline-overview.md)
+- Pipeline produkcyjny (kod) — osobne repozytorium; wiki opisuje metodologię w [`conifervision/project/pipeline-overview.md`](conifervision/project/pipeline-overview.md)
 

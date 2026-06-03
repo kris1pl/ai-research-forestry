@@ -47,9 +47,12 @@ jobs:
           cat /tmp/pages.json || true
           exit 1
 
-      - name: Link wiki as Quartz content
-        run: ln -sfn ../wiki content
+      - name: Prepare Quartz content from vault
         working-directory: site
+        run: |
+          rm -rf content
+          cp -a ../conifervision content
+          echo "Markdown files: $(find content -name '*.md' | wc -l)"
 
       - uses: actions/setup-node@v4
         with:
@@ -63,6 +66,8 @@ jobs:
           npm ci
           npx quartz build
           touch public/.nojekyll
+          test -f public/index.html || (echo "::error::Brak index.html — sprawdź katalog conifervision/" && exit 1)
+          echo "HTML pages: $(find public -name '*.html' | wc -l)"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
