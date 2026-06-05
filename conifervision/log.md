@@ -3,12 +3,18 @@ title: Log
 type: project
 tags: [meta]
 status: active
-updated: 2026-06-05
+updated: 2026-06-03
 ---
 
 # Wiki log
 
 Chronological record of ingest, query, and lint operations.
+
+## [2026-06-03] ingest | Miao et al. (2024) — PTC UAV species classification
+
+- Source: `raw/papers/remotesensing-16-01849-v2.pdf`
+- Added [[sources/miao-zhang-2024-ptc-uav-species]], [[concepts/pseudo-tree-crown]]
+- Updated [[methods/dinov3-classification]], [[project/pipeline-overview]], [[index]], [[methods/_index]]
 
 ## [2026-06-03] init | repo bootstrap
 

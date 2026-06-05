@@ -3,7 +3,7 @@ title: Methods index
 type: method
 tags: [index, methods]
 status: active
-updated: 2026-06-05
+updated: 2026-06-03
 ---
 
 # Pipeline methods
@@ -17,4 +17,4 @@ Pages describe implementation and supporting literature for each stage. See [[pr
 | CHM + detection | [[chm-detection]] | literature (Popescu 2004) |
 | DEIMv2 (height layers) | [[deimv2-canopy]] | stub |
 | Detection merge | [[merge-detections]] | stub |
-| DINOv3 classification | [[dinov3-classification]] | stub |
+| DINOv3 classification | [[dinov3-classification]] | literature (Miao 2024 — PTC / patches) |

@@ -4,7 +4,7 @@ description: Knowledge base for forest area analysis methodology
 type: project
 tags: [index]
 status: active
-updated: 2026-06-05
+updated: 2026-06-03
 ---
 
 # Conifervision Research Wiki
@@ -24,7 +24,7 @@ Compiled team knowledge on tree detection and classification methodology (drones
 ## Concepts
 
 - [[concepts/canopy-height-model]] — CHM (DSM − DTM)
-- (more on ingest — e.g. weak labels)
+- [[concepts/pseudo-tree-crown]] — PTC input reformation for species CNNs (UAV)
 
 ## Experiments
 
@@ -33,7 +33,7 @@ Compiled team knowledge on tree detection and classification methodology (drones
 ## Literature sources
 
 - [[sources/popescu-wynne-2004-seeing-the-trees]] — LiDAR CHM, variable-window local maxima, multispectral fusion (2004)
-- (more in `sources/` — files in `raw/papers/`)
+- [[sources/miao-zhang-2024-ptc-uav-species]] — pseudo tree crown (PTC), UAV species classification, ResNet50/PyTorch (2024)
 
 ## Navigation
 

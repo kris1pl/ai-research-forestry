@@ -36,6 +36,8 @@ related_methods:
 4. Train DINOv3 classifier on ground truth + weak labels.
 5. Classify detected trees with the trained model.
 
+**Literature (not in production):** [[concepts/pseudo-tree-crown]] from [[sources/miao-zhang-2024-ptc-uav-species]] — optional 3D-style crown reprojection before CNN input; tested with ResNet50 on UAV orthophoto patches, not DINOv3.
+
 ## External integrations
 
 - Operational data and labels: **Delta Lake** (outside this repo) — the wiki links metrics and versions; it does not duplicate tables.
