@@ -20,6 +20,8 @@ Research and documentation of **forest area (AREA) analysis methodology**:
 
 The wiki **compiles** knowledge from PDFs, web articles, and experiment results — it does not replace the production pipeline or Delta Lake.
 
+**Production code repo:** lives in a separate repository (not linked yet). See `conifervision/project/code-repo-integration.md` — integration is **TODO**; do not add code paths or cross-repo automation until that page is marked done.
+
 ## Repository layout
 
 | Path | Role | Agent |
@@ -81,7 +83,7 @@ Pages with `status: draft` are skipped by Quartz (`RemoveDrafts`).
 
 1. Read the source (PDF: optional `make extract-pdf FILE=...` → `.txt` beside the PDF).
 2. Discuss key takeaways with the user when the session is interactive.
-3. Create/update `conifervision/sources/<slug>.md` (summary, claims, pipeline implications) **in English**.
+3. Create/update `conifervision/sources/<slug>.md` (summary, claims, pipeline implications, **replication pseudocode when feasible**) **in English**.
 4. Update related `methods/`, `concepts/` pages (typically 5–15 files).
 5. Update `conifervision/index.md` and append to `conifervision/log.md`:
    `## [YYYY-MM-DD] ingest | Source title`
@@ -89,6 +91,20 @@ Pages with `status: draft` are skipped by Quartz (`RemoveDrafts`).
 7. Suggest commit: `ingest: short English description`.
 
 **Do not modify** files in `raw/` except what the user adds.
+
+### Replication pseudocode (on source pages)
+
+When the paper describes a **procedural method** with enough detail, add a section **## Replication pseudocode** on the source page:
+
+- Use **high-level pseudocode** (not production code) — numbered steps or a single fenced `text` block.
+- State **inputs**, **outputs**, and **parameters** named in the paper (with units).
+- Add **Prerequisites** (data, resolution, field plots, software assumptions).
+- Add **Gaps** — what the paper does not specify (thresholds, full ground-classification rules, etc.).
+- If replication is **not feasible** from the paper alone, write that explicitly and list what is missing (supplementary material, prior paper, proprietary workflow).
+
+Do not invent numeric thresholds absent from the source; use `TBD` or “per field calibration” where appropriate.
+
+Link replication steps to [[methods/...]] pages when updating them.
 
 ## Operation: Query
 
@@ -123,3 +139,7 @@ Lint output: list in chat + optional `log.md` entry: `## [date] lint | ...`
 - Ignored at build: `.obsidian`, `.templates`, `private`, draft pages.
 - `baseUrl`: `kris1pl.github.io/ai-research-forestry` — change in `site/quartz.config.ts` after fork.
 - UI locale: `en-US` in `site/quartz.config.ts`.
+
+## Deferred: production code repository
+
+Cross-linking to the main pipeline codebase (sibling repo, implementation paths, experiment ↔ `git sha` / MLflow) is **out of scope until completed** on `conifervision/project/code-repo-integration.md`. Until then, document methodology only; mention the external code repo in prose if needed, without inventing file paths.

@@ -4,6 +4,8 @@ Team knowledge base for forest area analysis methodology — [LLM Wiki](llm_wiki
 
 **Vault language: English.** All pages in `conifervision/` and agent-written updates follow [`AGENTS.md`](AGENTS.md).
 
+**TODO:** Integration with the separate production code repository is not set up yet — see [`conifervision/project/code-repo-integration.md`](conifervision/project/code-repo-integration.md).
+
 ## Struktura
 
 | Katalog | Opis |
@@ -64,7 +66,7 @@ In Cursor (or another agent), point at the repo and read [`AGENTS.md`](AGENTS.md
 
 Example prompts:
 
-- *“Ingest `raw/papers/foo.pdf` — update the wiki per AGENTS.md (English).”*
+- *“Ingest `raw/papers/foo.pdf` — update the wiki per AGENTS.md (English), including replication pseudocode if the method is clear enough.”*
 - *“Query: what does the wiki say about merging local maxima with CHM detections?”*
 - *“Lint the wiki against `conifervision/project/pipeline-overview.md`.”*
 

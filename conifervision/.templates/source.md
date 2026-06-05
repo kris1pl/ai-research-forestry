@@ -17,6 +17,25 @@ year:
 
 ## Implications for our pipeline
 
+## Replication pseudocode
+
+<!-- Include when the paper gives a reproducible procedure; otherwise state why not -->
+
+### Prerequisites
+
+- 
+
+### Procedure
+
+```text
+# high-level steps only
+1. ...
+```
+
+### Gaps / not specified in paper
+
+- 
+
 ## Quotes
 
 ## Related pages

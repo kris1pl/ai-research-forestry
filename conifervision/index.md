@@ -4,7 +4,7 @@ description: Knowledge base for forest area analysis methodology
 type: project
 tags: [index]
 status: active
-updated: 2026-06-03
+updated: 2026-06-05
 ---
 
 # Conifervision Research Wiki
@@ -15,6 +15,7 @@ Compiled team knowledge on tree detection and classification methodology (drones
 
 - [[project/pipeline-overview]] — current production pipeline
 - [[project/decisions]] — methodological decisions (ADR)
+- [[project/code-repo-integration]] — **TODO:** link to production code repository
 
 ## Pipeline methods
 
@@ -22,7 +23,8 @@ Compiled team knowledge on tree detection and classification methodology (drones
 
 ## Concepts
 
-- (added on ingest — e.g. canopy height model, weak labels)
+- [[concepts/canopy-height-model]] — CHM (DSM − DTM)
+- (more on ingest — e.g. weak labels)
 
 ## Experiments
 
@@ -30,7 +32,8 @@ Compiled team knowledge on tree detection and classification methodology (drones
 
 ## Literature sources
 
-- (summaries in `sources/` — links to files in `raw/papers/`)
+- [[sources/popescu-wynne-2004-seeing-the-trees]] — LiDAR CHM, variable-window local maxima, multispectral fusion (2004)
+- (more in `sources/` — files in `raw/papers/`)
 
 ## Navigation
 
