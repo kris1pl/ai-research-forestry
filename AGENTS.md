@@ -106,6 +106,12 @@ Do not invent numeric thresholds absent from the source; use `TBD` or “per fie
 
 Link replication steps to [[methods/...]] pages when updating them.
 
+On each touched **method** or **concept** page, add or refresh **## Replication notes**:
+
+- Link to `sources/<slug>#Replication pseudocode` (do not copy the full pseudocode block).
+- Short table: paper step → our implementation status (`TBD`, aligned, not applicable).
+- State when replication does not apply to that method.
+
 ## Operation: Query
 
 1. Read `conifervision/index.md`, then relevant pages.

@@ -18,6 +18,10 @@ See [[chm-detection]], [[merge-detections]].
 
 _(link to experiment registry / MLflow)_
 
+## Replication notes
+
+No replication pseudocode from [[sources/popescu-wynne-2004-seeing-the-trees]] — paper predates learned detectors on CHM layers. Add a source link here when a relevant paper is ingested.
+
 ## Literature / sources
 
 _(after ingest)_

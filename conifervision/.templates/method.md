@@ -14,6 +14,12 @@ sources: []
 
 ## In the pipeline
 
+## Literature
+
+## Replication notes
+
+<!-- Link to sources/…#Replication pseudocode; short mapping table; no full pseudocode duplicate -->
+
 ## Production parameters
 
-## Literature / sources
+## Related

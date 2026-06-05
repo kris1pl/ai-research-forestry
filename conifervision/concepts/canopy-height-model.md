@@ -29,6 +29,16 @@ Produced from 3D data and laser **ground model**, then used for height-stratifie
 - Grid resolution vs point density (drone GSD / LiDAR density).
 - Whether apex detection uses raw CHM peaks ([[methods/local-maxima]]) or learned detectors on CHM layers ([[methods/chm-detection]]).
 
+## Replication notes
+
+Minimal replication chain from [[sources/popescu-wynne-2004-seeing-the-trees#Replication pseudocode]]:
+
+```text
+DTM → top_DSM (max per sub-cell) → CHM = top_DSM - DTM
+```
+
+Details and gaps (ground classifier, kriging): on the **source** page — not duplicated here. Implementation path: [[methods/chm-detection]].
+
 ## Related
 
 - [[methods/chm-detection]]

@@ -29,3 +29,4 @@ Chronological record of ingest, query, and lint operations.
 - Added [[sources/popescu-wynne-2004-seeing-the-trees]], [[concepts/canopy-height-model]]
 - Updated [[methods/local-maxima]], [[methods/chm-detection]], [[index]]
 - Added **Replication pseudocode** section; ingest rule in `AGENTS.md`
+- **Replication notes** on [[methods/local-maxima]], [[methods/chm-detection]], [[methods/merge-detections]], [[concepts/canopy-height-model]]
