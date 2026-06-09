@@ -91,3 +91,19 @@ response = client.complete([
 ])
 print(response.text)
 ```
+
+## ingest_paper.py
+
+Próbny ingest paperu do `conifervision/sources/` przez skonfigurowany LLM (domyślnie Vertex `gemini-3.5-flash`). Ekstrahuje tekst PDF, wysyła kontekst wiki + paper, zapisuje stronę `source`.
+
+```bash
+make extract-pdf FILE=raw/papers/2405.15613v2.pdf   # opcjonalnie — ingest robi to sam
+make ingest-paper FILE=raw/papers/2405.15613v2.pdf WRITE=1
+```
+
+Bez `WRITE=1` wypisuje markdown na stdout (podgląd). Z `WRITE=1` skrypt **automatycznie** aktualizuje `log.md`, `index.md` oraz powiązane strony `methods/` / `concepts/` (drugi call LLM → `tools/wiki_update.py`). Idempotentne — ponowny ingest nie duplikuje wpisów.
+
+```bash
+# tylko odśwież wiki z istniejącej strony source (bez ponownego LLM na PDF)
+make ingest-paper FILE=raw/papers/2405.15613v2.pdf WRITE=1 WIKI_ONLY=conifervision/sources/vo-2024-automatic-data-curation.md
+```

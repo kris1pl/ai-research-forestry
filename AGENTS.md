@@ -81,12 +81,12 @@ Pages with `status: draft` are skipped by Quartz (`RemoveDrafts`).
 
 **Steps:**
 
-1. Read the source (PDF: optional `make extract-pdf FILE=...` → `.txt` beside the PDF). Batch Python scripts may use `get_llm_client()` from `tools/llm/` (default provider: Vertex); wiki page output remains **English**.
+1. Read the source (PDF: optional `make extract-pdf FILE=...` → `.txt` beside the PDF). Batch: `make ingest-paper FILE=raw/papers/....pdf WRITE=1` — uses `get_llm_client()` (default Vertex) and `tools/wiki_update.py` to write the source page **and** update `log.md`, `index.md`, related `methods/` / `concepts/` pages. Wiki page output remains **English**.
 2. Discuss key takeaways with the user when the session is interactive.
 3. Create/update `conifervision/sources/<slug>.md` (summary, claims, pipeline implications, **replication pseudocode when feasible**) **in English**.
-4. Update related `methods/`, `concepts/` pages (typically 5–15 files).
-5. Update `conifervision/index.md` and append to `conifervision/log.md`:
-   `## [YYYY-MM-DD] ingest | Source title`
+4. Update related `methods/`, `concepts/` pages (typically 1–5 files; automated by `ingest_paper` when using `WRITE=1`).
+5. Update `conifervision/index.md` and prepend to `conifervision/log.md`:
+   `## [YYYY-MM-DD] ingest | Source title` (automated by `ingest_paper`).
 6. Flag contradictions with existing pages (“Contradictions” section or inline note).
 7. Suggest commit: `ingest: short English description`.
 

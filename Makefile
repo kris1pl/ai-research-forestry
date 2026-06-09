@@ -1,4 +1,4 @@
-.PHONY: venv venv-recreate install extract-pdf llm-smoke build-wiki build-wiki-docker serve-wiki serve-wiki-docker prepare-content
+.PHONY: venv venv-recreate install extract-pdf llm-smoke ingest-paper build-wiki build-wiki-docker serve-wiki serve-wiki-docker prepare-content
 
 VENV := .venv
 PYTHON := $(VENV)/bin/python
@@ -26,6 +26,12 @@ endif
 
 llm-smoke:
 	$(PYTHON) -m tools.llm.smoke
+
+ingest-paper:
+ifndef FILE
+	$(error Użycie: make ingest-paper FILE=raw/papers/plik.pdf [WRITE=1] [WIKI_ONLY=conifervision/sources/slug.md])
+endif
+	$(PYTHON) -m tools.ingest_paper $(FILE) $(if $(WRITE),--write,) $(if $(NO_WIKI),--no-wiki,) $(if $(WIKI_ONLY),--wiki-only $(WIKI_ONLY),)
 
 # Lokalny build (wymaga Node >= 20.19; przy starszym Node użyj build-wiki-docker)
 build-wiki:

@@ -3,12 +3,18 @@ title: Log
 type: project
 tags: [meta]
 status: active
-updated: 2026-06-03
+updated: 2026-06-09
 ---
 
 # Wiki log
 
 Chronological record of ingest, query, and lint operations.
+
+## [2026-06-09] ingest | Vo et al. (2024) — SSL data curation (hierarchical k-means)
+
+- Source: `raw/papers/2405.15613v2.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/vo-2024-automatic-data-curation]]
+- Updated [[methods/dinov3-classification]], [[concepts/canopy-height-model]], [[index]]
 
 ## [2026-06-03] ingest | Miao et al. (2024) — PTC UAV species classification
 
