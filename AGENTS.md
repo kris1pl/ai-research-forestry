@@ -81,7 +81,7 @@ Pages with `status: draft` are skipped by Quartz (`RemoveDrafts`).
 
 **Steps:**
 
-1. Read the source (PDF: optional `make extract-pdf FILE=...` → `.txt` beside the PDF).
+1. Read the source (PDF: optional `make extract-pdf FILE=...` → `.txt` beside the PDF). Batch Python scripts may use `get_llm_client()` from `tools/llm/` (default provider: Vertex); wiki page output remains **English**.
 2. Discuss key takeaways with the user when the session is interactive.
 3. Create/update `conifervision/sources/<slug>.md` (summary, claims, pipeline implications, **replication pseudocode when feasible**) **in English**.
 4. Update related `methods/`, `concepts/` pages (typically 5–15 files).

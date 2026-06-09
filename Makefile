@@ -1,4 +1,4 @@
-.PHONY: venv install extract-pdf build-wiki build-wiki-docker serve-wiki serve-wiki-docker prepare-content
+.PHONY: venv venv-recreate install extract-pdf llm-smoke build-wiki build-wiki-docker serve-wiki serve-wiki-docker prepare-content
 
 VENV := .venv
 PYTHON := $(VENV)/bin/python
@@ -6,8 +6,13 @@ PIP := $(VENV)/bin/pip
 REPO_ROOT := $(CURDIR)
 DOCKER_NODE := node:22-bookworm-slim
 
+# Na Apple Silicon użyj natywnego arm64 (unikaj Rosetta / x86_64 venv).
 venv:
-	python3 -m venv $(VENV)
+	arch -arm64 python3 -m venv $(VENV)
+
+venv-recreate:
+	rm -rf $(VENV)
+	$(MAKE) venv install
 
 install: venv
 	$(PIP) install -U pip
@@ -18,6 +23,9 @@ ifndef FILE
 	$(error Użycie: make extract-pdf FILE=raw/papers/plik.pdf)
 endif
 	$(PYTHON) tools/extract_pdf_text.py $(FILE)
+
+llm-smoke:
+	$(PYTHON) -m tools.llm.smoke
 
 # Lokalny build (wymaga Node >= 20.19; przy starszym Node użyj build-wiki-docker)
 build-wiki:

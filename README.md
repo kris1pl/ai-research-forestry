@@ -13,7 +13,7 @@ Team knowledge base for forest area analysis methodology — [LLM Wiki](llm_wiki
 | [`raw/`](raw/) | Niezmienne źródła: PDF, clipy web, obrazy (`assets/`) |
 | [`conifervision/`](conifervision/) | **Obsidian** vault (English) — published via Quartz |
 | [`site/`](site/) | Quartz 4 — build statycznej strony |
-| [`tools/`](tools/) | Python: ekstrakcja tekstu z PDF |
+| [`tools/`](tools/) | Python: PDF extract, warstwa LLM (Vertex / OpenAI) |
 | [`AGENTS.md`](AGENTS.md) | Schema dla agenta: ingest / query / lint |
 
 ## Szybki start
@@ -33,6 +33,15 @@ Ustawienia vault (już w repo): linki **shortest**, załączniki w `../raw/asset
 make install
 make extract-pdf FILE=raw/papers/przyklad.pdf   # tworzy przyklad.txt
 ```
+
+Opcjonalnie — test warstwy LLM (Vertex domyślnie, konfiguracja w [`.env.example`](.env.example)):
+
+```bash
+cp .env.example .env   # uzupełnij VERTEX_PROJECT itd.
+make llm-smoke
+```
+
+Szczegóły: [`tools/README.md`](tools/README.md#llm-layer-toolsllm).
 
 ### 3. Podgląd strony wiki (Quartz)
 
