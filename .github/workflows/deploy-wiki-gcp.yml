@@ -1,0 +1,69 @@
+name: Deploy Wiki (GCP + IAP)
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: wiki-gcp
+  cancel-in-progress: false
+
+env:
+  GCP_PROJECT_ID: conifer-vision01
+  GCS_BUCKET: conifervision-wiki-prod
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Prepare Quartz content from vault
+        working-directory: site
+        run: |
+          rm -rf content
+          cp -a ../conifervision content
+          echo "Markdown files: $(find content -name '*.md' | wc -l)"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install and build Quartz
+        working-directory: site
+        run: |
+          npm ci
+          npx quartz build
+          touch public/.nojekyll
+          test -f public/index.html || (echo "::error::Missing index.html — check conifervision/" && exit 1)
+          echo "HTML pages: $(find public -name '*.html' | wc -l)"
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Deploy to GCS
+        run: |
+          gcloud storage rsync -r --delete-unmatched-destination-objects \
+            site/public "gs://${GCS_BUCKET}"
+
+      - name: Refresh Cloud Run (re-sync from GCS on startup)
+        run: |
+          gcloud run services update wiki-frontend \
+            --region=europe-central2 \
+            --update-env-vars="SYNC_TRIGGER=${GITHUB_SHA}" \
+            --quiet

@@ -14,7 +14,7 @@ const config: QuartzConfig = {
     enablePopovers: true,
     analytics: null,
     locale: "en-US",
-    baseUrl: "kris1pl.github.io/ai-research-forestry",
+    baseUrl: "wiki.conifervision.com",
     ignorePatterns: [
       "private",
       ".templates",

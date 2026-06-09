@@ -10,10 +10,16 @@ sources: []
 
 # {{title}}
 
-## Opis
+## Description
 
-## W pipeline
+## In the pipeline
 
-## Parametry produkcyjne
+## Literature
 
-## Literatura / źródła
+## Replication notes
+
+<!-- Link to sources/…#Replication pseudocode; short mapping table; no full pseudocode duplicate -->
+
+## Production parameters
+
+## Related

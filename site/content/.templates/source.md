@@ -11,12 +11,31 @@ year:
 
 # {{title}}
 
-## Streszczenie
+## Summary
 
-## Kluczowe tezy
+## Key claims
 
-## Implikacje dla naszego pipeline
+## Implications for our pipeline
 
-## Cytaty
+## Replication pseudocode
 
-## Powiązane strony
+<!-- Include when the paper gives a reproducible procedure; otherwise state why not -->
+
+### Prerequisites
+
+- 
+
+### Procedure
+
+```text
+# high-level steps only
+1. ...
+```
+
+### Gaps / not specified in paper
+
+- 
+
+## Quotes
+
+## Related pages

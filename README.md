@@ -56,9 +56,9 @@ Tylko build (lokalnie):
 make build-wiki
 ```
 
-Treść builda: katalog `conifervision/` (w CI kopiowany do `site/content`). Katalog `raw/` **nie** trafia na stronę publiczną.
+Treść builda: katalog `conifervision/` (w CI kopiowany do `site/content`). Katalog `raw/` **nie** trafia na stronę.
 
-Jeśli widzisz **RSS/XML zamiast strony** — deploy zbudował się bez treści (zły folder vault). Po poprawce zrób push i **Re-run** workflow.
+Jeśli widzisz **RSS/XML zamiast strony** — build/deploy bez treści vault (zły folder `conifervision/`). Po poprawce zrób push i **Re-run** workflow.
 
 ### 4. Praca z agentem
 
@@ -70,45 +70,107 @@ Example prompts:
 - *“Query: what does the wiki say about merging local maxima with CHM detections?”*
 - *“Lint the wiki against `conifervision/project/pipeline-overview.md`.”*
 
-## Publikacja (GitHub Pages)
+## Publikacja (GCP + IAP — prywatna)
 
-### Jednorazowa konfiguracja (obowiązkowa)
+Wiki jest dostępna **tylko** po zalogowaniu Google:
 
-Token Actions **nie może** utworzyć strony Pages — musisz włączyć ją raz z komputera (konto admin repo):
+**https://wiki.conifervision.com**
+
+| Element | Wartość |
+|---------|---------|
+| Hosting | GCS `conifervision-wiki-prod` → Cloud Run `wiki-frontend` → HTTPS LB + **IAP** (`wiki-backend-v2`) |
+| Auth | OAuth **External** (projekt bez GCP Organization) — szczegóły w [`docs/deploy-gcp-iap.md`](docs/deploy-gcp-iap.md) |
+| Deploy | Push na `main` → workflow [`.github/workflows/deploy-wiki-gcp.yml`](.github/workflows/deploy-wiki-gcp.yml) |
+| `baseUrl` | `wiki.conifervision.com` w [`site/quartz.config.ts`](site/quartz.config.ts) |
+
+**Pełna instrukcja setupu (DNS, OAuth, GitHub Secrets):** [`docs/deploy-gcp-iap.md`](docs/deploy-gcp-iap.md)
+
+**Skrypt infrastruktury (jednorazowo):**
 
 ```bash
-# Zainstaluj: https://cli.github.com/
-gh auth login
-chmod +x scripts/enable-github-pages.sh
-./scripts/enable-github-pages.sh
-# lub:
-gh api --method POST repos/kris1pl/ai-research-forestry/pages -f build_type=workflow
+bash infra/setup-gcp-wiki.sh
 ```
 
-Potem w GitHub:
+Czytelnicy **nie** potrzebują dostępu do GCP Console — tylko konta Google z dostępem IAP (poniżej).
 
-1. **Settings → Actions → General → Workflow permissions** → **Read and write permissions** → Save.
-2. **Settings → Environments → github-pages** — wyłącz *Required reviewers* (jeśli jest).
-3. **Actions** → *Deploy Forestry Wiki (Quartz)* → **Re-run all jobs**.
+### Dodawanie nowych użytkowników
 
-### Kolejne deploye
+Nowa osoba potrzebuje **dwóch** uprawnień (w trybie OAuth *Testing* oba są wymagane):
 
-Push na `main` → workflow buduje `site/public` i wdraża automatycznie.
+#### 1. Test user (OAuth consent screen)
 
-**URL:** https://kris1pl.github.io/ai-research-forestry/
+Dopóki aplikacja OAuth jest w trybie **Testing**, Google wpuszcza tylko adresy z listy test users.
 
-**Build fail na *Check GitHub Pages is enabled*** — nie wykonano jednorazowego `gh api` powyżej.
+1. [OAuth consent screen](https://console.cloud.google.com/apis/credentials/consent?project=conifer-vision01)
+2. Sekcja **Test users** → **Add users**
+3. Wpisz e-mail (np. `nowy.uzytkownik@conifervision.com` lub osobisty Gmail, jeśli tak uzgodniliście)
+4. **Save**
 
-**404 w przeglądarce** — `deploy` się nie udał; oba joby muszą być zielone w Actions.
+#### 2. Dostęp IAP (czytanie wiki)
 
-Jeśli forkujesz repo, zmień `baseUrl` w [`site/quartz.config.ts`](site/quartz.config.ts) na `twoj-user.github.io/nazwa-repo`.
+1. [Identity-Aware Proxy](https://console.cloud.google.com/security/iap?project=conifer-vision01)
+2. Zasób **Backend services** → **`wiki-backend-v2`**
+3. **Add principal** (lub **Grant access**)
+4. **New principals:** adres e-mail użytkownika (np. `nowy.uzytkownik@conifervision.com`)  
+   — albo grupa `wiki-readers@conifervision.com`, jeśli użytkownik jest już w grupie w [Google Admin](https://admin.google.com)
+5. **Role:** **Cloud IAP** → **IAP-secured Web App User**
+6. **Save**
 
-### Inne hostingi (ręcznie)
+Alternatywnie z terminala (ten sam e-mail co w kroku 1):
 
-| Platforma | Build | Output |
-|-----------|-------|--------|
-| Cloudflare Pages | `cd site && npm ci && npx quartz build` | `site/public` |
-| VPS | ten sam build + `rsync` do nginx/Caddy | `site/public` |
+```bash
+gcloud iap web add-iam-policy-binding \
+  --project=conifer-vision01 \
+  --resource-type=backend-services \
+  --service=wiki-backend-v2 \
+  --member='user:nowy.uzytkownik@conifervision.com' \
+  --role='roles/iap.httpsResourceAccessor'
+```
+
+#### 3. Co wysłać użytkownikowi
+
+- Link: **https://wiki.conifervision.com**
+- Logowanie: konto Google podane w krokach 1–2
+- **Nie** nadawaj ról w GCP Console (Viewer/Editor) — to nie jest potrzebne do czytania wiki
+
+#### Typowe błędy
+
+| Objaw | Przyczyna |
+|-------|-----------|
+| *Access blocked* / aplikacja w testowaniu | Brak na liście **Test users** (krok 1) |
+| *You don't have access* (403) po logowaniu | Brak roli **IAP-secured Web App User** (krok 2) |
+| `Empty Google Account OAuth client ID` | IAP włączone bez OAuth client na `wiki-backend-v2` — patrz [`docs/deploy-gcp-iap.md`](docs/deploy-gcp-iap.md) |
+
+#### Grupa zamiast pojedynczych maili (opcjonalnie)
+
+W [Google Admin](https://admin.google.com): grupa **`wiki-readers@conifervision.com`** → dodaj członków.  
+W IAP (krok 2) jeden principal: `wiki-readers@conifervision.com` zamiast wielu `user:…`.  
+Każdy nowy członek grupy nadal musi być na liście **Test users**, dopóki OAuth jest w trybie *Testing*.
+
+### GitHub Pages (wyłączone — nie używać)
+
+Publiczny URL `https://kris1pl.github.io/ai-research-forestry/` **musi być wyłączony** — wiki jest tylko na GCP + IAP.
+
+Workflow `.github/workflows/deploy-quartz.yml` został usunięty z repo. Jeśli Pages nadal działają, wyłącz je **raz**:
+
+**Opcja A — skrypt (gh CLI + admin repo):**
+
+```bash
+chmod +x scripts/disable-github-pages.sh
+./scripts/disable-github-pages.sh
+```
+
+**Opcja B — przeglądarka:**
+
+1. [Settings → Pages](https://github.com/kris1pl/ai-research-forestry/settings/pages)
+2. **Unpublish site** albo **Source: None** → Save
+
+**Weryfikacja:**
+
+```bash
+curl -sI https://kris1pl.github.io/ai-research-forestry/ | head -3
+# Oczekiwane: HTTP/2 404 (lub brak 200)
+```
 
 ## Polityka PDF
 

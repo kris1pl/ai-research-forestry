@@ -12,15 +12,15 @@ sources: []
 
 # {{title}}
 
-## Hipoteza
+## Hypothesis
 
-## Ustawienia
+## Setup
 
-## Wyniki
+## Results
 
-| Run | Metryka | Wartość | Notatki |
-|-----|---------|---------|---------|
+| Run | Metric | Value | Notes |
+|-----|--------|-------|-------|
 
-## Wniosek
+## Conclusion
 
-## Powiązane
+## Related

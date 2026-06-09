@@ -1,38 +1,41 @@
 ---
-title: Forestry Research Wiki
-description: Baza wiedzy o metodologii analizy obszarów leśnych
+title: Conifervision Research Wiki
+description: Knowledge base for forest area analysis methodology
 type: project
 tags: [index]
 status: active
 updated: 2026-06-03
 ---
 
-# Forestry Research Wiki
+# Conifervision Research Wiki
 
-Skompilowana wiedza zespołu o metodologii detekcji i klasyfikacji drzew (drony, CHM, modele AI, weak labels). Wiki utrzymywana przez agenta LLM według `AGENTS.md` w korzeniu repozytorium.
+Compiled team knowledge on tree detection and classification methodology (drones, CHM, AI models, weak labels). Maintained by an LLM agent per `AGENTS.md` at the repository root.
 
-## Projekt
+## Project
 
-- [[project/pipeline-overview]] — aktualny pipeline produkcyjny
-- [[project/decisions]] — decyzje metodologiczne (ADR)
+- [[project/pipeline-overview]] — current production pipeline
+- [[project/decisions]] — methodological decisions (ADR)
+- [[project/code-repo-integration]] — **TODO:** link to production code repository
 
-## Metody pipeline
+## Pipeline methods
 
-- [[methods/_index]] — spis metod
+- [[methods/_index]] — methods index
 
-## Koncepty
+## Concepts
 
-- (dodawane przy ingest — np. canopy height model, weak labels)
+- [[concepts/canopy-height-model]] — CHM (DSM − DTM)
+- [[concepts/pseudo-tree-crown]] — PTC input reformation for species CNNs (UAV)
 
-## Eksperymenty
+## Experiments
 
-- (strony w `experiments/` — hipoteza, metryki, wnioski)
+- (pages under `experiments/` — hypothesis, metrics, conclusions)
 
-## Źródła literaturowe
+## Literature sources
 
-- (streszczenia w `sources/` — link do plików w `raw/papers/`)
+- [[sources/popescu-wynne-2004-seeing-the-trees]] — LiDAR CHM, variable-window local maxima, multispectral fusion (2004)
+- [[sources/miao-zhang-2024-ptc-uav-species]] — pseudo tree crown (PTC), UAV species classification, ResNet50/PyTorch (2024)
 
-## Nawigacja
+## Navigation
 
-- [[log]] — chronologia zmian wiki
-- Indeks pełny: patrz sekcje powyżej; po ingest agent aktualizuje listy na tej stronie.
+- [[log]] — wiki change timeline
+- Full index: see sections above; the agent updates lists on this page after each ingest.

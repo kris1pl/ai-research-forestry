@@ -1,20 +1,20 @@
 ---
-title: Metody — indeks
+title: Methods index
 type: method
 tags: [index, methods]
 status: active
 updated: 2026-06-03
 ---
 
-# Metody pipeline
+# Pipeline methods
 
-Strony opisują implementację i literaturę wspierającą każdy etap. Zob. [[project/pipeline-overview]].
+Pages describe implementation and supporting literature for each stage. See [[project/pipeline-overview]].
 
-| Metoda | Strona | Status |
-|--------|--------|--------|
-| Orthophoto | _(do utworzenia)_ | — |
-| Local maxima | [[local-maxima]] | stub |
-| CHM + detekcja | [[chm-detection]] | stub |
-| DEIMv2 (warstwy wysokości) | [[deimv2-canopy]] | stub |
-| Merge detekcji | [[merge-detections]] | stub |
-| DINOv3 klasyfikacja | [[dinov3-classification]] | stub |
+| Method | Page | Status |
+|--------|------|--------|
+| Orthophoto | _(to be created)_ | — |
+| Local maxima | [[local-maxima]] | literature (Popescu 2004) |
+| CHM + detection | [[chm-detection]] | literature (Popescu 2004) |
+| DEIMv2 (height layers) | [[deimv2-canopy]] | stub |
+| Detection merge | [[merge-detections]] | stub |
+| DINOv3 classification | [[dinov3-classification]] | literature (Miao 2024 — PTC / patches) |

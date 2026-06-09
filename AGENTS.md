@@ -30,7 +30,7 @@ The wiki **compiles** knowledge from PDFs, web articles, and experiment results 
 | `raw/web/` | Markdown from clips / scrapes | **read only** |
 | `raw/assets/` | Attachment images | **read only** |
 | `conifervision/` | Obsidian vault — wiki pages | **create and edit** |
-| `site/` | Quartz (build → GitHub Pages) | **do not change** unless asked |
+| `site/` | Quartz (build → private GCP/IAP) | **do not change** unless asked |
 | `tools/` | Python scripts (PDF extract) | careful, per README |
 
 ## Page types (`conifervision/`)
@@ -143,7 +143,7 @@ Lint output: list in chat + optional `log.md` entry: `## [date] lint | ...`
 
 - Build: `make build-wiki` (content from `conifervision/`; CI copies to `site/content`).
 - Ignored at build: `.obsidian`, `.templates`, `private`, draft pages.
-- `baseUrl`: `kris1pl.github.io/ai-research-forestry` — change in `site/quartz.config.ts` after fork.
+- Published URL: `https://wiki.conifervision.com` (IAP; `baseUrl`: `wiki.conifervision.com` in `site/quartz.config.ts`).
 - UI locale: `en-US` in `site/quartz.config.ts`.
 
 ## Deferred: production code repository

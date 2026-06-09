@@ -1,29 +1,29 @@
 ---
-title: Decyzje metodologiczne (ADR)
+title: Methodological decisions (ADR)
 type: project
 tags: [adr]
 status: active
 updated: 2026-06-03
 ---
 
-# Decyzje metodologiczne
+# Methodological decisions
 
-Format ADR: **Kontekst → Decyzja → Konsekwencje**. Agent dodaje wpis po uzgodnieniu z zespołem.
+ADR format: **Context → Decision → Consequences**. The agent adds an entry after team agreement.
 
-## Szablon
+## Template
 
 ```markdown
-## ADR-NNN: Tytuł (YYYY-MM-DD)
+## ADR-NNN: Title (YYYY-MM-DD)
 
 **Status:** proposed | accepted | superseded
 
-**Kontekst:** …
+**Context:** …
 
-**Decyzja:** …
+**Decision:** …
 
-**Konsekwencje:** …
+**Consequences:** …
 ```
 
-## Wpisy
+## Entries
 
-_(brak — uzupełniaj przy ingest i po review zespołu)_
+_(none yet — add on ingest and after team review)_
