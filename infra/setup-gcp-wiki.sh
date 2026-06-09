@@ -228,6 +228,10 @@ gcloud projects add-iam-policy-binding "$PROJECT_ID" \
   --member="serviceAccount:${SA_EMAIL}" \
   --role="roles/run.developer" \
   --condition=None 2>/dev/null || true
+# Cloud Run update must actAs the runtime SA (wiki-runtime)
+gcloud iam service-accounts add-iam-policy-binding "$CR_SA_EMAIL" \
+  --member="serviceAccount:${SA_EMAIL}" \
+  --role="roles/iam.serviceAccountUser"
 
 echo "==> Workload Identity Federation..."
 if ! gcloud iam workload-identity-pools describe "$WIF_POOL" \

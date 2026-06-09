@@ -177,6 +177,8 @@ Po wyłączeniu `https://kris1pl.github.io/ai-research-forestry/` zwraca **404**
 | **Złe linki w wiki** | `baseUrl` | W `site/quartz.config.ts` musi być `wiki.conifervision.com` |
 | **Workflow auth fail** (`Authenticate to Google Cloud`) | Brak lub złe secrets w GitHub | Uruchom `bash infra/print-github-wiki-secrets.sh`, dodaj oba secrety w Settings → Actions, **Re-run workflow** |
 | **Workflow auth fail** | Złe WIF secrets | Porównaj provider path i SA z outputem skryptu; WIF na GCP jest OK jeśli `setup-gcp-wiki.sh` przeszedł |
+| **Deploy to GCS fail** | Brak `legacyBucketReader` na SA | `wiki-deployer` potrzebuje `objectAdmin` + `legacyBucketReader` na buckecie (w `setup-gcp-wiki.sh`) |
+| **Refresh Cloud Run fail** | Brak `serviceAccountUser` | `wiki-deployer` musi mieć `roles/iam.serviceAccountUser` na `wiki-runtime@…` (actAs przy `gcloud run services update`) |
 | **Grupa nie istnieje** | Admin | Utwórz `wiki-readers@…` w Google Admin przed IAP binding |
 
 ### Ręczny deploy (test)
