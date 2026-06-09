@@ -72,12 +72,15 @@ jobs:
 
       - name: Deploy to GCS
         run: |
+          test -d site/public || (echo "::error::site/public missing — Quartz build failed?" && exit 1)
+          echo "Deploying $(find site/public -type f | wc -l) files to gs://${GCS_BUCKET}"
           gcloud storage rsync -r --delete-unmatched-destination-objects \
-            site/public "gs://${GCS_BUCKET}"
+            site/public "gs://${GCS_BUCKET}" --project="${GCP_PROJECT_ID}"
 
       - name: Refresh Cloud Run (re-sync from GCS on startup)
         run: |
           gcloud run services update wiki-frontend \
             --region=europe-central2 \
+            --project="${GCP_PROJECT_ID}" \
             --update-env-vars="SYNC_TRIGGER=${GITHUB_SHA}" \
             --quiet
