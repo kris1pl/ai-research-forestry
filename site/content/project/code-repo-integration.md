@@ -15,7 +15,7 @@ updated: 2026-06-03
 - [ ] Document sibling repo path / GitHub URL in this page
 - [ ] Map each pipeline stage → code modules (`methods/*` → *Implementation* sections)
 - [ ] Link experiments to `code_git_sha`, MLflow run IDs, Delta Lake snapshots
-- [ ] Optional: `docs/research.md` in the code repo pointing to this wiki (GitHub Pages)
+- [ ] Optional: `docs/research.md` in the code repo pointing to this wiki (`https://wiki.conifervision.com`)
 - [ ] Optional: Cursor multi-root workspace or cross-repo lint (wiki vs code paths)
 - [ ] PR checklist in code repo: update ADR / `pipeline-overview` when methodology changes
 

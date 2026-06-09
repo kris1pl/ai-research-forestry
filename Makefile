@@ -1,4 +1,4 @@
-.PHONY: venv venv-recreate install extract-pdf llm-smoke ingest-paper build-wiki build-wiki-docker serve-wiki serve-wiki-docker prepare-content
+.PHONY: venv venv-recreate install extract-pdf llm-smoke ingest-paper build-wiki build-wiki-docker deploy-wiki-gcp serve-wiki serve-wiki-docker prepare-content
 
 VENV := .venv
 PYTHON := $(VENV)/bin/python
@@ -51,3 +51,9 @@ serve-wiki-docker:
 
 prepare-content:
 	rm -rf site/content && cp -a conifervision site/content
+
+# Build Quartz + rsync do GCS + odśwież Cloud Run (gdy CI nie zadziałał lub brak push)
+deploy-wiki-gcp: build-wiki-docker
+	gcloud storage rsync -r --delete-unmatched-destination-objects site/public gs://conifervision-wiki-prod
+	gcloud run services update wiki-frontend --region=europe-central2 --project=conifer-vision01 \
+		--update-env-vars="SYNC_TRIGGER=$$(date +%s)" --quiet

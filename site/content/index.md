@@ -4,7 +4,7 @@ description: Knowledge base for forest area analysis methodology
 type: project
 tags: [index]
 status: active
-updated: 2026-06-03
+updated: 2026-06-09
 ---
 
 # Conifervision Research Wiki
@@ -23,7 +23,7 @@ Compiled team knowledge on tree detection and classification methodology (drones
 
 ## Concepts
 
-- [[concepts/canopy-height-model]] — CHM (DSM − DTM)
+- [[concepts/canopy-height-model]] — CHM (DSM − DTM); satellite SSL curation link (Vo 2024)
 - [[concepts/pseudo-tree-crown]] — PTC input reformation for species CNNs (UAV)
 
 ## Experiments
@@ -34,6 +34,7 @@ Compiled team knowledge on tree detection and classification methodology (drones
 
 - [[sources/popescu-wynne-2004-seeing-the-trees]] — LiDAR CHM, variable-window local maxima, multispectral fusion (2004)
 - [[sources/miao-zhang-2024-ptc-uav-species]] — pseudo tree crown (PTC), UAV species classification, ResNet50/PyTorch (2024)
+- [[sources/vo-2024-automatic-data-curation]] — hierarchical k-means SSL data curation, satellite canopy height (Meta FAIR, 2024)
 
 ## Navigation
 
