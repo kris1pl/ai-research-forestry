@@ -123,6 +123,19 @@ gcloud compute ssl-certificates describe wiki-ssl-cert --global \
 | `GCP_WORKLOAD_IDENTITY_PROVIDER` | `projects/PROJECT_NUMBER/locations/global/workloadIdentityPools/github-pool/providers/github-provider` |
 | `GCP_SERVICE_ACCOUNT` | `wiki-deployer@conifer-vision01.iam.gserviceaccount.com` |
 
+Wartości dla `conifer-vision01` (zweryfikowane):
+
+```
+GCP_WORKLOAD_IDENTITY_PROVIDER=projects/433062774397/locations/global/workloadIdentityPools/github-pool/providers/github-provider
+GCP_SERVICE_ACCOUNT=wiki-deployer@conifer-vision01.iam.gserviceaccount.com
+```
+
+Skrypt (wypisuje aktualne wartości z GCP):
+
+```bash
+bash infra/print-github-wiki-secrets.sh
+```
+
 `PROJECT_NUMBER`:
 
 ```bash
@@ -162,7 +175,8 @@ Po wyłączeniu `https://kris1pl.github.io/ai-research-forestry/` zwraca **404**
 | **Pusta strona / 404** | Pusty bucket | Uruchom workflow deploy lub `gcloud storage rsync` ręcznie |
 | **RSS/XML zamiast HTML** | Brak treści w buildzie | Sprawdź kopię `conifervision` → `site/content` |
 | **Złe linki w wiki** | `baseUrl` | W `site/quartz.config.ts` musi być `wiki.conifervision.com` |
-| **Workflow auth fail** | Złe WIF secrets | Porównaj provider path i SA z outputem skryptu |
+| **Workflow auth fail** (`Authenticate to Google Cloud`) | Brak lub złe secrets w GitHub | Uruchom `bash infra/print-github-wiki-secrets.sh`, dodaj oba secrety w Settings → Actions, **Re-run workflow** |
+| **Workflow auth fail** | Złe WIF secrets | Porównaj provider path i SA z outputem skryptu; WIF na GCP jest OK jeśli `setup-gcp-wiki.sh` przeszedł |
 | **Grupa nie istnieje** | Admin | Utwórz `wiki-readers@…` w Google Admin przed IAP binding |
 
 ### Ręczny deploy (test)

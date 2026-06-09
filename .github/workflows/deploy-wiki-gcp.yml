@@ -47,9 +47,23 @@ jobs:
           test -f public/index.html || (echo "::error::Missing index.html — check conifervision/" && exit 1)
           echo "HTML pages: $(find public -name '*.html' | wc -l)"
 
+      - name: Verify GCP GitHub secrets
+        run: |
+          if [ -z "${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}" ]; then
+            echo "::error::Missing repository secret GCP_WORKLOAD_IDENTITY_PROVIDER."
+            echo "::error::Run: bash infra/print-github-wiki-secrets.sh — then add secrets in GitHub Settings → Actions."
+            exit 1
+          fi
+          if [ -z "${{ secrets.GCP_SERVICE_ACCOUNT }}" ]; then
+            echo "::error::Missing repository secret GCP_SERVICE_ACCOUNT."
+            echo "::error::Run: bash infra/print-github-wiki-secrets.sh — then add secrets in GitHub Settings → Actions."
+            exit 1
+          fi
+
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
+          project_id: ${{ env.GCP_PROJECT_ID }}
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
 
