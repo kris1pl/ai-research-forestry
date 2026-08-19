@@ -9,6 +9,7 @@ from datetime import date
 from pathlib import Path
 
 from tools.llm import ChatMessage, get_llm_client
+from tools.okf_common import iso_generated_at
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 VAULT = REPO_ROOT / "conifervision"
@@ -78,6 +79,18 @@ def _bump_updated(text: str, today: str | None = None) -> str:
         fm = re.sub(r"^updated:\s*.*$", f"updated: {today}", fm, count=1, flags=re.M)
     else:
         fm = fm.rstrip() + f"\nupdated: {today}"
+    if re.search(r"^generated:\s*$", fm, re.M):
+        fm = re.sub(
+            r"(^generated:\s*\n(?:  .+\n)*?  at:\s*).+$",
+            rf"\1{iso_generated_at(today)}",
+            fm,
+            count=1,
+            flags=re.M,
+        )
+    elif "generated:" not in fm:
+        fm = fm.rstrip() + (
+            f"\ngenerated:\n  by: agent:conifervision-wiki\n  at: {iso_generated_at(today)}"
+        )
     return _join_frontmatter(fm, body)
 
 
@@ -317,12 +330,12 @@ def apply_wiki_updates(
     if prepend_log_entry(source_slug, log_title, pdf_rel, model, touched_for_log):
         result.touched.append("log.md")
 
-    # methods/_index.md — bump date only when methods were touched
-    method_hits = [p for p in result.touched if p.startswith("methods/") and p != "methods/_index.md"]
+    # methods/index.md — bump updated on method pages when methods were touched
+    method_hits = [p for p in result.touched if p.startswith("methods/") and p not in {"methods/index.md"}]
     if method_hits:
-        idx_path = VAULT / "methods" / "_index.md"
+        idx_path = VAULT / "methods" / "index.md"
         if idx_path.is_file():
             _write(idx_path, _bump_updated(_read(idx_path)))
-            result.touched.append("methods/_index.md")
+            result.touched.append("methods/index.md")
 
     return result

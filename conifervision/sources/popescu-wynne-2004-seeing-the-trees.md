@@ -1,9 +1,13 @@
 ---
 title: "Popescu & Wynne (2004) — LiDAR, multispectral fusion, CHM, local maxima"
-type: source
+type: Source
+description: "Citation: Popescu, S. C., & Wynne, R. H. (2004). Seeing the Trees in the Forest: Using Lidar and Multispectral Data Fusion with Local Filtering and Variable Window Size for Estimating Tree Height. *P…"
 tags: [lidar, chm, local-maxima, multispectral, tree-height]
-status: active
+status: stable
 updated: 2026-06-05
+generated:
+  by: agent:conifervision-wiki
+  at: 2026-06-05T12:00:00Z
 replication_status: partial
 source_file: raw/papers/Seeing_the_Trees_in_the_Forest_Using_Lidar_and_Mul.pdf
 authors: [Sorin C. Popescu, Randolph H. Wynne]
@@ -13,7 +17,6 @@ related_methods:
   - methods/chm-detection
 sources: []
 ---
-
 # Popescu & Wynne (2004) — Seeing the Trees in the Forest
 
 **Citation:** Popescu, S. C., & Wynne, R. H. (2004). Seeing the Trees in the Forest: Using Lidar and Multispectral Data Fusion with Local Filtering and Variable Window Size for Estimating Tree Height. *Photogrammetric Engineering & Remote Sensing*, 70(5), 589–604. DOI: [10.14358/PERS.70.5.589](https://doi.org/10.14358/PERS.70.5.589)

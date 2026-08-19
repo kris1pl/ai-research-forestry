@@ -1,9 +1,13 @@
 ---
 title: CHM and height-layer detection
-type: method
+type: Method
+description: "CHM from the 3D model and ground model (laser / DTM). Object detection on height layers (small / large trees) — in production with DEIMv2 (deimv2-canopy)."
 tags: [chm, lidar, detection]
-status: active
+status: stable
 updated: 2026-06-05
+generated:
+  by: agent:conifervision-wiki
+  at: 2026-06-05T12:00:00Z
 related_methods:
   - methods/deimv2-canopy
   - methods/local-maxima
@@ -11,7 +15,6 @@ related_methods:
 sources:
   - sources/popescu-wynne-2004-seeing-the-trees
 ---
-
 # Canopy Height Model (CHM)
 
 CHM from the 3D model and **ground model** (laser / DTM). Object detection on height layers (small / large trees) — in production with **DEIMv2** ([[deimv2-canopy]]).

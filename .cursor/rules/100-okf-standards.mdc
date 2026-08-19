@@ -1,0 +1,75 @@
+---
+description: OKF v0.2 standards for conifervision/ — frontmatter, indexes, provenance, links.
+globs: conifervision/**/*.md
+alwaysApply: false
+---
+
+# OKF Standards (`conifervision/`)
+
+The vault is an [OKF v0.2](https://github.com/GoogleCloudPlatform/knowledge-catalog/tree/main/okf) knowledge bundle. Spec: [OKF SPEC.md](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md). Domain contract also in `AGENTS.md`.
+
+## Bundle layout
+
+| Path | Role |
+|------|------|
+| `conifervision/index.md` | Root index — **only** `okf_version: "0.2"` in frontmatter |
+| `conifervision/log.md` | Chronological history — **no** frontmatter |
+| `conifervision/<dir>/index.md` | Progressive disclosure listing — **no** frontmatter |
+| `conifervision/**/*.md` (else) | Concept documents |
+
+Concept ID = file path without `.md` (e.g. `methods/local-maxima`).
+
+## Required concept frontmatter
+
+```yaml
+type: Method | Concept | Source | Project | Experiment   # REQUIRED (domain types)
+title: Human-readable title
+description: One-line summary                              # recommended
+tags: [tag1, tag2]
+status: draft | stable | deprecated                        # OKF lifecycle (not "active")
+generated:
+  by: agent:ingest/gemini-3.5-flash | human:<name>
+  at: 2026-06-09T12:00:00Z
+```
+
+Legacy extensions (keep when useful): `updated`, `related_methods`, `source_file`, `authors`, `year`, `replication_status`.
+
+**Status mapping:** `active` → `stable`, `superseded` → `deprecated`, `candidate` → `draft`.
+
+## Provenance (`sources`)
+
+Prefer OKF structured entries on literature-backed concepts:
+
+```yaml
+sources:
+  - id: popescu-2004
+    resource: raw/papers/Seeing_the_Trees_in_the_Forest_Using_Lidar_and_Mul.pdf
+    title: Popescu & Wynne (2004) — LiDAR CHM local maxima
+    last_modified: 2004-05-01
+```
+
+Internal bundle links: `resource: /sources/slug.md` or footnotes keyed by `sources[].id`.
+
+## Links
+
+- **OKF (preferred for new edits):** `[Title](/methods/local-maxima.md)` — bundle-relative, leading `/`
+- **Obsidian/Quartz (existing):** `[[methods/local-maxima]]` — keep working; do not mass-convert unless asked
+
+## Progressive disclosure
+
+When adding a concept under a subdirectory:
+
+1. Create `path/to/concept.md` with OKF frontmatter.
+2. Add bullet to that directory's `index.md` (title + description).
+3. Update root `conifervision/index.md` if it is a top-level entry.
+4. Append `conifervision/log.md` on ingest/lint.
+
+## After vault edits
+
+```bash
+make okf-lint          # check conformance
+make okf-lint FIX=1    # apply safe frontmatter fixes
+make build-wiki-docker # verify Quartz still builds
+```
+
+Optional OKF graph (reference agent from Google knowledge-catalog): clone `okf/` and run `reference_agent visualize --bundle conifervision`.

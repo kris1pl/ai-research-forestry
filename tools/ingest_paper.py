@@ -22,9 +22,13 @@ drone orthophoto, CHM, tree detection, DINOv3 species classification).
 
 Output a single markdown file with YAML frontmatter. Rules:
 - Language: English
-- type: source, status: active
-- Include: title, tags, updated (today's date YYYY-MM-DD), source_file, authors, year
-- Optional: replication_status, related_methods (list of methods/... paths)
+- OKF v0.2 concept document (see AGENTS.md)
+- type: Source (Title Case OKF domain type)
+- status: stable (not "active")
+- description: one-line summary
+- generated: { by: agent:ingest/gemini-3.5-flash, at: ISO8601 UTC }
+- sources: list with at least one entry: { id, resource: raw/papers/..., title, last_modified if known }
+- Include: title, tags, updated, source_file, authors, year, replication_status, related_methods
 - Sections: Summary, Key claims, Implications for our pipeline, Replication pseudocode
   (Prerequisites, Procedure in a ```text block, Gaps), Quotes, Related pages
 - Wikilinks: [[methods/...]], [[concepts/...]], [[project/pipeline-overview]]

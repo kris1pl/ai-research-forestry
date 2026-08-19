@@ -79,6 +79,29 @@ Example prompts:
 - *“Query: what does the wiki say about merging local maxima with CHM detections?”*
 - *“Lint the wiki against `conifervision/project/pipeline-overview.md`.”*
 
+### 5. Codzienna praca z wiki (quick reference)
+
+```bash
+# Ingest nowego paperu (podgląd → zapis)
+make ingest-paper FILE=raw/papers/foo.pdf
+make ingest-paper FILE=raw/papers/foo.pdf WRITE=1
+
+# OKF lint — sprawdź / napraw frontmatter
+make okf-lint
+make okf-lint FIX=1
+
+# Podgląd strony
+make serve-wiki
+
+# Build (CI / lokalnie)
+make build-wiki-docker
+
+# Deploy na GCP (ręcznie, normalnie robi CI)
+make deploy-wiki-gcp
+```
+
+Szczegóły OKF: [`.cursor/rules/100-okf-standards.mdc`](.cursor/rules/100-okf-standards.mdc) · [`tools/README.md`](tools/README.md#okf-open-knowledge-format-v02) · [`AGENTS.md`](AGENTS.md#frontmatter-yaml--okf-v02)
+
 ## Publikacja (GCP + IAP — prywatna)
 
 Wiki jest dostępna **tylko** po zalogowaniu Google:

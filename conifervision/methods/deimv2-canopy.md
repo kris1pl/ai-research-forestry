@@ -1,11 +1,14 @@
 ---
 title: DEIMv2 — canopy detection
-type: method
+type: Method
+description: "Tree detection with DEIMv2 on multiple CHM height layers (small vs large trees)."
 tags: [deimv2, detection, ai]
-status: active
+status: stable
 updated: 2026-06-03
+generated:
+  by: agent:conifervision-wiki
+  at: 2026-06-03T12:00:00Z
 ---
-
 # DEIMv2
 
 Tree detection with **DEIMv2** on multiple CHM height layers (small vs large trees).

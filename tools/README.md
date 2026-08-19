@@ -107,3 +107,14 @@ Bez `WRITE=1` wypisuje markdown na stdout (podgląd). Z `WRITE=1` skrypt **autom
 # tylko odśwież wiki z istniejącej strony source (bez ponownego LLM na PDF)
 make ingest-paper FILE=raw/papers/2405.15613v2.pdf WRITE=1 WIKI_ONLY=conifervision/sources/vo-2024-automatic-data-curation.md
 ```
+
+## OKF (Open Knowledge Format v0.2)
+
+Vault `conifervision/` jest bundle OKF zgodnym ze [specyfikacją Google](https://github.com/GoogleCloudPlatform/knowledge-catalog/tree/main/okf). Kontrakt domenowy: `AGENTS.md`, reguła Cursor: `.cursor/rules/100-okf-standards.mdc`.
+
+```bash
+make okf-lint          # walidacja frontmatter, indexów, log.md
+make okf-lint FIX=1    # auto-fix: status, generated, description, typy Title Case
+```
+
+Lint sprawdza m.in. `okf_version` w root `index.md`, brak frontmatter w `log.md` i `*/index.md`, wymagane `type` + zalecane `generated`/`description` na conceptach.

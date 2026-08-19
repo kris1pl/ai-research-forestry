@@ -1,13 +1,17 @@
 ---
 title: "{{title}}"
-type: experiment
+type: Experiment
 tags: []
-status: candidate
+status: draft
 updated: {{date}}
+description: ""
 area:
 hypothesis:
 metrics: {}
 sources: []
+generated:
+  by: agent:conifervision-wiki
+  at: {{date}}T12:00:00Z
 ---
 
 # {{title}}

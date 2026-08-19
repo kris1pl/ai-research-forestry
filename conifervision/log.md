@@ -1,11 +1,3 @@
----
-title: Log
-type: project
-tags: [meta]
-status: active
-updated: 2026-06-09
----
-
 # Wiki log
 
 Chronological record of ingest, query, and lint operations.
@@ -20,12 +12,12 @@ Chronological record of ingest, query, and lint operations.
 
 - Source: `raw/papers/remotesensing-16-01849-v2.pdf`
 - Added [[sources/miao-zhang-2024-ptc-uav-species]], [[concepts/pseudo-tree-crown]]
-- Updated [[methods/dinov3-classification]], [[project/pipeline-overview]], [[index]], [[methods/_index]]
+- Updated [[methods/dinov3-classification]], [[project/pipeline-overview]], [[index]], [[methods/index]]
 
 ## [2026-06-03] init | repo bootstrap
 
 - Created LLM Wiki repository skeleton (vault `conifervision/`, Quartz, AGENTS.md).
-- Seed: [[project/pipeline-overview]], [[methods/_index]].
+- Seed: [[project/pipeline-overview]], [[methods/index]].
 
 ## [2026-06-03] i18n | English as primary language
 

@@ -1,9 +1,13 @@
 ---
 title: DINOv3 — species classification
-type: method
+type: Method
+description: "1. Object detection with DINOv3, crops, feature vectors."
 tags: [dinov3, classification, weak-labels, orthophoto, species]
-status: active
+status: stable
 updated: 2026-06-09
+generated:
+  by: agent:conifervision-wiki
+  at: 2026-06-09T12:00:00Z
 related_methods:
   - methods/merge-detections
 sources:

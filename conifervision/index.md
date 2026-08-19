@@ -1,12 +1,6 @@
 ---
-title: Conifervision Research Wiki
-description: Knowledge base for forest area analysis methodology
-type: project
-tags: [index]
-status: active
-updated: 2026-06-09
+okf_version: "0.2"
 ---
-
 # Conifervision Research Wiki
 
 Compiled team knowledge on tree detection and classification methodology (drones, CHM, AI models, weak labels). Maintained by an LLM agent per `AGENTS.md` at the repository root.
@@ -19,7 +13,7 @@ Compiled team knowledge on tree detection and classification methodology (drones
 
 ## Pipeline methods
 
-- [[methods/_index]] — methods index
+- [[methods/index]] — methods index (OKF progressive disclosure)
 
 ## Concepts
 

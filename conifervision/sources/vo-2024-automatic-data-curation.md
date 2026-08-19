@@ -1,9 +1,13 @@
 ---
 title: "Automatic Data Curation for Self-Supervised Learning: A Clustering-Based Approach"
-type: source
+type: Source
+description: "Citation: Vo, H. V., Khalidov, V., Darcet, T., et al. (2024). Automatic Data Curation for Self-Supervised Learning: A Clustering-Based Approach. arXiv:2405.15613v2. Code: [facebookresearch/ssl-data-c…"
 tags: [data-curation, clustering, self-supervised-learning, weak-labels, satellite-imagery]
-status: active
+status: stable
 updated: 2026-06-09
+generated:
+  by: agent:conifervision-wiki
+  at: 2026-06-09T12:00:00Z
 replication_status: partial
 source_file: raw/papers/2405.15613v2.pdf
 authors: [Huy V. Vo, Vasil Khalidov, Timothée Darcet, Théo Moutakanni, Nikita Smetanin, Marc Szafraniec, Hugo Touvron, Camille Couprie, Maxime Oquab, Armand Joulin, Hervé Jégou, Patrick Labatut, Piotr Bojanowski]
@@ -11,7 +15,6 @@ year: 2024
 related_methods:
   - methods/dinov3-classification
 ---
-
 # Vo et al. (2024) — Automatic SSL data curation (hierarchical k-means)
 
 **Citation:** Vo, H. V., Khalidov, V., Darcet, T., et al. (2024). Automatic Data Curation for Self-Supervised Learning: A Clustering-Based Approach. arXiv:2405.15613v2. Code: [facebookresearch/ssl-data-curation](https://github.com/facebookresearch/ssl-data-curation)

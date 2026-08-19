@@ -1,9 +1,13 @@
 ---
 title: Detection merge
-type: method
+type: Method
+description: "Combine detections from local-maxima and the CHM/DEIMv2 path into a final tree set per AREA."
 tags: [merge, nms, detection]
-status: active
+status: stable
 updated: 2026-06-05
+generated:
+  by: agent:conifervision-wiki
+  at: 2026-06-05T12:00:00Z
 related_methods:
   - methods/local-maxima
   - methods/chm-detection
@@ -11,7 +15,6 @@ related_methods:
 sources:
   - sources/popescu-wynne-2004-seeing-the-trees
 ---
-
 # Merge local maxima + CHM
 
 Combine detections from [[local-maxima]] and the CHM/DEIMv2 path into a final tree set per AREA.

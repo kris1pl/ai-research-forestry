@@ -1,11 +1,14 @@
 ---
 title: Production code repo integration (TODO)
-type: project
+type: Project
+description: "Status: not started. The production pipeline codebase lives in a separate, advanced Git repository (another folder). This research repo (ai-research-forestry) is intentionally standalone for now."
 tags: [todo, integration]
-status: active
+status: stable
 updated: 2026-06-03
+generated:
+  by: agent:conifervision-wiki
+  at: 2026-06-03T12:00:00Z
 ---
-
 # Production code repository — integration (TODO)
 
 **Status:** not started. The production pipeline codebase lives in a **separate, advanced Git repository** (another folder). This research repo (`ai-research-forestry`) is intentionally standalone for now.

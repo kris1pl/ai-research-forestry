@@ -1,12 +1,21 @@
 ---
 title: "{{title}}"
-type: source
+type: Source
 tags: []
-status: active
+status: stable
 updated: {{date}}
+description: ""
 source_file: raw/papers/...
 authors: []
 year:
+replication_status: partial
+generated:
+  by: agent:ingest/gemini-3.5-flash
+  at: {{date}}T12:00:00Z
+sources:
+  - id: primary
+    resource: raw/papers/...
+    title: "{{title}}"
 ---
 
 # {{title}}
@@ -18,8 +27,6 @@ year:
 ## Implications for our pipeline
 
 ## Replication pseudocode
-
-<!-- Include when the paper gives a reproducible procedure; otherwise state why not -->
 
 ### Prerequisites
 

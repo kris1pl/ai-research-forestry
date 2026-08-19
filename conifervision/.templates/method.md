@@ -1,9 +1,13 @@
 ---
 title: "{{title}}"
-type: method
+type: Method
 tags: []
-status: active
+status: stable
 updated: {{date}}
+description: ""
+generated:
+  by: agent:conifervision-wiki
+  at: {{date}}T12:00:00Z
 related_methods: []
 sources: []
 ---
@@ -18,7 +22,7 @@ sources: []
 
 ## Replication notes
 
-<!-- Link to sources/…#Replication pseudocode; short mapping table; no full pseudocode duplicate -->
+<!-- Link to /sources/…#Replication pseudocode; short mapping table; no full pseudocode duplicate -->
 
 ## Production parameters
 

@@ -1,15 +1,18 @@
 ---
 title: Pseudo tree crown (PTC)
-type: concept
+type: Concept
+description: "A synthetic side/3D view of an individual tree crown generated from a nadir UAV (or aerial) patch, used as classifier input instead of a conventional top-down crop. Introduced by Miao et al. (2024) t…"
 tags: [ptc, uav, orthophoto, species-classification, deep-learning]
-status: active
+status: stable
 updated: 2026-06-03
+generated:
+  by: agent:conifervision-wiki
+  at: 2026-06-03T12:00:00Z
 related_methods:
   - methods/dinov3-classification
 sources:
   - sources/miao-zhang-2024-ptc-uav-species
 ---
-
 # Pseudo tree crown (PTC)
 
 A **synthetic side/3D view** of an individual tree crown generated from a **nadir** UAV (or aerial) patch, used as classifier input instead of a conventional top-down crop. Introduced by Miao et al. (2024) to increase feature contrast for CNN-based **individual tree species** classification.

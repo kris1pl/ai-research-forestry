@@ -1,6 +1,7 @@
 ---
 title: Miao et al. (2024) — Pseudo tree crown (PTC) for UAV individual tree species classification
-type: source
+type: Source
+description: "Citation: Miao, S.; Zhang, K.; Zeng, H.; Liu, J. Improving Artificial-Intelligence-Based Individual Tree Species Classification Using Pseudo Tree Crown Derived from Unmanned Aerial Vehicle Imagery. *…"
 tags:
   - uav
   - orthophoto
@@ -10,8 +11,11 @@ tags:
   - pytorch
   - urban-trees
   - 3d
-status: active
+status: stable
 updated: 2026-06-03
+generated:
+  by: agent:conifervision-wiki
+  at: 2026-06-03T12:00:00Z
 replication_status: partial
 source_file: raw/papers/remotesensing-16-01849-v2.pdf
 authors:
@@ -24,7 +28,6 @@ related_methods:
   - methods/dinov3-classification
 sources: []
 ---
-
 # Miao et al. (2024) — PTC from UAV imagery for individual tree species classification
 
 **Citation:** Miao, S.; Zhang, K.; Zeng, H.; Liu, J. Improving Artificial-Intelligence-Based Individual Tree Species Classification Using Pseudo Tree Crown Derived from Unmanned Aerial Vehicle Imagery. *Remote Sensing* **2024**, *16*, 1849. DOI: [10.3390/rs16111849](https://doi.org/10.3390/rs16111849)

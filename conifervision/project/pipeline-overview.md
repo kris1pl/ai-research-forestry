@@ -1,9 +1,13 @@
 ---
 title: Pipeline overview
-type: project
+type: Project
+description: "Status: reference description — update whenever production methodology changes. Lint compares this page against code and methods/ pages."
 tags: [pipeline, production]
-status: active
+status: stable
 updated: 2026-06-03
+generated:
+  by: agent:conifervision-wiki
+  at: 2026-06-03T12:00:00Z
 related_methods:
   - methods/local-maxima
   - methods/chm-detection
@@ -11,7 +15,6 @@ related_methods:
   - methods/merge-detections
   - methods/dinov3-classification
 ---
-
 # Forest area analysis pipeline (AREA)
 
 **Status:** reference description — update whenever production methodology changes. Lint compares this page against code and `methods/` pages.

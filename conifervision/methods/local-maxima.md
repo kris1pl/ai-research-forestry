@@ -1,16 +1,19 @@
 ---
 title: Local maxima (sliding window)
-type: method
+type: Method
+description: "Detect tree tops from a 3D surface or CHM using local maximum (LM) filtering with a sliding / variable-size window to estimate height and support tree detection."
 tags: [detection, height, 3d, local-maxima]
-status: active
+status: stable
 updated: 2026-06-05
+generated:
+  by: agent:conifervision-wiki
+  at: 2026-06-05T12:00:00Z
 related_methods:
   - methods/chm-detection
   - methods/merge-detections
 sources:
   - sources/popescu-wynne-2004-seeing-the-trees
 ---
-
 # Local maxima
 
 Detect tree tops from a 3D surface or **CHM** using **local maximum (LM) filtering** with a **sliding / variable-size window** to estimate height and support tree detection.

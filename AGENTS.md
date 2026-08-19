@@ -45,29 +45,43 @@ The wiki **compiles** knowledge from PDFs, web articles, and experiment results 
 
 Templates: `conifervision/.templates/`.
 
-## Frontmatter (YAML)
+## Frontmatter (YAML) — OKF v0.2
 
-Required on every wiki page:
+`conifervision/` is an [Open Knowledge Format (OKF) v0.2](https://github.com/GoogleCloudPlatform/knowledge-catalog/tree/main/okf) bundle. Every **concept** `.md` (all files except reserved `index.md` / `log.md`) MUST have parseable YAML frontmatter with at least:
 
 ```yaml
 ---
+type: Method | Concept | Source | Project | Experiment
 title: "Human-readable title (English)"
-type: method | concept | experiment | source | project
+description: "One-line summary"
 tags: [tag1, tag2]
-status: active | candidate | superseded | draft
-updated: YYYY-MM-DD
+status: draft | stable | deprecated
+generated:
+  by: agent:ingest/gemini-3.5-flash   # or human:<name>
+  at: 2026-06-09T12:00:00Z
 ---
 ```
 
-Optional:
+**Reserved files (OKF):**
 
-- `area` — AREA identifier
-- `related_methods` — method slugs
-- `sources` — list of `sources/slug`
-- `metrics` — object (e.g. `f1`, `dataset`)
-- `hypothesis`, `source_file`, `authors`, `year` — by type
+| File | Frontmatter |
+|------|-------------|
+| `conifervision/index.md` | **Only** `okf_version: "0.2"` |
+| `conifervision/log.md` | None |
+| `conifervision/*/index.md` | None — directory listing for progressive disclosure |
 
-Pages with `status: draft` are skipped by Quartz (`RemoveDrafts`).
+**Domain extensions** (optional, keep for forestry wiki):
+
+- `updated: YYYY-MM-DD` — last touch date (legacy; prefer `generated.at`)
+- `area`, `related_methods`, `sources` (OKF provenance list), `metrics`, `hypothesis`, `source_file`, `authors`, `year`, `replication_status`
+
+**Status:** use OKF lifecycle — `stable` (was `active`), `draft`, `deprecated` (was `superseded`). Pages with `status: draft` or `draft: true` are skipped by Quartz.
+
+**Links:** prefer OKF bundle-relative `[text](/methods/slug.md)` in new content; existing `[[wikilinks]]` remain valid for Obsidian/Quartz.
+
+**Lint:** `make okf-lint` (see `.cursor/rules/100-okf-standards.mdc`).
+
+Concept ID = path relative to `conifervision/` without `.md`.
 
 ## Link conventions
 
