@@ -4,10 +4,10 @@ type: Method
 description: "Tree detection with DEIMv2 on multiple CHM height layers (small vs large trees)."
 tags: [deimv2, detection, ai]
 status: stable
-updated: 2026-06-03
-generated:
-  by: agent:conifervision-wiki
-  at: 2026-06-03T12:00:00Z
+updated: 2026-08-19
+P26-08-19T12:00:00Z
+sources:
+  - sources/paper-deimv2
 ---
 # DEIMv2
 
@@ -28,3 +28,7 @@ No replication pseudocode from [[sources/popescu-wynne-2004-seeing-the-trees]] â
 ## Literature / sources
 
 _(after ingest)_
+
+## Open questions from literature
+
+- How does the latency of DEIMv2-S or DEIMv2-M scale on edge hardware (e.g., NVIDIA Jetson) when optimized with TensorRT?

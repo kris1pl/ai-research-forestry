@@ -4,14 +4,13 @@ type: Method
 description: "1. Object detection with DINOv3, crops, feature vectors."
 tags: [dinov3, classification, weak-labels, orthophoto, species]
 status: stable
-updated: 2026-06-09
-generated:
-  by: agent:conifervision-wiki
-  at: 2026-06-09T12:00:00Z
+updated: 2026-08-19
+P26-08-19T12:00:00Z
 related_methods:
   - methods/merge-detections
 sources:
   - sources/miao-zhang-2024-ptc-uav-species
+  - sources/paper-deimv2
   - sources/vo-2024-automatic-data-curation
 ---
 # DINOv3 classification
@@ -40,7 +39,10 @@ Stage 3 in [[project/pipeline-overview]] — runs on per-tree crops after detect
 | ResNet50 64×64, 50 epochs | DINOv3 pipeline (architecture TBD in code repo) |
 | Field-validated species labels | Ground truth + weak labels (Delta Lake) |
 | Hierarchical k-means curation (Vo 2024) | **Not used** — we use plain clustering for weak labels; candidate improvement |
+| DINOv3 feature extraction | aligned |
 
+
+Pseudocode: [[sources/paper-deimv2#Replication pseudocode]].
 Full PTC pseudocode: [[sources/miao-zhang-2024-ptc-uav-species#Replication pseudocode]]. **Replication focus for us:** only the *idea* of non-nadir patch views until we run an internal A/B.
 
 ## Production parameters
@@ -59,3 +61,4 @@ _(model version, crop size, augmentations — link when code repo integrated)_
 - Can we adapt hierarchical k-means with resampling to balance highly skewed species distributions in our weak-label generation pipeline?
 - Can we adapt the hierarchical k-means + resampling pipeline to balance our weak-label species pools in Delta Lake?
 - Can we use hierarchical k-means with resampling to resolve the dominant-species cluster splitting issue in our weak-label generation pipeline?
+- Can we share a single DINOv3 backbone instance between the DEIMv2 detector and the downstream species classifier to minimize redundant forward passes?
