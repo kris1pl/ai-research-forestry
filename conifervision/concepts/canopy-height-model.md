@@ -5,7 +5,9 @@ description: "Normalized height of vegetation above ground: CHM = surface model 
 tags: [chm, dtm, dsm, lidar, height]
 status: stable
 updated: 2026-08-20
-P26-08-20T12:00:00Z
+generated:
+  by: agent:conifervision-wiki
+  at: 2026-08-20T12:00:00Z
 related_methods:
   - methods/chm-detection
   - methods/local-maxima

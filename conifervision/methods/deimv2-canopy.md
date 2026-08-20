@@ -5,16 +5,14 @@ description: "Tree detection with DEIMv2 on multiple CHM height layers (small vs
 tags: [deimv2, detection, ai]
 status: stable
 updated: 2026-08-20
-P26-08-19T12:00:00Z
+generated:
+  by: agent:conifervision-wiki
+  at: 2026-08-20T12:00:00Z
 sources:
   - sources/paper-edgecrafter
   - sources/paper-deimv2
   - sources/paper-fine-tuning_matters_and_parallel_decoder_helps
   - sources/paper-fsod-vfm
-P26-08-20T12:00:00Z
-generated:
-  by: agent:conifervision-wiki
-  at: 2026-08-20T12:00:00Z
 ---
 # DEIMv2
 

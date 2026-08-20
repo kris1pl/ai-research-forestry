@@ -5,7 +5,9 @@ description: "A synthetic side/3D view of an individual tree crown generated fro
 tags: [ptc, uav, orthophoto, species-classification, deep-learning]
 status: stable
 updated: 2026-08-20
-P26-08-20T12:00:00Z
+generated:
+  by: agent:conifervision-wiki
+  at: 2026-08-20T12:00:00Z
 related_methods:
   - methods/dinov3-classification
 sources:

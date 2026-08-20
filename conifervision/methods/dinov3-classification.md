@@ -5,7 +5,9 @@ description: "1. Object detection with DINOv3, crops, feature vectors."
 tags: [dinov3, classification, weak-labels, orthophoto, species]
 status: stable
 updated: 2026-08-20
-P26-08-19T12:00:00Z
+generated:
+  by: agent:conifervision-wiki
+  at: 2026-08-20T12:00:00Z
 related_methods:
   - methods/merge-detections
 sources:
@@ -16,8 +18,6 @@ sources:
   - sources/paper-fine-tuning_matters_and_parallel_decoder_helps
   - sources/paper-fsod-vfm
   - sources/paper-linguistic_guided_image_diffusion_model_for_tree_species_generation
-P26-08-20T12:00:00Z
-P26-08-20T12:00:00Z
 ---
 # DINOv3 classification
 

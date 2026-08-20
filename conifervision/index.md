@@ -1,9 +1,5 @@
 ---
 okf_version: "0.2"
-updated: 2026-08-20
-P26-08-20T12:00:00Z
-P26-08-20T12:00:00Z
-P26-08-20T12:00:00Z
 ---
 # Conifervision Research Wiki
 

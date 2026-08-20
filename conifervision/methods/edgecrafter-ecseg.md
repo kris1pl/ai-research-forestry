@@ -5,11 +5,12 @@ description: "Instance segmentation layer based on EdgeCrafter (ECSeg) for tree 
 tags: [edgecrafter, ecseg, instance-segmentation, detection, rgb]
 status: draft
 updated: 2026-08-20
-P26-08-20T12:00:00Z
+generated:
+  by: agent:conifervision-wiki
+  at: 2026-08-20T12:00:00Z
 related_methods:
   - methods/merge-detections
   - methods/deimv2-canopy
-sources: []
 sources:
   - sources/paper-edgecrafter
 ---

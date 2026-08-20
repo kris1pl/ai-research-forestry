@@ -79,10 +79,11 @@ def _bump_updated(text: str, today: str | None = None) -> str:
         fm = re.sub(r"^updated:\s*.*$", f"updated: {today}", fm, count=1, flags=re.M)
     else:
         fm = fm.rstrip() + f"\nupdated: {today}"
+    # Use \g<1> — plain \1 before a digit is parsed as octal (e.g. \12026 → "P26…")
     if re.search(r"^generated:\s*$", fm, re.M):
         fm = re.sub(
             r"(^generated:\s*\n(?:  .+\n)*?  at:\s*).+$",
-            rf"\1{iso_generated_at(today)}",
+            rf"\g<1>{iso_generated_at(today)}",
             fm,
             count=1,
             flags=re.M,

@@ -5,7 +5,9 @@ description: "CHM from the 3D model and ground model (laser / DTM). Object detec
 tags: [chm, lidar, detection]
 status: stable
 updated: 2026-08-20
-P26-08-20T12:00:00Z
+generated:
+  by: agent:conifervision-wiki
+  at: 2026-08-20T12:00:00Z
 related_methods:
   - methods/deimv2-canopy
   - methods/local-maxima

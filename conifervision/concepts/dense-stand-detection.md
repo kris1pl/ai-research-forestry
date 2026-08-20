@@ -5,12 +5,13 @@ description: "Evaluation concept for tree detection in dense stands where crown 
 tags: [dense-stands, evaluation, detection, instance-segmentation, dense/open]
 status: draft
 updated: 2026-08-20
-P26-08-20T12:00:00Z
+generated:
+  by: agent:conifervision-wiki
+  at: 2026-08-20T12:00:00Z
 related_methods:
   - methods/merge-detections
   - methods/deimv2-canopy
   - methods/edgecrafter-ecseg
-sources: []
 sources:
   - sources/paper-fsod-vfm
 ---
