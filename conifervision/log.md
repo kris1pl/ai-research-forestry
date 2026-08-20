@@ -2,6 +2,36 @@
 
 Chronological record of ingest, query, and lint operations.
 
+## [2026-08-20] ingest | Yun (2026) — LGINet text-guided diffusion for tree species generation
+
+- Source: `raw/papers/Linguistic_guided_image_diffusion_model_for_tree_species_generation.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/paper-linguistic_guided_image_diffusion_model_for_tree_species_generation]]
+- Updated [[index]], [[methods/dinov3-classification]]
+
+## [2026-08-20] ingest | Marcozzi (2026) — TreeFlow conditional 3D tree generation
+
+- Source: `raw/papers/TreeFlow.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/paper-treeflow]]
+- Updated [[index]], [[methods/chm-detection]], [[concepts/canopy-height-model]], [[concepts/pseudo-tree-crown]]
+
+## [2026-08-20] ingest | Feng (2026) — FSOD-VFM few-shot detection & graph diffusion
+
+- Source: `raw/papers/FSOD-VFM.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/paper-fsod-vfm]]
+- Updated [[index]], [[methods/dinov3-classification]], [[methods/deimv2-canopy]], [[concepts/dense-stand-detection]]
+
+## [2026-08-20] ingest | Yu et al. (2026) — Hybrid Ensemble Decoder and progressive fine-tuning for cross-domain FSOD
+
+- Source: `raw/papers/Fine-Tuning_Matters_and_Parallel_Decoder_Helps.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/paper-fine-tuning_matters_and_parallel_decoder_helps]]
+- Updated [[index]], [[methods/deimv2-canopy]], [[methods/dinov3-classification]]
+
+## [2026-08-20] ingest | Liu et al. (2026) — EdgeCrafter compact ViTs for edge dense prediction
+
+- Source: `raw/papers/EdgeCrafter.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/paper-edgecrafter]]
+- Updated [[index]], [[methods/dinov3-classification]], [[methods/deimv2-canopy]], [[methods/edgecrafter-ecseg]]
+
 ## [2026-08-19] ingest | Huang et al. (2026) — DEIMv2 real-time object detection with DINOv3
 
 - Source: `raw/papers/deimv2.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)

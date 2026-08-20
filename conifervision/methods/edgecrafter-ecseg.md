@@ -4,16 +4,15 @@ type: Method
 description: "Instance segmentation layer based on EdgeCrafter (ECSeg) for tree crown instances, designed to improve dense-stand separation and fusion."
 tags: [edgecrafter, ecseg, instance-segmentation, detection, rgb]
 status: draft
-updated: 2026-08-19
-generated:
-  by: agent:conifervision-wiki
-  at: 2026-08-19T12:00:00Z
+updated: 2026-08-20
+P26-08-20T12:00:00Z
 related_methods:
   - methods/merge-detections
   - methods/deimv2-canopy
 sources: []
+sources:
+  - sources/paper-edgecrafter
 ---
-
 # EdgeCrafter ECSeg
 
 Instance segmentation layer (ECSeg) intended as the main ROI provider for an ensemble tree detector, especially in dense stands where bbox-centric NMS can suppress true neighboring trees.
@@ -55,3 +54,6 @@ TBD:
 - `[[concepts/dense-stand-detection]]`
 - `[[methods/merge-detections]]`
 
+## Open questions from literature
+
+- Does the detection-distilled representation from ECDet transfer to tree crown instance segmentation (ECSeg) in dense stands without requiring separate backbone pretraining?

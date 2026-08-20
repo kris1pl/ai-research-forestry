@@ -4,17 +4,16 @@ type: Concept
 description: "Evaluation concept for tree detection in dense stands where crown overlap breaks bbox-centric NMS and segmentation boundaries drive errors."
 tags: [dense-stands, evaluation, detection, instance-segmentation, dense/open]
 status: draft
-updated: 2026-08-19
-generated:
-  by: agent:conifervision-wiki
-  at: 2026-08-19T12:00:00Z
+updated: 2026-08-20
+P26-08-20T12:00:00Z
 related_methods:
   - methods/merge-detections
   - methods/deimv2-canopy
   - methods/edgecrafter-ecseg
 sources: []
+sources:
+  - sources/paper-fsod-vfm
 ---
-
 # Dense stand detection (before clearing)
 
 This concept defines how we should evaluate (and eventually improve) tree detection in dense stands (for example, before clearing), where crown overlap and connected topology create failure modes that differ from sparse plots.
@@ -69,3 +68,6 @@ TBD:
 - `[[methods/merge-detections]]`
 - `[[methods/edgecrafter-ecseg]]`
 
+## Open questions from literature
+
+- Does applying a PageRank-style graph diffusion process over SAM2 mask overlaps help resolve boundary-level under-segmentation and duplicate detections in dense conifer stands?

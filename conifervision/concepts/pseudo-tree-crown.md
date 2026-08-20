@@ -4,13 +4,12 @@ type: Concept
 description: "A synthetic side/3D view of an individual tree crown generated from a nadir UAV (or aerial) patch, used as classifier input instead of a conventional top-down crop. Introduced by Miao et al. (2024) t…"
 tags: [ptc, uav, orthophoto, species-classification, deep-learning]
 status: stable
-updated: 2026-06-03
-generated:
-  by: agent:conifervision-wiki
-  at: 2026-06-03T12:00:00Z
+updated: 2026-08-20
+P26-08-20T12:00:00Z
 related_methods:
   - methods/dinov3-classification
 sources:
+  - sources/paper-treeflow
   - sources/miao-zhang-2024-ptc-uav-species
 ---
 # Pseudo tree crown (PTC)
@@ -49,3 +48,7 @@ Procedure summary: [[sources/miao-zhang-2024-ptc-uav-species#Replication pseudoc
 
 - [[methods/dinov3-classification]]
 - [[sources/miao-zhang-2024-ptc-uav-species]]
+
+## Open questions from literature
+
+- Does training species classifiers on features extracted from TreeFlow-generated 3D point clouds outperform classifiers trained on 2D pseudo tree crowns (PTC)?

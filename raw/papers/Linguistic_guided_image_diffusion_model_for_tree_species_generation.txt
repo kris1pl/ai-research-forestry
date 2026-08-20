@@ -1,0 +1,2111 @@
+LGINet: Linguistic guided image diffusion model for tree species generation 
+and identification from aerial imagery
+Ting Yun a,b,†, Gehui Weng b,†, Ruisheng Wang c, Yuntang Li d, Markus P. Eichhorn e,  
+Huaiqing Zhang f,*
+a Co-Innovation Center for Sustainable Forestry in Southern China, Nanjing Forestry University, Nanjing 210037, China
+b School of Information Science and Technology & School of Artificial Intelligence, Nanjing Forestry University, Nanjing 210037, China
+c School of Architecture & Urban Planning, Shenzhen University, Shenzhen 515100, China
+d School of Mechanical and Electrical Engineering, China Jiliang University, Hangzhou 310000, China
+e School of Biological, Earth and Environmental Sciences, University College Cork, Distillery Fields, North Mall, Cork T23 N73K, Ireland
+f Research Institute of Forest Resources Information Techniques, Chinese Academy of Forestry, Beijing 100091, China
+A R T I C L E  I N F O
+Keywords:
+Semantic imagery fusion
+Diffusion model
+Tree species identification
+Multimodal deep learning network
+A B S T R A C T
+A key challenge in applying AI to forest monitoring is tree species identification, hindered by complex visual 
+variations and limited data of tree canopies. Moreover, AI-assisted recognition frameworks that effectively 
+integrate large language models with human knowledge bases in forestry have not yet been fully established. 
+Against this background, this study introduces linguistic guided image diffusion model (LGINet), a framework 
+integrating textually guided image generation with tree species detection to enhance forest applications through 
+technological synergy. The framework comprises three key methodological components: (1) A module designed 
+to leverage detailed textual descriptions specific to forest environments, incorporating elements such as species 
+traits, spatial layout, and phenological features. It generates text embeddings that are semantically aligned with 
+forest knowledge. (2) An innovative diffusion-based framework integrates an improved U-Net architecture with 
+Markov chain theory and textual semantic embeddings, fusing noisy images with forest-specific linguistic se­
+mantics to generate highly realistic aerial tree images. (3) An optimized detection pipeline utilizing the generated 
+images, based on an enhanced YOLOv11 architecture with a context-aware feature extractor and adaptive anchor 
+scaling, enabling efficient, large-scale tree crown detection and species identification. Experimental evaluations 
+validate the efficacy of the proposed framework, with the image generation module achieving a Structural 
+Similarity Index (SSIM) of 0.94 and a Fr´echet Inception Distance (FID) score of 6.42, demonstrating exceptional 
+fidelity in synthetic output quality. Furthermore, the detection pipeline attained a mean Average Precision 
+(mAP50) of 0.868 in species identification tasks, consistently outperforming all baseline models across evalua­
+tion metrics. The integrated system improves capabilities of forest species detection by leveraging linguistic- 
+driven synthesis to generate high-fidelity forest imagery and tree species identification.
+1. Introduction
+Forest ecosystems are vital for global biodiversity, carbon seques­
+tration, and climate regulation, yet they face escalating threats from 
+deforestation, climate change, invasive species, and habitat fragmenta­
+tion [1]. Precise monitoring and species identification are essential for 
+advancing ecological conservation and sustainable forest management. 
+The complexity and diversity of forest ecosystems present significant 
+challenges for deep learning applications in forest, particularly due to 
+the scarcity of training samples. At present, multi-modal data fusion, 
+which integrates diverse data sources such as imagery, text semantics, 
+and ecological metadata to provide a more comprehensive representa­
+tion of specialized forest questions, is emerging as a key technical trend 
+and strategy for enhancing the accuracy and robustness of forest 
+monitoring systems.
+Although multimodal remote sensing approaches are increasingly 
+explored for forest monitoring, most current methods for tree species 
+identification remain reliant on discriminative features from RGB or 
+* Corresponding author.
+E-mail address: zhang@caf.ac.cn (H. Zhang). 
+† These authors are the co-first authors who contributed equally to this work.
+Contents lists available at ScienceDirect
+Information Fusion
+journal homepage: www.elsevier.com/locate/inffus
+https://doi.org/10.1016/j.inffus.2025.103912
+Received 29 June 2025; Received in revised form 25 October 2025; Accepted 2 November 2025  
+Information Fusion 129 (2026) 103912 
+Available online 7 November 2025 
+1566-2535/© 2025 Elsevier B.V. All rights are reserved, including those for text and data mining, AI training, and similar technologies. 
+
+
+hyperspectral imagery. Techniques such as YOLO [2], EfficientDet-D7 
+[3], Mask R-CNN [4], and Segment Anything [5] have been tailored to 
+address ecological complexity. However, their effectiveness is con­
+strained by a heavy dependence on labor-intensive annotations and 
+performance degradation under challenging conditions like illumination 
+changes, phenological shifts, and environmental variability. While some 
+studies have attempted to enhance robustness through multimodal 
+fusion (e.g., combining hyperspectral with aerial imagery [6] or inte­
+grating multispectral and aerial data [7]) , spectral-based approaches 
+still face inherent limitations. These include the "different canopy, same 
+spectrum" and "same canopy, different spectrum" phenomena caused by 
+inter-species similarity and intra-species variation, which complicate 
+accurate identification. A more fundamental limitation is the underuti­
+lization of linguistic information for auxiliary recognition, which re­
+mains largely unaddressed.
+Nevertheless, existing methods have yet to fully leverage large-scale 
+semantic repositories or exploit the rich descriptive capabilities inherent 
+in human language. Large Language Models (LLMs) [8] as core models 
+in natural language processing, are inherently capable of understanding 
+and generating natural language text by learning from vast text corpora. 
+By modeling probability distributions over word sequences, LLMs cap­
+ture linguistic patterns, structures, and semantic information, excelling 
+in a wide range of language tasks. Their strength lies in analyzing un­
+structured textual data, a capability that proves particularly valuable in 
+contexts requiring the distillation of actionable insights from diverse 
+linguistic sources. Pre-trained transformer architectures like BERT [9] 
+and its derivatives (e.g., SciBERT [10] for scientific literature, mBERT 
+[11] for multilingual tasks) represent foundational advancements in 
+natural language processing. Originally developed for general-purpose 
+language understanding, these models demonstrate remarkable capac­
+ity to process textual data through self-supervised learning on massive 
+corpora. Although LLMs have been widely applied across various in­
+dustries, their application in forest is still in its nascent stages. For 
+instance, recent works have begun exploring LLMs for forest applica­
+tions. ForestryBERT [12], a tailored BERT variant, addresses the dy­
+namic nature of forestry knowledge by pre-training on 204,636 Chinese 
+texts using a Dynamic Knowledge Absorption Mechanis. Despite their 
+transformative potential, LLMs face critical limitations in specialized 
+applications. 
+First, 
+domain-specific 
+technique 
+gaps 
+persist: 
+general-purpose models like BERT underperform in capturing special­
+ized forest knowledge due to their training on broad, non-specialized 
+corpora. Second, LLMs often exhibit poor interpretability [13], making 
+it challenging to trace the reasoning behind their outputs, which is 
+critical for reliable decision-making in forest. Third, deep reasoning in 
+forest-specific contexts is difficult: the reliance on general-purpose 
+corpora dilutes specialized, long-tail knowledge [14], and the lack of 
+modeling experience with domain-specific formats leads to distortions 
+or omissions of critical details when addressing complex forest 
+problems.
+On the other side, the scarcity of labeled training data in deep 
+learning applications has driven the adoption of generative models, 
+which have revolutionized data synthesis across various domains and 
+now offer transformative potential for forest and agriculture. These 
+models can be broadly classified into three main categories: Generative 
+Adversarial Networks (GANs) [15], Variational Autoencoders (VAEs) 
+[16], and Diffusion Models [17], each bringing distinct mechanisms and 
+applications to these fields. GANs, comprising a generator and 
+discriminator trained in an adversarial setting, remain pivotal for 
+dataset augmentation. In agriculture, GANs such as DCGAN [18] have 
+generated synthetic images of crop diseases, enabling robust training of 
+diagnostic models with limited real-world data. In forest, GANs have 
+been utilized to generate synthetic forest imagery, aiding in tasks such as 
+habitat mapping and species identification. However, GANs are prone to 
+mode collapse and training instability—issues that become particularly 
+pronounced in ecologically complex settings such as forests. The high 
+structural heterogeneity, occlusions, and varying illumination condi­
+tions challenge both the generator and discriminator: the generator may 
+fail to produce sufficiently diverse and realistic tree features, while the 
+discriminator can become overly sensitive to subtle textures and lighting 
+variations, disrupting the adversarial balance. This often leads to re­
+petitive or unrealistic synthetic outputs that inadequately represent the 
+true variability of forest environments. Variational Autoencoders (VAEs) 
+encode data into probabilistic latent spaces, enabling applications in 
+agriculture and forest through data-driven synthesis and cross-modal 
+generation [19]. In forest, they have been applied to generate syn­
+thetic tree crown images conditioned on annotated species labels, 
+thereby augmenting datasets for training deep learning classifiers [20]. 
+While advanced variants like β-VAE [21] and Conditional VAEs (CVAEs) 
+[22] offer potential for disentangling latent factors (e.g., seasonal vari­
+ations or light conditions), their direct application to simulating forest 
+growth dynamics or time-series canopy maps remains exploratory and 
+dependent on integration with ecological models or multimodal sensing 
+data. A key limitation of VAEs is their tendency toward 
+sharpness-fidelity trade-offs, often producing smoothed or blurry out­
+puts due to the variational approximation in the latent space. In forest 
+environments, this smoothing effect impairs the model’s ability to pre­
+serve fine-grained textural and morphological features that are critical 
+for species identification. For example, when distinguishing between 
+visually similar species such as Pinus sylvestris and Picea abies—which 
+differ subtly in crown shape, branching pattern, and bark textur­
+e—VAE-generated images may lack the high-frequency details necessary 
+to capture these discriminative characteristics, thereby reducing the 
+reliability of downstream classification tasks. Diffusion Models, partic­
+ularly Denoising Diffusion Probabilistic Models (DDPMs) [23] , have 
+recently excelled in high-fidelity forest scene generation. Unlike GANs, 
+which suffer from mode collapse and training instability, DDPMs itera­
+tively refine noise into structured botanical details, producing images 
+with precise leaf venation patterns and bark textures. In forest, DDPMs 
+simulate rare ecological events by conditioning generation on climato­
+logical variables (e.g., temperature anomalies, precipitation shifts). 
+Emerging methods that integrate linguistic and generative models, such 
+as Rsdiff [24], and multimodal frameworks like Versatile Diffusion [25], 
+demonstrate significant potential for efficient and semantically city 
+building detection and rich forest scene, though their application in this 
+domain faces further challenges and development space.
+To address these interconnected challenges of species diversity and 
+phenology, we propose a linguistic guided image diffusion network 
+(LGINet). This holistic framework synergistically integrates linguistic 
+semantics with diffusion models to generate realistic tree samples that 
+capture species-specific traits and seasonal phenological shifts, thereby 
+enhancing tree species identification in aerial imagery. LGINet achieves 
+three key objectives: (1) Developing a specialized semantic generation 
+library for forest text, leveraging optimized neural architectures and 
+integrating domain-specific corpora to construct a tailored forest lan­
+guage model. (2) A comprehensive review of the theoretical foundations 
+of diffusion probabilistic models is conducted, followed by the presen­
+tation of an enhanced forest tree species diffusion model. This model 
+integrates an improved U-Net-similar architecture and incorporates 
+guidance from a text-semantic network. (3) Leveraging these synthetic 
+images as training samples for effective tree crown detection and species 
+identification, powered by a customized YOLOv11 architecture opti­
+mized for large-scale forest monitoring.
+T. Yun et al.                                                                                                                                                                                                                                     
+Information Fusion 129 (2026) 103912 
+2 
+
+
+2. Materials and methods
+2.1. Data acquisition
+In this study, we employed a diverse set of image datasets to ensure 
+broad geographic, ecological, and phenological coverage for multimodal 
+forest analysis. The selected datasets include international and domestic 
+sources, supplemented by aerial imagery collected from publicly avail­
+able internet repositories. International datasets form the foundation of 
+our study. The Prue Forest Dataset [26] offers temperate urban forest 
+imagery with representative canopy structures, while the Quebec Trees 
+Dataset [27] provides high-resolution multi-seasonal imagery from 
+northern mixed forests, capturing pronounced phenological variations 
+across spring, summer, and fall conditions. Additionally, specialized 
+single-species datasets—Kolovai-Trees (coconut palms) and Larch_Ca­
+sebearer (larch) [28]—enhance the representation of specific tree 
+morphologies. For subtropical forest contexts, we incorporated two 
+Chinese datasets. The Zhongshan Scenic Area Canopy Inventory delivers 
+high-resolution drone imagery of a managed memorial landscape, while 
+the 
+Nanjing 
+Forestry 
+University 
+Arboretum 
+dataset 
+provides 
+multi-temporal observations of diverse woody species from 2018 to 
+2022. Furthermore, our training corpus was augmented with aerial 
+imagery of multiple tree species sourced from publicly available internet 
+databases, expanding the diversity of canopy architectures and envi­
+ronmental conditions. Table 1 summarizes key characteristics of the four 
+primary datasets, including species diversity, sample counts, class dis­
+tributions, spatial resolution, phenological diversity, and dominant tree 
+species.
+The linguistic dataset consists of 150 academic articles and forestry 
+reports (totaling approximately 1.2 million words), sourced from mul­
+tiple databases: Google Scholar (80 articles), Web of Science (50 peer- 
+reviewed studies on ecology and forestry), and China National Knowl­
+edge Infrastructure (20 reports focusing on subtropical forestry data in 
+China). Text data were retrieved through a combination of manual 
+searches and automated tools, including web scraping with Python li­
+braries such as BeautifulSoup and database API interactions using re­
+quests. Keywords included terms like "forest ecology," "tree species 
+classification," and "urban forestry." Results were filtered to publications 
+from 2015 to 2022 to ensure relevance and timeliness. The raw text data 
+underwent rigorous preprocessing to transform them into an analysis- 
+ready structured format. This included text cleaning with regular ex­
+pressions to remove HTML tags, special characters, and non-text ele­
+ments; tokenization into words and sentences using the NLTK library; 
+lowercasing and lemmatization with NLTK’s WordNetLemmatizer to 
+standardize terminology; and domain-specific processing to extract 
+forest-related terms, such as species names and phenological terminol­
+ogy, using a predefined vocabulary. The final text dataset was then 
+embedded using pre-trained language models, improving the inter­
+pretability of the diffusion model in the forest-specific context when 
+combined with image data.
+To construct a robust multimodal dataset, individual tree crown 
+images were first extracted from all source datasets and uniformly 
+resized to 32 × 32 × 3 pixels, a patch resolution chosen to strike a 
+balance between computational efficiency and the preservation of crit­
+ical details such as leaf texture, while remaining consistent with estab­
+lished benchmarks like DDPM on CIFAR-10. Each image subsequently 
+underwent a series of preprocessing operations to improve invariance 
+and generalizability. These included affine transformations (rotation, 
+horizontal flip) and radiometric adjustments (brightness and contrast 
+variation within ±30 %). Each processed image was paired with a 
+descriptive text annotation detailing acquisition angle, species classifi­
+cation, lighting condition, and phenological stage. The resulting multi­
+modal dataset encompasses a diverse set of tree species and was 
+partitioned into training, validation, and test subsets at a 7:2:1 ratio, 
+facilitating reproducible evaluation of model performance. Fig. 1 illus­
+trates approximately 30 representative species examples alongside their 
+textual descriptions. This integrated dataset supports the joint training 
+of a 2.2.2. Contrastive Language-Image Pre-training framework (CLIP)- 
+based vision–language encoder and a diffusion-based generator, 
+enabling effective cross-modal alignment between visual features and 
+ecological semantics for enhanced species detection in complex forest 
+environments.
+2.2. Textual semantic guided image generation via diffusion modeling in 
+LGINet
+This section describes the textual semantic-guided image generation 
+framework of LGINet, which integrates three core components: a 
+denoising diffusion process for learning image representations, a 
+contrastive language-image pre-training module inspired by the 
+Contrastive Language-Image Pre-training (CLIP) framework [29] for 
+cross-modal alignment, and an enhanced U-Net-based [30] noise pre­
+diction network conditioned on textual inputs. From random noise, the 
+model iteratively refines images using textual prompts to synthesize 
+photorealistic forest scenes with detailed botanical features, ensuring 
+ecological plausibility.
+2.2.1. Theoretical foundations of Markov chains for our diffusion model
+This subsection outlines the theoretical foundation of our proposed 
+framework as depicted in Fig. 2. The forward process involves pro­
+gressively injecting Gaussian noise into the input image Ii(x0) (where i 
+indexes the image in the batch) via a Markov chain mechanism. Over a 
+predefined number of timesteps T, this transforms the original data 
+distribution into an approximate standard normal distribution. 
+Conversely, the reverse process utilizes a learned neural network θ to 
+iteratively refine the noisy intermediate states. Starting from the ter­
+minal noise distribution, the network gradually reconstructs a high- 
+fidelity image by predicting and removing the noise. The trained 
+model parameters θ and the current timestep are used to generate a 
+clearer image at each previous step. a) Forward Diffusion Processes
+The forward process q(Ii(x1:T)|Ii(x0)) gradually transforms an orig­
+inal image Ii(x0) into standard normal distribution noise over T time­
+steps by adding Gaussian noise incrementally. Governed by the 
+conditional probability q(Ii(xt)|Ii(xt−1)) that follows a Gaussian distri­
+Table 1 
+Summary of datasets used in the study.
+Dataset name
+Number of 
+species
+Total 
+samples
+Per-Special 
+sample counts
+Spatial 
+resolution
+Seasonal and Phenological diversity
+Dominant tree species
+Prue Forest [26]
+18
+69,110
+~3893 average
+20 cm
+Low (single-season winter imagery 
+from January 2023)
+Deciduous oak, Evergreen oak, Beech, 
+Chestnut, Black locust, Maritime pine, Fir
+Quebec Trees 
+[27]
+14
+22,260
+1590 average
+1.81–2.02 cm
+High (multi-seasonal seven- 
+acquisition from spring to fall 2021)
+Balsam fir, Striped maple, Red maple, Paper 
+birch, American beach, Spruce
+Zhongshan 
+Scenic Area
+~50
+~5000
+~100 average
+5 cm
+Medium (some phenological variation 
+from seasonal flights)
+Cedrus deodara, Chamaecyparis obtuse, 
+Juniperus chinensis, Ginkgo biloba
+NJFU
+57
+1347
+~24 average
+2–5 cm
+High (multi-temporal from 
+2018–2022)
+Metasequoia, Juniperus chinensis, Platanus 
+hispanica, Ginkgo biloba
+T. Yun et al.                                                                                                                                                                                                                                     
+Information Fusion 129 (2026) 103912 
+3 
+
+
+bution, this transformation corresponds to the predefined noise sched­
+uling mechanism in diffusion models and can be represented by the 
+following equation: 
+Where Ii(x1:T) represents the sequence of images from Ii(x1) to Ii(xT)
+after noise has been added. Ii(xt) represents the image at time step t. We 
+can flatten Ii(xt) and εt ∈R32×32×3 ∼N(0, I) and then obtain Ii(xt) =
+̅̅̅̅̅̅̅̅̅̅̅̅
+1 −βt
+√
+Ii(xt−1) +
+̅̅̅̅
+βt
+√
+λεt =
+̅̅̅̅̅̅̅̅̅̅̅̅
+1 −βt
+√
+Ii(xt−1) +
+̅̅̅̅
+βt
+√εt 
+through 
+repar­
+ameterization. βt is a hyperparameter that governs the noise level at 
+each diffusion step. It is scheduled linearly using a specific equation to 
+increase from an initial value of β1 = 10−4 to a final value of βT = 0.02. 
+The formula for this linear scheduling is: βt = β1 + (βT −
+β1)⋅(t −
+1)/(T −
+1). λ ∈R3072×3072 represents an identity matrix with di­
+mensions corresponding to the flattened εt This ensures the noise 
+Fig. 1. A subset of our aerial tree imagery dataset, annotated with corresponding semantic information, including acquisition angle, species descriptions, illumi­
+nation conditions, and phenological traits, was used as training samples for the network.
+Fig. 2. The theoretical process for diffusion model of forward noise injection and reverse denoising applied to an image.
+q(Ii(x1:T)|Ii(x0)) =
+∏
+T
+t=1
+q(Ii(xt)|Ii(xt−1)) =
+∏
+T
+t=1
+1
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+(2π)n|βtλ|
+√
+exp
+(
+−1
+2
+(
+Ii(xt) −
+̅̅̅̅̅̅̅̅̅̅̅̅
+1 −βt
+√
+Ii(xt−1)
+)⊤
+(βtλ)−1(
+Ii(xt) −
+̅̅̅̅̅̅̅̅̅̅̅̅
+1 −βt
+√
+Ii(xt−1)
+))
+where, q(Ii(xt)|Ii(xt−1)) ∼N
+(
+Ii(xt);
+̅̅̅̅̅̅̅̅̅̅̅̅
+1 −βt
+√
+Ii(xt−1), βtλ
+)
+(1) 
+T. Yun et al.                                                                                                                                                                                                                                     
+Information Fusion 129 (2026) 103912 
+4 
+
+
+covariance matrix is diagonal, with each diagonal element being βt, 
+indicating identical variance across dimensions and uncorrelated noise 
+between them. n represents the image dimension, specifically 32 × 32 ×
+3. ⊤denotes the transpose of a matrix.
+The recursive nature of Ii(xt) allows it to be expressed further as: 
+The noise matrices εt, εt−1, εt−1, and ε are all standard normal 
+distributed noises. εt−1 represents the linear combination of two inde­
+pendent standard normal variables εt−1 and εt, with coefficients 
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+(1 −βt)βt−1
+√
+and 
+̅̅̅̅
+βt
+√
+, respectively. As these noise terms are indepen­
+dent, their combination is also normally distributed, with a mean of 
+0 and a variance of (1 −βt)βt−1 + βt, i.e. 1 −(1 −βt)(1 −βt−1). Based on 
+this recursive relationship, we can now derive the conditional proba­
+bility distributions, expressing the conditional probability q(Ii(xt)|Ii(x0))
+as a Gaussian distribution, as shown in Eq. (3). Similarly, we can express 
+the conditional probability q(Ii(xt−1)|Ii(x0)) as a Gaussian distribution, 
+as shown in Eq. (4). 
+q(Ii(xt)|Ii(x0)) ∼N
+(
+Ii(xt);
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+(1 −βt)
+√
+Ii(x0), 1 −(1 −βt)λ
+)
+(3) 
+q(Ii(xt−1)|Ii(x0)) ∼N
+(
+Ii(xt−1);
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+(1 −βt−1)
+√
+Ii(x0), 1 −(1 −βt−1)λ
+)
+(4) 
+b) Reverse Diffusion Processes
+The reverse process involves restoring clearer images from noisy 
+ones by incorporating textual semantic guidance, which is the inverse of 
+the forward process. The goal is to recover the original image from the 
+noisy image while aligning with linguistic semantics. In this process, the 
+model learns to progressively remove noise conditioned on text em­
+beddings y, ultimately restoring a clean image sample that matches the 
+semantic meaning of the text. This process can be represented by the 
+following equation: 
+pθ(Ii(xT:0)|y) = p(Ii(xT))
+∏
+T
+t=1
+pθ(Ii(xt−1)|Ii(xt), y), where, pθ(Ii(xt−1)|Ii(xt), y)
+∼N
+(
+xt−1; μθ(Ii(xt), t, y), σ2
+t λ
+)
+(5) 
+pθ(Ii(xT:0)|y) represents a joint probability distribution conditioned 
+on text embedding y, illustrating the process of gradually denoising from 
+a standard normally distributed noisy image Ii(xT) through model pa­
+rameters θ to generate a sequence of images Ii(xT−1), Ii(xT−2),…, Ii(x0). 
+Specifically, we would like to learn a parameterized conditional distri­
+bution p(Ii(xT)) is the initial condition for the entire reverse process, 
+defining the probability distribution of the noisy data. The conditional 
+probability distribution pθ(Ii(xt−1)|Ii(xt), y) represents the model’s pre­
+diction of the previous state Ii(xt−1) conditioned on both the current 
+noise state Ii(xt) and y. The mean value μθ(Ii(xt), t, y) indicates the pre­
+dicted transition from Ii(xt) to Ii(xt−1) under the guidance of y, while the 
+variance remains fixed at σ2
+t λ. c) Loss Function in Diffusion Models
+The ultimate goal of a diffusion model is for the learned distribution 
+pθ(Ii(xt−1)|Ii(xt), y) in the reverse denoising process to recover the orig­
+inal data Ii(x0) as faithfully as possible, which is equivalent to maxi­
+mizing the log-likelihood of the training data, logpθ(Ii(x0)|y). However, 
+directly computing logpθ(Ii(x0)|y) is intractable. Instead, we optimize its 
+variational lower bound and Jensen’s Inequality, as shown in Eq. (6). 
+The upper bound L of −logpθ(Ii(x0)|y) is the variational lower bound, 
+and the training objective of the diffusion model is to minimize this 
+upper bound. The detailed derivation of the final step of Eq. (6) is pro­
+vided in Appendix A.1. By individually applying the Kullback-Leibler 
+Divergence (DKL) [31]—which measures the difference between two 
+Ii(xt) =
+̅̅̅̅̅̅̅̅̅̅̅̅
+1 −βt
+√
+Ii(xt−1) +
+̅̅̅̅
+βt
+√
+εt =
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+(1 −βt)(1 −βt−1)
+√
+Ii(xt−2) +
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+(1 −βt)βt−1
+√
+εt−1 +
+̅̅̅̅
+βt
+√
+εt
+=
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+(1 −βt)(1 −βt−1)
+√
+Ii(xt−2) +
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+1 −(1 −βt)(1 −βt−1)
+√
+εt−1 = ⋅⋅⋅=
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+(1 −βt)
+√
+Ii(x0) +
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+1 −(1 −βt)
+√
+ε
+(2) 
+−logpθ(Ii(x0)|y) = −log
+∫
+pθ(Ii(xT:0)|y)dx1:T = −log
+∫
+q(Ii(x1:T)|Ii(x0))
+pθ(Ii(xT:0)|y)
+q(Ii(x1:T)|Ii(x0))dx1:T ≤−
+∫
+q(Ii(x1:T)|Ii(x0))log
+pθ(Ii(xT:0)|y)
+q(Ii(x1:T)|Ii(x0))dx1:T = L
+= Eq
+[
+−log
+pθ(Ii(xT:0)|y)
+q(Ii(x1:T)|Ii(x0))
+]
+= Eq
+⎡
+⎢⎢⎢⎣−log
+p(Ii(xT))
+∏
+T
+t=1
+pθ(Ii(xt−1)|Ii(xt), y)
+∏
+T
+t=1
+q(Ii(xt)|Ii(xt−1))
+⎤
+⎥⎥⎥⎦
+= Eq
+[
+−log
+p(Ii(xT))
+q(Ii(xT)|Ii(x0)) −
+∑
+T
+t=1
+log
+pθ(Ii(xt−1)|Ii(xt), y)
+q(Ii(xt−1)|Ii(xt), Ii(x0)) −logq(Ii(x0)|Ii(x1), Ii(x0))
+]
+(6) 
+T. Yun et al.                                                                                                                                                                                                                                     
+Information Fusion 129 (2026) 103912 
+5 
+
+
+probability distributions—to the first two terms on the right-hand side of 
+the last line in Eq. (6), we can further elaborate the equation as: 
+During the training process, items LT and L0 can be considered as a 
+constant and subsequently ignored, as lacks learnable parameters θ. The 
+item Lt−1 uses DKL to directly compare pθ(Ii(xt−1)|Ii(xt), y) against the 
+forward process posteriors q(Ii(xt−1)|Ii(xt), Ii(x0)). According to the 
+Markov property, Ii(xt−1) is conditionally independent of Ii(x0) when 
+Ii(xt) is given, these posteriors become tractable by incorporating Ii(x0)
+as conditional information through Bayesian formulation: 
+q(Ii(xt−1)|Ii(xt), Ii(x0)) ∼N(̃μt,̃βtλ)
+= q(Ii(xt)|Ii(xt−1), Ii(x0)) q(Ii(xt−1)|Ii(x0))
+q(Ii(xt)|Ii(x0))
+(8) 
+The mean ̃μt and variance ̃βt can be calculated based on the proba­
+bility density function. The detailed derivation process is outlined in 
+Appendix A.2. 
+̃μt =
+1
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+(1 −βt)
+√
+(
+Ii(xt) −
+βt
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+1 −(1 −βt)
+√
+ε
+)
+,̃βt = 1 −(1 −βt−1)
+1 −(1 −βt)
+βt
+(9) 
+Given two Gaussian distributions q(Ii(xt−1)|Ii(xt), Ii(x0)) ∼N(̃μt, ̃βtλ)
+and pθ(Ii(xt−1)|Ii(xt), y) ∼N
+(
+xt−1; μθ(Ii(xt), t, y), σ2
+t λ
+)
+, and by letting σ2
+t =
+̃βt, we can substitute them into the KL divergence formula, i.e., DKL
+(
+N(̃μt,
+̃βtλ)‖ N
+( μθ, σ2
+t λ
+))
+= log
+(
+σt̅̅̅
+̃βt
+√
+)
++̃βt+‖̃μt−μθ||2
+2σ2
+t
+−
+1
+2 to express Lt−1 as follows: 
+Lt−1 = Eq
+[
+log
+(σt
+σt
+)
++ σ2
+t + ‖ ̃μt −μθ(Ii(xt), t, y)||2
+2σ2
+t
+−1
+2
+]
+= Eq
+[ 1
+2σ2
+t
+‖ ̃μt −μθ(Ii(xt), t, y)||2
+]
++ C
+(10) 
+Our ultimate goal is to minimize the loss function, which involves 
+making the form of μθ match that of ̃μt according to Eq. (9), μθ(Ii(xt), t,
+y) =
+1̅̅̅̅̅̅̅
+1−βt
+√
+(
+Ii(xt) −
+βt
+̅̅̅̅̅̅̅̅̅̅̅̅̅
+1−(1−βt)
+√
+εθ(Ii(xt), t, y)
+)
+, where εθ(Ii(xt), t, y) is the 
+noise predicted by the model parameters θ from the noisy image Ii(xt)
+and text embeddings y. Using Eq. (10) can be simplified to the following 
+equation: 
+Lt−1 = Eq
+[
+β2
+t
+2σ2
+t (1 −βt)(1 −(1 −βt))
+‖ ε −εθ(Ii(xt), t, y)||2
+]
+−C
+(11) 
+Eq. (11) addresses this by simplifying the loss function to directly use 
+the MSE between the predicted noise εθ and the true noise ε. d) Gener­
+ating Images with Diffusion Models
+Leveraging the trained noise εθ(Ii(xt), t, y), we can also generate 
+sample Ii(xt−1) by introducing εφ ∈R32×32×3 ∼N(0, I) and applying a 
+linear transformation. Here, we take the mean μθ and variance σ2
+t = ̃βt 
+and substitute them into Eq. (5). Then, we can perform 
+Fig. 3. Network architecture diagram of the diffusion modeling-based textual semantic guided image generation component in LGINet. The model comprises three 
+core modules: (a) Contrastive Language-Image Pre-training framework, (b) Training Process of LGINet, (c) Generation Process of the LGINet.
+L = Eq[DKL(q(Ii(xT)|Ii(x0))‖ p(Ii(xT)))]
+⏟̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅⏞⏞̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅⏟
+LT
++
+∑
+T
+t=1
+Eq[DKL(q(Ii(xt−1)|Ii(xt), Ii(x0))‖pθ(Ii(xt−1)|Ii(xt), y))]
+⏟̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅⏞⏞̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅⏟
+Lt−1
+−Eq[logq(Ii(x0)|Ii(x1), Ii(x0))]
+⏟̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅⏞⏞̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅⏟
+L0
+(7) 
+T. Yun et al.                                                                                                                                                                                                                                     
+Information Fusion 129 (2026) 103912 
+6 
+
+
+reparameterization on pθ(Ii(xt−1)|Ii(xt), y) as follows: 
+Ii(xt−1) =
+1
+̅̅̅̅̅̅̅̅̅̅̅̅
+1 −βt
+√
+(
+Ii(xt) −
+βt
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+1 −(1 −βt)
+√
+εθ(Ii(xt), t, y)
+)
++
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+1 −(1 −βt−1)
+1 −(1 −βt)
+βt
+√
+εφ
+(12) 
+Eq. (12) represents a one-step denoising process. Each subsequent 
+step systematically diminishes the noise level while amplifying the 
+intricate details of the image, progressively aligning it with the learned 
+image distribution. Upon completion of all temporal steps, ranging from 
+T down to 0, the ultimate latent variable Ii(xt−1) emerges as the gener­
+ated image.
+2.2.2. Contrastive language-image pre-training framework (CLIP)
+In this study, we adopt the CLIP framework, which leverages 
+contrastive learning to train a model capable of aligning textual and 
+visual representations in a shared embedding space. As illustrated in 
+Fig. 3(a), the model is trained on a large-scale preprocessed dataset 
+comprising aligned image-text pairs (Ii ↔Si) , where each image is 
+associated with a corresponding textual description. These pairs are 
+organized in batches of size b and passed through dual encoders—a text 
+encoder and an image encoder. a) ViT-Based Image Encoder
+The image encoder, highlighted in the blue module of Fig. 3(a), 
+employs the Vision Transformer (ViT) [32], chosen for its lower 
+computational requirements and ease of integration. The input image 
+Ii(i = 1, 2, ..., b) is divided into 4 image patches, each of size (c, p, p) , 
+where pis set to 16. These patches, combined with positional encodings, 
+are fed into the Transformer [33] architecture to generate image em­
+beddings EIi. The dimension of EIi is [b,e], with e set to 512 to align with 
+the text embeddings generated in section b). b) Text Encoder with 
+Word2Vec and Transformer
+As detailed in the text encoder module of Fig. 3(a), each input sen­
+tence Si is first tokenized into tokens using Byte Pair Encoding (BPE) 
+[34]. Following text cleaning (removal of punctuation, numbers, and 
+non-informative 
+terms), 
+these 
+tokens 
+are 
+mapped 
+into 
+a 
+high-dimensional space by a Word2Vec model [35] pre-trained on our 
+domain-specific forestry corpus (introduced in SubSection 2.1). Each 
+token is converted into a 512-dimensional vector Vwξ, resulting in a text 
+embedding matrix of size [b, k, e], where: b = 25 denotes the batch size 
+(number of sentences), and k ≤77 is the maximum number of tokens per 
+sentence. The Word2Vec model was trained in a Skip-gram manner with 
+a window size of 5 to maximize the probability of predicting context 
+tokens (two preceding and two following). The training objective 
+maximized the cosine similarity between the center token and its 
+context tokens, implemented via a negative sampling loss: 
+LV =
+1
+M −4
+∑
+M−2
+ξ=3
+∑
+−2≤j≤2,j∕=0
+log
+exp
+(
+V
+⊤
+wξ+jVwξ
+)
+∑
+W
+η=1
+exp
+(
+V
+⊤
+η Vwξ
+)
+(13) 
+Here, M represents the total number of tokens in the current text, wξ+j 
+refers to the context token. V
+⊤
+wξ+j represents the transpose of the context 
+word vector for the token wξ. W signifies the total number of unique 
+tokens in the whole training vocabulary. V⊤
+η is the transpose of the vector 
+associated with the η −th token in the vocabulary.
+Finally, the text embedding matrix of size [b, k, e] is processed by a 
+Transformer encoder with 8 attention heads. The output is a contextu­
+alized sentence embedding tensor ESi of size [b,e], where each sentence in 
+the batch is represented by a single 512-dimensional vector. c) Joint 
+Image-Text Embedding with Contrastive Learning
+As illustrated in the similarity matrix of Fig. 3(a), each row corre­
+sponds to an image embedding, each column to a text embedding, and 
+the diagonal elements represent the genuine pairs (high similarity), 
+while off-diagonal elements correspond to incorrect pairings (low 
+similarity). We optimize for these similarity scores using a symmetric 
+cross-entropy loss LC, defined by the equation: 
+LC = −1
+B
+∑
+B
+i=1
+⎡
+⎢⎢⎢⎣log
+exp
+(
+sim
+(
+EIi, ESi
+)/τ
+)
+∑
+B
+j=1
+exp
+(
+sim
+(
+EIi, ESj
+)/
+τ
+) + log
+exp
+(
+sim
+(
+EIi, ESi
+)/τ
+)
+∑
+B
+j=1
+exp
+(
+sim
+(
+EIj, ESi
+)/
+τ
+)
+⎤
+⎥⎥⎥⎦
+(14) 
+Where sim
+(
+EIi, ESi
+)
+represents the cosine similarity between the 
+image embedding EIi ∈R512 and text embedding ESi ∈R512. In our 
+experimental setup, the CLIP model utilized a fixed temperature 
+parameter τ = 0.7 to balance model sharpness and generalization ca­
+pabilities during training. For contrastive learning, we employed in- 
+batch hard negative sampling from the b × b similarity matrix 
+(excluding diagonal elements), enabling efficient contrastive optimiza­
+tion without requiring external memory banks - a design choice critical 
+for handling our dataset scale of 1.2 million text tokens and 30,000+
+images. The training regimen comprised 200 epochs (approximately 
+50,000 iterations with batch size 25), optimized using AdamW with 
+learning rate (lr) 1×10−4 and weight decay 0.01. Convergence was 
+achieved when validation loss stabilization occurred (<0.05 change 
+across 10 consecutive epochs).
+2.2.3. Training and generation process of the improved U-Net
+The training process follows the improved U-Net architecture illus­
+trated in Fig. 3(b), which accepts three inputs: 1) a batch of noisy images 
+Ii(xt) , generated by adding noise ε ∈Rb×32×32×3 to the original images; 
+2) the corresponding text embedding ESi, namely the condition y, pro­
+duced by the text encoder (yellow block) for the input sentences; and 3) 
+the timestep t.
+The timestep t is processed by the Timestep Embedding module (dark 
+green ellipse) , which applies the sinusoidal embedding function defined 
+in Eqs. (15) and (16) to produce a positional encoding matrix PE ∈Rb×m. 
+Here, m denotes the model’s embedding dimension. This dimension is 
+determined by the feature map sizes propagated through the improved 
+U-Net architecture. This matrix PE is then processed by a linear layer 
+(light green ellipse), expanding its dimension to b × 4m, before being fed 
+into each ResBlock to provide timestep conditioning throughout the 
+network. 
+PEt[2i] = sin
+(
+t
+10000
+2i
+m
+)
+for i = 0, 1, 2, ..., m
+2 −1
+(15) 
+PEt[2i + 1] = cos
+(
+t
+10000
+2i
+m
+)
+for i = 0, 1, 2, ..., m
+2 −1
+(16) 
+The improved U-Net architecture in Fig. 3(b) consists of three 
+encoder layers, a bridge layer, and three decoder layers. Each encoder 
+layer contains two parallel groups. Each group includes a Residual Block 
+(ResBlock) for processing timestep embeddings and image features, and 
+a Spatial Transformer module for integrating text embeddings via cross- 
+attention (see Appendix Fig. a1 for detailed architectures). A down­
+sampling operation via strided convolution follows each encoder layer. 
+The bridge layer consists of three ResBlocks, a Spatial Transformer 
+module, and another three ResBlocks arranged sequentially. Each 
+decoder layer begins with an upsampling module, followed by two 
+parallel groups of a ResBlock and a Spatial Transformer module. Skip 
+connections (gray arrows) link corresponding encoder and decoder 
+layers to preserve contextual information.
+The final convolutional layer outputs the predicted noise, 
+εθ ∈Rb×32×32×3, for the batch of input images. These predictions are 
+compared to the ground-truth noise ε using the mean squared error 
+(MSE) loss defined based on the simplified form in Eq. (11) for network 
+parameter optimization. The loss function is as follows: 
+T. Yun et al.                                                                                                                                                                                                                                     
+Information Fusion 129 (2026) 103912 
+7 
+
+
+L(θ) = Eq
+[
+‖ ε −εθ(Ii(xt), t, y)||2]
+(17) 
+For the generation pipeline depicted in Fig. 3(c), the inference pro­
+cess proceeds from T = 0 backward. A batch of text prompts are first 
+encoded into contextual embeddings via a pretrained text encoder. 
+Corresponding Gaussian noise samples Ii(xT) ∼N(0, 1) and temporal 
+embeddings (for timestep T) are injected into the trained U-Net. 
+Through iterative denoising steps governed by Eq. (12), the model 
+progressively refines noise estimates to produce intermediate latent 
+representations. This recursive process continues until t = 0, yielding 
+final image reconstructions that semantically align with input text 
+descriptions.
+For training the improved U-Net, we employed the AdamW opti­
+mizer with an initial learning rate of 1 × 104, a linear warmup schedule 
+over 1000 steps to stabilize early training, and Exponential Moving 
+Average (EMA) with a decay rate of 0.999 to improve generalization by 
+averaging model weights across iterations. Training was conducted 
+70,000 steps with a batch size of 25 on NVIDIA A100 GPUs. During 
+training, the text encoder is frozen to leverage domain-specific knowl­
+edge without overfitting, while the U-Net diffusion backbone is fully 
+trained. Shared components include the variance scheduler βt and noise 
+sampler, which are fixed across forward and reverse processes for 
+consistency.
+2.3. Forest canopy detection via diffusion-generated outputs in LGINet
+To leverage synthetically generated tree canopy images for practical 
+forest monitoring , the 32 × 32-pixel generated patches were first 
+assembled into composite 640 × 640-pixel images to simulate realistic 
+forest scenes. This approach allows for the scalable creation of larger 
+scenes and can be extended to real-world forest coverage through iter­
+ative tiling or a sliding window strategy, thereby reducing the atten­
+tional complexity inherent in processing high-resolution aerial data. 
+Based on this, we developed an enhanced YOLOv11-based detection 
+pipeline. This pipeline incorporates two key architectural improve­
+ments: (1) We implemented a Feature Pyramid Network FPN enhanced 
+with bidirectional(BiFPN) cross-scale connections, enabling richer 
+multi-scale feature fusion. This improvement is critical for detecting tree 
+crowns of varying sizes within a single composite image, ensuring robust 
+performance across diverse forest scenes. (2) We integrated globally 
+pooled attention-augmented fully connected layers into the classifica­
+tion branches. These layers leverage semantic context derived from the 
+entire image to modulate classification scores, improving species dif­
+ferentiation by combining local features with broader contextual cues. 
+The detailed network structure is illustrated in Fig. a2 of Appendix.
+The improved YOLOv11 was pre-trained on our dataset and fine- 
+tuned using our multimodal forest dataset. The training followed a 
+curriculum learning approach, beginning with detection on isolated tree 
+crowns and progressively introducing composite images with increasing 
+numbers of overlapping tree crowns. Data augmentation techniques, 
+including photometric distortions, synthetic occlusion patterns 
+mimicking canopy gaps, and spatial transformations preserving 
+ecological validity, were applied to enhance robustness. The loss func­
+tion combines a generalized intersection-over-union (GIoU) term for 
+bounding box regression with a hierarchical softmax classification loss, 
+weighted by species frequency to address class imbalance.
+3. Results and analysis
+3.1. Token similarity analysis with text encoder
+To evaluate the performance of the text encoder, we utilize a color- 
+coding approach to mark the similarity between each token in a given 
+text. In this visual representation, red indicates a high degree of simi­
+larity between token, while blue signifies a lower similarity. For 
+instance, when discussing forest-related vocabulary, semantically 
+similar token will exhibit similar shades of red, reflecting their strong 
+correlation within the forest context. This color-coded similarity 
+marking provides an intuitive way to observe and understand the se­
+mantic connections between token.
+In Fig. 4, we present a heatmap of pairwise similarities among key 
+forest-related terms. The results demonstrate that our semantic model 
+effectively captures semantic nuances, accurately reflecting the simi­
+larity between related tokens. For instance, "pine" exhibits high simi­
+larity with token like "known," "leaves," and "species," while "wood" 
+shows high similarity with "recognition," "used," and "species." The 
+Transformer component further enhances contextual understanding by 
+dynamically capturing long-range dependencies between token. This 
+capability is evident in its ability to differentiate subtle variations in 
+meaning based on sentence structure. For example, in the phrase "A 
+Fig. 4. Heatmap visualization of token similarity within forest-related textual descriptions. The color-coded map illustrates semantic relationships between tokens, 
+where red indicates high similarity and blue indicates low similarity.
+T. Yun et al.                                                                                                                                                                                                                                     
+Information Fusion 129 (2026) 103912 
+8 
+
+
+golden canopy of a ginkgo tree in autumn," the encoder assigns higher 
+importance to "golden" and "autumn," emphasizing their role in 
+describing the seasonal context. Our model combined Word2Vec and 
+Transformer not only ensures precise semantic embedding but also 
+robustly handles complex forest-related text inputs.
+3.2. Generated image quality and visualizing the denoising process
+To better understand the denoising process in our diffusion model, 
+we visualize the iterative refinement from random noise to coherent 
+images in the Fig. 5(a). Each row represents a specific textual prompt 
+describing different types of trees or aerial perspectives. The horizontal 
+progression illustrates how the model gradually refines the noisy input 
+into a high-quality image. For instance, the right side of the first row 
+Fig. 5. Visual demonstration of the generative model. (a): Progressive denoising from random noise (t = 500) to a clear image (t = 0) guided by text prompts. (b)-left: 
+Tree-species detection results on aerial photographs from Nanjing Forestry University and Shanghai Botanical Garden. (b)-right: Aerial images generated from text 
+descriptions for the same species. (c): Generated tree-canopy samples under diverse conditions and comparisons with GPT-4o, DALL-E 3, and Leonardo AI. (d): 
+Comparison of images generated under different text prompt weights.
+T. Yun et al.                                                                                                                                                                                                                                     
+Information Fusion 129 (2026) 103912 
+9 
+
+
+shows the generation of a ginkgo tree in autumn, starting from random 
+noise and progressively refining the image to capture the golden canopy 
+and detailed leaf structures. The right panels of rows 3–4 demonstrate 
+that Chinese fir and oak species exhibit robust detail preservation under 
+overcast or low-light conditions, while the right panels of rows 5–6 
+highlight banyan and coconut palm’s capability to maintain sharp 
+texture generation even under high-intensity sunlight exposure.
+The denoising process underscores the model’s capacity to integrate 
+textual guidance, yielding images that are both visually coherent and 
+semantically aligned with the input prompts. As shown in the right panel 
+of Fig. 5(b), the model leverages this text-guided synthesis capability to 
+generate aerial views that closely resemble real-world data from the 
+Nanjing Forestry University and Shanghai Botanical Garden datasets. 
+The synthesized images, which exhibit rich textures, accurate color 
+distributions, and realistic structural details, were seamlessly integrated 
+into their corresponding tree species in the original dataset, blending 
+convincingly into authentic environments. These results demonstrate 
+the model’s robustness in capturing intricate natural scene attrib­
+utes—such as coherent foliage patterns, multi-layered canopy struc­
+tures, 
+and 
+ecologically 
+plausible 
+spatial 
+arrangements—while 
+consistently adhering to semantic instructions.
+3.3. Quantitative evaluation of generated images
+In the quantitative evaluation section, we leveraged a comprehen­
+sive suite of widely acknowledged metrics to rigorously assess the 
+quality of the generated images. These metrics collectively encapsulate 
+the realism and diversity of the images from diverse perspectives. To 
+contextualize our model’s performance, We compared our model 
+against a range of benchmark models, including GAN [15], CycleGAN 
+[36], BigGAN [37], StyleGAN [38], VAE [16], β-VAE [21], CVAE [22], 
+DDPM [23], and Denoising Diffusion Implicit Models (DDIM) [39]. The 
+outcomes are summarized in the Table 2. The Inception Score (IS) of our 
+model, achieving 9.89 on the forest image dataset, significantly out­
+performs these benchmark models, highlighting its ability to generate 
+both sharp and diverse forest images. Similarly, the Fr´echet Inception 
+Distance (FID) score of 6.42 reflects the model’s capacity to produce 
+high-quality images with a distribution that closely resembles real forest 
+scenes. Furthermore, the Structural Similarity Index Measure (SSIM) of 
+0.94 demonstrates the model’s capability to not only replicate the visual 
+appearance of real forests but also preserve intricate structural details, 
+surpassing 
+or 
+matching 
+the 
+performance 
+of 
+contemporary 
+state-of-the-art methods. On a pixel level, the Mean Squared Error (MSE) 
+of 0.001 affirms the model’s precision in reconstructing realistic forest 
+images, while the Peak Signal-to-Noise Ratio (PSNR) of 30 dB un­
+derscores its robustness against distortions. These results collectively 
+position our model as a leading approach in generative modeling, 
+excelling in pixel accuracy, structural consistency, and overall image 
+quality.
+We also compared the GPT-4o, DALL-E 3, and Leonardo AI genera­
+tive models. The actual generation results are shown at the Fig. 5(c). For 
+the prompt “A green cedar canopy image captured from a satellite 
+view,” GPT-4o produced two images—one with an incorrect viewpoint 
+and another with the wrong tree count. DALL-E 3 gave distorted results 
+that deviate from reality. Leonardo yielded more realistic and higher- 
+resolution images, yet its tree numbers and viewing angles were 
+Table 2 
+The performance of our dataset, as evaluated by different methods across various metrics, is outlined below with respective scores.
+Model
+IS↑
+FID↓
+SSIM↑
+MSE↓
+PSNR↑
+GT(s)↓
+GFLOPs↑
+Memory(MB)↓
+GAN [15]
+4.60
+65.93
+0.89
+0.003
+32
+0.8
+0.5
+83
+CycleGAN [36]
+7.02
+15.03
+0.72
+0.008
+26
+1.2
+1.2
+156
+BigGAN [37]
+9.22
+14.73
+0.86
+0.004
+28
+1.5
+3.5
+257
+StyleGAN [38]
+9.74
+4.21
+0.93
+0.005
+37
+1.8
+5.0
+284
+VAE [16]
+5.29
+49.46
+0.75
+0.012
+19
+2.5
+0.8
+62
+β-VAE [21]
+6.42
+14.73
+0.77
+0.007
+27
+2.0
+1.0
+79
+CVAE [22]
+8.22
+21.7
+0.83
+0.005
+27
+2.2
+1.5
+101
+DDPM [23]
+8.46
+7.89
+0.91
+0.003
+34
+4.5
+4.2
+358
+DDIM [39]
+8.87
+7.54
+0.92
+0.002
+38
+4.0
+3.8
+343
+Our
+9.89
+6.42
+0.94
+0.001
+30
+5.2
+4.5
+324
+Note: GT:Generation Time.
+Fig. 6. (a) The loss dynamics of our generative model exhibit variations under different parameter configurations. (b) Ablation results on the text encoder.
+T. Yun et al.                                                                                                                                                                                                                                     
+Information Fusion 129 (2026) 103912 
+10 
+
+
+inconsistent. LGINet achieved superior fidelity and stability; because our 
+images are generated at 32 × 32 pixels, the result shows a slight blur.
+3.4. Ablation study
+To systematically evaluate the contributions of key components in 
+our proposed diffusion model, we conducted ablation studies on text 
+prompt weights, batch size, diffusion timesteps t, and attention mech­
+anisms, focusing on their impacts on generation quality and semantic 
+consistency. To assess semantic controllability and prompt robustness, 
+we employed classifier-free guidance (CFG) [40]. This is achieved by 
+jointly training, within a single network, a linguistically-guided condi­
+tional and an unconditional diffusion model. We evaluated a range of 
+text prompt weights (0, 0.25, 0.5, 1, 1.5), which is consistent with the 
+Table 3 
+Performance comparison of diverse detection models evaluated on our dataset.
+Versions
+Evaluation index
+Detection precision of dominant tree species
+Precision
+Recall
+mAP50
+GFLOPs
+Size
+Pine
+Verdant metasequoia
+Willow
+Ginkgo
+Poplar
+Oil-tea
+SSD [42]
+0.742
+0.777
+0.727
+23.9
+18.58
+0.722
+0.747
+0.714
+0.703
+0.687
+0.744
+FR-CNN [43]
+0.759
+0.688
+0.777
+8.1
+6.55
+0.728
+0.754
+0.740
+0.728
+0.708
+0.770
+MR-CNN [4]
+0.798
+0.695
+0.807
+6.4
+5.35
+0.734
+0.765
+0.756
+0.734
+0.723
+0.801
+EDet-D7 [3]
+0.792
+0.748
+0.812
+7.7
+4.93
+0.793
+0.802
+0.765
+0.763
+0.731
+0.826
+InDeepOCC [44]
+0.812
+0.756
+0.834
+28.6
+25.59
+0.832
+0.841
+0.788
+0.787
+0.734
+0.846
+SAnything [5]
+0.822
+0.602
+0.822
+8.3
+5.59
+0.824
+0.830
+0.772
+0.773
+0.741
+0.837
+YOLOv10s [45]
+0.853
+0.812
+0.864
+24.7
+15.9
+0.882
+0.884
+0.841
+0.830
+0.825
+0.908
+HAFENet [41]
+0.868
+0.815
+0.856
+171
+128
+0.893
+0.896
+0.844
+0.831
+0.828
+0.918
+Our Model
+0.879
+0.819
+0.868
+21.4
+18.4
+0.904
+0.922
+0.862
+0.861
+0.859
+0.937
+Our Model
+Real only
+25 % Synthetic
+50 % Synthetic
+100 % Synthetic
+200 % Synthetic
+Precision
+mAP50
+Precision
+mAP50
+Precision
+mAP50
+Precision
+mAP50
+Precision
+mAP50
+​
+0.851
+0.853
+0.865
+0.858
+0.874
+0.864
+0.879
+0.868
+0.881
+0.871
+​
+Note: FR-CNN: Faster R-CNN, MR-CNN: Mask R-CNN, EDet-D7: EfficientDet-D7, SAnything: Segment Anything, mAP50 indicates the mean Average Precision at 50 % 
+IoU threshold (higher is better), GFLOPs: Giga Floating-point Operations Per Second, and Size(Mb) shows the model size in megabytes. 25 % Synthetic: The ratio of real 
+to synthetic images is 1:25 %.
+Fig. 7. This figure illustrates the detection process of the improved YOLOv11, showcasing input/output image pairs with bounding box annotations for tree crown 
+detection in diverse scenes, alongside self-attention heatmaps that reveal the model’s focus areas during the detection process.
+T. Yun et al.                                                                                                                                                                                                                                     
+Information Fusion 129 (2026) 103912 
+11 
+
+
+prevailing practices in semantic-guided diffusion modeling. For batch 
+size, we compared settings of 25, 50, and 100 to balance training sta­
+bility and forest image fidelity, noting that smaller batches may desta­
+bilize training due to noisy gradients, while larger batches risk 
+over-smoothing gradients and limiting generalization. For diffusion 
+timesteps t, we tested t = 500, 750, 1000 to trade-off between compu­
+tational efficiency and ecological detail, where shorter timesteps reduce 
+costs but may omit complex forest features, and longer timesteps 
+enhance realism at higher computational expense. For attention mech­
+anisms, we evaluated the incorporation of self-attention mechanisms 
+within the SpatialTransform module to optimize spatial coherence and 
+text-image semantic alignment, which are critical for capturing 
+forest-specific attributes such as species distribution and aerial layout 
+patterns.
+The ablation study confirms that each component contributes 
+significantly to the overall performance of the model. We first identified 
+an optimal text prompt weight of 1.0, which effectively balances con­
+ditional fidelity and generative diversity. To qualitatively evaluate this 
+trade-off, Fig. 5(d) presents 16 sample images generated from 8 distinct 
+semantic prompts across different weighting configurations. The results 
+indicate that unconditional generation (weight=0) yields coherent but 
+semantically unaligned samples. A weight of 0.5 provides limited se­
+mantic fidelity (FID=6.94, SSIM=0.90), while the optimal weight of 1.0 
+achieves a superior balance (FID=6.42, SSIM=0.94). Although a weight 
+of 1.5 offers marginal metric gains (FID=6.37, SSIM=0.96), it in­
+troduces subtle artifacts, such as oversaturated foliage. Beyond the text 
+prompt weight, the noise scheduler ensures sufficient granularity for 
+high-quality denoising, positional encodings provide crucial temporal 
+information, textual semantics align generated images with prompts, 
+self-attention enhances spatial and semantic coherence, and the optimal 
+batch size ensures efficient learning. Fig. 6(a) demonstrates the loss 
+variations across epochs under different parameter settings, highlighting 
+the stability and convergence benefits of these optimized components. 
+To further evaluate the effectiveness of different text encoder variants in 
+LGINet, we conducted an additional ablation study, with the results 
+presented in Fig. 6(b). The comparison of No-Text (IS=5.32, PSNR=25), 
+Weak-Text (IS=7.21, PSNR=27), Raw Class Labels (IS=8.76, 
+PSNR=29), and Full-Text Semantics (IS=9.89, PSNR=30) demonstrates 
+that progressively sophisticated text guidance leads to significant im­
+provements in image quality and semantic consistency.
+3.5. Aerial tree species detection results
+We validated the detection performance across multiple state-of-the- 
+art object detection models using a dataset of approximately 100k real 
+images and an equal number of generated ones, with various mixing 
+ratios investigated. As illustrated in Table 3, the performance compari­
+son reveals that our model achieves the highest mAP50 score of 0.868 
+while maintaining computational efficiency at 21.4 GFLOPs, out­
+performing other variants like SAnything (0.822 Precision, 0.822 
+mAP50)YOLOv10s (0.853 Precision, 0.864 mAP50) and HAFENet [41] 
+(0.868 Precision, 0.856 mAP50). Moreover, the performance improves 
+notably as the synthetic data ratio increases from 0 % to 100 % (a ratio of 
+1:1), while further increasing it to 200 % yields only a marginal gain of 
+0.002 in precision.
+Further validation was conducted through targeted detection 
+Fig. 8. Performance metrics of our enhanced detection model across diverse experimental plots.
+T. Yun et al.                                                                                                                                                                                                                                     
+Information Fusion 129 (2026) 103912 
+12 
+
+
+experiments on diverse forest scenes. We analyzed the aerial photo­
+graphs of Nanjing Forestry University and Shanghai Botanical Garden 
+presented in Fig. 5(b), where the species and quantities of tree species 
+contained in the aerial images are annotated within rectangular boxes 
+located on the left side of the figures. We employed YOLOv11s to 
+analyze six distinct sample areas, as shown in Fig. 7. These areas 
+included pure stands of Camellia oleifera, Phoenix, Poplar, and Pine, 
+along with an aerial photograph of Nanjing Forestry University and the 
+urban area of Campo Grande. The self-attention heatmaps in Fig. 7
+visually elucidate the model’s detection mechanism by highlighting its 
+focal regions. These results demonstrate the method’s capability for 
+accurate and interpretable tree crown detection across diverse envi­
+ronments, from homogeneous plantations to complex urban forests. 
+Fig. 8 shows the detection results demonstrate robust performance 
+across different vegetation types and complexities: Pure Stands Detec­
+tion: Achieved high precision in homogeneous plantations, with detec­
+tion accuracy exceeding 0.87 for all four tree species (Camellia oleifera, 
+Phoenix, Poplar, Pine). Complex Scenes Handling: Successfully pro­
+cessed the Nanjing Forestry University aerial photo containing mixed 
+species, maintaining 0.78 precision despite complex canopy structures. 
+Urban Forestry Application: Demonstrated adaptability to urban envi­
+ronments with 0.81 precision in the Campo Grande urban area 
+detection.
+4. Discussion
+This study was motivated by the hypothesis that structured ecolog­
+ical knowledge, encoded in linguistic descriptions, can guide probabi­
+listic image generation to overcome challenges [46] like interspecies 
+tree similarities, environmental disturbances and phenological varia­
+tions [47]. To operationalize this, we proposed LGINet, a novel multi­
+modal framework that leverages domain-specific text from forestry 
+corpora to steer a diffusion-based synthesis process. At its core, LGINet 
+employs a stabilized diffusion architecture founded on a Markovian 
+chain of iterative denoising, which refines synthetic images under se­
+mantic constraints derived from text. This approach integrates a 
+large-scale language model to parse complex and often ambiguous 
+botanical descriptions into dense ecological embeddings, effectively 
+bridging the gap between linguistic knowledge and visual generation. 
+Our results demonstrate that LGINet generates highly realistic tree im­
+agery with exceptional fidelity (SSIM: 0.94; FID: 6.42). The downstream 
+detection module attained a mAP50 of 0.868, outperforming baseline 
+models. These results highlight the potential of our approach, which 
+stands in contrast to the limitations of prevailing data augmentation 
+paradigms.
+Previous research in this domain has commonly employed fusion 
+strategies integrating GANs with CNNs or VAEs with transformer-based 
+architectures. For instance, GAN-based methods leveraging StyleGAN or 
+BigGAN have been fused with detection frameworks like Faster R-CNN 
+to augment training datasets and enhance species classification accuracy 
+[48]. Similarly, VAEs have been combined with CNNs to model forest 
+structural complexity while supporting detection tasks [49]. However, 
+these fusion approaches exhibit notable deficiencies. For instance, GANs 
+suffer from mode collapse and training instability, leading to synthetic 
+images with blurred textures and semantic inconsistencies that impair 
+downstream detection performance [50]. VAEs, on the other hand, often 
+produce outputs with compromised sharpness due to inherent fidelity 
+trade-offs, resulting in semantic drift that misaligns generated images 
+with ecological contexts. Furthermore, the lack of a cohesive optimiza­
+tion strategy in these fusion frameworks limits their effectiveness in 
+handling dense forest canopies and inter-tree occlusions, where detec­
+tion performance frequently degrades [51].
+Although LGINet outperforms GAN and VAE baselines in image fi­
+delity (e.g., IS 9.89 vs. StyleGAN’s 9.74), it introduces certain limitations 
+requiring attention. The iterative denoising process inherent to diffusion 
+models incurs notable computational overhead. As summarized in 
+Table 2, LGINet requires 5.2 s, 4.5 GFLOPs, and 324 MB of memory per 
+image on an A100 GPU, compared to StyleGAN’s 1.8 s, 5.0 GFLOPs, and 
+280 MB—resulting in a 2.9 × increase in latency. This computational 
+profile currently impedes the deployment of optimized versions on 
+embedded drone chips for real-time monitoring at the plot or regional 
+scale. Second, although CLIP improves ecological relevance, subtle se­
+mantic gaps persist when translating complex ecological descriptions 
+into visual outputs, particularly for heterogeneous forest scenes world­
+wide. Third, the framework lacks iterative linguistic interaction, 
+limiting the ability to adjust ecological parameters during scene gener­
+ation. Furthermore, our tree species detection method primarily relies 
+on discerning foliar characteristics such as crown shape and leaf texture. 
+Consequently, the model’s performance is fundamentally limited when 
+dealing with leafless specimens, including withered trees or those in the 
+leaf-off season. Therefore, solving complex dead wood detection and 
+species classification tasks—such as segmenting overlapping fallen logs 
+[52] or isolating adjacent standing dead trees [53,54] —will require 
+both a larger set of corresponding training samples and further model 
+development. Our future work will therefore explore several directions 
+to address these limitations: developing lightweight variants through 
+model compression techniques like knowledge distillation [55]; inte­
+grating taxonomic-ecological knowledge graphs to enhance semantic 
+grounding [56]; designing human-language multi-turn interactive 
+communication networks [57] to enable iterative refinement of complex 
+ecological descriptions, thereby closing the subtle semantic gaps in the 
+translation to visual outputs; and extending the model to various forest 
+scenarios under nature disturbances by generating and training on 
+hybrid feature sets with curated datasets, thereby enhancing general­
+izability and applicability across diverse forest monitoring tasks. 
+Furthermore, we will incorporate self-supervised learning strategies 
+such as masked autoencoding and contrastive text-image alignment to 
+improve ecological coherence while reducing reliance on labeled data.
+5. Conclusion
+This study presents an innovative framework that integrates a forest- 
+specific language model with a text-guided diffusion model and a 
+detection network, enabling semantically conditioned forest image 
+synthesis and accurate tree species detection. The forest language model 
+encodes ecological knowledge to guide the diffusion process, generating 
+realistic forest scenes which are then used to train an improved 
+YOLOv11-based detector. By aligning image and text embeddings under 
+the CLIP paradigm, the approach ensures high semantic consistency 
+between generated visuals and input descriptions. An enhanced U-Net 
+progressively refines output images, achieving a PSNR of 30 dB, while 
+the detection model attains a mAP of 0.868. Evaluations demonstrate 
+the framework’s strong performance across complex canopy structures 
+and species-rich environments, supported by a multi-source training 
+corpus that promotes robustness and generalizability. Future work will 
+focus on extending the model’s adaptability to diverse geographic and 
+ecological settings, with the potential to incorporate large language 
+models for global-scale tree sample generation.
+CRediT authorship contribution statement
+Ting Yun: Writing – review & editing, Writing – original draft, Su­
+pervision, Resources, Methodology, Funding acquisition, Data curation, 
+Conceptualization. Gehui Weng: Writing – review & editing, Writing – 
+original draft, Visualization, Methodology, Data curation, Conceptuali­
+zation. Ruisheng Wang: Writing – review & editing, Supervision, 
+Methodology, Conceptualization. Yuntang Li: Visualization, Valida­
+tion, Resources, Investigation. Markus P. Eichhorn: Writing – review & 
+editing, Validation, Investigation, Conceptualization. Huaiqing Zhang: 
+Visualization, Validation, Resources, Funding acquisition, Formal 
+analysis.
+T. Yun et al.                                                                                                                                                                                                                                     
+Information Fusion 129 (2026) 103912 
+13 
+
+
+Declaration of competing interest
+The authors declare that they have no known competing financial 
+interests or personal relationships that could have appeared to influence 
+the work reported in this paper.
+Acknowledgments
+This study was financially supported by the National Natural Science 
+Foundation of China (grant numbers 32371876 and 32271877), the 
+Natural Science Foundation of Jiangsu Province (BK20221337), China, 
+and the Open Project Program of Rubber Research Institute, Chinese 
+Academy of Tropical Agricultural Sciences (RRI-KLOF202502)
+Appendix
+A. 1. The detailed derivation process of the final step of Eq. (6) is as follows: 
+Eq
+⎡
+⎢⎢⎢⎣−log
+p(Ii(xT))
+∏
+T
+t=1
+pθ(Ii(xt−1)|Ii(xt), y)
+∏
+T
+t=1
+q(Ii(xt)|Ii(xt−1))
+⎤
+⎥⎥⎥⎦= Eq
+[
+−logp(Ii(xT)) −
+∑
+T
+t>1
+log pθ(Ii(xt−1)|Ii(xt), y)
+q(Ii(xt)|Ii(xt−1))
+−log pθ(Ii(x0)|Ii(x1), y)
+q(Ii(x1)|Ii(x0))
+]
+(a1) 
+Based on Bayes’ theorem and the properties of Markov chains, q(Ii(xt)|Ii(xt−1)) = q(Ii(xt−1)|Ii(xt),Ii(x0)) q(Ii(xt)|Ii(x0))
+q(Ii(xt−1)|Ii(x0)), the second term on the right- 
+hand side of Eq. a1 can be expressed as: 
+∑
+T
+t>1
+log pθ(Ii(xt−1)|Ii(xt), y)
+q(Ii(xt)|Ii(xt−1))
+=
+∑
+T
+t>1
+log
+pθ(Ii(xt−1)|Ii(xt), y)
+q(Ii(xt−1)|Ii(xt), Ii(x0))⋅q(Ii(xt−1)|Ii(x0))
+q(Ii(xt)|Ii(x0))
+=
+∑
+T
+t>1
+log
+pθ(Ii(xt−1)|Ii(xt), y)
+q(Ii(xt−1)|Ii(xt), Ii(x0)) + logq(Ii(x1)|Ii(x0)) −logq(Ii(x2)|Ii(x0)) + ... −logq(Ii(xT)|Ii(x0))
+=
+∑
+T
+t>1
+log
+pθ(Ii(xt−1)|Ii(xt), y)
+q(Ii(xt−1)|Ii(xt), Ii(x0)) + logq(Ii(x1)|Ii(x0)) −logq(Ii(xT)|Ii(x0))
+(a2) 
+Substituting Eq. a2 into Eq. a1 and combining like terms, we can simplify Eq. a1 to: 
+Eq
+[
+−log
+p(Ii(xT))
+q(Ii(xT)|Ii(x0)) −
+∑
+T
+t=1
+log
+pθ(Ii(xt−1)|Ii(xt), y)
+q(Ii(xt−1)|Ii(xt), Ii(x0)) −logq(Ii(x0)|Ii(x1), Ii(x0))
+]
+(a3) 
+Eq. (6) in the main text follows directly from Eq. a4 and the definition of the KL divergence given in Equation log Q
+P = DKL(Q ‖ P).
+A.2. To elucidate the specific derivation of parameters ̃μt and ̃β
+2
+t in Eq. (8), we disregard the identical proportionality constants in the probability 
+density functions on both sides of the equation, such that the left-hand side of Eq. (8) can be formulated as: 
+q(Ii(xt−1)|Ii(xt), Ii(x0))∝exp
+(
+−(Ii(xt−1) −̃μt)2
+2̃β
+2
+t
+)
+= exp
+(
+−1
+2
+(
+1
+̃β
+2
+t
+Ii(xt−1)2 −2̃μt
+̃β
+2
+t
+Ii(xt−1) + ̃μt
+2
+̃β
+2
+t
+))
+(a4) 
+The right-hand side of Eq. (8) can be expressed as: 
+q(Ii(xt)|Ii(xt−1),Ii(x0))q(Ii(xt−1)|Ii(x0))
+q(Ii(xt)|Ii(x0))
+∝exp
+(
+−1
+2⋅
+(
+Ii(xt)−
+̅̅̅̅̅̅̅̅̅̅̅
+1−βt
+√
+Ii(xt−1)
+)2
+βt
+)
+⋅exp
+(
+−1
+2⋅
+(
+Ii(xt−1)−
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+(1−βt−1)
+√
+Ii(x0)
+)2
+1−(1−βt−1)
+)
+÷exp
+(
+−1
+2⋅
+(
+Ii(xt)−
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+(1−βt)
+√
+Ii(x0)
+)2
+1−(1−βt)
+)
+= exp
+(
+−1
+2
+((
+Ii(xt)−
+̅̅̅̅̅̅̅̅̅̅̅
+1−βt
+√
+Ii(xt−1)
+)2
+βt
++
+(
+Ii(xt−1)−
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+(1−βt−1)
+√
+Ii(x0)
+)2
+1−(1−βt−1)
+−
+(
+Ii(xt)−
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+(1−βt)
+√
+Ii(x0)
+)2
+1−(1−βt)
+))
+= exp
+(
+−1
+2
+(
+Ii(xt)2 −2
+̅̅̅̅̅̅̅̅̅̅̅̅
+1−βt
+√
+Ii(xt)Ii(xt−1)+(1−βt)Ii(xt−1)2
+βt
++
+Ii(xt−1)2 −2
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+(1−βt−1)
+√
+Ii(x0)Ii(xt−1)+(1−βt−1)Ii(x0)2
+1−(1−βt−1)
+−
+(
+Ii(xt)−
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+(1−βt)
+√
+Ii(x0)
+)2
+1−(1−βt)
+))
+= exp
+(
+−1
+2
+((1−βt
+βt
++
+1
+1−(1−βt−1)
+)
+Ii(xt−1)2 −
+(
+2
+̅̅̅̅̅̅̅̅̅̅̅
+1−βt
+√
+βt
+Ii(xt)+
+2
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+(1−βt−1)
+√
+1−(1−βt−1)
+Ii(x0)
+)
+Ii(xt−1)+C(Ii(xt),Ii(x0))
+))
+(a5) 
+Let 1
+̃β
+2
+t
+= 1−βt
+βt +
+1
+1−(1−βt−1) and 2̃μt
+̃β
+2
+t
+=
+2
+̅̅̅̅̅̅̅
+1−βt
+√
+βt
+Ii(xt)+ 2
+̅̅̅̅̅̅̅̅̅̅̅̅
+(1−βt−1)
+√
+1−(1−βt−1) Ii(x0), yielding the following results: 
+̃μt(Ii(xt), Ii(x0)) =
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+(1 −βt−1)
+√
+βt
+1 −(1 −βt)
+Ii(x0) +
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+(1 −βt)
+√
+(1 −(1 −βt−1))
+1 −(1 −βt)
+Ii(xt),̃βt = (1 −(1 −βt−1))βt
+1 −(1 −βt)
+= 1 −(1 −βt−1)
+1 −(1 −βt)
+βt
+(a6) 
+T. Yun et al.                                                                                                                                                                                                                                     
+Information Fusion 129 (2026) 103912 
+14 
+
+
+Based on Ii(xt) =
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+(1 −βt)
+√
+Ii(x0) +
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+1 −(1 −βt)
+√
+ε in Eq. (2), we obtain Ii(x0) = Ii(xt)−
+̅̅̅̅̅̅̅̅̅̅̅̅̅
+1−(1−βt)
+√
+ε
+̅̅̅̅̅̅̅̅̅
+(1−βt)
+√
+Ii(x0) . Substituting this result into Eq. a6 and simplifying 
+yields the derivation of Eq. (9). Fig A1, A2
+A.3.
+Fig. A1. Detailed structure of ResBlock and Spatial Transformer modules in the improved U-Net.
+A.4. The improved YOLOv11 architecture employs an EfficientNet backbone to extract multi-scale features from a 640 × 640 input image, 
+generating a feature pyramid (P1–P7). Features from P3 to P7 are fed into a BiFPN module for cross-scale fusion via top-down and bottom-up pathways 
+across multiple layers, progressively refining the representations. The enhanced features then pass through a Dynamic Anchor module for anchor 
+tuning and selection, before being processed by parallel prediction heads—a Class Prediction Net for object categorization and a Box Prediction Net for 
+bounding box regression—to yield the final detection results.
+Fig. A2. Schematic of the improved YOLOv11 architecture highlighting the Bi-FPN and Dynamic Anchor mechanism.
+Data availability
+Data will be made available on request.
+References
+[1] R. Kumar, A. Kumar, P. Saikia, Deforestation and forests degradation impacts on 
+the environment, in: environmental degradation: challenges and strategies for 
+mitigation, Springer, 2022, pp. 19–46.
+[2] Z. Shao, K. He, B. Yuan, S. Xu, Enhanced YOLOv8 framework for precision vehicle 
+detection in high-resolution remote sensing images, Signal, Image Video Process. 
+19 (2025) 218.
+[3] X. Wang, Q. Zhao, P. Jiang, Y. Zheng, L. Yuan, P. Yuan, LDS-YOLO: a lightweight 
+small object detection method for dead trees from shelter forest, Comput. Electron. 
+Agric. 198 (2022) 107035.
+[4] Z. Hao, L. Lin, C.J. Post, E.A. Mikhailova, M. Li, Y. Chen, K. Yu, J. Liu, Automated 
+tree-crown and height detection in a young forest plantation using mask region- 
+based convolutional neural network (Mask R-CNN), ISPRS J. Photogramm. Remote 
+Sens. 178 (2021) 112–123.
+[5] E. Hattula, J. Raninen, L. Zhu, Segment anything model with LiDAR based images 
+for building segmentation in forest areas, The International Archives of the 
+Photogrammetry, Remote Sens. Spat. Inf. Sci. 48 (2025) 13–19.
+[6] T. Sankey, J. Donager, J. McVay, J.B. Sankey, UAV lidar and hyperspectral fusion 
+for forest monitoring in the southwestern USA, Remote Sens. Env. 195 (2017) 
+30–43.
+[7] M. Maltamo, J. R¨aty, L. Korhonen, E. Kotivuori, M. Kukkonen, H. Peltola, 
+J. Kangas, P. Packalen, Prediction of forest canopy fuel parameters in managed 
+boreal forests using multispectral and unispectral airborne laser scanning data and 
+aerial images, Eur. J. Remote Sens. 53 (2020) 245–257.
+[8] K. Singhal, S. Azizi, T. Tu, S.S. Mahdavi, J. Wei, H.W. Chung, N. Scales, 
+A. Tanwani, H. Cole-Lewis, S. Pfohl, Large language models encode clinical 
+knowledge, Nature 620 (2023) 172–180.
+[9] C. Zhou, Q. Li, C. Li, J. Yu, Y. Liu, G. Wang, K. Zhang, C. Ji, Q. Yan, L. He, 
+A comprehensive survey on pretrained foundation models: a history from bert to 
+chatgpt, Int. J. Mach. Learn. Cybern. (2024) 1–65.
+[10] P. Lobanova, P. Bakhtin, Y. Sergienko, Identifying and visualizing trends in science, 
+technology, and innovation using SciBERT, IEEE Trans. Eng. Manag. 71 (2023) 
+11898–11906.
+[11] V. Blazhuk, O. Mazurets, O. Zalutska, An approach to using the mBERT deep 
+learning neural network model for identifying, Emot. Compon. Commun. Intent. 
+(2024).
+[12] J. Tan, H. Zhang, J. Yang, Y. Liu, D. Zheng, X. Liu, ForestryBERT: a pre-trained 
+language model with continual learning adapted to changing forestry text, Knowl. 
+Based Syst. 320 (2025) 113706.
+[13] C. Singh, A. Askari, R. Caruana, J. Gao, Augmenting interpretable models with 
+large language models during training, Nat. Commun. 14 (2023) 7913.
+[14] L. Huang, W. Yu, W. Ma, W. Zhong, Z. Feng, H. Wang, Q. Chen, W. Peng, X. Feng, 
+B. Qin, A survey on hallucination in large language models, Princ. Taxon. Chall. 
+Open Quest. (2023), 2023, arXiv preprint, arXiv:2311.05232.
+[15] ´A.G. Dieste, F. Argüello, D.B. Heras, ResBaGAN: a residual balancing GAN with 
+data augmentation for forest mapping, IEEE J. Sel. Top. Appl. Earth Obs. Remote 
+Sens. 16 (2023) 6428–6447.
+[16] M. Anand, F.J. Bohn, G. Camps-Valls, R. Fischer, A. Huth, L.-b. Sweet, 
+J. Zscheischler, Identifying compound weather drivers of forest biomass loss with 
+generative deep learning, Environ. Data Sci. 3 (2024) e4.
+[17] L. Yang, Z. Zhang, Y. Song, S. Hong, R. Xu, Y. Zhao, W. Zhang, B. Cui, M.-H. Yang, 
+Diffusion models: a comprehensive survey of methods and applications, ACM 
+Comput. Surv. 56 (2023) 1–39.
+[18] P. Jayagopal, K. Purushothaman Janaki, P. Mohan, U.B. Kondapaneni, 
+J. Periyasamy, S.K. Mathivanan, G.T. Dalu, A modified generative adversarial 
+networks with Yolov5 for automated forest health diagnosis from aerial imagery 
+and Tabu search algorithm, Sci. Rep. 14 (2024) 4814.
+[19] U. Ullah, J.-S. Lee, C.-H. An, H. Lee, S.-Y. Park, R.-H. Baek, H.-C. Choi, A review of 
+multi-modal learning from the text-guided visual processing viewpoint, Sensors 22 
+(2022) 6816.
+T. Yun et al.                                                                                                                                                                                                                                     
+Information Fusion 129 (2026) 103912 
+15 
+
+
+[20] B. Ho, B.B. Kocer, M. Kovac, Vision based crown loss estimation for individual trees 
+with remote aerial robots, ISPRS J. photogramm, Remote Sens. 188 (2022) 75–88.
+[21] T.F.R. Ribeiro, F.J.M.D. Silva, R.L.D.C. Costa, Modelling forest fire dynamics using 
+conditional variational autoencoders, Inf. Syst. Front. (2024) 1–20.
+[22] Y. Akkem, S.K. Biswas, A. Varanasi, A comprehensive review of synthetic data 
+generation in smart farming by using variational autoencoder and generative 
+adversarial network, Eng. Appl. Artif. Intell. 131 (2024) 107881.
+[23] W.G.C. Bandara, N.G. Nair, V.M. Patel, in: , IEEE, 2025, pp. 5250–5262, 2025 
+IEEE/CVF Winter Conference on Applications of Computer Vision (WACV).
+[24] A. Sebaq, M. ElHelw, Rsdiff: remote sensing image generation from text using 
+diffusion model, Neural Comput. Appl. 36 (2024) 23103–23111.
+[25] S. Kim, J. Lee, K. Hong, D. Kim, N. Ahn, DiffBlender: composable and versatile 
+multimodal text-to-image diffusion models, Expert Syst. Appl. (2025) 129345.
+[26] C. Gaydon, F. Roche, in: , IEEE, 2025, pp. 5895–5904, 2025 IEEE/CVF Winter 
+Conference on Applications of Computer Vision (WACV).
+[27] M. Cloutier, M. Germain, E. Lalibert´e, Influence of temperate forest autumn leaf 
+phenology on segmentation of tree species from UAV imagery using deep learning, 
+Remote Sens Env. 311 (2024) 114283.
+[28] S. Vigneshwaran, V.N. Tamburi, Identification of coconut palm trees using single 
+shot detector deep learning model, Spat. Inf. Res. 31 (2023) 695–707.
+[29] A. Radford, J.W. Kim, C. Hallacy, A. Ramesh, G. Goh, S. Agarwal, G. Sastry, 
+A. Askell, P. Mishkin, J. Clark, in: , PmLR, 2021, pp. 8748–8763. International 
+conference on machine learning.
+[30] X. Wu, D. Hong, J. Chanussot, UIU-Net: u-net in U-net for infrared small object 
+detection, IEEE Trans. Image Process. 32 (2022) 364–376.
+[31] S. Ji, Z. Zhang, S. Ying, L. Wang, X. Zhao, Y. Gao, Kullback–Leibler divergence 
+metric learning, IEEE Trans. Cybern 52 (2020) 2047–2058.
+[32] K. Han, Y. Wang, H. Chen, X. Chen, J. Guo, Z. Liu, Y. Tang, A. Xiao, C. Xu, Y. Xu, 
+A survey on vision transformer, IEEE Trans Pattern Anal Mach Intell 45 (2022) 
+87–110.
+[33] A. Vaswani, N. Shazeer, N. Parmar, J. Uszkoreit, L. Jones, A.N. Gomez, Ł. Kaiser, 
+I. Polosukhin, Attention is all you need, Adv. Neural Inf. Process Syst. (2017) 30.
+[34] Y. Shibata, T. Kida, S. Fukamachi, M. Takeda, A. Shinohara, T. Shinohara, 
+S. Arikawa, Byte pair encoding: a text compression scheme that accel, Pattern 
+Matching (1999).
+[35] D. Jatnika, M.A. Bijaksana, A.A. Suryani, Word2vec model analysis for semantic 
+similarities in english words, Procedia Comput. Sci. 157 (2019) 160–167.
+[36] J. Chen, L. Wang, R. Feng, P. Liu, W. Han, X. Chen, CycleGAN-STF: spatiotemporal 
+fusion via CycleGAN-based image generation, IEEE Trans. Geosci. Remote Sens. 59 
+(2020) 5851–5865.
+[37] D. Pal, A. Ross, Synthesizing forestry images conditioned on plant phenotype using 
+a generative adversarial network, Pattern Recognit. (2025) 111385.
+[38] Y. Zhang, J. Niu, Z. Huang, C. Pan, Y. Xue, F. Tan, High-precision detection for 
+sandalwood trees via improved YOLOv5s and StyleGAN, Agriculture 14 (2024) 
+452.
+[39] L. He, Q. Chen, Y. Pang, M. Wang, Y. Wu, L. Liu, Z. Qiang, An improved face 
+attributes editing method based on DDIM, Sci. Rep. 14 (2024) 27154.
+[40] J. Ho, T. Salimans, Classifier-free diffusion guidance, arXiv preprint arXiv:2207.12 
+598, (2022).
+[41] J. Wang, L. Jin, F. Wang, H. Zhou, H. Lin, Hierarchical attention and feature 
+enhancement network for multi-scale small targets in pine wilt disease, Comput. 
+Electron. Agric. 239 (2025) 111037.
+[42] W. Liu, D. Anguelov, D. Erhan, C. Szegedy, S. Reed, C.-Y. Fu, A.C. Berg, Ssd: single 
+shot multibox detector, in: computer Vision–ECCV 2016: 14th European 
+Conference, Amsterdam, The Netherlands, October 11–14, 2016, proceedings, part 
+I 14, Springer (2016) 21–37.
+[43] Q.-x. Zhang, G.-h. Lin, Y.-m. Zhang, G. Xu, J.-j. Wang, Wildland forest fire smoke 
+detection based on faster R-CNN using synthetic smoke images, Procedia Eng. 211 
+(2018) 441–446.
+[44] Y. Xu, Y. Ma, Q. Ye, L. Fu, X. Yang, Interpretable deep one-class model for forest 
+fire detection, Expert Syst. Appl. 281 (2025) 127657.
+[45] L.-h. He, Y.-z. Zhou, L. Liu, W. Cao, J.-h. Ma, Research on object detection and 
+recognition in remote sensing images based on YOLOv11, Sci. Rep. 15 (2025) 
+14032.
+[46] H. Chefer, Y. Alaluf, Y. Vinker, L. Wolf, D. Cohen-Or, Attend-and-excite: attention- 
+based semantic guidance for text-to-image diffusion models, ACM trans. Graph. 
+(TOG) 42 (2023) 1–10.
+[47] L.J. Marchand, I. Dox, J. Griˇcar, P. Prislan, S. Leys, J. Van den Bulcke, P. Fonti, 
+H. Lange, E. Matthysen, J. Pe˜nuelas, Inter-individual variability in spring 
+phenology of temperate deciduous trees depends on species, tree size and previous 
+year autumn phenology, Agric. Meteorol. 290 (2020) 108031.
+[48] S. Wan, S. Goudos, Faster R-CNN for multi-class fruit detection using a robotic 
+vision system, Comput. Netw. 168 (2020) 107036.
+[49] T. Yun, J. Li, L. Ma, J. Zhou, R. Wang, M.P. Eichhorn, H. Zhang, Status, 
+advancements and prospects of deep learning methods applied in forest studies, 
+Int. J. Appl. Earth Obs. Geoinf. 131 (2024) 103938.
+[50] V. Sampath, I. Maurtua, J.J. Aguilar Martin, A. Gutierrez, A survey on generative 
+adversarial networks for imbalance problems in computer vision tasks, J. Big. Data 
+8 (2021) 1–59.
+[51] Z. Xiang, T. Li, Y. Lv, R. Wang, T. Sun, Y. Gao, H. Wu, Identification of damaged 
+canopies in farmland artificial shelterbelts based on fusion of unmanned aerial 
+vehicle LiDAR and multispectral features, Forests 15 (2024) 891.
+[52] P. Polewski, J. Shelton, W. Yao, M. Heurich, Instance segmentation of fallen trees 
+in aerial color infrared imagery using active multi-contour evolution with fully 
+convolutional network-based intensity priors, ISPRS J. Photogramm. Remote Sens. 
+178 (2021) 297–313.
+[53] P. Polewski, J. Shelton, W. Yao, M. Heurich, Segmentation of single standing dead 
+trees in high-resolution aerial imagery with generative adversarial network-based 
+shape priors, The International Archives of the Photogrammetry, Remote Sens. 
+Spat. Inf. Sci. 43 (2020) 717–723.
+[54] P. Polewski, W. Yao, M. Heurich, P. Krzystek, U. Stilla, Detection of single standing 
+dead trees from aerial color infrared imagery by segmentation with shape and 
+intensity priors, ISPRS Ann. Photogramm. Remote Sens. Spat. Inf. Sci. 2 (2015) 
+181–188.
+[55] Y.-W. Hong, J.-S. Leu, M. Faisal, S.W. Prakosa, Analysis of model compression 
+using knowledge distillation, IEEE Access 10 (2022) 85095–85105.
+[56] Z. He, W. Yao, J. Shao, P. Wang, UB-FineNet: urban building fine-grained 
+classification network for open-access satellite images, ISPRS J. Photogramm. 
+Remote Sens. 217 (2024) 76–90.
+[57] D. Gao, H. Wang, Y. Chen, Q. Ye, W. Wang, X. Guo, S. Wang, Y. Liu, T. He, Lobee: 
+bidirectional communication between lora and zigbee based on physical-layer ctc, 
+IEEE Trans. Wirel. Commun. (2025).
+T. Yun et al.                                                                                                                                                                                                                                     
+Information Fusion 129 (2026) 103912 
+16

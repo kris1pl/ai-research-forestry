@@ -4,15 +4,14 @@ type: Concept
 description: "Normalized height of vegetation above ground: CHM = surface model of canopy top − digital terrain model (DTM)."
 tags: [chm, dtm, dsm, lidar, height]
 status: stable
-updated: 2026-06-09
-generated:
-  by: agent:conifervision-wiki
-  at: 2026-06-09T12:00:00Z
+updated: 2026-08-20
+P26-08-20T12:00:00Z
 related_methods:
   - methods/chm-detection
   - methods/local-maxima
 sources:
   - sources/vo-2024-automatic-data-curation
+  - sources/paper-treeflow
   - sources/popescu-wynne-2004-seeing-the-trees
 ---
 # Canopy height model (CHM)
@@ -53,3 +52,4 @@ Details and gaps (ground classifier, kriging): on the **source** page — not du
 ## Open questions from literature
 
 - Does pre-training our backbone on hierarchical-k-means-curated regional orthophotos improve local tree-level height regressions?
+- How does the height-dependent resolution degradation in generative models like TreeFlow affect the fidelity of synthetic canopy height models derived from them?

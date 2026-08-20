@@ -1,0 +1,2309 @@
+Academic Editor: Sheng Nie
+Received: 25 April 2026
+Revised: 18 June 2026
+Accepted: 20 June 2026
+Published: 5 July 2026
+Copyright: © 2026 by the authors.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed under the terms and
+conditions of the Creative Commons
+Attribution (CC BY) license.
+Article
+TreeFlow: Conditional Flow Matching for 3D Tree Point Cloud
+Generation from Inventory Attributes
+Anthony Marcozzi 1,*
+, Johnathan Tenny 2
+, Daithi Martin 1
+, Juan Castorena 3
+, Zachary Crennen 3
+,
+Lucas Wells 4
+and Samuel Hillman 5
+1
+Center for Applied Fire and Ecosystem Science, New Mexico Consortium, Los Alamos, NM 87544, USA;
+dmartin@newmexicoconsortium.org
+2
+School of Informatics, Computing, and Cyber Systems, Northern Arizona University,
+Flagstaff, AZ 86011, USA; jt893@nau.edu
+3
+Los Alamos National Laboratory, Los Alamos, NM 87544, USA; jcastorena@lanl.gov (J.C.);
+zcrennen@lanl.gov (Z.C.)
+4
+Silvx Labs, Missoula, MT 59808, USA; lucas@silvxlabs.com
+5
+Department of Energy, Environment and Climate Action, Government of Victoria,
+East Melbourne, VIC 3002, Australia; samuel.c.hillman@gmail.com
+*
+Correspondence: amarcozzi@newmexicoconsortium.org
+Highlights
+What are the main findings?
+• TreeFlow generates 3D individual-tree point clouds conditioned on scalar inventory
+attributes (species, acquisition platform, and height) using a flow matching framework
+trained entirely on real laser scanning data.
+• Generated trees are nearly indistinguishable from real trees of the same genus and
+height class on five of six geometric similarity metrics, with the strongest performance
+for trees under 25 m tall.
+What are the implications of the main findings?
+• TreeFlow offers a data-driven alternative to the chained allometric and parametric
+submodels currently used to build 3D crowns for fire behavior simulation, radiative
+transfer, and forest digital twins, capturing the clumping, gaps, and irregular branching
+that smooth geometric envelopes cannot represent.
+• By learning crown structure from real scans, the approach helps bridge the long-standing
+trade-off in forest remote sensing between landscape-scale coverage and within-crown
+structural detail.
+Abstract
+Accurate three-dimensional representations of tree structure are essential for fire modeling,
+radiative transfer simulation, synthetic data generation, and digital twins of forests, yet
+detailed 3D structure is rarely available at required scales. Current approaches approximate
+crowns with smooth geometric primitives, discarding the clumping, gaps, and irregular
+branching present in real trees. We present TreeFlow, a conditional flow matching model
+that generates realistic 3D tree point clouds from species, acquisition platform, and height.
+The model uses a transformer trained on real laser scanning data from the FOR-species20K
+benchmark to learn a velocity field transporting samples from a Gaussian distribution to
+the source data distribution. We evaluate generation quality by comparing conditioning
+and distributional fidelity metrics to scans of real trees. Generated trees match or approach
+the intra-class baseline on five of six metrics, with a Chamfer distance of 0.581 m versus
+0.559 m for real trees of the same genus and height class. Performance is strongest below
+Remote Sens. 2026, 18, 2197
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+2 of 33
+25 m and degrades with increasing height. TreeFlow generates individual-tree point clouds
+conditioned on scalar inventory attributes using a model trained entirely on real laser
+scanning data.
+Keywords: flow matching; point cloud generation; 3D tree structure; terrestrial laser
+scanning; conditional generative modeling; crown architecture; forest digital twin; deep
+learning; wildland fuel; fuel modeling
+1. Introduction
+Three-dimensional vegetation structure plays a central role in forest ecology and man-
+agement. The sizes, shapes, and spatial arrangements of individual tree crowns determine
+canopy light interception, influence competition and growth dynamics, shape the turbulent
+wind flow environment within and above forest canopies, and control the distribution
+and dynamics of wildland fuels. Accurate 3D representations of trees are needed to gen-
+erate high-resolution fuel inputs for next-generation fire models [1,2], simulate radiative
+transfer through forest canopies [3–5], create synthetic training data for remote sensing
+algorithms [6,7], and construct digital twins of forests [8]. In each of these applications, the
+accuracy of downstream predictions is sensitive to the fidelity of 3D vegetation inputs.
+Despite its importance, detailed 3D tree structure is rarely available at the scales
+these applications require. Most operational systems approximate crown shape using
+approximate geometric forms, commonly assuming uniform fuel distribution within
+crowns [5,9,10]. FastFuels constructs individual tree crowns using crown profile mod-
+els within parametric envelopes [11,12]. Forest growth simulators represent crowns as
+ellipsoids, paraboloids, or cylinders scaled by allometric relationships [13]. These functional
+forms are smooth and symmetric by construction and cannot represent the clumping, gaps,
+or differential branching patterns present in real crowns. Vegetation structure influences
+fire behavior not only through its distribution of combustible mass but also through its
+effects on fluid drag, wind entrainment, and microclimate [14–17].
+Advances in remote sensing have made it increasingly possible to measure individ-
+ual trees across large areas. Airborne laser scanning (ALS) and uncrewed aerial system
+(UAS) photogrammetry can detect individual trees and estimate their height, crown dimen-
+sions, and, in some cases, diameter, though detection is biased toward dominant overstory
+trees, and results can be described as tree-approximate objects rather than true individual
+tree measurements [18]. Structure-from-motion (SfM) methods applied to UAS imagery
+have demonstrated the ability to extract tree locations, heights, and diameters with low
+error in open-canopy conifer forests [19,20]. High-resolution canopy height models de-
+rived from aerial imagery now cover the entire conterminous United States at sub-meter
+resolution [21]. Terrestrial laser scanning (TLS) and ground-based mobile laser scanning
+(MLS) capture detailed 3D structure at plot scales, and emerging operational protocols such
+as IntELiMon are expanding the footprint of TLS acquisitions for ecosystem and fire effects
+monitoring [22]. Combining these data sources with predictive models for unmeasured
+attributes creates the possibility of generating census-like tree inventories [23]. However,
+existing approaches exhibit a fundamental trade-off between spatial coverage and struc-
+tural detail. TLS captures fine-scale internal crown architecture but is limited to plot-scale
+measurements. Conversely, methods that support landscape-scale inventories, such as
+ALS, UAS SfM, and canopy height models derived from active and passive satellite sensors
+primarily describe the outer canopy surface, producing tree-level attributes (e.g., position,
+height, and crown width) without resolving within-crown structure.
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+3 of 33
+Bridging this gap has traditionally required chaining together multiple submodels. A
+typical pipeline uses allometric equations to predict crown dimensions from diameter and
+height, a crown profile model to define the outer envelope, and a probabilistic distribution
+function to populate the interior with fuel mass [1,2]. Each submodel contains significant
+assumptions, many of them untested, and when linked together, errors propagate and
+compound in canopy structure models and downstream model outputs.
+An alternative is to bypass parametric models by using tree data clipped directly
+from TLS point clouds. Schäfer et al. [24] matched inventory trees to a database of real
+scanned trees by species and dimensions, then assembled and virtually scanned them with
+HELIOS++. Li et al. [25] transformed TLS scans of reference trees to match ALS-detected
+tree positions and dimensions across larger areas. Both approaches avoid geometric simpli-
+fications but depend on the availability of TLS-scanned trees that closely match the target
+specifications. Existing scan collections cover limited geographic regions and species, and
+insufficient data could lead to excessive scaling or reuse of some tree entities, leading to
+undesirable results.
+Large-scale aggregation of very high-resolution point cloud datasets could enable new
+opportunities for simulating forest architecture using individually scanned trees. The FOR-
+species20K benchmark dataset [26] comprises 20,158 point clouds representing manually
+segmented individual trees spanning 33 species from 19 genera, collected primarily from
+European forests using TLS, MLS, and ULS platforms. The dataset covers temperate, boreal,
+and Mediterranean biogeographic regions with tree heights ranging from 0.3 m to 56.3 m.
+Originally developed for benchmarking species classification models, its scale and diversity
+make it feasible to train generative models that learn 3D tree structure directly from real
+data. Recent advances in generative modeling, particularly diffusion models and flow
+matching [27,28], have demonstrated the ability to learn complex distributions over 3D
+point clouds and generate realistic samples [29,30].
+Several efforts have applied these and related methods to tree modeling. At the
+individual tree level, Lee et al. [31] trained a transformer to generate L-system strings from
+procedurally generated trees, Zhou et al. [32] learned branch development rules through a
+situated latent space, Wang et al. [33] developed an autoregressive transformer for branch
+skeleton generation, Lee et al. [34] generated 600,000 3D tree models from single images
+using diffusion priors, and Xu et al. [35] applied diffusion to tree point cloud generation but
+trained on small synthetic datasets without conditioning on tree attributes. These methods
+are trained on procedurally generated or synthetic trees rather than real laser scanning
+data. Stone et al. [36] and Bornand et al. [37] explored the use of synthetic tree data for
+training downstream deep learning tasks and found that the realism of synthetic training
+data significantly affects performance on real data. Most closely related to the present work,
+Hristova et al. [38] trained 3D adversarial autoencoders on the FOR-species20K dataset
+to generate individual-tree point clouds for several common European species, sampling
+from a learned per-species latent prior rather than conditioning a single model on scalar
+inventory attributes. At larger scales, Castorena et al. [39] and Hartsook et al. [40] used real
+LiDAR data to generate TLS-resolution forest structure from ALS inputs.
+In this paper, we present TreeFlow, a conditional flow matching model that generates
+3D individual tree point clouds from user-input species, acquisition platform, and tree
+height. The model learns to transform samples from a standard Gaussian distribution
+into realistic tree point clouds by integrating a learned velocity field conditioned on tree
+attributes. We train on the FOR-species20K dataset [26] using a transformer architecture
+with long skip connections. We evaluate generation quality along two axes: conditioning
+fidelity, which measures whether individual generated trees reproduce the geometric
+properties of their source trees, and distributional fidelity, which measures whether the
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+4 of 33
+population of generated trees reproduces the statistical structure of the real population. To
+our knowledge, this represents the first application of flow matching to generate individual-
+tree point clouds conditioned on scalar inventory attributes using a model trained entirely
+on real laser scanning data.
+2. Methods
+2.1. Data
+We trained our generative model using the FOR-species20K benchmark dataset, a large-
+scale collection of individual tree point clouds originally developed for species classification
+from proximally sensed laser scanning data [26]. The full dataset comprises 20,158 manually
+segmented trees spanning 33 species from 19 genera, with a minimum of 50 individuals
+per species. Of these, 17,707 are released with species labels as the development set. The
+remaining 2451 have withheld labels for the classification benchmark and are not used
+in this study. For each tree, the dataset provides a 3D point cloud along with metadata
+including species, acquisition platform, and tree height (Figure 1).
+7.5
+5.0
+2.5
+0.0
+2.5
+5.0
+7.5
+X (m)
+7.5 5.0
+2.5
+0.0
+2.5
+5.0
+7.5
+Y (m)
+0.0
+2.5
+5.0
+7.5
+10.0
+12.5
+15.0
+17.5
+(a)
+4
+2
+0
+2
+4
+X (m)
+4
+2
+0
+2
+4
+Y (m)
+0
+2
+4
+6
+8
+(b)
+6
+4
+2
+0
+2
+4
+6
+X (m)
+6
+4
+2
+0
+2
+4
+6
+Y (m)
+0
+2
+4
+6
+8
+10
+12
+(c)
+15
+10
+5
+0
+5
+10
+15
+X (m)
+15
+10
+5
+0
+5
+10
+15
+Y (m)
+0
+5
+10
+15
+20
+25
+30
+(d)
+Figure 1. Example tree point clouds from the FOR-species20K dataset illustrating variation in species,
+size, and acquisition platform. Each point cloud has been downsampled to 16,384 points as described
+in Section 2.4. Points are colored by height. (a) Sycamore maple (Acer pseudoplatanus), a 19.43 m
+broadleaf captured via TLS; (b) Common hazel (Corylus avellana), a 9.84 m broadleaf captured via TLS;
+(c) Field Maple (Acer campestre), a 12.28 m broadleaf captured via TLS; (d) Douglas fir (Pseudotsuga
+menziesii), a 34.87 m conifer captured via ULS.
+Data represent temperate (61%), boreal (25%), and Mediterranean (7%) biogeographic
+regions, with collections occurring mainly in European forests with some additional sam-
+ples from Canada, Australia, and New Zealand. The dataset incorporates point clouds from
+three acquisition platforms: terrestrial laser scanning (TLS, 70%), UAS laser scanning (ULS,
+22%), and mobile laser scanning (MLS, 8%), captured using more than 12 different sensors.
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+5 of 33
+This multi-platform composition introduces substantial variation in point density, occlusion
+patterns, and spatial resolution. Tree heights range from 0.3 m to 56.3 m, encompassing
+developmental stages from saplings to mature trees.
+Point clouds were preprocessed through a three-step normalization procedure de-
+signed to facilitate stable flow matching training. First, each point cloud was translated to a
+common origin defined as the center of its 3D bounding box, aligning the target distribution
+with the zero-centered Gaussian source distribution. Second, coordinates were scaled by
+tree height, normalizing the vertical extent of all trees to a unit interval of [−0.5, 0.5] while
+preserving natural aspect ratios. Third, an additional scaling factor of 2.0 was applied,
+stretching the vertical extent to [−1, 1] to match the unit standard deviation of the Gaussian
+source distribution. This normalization helps ensure that the learned velocity field does not
+need to account for large translations or scale differences, improving training stability and
+enabling efficient integration during sampling. One consequence of scaling by tree height is
+that all trees occupy the same normalized volume regardless of their true size, so at a fixed
+point count, a taller tree distributes its points across a proportionally larger metric-scale
+structure than a shorter one. This reduces the effective spatial resolution available to the
+model for taller trees. Lastly, the dataset was divided into training (80%), validation (10%),
+and test (10%) subsets using stratified sampling by species to ensure representation across
+all splits.
+2.2. Flow Matching Framework
+The goal of our generative model is to synthesize realistic 3D tree point clouds condi-
+tioned on a small set of observable attributes: species, acquisition platform, and tree height.
+Mathematically, we frame this as learning a transformation from an isotropic Gaussian
+distribution p0 = N (0, I) to the normalized tree point cloud distribution p1 ≈pdata, such
+that specifying only species, sensor type, and target height is sufficient to generate novel,
+structurally plausible individual tree point clouds. Figure 2 shows a conceptual diagram of
+this transformation. Our formulation treats individual points as independent samples dur-
+ing the generative process, with the permutation-equivariant neural network architecture
+(Section 2.3) responsible for learning and enforcing spatial relationships that yield coherent
+tree structures.
+We adopt the Flow Matching framework, a simulation-free approach for training
+Continuous Normalizing Flows (CNFs) that has demonstrated strong performance in high-
+dimensional generative modeling [27,28]. The central concept is a time-dependent velocity
+field vt(x) that describes how points move through the data space over a continuous time
+interval t ∈[0, 1], effectively transporting probability mass from the source distribution
+(noise) to the target distribution (data).
+We employ the Conditional Optimal Transport (OT) probability path, which defines a
+linear interpolation between noise and data as
+xt = (1 −t)x0 + tx1
+(1)
+where x0 ∼N (0, I) is a sample from the source Gaussian, and x1 ∼pdata is a sample from
+the target data distribution. The corresponding target velocity field that generates this path
+takes the form
+ut = x1 −x0
+(2)
+The neural network vθ is trained to predict this target velocity given the interpolated
+point xt, the timestep t, and conditioning information c (encoding species, platform, and
+height). Training minimizes the Conditional Flow Matching (CFM) loss
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+6 of 33
+LCFM(θ) = Et, x0, x1
+h
+∥vθ(xt, t, c) −ut∥2i
+(3)
+where t ∼U[0, 1], x0 ∼p0, and x1 ∼pdata. The CFM loss can be thought of as regressing
+the predicted velocity onto the target velocity using mean squared error. Importantly, this
+objective requires only samples from the source and target distributions, avoiding the
+expensive numerical simulation of differential equations during training.
+X0 (Source)
+(0, I)
+X1 (Target)
+pdata
+Training: xt = (1
+t)x0 + tx1
+Inference: ODE integration
+Learned velocity field v
+Figure 2. Conceptual illustration of the flow matching framework for 3D tree point cloud generation.
+(Left) Source distribution p0 = N (0, I) represented by blue isolines: points are sampled from a
+standard Gaussian distribution in R3. (Center) A neural network vθ(xt, t, c) learns a time-dependent
+velocity field that transports samples along the optimal transport path xt = (1 −t)x0 + tx1, where
+t ∈[0, 1]. The heatmap illustrates the evolution of a 1D marginal density from a unimodal Gaussian
+at t = 0 to a bimodal distribution at t = 1. The conditioning vector c encodes tree attributes (species,
+acquisition platform, height). (Right) Target distribution p1 ≈pdata represented by red isolines:
+a normalized tree point cloud from the FOR-species20K dataset. At inference, synthetic trees are
+generated by sampling x0 ∼N (0, I) and integrating the learned velocity field forward in time.
+2.3. Model Architecture
+We model vθ as a transformer [41] with long skip connections following the U-ViT
+design [42], processing point clouds as sequences of coordinate tokens. Given an interpo-
+lated point cloud xt, timestep t, and conditioning inputs c, the network outputs a per-point
+velocity vector vθ(xt, t, c) ∈R3 predicting the instantaneous direction of movement along
+the learned flow. Spatial information is encoded through fixed sinusoidal positional em-
+beddings, while conditioning information in the form of timestep, species, platform, and
+height is provided as additional tokens prepended to the input sequence. Figure 3 shows a
+diagram of the model architecture, and full implementation details are provided below.
+The input to the network consists of raw 3D point coordinates, which are transformed
+into high-dimensional token representations through sinusoidal positional encoding fol-
+lowed by a learned projection. We apply fixed NeRF-style frequency embeddings [43]
+independently to each spatial axis using the frequency series
+fk = 2k · π,
+k = 0, 1, . . . , L −1
+(4)
+where L is the number of frequency bands. For each axis a ∈{x, y, z} and coordinate value
+pa, the encoding concatenates sine and cosine components across all frequencies:
+enc(pa) = [sin(pa f0), cos(pa f0), . . . , sin(pa fL−1), cos(pa fL−1)]
+(5)
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+7 of 33
+The raw coordinates are concatenated with the axis-wise encodings to form a (3 + 6L)-
+dimensional feature vector for each point, which is then projected to model dimension d
+through a two-layer MLP with GELU activation. We use L = 12 frequency bands, which
+gives us an initial data dimension of 75. Each of the N points in a point cloud is treated as
+an independent token in the input sequence.
+t, s, q, h (conditions)
+(B, 4)
+xt (noisy points)
+(B, N, 3)
+Cond. Embedders
+4 tokens + type embeds
+Point Embedding
+NeRF sinusoidal + MLP
+Input
+[ c1 c2 c3 c4
+|
+{z
+}
+cond
+| p1 · · · pN
+|
+{z
+}
+points
+]
+(B, 4, D)
+(B, N, D)
+Transformer Block 0
+Transformer Block 1
+Transformer Block 2
+Transformer Block 3
+Transformer Block 4
+Transformer Block 5
+Transformer Block 6
+Transformer Block 7
+(B, 4+N, D)
+Skip Connections
+Discard 4 cond. tokens
+LayerNorm
+Linear(D→3)
+Velocity vθ
+(B, 4+N, D)
+(B, N, D)
+(B, N, 3)
+Figure 3. Architecture of the conditional flow matching network. Conditioning inputs are timestep t,
+species s, acquisition platform q, and tree height h; point coordinates pa denote position along spatial
+axis a.
+The timestep t ∈[0, 1] is scaled to [0, 1000] and encoded using sinusoidal embeddings
+with 256 frequency components following the standard transformer formulation [41], then
+projected through a two-layer MLP with SiLU activation to produce a d-dimensional
+vector. The species and acquisition platform are categorical variables encoded via learned
+embedding tables of dimension d. To enable classifier-free guidance (CFG) during inference
+(Section 2.5), each embedding table includes an additional null token at index K + 1,
+where K is the number of categories. Tree height, a continuous variable in R1, is first log-
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+8 of 33
+transformed, then projected to Rd through a separate two-layer MLP with SiLU activation.
+A learnable null embedding vector is also maintained for height to support CFG dropout
+of this continuous attribute. Each conditioning embedding is assigned a learned token-
+type embedding to distinguish its role, and the four resulting d-dimensional vectors are
+prepended to the point token sequence as separate tokens, forming an input sequence of
+length 4 + N.
+The transformer backbone consists of a sequence of pre-norm transformer blocks [41].
+Each block contains two sub-layers: multi-head self-attention followed by a pointwise
+feedforward MLP with GELU activation and 4× hidden dimension expansion. Both sub-
+layers use pre-LayerNorm residual connections. To prevent attention logit growth during
+training, we apply LayerNorm to the query and key projections independently per head
+before computing attention scores [44]. Conditioning information enters the transformer
+exclusively through self-attention between the prepended conditioning tokens and the
+point tokens, with no per-layer modulation of the network weights.
+Following the U-ViT design [42], we add long skip connections between early and
+late transformer blocks. For i < L/2, the output of block i is concatenated with the
+output of block L −1 −i and projected back to model dimension d through a linear
+layer. These skip connections preserve the conditioning signal from early layers, where
+the prepended tokens have the most direct influence, through to the final layers of the
+network. Our implementation uses a model dimension of d = 512, 8 transformer blocks,
+and 8 attention heads.
+After the transformer blocks, we append an output head that discards the four prepended
+conditioning tokens and operates only on the point tokens. A final LayerNorm is ap-
+plied to the point token representations, followed by a linear projection mapping each
+d-dimensional token to R3, producing the per-point velocity prediction vθ(xt, t, c). The full
+model contains approximately 28.3 million trainable parameters.
+2.4. Training
+To enhance model robustness and promote geometric invariance, we employed data
+augmentation during training. Random rotation around the vertical (Z) axis was applied to
+each sample, and the point order within each cloud was shuffled to enforce permutation
+invariance. Point clouds exceeding 16,384 points were randomly subsampled to this
+maximum count to manage computational load. We further employed a batch-level point
+sampling strategy in which a random target point count was drawn per batch from a power-
+law distribution n = uα · nmax, where u ∼U[0, 1] and α = 0.3, with a floor of 256 points.
+All point clouds within a batch were then subsampled to this target count, exposing the
+model to variable point densities while enabling efficient batched computation.
+We optimized the model using AdamW with weight decay of 1 × 10−5. Gradient
+clipping with a maximum norm of 1.0 was applied to prevent training instabilities arising
+from occasional large gradients. We employed mixed-precision training using bfloat16 via
+PyTorch’s automatic mixed precision.
+Because self-attention has O(N2) computational cost, training directly at the full point
+count of 16,384 is expensive. We therefore adopted a curriculum learning strategy that
+progressively increased the point count across three training stages, initializing each stage
+from the weights of the previous one. In the first stage, the model was trained at 4096 points
+per cloud for 2000 epochs with a learning rate of 1 × 10−4 and cosine annealing to 1 × 10−5,
+using a per-GPU batch size of 32. In the second stage, the point count was increased
+to 8192 for 1000 epochs with a constant learning rate of 5 × 10−5 and a per-GPU batch
+size of 16. In the third stage, the point count was increased to 16,384 for 5000 epochs
+with a learning rate of 5 × 10−5 and cosine annealing to 1 × 10−6, using a per-GPU batch
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+9 of 33
+size of 8. At each transition, only the model weights were transferred; the optimizer and
+learning rate scheduler were reinitialized. All three stages drew training data from the
+same preprocessed dataset, which contains only trees with at least 16,384 points.
+The training procedure at each stage was identical. A batch of normalized point clouds
+was sampled from the training set along with their associated conditioning labels (species,
+acquisition platform, and height). For each example in the batch, a random timestep t was
+drawn independently from U[0, 1], and Gaussian noise x0 ∼N (0, I) was sampled with
+the same shape as the target point cloud x1. Interpolated points xt were then computed
+according to Equation (1). To enable classifier-free guidance during inference, conditioning
+inputs were randomly replaced with null embeddings with 15% probability. The model
+predicted velocities vθ(xt, t, c), and the Conditional Flow Matching loss in Equation (3) was
+computed against the target velocities ut expressed by Equation (2).
+Training was performed on four NVIDIA L40S GPUs using distributed data-parallel
+training via the Hugging Face Accelerate library. On four NVIDIA L40S GPUs, the three
+curriculum stages took approximately 21 h (4096 points, 2000 epochs;
+38 s/epoch),
+25 h (8192 points, 1000 epochs;
+89 s/epoch), and 328 h (16,384 points, 5000 epochs;
+236 s/epoch), for a total of roughly 370 four-GPU wall-clock hours (1500 L40S GPU-hours).
+Fine-tuning dominates because of the quadratic cost of self-attention at the full point count.
+Once the model is trained, generating one point cloud at the full 16,384-point resolution
+takes 22.5 s on a single L40S GPU. The implementation used Python version 3.10.19 with
+PyTorch version 2.8.0+cu129 and the flow-matching library [45] for optimal transport
+path computations. Source code is available at https://github.com/amarcozzi/TreeFlow,
+accessed on 19 June 2026.
+2.5. Evaluation
+Sample generation follows the standard flow matching inference procedure: integrat-
+ing the learned velocity field forward in time to transport samples from the source distribu-
+tion to the target distribution. Generation begins by sampling initial points x0 ∼N (0, I)
+with point count matching that of the source tree. The learned velocity field vθ(xt, t, c) is
+then integrated from t = 0 to t = 1 using the Dormand–Prince adaptive ODE solver [46].
+To improve sample fidelity to the conditioning vector, we apply classifier-free guidance
+(CFG) during inference [47]. At each integration step, the velocity is computed as
+v = vuncond + ω · (vcond −vuncond)
+(6)
+where vuncond is the model output with conditioning information replaced by null embed-
+dings, vcond is the fully conditioned output, and ω is the guidance scale.
+For each tree in the held-out test set, we generated 16 synthetic point clouds with CFG
+scale sampled independently for each sample from ω ∼U[1.0, 4.5], exposing the evaluation
+to a range of conditioning strengths. Generated point clouds were then transformed from
+normalized coordinates back to metric scale by reversing the preprocessing described in
+Section 2.1. The source tree’s point cloud was denormalized identically for all subsequent
+comparisons. We assess generation quality along two complementary axes, conditioning
+fidelity and distributional fidelity, reported globally, per genus, and per height bin at 5 m
+intervals from 0 to 40 m with a final bin for trees exceeding 40 m.
+Conditioning fidelity evaluates whether individual generated trees reproduce the geo-
+metric properties of their source trees, measured via six per-pair metrics. Chamfer distance
+measures the symmetric mean nearest-neighbor distance in meters between two point
+clouds. Because the model is trained with random rotation augmentation around the verti-
+cal axis, generated trees have no preferred horizontal orientation. We therefore align both
+clouds to a canonical orientation before comparison by centering at the mean, applying
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+10 of 33
+PCA to the xy-coordinates, and orienting the first principal axis so that the skewness of the
+projected coordinates is positive.
+The next three metrics are derived from a stem-tracking algorithm that fits a polyno-
+mial spine to the trunk axis and computes cylindrical coordinates for each point relative
+to this spine, with radial distance measured perpendicular to the stem and arc length
+measured along it. The algorithm is described in Appendix B. The stem is divided into
+30 equal arc-length slices, and the mean radial distance is computed within each slice. The
+maximum crown radius is the largest of these mean radial distances, measured in meters.
+Height at maximum crown radius is the arc-length position of the widest slice, converted
+to meters. Height to crown base is estimated by detecting the knee point in the cumulative
+radial profile, corresponding to the arc-length position where crown point density begins
+accumulating rapidly. The detection procedure is detailed in Appendix C.
+Because the stem-tracking algorithm fits a polynomial spine to the trunk axis, point
+clouds that lack a well-defined trunk can cause the cubic fit to diverge, placing the estimated
+spine far from the points and inflating the radial coordinate without bound (Appendix B).
+We therefore flag a generated sample as a stem-fit failure when its extracted maximum
+crown radius exceeds Treal = 9.87 m, where Treal is the largest crown radius observed
+across all real trees in the dataset. Flagged samples are excluded from the four metrics that
+depend on the fitted spine—maximum crown radius difference, height at maximum crown
+radius difference, height to crown base difference, and 2D histogram divergence—and
+from the three morphological Wasserstein distances defined below. They are retained for
+Chamfer distance and vertical KDE divergence, which do not depend on the stem-tracking
+algorithm, so that genuinely degenerate generations continue to be penalized wherever the
+measurement itself remains valid. We report the rate of flagged samples in Section 3.
+The final two metrics compare the full spatial distribution of points within each tree.
+Vertical KDE divergence is the Jensen–Shannon divergence between one-dimensional
+kernel density estimates of the vertical coordinates evaluated at 64 equally spaced positions.
+This metric does not depend on the stem-tracking algorithm. Two-dimensional histogram
+divergence is the Jensen–Shannon divergence between 16 × 32 histograms of radial distance
+and arc length, with bin edges scaled to each tree’s own range so that the comparison reflects
+distributional shape rather than absolute extent.
+For each source tree, the six metrics are computed against all 16 of its generated
+samples and the median is retained as the per-tree summary statistic. Tables report the
+mean of these per-tree medians within each stratum, ensuring that every source tree
+contributes equally.
+To aid interpretation, we construct two reference baselines from the real test set. The
+intra-class baseline pairs each test tree with 32 randomly sampled real neighbors that
+share its genus and height bin, representing the natural geometric variation among trees of
+comparable type and size. The inter-class baseline pairs each test tree with 32 neighbors
+drawn from different genera, representing the expected dissimilarity between unrelated
+trees. All six metrics are computed for these real–real pairs using the same alignment and
+feature extraction pipeline applied to generated samples.
+As a third reference, we additionally evaluate a nearest-neighbor retrieval-and-scaling
+baseline. For each test tree, the baseline retrieves the 16 nearest-in-height training trees of
+the same species, preferring those sharing the test tree’s acquisition platform and falling
+back to the same genus and then the full training set when too few same-species trees are
+available. Because all point clouds are height-normalized, assigning the test tree’s height
+to a retrieved cloud rescales it to the target height exactly, so the baseline draws only on
+the conditioning attributes available to TreeFlow and uses no information from the test
+tree’s own point cloud. Retrieved trees are scored with the identical alignment and feature
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+11 of 33
+extraction pipeline applied to the generated samples. Because the retrieved trees are real,
+this baseline functions as a distributional analog of the intra-class baseline: it calibrates the
+scores that real trees achieve on this dataset rather than serving as a competing generator.
+Distributional fidelity evaluates whether the population of generated trees reproduces
+the statistical structure of the real population. We compute the Wasserstein-1 distance
+between the real and generated marginal distributions of three morphological properties:
+height at maximum crown radius, maximum crown radius, and height to crown base.
+For each property and stratum, the distance is computed between all real test trees in the
+stratum and all generated trees conditioned on sources within that stratum, requiring a
+minimum of five samples per group.
+To enable comparison with prior work on point cloud generation, we additionally
+report three population-level metrics in wide use for this task: Coverage (COV), Minimum
+Matching Distance (MMD), and 1-nearest-neighbor classifier accuracy (1-NNA) [30,35].
+Coverage is the fraction of real trees that are the nearest neighbor of at least one generated
+tree, with higher values indicating broader coverage of the real distribution. Minimum
+matching distance is the mean Chamfer distance from each real tree to its nearest generated
+tree in meters, with lower values indicating closer matches. 1-NNA is the leave-one-out
+1-nearest-neighbor classification accuracy over the pooled set of real and generated trees,
+for which a value of 0.5 indicates that the two populations are indistinguishable. All
+three metrics are computed on canonicalized, metric-scale point clouds subsampled to
+2048 points for computational efficiency, evaluated within each (genus, height bin) stratum,
+and aggregated into a global summary weighted by the number of real trees per stratum.
+These metrics are reported in Appendix A.1.
+3. Results
+Figure 4 illustrates the generative process for a single Douglas fir (Pseudotsuga menziesii,
+h = 32.4 m, ULS) across successive flow times from the isotropic Gaussian source at t = 0
+to the final generated tree at t = 1. The integration reveals a coarse-to-fine hierarchy. At
+t = 0.5, the point cloud remains diffuse, exhibiting only a weak vertical elongation. By
+t = 0.8, a recognizable tree silhouette has formed, and between t = 0.9 and t = 0.95 the
+crown differentiates into a narrow conical profile characteristic of the species. Individual
+branch-scale features resolve only in the final stages of the flow. This progression suggests
+that the learned velocity field encodes tree structure at multiple spatial scales, allocating
+most of the transport budget to establishing gross geometry before committing to fine detail.
+Figure 5 presents six real trees from the test set alongside four generated samples
+for each, spanning a range of species and tree sizes. Source trees were selected from the
+middle-performing third of the test set, ranked by median Chamfer distance, with height
+stratification to represent diverse size classes. Within each row, all samples share the
+same conditioning inputs (species, height, and acquisition platform), so differences among
+the four samples reflect the model’s learned variability rather than differences in input.
+The generated trees reproduce the overall crown shape, stem proportions, and vertical
+point density structure of their real counterparts while exhibiting variation in branch
+placement, crown extent, and lean. Given a fixed set of attributes, the model produces
+structurally distinct but morphologically plausible realizations of 3D tree architecture. In
+addition, Figure 6 presents six real trees from the test set chosen randomly without sample
+or selection bias.
+The model’s response to the height conditioning variable is shown in Figure 7, which
+presents four generated Scots pine (Pinus sylvestris, TLS) point clouds at target heights of 5,
+12, 20, and 30 m. Each sample was generated from independent Gaussian noise with only
+the target height varied. Species and platform were held fixed. The 5 m tree exhibits a broad,
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+12 of 33
+low-set crown typical of open-grown juveniles, while taller trees develop progressively
+longer bare stems and narrower, elevated crowns consistent with mature stand-grown
+individuals. These height-dependent structural relationships were not explicitly encoded
+and emerge entirely from the training data distribution.
+t = 0.0
+t = 0.50
+t = 0.70
+t = 0.80
+t = 0.90
+t = 0.95
+t = 0.97
+t = 1.0
+Figure 4. Time evolution of the generative process for a single Douglas fir (Pseudotsuga menziesii,
+h = 32.4 m, ULS) with classifier-free guidance scale ω = 3.0. Each panel shows the point cloud at
+flow time t, progressing from the isotropic Gaussian source distribution (t = 0) to the final generated
+tree (t = 1) via integration of the learned velocity field vθ. Time steps are spaced non-uniformly to
+emphasize the later stages of integration where fine structure emerges. Points are colored by height,
+and each panel is independently scaled to its spatial extent.
+Table 1 reports global conditioning fidelity across all 1271 test trees using the
+six per-pair metrics described in Section 2.5, alongside the intra-class and inter-class
+reference baselines.
+Table 1. Global conditioning fidelity across all 1271 test trees, reported as the mean of per-tree
+medians. The stem-tracker metrics (|∆|HmCR, |∆|CrR, |∆|HCB, 2D histogram) exclude a small
+fraction of degenerate generations with non-physical fitted crown radius; Chamfer and vertical KDE
+retain all samples. The intra-class baseline pairs each test tree with real neighbors sharing its genus
+and height bin; the inter-class baseline pairs each test tree with neighbors from different genera.
+Metric
+Generated
+Intra-Class
+Inter-Class
+Chamfer distance (m)
+0.581
+0.559
+1.025
+|∆| Height at max crown R (m)
+2.806
+2.932
+8.377
+|∆| Max crown radius (m)
+0.771
+0.641
+1.074
+|∆| Height to crown base (m)
+1.985
+2.113
+5.568
+Vertical KDE JSD
+0.086
+0.094
+0.122
+2D histogram JSD
+0.236
+0.251
+0.319
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+13 of 33
+Real
+Sample 1
+Sample 2
+Sample 3
+Sample 4
+Pseudotsuga menziesii
+H = 39.4 m
+ULS
+Tilia cordata
+H = 20.1 m
+TLS
+Fagus sylvatica
+H = 14.2 m
+TLS
+Pinus nigra
+H = 10.3 m
+TLS
+Quercus faginea
+H = 7.6 m
+TLS
+Carpinus betulus
+H = 6.5 m
+TLS
+Figure 5.
+Representative generation quality.
+Six test-set trees (leftmost column) alongside
+four generated samples each, conditioned on the same species, height, and acquisition platform
+as the source. Source trees were drawn from the middle third of the test set as ranked by median
+Chamfer distance and reflect typical model performance. Species, height, and platform are listed at
+left. Points are colored by height.
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+14 of 33
+Real
+Sample 1
+Sample 2
+Sample 3
+Sample 4
+Fagus sylvatica
+H = 37.0 m
+TLS
+Quercus rubra
+H = 23.5 m
+ULS
+Picea abies
+H = 20.4 m
+TLS
+Pinus sylvestris
+H = 18.0 m
+TLS
+Acer campestre
+H = 7.6 m
+TLS
+Carpinus betulus
+H = 6.8 m
+TLS
+Figure 6. Random samples. Six test-set trees (leftmost column) alongside four generated samples
+each, conditioned on the same species, height, and acquisition platform as the source. Source trees
+were drawn at random from the test set, so the displayed samples reflect the full range of generation
+quality without selection bias. Species, height, and platform are listed at left. Points are colored
+by height.
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+15 of 33
+h = 5 m
+h = 12 m
+h = 20 m
+h = 30 m
+Figure 7. Generated Scots pine (Pinus sylvestris, TLS) point clouds at four target heights with classifier-
+free guidance scale ω = 3.0. Each panel shows a single sample generated from independent Gaussian
+noise with only the target height h varied; species and platform are held fixed. Points are colored by
+height. All four panels share a common vertical scale, and their trunk bases are aligned at z = 0, so
+the apparent size of each tree reflects its true generated height in meters, and cross-panel comparison
+is direct.
+On five of the six metrics, generated samples perform at or near the intra-class baseline.
+The Chamfer distance of 0.581 m for generated trees compares to 0.559 m for the intra-class
+baseline, a difference of only 4%. This indicates that generated trees are approximately as
+geometrically similar to their source as two real trees of the same genus and height bin are
+to each other. Height at maximum crown radius difference (2.806 m vs. 2.932 m), height
+to crown base difference (1.985 m vs. 2.113 m), vertical KDE divergence (0.086 vs. 0.094),
+and 2D histogram divergence (0.236 vs. 0.251) all show generated samples matching or
+slightly outperforming the intra-class baseline. All six metrics fall substantially closer to
+the intra-class baseline than to the inter-class baseline, confirming that the model generates
+trees belonging to the correct morphological class.
+The one metric where generated samples remain worse than the intra-class baseline is
+maximum crown radius difference (0.771 m vs. 0.641 m), a 20% relative increase. This value
+is computed after excluding a small fraction of degenerate generations whose fitted crown
+radius is non-physical. Retaining them inflates the difference to 1.012 m, a 58% increase.
+The residual gap indicates that the model still occasionally over- or under-estimates lateral
+crown extent even when the vertical structure of the tree is well captured. The per-tree
+distributions underlying these means are right-skewed. As reported in Table A2, the median
+per-tree value lies well below the mean for every stem-tracker metric (for example, a median
+maximum crown radius difference of 0.539 m against a mean of 0.771 m), indicating that
+most generated trees are reconstructed more accurately than the mean alone suggests and
+that a minority account for much of the error.
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+16 of 33
+The conditioning fidelity metrics in Table 1 assess individual-level accuracy but do
+not reveal whether the model introduces systematic biases across the population. We
+therefore compute the Wasserstein-1 (W1) distance between the real and generated marginal
+distributions of three morphological properties. The W1 distances for height to crown base
+(0.238 m), height at maximum crown radius (0.602 m), and maximum crown radius (0.473 m)
+are all small relative to the range of tree heights in the dataset, once degenerate generations
+are excluded. These values indicate that the model places the crown base transition, the
+widest crown section, and the lateral crown extent at statistically appropriate positions
+across the population.
+Table 2 stratifies the previous evaluation by genus, revealing substantial variation
+in generation quality across taxa. The strongest results appear for genera that are well
+represented in the training data and span moderate heights. Pinus (n = 393), the most
+abundant genus, achieves a Chamfer distance of 0.41 m and a crown radius W1 of 0.22 m.
+Quercus (n = 102), Tilia (n = 20), and Eucalyptus (n = 28) show similarly strong condition-
+ing fidelity, with Chamfer distances below 0.6 m and crown radius W1 values under 1 m.
+Euonymus (n = 5), though represented by very few test trees, achieves the lowest Chamfer
+distance (0.20 m) and crown radius difference (0.17 m) of any genus.
+Table 2. Conditioning fidelity and distributional fidelity stratified by genus. Genera are sorted
+alphabetically. n is the number of unique test trees. Conditioning fidelity columns: CD, Chamfer
+distance (m); ∆HmCR, absolute difference in height at maximum crown radius (m); ∆CrR, absolute
+difference in maximum crown radius (m); ∆HCB, absolute difference in height to crown base (m);
+V-KDE, vertical KDE Jensen–Shannon divergence; H2D, 2D histogram Jensen–Shannon divergence.
+The W1 columns report the Wasserstein-1 distance (m) between the real and generated marginal
+distributions of height at maximum crown radius (HmCR), maximum crown radius (CrR), and height
+to crown base (HCB). Stem-tracker metrics exclude degenerate generations. W1 requires a minimum
+of five trees per stratum and is omitted where this threshold is not met.
+Conditioning Fidelity
+W1 (m)
+Genus
+n
+CD
+∆HmCR
+∆CrR
+∆HCB
+V-KDE
+H2D
+HmCR
+CrR
+HCB
+Abies
+9
+0.81
+4.49
+0.76
+3.84
+0.080
+0.233
+2.09
+0.73
+2.00
+Acer
+124
+0.69
+2.30
+0.69
+1.43
+0.050
+0.252
+0.85
+0.32
+0.57
+Betula
+36
+0.54
+2.73
+0.63
+1.61
+0.103
+0.273
+1.04
+0.19
+0.88
+Carpinus
+66
+0.58
+2.02
+0.87
+1.44
+0.067
+0.290
+0.75
+0.77
+0.30
+Corylus
+4
+0.88
+1.18
+1.06
+0.84
+0.088
+0.325
+—
+—
+—
+Crataegus
+14
+0.40
+1.03
+1.13
+0.63
+0.091
+0.352
+0.61
+0.62
+0.44
+Eucalyptus
+28
+0.41
+0.86
+0.60
+0.73
+0.078
+0.254
+0.52
+0.49
+0.29
+Euonymus
+5
+0.20
+0.49
+0.17
+0.48
+0.090
+0.316
+0.30
+0.19
+0.20
+Fagus
+199
+0.76
+3.86
+1.06
+2.85
+0.072
+0.256
+0.50
+0.71
+0.46
+Fraxinus
+17
+0.94
+2.44
+1.12
+2.39
+0.043
+0.236
+1.89
+0.54
+1.26
+Larix
+9
+1.32
+4.94
+1.63
+4.28
+0.258
+0.363
+3.04
+1.72
+1.45
+Picea
+147
+0.60
+4.35
+0.70
+3.21
+0.127
+0.242
+1.69
+0.52
+0.83
+Pinus
+393
+0.41
+2.22
+0.53
+1.50
+0.079
+0.195
+0.88
+0.22
+0.27
+Populus
+14
+0.66
+2.11
+1.21
+1.29
+0.104
+0.322
+0.78
+0.98
+0.74
+Prunus
+1
+0.50
+2.57
+0.23
+2.57
+0.065
+0.183
+—
+—
+—
+Pseudotsuga
+64
+0.98
+5.01
+1.22
+3.57
+0.222
+0.280
+1.68
+1.03
+1.24
+Quercus
+102
+0.52
+1.73
+0.95
+1.30
+0.045
+0.186
+0.43
+0.74
+0.35
+Tilia
+20
+0.39
+1.47
+0.56
+0.76
+0.059
+0.261
+0.45
+0.16
+0.32
+Ulmus
+19
+0.39
+1.94
+0.48
+0.87
+0.063
+0.312
+1.53
+0.41
+0.36
+Performance degrades for tall conifers and underrepresented genera. Larix (n = 9) has
+the highest Chamfer distance (1.32 m) and vertical KDE divergence (0.258), consistent with
+its sparse, open crown architecture being difficult to reconstruct from few training examples.
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+17 of 33
+Before excluding degenerate generations, the maximum crown radius W1 reaches 29.31 m
+for Picea and 26.69 m for Pseudotsuga. These are driven by non-physical values produced
+by a small fraction of generations on which the cubic stem-spine fit diverges, inflating the
+radial coordinate without bound (Appendix B). Excluding these samples brings the crown
+radius W1 to 0.52 m for Picea and 1.03 m for Pseudotsuga, in line with other genera. Both genera
+are among the tallest in the dataset, and the degenerate generations that drive the inflation are
+concentrated at large heights, as the following height-stratified analysis shows.
+Table 3 stratifies the evaluation by height bin, revealing a clear relationship between
+tree height and generation quality. Nearly every conditioning fidelity metric degrades mono-
+tonically with increasing height. Trees below 5 m achieve a Chamfer distance of 0.28 m and
+crown radius W1 of 0.39m. Trees in the 10–20m range remain practical with Chamfer dis-
+tances of 0.44–0.56 m. Above 25 m, the Chamfer distance approaches or exceeds 1.0 m and the
+height-related crown morphology differences roughly double relative to the 15–20 m bin.
+Table 3. Conditioning fidelity (mean of per-tree medians) and distributional fidelity (W1, meters)
+stratified by height bin. Column name abbreviations are defined in the caption of Table 2; stem-tracker
+metrics exclude degenerate generations. Bins are 5 m intervals from 0 to 40 m with a final bin for trees
+exceeding 40 m; n is the number of unique test trees per bin.
+Conditioning Fidelity
+W1 (m)
+Height Bin
+n
+CD
+∆HmCR
+∆CrR
+∆HCB
+V-KDE
+H2D
+HmCR
+CrR
+HCB
+0–5 m
+103
+0.28
+0.82
+0.49
+0.48
+0.064
+0.290
+0.22
+0.39
+0.16
+5–10 m
+268
+0.41
+1.50
+0.60
+0.92
+0.064
+0.259
+0.30
+0.44
+0.14
+10–15 m
+133
+0.56
+2.39
+0.75
+1.69
+0.085
+0.265
+0.79
+0.44
+0.40
+15–20 m
+257
+0.44
+2.41
+0.60
+1.65
+0.065
+0.192
+0.81
+0.31
+0.21
+20–25 m
+239
+0.61
+3.07
+0.81
+2.34
+0.083
+0.211
+0.93
+0.46
+0.39
+25–30 m
+137
+0.95
+4.93
+1.07
+3.65
+0.149
+0.251
+1.81
+0.83
+1.22
+30–35 m
+85
+1.04
+5.54
+1.36
+4.07
+0.130
+0.249
+1.23
+0.89
+0.56
+35–40 m
+38
+1.02
+5.22
+1.18
+3.42
+0.123
+0.225
+1.76
+0.97
+1.04
+40+ m
+11
+0.92
+5.79
+1.07
+3.91
+0.092
+0.188
+3.84
+0.50
+2.22
+The rate at which generations are flagged as degenerate is reported in Table 4. Across
+all 20,336 generated samples, 2.09% are flagged, but the rate is sharply concentrated at
+large heights. It is below 0.1% for all trees under 20 m, rises to 8.30% in the 25–30 m bin
+and peaks at 11.32% in the 30–35 m bin. By genus, the rate is highest for the tall conifers
+Pseudotsuga (10.4%) and Picea (7.4%), but it is not exclusively a conifer phenomenon, as the
+tall broadleaf Fagus reaches 3.5%. This height concentration mirrors the height-dependent
+degradation in conditioning fidelity documented in Table 3, and is consistent with the
+stem-tracking spine being most prone to divergence when trunk segments are long, and
+crown extents are large.
+Table 4. Rate of degenerate generations across all 20,336 generated samples, defined as samples
+whose stem-tracked crown radius exceeds the largest crown radius observed in the real dataset
+(Treal = 9.87 m)—a non-physical value produced when the cubic stem-spine fit diverges on a diffuse
+or ill-defined generated trunk. Overall rate 2.09% (425/20,336); among tall conifers (Picea, Pseudotsuga,
+Abies, Larix) 7.9% (288/3664). By genus, the rate is 10.4% for Pseudotsuga, 7.4% for Picea, 4.2% for Larix,
+and 3.5% for Fagus, and below 1.5% for all other genera.
+Height Bin
+Degenerate/Total
+Rate (%)
+0–5 m
+0/1648
+0.00
+5–10 m
+0/4288
+0.00
+10–15 m
+1/2128
+0.05
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+18 of 33
+Table 4. Cont.
+Height Bin
+Degenerate/Total
+Rate (%)
+15–20 m
+4/4112
+0.10
+20–25 m
+52/3824
+1.36
+25–30 m
+182/2192
+8.30
+30–35 m
+154/1360
+11.32
+35–40 m
+31/608
+5.10
+40+ m
+1/176
+0.57
+Overall
+425/20,336
+2.09
+4. Discussion
+The results presented here demonstrate that a conditional flow matching model with
+a general transformer architecture can generate structurally plausible 3D tree point clouds
+from species, acquisition platform, and tree height alone, bypassing the chained submodel
+pipelines that have traditionally been required to estimate 3D structure from inventory
+attributes. On five of six conditioning fidelity metrics, generated trees perform at or near the
+intra-class baseline, and the model produces morphologically distinct samples that respect
+species-specific crown architecture and scale appropriately with height. We obtained these
+results using a single dataset, a single architecture with no domain-specific structural
+priors, and a minimal set of conditioning variables. We chose this minimal configuration to
+establish a baseline that future work can extend through expanded training data, richer
+conditioning information, and alternative model architectures.
+The dominant pattern across both the genus-level and height-level stratification is that
+generation quality degrades with increasing tree height. This degradation has a clear mech-
+anistic explanation. Because all point clouds are scaled by tree height during normalization,
+a 35 m tree distributes the same number of points across a proportionally larger metric-
+scale structure than a 5 m tree, reducing the effective spatial resolution available to the
+model. While we acknowledge the deficiency of this approach, this normalization scheme
+allowed for efficient training of a general architecture as described above. A generative
+scheme that targets a fixed point density rather than a fixed point count would avoid the
+height-dependent resolution loss and is an important direction for future work. In practice,
+the model presented here produces its strongest results for trees below approximately 25 m,
+where Chamfer distances remain below 0.7 m and distributional metrics are well-behaved
+across most genera.
+Maximum crown radius is the metric on which generated samples remain worst
+relative to the intra-class baseline, with a per-pair difference 20% larger at the global level.
+This residual is small, but interpreting it requires separating a genuine model limitation
+from an evaluation artifact that affects this metric alone. The stem-tracking algorithm fits
+a cubic polynomial spine to the trunk axis (Appendix B), and on a generated cloud that
+lacks a well-defined trunk this fit can diverge, placing the spine far outside the bounded
+point cloud. Because the radial coordinate is the perpendicular distance from each point to
+this spine, a diverging fit inflates it without bound, producing the degenerate generations
+characterized in Table 4. Only the radial coordinate can diverge in this way. Height at
+maximum crown radius and height to crown base are arc-length positions bounded by
+tree height, which is why those metrics are unaffected and only maximum crown radius
+requires the exclusion. The stem tracker produces no such values on any real tree or any
+retrieval-baseline output, confirming that the divergence is a property of a small subset of
+generations rather than of the tracking algorithm itself. Once these degenerate generations
+are excluded, a small genuine gap remains. Valid generated crowns differ from their real
+counterparts by a few tenths of a meter in lateral extent. We attribute this residual to the
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+19 of 33
+conditioning variables rather than the evaluation, since lateral crown extent is influenced
+by competition, light environment, site quality, and developmental history, none of which
+are captured by species and height alone. The model produces plausible samples from the
+distribution it has learned, but that distribution is broad because the conditioning does not
+sufficiently constrain lateral extent.
+The model learns to approximate a distribution over 3D point clouds spanned by
+the training data and cannot generalize to species, crown morphologies, or geographic
+contexts outside that distribution. While the evaluation demonstrates strong performance
+on the held-out test set, the splits were stratified by species but partitioned at the level
+of individual trees rather than by source data collection. The FOR-species20K dataset
+aggregates 25 contributed sub-collections, each identified by a dataset field, and trees
+from the same collection—potentially sharing a plot, site, or acquisition campaign—may
+therefore appear in both training and test sets. Because trees from a common site can share
+systematic characteristics in scanner, point density, occlusion pattern, and local growing
+conditions, the held-out metrics reported here may be optimistic relative to performance
+on trees from entirely unseen sites. A stricter site-level split was not feasible for several
+underrepresented species, for which the available trees originate from only one or a few
+stands and a source-level holdout would remove the species from a split entirely. As
+the training data are expanded to include additional independent collections, a source- or
+site-level evaluation protocol would provide a more conservative estimate of generalization.
+The FOR-species20K dataset is geographically concentrated in European forests with
+imbalanced platform representation (Section 2.1), and the per-genus results in Table 2
+confirm that generation quality correlates with sample size in the training set. Expanding
+the training dataset is the most direct path to broader applicability. There are many
+single-tree and plot-level TLS datasets across the globe that could extend the geographic,
+species, and crown morphology coverage of the existing benchmark. Examples include
+the 3Dtrees.earth (https://3dtrees.earth/) and Global TLS (https://www.global-tls.net/)
+datasets. The Interagency LiDAR Monitoring and Research Applications (IntELiMon) is
+another possible dataset consisting of many single scan plots, which can be used for either
+individual tree training data or a modified approach in which we train a model to learn the
+conditional generation of single scan plots rather than individual trees [48].
+Another limitation of this modeling approach is that the transformer architecture
+imposes O(N2) computational complexity in the self-attention mechanism, which is the
+primary bottleneck for scaling to larger point counts. At 16,384 points with FlashAttention,
+training on L40S GPUs and inference via adaptive ODE solving are tractable, but scaling to
+the full point densities typical of TLS scans, often exceeding 100,000 points per tree, is not
+feasible with the current approach. The multiple forward passes required by classifier-free
+guidance at each ODE solver step further compound this cost. We investigated several
+sparse self-attention techniques to address the quadratic scaling but found that custom
+implementations were slower than full self-attention with FlashAttention for the point
+counts considered here.
+A related concern is whether the general transformer architecture is the right choice
+for this problem. Full self-attention means that every point attends to every other point,
+including pairs with no meaningful spatial relationship, such as a stem point and a distant
+terminal branch point. An architecture with a stronger inductive bias for 3D structure,
+such as point transformer networks or octree representations, could potentially reduce
+computation by restricting attention to local neighborhoods while still capturing the long-
+range dependencies needed for global crown shape [49,50]. A second promising direction
+is latent-space generation, in which an encoder compresses the point cloud to a fixed-size
+representation and the flow matching model operates in that lower-dimensional space [51].
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+20 of 33
+This would decouple the token count from the point count, and the idea has shown
+strong results in image generation [52] and point cloud generation [30]. An ablation study
+comparing generation quality and computational cost across these architectural families is
+an important direction for future work.
+Species and height alone do not capture the range of factors that influence crown
+morphology, including competition, light environment, site quality, and developmental
+history. As noted above, this is likely a contributing factor to the crown radius underper-
+formance observed for several genera. The most immediate path to richer conditioning
+is the inclusion of variables that can be computed directly from the training data using
+the methods presented in this paper, such as crown base height, maximum crown radius,
+and diameter at breast height. Beyond tree-level attributes, conditioning on partial 3D
+information such as a low-resolution ALS scan or a 2D canopy height model could enable
+the generation of 3D structure at landscape scales [39]. The freely available CONUS-scale
+NAIP-CHM data product would make such an approach feasible for open canopies across
+the continental United States [21].
+With the conditioning expansion described above, TreeFlow has the potential to sup-
+port crown construction in FastFuels, which currently builds volumetric tree crowns from
+species, height, diameter, and crown base height using parametric crown profile models and
+probabilistic mass distribution functions [1]. These submodels are weakly parameterized
+for many species and rely on idealized geometric envelopes. TreeFlow offers two potential
+paths: generated point clouds could supply structural inputs in place of the profile and mass
+distribution chain, or generated samples could be used to fit the parameters of the existing
+functions. The framework also extends naturally as richer training data become available.
+Per-point semantic labels from datasets such as SegmentedForests [53] would allow joint
+generation of 3D positions and component classes (stem, branch, foliage), and methods
+that estimate biomass directly from TLS scans [54] suggest the possibility of generating
+voxels with mass quantities rather than assigning them through downstream allometry.
+More broadly, the generated point clouds may provide structural inputs for forest
+digital twins, which have been proposed as integrative modeling frameworks but currently
+lack scalable methods for populating 3D tree geometry from inventory data [8,55]. The
+same structure could support radiative transfer simulation [3,4], canopy light interception
+modeling [5], and quantitative structure modeling [56].
+5. Conclusions
+In this paper, we presented TreeFlow, a conditional flow matching model that generates
+3D individual tree point clouds from species, acquisition platform, and tree height, trained
+entirely on real laser scanning data from the FOR-species20K benchmark dataset. On five of
+six conditioning fidelity metrics, generated trees perform at or near the intra-class baseline,
+indicating that they are approximately as similar to their source trees as two real trees of
+the same genus and height class are to each other. The model captures species-specific
+crown architecture and produces morphologically distinct samples that scale appropriately
+with height, all without domain-specific structural priors or chained submodel pipelines.
+Generation quality is strongest for trees below 25 m and degrades at greater heights due to
+reduced effective spatial resolution under the current normalization scheme.
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+21 of 33
+The minimal conditioning configuration used here establishes a baseline that can be
+extended in several directions: expanding the training data to include additional geographic
+regions and species, enriching the conditioning vector with variables such as crown base
+height and diameter at breast height, and exploring architectures with stronger inductive
+biases for 3D structure or latent-space generation to scale beyond the current 16,384-point
+limit. With these extensions, TreeFlow could serve as a data-driven alternative to parametric
+crown construction in platforms such as FastFuels, and more broadly as a scalable method
+for populating 3D tree geometry in forest digital twins.
+Author Contributions: Conceptualization, A.M., D.M., J.C., Z.C., L.W. and S.H.; Methodology,
+A.M., J.T., J.C., L.W. and S.H.; Software, A.M. and J.C.; Validation, A.M.; Formal analysis, A.M.;
+Investigation, A.M., L.W. and S.H.; Resources, A.M.; Data curation, A.M.; Writing—original draft,
+A.M. and Z.C.; Writing—review & editing, A.M., J.T., D.M., J.C., Z.C., L.W. and S.H.; Visualization,
+A.M.; Supervision, A.M.; Project administration, A.M. All authors have read and agreed to the
+published version of the manuscript.
+Funding: This research was funded by the Department of Defense, Environmental Security Technol-
+ogy Certification Program, grant numbers RC23-7626, RC24-8162, and NH25-9025.
+Data Availability Statement:
+All source code for data preprocessing, model training, sample
+generation, figure creation, and evaluation is provided in the GitHub repository: https://github.
+com/amarcozzi/TreeFlow, accessed on 19 June 2026. Model checkpoints, training validation, final
+weights, and all generated samples are available in the Zenodo repository: https://zenodo.org/
+records/19719862, accessed on 19 June 2026.
+Acknowledgments: This research used resources provided by the SCINet project and/or the AI
+Center of Excellence of the USDA Agricultural Research Service, ARS project numbers 0201-88888-
+003-000D and 0201-88888-002-000D. We also acknowledge the USDA United States Forest Service
+award 23-CS-11221637-120.
+Conflicts of Interest: Author Lucas Wells was employed by the company Silvx Labs. The remaining
+authors declare that the research was conducted in the absence of any commercial or financial
+relationships that could be construed as a potential conflict of interest.
+Appendix A. Additional Results
+Appendix A.1. Distributional Metrics
+We additionally evaluate the population-level metrics described in Section 2.5, which
+assess whether the generated population as a whole resembles the real population rather
+than scoring individual conditioning pairs. Table A1 reports Coverage, Minimum Matching
+Distance, and 1-nearest-neighbor classifier accuracy for TreeFlow, alongside a real-data
+reference computed by scoring a sample of real training trees against the real test set over
+the identical strata. Because the reference is composed of real trees, its 1-NNA of 0.483 sits
+at the real-vs-real value of approximately 0.5; it calibrates the scores attainable on this
+dataset rather than acting as a competing generator. TreeFlow attains the closest agreement
+with this reference for trees below 20 m and diverges from it at greater heights, the same
+height-dependent pattern observed in the conditioning fidelity and Wasserstein metrics.
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+22 of 33
+Table A1. Distributional fidelity: Coverage (COV; higher better), Minimum Matching Distance (MMD;
+meters, lower better), and 1-nearest-neighbor classifier accuracy (1-NNA; 0.5 is indistinguishable
+from real). The per-bin and global rows are TreeFlow; the final row is a real-data reference. That
+reference scores a sample of real training trees (the nearest-in-height same-species neighbors used
+by the retrieval baseline) against the real test set, computed over the identical strata, and therefore
+calibrates what “real” scores look like on this dataset—its 1-NNA of ≈0.5 is the real-vs-real reference
+point by construction, not a competing generator. Metrics are computed within (genus, height-bin)
+strata and aggregated weighting in each stratum by its number of real trees.
+Height Bin
+COV
+MMD (m)
+1-NNA
+0–5 m
+0.899
+0.161
+0.580
+5–10 m
+0.728
+0.258
+0.662
+10–15 m
+0.835
+0.345
+0.654
+15–20 m
+0.524
+0.307
+0.666
+20–25 m
+0.521
+0.367
+0.666
+25–30 m
+0.664
+0.524
+0.766
+30–35 m
+0.767
+0.629
+0.783
+35–40 m
+0.565
+0.647
+0.761
+TreeFlow (global)
+0.652
+0.354
+0.679
+Real-data reference (retrieval)
+0.757
+0.310
+0.483
+Table A2. Dispersion of the per-tree conditioning-fidelity metrics for the generated samples in Table 1,
+computed across the per-conditioning-tree values (n = 1271) so that every source tree contributes
+equally. We report the mean, standard deviation (SD), median, and interquartile range (IQR). For
+the right-skewed stem-tracker metrics, the median lies well below the mean, confirming that typical
+generations are closer to the real trees than the mean alone indicates; degenerate generations are
+excluded as in Table 1.
+Metric
+Mean
+SD
+Median
+IQR
+Chamfer distance (m)
+0.581
+0.410
+0.456
+0.285–0.769
+|∆| Height at max crown R (m)
+2.806
+2.715
+1.977
+1.193–3.555
+|∆| Max crown radius (m)
+0.771
+0.681
+0.539
+0.324–0.983
+|∆| Height to crown base (m)
+1.985
+1.905
+1.296
+0.701–2.619
+Vertical KDE JSD
+0.086
+0.099
+0.054
+0.032–0.092
+2D histogram JSD
+0.236
+0.102
+0.221
+0.154–0.295
+Appendix A.2. Classifier-Free Guidance Scale Sensitivity
+As described in the Section 2.5, each of the 16 synthetic point clouds generated per
+test tree used a classifier-free guidance scale ω drawn independently from a uniform
+distribution. This design allows us to examine how guidance strength affects generation
+quality post hoc without requiring additional inference runs.
+Figure A1 shows each of the six conditioning fidelity metrics as a function of ω. Within
+each panel, the solid line traces the binned median across all real–generated pairs falling in
+that ω bin, the shaded band spans the interquartile range, and the dashed horizontal line
+marks the corresponding intra-class reference baseline reported in Table 1.
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+23 of 33
+All six metrics remain close to the intra-class baseline across the sampled guidance
+range, indicating that generation quality is not strongly sensitive to the choice of ω within
+this interval. Chamfer distance, the three morphological difference metrics, and the vertical
+KDE divergence show essentially flat medians with consistent spread. The 2D histogram
+divergence exhibits a mild upward trend with increasing ω, suggesting that stronger
+guidance may slightly reduce internal structural diversity relative to the source tree. The
+interquartile range is approximately constant across ω for every metric, indicating that
+guidance strength primarily affects central tendency rather than the variability of generation
+quality. These results suggest that the model produces robust outputs across a broad
+range of guidance strengths, and that practitioners can select ω within this range without
+substantial impact on fidelity.
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Chamfer distance (m)
+0
+1
+2
+3
+4
+5
+ Height at max crown radius (m)
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+1.2
+1.4
+ Max crown radius (m)
+1.5
+2.0
+2.5
+3.0
+3.5
+4.0
+Classifier-free guidance scale 
+0.0
+0.5
+1.0
+1.5
+2.0
+2.5
+3.0
+3.5
+ Height to crown base (m)
+1.5
+2.0
+2.5
+3.0
+3.5
+4.0
+Classifier-free guidance scale 
+0.00
+0.02
+0.04
+0.06
+0.08
+0.10
+0.12
+Vertical KDE divergence
+1.5
+2.0
+2.5
+3.0
+3.5
+4.0
+Classifier-free guidance scale 
+0.00
+0.05
+0.10
+0.15
+0.20
+0.25
+0.30
+0.35
+0.40
+2D histogram divergence
+Binned median
+Interquartile range
+Intra-class baseline
+Figure A1. Conditioning fidelity metrics as a function of the classifier-free guidance scale ω. Each
+panel shows one of the six per-pair metrics from Table 1. The solid line is the median over all
+real–generated pairs within each ω bin, the shaded band spans the interquartile range, and the
+dashed horizontal line marks the intra-class baseline from Table 1. All six metrics remain close to the
+intra-class baseline across the sampled range, with only the 2D histogram divergence exhibiting a
+mild upward trend.
+Appendix A.3. Samples
+To complement the qualitative cases shown in Figures 5 and 6, we provide three
+additional sets of qualitative samples drawn from different regions of the quality distribution.
+Figure A2 shows source trees from the top third of the test set ranked by median Chamfer
+distance, representing best-case generation quality. Figure A3 shows source trees from the
+bottom third and includes several obvious failure cases. As in Figures 5 and 6, all four samples
+within a row share the same species, height, and acquisition platform, so variation across
+samples reflects the model’s learned variability rather than differences in conditioning.
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+24 of 33
+Real
+Sample 1
+Sample 2
+Sample 3
+Sample 4
+Picea abies
+H = 24.8 m
+MLS
+Pinus sylvestris
+H = 18.9 m
+TLS
+Betula pendula
+H = 17.0 m
+TLS
+Eucalyptus miniata
+H = 8.7 m
+TLS
+Picea glauca
+H = 5.6 m
+MLS
+Fagus sylvatica
+H = 2.7 m
+TLS
+Figure A2. Best case generation quality. Six test-set trees (leftmost column) alongside four generated
+samples each, conditioned on the same species, height, and acquisition platform as the source. Source
+trees were drawn from the top third of the test set, as ranked by median Chamfer distance, and
+illustrate the best generation quality observed in our analysis. Species, height, and platform are listed
+at left. Points are colored by height.
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+25 of 33
+Real
+Sample 1
+Sample 2
+Sample 3
+Sample 4
+Pseudotsuga menziesii
+H = 36.9 m
+TLS
+Abies alba
+H = 31.7 m
+TLS
+Fagus sylvatica
+H = 27.0 m
+ULS
+Larix decidua
+H = 24.1 m
+TLS
+Carpinus betulus
+H = 20.1 m
+TLS
+Corylus avellana
+H = 9.7 m
+TLS
+Figure A3. Worst case generation quality. Six test-set trees (leftmost column) alongside four generated
+samples each, conditioned on the same species, height, and acquisition platform as the source. Source
+trees were drawn from the bottom third of the test set as ranked by median Chamfer distance
+and illustrate the poorest generation quality observed in our analysis, including missing stems,
+fragmented crowns, and gross morphological errors. Species, height, and platform are listed at left.
+Points are colored by height.
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+26 of 33
+Appendix B. Stem Tracking Algorithm
+The stem-tracking algorithm estimates the central axis of the trunk and main stem
+from an unstructured 3D point cloud, then expresses each point in cylindrical coordinates
+relative to this axis. The algorithm proceeds in five stages: trunk base detection, bottom-up
+spine tracking, iterative refinement, outlier rejection, and polynomial fitting with arc-length
+parameterization. All parameter values reported below were held fixed across all trees in
+the dataset.
+Stage 1: Trunk Base Detection
+The first stage identifies the xy-position of the trunk base, which serves as the starting
+point for upward tracking. A naive approach would select the densest horizontal cluster in
+a thin slab near the ground, but low branches that extend below the base of the live crown
+can produce clusters that are denser than the trunk itself, pulling the estimate away from
+the true stem position.
+We instead exploit the fact that the trunk persists vertically through many horizontal
+slices, while a branch appears in only one or two. The lower 30% of the tree by height is
+isolated as the base region and divided into six horizontal sub-slices. Within each sub-slice,
+a mean-shift procedure with Gaussian kernel bandwidth equal to 15% of the base region’s
+horizontal extent converges to the local density maximum, producing one candidate xy-
+position per sub-slice. Each candidate is then scored by its vertical persistence: the number
+of sub-slices that contain at least one point within the kernel bandwidth of that candidate.
+The candidate with the highest persistence score is selected as the trunk base position. Ties
+are broken in favor of the candidate closest to the horizontal median of the base region.
+Stage 2: Bottom-Up Spine Tracking
+Beginning from the trunk base position identified in Stage 1, the algorithm tracks the
+stem center upward through 20 horizontal slices spanning the full height of the tree. Within
+each slice, a weighted centroid of the horizontal coordinates is computed using two sources
+of information, while the vertical coordinate of the spine position is taken as the median
+height of the points in the slice.
+The first source of information is spatial proximity to the previous slice center. A
+Gaussian kernel assigns a higher weight to points near the expected stem position, with
+standard deviation equal to 10% of the current slice’s horizontal extent. To prevent the
+kernel from growing excessively wide in canopy slices where the horizontal extent is large,
+the standard deviation is capped at twice the value computed for the base region.
+The second source is local point density. For each point in the slice, the mean distance
+to its 16 nearest horizontal neighbors is computed. Points in tight clusters, as typically
+found along the trunk, receive higher weight than isolated points in the outer canopy.
+The two sources are combined as follows. Let ( ˆx, ˆy) denote the spine center from the
+previous slice, σ the capped Gaussian standard deviation, and ¯d(k)
+i
+the mean distance from
+point i to its k = 16 nearest horizontal neighbors. The proximity and density weights for
+each point i in the slice are
+wprox
+i
+= exp
+
+−(xi −ˆx)2 + (yi −ˆy)2
+2σ2
+
+,
+wdens
+i
+=
+1
+¯d(k)
+i
+
+max
+j
+1
+¯d(k)
+j
+(A1)
+The density weights are normalized by their maximum value so that the two terms
+contribute on comparable scales. The combined weight is wi = wprox
+i
+· wdens
+i
+, and the
+horizontal spine position for the slice is the weighted mean of the xy-coordinates.
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+27 of 33
+To prevent the tracker from jumping to a distant branch between consecutive slices,
+the horizontal displacement from the previous spine position is clamped to a maximum of
+5% of the total tree height per step.
+0.00
+0.05
+0.10
+0.15
+0.20
+0.25
+0.30
+0.35
+Radial distance r
+0.00
+0.25
+0.50
+0.75
+1.00
+1.25
+1.50
+1.75
+2.00
+Arc length s
+0.000
+0.001
+0.002
+0.003
+0.004
+0.005
+Point density
+(a)
+0.00
+0.05
+0.10
+0.15
+0.20
+0.25
+0.30
+0.35
+Radial distance r
+0.00
+0.25
+0.50
+0.75
+1.00
+1.25
+1.50
+1.75
+2.00
+Arc length s
+0.000
+0.002
+0.004
+0.006
+0.008
+0.010
+0.012
+Point density
+(b)
+Figure A4. (Left) Three-dimensional point cloud colored by height with the fitted polynomial
+spine shown in red. (Right) Two-dimensional density histogram of the cylindrical coordinates (r, s)
+computed relative to the spine using 16 × 32 bins. (a) Stem-tracking output for a 30.1 m narrow-leaved
+ash (Fraxinus angustifolia) captured via TLS. (b) Stem-tracking output for a 15.2 m Scots pine (Pinus
+sylvestris) captured via ULS.
+Stage 3: Iterative Refinement
+The spine positions from Stage 2 are smoothed by fitting cubic polynomials px(z) and
+py(z) to the tracked xy-positions as functions of height z. The polynomial curves are then
+evaluated at the midpoint of the lowest height bin to produce a refined starting position,
+and the bottom-up tracking pass of Stage 2 is repeated once using this new initialization.
+This refinement corrects cases where the initial base estimate was slightly offset, which can
+bias the tracked spine through all subsequent slices.
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+28 of 33
+Stage 4: Outlier Rejection
+Before the final polynomial fit, spine positions that deviate strongly from the overall
+trend are removed. A degree-1 polynomial is fit to the tracked positions, and the Euclidean
+residuals in the horizontal plane are computed. Positions with residuals exceeding the
+median residual by more than 2.5 times the median absolute deviation are discarded. This
+step removes spine positions that were pulled toward isolated canopy clusters despite the
+clamping constraint in Stage 2.
+Stage 5: Polynomial Fitting and Arc-Length Parameterization
+Cubic polynomials px(z) and py(z) are fit to the remaining spine positions, defining a
+smooth parametric curve (px(z), py(z), z) that represents the central stem axis. For each
+point in the original cloud, the radial distance r is computed as the perpendicular distance
+to the spine at the corresponding height:
+ri =
+q
+(xi −px(zi))2 + (yi −py(zi))2
+(A2)
+Rather than using raw height z as the second cylindrical coordinate, we parameterize
+position along the spine by arc length s. For a curved or leaning stem, equal increments
+in z do not correspond to equal distances along the stem, and arc length provides a more
+physically meaningful measure of position. The arc-length differential is
+ds
+dz =
+q
+p′x(z)2 + p′y(z)2 + 1
+(A3)
+where p′
+x and p′
+y are the derivatives of the fitted polynomials. We evaluate this expression
+on a uniform grid of 500 points along z and compute the cumulative arc length via the
+trapezoidal rule. Each point’s arc-length coordinate is then obtained by linear interpolation
+into this cumulative grid.
+The resulting coordinates (ri, si) for each point provide the basis for the maximum
+crown radius, height-to-crown-base, and two-dimensional histogram metrics described
+in Section 2.5.
+Appendix B.1. Degenerate Stem Fits
+The maximum crown radius metrics in Tables 1–3 exclude a small fraction of genera-
+tions on which the stem-tracking spine fit diverges, as defined in Section 2.5. Figure A5
+shows two representative cases, one Picea and one Pseudotsuga, in which the generated
+point cloud is bounded at roughly unit scale but the fitted cubic spine sweeps far outside
+it, so that the radial coordinate measured relative to the spine reaches values no physical
+crown can attain. The fitted crown radii of the flagged generations reach hundreds to
+thousands of meters, with a maximum of 5535 m, confirming that these values arise from
+the polynomial fit rather than from the geometry of the generated cloud. Table A3 reports
+the sensitivity of the global maximum crown radius Wasserstein distance to the exclusion
+threshold. The raw distance of 5.385 m collapses to below 0.6 m for every threshold across
+the physically plausible range and remains within [0.47, 0.59] from Treal = 9.87 m up to
+30 m, so the corrected value does not depend on the precise cutoff. The adopted thresh-
+old, Treal = 9.87 m, is the largest crown radius observed in the real data and is the most
+conservative of these choices.
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+29 of 33
+Table A3. Sensitivity of the global maximum-crown-radius Wasserstein distance (W1, meters) to the
+threshold above which a generated sample’s tracked crown radius is treated as a stem-fit failure and
+excluded. Treal = 9.87 m—the largest crown radius in the real dataset—is the physically motivated
+value adopted throughout; it is the most conservative principled choice (it excludes the most samples)
+yet is not tuned to the generated results. The raw value (no exclusion) is dominated by a small tail of
+physically impossible fitted radii (up to 5535 m, produced by Runge-type divergence of the cubic
+stem-spine fit): any threshold across the plausible range collapses W1 by an order of magnitude and
+leaves it within [0.47, 0.59], so the conclusion does not depend on the precise cutoff.
+Exclusion Threshold
+Excluded (%)
+W1 Crown Radius (m)
+none (raw)
+0.00
+5.385
+Treal = 9.87 m
+2.09
+0.473
+12 m
+1.70
+0.507
+15 m
+1.46
+0.534
+20 m
+1.32
+0.554
+30 m
+1.17
+0.588
+(a)
+(b)
+Figure A5. Two representative degenerate generations on which the cubic stem-spine fit diverges. In
+each panel, the generated point cloud (colored by height) is bounded at roughly unit scale, but the
+fitted polynomial spine (red) sweeps far outside it. Because the radial coordinate is measured as the
+perpendicular distance from each point to this spine, the divergence inflates the tracked maximum
+crown radius to a non-physical value, in these cases, tens of meters for clouds only a few meters
+across. Such samples are flagged as stem-fit failures (Section 2.5) and excluded from the stem-tracker
+metrics. (a) Pseudotsuga menziesii: a degenerate generation whose fitted crown radius reaches 86 m;
+(b) Picea abies: a degenerate generation whose fitted crown radius reaches 71 m.
+Appendix C. Height to Crown Base Algorithm
+Height to crown base is estimated from the cylindrical coordinates (ri, si) produced by
+the stem-tracking algorithm described in Appendix B. The key observation is that for most
+tree architectures, moving upward along the stem from the base, the mean radial distance
+of points from the stem remains small through the bare trunk region and then increases
+sharply once the crown begins. The height to crown base corresponds to the arc-length
+position where this transition occurs.
+The arc-length axis is divided into 30 equal slices from s = 0 to s = smax, and the
+mean radial distance ¯rk is computed for each slice k. The cumulative radial profile is then
+constructed as
+Ck =
+k
+∑
+j=1
+¯rj
+(A4)
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+30 of 33
+For a tree with a distinct bare stem below the crown, Ck increases slowly through the
+trunk region and then accelerates once the crown is reached, producing a concave curve
+when plotted against arc-length position.
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Normalized arc length
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Normalized cumulative r
+Cumulative r
+Unit diagonal
+HCB = 12.5 m
+dk
+0.00
+0.05
+0.10
+0.15
+0.20
+0.25
+Weighted distance dk
+(a)
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Normalized arc length
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Normalized cumulative r
+Cumulative r
+Unit diagonal
+HCB = 10.7 m
+dk
+0.00
+0.05
+0.10
+0.15
+0.20
+0.25
+Weighted distance dk
+(b)
+Figure A6. Height-to-crown-base detection on two trees with contrasting architecture. Left panels
+show the three-dimensional point cloud with the fitted polynomial spine (red), detected crown base
+plane (green ellipse), and maximum crown radius ring (orange ellipse). Right panels show the
+normalized cumulative radial profile (blue curve), the unit diagonal (dashed gray), and the weighted
+detection function dk from Equation (A6) (gray, right axis). The detected knee point (green) marks
+the transition from bare stem to crown. (a) Narrow-leaved ash (Fraxinus angustifolia), H = 30.1 m,
+captured via TLS. The crown base is detected at 12.5 m along the stem. (b) Scots pine (Pinus sylvestris),
+H = 15.2 m, captured via ULS. The crown base is detected at 10.7 m along the stem.
+To detect the transition point, we apply a modified version of the Kneedle algorithm [57],
+which identifies knee points in concave or convex curves by maximizing the distance
+between the curve and a reference line. Both the arc-length positions and the cumulative
+profile are first normalized to the unit interval:
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+31 of 33
+ˆsk = sk −s1
+sK −s1
+,
+ˆCk = Ck −C1
+CK −C1
+(A5)
+where K is the number of slices with at least one point. In the standard Kneedle formulation,
+the knee is the point of maximum perpendicular distance from the diagonal ˆC = ˆs. We
+modify the detection function by introducing a tapering weight that biases the detection
+toward lower positions on the stem:
+dk = (ˆsk −ˆCk) · (1 −ˆsk)1/2
+(A6)
+The first term (ˆsk −ˆCk) is largest where the cumulative curve lags farthest behind
+the diagonal, which corresponds to the region where radial extent is just beginning to
+accumulate. The second term (1 −ˆsk)1/2 progressively downweights positions higher on
+the stem, preventing the algorithm from selecting spurious knee points in the upper crown,
+where the cumulative curve may plateau or fluctuate. This modification reflects the prior
+expectation that the true crown base occurs in the lower portion of the tree. The crown
+base is assigned to the slice k∗= arg maxk dk, and the height to crown base in meters is
+computed as HCB = (sk∗/smax) · h, where h is the tree height.
+References
+1.
+Marcozzi, A.; Wells, L.; Parsons, R.; Mueller, E.; Linn, R.; Hiers, J.K. FastFuels: Advancing wildland fire modeling with
+high-resolution 3D fuel data and data assimilation. Environ. Model. Softw. 2025, 183, 106214. [CrossRef]
+2.
+Tutland, N.J.; Wion, A.P.; May, C.J.; Hutchings, G.C.; Nowak, H.A.; Gattiker, J.R.; Hiers, J.K.; Linn, R.R.; Pokswinski, S.M.;
+Margolis, E.Q. Representing 3-dimensional fuels for physics-based fire behavior models: A general framework and case study in
+a type-converted post-fire shrubfield. Fire Ecol. 2025, 21, 43. [CrossRef]
+3.
+Gastellu-Etchegorry, J.P.; Yin, T.; Lauret, N.; Cajgfinger, T.; Gregoire, T.; Grau, E.; Feret, J.B.; Lopes, M.; Guilleux, J.; Dedieu, G.;
+et al. Discrete Anisotropic Radiative Transfer (DART 5) for Modeling Airborne and Satellite Spectroradiometer and LIDAR
+Acquisitions of Natural and Urban Landscapes. Remote Sens. 2015, 7, 1667–1701. [CrossRef]
+4.
+Winiwarter, L.; Esmorís Pena, A.M.; Weiser, H.; Anders, K.; Martínez Sánchez, J.; Searle, M.; Höfle, B. Virtual laser scanning with
+HELIOS++: A novel take on ray tracing-based simulation of topographic full-waveform 3D laser scanning. Remote Sens. Environ.
+2022, 269, 112772. [CrossRef]
+5.
+Xiao, S.; Fei, S.; Li, Q.; Zhang, B.; Chen, H.; Xu, D.; Cai, Z.; Bi, K.; Guo, Y.; Li, B.; et al. The Importance of Using Realistic 3D
+Canopy Models to Calculate Light Interception in the Field. Plant Phenomics 2023, 5, 0082. [CrossRef] [PubMed]
+6.
+Bryson, M.; Wang, F.; Allworth, J. Using Synthetic Tree Data in Deep Learning-Based Tree Segmentation Using LiDAR Point
+Clouds. Remote Sens. 2023, 15, 2380. [CrossRef]
+7.
+Raverta Capua, F.; Schandin, J.; De Cristóforis, P. Training Point-Based Deep Learning Networks for Forest Segmentation
+with Synthetic Data.
+In Proceedings of the Pattern Recognition: 27th International Conference, ICPR 2024, Kolkata, India,
+1–5 December 2024; pp. 64–80. [CrossRef]
+8.
+Buonocore, L.; Yates, J.; Valentini, R. A Proposal for a Forest Digital Twin Framework and Its Perspectives. Forests 2022, 13, 498.
+[CrossRef]
+9.
+Reinhardt, E.; Scott, J.; Gray, K.; Keane, R. Estimating canopy fuel characteristics in five conifer stands in the western United
+States using tree and stand measurements. Can. J. For. Res. 2006, 36, 2803–2814. [CrossRef]
+10.
+Scott, J.H.; Reinhardt, E.D. Assessing Crown Fire Potential by Linking Models of Surface and Crown Fire Behavior; Research Paper
+RMRS-RP-29; U.S. Department of Agriculture, Forest Service, Rocky Mountain Research Station: Fort Collins, CO, USA, 2001;
+Volume 29, 59p. [CrossRef]
+11.
+Ferrarese, J.; Affleck, D.; Seielstad, C. Conifer crown profile models from terrestrial laser scanning. Silva Fenn. 2015, 49, 1106 .
+[CrossRef]
+12.
+Purves, D.W.; Lichstein, J.W.; Pacala, S.W. Crown Plasticity and Competition for Canopy Space: A New Spatially Implicit Model
+Parameterized for 250 North American Tree Species. PLoS ONE 2007, 2, e870. [CrossRef] [PubMed]
+13.
+Seidl, R.; Rammer, W.; Scheller, R.M.; Spies, T.A. An individual-based process model to simulate landscape-scale forest ecosystem
+dynamics. Ecol. Model. 2012, 231, 87–100. [CrossRef]
+14.
+Banerjee, T. The Role of Canopy Turbulence in Wildland Fire Behavior. Annu. Rev. Fluid Mech. 2026, 58, 473–502. [CrossRef]
+15.
+Linn, R.R.; Hiers, J.K.; O’Brien, J.J.; Yedinak, K.; Hoffman, C.; Canfield, J.; Robinson, D.; Goodrick, S. Wildland fire entrainment:
+The missing link between wildland fire and its environment. PNAS Nexus 2025, 4, 576. [CrossRef] [PubMed]
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+32 of 33
+16.
+Loudermilk, E.L.; O’Brien, J.J.; Goodrick, S.L.; Linn, R.R.; Skowronski, N.S.; Hiers, J.K. Vegetation’s influence on fire behavior
+goes beyond just being fuel. Fire Ecol. 2022, 18, 9. [CrossRef]
+17.
+Marcozzi, A.A.; Johnson, J.V.; Parsons, R.A.; Flanary, S.J.; Seielstad, C.A.; Downs, J.Z. Application of LiDAR Derived Fuel Cells to
+Wildfire Modeling at Laboratory Scale. Fire 2023, 6, 394. [CrossRef]
+18.
+Jeronimo, S.M.A.; Kane, V.R.; Churchill, D.J.; McGaughey, R.J.; Franklin, J.F. Applying LiDAR Individual Tree Detection to
+Management of Structurally Diverse Forest Landscapes. J. For. 2018, 116, 336–346. [CrossRef]
+19.
+Creasy, M.B.; Tinkham, W.T.; Hoffman, C.M.; Vogeler, J.C. Potential for individual tree monitoring in ponderosa pine dominated
+forests using unmanned aerial system structure from motion point clouds. Can. J. For. Res. 2021, 51, 1093–1105. [CrossRef]
+20.
+Tinkham, W.T.; Swayze, N.C.; Hoffman, C.M.; Lad, L.E.; Battaglia, M.A. Modeling the Missing DBHs: Influence of Model Form
+on UAV DBH Characterization. Forests 2022, 13, 2077. [CrossRef]
+21.
+Morford, S.L.; Allred, B.W.; Coons, S.P.; Marcozzi, A.A.; McCord, S.E.; Smith, J.T.; Naugle, D.E. A 0.6-meter resolution canopy
+height and structure model for the contiguous United States. bioRxiv 2025. [CrossRef] [PubMed]
+22.
+Murphy, M.C.; Loudermilk, E.L.; Pokswinski, S.; Williams, B.; Link, E.; Lienesch, L.; Douglas, L.; Skowronski, N.; Gallagher, M.;
+Maxwell, A.; et al. Terrestrial 3D Laser Scanning for Ecosystem and Fire Effects Monitoring. bioRxiv 2024. [CrossRef]
+23.
+Roten, D.; Wells, L.; Crawl, D.; Parsons, R.A.; Marcozzi, A.; Linn, R.R.; Hiers, K.; Altintas, I. TrueTrees: A Scalable Workflow for
+the Integration of Airborne LiDAR Scanning Data into Fuel Models for Prescribed Fire Simulations. In Proceedings of the 2023
+IEEE 19th International Conference on e-Science (e-Science), Limassol, Cyprus, 9–13 October 2023; pp. 1–10. [CrossRef]
+24.
+Schäfer, J.; Weiser, H.; Winiwarter, L.; Höfle, B.; Schmidtlein, S.; Fassnacht, F.E. Generating synthetic laser scanning data of forests
+by combining forest inventory information, a tree point cloud database and an open-source laser scanning simulator. For. Int. J.
+For. Res. 2023, 96, 653–671. [CrossRef]
+25.
+Li, W.; Hu, X.; Su, Y.; Tao, S.; Ma, Q.; Guo, Q. A new method for voxel-based modelling of three-dimensional forest scenes with
+integration of terrestrial and airborne LiDAR data. Methods Ecol. Evol. 2024, 15, 569–582. [CrossRef]
+26.
+Puliti, S.; Lines, E.R.; Müllerová, J.; Frey, J.; Schindler, Z.; Straker, A.; Allen, M.J.; Winiwarter, L.; Rehush, N.; Hristova, H.; et al.
+Benchmarking tree species classification from proximally sensed laser scanning data: Introducing the FOR-species20K dataset.
+Methods Ecol. Evol. 2025, 16, 801–818. [CrossRef]
+27.
+Lipman, Y.; Chen, R.T.Q.; Ben-Hamu, H.; Nickel, M.; Le, M. Flow Matching for Generative Modeling. arXiv 2023, arXiv:2210.02747.
+[CrossRef]
+28.
+Liu, X.; Gong, C.; Liu, Q. Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow. arXiv 2022,
+arXiv:2209.03003. [CrossRef]
+29.
+Luo, S.; Hu, W. Diffusion Probabilistic Models for 3D Point Cloud Generation. In Proceedings of the 2021 IEEE/CVF Conference
+on Computer Vision and Pattern Recognition (CVPR), Nashville, TN, USA, 20–25 June 2021; pp. 2836–2844. [CrossRef]
+30.
+Zeng, X.; Vahdat, A.; Williams, F.; Gojcic, Z.; Litany, O.; Fidler, S.; Kreis, K. LION: Latent Point Diffusion Models for 3D Shape
+Generation. arXiv 2022, arXiv:2210.06978. [CrossRef]
+31.
+Lee, J.J.; Li, B.; Benes, B. Latent L-systems: Transformer-based Tree Generator. ACM Trans. Graph. 2023, 43, 7:1–7:16. [CrossRef]
+32.
+Zhou, X.; Li, B.; Benes, B.; Fei, S.; Pirk, S. DeepTree: Modeling Trees with Situated Latents. arXiv 2023, arXiv:2305.05153.
+[CrossRef]
+33.
+Wang, H.; Zhang, B.; Klein, J.; Michels, D.L.; Yan, D.; Wonka, P. Autoregressive Generation of Static and Growing Trees. arXiv
+2025, arXiv:2502.04762. [CrossRef]
+34.
+Lee, J.J.; Li, B.; Beery, S.; Huang, J.; Fei, S.; Yeh, R.A.; Benes, B. Tree-D Fusion: Simulation-Ready Tree Dataset from Single Images
+with Diffusion Priors. arXiv 2024, arXiv:2407.10330. [CrossRef]
+35.
+Xu, H.; Huai, Y.; Nie, X.; Meng, Q.; Zhao, X.; Pei, X.; Lu, H. Diff-Tree: A Diffusion Model for Diversified Tree Point Cloud
+Generation with High Realism. Remote Sens. 2025, 17, 923. [CrossRef]
+36.
+Stone, G.; Sarker, S.; Greenberg, J.; Tavakkoli, A. Generating Synthetic Tree Point Clouds for Deep Learning Applications in
+Remote Sensing. In Proceedings of the Advances in Visual Computing; Bebis, G., Patel, V., Gu, J., Panetta, J., Gingold, Y., Johnsen, K.,
+Arefin, M.S., Dutta, S., Biswas, A., Eds.; Springer: Cham, Switzerland, 2025; pp. 3–14. [CrossRef]
+37.
+Bornand, A.; Abegg, M.; Morsdorf, F.; Rehush, N. Completing 3D point clouds of individual trees using deep learning. Methods
+Ecol. Evol. 2024, 15, 2010–2023. [CrossRef]
+38.
+Hristova, H.; Blattert, C.; Puliti, S.; Schweier, J. Designing the Forest of Tomorrow: Generating Virtual Trees with Adversarial
+Autoencoders. Int. Arch. Photogramm. Remote Sens. Spat. Inf. Sci. 2025, 48, 619–624. . [CrossRef]
+39.
+Castorena, J.; Loudermilk, E.L.; Pokswinski, S.; Linn, R. From canopy to ground via ForestGen3D: Learning cross-domain
+generation of 3D forest structure from aerial-to-terrestrial LiDAR. ISPRS J. Photogramm. Remote Sens. 2026, 235, 363–382. [CrossRef]
+40.
+Hartsook, T.; Tavakkoli, A.; Greenberg, J. A Conditional Variational Autoencoder to Learn Mappings Between ALS and TLS
+Measured Forests. In Proceedings of the Advances in Visual Computing; Bebis, G., Ye, J., Wang, Y., Konakovi´c Lukovi´c, M., Kalantari,
+N.K., Cho, I., Yang, Y., Dimara, E., Brehmer, M., Eds.; Springer: Cham, Switzerland, 2026; pp. 261–271. [CrossRef]
+https://doi.org/10.3390/rs18132197
+
+
+Remote Sens. 2026, 18, 2197
+33 of 33
+41.
+Vaswani, A.; Shazeer, N.; Parmar, N.; Uszkoreit, J.; Jones, L.; Gomez, A.N.; Kaiser, L.; Polosukhin, I. Attention Is All You Need.
+arXiv 2023, arXiv:1706.03762. [CrossRef]
+42.
+Bao, F.; Nie, S.; Xue, K.; Cao, Y.; Li, C.; Su, H.; Zhu, j. All are Worth Words: A ViT Backbone for Diffusion Models. arXiv 2023,
+arXiv:2209.12152. [CrossRef]
+43.
+Mildenhall, B.; Srinivasan, P.P.; Tancik, M.; Barron, J.T.; Ramamoorthi, R.; Ng, R. NeRF: Representing Scenes as Neural Radiance
+Fields for View Synthesis. arXiv 2020, arXiv:2003.08934. [CrossRef]
+44.
+Esser, P.; Kulal, S.; Blattmann, A.; Entezari, R.; Müller, J.; Saini, H.; Levi, Y.; Lorenz, D.; Sauer, A.; Boesel, F.; et al. Scaling Rectified
+Flow Transformers for High-Resolution Image Synthesis. arXiv 2024, arXiv:2403.03206. [CrossRef]
+45.
+Lipman, Y.; Havasi, M.; Holderrieth, P.; Shaul, N.; Le, M.; Karrer, B.; Chen, R.T.Q.; Lopez-Paz, D.; Ben-Hamu, H.; Gat, I. Flow
+Matching Guide and Code. arXiv 2024, arXiv:2412.06264. http://arxiv.org/abs/2412.06264.
+46.
+Dormand, J.R.; Prince, P.J. A family of embedded Runge-Kutta formulae. J. Comput. Appl. Math. 1980, 6, 19–26. [CrossRef]
+47.
+Ho, J.; Salimans, T. Classifier-Free Diffusion Guidance. arXiv 2022, arXiv:2207.12598. [CrossRef]
+48.
+Pokswinski, S.; Gallagher, M.R.; Skowronski, N.S.; Loudermilk, E.L.; Hawley, C.; Wallace, D.; Everland, A.; Wallace, J.; Hiers, J.K.
+A simplified and affordable approach to forest monitoring using single terrestrial laser scans and transect sampling. MethodsX
+2021, 8, 101484. [CrossRef] [PubMed]
+49.
+Wang, P.S. OctFormer: Octree-based Transformers for 3D Point Clouds. ACM Trans. Graph. 2023, 42, 155:1–155:11. [CrossRef]
+50.
+Wu, X.; Jiang, L.; Wang, P.S.; Liu, Z.; Liu, X.; Qiao, Y.; Ouyang, W.; He, T.; Zhao, H. Point Transformer V3: Simpler, Faster,
+Stronger. arXiv 2024, arXiv:2312.10035. [CrossRef]
+51.
+Jaegle, A.; Gimeno, F.; Brock, A.; Zisserman, A.; Vinyals, O.; Carreira, J. Perceiver: General Perception with Iterative Attention.
+arXiv 2021, arXiv:2103.03206. [CrossRef]
+52.
+Dao, Q.; Phung, H.; Nguyen, B.; Tran, A. Flow Matching in Latent Space. arXiv 2023, arXiv:2307.08698. [CrossRef]
+53.
+Laino, D.; Cabo, C.; Ordóñez, C.; Bolanos, R.; Janvier, R.; Giulioni, F.; Herrmann, M.; Hudak, A.; Parsons, R.; Santin, C.
+SegmentedForests: A labelled dataset of terrestrial LiDAR point clouds for semantic segmentation of forests. For. Int. J. For. Res.
+2026, 99, cpaf062. [CrossRef]
+54.
+Tenny, J.T.; Sankey, T.T.; Munson, S.M.; Sánchez Meador, A.J.; Goetz, S.J. Canopy and surface fuels measurement using terrestrial lidar
+single-scan approach in the Mogollon Highlands of Arizona. Int. J. Wildland Fire 2025, 34, WF24221. [CrossRef]
+55.
+Döllner, J.; de Amicis, R.; Burmeister, J.M.; Richter, R. Forests in the Digital Age: Concepts and Technologies for Designing and
+Deploying Forest Digital Twins. In Proceedings of the 28th International ACM Conference on 3D Web Technology, San Sebastián,
+Spain, 9–11 October 2023; Web3D ’23; pp. 1–12. [CrossRef]
+56.
+Calders, K.; Newnham, G.; Burt, A.; Murphy, S.; Raumonen, P.; Herold, M.; Culvenor, D.; Avitabile, V.; Disney, M.; Armston, J.;
+et al. Nondestructive estimates of above-ground biomass using terrestrial laser scanning. Methods Ecol. Evol. 2015, 6, 198–208.
+[CrossRef]
+57.
+Satopaa, V.; Albrecht, J.; Irwin, D.; Raghavan, B. Finding a “Kneedle” in a Haystack: Detecting Knee Points in System Behavior.
+In Proceedings of the 2011 31st International Conference on Distributed Computing Systems Workshops, Minneapolis, MN, USA,
+20–24 June 2011; pp. 166–171. [CrossRef]
+Disclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual
+author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to
+people or property resulting from any ideas, methods, instructions or products referred to in the content.
+https://doi.org/10.3390/rs18132197
