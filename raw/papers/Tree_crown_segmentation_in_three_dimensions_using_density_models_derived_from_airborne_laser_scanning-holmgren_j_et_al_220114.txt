@@ -1,0 +1,1635 @@
+Full Terms & Conditions of access and use can be found at
+https://www.tandfonline.com/action/journalInformation?journalCode=tres20
+International Journal of Remote Sensing
+ISSN: (Print) (Online) Journal homepage: https://www.tandfonline.com/loi/tres20
+Tree crown segmentation in three dimensions
+using density models derived from airborne laser
+scanning
+Johan Holmgren, Eva Lindberg, Kenneth Olofsson & Henrik J. Persson
+To cite this article: Johan Holmgren, Eva Lindberg, Kenneth Olofsson & Henrik J. Persson
+(2022) Tree crown segmentation in three dimensions using density models derived from
+airborne laser scanning, International Journal of Remote Sensing, 43:1, 299-329, DOI:
+10.1080/01431161.2021.2018149
+To link to this article:  https://doi.org/10.1080/01431161.2021.2018149
+© 2022 The Author(s). Published by Informa
+UK Limited, trading as Taylor & Francis
+Group.
+Published online: 05 Jan 2022.
+Submit your article to this journal 
+Article views: 179
+View related articles 
+View Crossmark data
+
+
+Tree crown segmentation in three dimensions using density 
+models derived from airborne laser scanning
+Johan Holmgren
+, Eva Lindberg
+, Kenneth Olofsson
+and Henrik J. Persson
+Department Forest Resource Management, Swedish University of Agricultural Sciences, Umeå, Sweden
+ABSTRACT
+This article describes algorithms to extract tree crowns using two- 
+dimensional (2D) and three-dimensional (3D) segmentation. As 
+a first step, a 2D-search detected the tallest trees but was unable 
+to detect trees located below other trees. However, a 3D-search for 
+local maxima of model fits could be used in a second step to detect 
+trees also in lower canopy layers. We compared tree detection 
+results from ALS carried out at 1450 m above ground level (high 
+altitude) and tree detection results from ALS carried out at 150 m 
+above ground level (low altitude). For validation, we used manual 
+measurements of trees in ten large field plots, each with an 80 m 
+diameter, in a hemiboreal forest in Sweden (lat. 58°28' N, long. 13° 
+38' E). In order to measure the effect of using algorithms with 
+different computational costs, we validated the tree detection 
+from the 2D segmentation step and compared the results with 
+the 2D segmentation followed by 3D segmentation of the ALS 
+point cloud. When applying 2D segmentation only, the algorithm 
+detected 87% of the trees measured in the field using high-altitude 
+ALS data; the detection rate increased to 91% using low-altitude 
+ALS data. However, when applying 3D segmentation as well, the 
+algorithm detected 92% of the trees measured in the field using 
+high-altitude ALS data; the detection rate increased to 99% using 
+low-altitude ALS data. For all combinations of algorithms and data 
+resolutions, undetected trees accounted for, on average, 0–5% of 
+the total stem volume in the field plots. The 3D tree crown seg­
+mentation, which was using crown density models, made it possi­
+ble to detect a large percentage of trees in multi-layered forests, 
+compared with using only a 2D segmentation method.
+ARTICLE HISTORY 
+Received 31 May 2021  
+Accepted 1 December 2021  
+1. Introduction
+Information about individual trees can now be derived using algorithms that delineate 
+tree crowns in Airborne Laser Scanning (ALS) data (Hyyppä et al. 2008). Decision makers 
+can use such tree maps to monitor forests for environmental and climate changes, and 
+optimize the utilization of natural resources to achieve multiple goals such as the supply 
+of bio-based products and biodiversity. Tree level information is the basis for a new type 
+of forestry – precision forestry (Holopainen, Vastaranta and Hyyppä 2014).
+CONTACT Johan Holmgren 
+Johan.Holmgren@slu.se 
+Department Forest Resource Management, Swedish 
+University of Agricultural Sciences, Umeå, Sweden
+INTERNATIONAL JOURNAL OF REMOTE SENSING 
+2022, VOL. 43, NO. 1, 299–329 
+https://doi.org/10.1080/01431161.2021.2018149
+© 2022 The Author(s). Published by Informa UK Limited, trading as Taylor & Francis Group.  
+This is an Open Access article distributed under the terms of the Creative Commons Attribution-NonCommercial-NoDerivatives License 
+(http://creativecommons.org/licenses/by-nc-nd/4.0/), which permits non-commercial re-use, distribution, and reproduction in any med­
+ium, provided the original work is properly cited, and is not altered, transformed, or built upon in any way.
+
+
+ALS data with low resolution are already available for large forested areas, and have been 
+used for operational surveys, such as the recently implemented national forest mapping 
+projects (Nilsson et al. 2017). On the other hand, ALS data with sufficient resolution to detect 
+individual trees have not been feasible for the mapping of large forest areas in the past, 
+because of a high cost per area unit for large areas, and due to high set-up costs for small areas. 
+However, the potential to cover large areas has recently improved. Two main system cate­
+gories can now provide ALS data with a resolution high enough to detect individual trees: (1) 
+large-area survey ALS systems that provide high-resolution (>10 pulses m−2) data from high 
+altitudes (Swatantran et al. 2016), and (2) short-range systems operated from helicopters or 
+drones, providing ultra-high-resolution (>100 pulses m−2) for specific areas of interest and with 
+a lower set-up cost (Kellner et al. 2019). All of these ALS systems enable efficient mapping of 
+forests and produce large amounts of data. Therefore, algorithms for extraction of individual 
+tree information should both be computationally efficient and be able to adapt to the different 
+site conditions that may occur across large geographical areas.
+Challenges in delineating individual tree crowns from ALS data relate to the physical 
+principles of laser scanning. Laser systems emit laser pulses and digitize the amplitude of 
+the returned signals at discrete time intervals. The system saves the waveform described 
+by the amplitude data for the returned signal and/or local maxima of the returned signal 
+(i.e. returned pulses). The system typically records single return pulses only if a solid 
+surface is measured (such as flat ground without vegetation) but, when forested areas are 
+being measured, more often multiple pulses are returned (Baltsavias 1999). Hence, ALS 
+detects non-solid as well as solid surfaces in forests, making it difficult to distinguish trees 
+using surface-model-based algorithms that detect tree crown boundaries.
+A common approach used for many tree detection algorithms is first to create a digital 
+surface model (DSM), which is a two-dimensional (2D) raster with height (i.e. distance to 
+ground) assigned to raster cell values, then to estimate tree locations from local maxima within 
+the DSM. The final step is to delineate tree crowns using a watershed segmentation (Lindberg 
+and Holmgren 2017). This approach suffers from at least two major problems. The first 
+problem is caused by the non-solid properties of tree crowns. Laser pulse returns are usually 
+located somewhere inside tree crowns and not just at the top of the canopy, which is the 
+assumption made when tree crown delineation algorithms find local maxima of a DSM. 
+Therefore, researchers have developed algorithms that find the outermost parts of the canopy, 
+for example, using active contours (Persson, Holmgren and Söderman 2002). However, smaller 
+trees close to taller trees may be located below such a surface, and so detection of trees will 
+depend on the parameter settings for the algorithm used to construct the surface. The second 
+issue arising from using algorithms with a DSM is how to select the scale parameters, which 
+usually includes one affecting the smoothing of the DSM. The tree detection results will 
+depend on a combination of tree size, tree crown shape at a given place, and scale parameters. 
+Some previous studies have addressed this scale problem by using multiscale approaches and 
+variable window sizes determined from empirical relationships (Persson, Holmgren and 
+Söderman 2002; Popescu, Wynne and Nelson 2002; Wolf and Heipke 2007; Bian et al. 2014; 
+Falkowski et al. 2006).
+The surface-based algorithms guarantee robustness and computational efficiency but, 
+since the algorithms exclude sub-canopy data, they are only suitable for certain applications. 
+However, the algorithms can often estimate forest volume and biomass with sufficient 
+accuracy, since the tallest, dominant trees contribute the greatest to these variables. 
+300
+J. HOLMGREN ET AL.
+
+
+However, mapping of the understory requires algorithms that utilize laser data in other ways. 
+Methods for three-dimensional (3D) segmentation, hence trying to overcome the previously 
+described challenges, still often use surface-based approaches as a first step and then use 
+information from the first step when analyzing the whole point cloud (Kandare et al. 2016; Wu 
+et al. 2013; Bucksch et al. 2013; Lu et al. 2014.). Some algorithms include k-means clustering 
+(Morsdorf et al. 2003; Gupta, Weinacker and Koch 2010; Lindberg et al. 2014), stem detection 
+(Mongus and Žalik 2015), and normalized cuts (Reitberger et al. 2009). There are also 
+approaches that use region growing (Lee et al. 2010; Vaughn, Moskal and Turnblom 2012; 
+Wang et al. 2016).
+In this article, we describe two segmentation algorithms (2D and 3D segmentation), both 
+using templates (i.e. model of the tree crown density) derived from empirical data. The 2D 
+segmentation algorithm creates a model fit surface rather than a traditional surface model of 
+the canopy. The templates are based on the discrete probability density function of laser 
+returns from different locations in tree crowns (i.e. density models). The 2D segmentation 
+algorithm is a refinement of an earlier algorithm (Holmgren and Lindberg 2019) which, in turn, 
+was an improvement of an algorithm based on solid geometric tree crown templates 
+(Holmgren and Lindberg 2013). Our work described in this article further improves this 2D 
+algorithm through another function to derive the model fit surface, repeated use of watershed 
+segmentation. The new 3D segmentation algorithm uses the output from the 2D segmenta­
+tion, and further separates trees located below other trees. The 3D segmentation algorithm 
+uses clustering of 3D points based on model fit strings derived using tree crown templates (i.e. 
+density models). For both algorithms, instead of attempting to overcome the problem of noise 
+caused by laser returns inside tree crowns, we included these laser returns as part of a density 
+model of the tree crowns. To address the challenge of finding optimal scale parameters, we 
+used templates derived from crown density models trained with empirical data. We validated 
+the algorithms using high-altitude ALS data to understand the feasibility of applying the 
+algorithms to large-area mapping. We also validated the algorithms using ultra-high- 
+resolution data from low-altitude ALS to understand whether it was data resolution or the 
+algorithms themselves that limited the obtained tree detection accuracy. The objectives were: 
+(1) to validate algorithms based on crown density models, (2) to compare 2D and 3D 
+segmentation, and (3) to compare tree detection using ALS data from low and high altitudes.
+2. Material
+2.1. Study area
+The segmentation method was validated using manually measured tree positions in ten 
+circular field plots, each with 80 m diameter, located at the test site at Remningstorp (lat. 58° 
+28' N, long. 13°38' E) in southern Sweden. The test site mainly contains managed hemiboreal 
+forest dominated by Norway spruce (Picea abies) and Scots pine (Pinus sylvestris), but also 
+includes deciduous trees, mostly Birch (Betula sp.) and Oak (Quercus robur).
+INTERNATIONAL JOURNAL OF REMOTE SENSING
+301
+
+
+2.2. Airborne laser scanning
+To obtain data that were suitable for large-area mapping, the airborne laser scanner (ALS) 
+system Leica Terrain Mapper was operated between 1422 m and 1450 m above ground level, 
+at a flight speed of 278 km h−1. The test site was laser scanned in October 2019. The field of 
+view was 30 degrees with an elliptical scan pattern. The elliptical scan pattern, combined with 
+sidewise overlap between flight strips, resulted in laser measurements of trees from up to four 
+directions. The pulse repetition frequency was 1600 kHz. The scanner frequency was 150 Hz. 
+The laser footprint was .35 m. The nominal density of last or single returns as derived from the 
+mission plan was approximately 22 points m−2. The observed ALS density was, on average, 69 
+returns m−2 in the field plots used for validation, including buffer zones.
+To obtain high-resolution data to study the limitations of the algorithms, the airborne 
+laser scanner system Riegl MLS-Q680i was operated from a helicopter at a flight altitude of 
+150 m above ground level. The field plots used in this study were laser scanned in 
+December 2018. Each field plot was covered with multiple flyovers from different direc­
+tions to obtain high-resolution ALS data. The laser scanner was mounted with the scanner 
+level approximately 15 degrees to the forward direction which, in combination with 
+multiple flyovers of the field plots, resulted in multiple views of tree crowns from the 
+side. The observed ALS density was, on average, 2511 returns m−2 in the field plots used 
+for validation, including buffer zones.
+For both datasets, the laser returns were classified as ground and non-ground returns using 
+the software TerraScan from Terrasolid. We replaced the original z values of the laser returns 
+with height above the ground (z) using the same software. We used the height-normalized ALS 
+data (x, y, z) as input to the tree crown segmentation algorithms.
+2.3. Field data
+A manual field inventory of ten 80 m diameter field plots was carried out in May 2019. As 
+instructed, the stem diameters (DBH) of all trees with ≥4 cm stem diameter at 1.3 m above 
+ground level were measured in two directions using a calliper. The eight of the sample trees 
+was measured with a hypsometer. In each plot, 16 subplots were systematically distributed to 
+facilitate measurement of tree positions. Tree positions were measured in the subplots using 
+ultrasonic trilateration (POSTEX, Haglöf Sweden AB) with a maximum working range of 
+approximately 15 m from the subplot center. The POSTEX equipment was integrated with 
+a digital calliper with tree positions measured relative to the subplot center. Approximate 
+positions of each subplot center were measured using a Global Navigation Satellite System 
+(GNSS) and were used as starting positions for a co-registration algorithm. The field plot co- 
+registration carried out in this study used a previously developed algorithm (Olofsson, 
+Lindberg and Holmgren 2008). The technique is based on synthetic tree position images 
+where the coordinates determine the position within the image and the size variable, for 
+instance the stem diameter, determines the amplitude of a Gaussian function. The field plot 
+image can be rotated a few degrees between each correlation run, to compensate for possible 
+compass errors. The position with the highest normalized correlation coefficient was consid­
+ered a possible position of the field plot within the coordinate system of the forest area. Tree 
+coordinates of the subplots can be transformed to global coordinates using the described co- 
+registration algorithm, even when the accuracy of the subplot center position measurement is 
+302
+J. HOLMGREN ET AL.
+
+
+poor. Thus, tree coordinates from all subplots could be merged to a large circular field plot of 
+80 m diameter. The tree coordinates of the large field plot were then matched a second time 
+with the tree map from ALS data to improve the transformation to global coordinates further. 
+The heights (H) of field-measured trees (except sample trees) were estimated using regression 
+functions as described in Persson and Fransson (2017). For the estimations, separate functions 
+were used for different tree classes (Scots pine, Norway spruce, and deciduous trees) using 
+DBH as the explanatory variable for all tree classes, and also using plot-level basal area for Scots 
+pine and Norway spruce. The parameters of the functions were estimated using a large 
+database consisting of sample trees from several field inventories at the test site. The stem 
+volumes of field-measured trees were derived using volume functions for southern Sweden 
+(Brandel 1990), with H and DBH as input variables. A summary of the field inventory data for the 
+plots used for validation is presented in Table 1.
+3. Methods
+The segmentation algorithms used tree crown templates, each consisting of a 2D density 
+raster with cells representing density of the 3D space in washer-shaped slices (‘washers’) 
+extracted from tree crowns. For the density raster, one dimension is relative distance from 
+ground and the other dimension is relative distance from tree centre. The relative distance was 
+calculated by dividing distance by tree height (i.e. raster cell value of a canopy height model). 
+The segmentation algorithms derived templates in a training phase, using ALS data inside 
+manually delineated tree crown polygons. For the prediction phase, the templates were fitted 
+to ALS data at raster cell locations within the laser-scanned area. A model fit (MF) surface was 
+created by deriving a model coefficient with values between zero and one, with a value of one 
+for a perfect fit. The MF surface was then used for 2D segmentation, followed by a 3D 
+segmentation using MF strings. In the following subsections, we describe the entire segmen­
+tation procedure in detail. Overviews of the algorithms are shown in Figure 1 and Table 2.
+3.1. Tree crown template
+3.1.1. Tree crown density model
+A tree crown template is a density model (i.e. a raster describing tree crown density) based on 
+ALS data from the vegetation (i.e. ALS returns above a height threshold). The template can be 
+created using ALS data in manually delineated tree crown polygons. In the training phase, the 
+Table 1. Summary of the field data used for validation.
+Plot
+Stem density  
+(numberha−1)
+DBH 
+Average 
+(mm)
+DBH 
+Min 
+(mm)
+DBH 
+Max 
+(mm)
+Proportion 
+Pine 
+(%)
+Proportion 
+Spruce 
+(%)
+Proportion  
+Deciduous 
+(%)
+1
+613
+297
+49
+469
+0
+97
+3
+2
+420
+258
+50
+397
+2
+84
+14
+3
+643
+298
+47
+514
+0
+93
+7
+4
+462
+258
+86
+405
+0
+97
+3
+5
+348
+287
+175
+435
+14
+86
+0
+6
+523
+282
+43
+498
+52
+48
+0
+7
+643
+172
+42
+465
+31
+62
+7
+8
+485
+281
+55
+421
+0
+82
+18
+9
+352
+314
+42
+507
+84
+3
+14
+10
+436
+301
+72
+509
+0
+94
+6
+INTERNATIONAL JOURNAL OF REMOTE SENSING
+303
+
+
+model centre (xc, yc) was defined as the mean value of x and y coordinates of all laser returns 
+above a height threshold within the manually delineated tree crown polygon. The model 
+includes a tree height (hmax) which, for the training phase, was set as the maximum height of 
+laser returns located within the manually delineated tree crown. From the model centre, laser 
+returns were selected within a search radius and each laser return was projected onto a height- 
+radius plane to create a tree crown density raster (Figure 2). The raster cell values were derived 
+using accumulated values of projected laser returns. This was carried out as follows: for each 
+laser return above a height threshold, the distance r to the tree crown centre was calculated 
+using Equation 1. This distance and the height of the laser return were used to calculate 
+a relative radial distance rp to the tree centre (Equation 2) and relative height hp (Equation 3) by 
+dividing with the maximum height above the ground (hmax). The raster indices were calculated 
+by dividing the radial distance with the raster cell size m (set to .01, proportion of hmax), where 
+index i represents the radius dimension (Equation 4) and index j represents the height 
+Figure 1. Overview of the segmentation algorithms using templates (i.e. tree crown density models).
+304
+J. HOLMGREN ET AL.
+
+
+Table 2. Algorithm summary.
+Input
+Unit
+Action
+Output
+Files with ALS data of manually  
+delineated trees crowns
+Do for ALS data from each tree  
+crown in the training dataset
+For the associated crown density raster: loop the raster  
+and aggregate laser return values to raster cells
+Templates
+ALS data
+Do for each raster cell within the  
+laser-scanned area
+Set raster cell value to the height value of the laser return  
+contained in the raster cell with the maximum distance  
+from ground
+DSM
+DSM
+Do for each raster cell of the  
+laser-scanned area
+Set raster cell value to one if the maximum height (DSM) is above  
+a height threshold (2 m) followed by morphological closing
+Canopy area raster
+DSM; canopy area raster
+Do for each raster cell within the  
+laser-scanned area
+Set raster cell value to the DSM. If the value of the DSM is zero but the 
+canopy area raster is one, interpolate a height using the smallest 
+window needed to find a neighboring raster cell with canopy DSM 
+values above zero
+Canopy Height Model (CHM)
+CHM; ALS data; templates  
+(one for each tree class)
+Do for each raster cell within the  
+laser-scanned area
+Derive a tree crown model using surrounding data and calculate  
+B value, one for each of the templates, and save the maximum  
+B value in the raster cell
+Model Fit Surface (MFS)
+MFS
+Do for each raster cell within the  
+laser-scanned area
+Calculate a new value of the model fit surface using  
+a Gaussian kernel, which produces a smoothed model fit surface
+Smoothed MFS
+Smoothed MFS
+Do for each raster cell within the  
+laser-scanned area
+Watershed segmentation: starting at each raster cell, create  
+a path by traveling to a neighboring raster cell in the  
+steepest direction
+Initial segmentation
+CHM; ALS data; templates;  
+Initial segmentation
+Do for each raster cell within the  
+laser-scanned area
+Derive a tree crown model using surrounding data only  
+from locations within the same segment, and calculate  
+B value, one for each of the templates, and save the  
+maximum B value in the raster cell
+CMF Surface
+CMF Surface
+Do for each raster cell of the  
+laser-scanned area
+Derive a model fit surface using a Gaussian kernel
+Smoothed CMF surface
+Smoothed CMF surface
+Do for each raster cell within the  
+laser-scanned area
+Watershed segmentation: starting at this raster cell,  
+create a path by traveling to a neighboring raster  
+cell in the steepest direction
+Final 2D segmentation
+Final 2D segmentation; ALS data
+Do for each crown segment  
+within the laser-scanned area
+Find the tree center position, tree height, crown area,  
+and other variables derived from laser data within  
+a crown segment
+File with tree attributes
+ALS data; Final 2D segment
+Do for each crown segment  
+within the laser-scanned area
+Derive 3D points with model fit coefficient
+MF strings
+MF strings
+Do for each 3D point of the model  
+fit strings within each 2D segment
+Find cluster centres using the mean shift algorithm
+3D points with cluster identification
+INTERNATIONAL JOURNAL OF REMOTE SENSING
+305
+
+
+dimension (Equation 5) of the 2D crown density raster. For a density raster that represented the 
+model for a specific tree class, the value a divided by the volume that the raster cell 
+represented (Equation 6) was accumulated; this was repeated for all laser returns within the 
+washer (k = 1 . . . n). In this work, the value a was set to one, but could also be an attributed 
+value of a laser return describing crown density, such as amplitude of the returned laser signal. 
+The Δri is the horizontal width of the washer and Δhj is the vertical width of the washer.
+r ¼
+ffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffi
+x   xc
+ð
+Þ2 þ y   yc
+ð
+Þ2
+q
+(1) 
+rp ¼ r=hmax
+(2) 
+Figure 2. The templates created in the training phase using low-altitude ALS data.
+306
+J. HOLMGREN ET AL.
+
+
+hp ¼ h=hmax
+(3) 
+i ¼ rp=m
+(4) 
+j ¼ hp=m
+(5) 
+dij ¼
+X
+n
+k¼1
+a=ðr2
+i π   ðri   ΔriÞ2πÞΔhj
+(6) 
+3.1.2. Create tree crown templates with empirical data
+The laser scanning data used for training were selected by manual delineation of individual 
+tree crowns. In this work, we used three different tree classes: Scots pine, Norway spruce, and 
+deciduous trees. We used visualizations of high-resolution ALS data to delineate polygons, 
+which were used to extract ALS data for individual tree crowns. The laser data within the tree 
+crowns from a tree class were then scaled, combined into one, and projected onto the height- 
+radius plane, as given by the crown density model (Equations 1–6). For the training phase, hmax 
+was the maximum height above the ground (z) of all laser returns in the tree crown polygon 
+given by the manual delineation. The use of the projection to the height-radius plane means 
+that the matching procedure assumes rotational symmetry around the tree center. These 
+crown density models are more robust compared to algorithms based only on canopy height 
+surface models, since laser returns within a tree crown no longer appear as noise, but 
+contribute to the density model (Figure 2). We solved the scale selection problem by using 
+a density model trained with empirical data, and templates scaled with tree height (hmax). For 
+this experiment, we used 20 Scots pine trees, 24 Norway spruce trees, and 10 deciduous trees. 
+The tree crowns used for training were arbitrarily selected from within the 10 field plots. The 
+extent of the crowns was manually delineated using a DSM derived from the low-altitude laser 
+scanning data and using information about tree classes from the field inventory for tree 
+species annotation. The delineation of tree crowns was used for extraction of laser data from 
+both flight altitudes to produce sensor-specific training data for the templates.
+3.2. Tree crown 2D segmentation
+The automatic delineation of individual tree crowns to create 2D crown segments requires 
+several steps, which involve using a crown density model for delineation of individual trees: (1) 
+Generate a Canopy Height Model (CHM), (2) create a model fit surface using the best model fit 
+at each raster cell from any of the tested tree crown templates, with height (hmax) from the 
+CHM as scaling factor, (3) apply a watershed segmentation to the model fit surface generated 
+in step 2, (4) repeat step 2 including only ALS data from the crown segment resulting from the 
+previous segmentation, and (5) repeat step 3 based on the surface obtained in step 4. In the 
+following five subsections, we describe each of these steps in detail.
+3.2.1. Canopy height model
+The tree crown 2D segmentation algorithm can use tree heights from any CHM for scaling the 
+templates. However, the CHM should describe the uppermost part of the canopy, excluding 
+low height values or missing data within a tree crown, which otherwise could result in 
+INTERNATIONAL JOURNAL OF REMOTE SENSING
+307
+
+
+commission errors. To obtain a suitable CHM with .25 m raster cell size we used morphological 
+filtering to first define crown area and then interpolate crown heights only for raster cells 
+located within areas covered by tree crowns. We describe the process in this subsection. 
+A crown area raster that defined areas covered by the tree crowns was first created using 
+a height threshold (2 m above ground level). The value of a raster cell was set to one if there 
+was at least one laser return above the height threshold within the raster cell, otherwise zero. 
+Morphological closing was then carried out using a 3 × 3 structuring element. The closing 
+operation involves using dilation followed by erosion. The crown area raster created from the 
+morphological filtering was then used as a mask to construct the canopy height model. A first 
+version of the CHM was created by setting the raster cell values to the maximum height (i.e. 
+distance above the ground) of all laser returns above a height threshold (2 m above ground 
+level) within the raster cell, and to zero if there were no laser returns above the height 
+threshold within the raster cell. The CHM was updated for raster cells with value zero if the 
+crown area raster was equal to one. The new value was calculated by interpolation of values 
+within the smallest window needed to cover at least one raster cell of the first version of the 
+CHM with a value greater than zero.
+3.2.2. Model fit surface
+We first created a raster that covered the laser-scanned area with a raster cell size of .25 m and 
+set all raster cell values to zero. A model centre was located with its origin at each raster cell 
+centre. The height at the centre of the tree crown model (hmax) was set to the raster cell value of 
+the CHM at the corresponding raster cell. All templates derived in the training phase, one for 
+each tree class, were tested at this location. A measure of model fit, Bhattacharyya coefficient 
+(B), previously also used for segmentation (Ning et al. 2010), was derived for each combination 
+of raster cell location and tree class, using Equation 7, where p(xij) is the relative frequency of 
+laser returns within a raster cell of the crown density raster derived for a tree class in the 
+training phase (Equations 1–6), q(yij) is the relative frequency of laser returns within a raster cell 
+of the local crown density raster derived in the prediction phase (Equations 1–6 applied to data 
+only from the area surrounding the tree centre at the current raster cell location), M is the 
+height (number of rows) and N is the width (number of columns) of the crown density raster. 
+Relative frequency for the models in the training phase and the local model in the prediction 
+phase were derived for each tree class using Equations 8 and 9, respectively, where Sp is the 
+sum of raster cell values in the training phase raster and Sq is the sum of raster cell values in the 
+prediction phase raster. In Equations 8 and 10, xij is the sum of laser returns in raster cell with 
+index i and j of the crown density raster from the training phase (aggregated from all trees in 
+a specific class used for training) using Equation 6. In Equations 9 and 11, yij is the number of 
+laser returns in the raster cell with index i and j of the crown density raster from the prediction 
+phase using Equation 6. Thus, B is a measure of model fit with values between zero and one. 
+For the extreme case where the two distributions completely mismatch, B is zero, and for the 
+extreme case where the two distributions completely overlap, B is one.
+B ¼
+X
+M
+i¼1
+X
+N
+j¼1
+ffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffi
+p xij
+ 
+q yij
+ 
+q
+(7) 
+p xij
+ 
+¼ xij=Sp
+(8) 
+308
+J. HOLMGREN ET AL.
+
+
+q yij
+ 
+¼ yij=Sq
+(9) 
+Sp ¼
+X
+M
+i¼1
+X
+N
+j¼1
+xij
+(10) 
+Sq ¼
+X
+M
+i¼1
+X
+N
+j¼1
+yij
+(11) 
+The raster cell value of the MF surface was set to the maximum B value from 
+tests with all models for tree crown classes from the training phase. In this study, 
+three classes were used, namely Scots Pine, Norway spruce, and deciduous trees. 
+The MF surface was smoothed with a 3 × 3 raster Gaussian filter that was applied 
+recursively three times, in order to avoid local variation caused by noise.
+3.2.3. Initial watershed segmentation
+A watershed segmentation algorithm was applied to the smoothed MF surface. 
+First, a seed was placed in each raster cell and used as the starting point. Second, 
+a path was derived from each seed to a local maximum. To find this path, the 
+following rule was applied: from one raster cell, move to a neighbouring raster cell 
+in the direction with the steepest slope (eight possible directions), and repeat until 
+a local maximum is reached. All raster cells with seeds that resulted in a path that 
+ended at the same local maximum defined a segment.
+3.2.4. Constrained model fit surface
+A new MF surface was derived, a Constrained Model Fit (CMF) surface, using the 
+same method as for the first step but with one difference: the local model was 
+derived only from laser returns within the same segment (i.e. from the initial 
+segmentation) as the location of the model tree center (xc, yc). The CMF surface 
+was then smoothed with a 3 × 3 raster Gaussian filter that was applied recursively 
+three times, in order to avoid local variation caused by noise.
+3.2.5. Second watershed segmentation
+This step involved a second watershed segmentation based on the CMF surface 
+rather than the MF surface. In this step, the algorithm merged segments as not all 
+raster cells were assigned a high B value when only laser data within the segment 
+obtained from the first segmentation were included.
+3.3. Tree crown 3D segmentation
+The 2D segmentation using 2D model fit surfaces will not detect trees located 
+below other trees. Therefore, we also developed a 3D segmentation algorithm in 
+order to separate the 3D laser returns further into separate tree crowns starting 
+with 3D points in the segment obtained from the 2D surface algorithm. We used 
+the mean shift algorithm for searching 3D cluster centre locations and based our 
+search for cluster centres on the same models of tree crown density as was used 
+INTERNATIONAL JOURNAL OF REMOTE SENSING
+309
+
+
+for the 2D segmentation. The generic idea of the mean shift algorithm is as 
+follows, using a simple example with 2D point data. At the location of each 2D 
+point (x, y), mean values of x and y coordinates are derived using neighbouring 2D 
+points within a specific radius from the current location, giving a new location. For 
+the new location, new mean values of x and y coordinates are derived using 2D 
+points within a radius from this updated location. The procedure is repeated until 
+there is only a small change of locations between subsequent iterations (or until 
+a maximum pre-set number of iterations is reached). In addition, one can use 
+a kernel, for example, a Gaussian function, to calculate weighted mean values, 
+instead of only using mean values within a radius. The mean shift procedure is 
+applied to all the 2D points and the points in the original dataset with updated 
+mean values that arrive to similar locations define a cluster.
+3.3.1. Model fit strings
+In this work, we used the generic idea of the mean shift algorithm applied to cluster 3D points, 
+and used tree crown density models (i.e. templates) as kernels. These were the same templates 
+as were used for the 2D segmentation. Each crown density raster (i.e. template) was first 
+smoothed with a Gaussian kernel to ensure stable results despite the use of small training 
+datasets. The mean shift algorithm needs a symmetrical kernel in each dimension to avoid 
+centroid locations, updated in each iteration, that depend on the shape of the kernel. However, 
+our templates are symmetrical only in the 2D plane (i.e. radially symmetric). Therefore, in the 
+first step, the centroid location was updated only in the 2D plane, however, still using 3D point 
+data (Equations 12 and 13), where p(xij) was derived using Equation 8, Xt and Yt are original 
+coordinates, and Xt +1 and Yt +1 are updated coordinates. The location of the center of gravity of 
+the template was used as the kernel center for the mean shift algorithm and the template was 
+scaled with the height. In addition, our crown density model was first smoothed with 
+a Gaussian kernel. In this way, the current mean location was updated in the 2D plane until 
+the change of the mean location (Equation 14) between subsequent iterations was below 
+a threshold of .1 m or until the maximum number of iterations (set to 500) was reached. For 
+each starting point, the mean shift procedure was repeated using each of the templates (i.e. 
+tree class), resulting in one end point for each density model. At the end point, B was calculated 
+(Equation 7) and the end point containing the maximum B, out of all the tested templates, was 
+used together with the maximum B value, for further processing. The mean shift algorithm was 
+applied in the 2D plane using all points in a 2D segment as starting points, each resulting in 
+one end point, with a shift in the 2D plane but not in the vertical direction. Thus, the result of 
+the mean shift in the 2D plane was a set of strings along tree center locations, which consisted 
+of 3D coordinates (i.e. coordinates of end points) and B values, referred to as model fit (MF) 
+strings (Figure 3(a)). We used the name MF strings because these can be sampled and 
+represented as points at any distance from the ground.
+Xtþ1 ¼
+X
+M
+i¼1
+X
+N
+j¼1
+p xij
+ 
+Xt=
+X
+M
+i¼1
+X
+N
+j¼1
+p xij
+ 
+(12) 
+Ytþ1 ¼
+X
+M
+i¼1
+X
+N
+j¼1
+p xij
+ 
+Yt=
+X
+M
+i¼1
+X
+N
+j¼1
+p xij
+ 
+(13) 
+310
+J. HOLMGREN ET AL.
+
+
+Dxy ¼
+ffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffi
+Xt   Xtþ1
+ð
+Þ2 þ Yt   Ytþ1
+ð
+Þ2
+q
+(14) 
+3.3.2. Clustering of 3D points
+Following a MF string from a treetop down toward the ground, the maximum 
+B value is typically found at the centre of a tree crown. Thus, the next step is to 
+follow the MF strings and find one or several local maxima of the B value (i.e. 
+coefficient of model fit). For this final step, the mean shift algorithm was applied in 
+the 3D space using a weighting function that consisted of a product of three 
+terms: (1) Gaussian function of the vertical distance, (2) Gaussian function of the 
+horizontal distance, and (3) the B value (Equation 15). Because of the vertical main 
+direction of the MF strings, we used a high sigma value of the Gaussian function 
+in the vertical direction and a low sigma value of the Gaussian function in the 
+horizontal direction. The sigma values were set as proportions of the z value (i.e. 
+distance to the ground) in order to use higher sigma values at the top of the 
+canopy and lower sigma values close to the ground, using Equations 16 and 17, 
+Figure 3. (a) Model fit (MF) strings with colors set by the model fit coefficient (B value) and gray points 
+showing the original point cloud, (b) the original point cloud with colors set by the identification 
+numbers of 3D segments. the original point cloud was selected using a polygon obtained from 2D 
+segmentation using high-altitude ALS data.
+INTERNATIONAL JOURNAL OF REMOTE SENSING
+311
+
+
+where br and bz were set to .05 and .2, respectively. The mean value of the 3D 
+coordinates was updated using the centre locations in the strings (Xc, Yc, Zc) 
+inserted into Equations 18–20, where G represents the Gaussian function, and 
+U is the number of 3D points contained in a tree crown polygon according to 
+the 2D segmentation. The mean location was updated in 3D space, following the 
+strings, until the change of the mean location between subsequent iterations 
+(Equation 21) was below a threshold of .1 m, or until a maximum number of 
+iterations (set to 500) was reached. This resulted in a new set of end points 
+along the string cluster centre locations. We clustered the new end points using 
+a threshold for the 3D Euclidian distance (0.3 m). The original 3D coordinates of 
+the laser returns associated with the same cluster using this Euclidian distance 
+clustering were marked with the same cluster identification number (Figure 3(b)).
+wi ¼ BxyzG x; y; σr
+ð
+ÞG z; σz
+ð
+Þ
+(15) 
+σr ¼ brZc
+t
+(16) 
+σz ¼ bzZc
+t
+(17) 
+Xc
+tþ1 ¼
+X
+U
+i¼1
+wiXc
+t =
+X
+U
+i¼1
+wi
+(18) 
+Yc
+tþ1 ¼
+X
+U
+i¼1
+wiYc
+t =
+X
+U
+i¼1
+wi
+(19) 
+Zc
+tþ1 ¼
+X
+U
+i¼1
+wiZc
+t =
+X
+U
+i¼1
+wi
+(20) 
+Dxyz ¼
+ffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffi
+Xc
+t   Xc
+tþ1
+ 2 þ Yc
+t   Yc
+tþ1
+ 2 þ Zc
+t   Zc
+tþ1
+ 2
+q
+(21) 
+3.4. Derive attributes for individual trees
+The result from the final 2D segmentation was used to estimate tree crown 
+properties. A centre position of a tree crown was estimated using the location of 
+the maximum value of the CMF surface inside the segment. The tree height of 
+a segment was estimated as the maximum laser height within the segment, except 
+in cases where there was tree crown overlap from a neighbouring tree. A segment 
+corresponding to a small tree next to a tall tree could include small areas of the 
+neighbour tree, and therefore have incorrect laser heights near the edge of the 
+tree crown segment. Therefore, the height of the estimated location of the tree 
+crown centre (Hc) was compared with the maximum laser height (Hm) of the 
+segment. If the difference between Hm and Hc was >10% of Hc, we used Hc else 
+Hm was used for the tree height value. The position of a 3D tree crown cluster was 
+312
+J. HOLMGREN ET AL.
+
+
+derived using the mean values of x and y coordinates of laser points within the 
+cluster. The height of a 3D tree crown cluster was derived using the 90th percen­
+tile of heights (z) for laser points within the cluster.
+3.5. Validation
+The algorithms (2D segmentation and 3D segmentation) were validated using ALS 
+data from high and low altitudes. In order to increase computation speed, we 
+reduced point density before the 3D clustering step when using the low-altitude 
+ALS data. First, the original point cloud was reduced by using a grid with a voxel 
+size of .1 m and replacing the points within a voxel with new data based on 
+average values. Second, the point cloud used to define start points in the mean 
+shift algorithm and create MF strings was further reduced using the same proce­
+dure, but with a voxel size of .2 m. There was a small geometric mismatch 
+between the two sets of ALS data (high and low altitude), which was reduced 
+by matching the DSM from both sensors for each subarea (i.e. field plot) and 
+finding the transformation with the highest correlation between DSM values.
+We used automatic linking of field-measured and ALS datasets with an algorithm that 
+minimizes the sum of link distances (Olofsson, Lindberg and Holmgren 2008). The 
+proportion of detected trees was derived as the ratio of linked trees and the total number 
+of manually measured trees in the plot. The proportion of basal area detected was 
+calculated as the sum of basal area (cross-sectional area of the tree stem, 1.3 m above 
+ground level) from linked trees divided by the sum of basal area from all manually 
+measured trees in the plot. The estimated stem volume for each tree was used to derive 
+the sum of stem volume of the detected trees in relation to the sum of stem volume of all 
+the manually measured trees in the field plots.
+The commission error was calculated as the proportion of ALS-measured trees 
+that were not linked to a manually measured tree. The stem volumes of trees 
+detected from the ALS data were summed to plot level and compared with the 
+sum of stem volumes of all field measured trees on the plot. For the automatically 
+linked trees detected from the ALS data by the 2D segmentation, the tree heights 
+were compared with the field-measured sample tree heights (i.e. height from ALS 
+minus height from field measurement). Standard deviations of the differences and 
+mean of the differences were calculated. The tree heights derived from ALS data at 
+different flight altitudes were compared using the same procedure.
+4. Results
+For visualization of the 2D segmentation, tree crown segments were overlaid on 
+a DSM with 5 cm resolution and compared with the manually measured tree 
+positions (Figure 4). The 2D segmentation mostly agreed with both DSM and 
+manually measured trees. For visualization of the 3D clustering, laser returns 
+clustered to tree crowns were represented as 3D points with different colors 
+(Figure 5).
+INTERNATIONAL JOURNAL OF REMOTE SENSING
+313
+
+
+The lowest proportions of detected trees were found for the small trees in field 
+plots with a multi-layered canopy (Figures 6–9, Tables 3–6). When using only 2D 
+segmentation, 87% of the trees were detected from high-altitude ALS data, and 
+91% of the trees were detected from low-altitude ALS data (Table 7). However, 
+when using 2D segmentation followed by 3D clustering, 92% of the trees were 
+detected using high-altitude ALS data and 99% of the trees were detected using 
+low-altitude ALS data (Table 7). Both flight altitude and choice of algorithm 
+affected the omission error (Table 7). This was especially evident for trees in 
+lower canopy layers (Figures 6–9, Tables 3–6).
+The sum of stem volume from the detected trees was compared with the sum 
+of stem volume from all trees within stem diameter intervals. The detected trees 
+represented a high proportion of the stem volume of the field-measured trees 
+(Tables 3–7, undefined Figures 10–13). In order to compare the results of the 
+algorithms developed in this study with a standard tree detection algorithm, we 
+also tested local maximum detection in a DSM with a cell size of .25 m, derived 
+from both high and low altitude ALS data. We used Gaussian smoothing of the 
+DSM and a 2 m search radius to reduce commission errors. The standard algorithm 
+detected 81% of the trees using ALS data from the high altitude, and 82% of the 
+trees using ALS data from the low altitude on average for the plots. The average 
+commission error for the plots was 6% and 5% for high and low altitude ALS data, 
+respectively.
+Figure 4. DSM with 0.05 m resolution as the background image, and tree crown segments from the 2D 
+segmentation algorithm using ALS data from low altitude (150 m above ground level) as the input. 
+Field measured tree positions shown as yellow dots. the boundary of the field plot (80 m diameter) is 
+shown with a green circle.
+314
+J. HOLMGREN ET AL.
+
+
+When comparing DSM from the first (low altitude) and second scanning (high 
+altitude) missions, we observed that several trees had been removed between the 
+scanning events, especially in plot 2. This could be one reason for the lower 
+detection rate in the high-altitude scanning, when compared with earlier field 
+data. There were many commission errors in a few plots, especially plot number 
+9. After comparing field data, DSM and segmentation, it was clear that many small 
+trees were detected from the ALS data that were not measured during the field 
+inventory. This was probably due to the limit of 4 cm DBH for manual field 
+measurements of a tree while the lower threshold used by the algorithms was 2  
+m height in the ALS data. The reported commission errors were reduced when we 
+only included tall trees (>10 m ALS height) for the validation. Thresholds using 
+different variables (stem diameter from field inventory and height from ALS) will 
+increase the magnitude of reported commission errors compared to true commis­
+sion errors. For tall trees (>10 m ALS height) and for the 2D segmentation, the 
+commission error was between 5% and 17% using high-altitude ALS data (Table 3), 
+and between 3% and 10% using low-altitude ALS data (Table 4). After comparing 
+field data and DSM, it was clear that a few trees in each plot were missed during 
+the manual field inventory. Trees excluded during the field inventory contribute to 
+the total commission errors.
+Tree height estimates from the two different ALS acquisitions were compared 
+(Figure 14). In addition, tree height estimates from high-altitude ALS and low-altitude 
+ALS data were compared with manual measurements (Figures 15 and 16). The standard 
+deviation of differences between trees heights from ALS from two different altitudes was 
+.73 m. The bias was .24 m, thus tree heights were, on average, estimated to be lower from 
+the higher altitude data (Figure 14). The standard deviation of differences between ALS- 
+Figure 5. Clustering of 3D point cloud produced from high-altitude ALS data (1450 m above ground level).
+INTERNATIONAL JOURNAL OF REMOTE SENSING
+315
+
+
+measured heights from the higher altitude and field-measured tree heights was .86 m. 
+The bias was −.07 m, thus tree heights were, on average, estimated to be lower from ALS 
+data than from manual measurements (Figure 15). The standard deviation of differences 
+between ALS-measured heights from the lower altitude and field-measured tree heights 
+was .74 m. The bias was .13 m, thus tree heights were, on average, estimated to be higher 
+from ALS data than from manual measurements (Figure 16).
+Figure 6. Histograms showing tree detection results from 2D segmentation using high-altitude ALS 
+data (white bars for all field trees and gray bars for field trees that were linked to trees detected in the 
+ALS data).
+316
+J. HOLMGREN ET AL.
+
+
+5. Discussion
+We have developed new segmentation algorithms, which uses density models of 
+tree crowns with empirical data as a reference. Axelsson (1999) highlighted the 
+advantage of using original laser data in the filtering and modelling process. For 
+the algorithms, we model tree crowns using original laser data. We search for tree 
+locations and carry out delineation of trees with a watershed algorithm, where the 
+input is a model fit surface instead of a canopy height surface model. We solve the 
+Figure 7. Histograms showing tree detection results from 2D segmentation using low-altitude ALS 
+data (white bars for all field trees and gray bars for field trees that were linked to tree detected in the 
+ALS data).
+INTERNATIONAL JOURNAL OF REMOTE SENSING
+317
+
+
+scale selection problem using a training phase, where we create crown density 
+models for a set of tree classes. The simple models, with scaling using tree heights 
+and an assumption of radial symmetry, reduce the amount of data needed for 
+training and make the algorithm computationally efficient. The algorithm does not 
+require site-specific parameter settings. Instead, the algorithm learns from laser 
+data using manually delineated tree crown polygons (empirical data). These poly­
+gons should be defined for tree crown classes, where trees of the same class have 
+similar crown shape and structure. In this study, we only used three classes and 
+Figure 8. Histograms showing 3D segmentation tree detection results using high-altitude ALS data 
+(white bars for all field trees and gray bars for field trees that were linked to tree detected in the ALS 
+data).
+318
+J. HOLMGREN ET AL.
+
+
+a few trees within each tree class. Future work should find out how segmentation 
+results depend on training data size and number of tree species.. More efficient 
+procedures should be developed for selection of empirical data. In addition, future 
+work should find out potential errors due to inclusion of data from low vegetation 
+in the models.
+The use of a model fit surface makes it difficult to detect trees located below 
+other trees. Therefore, we used 3D clustering as an optional second step, which 
+requires more computations. For the 3D clustering, we first use the mean shift 
+Figure 9. Histograms showing 3D segmentation tree detection results using low-altitude ALS data 
+(white bars for all field trees and gray bars for field trees that were linked to tree detected in the ALS 
+data).
+INTERNATIONAL JOURNAL OF REMOTE SENSING
+319
+
+
+algorithm in two dimensions, with density models of tree crowns as kernels, to 
+find strings that define the centre locations of tree crowns, and derive model fit 
+coefficients for each part of these strings. We then apply the mean shift algorithm 
+in three dimensions to find local maxima of coefficients along the strings to define 
+cluster centres. Although the sequential approach with 2D segmentation followed 
+by 3D clustering was successful in earlier studies it will introduce problems. For 
+example, the restriction of the 3D clustering to use only data from a 2D segment 
+will yield incorrect clusters if the 2D segmentation has errors. In this study, the 3D 
+clustering was strictly limited to a 2D segment, i.e. the 3D clustering was first 
+performed with data from one 2D segment, and then using data from another 2D 
+segment. Although the 3D clustering is able to detect several small trees located 
+Figure 10. Stem volume for all trees and for detected trees using high-altitude 2D segmentation in 
+stem diameter intervals on all field plots.
+Figure 11. Stem volume for all trees and for detected trees using low-altitude 2D segmentation in 
+stem diameter intervals on all field plots.
+320
+J. HOLMGREN ET AL.
+
+
+Figure 12. Stem volume for all trees and for detected trees using high-altitude 3D segmentation in 
+stem diameter intervals on all field plots.
+Figure 13. Stem volume for all trees and for detected trees using low-altitude 3D segmentation in 
+stem diameter intervals on all field plots.
+Table 3. Results from tree detection using 2D segmentation and high-altitude ALS data: 
+omission errors affect (in percentage) on the number of trees (Number), on the basal area 
+(Basal area), and on the stem volume (Volume); commission error (in percentage) of all trees 
+and of only tall trees (ALS tree height >10 m).
+Omission error (%)
+Commission error (%)
+Plot
+Number
+Basal area
+Volume
+All trees
+Tall trees
+1
+9
+5
+4
+9
+8
+2
+12
+10
+9
+7
+7
+3
+17
+7
+6
+10
+10
+4
+2
+1
+1
+6
+5
+5
+2
+2
+1
+13
+8
+6
+7
+4
+3
+11
+9
+7
+49
+11
+8
+17
+12
+8
+12
+6
+5
+12
+11
+9
+15
+3
+3
+34
+17
+10
+7
+6
+6
+13
+13
+INTERNATIONAL JOURNAL OF REMOTE SENSING
+321
+
+
+Figure 14. Tree heights from high-altitude ALS data (1450 m above ground level) and tree heights 
+from low-altitude ALS data (150 m above ground level) for automatically connected trees on 10 
+sample plots (2200 linked trees), coefficient of determination (R2), standard deviation of differences 
+(STD) and mean value of differences (Bias).
+Table 4. Results from tree detection using 2D segmentation and low-altitude ALS data: 
+omission errors affect (in percentage) on the number of trees (Number), on the basal area 
+(Basal area), and on the stem volume (Volume); commission error (in percentage) of all trees 
+and of only tall trees (ALS tree height >10 m).
+Omission error (%)
+Commission error (%)
+Plot
+Number
+Basal area
+Volume
+All trees
+Tall trees
+1
+4
+1
+1
+5
+4
+2
+4
+3
+3
+4
+3
+3
+14
+5
+4
+6
+6
+4
+3
+2
+2
+7
+4
+5
+2
+2
+2
+11
+3
+6
+5
+3
+3
+7
+5
+7
+38
+8
+5
+15
+3
+8
+9
+4
+3
+5
+4
+9
+10
+2
+1
+46
+7
+10
+5
+6
+5
+10
+10
+322
+J. HOLMGREN ET AL.
+
+
+Figure 15. Tree heights from individual trees obtained from high-altitude ALS data (1450 m above 
+ground level) and field-measured trees (214 linked trees), coefficient of determination (R2), standard 
+deviation of differences (STD) and mean value of differences (Bias).
+Table 5. Results from tree detection using 3D segmentation and high-altitude ALS data: 
+omission errors affect (in percentage) on the number of trees (Number), on the basal area 
+(Basal area), and on the stem volume (Volume); commission error (in percentage) of all trees 
+and of only tall trees (ALS tree height >10 m).
+Omission error (%)
+Commission error (%)
+Plot
+Number
+Basal area
+Volume
+All trees
+Tall trees
+1
+7
+3
+3
+17
+7
+2
+11
+10
+9
+21
+8
+3
+15
+5
+4
+23
+10
+4
+3
+2
+2
+15
+6
+5
+1
+1
+1
+35
+8
+6
+5
+4
+4
+26
+10
+7
+24
+4
+3
+41
+17
+8
+10
+6
+6
+28
+11
+9
+3
+1
+1
+69
+23
+10
+5
+5
+4
+31
+14
+INTERNATIONAL JOURNAL OF REMOTE SENSING
+323
+
+
+Figure 16. Tree heights for individual trees obtained from a helicopter at low altitude (150 m above 
+ground level) and field-measured trees (221 linked trees), coefficient of determination (R2), standard 
+deviation of differences (STD) and mean value of differences (Bias).
+Table 6. Results from tree detection using 3D segmentation and low-altitude ALS data: 
+omission errors affect (in percentage) on the number of trees (Number), on the basal area 
+(Basal area), and on the stem volume (Volume); commission error (in percentage) of all trees 
+and of only tall trees (ALS tree height >10 m).
+Omission error (%)
+Commission error (%)
+Plot
+Number
+Basal area
+Volume
+All trees
+Tall trees
+1
+1
+0
+0
+61
+5
+2
+0
+0
+0
+67
+3
+3
+1
+1
+0
+66
+7
+4
+1
+1
+1
+62
+4
+5
+1
+0
+0
+67
+3
+6
+0
+0
+0
+73
+6
+7
+1
+0
+0
+81
+25
+8
+1
+1
+0
+72
+6
+9
+0
+0
+0
+92
+45
+10
+0
+0
+0
+77
+14
+324
+J. HOLMGREN ET AL.
+
+
+below a tall tree, problems will occur if several tall trees (i.e. several 2D segments) 
+cover one small tree. It is possible to solve this problem using buffer zones of ALS 
+data outside the currently processed 2D segment and only save 3D clusters with 
+their centres located within the currently processed 2D segment. The results of the 
+3D clustering was limited to modelling of tree crowns. One effect of this can be 
+observed in Figure 3(b), where data from a tree stem belonging to a tall tree was 
+included in the 3D cluster of a shorter tree below. This will result in an over­
+estimated tree height for the shorter tree, which might be one reason for relatively 
+high commission errors observed on two plots with a mixture of tall pine trees 
+and short trees (Tables 5-6). It is possible to solve this problem by also detecting 
+tree stems, and not only tree crowns.
+Some trees were removed between the two ALS data acquisition missions, 
+probably due to bark beetle infestation. The removals were clear when comparing 
+the DSM from the two different ALS datasets. Thus, the true proportions of 
+detected trees, using high-altitude ALS data, are higher than given by the com­
+parison with field data. The field measurements used for validation were not 
+completely correct. This was due to field crews sometimes making mistakes. For 
+example, one field crew omitted some trees from the inventory. They painted the 
+trees that had been measured in order to avoid this mistake. Despite painting the 
+trees, some errors in the field measurements are visible when comparing field 
+measurements to a DSM with 5 cm resolution, and therefore contribute to the 
+commission error. Thus, true commission errors are lower compared to the values 
+from the validation based on the field inventory.
+We also experienced problems using different thresholds for the different data 
+sources, that is, stem diameter (DBH) for the field inventory and height for the ALS 
+data. One solution to the threshold problem was to use only tall trees for valida­
+tion of commission errors. For tall trees, commission errors were smaller, and trees 
+missed during the field inventory can explain some of the errors. However, the 
+commission errors were larger for the high-altitude ALS data. One reason for larger 
+commission errors using lower resolution ALS data could be lower quality of the 
+canopy height model used to set the height of tree crown models. We used 
+morphological filters to derive a canopy area raster, which we used to decide 
+whether we should interpolate height values for data raster cells with no data 
+values in the canopy height model (CHM). Problems with raster cell values in the 
+Table 7. Mean values of plot results from tree detection using 2D segmentation and low-altitude ALS 
+data: omission errors affect (in percentage) on the number of trees (number), on the basal area (basal 
+area), and on the stem volume (volume); commission error (in percentage) of all trees and of only tall 
+trees (ALS tree height >10 m).
+Omission error (%)
+Commission error (%)
+Dataset
+Algorithm
+Number
+Basal area
+Volume
+All trees
+Tall trees
+High altitude
+2D segmentation
+13
+6
+5
+13
+10
+Low altitude
+2D segmentation
+9
+4
+3
+12
+5
+High altitude
+3D segmentation
+8
+4
+4
+31
+11
+Low altitude
+3D segmentation
+1
+0
+0
+72
+12
+INTERNATIONAL JOURNAL OF REMOTE SENSING
+325
+
+
+CHM deviating from the true canopy height could be one reason for larger 
+commission errors when using ALS data with lower density, and it could therefore 
+be possible to improve the results using enhanced interpolation.
+We observed similar proportions of detected volume for the two ALS data resolutions. 
+The detection rates in lower canopy layers were higher using high-resolution ALS data. In 
+earlier studies, tree detection results have been similar, compared to results obtained in 
+this study, for densities above 10 laser returns per square meter (Reitberger et al. 2009; 
+Kaartinen et al. 2012; Yao et al. 2014; Kandare et al. 2016). We observed a high proportion 
+of detected trees in this study, using low-altitude ALS data and 3D segmentation, 
+compared to several earlier studies. However, the results are difficult to compare because 
+of the use of different data for validation.
+In this study, we compared tree height estimates from two altitudes. The 
+standard deviation of the differences was .73 m. Morsdorf et al. (2008) observed 
+a small difference in tree height estimates using ALS from flight altitudes of 500 m 
+and 900 m above ground level. For comparison with manual measurements, the 
+standard deviation was only slightly higher using ALS data from 900 m altitude, 
+1.49 m, compared with 1.39 m for the 500 m altitude. In comparisons of several 
+algorithms in Finland using ALS data from 600 m flight altitude and ALS data 
+densities of 2, 4, and 8 points per m2, the root-mean-square errors of tree height 
+estimations were usually between .5 m and 1.0 m (Kaartinen et al. 2012) which are 
+similar to the results obtained in our study.
+Very high-resolution ALS makes it possible to obtain laser returns from all 
+treetops not obscured by other trees. There are errors caused by manual measure­
+ments using a hypsometer for angle measurement and from problems in observing 
+treetops from a location on the ground. Therefore, the reported errors from ALS- 
+based estimates of tree height could depend much on the errors caused by the 
+manual method used for validation. For example, tree heights from ALS from a low 
+altitude were on average higher than from manual measurements, which could be 
+a result of problems to observe all parts of the treetop from a viewpoint on the 
+ground.
+6. Conclusions
+We observed higher tree detection rates using ALS data collected from low 
+altitude (150 m above ground level) compared to high altitude (1450 m above 
+ground level). The algorithm produced similar results using high-altitude ALS 
+data compared to low-altitude ALS data for detection of trees that made up the 
+majority of the total stem volume. Thus, the high-resolution ALS data from a low 
+altitude was mostly useful for detection of small trees in lower vegetation layers. 
+The second part of the algorithm included clustering of 3D point data, making it 
+possible to detect trees located below other trees. However, this second part is 
+more computationally expensive. High proportions of the stem volume were 
+detected with only the first part of the algorithm, using watershed segmentation 
+of a model fit surface. This is important information for large-area mapping of 
+forest resources in terms of wood supply to forest industries. However, low- 
+altitude ALS data can be used to produce high-resolution point clouds for detailed 
+326
+J. HOLMGREN ET AL.
+
+
+mapping of specific areas and provide additional information about low vegeta­
+tion; this information is useful for environmental monitoring of hot-spot areas or 
+for planning forest operations. The use of 3D tree crown segmentation based on 
+crown density models made it possible to detect a large percentage of trees in 
+multi-layered forests.
+Acknowledgements
+COWI Mapping (now Hexagon Geosystems) performed the high-altitude laser scanning and 
+Visimind AB performed the low-altitude laser scanning. The authors would like to thank the field 
+crew who collected the data used for validation.
+Disclosure statement
+No potential conflict of interest was reported by the author(s).
+Funding
+The work was supported by the Bo Rydins Foundation for Science Research [F19/17]; Brattås 
+Foundation for Forest Science Research [F18:03]; Carl Tryggers Foundation for Science Research 
+[CTS 18: 151]; The Royal Swedish Academy of Agriculture and Forestry (KSLA) [TF 2019-0064]; Hildur 
+and Sven Wingquist Foundation for Forest Science Research [17/18-2 / 107-5 SOJOH,18/19-4 / 110-5 
+SOJOH]; Skogssällskapet [2019-649-S2 2018 LIABE]; FORMAS [2018-01161].
+ORCID
+Johan Holmgren 
+http://orcid.org/0000-0002-7112-8015
+Eva Lindberg 
+http://orcid.org/0000-0002-1792-0773
+Kenneth Olofsson 
+http://orcid.org/0000-0002-2836-2316
+Henrik J. Persson 
+http://orcid.org/0000-0002-3403-057X
+References
+Axelsson, P. E. 1999. “Processing of Laser Scanner Data—algorithms and Applications.” ISPRS 
+Journal of Photogrammetry and Remote Sensing 54 (2–3): 138–147. doi:10.1016/s0924- 
+2716(99)00008-8.
+Baltsavias, E. P. 1999. “Airborne Laser Scanning: Basic Relations and Formulas.” ISPRS Journal 
+of Photogrammetry and Remote Sensing 54 (2–3): 199–214. doi:10.1016/S0924-2716(99) 
+00015-5.
+Bian, Y., P. Zou, Y. Shu, and Y. Ronghuan. 2014. “Individual Tree Delineation in Deciduous 
+Forest Areas with LiDar Point Clouds.” Canadian Journal of Remote Sensing 40 (2): 
+152–163.
+Brandel, G. 1990. Volume Functions for Individual Trees : Scots Pine (Pinus Sylvestris), Norway Spruce 
+(Picea Abies) and Birch (Betula Pendula & Betula Pubescens). Garpenberg, Sweden: Swedish 
+University of Agricultural Sciences.
+Bucksch, A., R. Lindenbergh, M. Zulkarnain Abd Rahman, and M. Menenti. 2013. “Breast 
+Height Diameter Estimation from High-Density Airborne LiDar Data.” IEEE Geoscience and 
+Remote Sensing Letters 11 (6): 1056–1060. doi:10.1109/LGRS.2013.2285471.
+INTERNATIONAL JOURNAL OF REMOTE SENSING
+327
+
+
+Falkowski, M. J., A. M. S. Smith, A. T. Hudak, P. E. Gessler, L. A. Vierling, and N. L. Crookston. 2006. 
+“Automated Estimation of Individual Conifer Tree Height and Crown Diameter via 
+Two-Dimensional Spatial Wavelet Analysis of Lidar Data.” Canadian Journal of Remote Sensing 
+32 (2): 153–161. doi:10.5589/m06-005.
+Gupta, S., H. Weinacker, and B. Koch. 2010. “Comparative Analysis of Clustering-Based Approaches 
+for 3-D Single Tree Detection Using Airborne Fullwave Lidar Data.” Remote Sensing 2 (4): 968–989. 
+doi:10.3390/rs2040968.
+Holmgren, J. and E. Lindberg. 2013. “Tree Crown Segmentation Based on a Geometric Tree Crown 
+Model for Prediction of Forest Variables.” Canadian Journal of Remote Sensing 39 (sup1): S86–S98. 
+doi:10.5589/m13-025.
+Holmgren, J. and E. Lindberg. 2019. “Tree Crown Segmentation Based on a Tree Crown Density 
+Model Derived from Airborne Laser Scanning.” Remote Sensing Letters 10 (12): 1143–1152. 
+doi:10.1080/2150704X.2019.1658237.
+Holopainen, M., M. Vastaranta, and J. Hyyppä. 2014. “Outlook for the Next Generation’s 
+Precision Forestry in Finland.” Forests 5 (7): 1682–1694. doi:10.3390/f5071682.
+Hyyppä, J., H. Hyyppä, D. Leckie, F. Gougeon, X. Yu, and M. Maltamo. 2008. “Review of Methods of 
+Small-Footprint Airborne Laser Scanning for Extracting Forest Inventory Data in Boreal Forests.” 
+International Journal of Remote Sensing 29 (5): 1339–1366. doi:http://dx.doi.org/10.1080/ 
+01431160701736489.
+Kaartinen, H., J. Hyyppä, X. Yu, M. Vastaranta, H. Hyyppä, A. Kukko, and M. Holopainen, Heipke, C., 
+Hirschmugl, M., Morsdorf, F., Næsset, E., Pitkänen, J., Popescu, S., Solberg, S., Wolf, B.M., Wu, J. 
+et al.2012. ”An International Comparison of Individual Tree Detection and Extraction Using 
+Airborne Laser Scanning.” Remote Sensing 4 (4): 950–974. doi:http://dx.doi.org/10.3390/ 
+rs4040950.
+Kandare, K., H. Ole Ørka, J.-C.-W. Chan, and M. Dalponte. 2016. “Effects of Forest Structure 
+and Airborne Laser Scanning Point Cloud Density on 3D Delineation of Individual Tree 
+Crowns.” European Journal of Remote Sensing 49 (1): 337–359. doi:10.5721/EuJRS20164919.
+Kellner, J. R., J. Armston, K. C. Markus Birrer, L. Duncanson, C. Eck, C. Falleger, B. Imbach, 
+K. Král, and M. Krůček. 2019. “New Opportunities for Forest Remote Sensing Through 
+Ultra-High-Density Drone Lidar.” Surveys in Geophysics 40 (4): 959–977. doi:10.1007/ 
+s10712-019-09529-9.
+Lee, H., K. Clint Slatton, B. Edward Roth, and W.P. Cropper Jr.2010. “Adaptive Clustering of 
+Airborne LiDar Data to Segment Individual Tree Crowns in Managed Pine Forests.” 
+International Journal of Remote Sensing 31 (1): 117–139. doi:10.1080/01431160902882561.
+Lindberg, E. and J. Holmgren. 2017. “Individual Tree Crown Methods for 3D Data from 
+Remote Sensing.” Current Forestry Reports 3 (1): 19–31. doi:10.1007/s40725-017-0051-6.
+Lindberg, E., L. Eysn, M. Hollaus, J. Holmgren, and N. Pfeifer. 2014. “Delineation of Tree 
+Crowns and Tree Species Classification from Full-Waveform Airborne Laser Scanning Data 
+Using 3-D Ellipsoidal Clustering.” Ieee Journal of Selected Topics in Applied Earth 
+Observations and Remote Sensing 7 (7): 3174–3181. doi:10.1109/jstars.2014.2331276.
+Lu, X., Q. Guo, W. Li, and J. Flanagan. 2014. “A Bottom-Up Approach to Segment Individual 
+Deciduous Trees Using Leaf-off Lidar Point Cloud Data.” ISPRS Journal of Photogrammetry and 
+Remote Sensing 94: 1–12. doi:10.1016/j.isprsjprs.2014.03.014.
+Mongus, D. and B. Žalik. 2015. “An Efficient Approach to 3D Single Tree-Crown Delineation in LiDar 
+Data.” ISPRS Journal of Photogrammetry and Remote Sensing 108: 219–233. doi:10.1016/j. 
+isprsjprs.2015.08.004.
+Morsdorf, F., E. Meier, B. Allgöwer, and D. Nüesch. 2003. “Clustering in Airborne Laser Scanning Raw 
+Data for Segmentation of Single Trees.” International Archives of the Photogrammetry, Remote 
+Sensing and Spatial Information Sciences 34 (part 3): W13.
+Morsdorf, F., O. Frey, E. Meier, K. I. Itten, and B. Allgower. 2008. “Assessment of the Influence of Flying 
+Altitude and Scan Angle on Biophysical Vegetation Products Derived from Airborne Laser 
+Scanning.” International Journal of Remote Sensing 29 (5): 1387–1406. doi:10.1080/ 
+01431160701736349.
+328
+J. HOLMGREN ET AL.
+
+
+Nilsson, M., K. Nordkvist, J. Jonzen, N. Lindgren, P. Axensten, J. Wallerman, and M. Egberth, 
+Larsson, S., Nilsson, L., Eriksson, J., Olsson, H. 2017. ”A Nationwide Forest Attribute Map of 
+Sweden Predicted Using Airborne Laser Scanning Data and Field Data from the National 
+Forest Inventory.” Remote Sensing of Environment 194: 447–454. doi:10.1016/j. 
+rse.2016.10.022.
+Ning, J., L. Zhang, D. Zhang, and C. Wu. 2010. “Interactive Image Segmentation by Maximal 
+Similarity Based Region Merging.” Pattern Recognition 43 (2): 445–456. doi:10.1016/j. 
+patcog.2009.03.004.
+Olofsson, K., E. Lindberg, and J. Holmgren. 2008. A Method for Linking Field-Surveyed and 
+Aerial-Detected Single Trees Using Cross Correlation of Position Images and the Optimization 
+of Weighted Tree List Graphs. Paper presented at the Proceedings of SilviLaser 2008, 8th 
+international conference on LiDAR applications in forest assessment and inventory, Heriot-Watt 
+University, Edinburgh, UK, September 17–19.
+Persson, Å., J. Holmgren, and U. Söderman. 2002. “Detecting and Measuring Individual Trees 
+Using an Airborne Laser Scanner.” Photogrammetric Engineering and Remote Sensing 68: 
+925–932.
+Persson, H. J. and J. E. Fransson. 2017. “Comparison Between TanDem-X-and ALS-Based Estimation 
+of Aboveground Biomass and Tree Height in Boreal Forests.” Scandinavian Journal of Forest 
+Research 32 (4): 306–319. doi:10.1080/02827581.2016.1220618.
+Popescu, S. C., R. H. Wynne, and R. F. Nelson. 2002. “Estimating Plot-Level Tree Heights with 
+Lidar: Local Filtering with a Canopy-Height Based Variable Window Size.” Computers and 
+Electronics in Agriculture 37 (1–3): 71–95. doi:10.1016/S0168-1699(02)00121-7.
+Reitberger, J., C. Schnorr, P. Krzystek, and U. Stilla. 2009. “3D Segmentation of Single Trees Exploiting 
+Full Waveform LIDAR Data.” ISPRS Journal of Photogrammetry and Remote Sensing 64 (6): 561–574. 
+doi:10.1016/j.isprsjprs.2009.04.002.
+Swatantran, A., H. Tang, T. Barrett, P. DeCola, and R. Dubayah. 2016. “Rapid, High-Resolution Forest 
+Structure and Terrain Mapping Over Large Areas Using Single Photon Lidar.”Scientific Reports 6.
+Vaughn, N. R., L. M. Moskal, and E. C. Turnblom. 2012. “Tree Species Detection Accuracies Using 
+Discrete Point Lidar and Airborne Waveform Lidar.” Remote Sensing 4 (2): 377–403. doi:10.3390/ 
+rs4020377.
+Wang, Y., J. Hyyppä, X. Liang, H. Kaartinen, X. Yu, E. Lindberg, J. Holmgren, Y. Qin, C. Mallet, and 
+A. Ferraz. 2016. “International Benchmarking of the Individual Tree Detection Methods for 
+Modeling 3-D Canopy Structure for Silviculture and Forest Ecology Using Airborne Laser 
+Scanning.” IEEE Transactions on Geoscience and Remote Sensing 54 (9): 5011–5027. doi:10.1109/ 
+TGRS.2016.2543225.
+Wolf, B.-M. and C. Heipke. 2007. “Automatic Extraction and Delineation of Single Trees from 
+Remote Sensing Data.” Machine Vision and Applications 18 (5): 317–330. doi:10.1007/ 
+s00138-006-0064-9.
+Wu, B., B. Yu, W. Yue, S. Shu, W. Tan, C. Chunling, Y. Huang, J. Wu, and H. Liu. 2013. “A Voxel-Based 
+Method for Automated Identification and Morphological Parameters Estimation of Individual 
+Street Trees from Mobile Laser Scanning Data.” Remote Sensing 5 (2): 584–611. doi:10.3390/ 
+rs5020584.
+Yao, W., J. Krull, P. Krzystek, and M. Heurich. 2014. “Sensitivity Analysis of 3D Individual Tree 
+Detection from LiDar Point Clouds of Temperate Forests.” Forests 5 (6): 1122–1142. doi:10.3390/ 
+f5061122.
+INTERNATIONAL JOURNAL OF REMOTE SENSING
+329

@@ -1,0 +1,1434 @@
+Received 22 February 2025, accepted 15 April 2025, date of publication 22 April 2025, date of current version 29 April 2025.
+Digital Object Identifier 10.1109/ACCESS.2025.3563363
+Self-Supervised Learning for Precise Individual
+Tree Segmentation in Airborne LiDAR Point
+Clouds
+LAMA SHAHEEN1,2, BADER RASHEED
+3, AND MANUEL MAZZARA
+1
+1Institute of Software Development and Engineering, Innopolis University, 420500 Innopolis, Russia
+2Research Center for Artificial Intelligence, Innopolis University, 420500 Innopolis, Russia
+3Laboratory of Innovative Technologies for Processing Video Content, Innopolis University, 420500 Innopolis, Russia
+Corresponding author: Bader Rasheed (b.rasheed@innopolis.university)
+ABSTRACT
+Segmenting individual trees from airborne LiDAR point cloud data is critical for forest
+management, urban planning, and ecological monitoring but remains challenging due to complex natural
+environments, diverse tree architectures, and dense canopies. Traditional supervised methods rely on
+extensive, manually annotated datasets that are often impractical to obtain. In this study, we propose
+a novel self-supervised learning framework that eliminates the need for manual labeling by integrating
+transformation-invariant feature extraction, an energy-based segmentation loss, and soft clustering. The
+framework operates in two stages: a pretext task applies geometric transformations—rotation (from –45◦to
++45◦), translation (between –1 and 1 units), and scaling (between 0.5 and 2.0)—to learn robust features,
+while an unsupervised segmentation step leverages an energy function that combines height, density,
+and slope attributes to cluster points corresponding to individual trees. We evaluated our approach on a
+high-density LiDAR dataset acquired from the Estonian Land Board (LAS format, version 1.4) comprising
+over 850,000 points. Our method achieves up to 87% convexity, 78% solidity, and an elliptical fit error as
+low as 0.12, substantially reducing over-segmentation compared to baseline clustering techniques. These
+results demonstrate that our self-supervised framework offers a scalable, label-free solution for precise tree
+segmentation, with significant advantages in accuracy and efficiency over traditional supervised methods.
+INDEX TERMS Self-supervised learning, individual trees segmentation, airborne LiDAR data processing.
+I. INTRODUCTION
+The accurate segmentation of individual trees from airborne
+LiDAR point cloud data is a foundational task in forest man-
+agement [1], urban planning [2], and ecological studies [3],
+[4]. Such segmentation facilitates a range of applications
+including biomass estimation, carbon stock calculation,
+forest monitoring, and biodiversity assessment [3], [5], [6].
+In addition, trees play a crucial role in various environmental
+management strategies, particularly in flood and erosion
+management [7], ecosystem monitoring [8], [9], [10], and
+The associate editor coordinating the review of this manuscript and
+approving it for publication was Ganesh Naik
+.
+agricultural practices [11], [12], underscoring the timeliness
+and significance of reliable tree segmentation methodologies.
+Despite its significance, the task is fraught with challenges
+stemming from the complex and diverse nature of tree
+structures where LiDAR data consists of massive point
+clouds that represent tree structures in a detailed yet complex
+manner, making the processing and analysis demanding [13],
+[14], variability in LiDAR data quality [15], and the
+complexity of processing massive point cloud datasets [16].
+Traditional methods for tree segmentation have relied on
+supervised learning techniques [17], these methods involve
+training a model on a dataset where each tree or tree-related
+feature is labeled. This process enables the model to
+distinguish between various elements in an image, such
+VOLUME 13, 2025
+ 2025 The Authors. This work is licensed under a Creative Commons Attribution 4.0 License.
+For more information, see https://creativecommons.org/licenses/by/4.0/
+70895
+
+
+L. Shaheen et al.: Self-Supervised Learning for Precise Individual Tree Segmentation
+as trees, and other vegetation. While supervised learning
+methods have proven effective for this task, they require a
+considerable amount of labeled data for training, which can
+be time-consuming and resource-intensive to obtain [18],
+[19], [20]. Moreover, supervised models can not generalize
+across diverse forest types and conditions due to the high
+variability in tree shapes, sizes, and densities. This variability
+presents significant challenges in modeling forest attributes
+from remote sensing data like airborne LiDAR [20].
+In response to these challenges, recent advances have
+shifted towards unsupervised and semi-supervised learning
+paradigms, where these methods can discover hidden patterns
+in data without need for labeled examples [21], [22], [23],
+while semi-supervised learning combines a small amount of
+labeled data with a larger pool of unlabeled data to improve
+learning efficiency [24], [25]. However, these approaches
+still have issues with accurately distinguishing individual
+trees, particularly in dense forests or urban environments
+where trees are closely interspaced or obscured, which can
+confuse algorithms that rely on spatial patterns and density
+cues [26].
+This study introduces a novel self-supervised learning
+framework that eliminates manual annotations while incor-
+porating three key innovations: (1) transformation-invariant
+feature learning, (2) a novel energy-based segmentation loss,
+and (3) an adaptive soft clustering mechanism.
+The contributions of this study are anticipated to have
+a broad impact on applications in forestry, environmental
+monitoring, and urban planning by providing a robust and
+scalable solution for tree segmentation from LiDAR data.
+The paper is structured as follows: Section II (Related
+Work) reviews existing methodologies for tree segmentation
+using LiDAR data and highlights the research gaps this
+study addresses. Section III (Methodology) details the
+proposed self-supervised framework, covering data prepro-
+cessing, transformation-invariant feature learning, and the
+segmentation model. Section IV (Experimental Setup and
+Results) describes the evaluation metrics, dataset details,
+and segmentation results, demonstrating the framework’s
+effectiveness compared to baseline methods. Section V
+(Discussion and Future Work) discusses the implications of
+the findings, potential applications, and avenues for future
+research.
+The proposed framework advances the state of the art in
+LiDAR-based tree segmentation, offering a generalizable,
+efficient, and annotation-free alternative to existing methods.
+II. RELATED WORK
+The segmentation of individual trees from LiDAR data
+has garnered significant interest in remote sensing, forestry,
+and urban planning due to its potential for contributing to
+ecological monitoring, forest management, and urban green
+space development. This section reviews the state-of-the-
+art in tree segmentation techniques from LiDAR data and
+identifies research gaps.
+A. CURRENT RESEARCH
+Existing research on tree segmentation can be broadly
+categorized into raster-based and point-based approaches.
+Raster-based methods transform the LiDAR point cloud
+into a 2D representation, such as digital surface models
+(DSMs) or canopy height models (CHMs). These methods
+then process the rasterized images to detect tree tops using
+various algorithms. Watershed segmentation applies the
+watershed algorithm to CHMs to delineate tree crowns but is
+prone to over-segmentation, particularly in dense forests [4],
+[27]. Region growing utilizes seed points, typically the local
+maxima in CHMs, to segment tree crowns by expanding
+regions based on height similarity. While effective in
+uniform forests, it struggles with heterogeneous canopies [3],
+[28], [29]. Machine learning approaches have also been
+applied to rasters, such as convolutional neural networks
+(CNNs) trained on CHMs for tree segmentation, achieving
+high accuracy but requiring extensive labeled datasets and
+potentially losing spatial resolution compared to point-based
+methods [30], [31].
+Point-based segmentation techniques work directly on
+3D LiDAR point clouds, preserving geometric information
+and enabling more precise segmentation. Clustering-based
+approaches such as DBSCAN [32], [33] and k-means
+clustering [34], [35] attempt to group points corresponding
+to individual trees. However, they often require fine-tuning
+parameters like point density thresholds, making them
+dataset-dependent. Graph-based segmentation methods con-
+struct graphs where points act as nodes, and edges define
+spatial relationships. Spectral clustering techniques are then
+used to segment trees, but these methods are computationally
+expensive [36], [37], [38], [39]. Deep learning approaches
+for 3D point clouds, including PointNet [40], [41] and its
+variants [42], [43], [44], have demonstrated promising results
+in tree segmentation, but they require large amounts of
+training data and significant computational resources.
+B. RESEARCH GAPS
+Despite advancements in tree segmentation, several key
+challenges remain unaddressed. Many existing methods rely
+on specific tree species, forest types, and LiDAR acquisition
+parameters, limiting their generalizability across diverse
+ecosystems [45]. Methods such as watershed segmentation
+often suffer from over-segmentation in dense forests where
+canopy overlap is high [46]. Current techniques also struggle
+in mixed and sparse forests, where tree structures and canopy
+densities vary significantly. Supervised deep learning models
+require extensive annotated datasets, making them expensive
+and time-consuming to develop. Computational complexity
+remains an issue, as deep learning and graph-based methods
+demand high processing power, making real-time deploy-
+ment on UAVs and edge devices impractical.
+Table 1 summarizes the identified challenges and how our
+proposed approach addresses them.
+70896
+VOLUME 13, 2025
+
+
+L. Shaheen et al.: Self-Supervised Learning for Precise Individual Tree Segmentation
+TABLE 1. Challenges in tree segmentation and proposed solutions.
+By addressing these limitations, our self-supervised learn-
+ing framework enhances segmentation accuracy, reduces
+dependency on labeled data, and improves adaptability across
+different forest conditions. Detailed evaluations of these
+improvements are presented in the Experiments and Results
+section.
+III. METHODOLOGY
+Figure 1 provides an overview of the conceptual design of the
+proposed self-supervised learning framework for segmenting
+individual trees from airborne LiDAR data, starting from data
+pre-processing, to the main self-supervised framework. The
+figure illustrates the dual-task architecture of the framework,
+which is composed of two key components: the pretext task
+and the main segmentation task. In the pretext task, various
+geometric transformations—such as rotation, translation, and
+scaling—are applied to the LiDAR point cloud to enable the
+model to learn transformation-invariant features. The model
+processes these transformations to extract key features that
+are subsequently used in the main task of tree segmentation.
+FIGURE 1. Self-Supervised learning framework.
+The main task leverages the learned features to accurately
+differentiate and segment individual trees using a soft
+clustering technique. The clustering mechanism dynamically
+assigns points to centroids that represent individual trees,
+ensuring precise segmentation based on the geometric
+properties of the trees. The overall architecture is designed to
+adapt to the inherent variability of tree structures and forest
+conditions, providing robust segmentation results in dense
+and heterogeneous environments.
+A. PRE-PROCESSING LIDAR POINT CLOUD
+The preprocessing stage is a fundamental step in preparing
+airborne LiDAR point cloud data for segmentation. The
+objective is to improve data quality by mitigating sensor
+noise, removing outliers, and standardizing the spatial
+representation of points. These processes ensure that the
+dataset is optimized for self-supervised learning, enabling
+robust feature extraction and segmentation of individual trees.
+1) NOISE REDUCTION AND OUTLIER REMOVAL
+LiDAR point cloud data often contains noise due to
+atmospheric conditions, sensor errors, or surface reflectance
+variations. To address these issues, a statistical outlier
+removal (SOR) filter is applied. The method evaluates each
+point pi by computing the average distance to its k-nearest
+neighbors:
+di = 1
+k
+X
+j∈N (i)
+∥pi −pj∥
+(1)
+where:
+• N(i) represents the set of k-nearest neighbors of point
+pi,
+• di is the mean distance to these neighbors.
+A threshold Tn is then computed as:
+Tn = µd + 2σd
+(2)
+where:
+• µd is the global mean of all di,
+• σd is the standard deviation of di.
+Points with distances exceeding Tn are classified as
+outliers and removed. This filtering process effectively
+reduces atmospheric noise and artifacts, ensuring the dataset
+contains only relevant points for segmentation.
+2) MORPHOLOGICAL FILTERING FOR OBJECT REFINEMENT
+Following noise removal, morphological filtering is applied
+to eliminate transient objects such as power lines, birds, and
+isolated noise points. This method leverages local surface
+normals to identify points that deviate significantly from their
+neighborhood’s structure.
+For each point pi, the surface normal is estimated
+using Principal Component Analysis (PCA) over its local
+neighborhood. The normal vector is given by:
+Ni = (nx, ny, nz)
+(3)
+where Ni is computed from the eigenvectors of the covariance
+matrix of neighboring points. Points with abnormally large
+deviations in their normal orientations are removed, as they
+likely represent noise or artifacts.
+VOLUME 13, 2025
+70897
+
+
+L. Shaheen et al.: Self-Supervised Learning for Precise Individual Tree Segmentation
+3) NORMALIZATION FOR STANDARDIZED REPRESENTATION
+To ensure consistency in the spatial representation of the point
+cloud, normalization is performed. The goal is to transform
+all points into a unit cube while preserving relative geometric
+relationships.
+Each point pi = (xi, yi, zi) is transformed based on the
+minimum and maximum coordinates of the dataset:
+p′
+i =
+ xi −xmin
+xmax −xmin
+,
+yi −ymin
+ymax −ymin
+,
+zi −zmin
+zmax −zmin
+
+(4)
+where:
+• (xmin, ymin, zmin)
+and
+(xmax, ymax, zmax)
+define
+the
+bounding box of the point cloud.
+This transformation ensures that all points lie within
+the range [0, 1], making them compatible with deep learn-
+ing architectures and improving numerical stability during
+training.
+4) CHUNKING FOR EFFICIENT PROCESSING
+Since large LiDAR datasets can be computationally expen-
+sive to process, the normalized point cloud is divided into
+smaller, non-overlapping spatial chunks. Each chunk is
+defined based on a fixed grid, ensuring that all points within
+a given area are grouped together. The division is performed
+along the X-Y plane, maintaining all height values.
+This chunking strategy is sufficient for:
+• Memory-efficient processing by reducing the number
+of points processed per iteration.
+• Preservation of tree structure within each chunk,
+ensuring that points from the same tree remain grouped.
+FIGURE 2. Preprocessed LiDAR point cloud data.
+B. SELF-SUPERVISED LEARNING FRAMEWORK
+This research introduces a novel self-supervised learning
+framework designed for the segmentation of individual
+trees from airborne LiDAR point cloud data. It leverages a
+dual-task structure, focusing on a pretext task for features
+extraction and a main task for accurate tree segmentation.
+This innovative approach aims to deeply understand the
+geometric and topological nuances of LiDAR data for
+enhanced segmentation performance.
+1) PRETEXT TASK: GEOMETRIC TRANSFORMATIONS
+The geometric transformations pretext task aims to enhance
+the network’s ability to learn robust, transformation-invariant
+features from the LiDAR point cloud data. This task
+involves applying various geometric transformations to the
+point cloud data and training the network to predict these
+transformations. By focusing on this task, the model can
+develop a deeper understanding of the geometric struc-
+tures and relationships within the data, which is crucial
+for accurate tree segmentation. The transformation values
+were carefully selected based on empirical observations
+of natural tree structures in aerial LiDAR datasets. These
+values ensure that the model learns meaningful geo-
+metric variations without introducing artificial distortions.
+Specifically:
+• Rotation −45◦to +45◦: Trees exhibit variations in
+orientation due to environmental factors such as wind,
+terrain inclination, and slight sensor tilts. This range
+captures realistic tree rotations without excessive defor-
+mation. Expanding beyond this range (e.g., ±90◦) could
+introduce unrealistic orientations, while reducing it (e.g.,
+±20◦) might limit the model’s ability to generalize
+across varying forest conditions.
+The rotation matrix for a point pi = (xi, yi, zi) in 3D
+space is given by:
+Rz(θ) =
+
+
+cos θ −sin θ 0
+sin θ
+cos θ
+0
+0
+0
+1
+
+
+(5)
+The transformed point p′
+i is computed as:
+p′
+i = Rz(θ) · pi
+(6)
+• Translation:
+A random translation vector T = (tx, ty, tz) is sampled
+from the range [−1, 1] units along each axis. The
+transformation modifies the position of a point pi as:
+p′
+i = pi + T
+(7)
+This operation ensures that the network learns to
+recognize trees independent of their absolute spatial
+location. [−1, 1] ensures small but realistic shifts in tree
+positions, reflecting minor variations in LiDAR sensor
+alignment and GPS inaccuracies. Shifts beyond ±1 unit
+would introduce unrealistic positional offsets, whereas a
+smaller range (e.g., ±0.5) might not sufficiently capture
+sensor drift effects.
+• Scaling: A scaling factor s is chosen from the range
+[0.5, 2.0] to simulate variations in tree size caused
+by natural growth differences or LiDAR acquisition
+inconsistencies, where this simulates natural growth
+70898
+VOLUME 13, 2025
+
+
+L. Shaheen et al.: Self-Supervised Learning for Precise Individual Tree Segmentation
+variations in tree sizes while preventing unrealistic
+deformations. Scaling below 0.5 might cause loss of
+critical structural details, and scaling above 2.0 might
+introduce tree sizes not typically observed in real-world
+LiDAR data. The transformation is applied as:
+p′
+i = s · pi
+(8)
+This forces the model to develop scale-invariant repre-
+sentations, ensuring robustness when segmenting trees
+of varying sizes.
+Neural Architecture for Pretext Task: The neural architec-
+ture for the pretext task is designed to extract meaningful
+features from point clouds while ensuring these features
+capture the complex geometric structures of trees. Inspired
+by PointNet, the architecture is enhanced to be shape-aware,
+adapting its processing based on local and global geometric
+characteristics.
+a: FEATURE LEARNING VIA NEURAL ARCHITECTURE
+A PointNet-based neural network is employed to extract
+features from the transformed point cloud. This network
+processes each point independently, leveraging multi-layer
+perceptrons (MLPs) for local feature extraction and a
+max-pooling operation for global feature aggregation.
+By combining local and global geometric properties, the
+architecture can learn rich, transformation-invariant represen-
+tations of tree structures.
+b: LOCAL FEATURE EXTRACTION
+Each point pi is passed through a series of shared MLP layers:
+fi = MLP(pi),
+(9)
+where fi is the learned feature representation of point pi. These
+shared MLP layers learn localized spatial relationships and
+structural details, capturing fine-grained information such as
+branch orientation and foliage density.
+c: GLOBAL FEATURE AGGREGATION
+To encode the overall shape and layout of the point cloud,
+a symmetric max-pooling operation aggregates local features
+into a global feature vector:
+fglobal = max
+i
+fi.
+(10)
+This operation ensures permutation invariance, which means
+that the model’s performance does not depend on the order of
+points. Moreover, by selecting the highest activation across
+all points in each feature dimension, max-pooling emphasizes
+the most prominent structural characteristics (e.g., treetops,
+dense foliage clusters). Consequently, it filters out irrelevant
+noise and captures essential spatial cues that define the tree’s
+overall geometry, regardless of variations in point density.
+d: FEATURE AUGMENTATION
+Finally, each point’s representation is enhanced by concate-
+nating its local feature vector, the global feature vector, and
+additional geometric properties (e.g., height, density):
+faugmented = [fi, fglobal, geometric properties].
+(11)
+This augmented feature vector encodes both fine-scale local
+details and the broader context of the entire tree, thus
+enabling robust transformation-invariant feature learning for
+the subsequent segmentation task.
+2) LOSS FUNCTION FOR PRETEXT TASK
+The objective of the pretext task is to predict the transfor-
+mations applied to the point cloud. To achieve this, a Mean
+Squared Error (MSE) loss function is used:
+Lpretext = 1
+N
+N
+X
+i=1
+∥Ti −ˆTi∥2
+(12)
+where:
+• Ti represents the actual transformation parameters
+(rotation angle, translation vector, and scaling factor).
+• ˆTi is the predicted transformation.
+• N is the number of training samples.
+Minimizing this loss ensures that the network learns
+to accurately recover transformation parameters, thereby
+enforcing transformation invariance in the learned features.
+3) FEATURES GEOMETRIC TRANSFORMATION
+After the Pretext Task, which helps with getting the full shape
+of the point cloud, we need to move features from points
+from the same tree close to each other and features from
+points from different trees far from each other. This should
+be done in an unsupervised way without labeled data. To do
+that, we need to build a mathematical model to help us design
+the loss function that helps to do that. The tree is as an energy
+function. The tree top has highest value. All points around it
+are in decreasing height and have a slope pointing to the top
+of the tree from all directions. As the point has higher point
+relative to other point in the surrounding, this means that its
+features should not move too much, and vice versa. We should
+also consider unstructured trees where there is no one point
+of tree top, but a group of points and only some points are in
+decreasing height. However, we can use the fact that all tree
+top points are higher than the ground.
+The objective is to design a loss function that can guide
+the model to cluster point cloud features such that points
+belonging to the same tree are close to each other in feature
+space, while points from different trees are far apart. This
+should be achieved without labeled data, using the shape
+characteristics of trees.
+a: ENERGY FUNCTION REPRESENTATION
+To achieve effective unsupervised tree segmentation in point
+cloud data, we propose a novel energy function that integrates
+geometric and topological properties of trees, taking into
+account height, density, and slope characteristics. This energy
+function forms the basis for our loss functions, guiding the
+clustering process.
+VOLUME 13, 2025
+70899
+
+
+L. Shaheen et al.: Self-Supervised Learning for Precise Individual Tree Segmentation
+In our framework, we assign an energy value to each
+point in the LiDAR point cloud based on its geometric
+properties— height, density, and slope. This energy reflects
+how ‘‘important’’ or ‘‘influential’’ a point is in defining the
+structure of a tree.
+• High-Energy Points: Typically located at the treetops
+or dense canopy regions. They have a strong ability to
+attract nearby points in the feature space.
+• Low-Energy Points: Usually found near the ground or in
+sparse areas. They have less influence on other points.
+b: HEIGHT-BASED ENERGY EHEIGHT
+The height of a point in a 3D point cloud is a critical feature
+in tree structures, where higher points typically belong to tree
+tops or canopies. The sigmoid function is used to normalize
+height values and ensure that points with greater heights
+receive higher energy values.
+Eheight(pi) = σ
+zi −µz
+σz
+
+(13)
+where zi is the height of point i, µz is the mean height, and
+σz is the standard deviation of heights. The sigmoid function
+ensures that higher points receive higher energy values and
+ensures a smooth transition between low and high values,
+preventing abrupt changes in the energy distribution, which
+would lead to incorrect clustering.
+c: DENSITY-BASED ENERGY EDENSITY
+The local density of points is a useful indicator of whether a
+point belongs to a dense tree cluster (e.g., within the canopy)
+or is part of sparse regions (e.g., near the tree edges or trunk).
+A Gaussian kernel measures local density:
+ρi =
+X
+j∈N (i)
+exp
+ 
+−∥pi −pj∥2
+2σ 2ρ
+!
+(14)
+This kernel captures the notion of smooth changes in
+density, ensuring that points that are close together are treated
+as part of the same cluster. The exponential decay ensures
+that distant points do not contribute significantly to a point’s
+density, which helps preserve clear boundaries between trees.
+and the normalized density energy is defined as:
+Edensity(pi) =
+exp(ρi)
+P
+k exp(ρk)
+(15)
+d: SLOPE-BASED ENERGY ESLOPE
+Slope represents the steepness of elevation changes in a
+local neighborhood of points. In tree structures, regions
+with steeper slopes are often transitions between the trunk
+and the canopy or different parts of the canopy itself.
+By incorporating slope into the energy function, the model
+can better capture the structural nuances of the tree.
+si =
+X
+j∈N (i)
+|zi −zj|
+∥pi −pj∥
+(16)
+This formula captures the steepness by looking at height
+differences between neighboring points. The corresponding
+energy is:
+with the corresponding energy defined as:
+Eslope(pi) = exp
+
+−si
+σs
+
+(17)
+where σs controls the sensitivity of the slope function.
+e: COMBINED ENERGY FUNCTION
+The overall energy function E(pi) combines the height,
+density, and slope energies through a weighted sum:
+E(pi) = whEheight(pi) + wdEdensity(pi) + wsEslope(pi)
+wh + wd + ws
+(18)
+This formula balances the contributions of height, density,
+and slope to create a smooth energy landscape over the point
+cloud. By modulating the weights, we can prioritize certain
+features depending on the forest type or specific dataset
+characteristics. This normalization ensures that higher energy
+values correlate with potential tree top points, enabling
+effective clustering.
+f: LOSS FUNCTION DESIGN
+The loss function design is crucial in guiding the training
+process of the neural architecture for the Features Transfor-
+mation, ensuring the model learns meaningful representations
+that facilitate accurate segmentation.
+g: INTRA-CLUSTER LOSS LINTRA
+This term encourages points within the same tree to remain
+close together.. Mathematically, this can be viewed as a
+minimization of the distance between point features that
+belong to the same tree.
+Lintra =
+X
+i∈point cloud
+X
+j∈neighbors(i)
+wij∥fi −fj∥2
+(19)
+where wij is the weight based on HPE and SPE:
+wij = exp
+
+−|E(pi) −E(pj)|
+σh
+
+(20)
+• When E(pi) ≈E(pj):
+– The energy difference is small, so wij is close to 1.
+– Points pi and pj strongly influence each other.
+– Their feature vectors are encouraged to be close,
+pulling them together in feature space.
+• When E(pi) differs significantly from E(pj):
+– The energy difference is large, so wij decreases
+exponentially.
+– The influence between pi and pj diminishes.
+– Their feature vectors are allowed to diverge,
+preventing inappropriate clustering.
+70900
+VOLUME 13, 2025
+
+
+L. Shaheen et al.: Self-Supervised Learning for Precise Individual Tree Segmentation
+h: INTER-CLUSTER LOSS LINTER
+This term discourages points from different trees from
+being close in feature space, thus enhancing separation in
+clustering.
+Linter =
+X
+i∈points
+X
+j∈N ′(i)
+(1 −wij) exp
+
+−∥fi −fj∥2
+• For points from different trees (dissimilar energy), wij is
+low.
+• The term (1 −wij) becomes significant.
+• The loss penalizes small feature distances between these
+points, pushing them apart.
+i: SLOPE-BASED LOSS LSLOPE
+The slope-based loss guides points with steep slopes toward
+identified tree top points, improving the overall clustering
+process. This term leverages the directional properties
+derived from the local surface normals to group points that
+belong to the same tree.
+Lslope =
+X
+i∈points
+X
+j∈N (i)
+sij∥fi −fj∥2
+• Points with higher slopes (closer to tree tops) tend to
+influence nearby points, pulling them upward in feature
+space.
+• The slope-based loss helps points cluster around these
+high-slope regions, ensuring that the structure of the tree
+(e.g., from trunk to top) is well-represented.
+• By focusing on slope, the model can capture the vertical
+relationships in trees, ensuring that points at similar
+heights and gradients stay grouped.
+This loss ensures that points near the treetops, which
+typically have higher slopes relative to other points, attract
+nearby points, enforcing the structural continuity of the tree.
+j: TOTAL LOSS LTOTAL
+The total loss integrates the individual losses:
+Ltotal = λ1 · Lintra + λ2 · Linter + λ3 · Lslope
+(21)
+k: OVERALL EFFECT
+• Intra-Cluster Attraction: Lintra
+pulls similar-energy
+points together.
+• Inter-Cluster Repulsion: Linter pushes dissimilar-energy
+points apart.
+• Geometric Consistency: Lslope maintains the structural
+integrity of tree shapes.
+4) MAIN TASK: TREE SEGMENTATION
+Leveraging the pretext task’s learned features, and the
+geometric transformation step, the segmentation main task
+embarks on distinguishing individual trees with high pre-
+cision. This task is handled using a novel soft clustering
+mechanism that works directly on the transformed features,
+optimizing tree segmentation without the need for additional
+neural network layers. The clustering process is guided
+by custom-designed loss functions that ensure the correct
+grouping of points into clusters representing individual trees.
+The core of the segmentation process is the soft clustering
+mechanism, which assigns points to centroids that represent
+potential tree clusters. Unlike hard clustering techniques,
+which assign each point to a single cluster, soft clustering
+enables points to have varying degrees of membership across
+different clusters. This flexibility is crucial for handling
+the natural variability in tree shapes and sizes, as well as
+managing points that lie near the boundaries between trees.
+(1) Soft Clustering Mechanism
+Traditional hard clustering techniques, such as k-means
+or DBSCAN, assign each point to one cluster, limiting
+their ability to handle ambiguous regions where tree crowns
+overlap or where there is a gradual transition between tree
+structures. To overcome these limitations, we introduce a soft
+clustering mechanism, where each point has a probabilistic
+membership, guided by energy values calculated previously,
+across multiple clusters (trees). This approach allows for
+more flexibility and precision, particularly in dense forest
+environments where tree boundaries are not always well-
+defined. The energy values provide cues related to the
+tree tops and dense canopy regions. The number of trees
+(clusters) is unknown, so an adaptive clustering mechanism
+is employed to dynamically estimate and refine the number
+of clusters during the process.
+In soft clustering, the probability that a point pi belongs
+to cluster Ck (representing a tree) is given by the following
+softmax function over the distance between the point and the
+centroid of each cluster:
+Membership(pi ∈Ck) =
+exp(−d(pi, µk))
+PK
+j=1 exp(−d(pi, µj))
+where:
+• d(pi, µk) is the distance between the point pi and the
+centroid µk of cluster Ck,
+• K is the number of clusters (trees),
+• µj represents the centroid of cluster Cj.
+The distances are calculated in the learned feature space,
+which encodes geometric and topological information about
+the trees. This soft clustering mechanism provides flexibility
+in how points near tree boundaries are handled, allowing
+them to be probabilistically shared between multiple trees,
+capturing the natural ambiguity.
+2) Centroid Initialization and Refinement To initialize
+the clustering process, we leverage the energy values E(pi)
+computed previously. The key insight is to use high-energy
+points as cues for centroid initialization, as these points are
+more likely to belong to significant parts of trees (like the
+tops).
+However, while energy values help identify critical points,
+the centroids should not all be initialized too close to the same
+regions. To ensure that centroids are spread across different
+x, y locations, we enforce a spatial distribution constraint
+during initialization. Thus, the centroids are initialized from
+VOLUME 13, 2025
+70901
+
+
+L. Shaheen et al.: Self-Supervised Learning for Precise Individual Tree Segmentation
+both high-energy points and spatially distinct locations in the
+x, y-plane.
+• Centroid Initialization: The initial set of centroids µk
+is drawn from high-energy points, but they are selected
+such that they are spread out over the x, y-plane to cover
+different regions of the point cloud. Points with high
+energy values are prioritized, but a minimum distance
+dmin between centroids is enforced to prevent them from
+being too concentrated in one area:
+µk ∈{pi | E(pi) is high and d(pi, pj) > dmin for all µj}
+Adaptive Cluster Management: Merging, Pruning,
+and Refinement
+The adaptive cluster management process ensures that the
+number of clusters is dynamically estimated and adjusted
+throughout the clustering iterations. This management is
+necessary because the number of trees is not known in
+advance. The following steps outline how clusters are
+merged, pruned, and refined during the process:
+• Centroid Merging: Centroids initialized from nearby
+high-energy regions may occasionally represent the
+same tree. In such cases, centroid merging is applied.
+If two centroids µk and µl are found to be close in both
+spatial distance and energy value, indicating that they
+belong to the same tree, they are merged into a single
+centroid:
+Merge if d(µk, µl) < ϵ and |E(µk) −E(µl)| < δ
+where ϵ is a threshold on the spatial distance and δ is a
+threshold on the energy value difference between cen-
+troids. After merging, the new centroid is recalculated
+based on the merged clusters.
+• Centroid Pruning: If a centroid is found to be
+associated with very few points, it is considered a
+spurious centroid and is pruned from the clustering
+process. The pruning criterion is based on the number
+of points assigned to the centroid via soft clustering:
+Prune if
+N
+X
+i=1
+Membership(pi ∈Ck) < Tmin
+where Tmin is a threshold for the minimum cluster size.
+• Centroid Refinement: For centroids that are neither
+merged nor pruned, their positions are refined by
+recalculating them as the weighted average of the points
+assigned to them:
+µ(t+1)
+k
+=
+PN
+i=1 Membership(pi ∈Ck) · pi
+PN
+i=1 Membership(pi ∈Ck)
+This refinement ensures that centroids move toward
+the geometric centers of their respective tree clusters,
+leading to more precise segmentation.
+TABLE 2. Overview of dense, mixed, and scattered forest datasets.
+5) FINAL SEGMENTATION RESULTS
+Upon convergence, the soft clustering method assigns each
+point in the point cloud to a cluster (tree) with a probability.
+The final segmentation map shows distinct clusters, each
+corresponding to an individual tree. The centroids stabilize in
+regions that best represent the overall tree structure, and the
+boundaries between trees are clearly defined, even in densely
+populated forests.
+IV. EXPERIMENTAL RESULTS
+This section presents the outcomes from both the pretext
+task, designed to learn transformation-invariant features, and
+the tree segmentation task, which leverages those learned
+features to accurately segment individual trees from airborne
+LiDAR point cloud data.
+A. DATA ACQUISITION
+The LiDAR data utilized in this study was sourced from
+the Estonian Land Board’s X-GIS portal [47]. The dataset
+contains aerial LiDAR point clouds gathered for a specific
+objective of conducting mapping and analysis in forests. The
+data collection took place in 2023.
+photography carried out on April 30, 2024. High-
+resolution LiDAR sensors were used to conduct the mapping,
+guaranteeing optimal data. High level of precision is essential
+for depicting terrain accurately. The pixel size of the point
+cloud data is 2. centimeters, which adds to the high point
+density and level of detail in the generated models. The
+LiDAR information comes in LAS format, precisely version
+1.4, covering varied areas. multiple categories for the points
+(e.g., ground, vegetation, buildings). The information is
+georeferenced. This data is referenced to the GDA94 datum
+and is projected into UTM Zone 55S.
+Table 2 summarizes the key characteristics of the LiDAR
+datasets used in this study, including the number of points,
+area coverage, geographic extent, elevation range, and point
+density for scattered, dense and mixed forest environments.
+B. PRETEXT TASK RESULTS
+The pretext task aimed to train the model to learn robust,
+transformation-invariant features from the LiDAR point
+cloud data by applying a series of geometric transformations
+(rotation, translation, and scaling) to the point cloud chunks.
+The model was tasked with predicting these transformations,
+70902
+VOLUME 13, 2025
+
+
+L. Shaheen et al.: Self-Supervised Learning for Precise Individual Tree Segmentation
+FIGURE 3. Training loss curve for pretext task.
+and the learned features from this task serve as the foundation
+for the subsequent tree segmentation.
+The model was trained using the PointNet-inspired archi-
+tecture with a feature augmentation module that combined
+local and global features for each chunk. We used the Mean
+Squared Error (MSE) loss function to minimize the difference
+between the predicted and ground truth transformations for
+rotation, translation, and scaling. The model was trained for
+100 epochs with a learning rate of 0.0005 and a batch size
+of 16.
+- Training Loss Curve: The training loss curve (Figure 5)
+shows the model’s convergence over 100 epochs. The loss
+started around 0.82 and progressively decreased to around
+0.05. The model achieved rapid improvements in the early
+epochs, stabilizing after approximately 30 epochs, indicating
+that the model effectively learned to predict the geometric
+transformations.
+- Transformation Predictions: Figure 4 shows the
+original point cloud chunks alongside their transformed
+counterparts. These visualizations illustrate the application
+of geometric transformations and how the model learned to
+predict them. The spatial relationships between points in the
+transformed chunks are preserved, indicating that the model
+has learned meaningful features capable of differentiating
+between transformations.
+-
+Transformation
+Prediction
+Metrics:
+The
+model
+achieved a Mean Squared Error (MSE) of 0.037 for predicting
+rotations, 0.0011 for translations, and 0.0131 for scaling,
+indicating high precision in transformation predictions. The
+average cosine similarity between original and transformed
+features was 0.98, while the average Euclidean distance was
+0.22, further validating the transformation-invariance of the
+learned
+features.
+C. FEATURES GEOMETRIC TRANSFORMATION
+This process focuses on training the self-supervised segmen-
+tation model using the pre-trained PointNet-based feature
+extractor. The extracted features are leveraged to guide an
+FIGURE 4. Geometric transformation.
+FIGURE 5. Training loss curve for tree segmentation.
+energy-based clustering mechanism, ensuring that individual
+trees are accurately segmented from airborne LiDAR point
+cloud data.
+After feature extraction, height, density, and slope-based
+energy functions are computed to enhance the differentiation
+of individual trees within dense forests. These energy values
+are then combined to initialize and refine tree clusters during
+segmentation.
+To
+train
+the
+segmentation
+model,
+the
+dataset
+is
+divided into 48 non-overlapping spatial chunks, ensuring
+structural consistency within each region. The model
+undergoes iterative training across these chunks over
+30 epochs, using an 80:20 train-validation split. Com-
+putational efficiency is maintained by freezing the fea-
+ture
+extractor,
+allowing
+the
+segmentation
+network
+to
+focus solely on refining tree boundaries and structural
+consistency.
+The model’s performance is assessed using geometric
+and clustering metrics, confirming its ability to generalize
+across diverse forest landscapes. The training loss and
+validation loss curves as shown in Figure 5, illustrate the
+stability and convergence of the model, demonstrating the
+effectiveness of the self-supervised framework in individual
+tree segmentation.
+VOLUME 13, 2025
+70903
+
+
+L. Shaheen et al.: Self-Supervised Learning for Precise Individual Tree Segmentation
+FIGURE 6. Soft clustering results across different forest types. Each row
+shows the original point cloud (left) and the segmented result (right).(A,
+B) Dense forest,(C, D, E, F) Mixed forest, and(G, H) Scattered forest.
+D. TREE SEGMENTATION RESULTS
+The primary goal of this research is to segment individual
+trees from airborne LiDAR point clouds while preserving
+natural tree structures, topologies, and spatial distributions.
+Building on the learned features from the pretext task, our
+segmentation model employs a soft clustering mechanism
+with geometry-aware feature extraction to accurately delin-
+eate trees in dense, mixed, and scattered forests.
+As illustrated in Figure 6, each row corresponds to
+a different forest type. In the dense forest example (A,
+B), the algorithm successfully separates individual trees
+despite significant canopy overlap. For mixed forests (C–
+F), the model adapts to heterogeneous species and diverse
+canopy structures. Finally, in scattered forests (G, H), the
+segmentation aligns well with distinct trees while avoiding
+over-fragmentation in open-canopy areas.
+E. QUANTITATIVE EVALUATION METRICS
+To quantitatively assess the quality of the segmentation,
+we employ the following metrics:
+• Convexity and Solidity: These metrics measure how
+closely each segmented cluster approximates a convex
+TABLE 3. Quantitative evaluation metrics for different forest types.
+TABLE 4. Segmentation processing times for each point cloud.
+shape (convexity) and the proportion of the convex hull
+occupied by the cluster (solidity). Higher values indicate
+a tighter fit to the canopy boundary.
+• Elliptical Fit Error: This metric quantifies the devi-
+ation of each cluster from an ideal ellipsoidal shape.
+Lower values imply that the segmentation aligns more
+closely with typical tree crown geometries.
+Table 3 shows that the proposed soft clustering approach
+yields high convexity and solidity values while maintaining
+a low elliptical fit error. These metrics indicate that the
+segmentation faithfully captures the natural crown geometry,
+effectively minimizing both over-segmentation and under-
+segmentation.
+F. COMPUTATIONAL COMPLEXITY ANALYSIS
+All experiments were conducted on a Windows 10 system
+equipped with a 12th Gen Intel®CoreTM i7-12650H CPU (10
+physical cores, 16 logical cores), 15.71 GB of RAM, and an
+NVIDIA GeForce RTX 4050 Laptop GPU (6 GB VRAM).
+The model was implemented using Python 3.11.0, and
+deep learning computations were performed using PyTorch
+2.3.0+cpu and TensorFlow 2.15.0. Data processing and
+analysis were carried out with NumPy 1.26.4, SciPy 1.13.0,
+Scikit-learn 1.4.2, and Pandas 2.2.2, while visualization
+was handled using Matplotlib 3.8.2. The LiDAR data was
+processed using the Laspy 2.5.3 library.
+The processing times reported in Table 4 reflect several
+key factors intrinsic to our approach. First, our segmentation
+algorithm is built on a self-supervised neural network
+framework—specifically, a PointNet-inspired architecture—
+that performs computationally intensive operations such as
+transformation-invariant feature extraction and energy-based
+soft
+clustering.
+These
+operations,
+while
+essential
+for
+achieving high segmentation accuracy, inherently increase
+computational load.
+Additionally, the processing time is strongly dependent on
+the characteristics of the input LiDAR data. For instance,
+dense and mixed forests, which contain higher point
+70904
+VOLUME 13, 2025
+
+
+L. Shaheen et al.: Self-Supervised Learning for Precise Individual Tree Segmentation
+densities and complex canopy overlaps, naturally require
+longer processing times (116.68 minutes and 142.60 min-
+utes, respectively) compared to the scattered forest dataset
+(7.17 minutes), where fewer points and simpler spatial
+configurations reduce computational demands.
+It is also important to note that our experiments were
+carried out on an NVIDIA GeForce RTX 4050 Laptop
+GPU with 6 GB VRAM—a relatively modest GPU for
+deep learning tasks. This hardware limitation contributes
+to the observed execution times, and we acknowledge that
+deploying the model on more powerful GPUs or optimizing
+the algorithm (e.g., through parallel processing or model
+pruning) could significantly reduce these times. Moreover,
+the model and the code could be optimized for faster
+computation, but this is the main focus of the research.
+In summary, while the reported processing times are
+high, they are reasonable given the complex nature of the
+segmentation task, the variability in point cloud density,
+and the current hardware configuration. The focus of our
+work was on achieving robust segmentation accuracy, with
+processing speed being a secondary concern. Future work
+will explore optimization strategies to enhance computational
+efficiency without sacrificing segmentation quality.
+V. DISCUSSION
+The results from both the pretext task and tree segmentation
+task demonstrate the model’s ability to learn meaningful
+features and apply them effectively for segmentation. The
+integration of:
+• Soft clustering, which adapts to canopy overlaps by
+assigning points probabilistic memberships,
+• Geometry-aware features (height, density, slope),
+guiding centroids toward treetop and high-density
+regions,
+proves to be effective in complex forest environments.
+Compared to the hard boundary assignments in DBSCAN,
+our method significantly reduces segmentation errors, par-
+ticularly in dense forest canopies and regions with closely
+spaced tree crowns.
+The quantitative evaluation across different forest types
+(Table 3) highlights the robustness of the proposed frame-
+work. In dense forests, where canopy overlap poses signif-
+icant challenges, the model achieved the highest convexity
+(0.83) and solidity (0.78), indicating well-defined and
+coherent tree crowns. The elliptical fit error (0.30) further
+demonstrates that the segmented tree shapes closely align
+with natural tree geometries.
+In mixed forests, characterized by heterogeneous tree
+species and varying canopy structures, the model maintained
+strong performance with a convexity of 0.77 and solidity
+of 0.67, while achieving an elliptical fit error of 0.35. This
+indicates that the model adapts well to diverse tree forms
+without compromising segmentation accuracy.
+For scattered forests, where trees are more spatially
+isolated, the model exhibited a convexity of 0.80 and
+TABLE 5. List of abbreviations.
+solidity of 0.70, with a slightly higher elliptical fit
+error of 0.36. Despite the challenges posed by sparse
+point distributions, the framework effectively segmented
+individual trees, though minor improvements could be
+explored to enhance shape approximation in open-canopy
+environments.
+This enhanced performance is attributed to the energy-based
+loss functions that encourage intra-cluster cohesion while
+enforcing inter-cluster separation. The slope-based constraint
+plays a vital role in maintaining vertical consistency along
+tree trunks and canopies, particularly in dense and mixed
+forests.
+Overall, these qualitative and quantitative findings confirm
+that self-supervised approach leverages transformation-
+invariant and geometry-aware features for robust tree seg-
+mentation across various forest types in LiDAR point clouds.
+VI. ADVANTAGES AND LIMITATIONS
+The proposed self-supervised learning framework for tree
+segmentation from airborne LiDAR data introduces signifi-
+cant advancements, but it also has certain limitations. This
+section discusses both aspects.
+A. ADVANTAGES
+• Eliminates the Need for Labeled Data: Unlike super-
+vised methods, the proposed framework does not rely on
+manually annotated training data, reducing the cost and
+time associated with data labeling.
+• Improved Segmentation Accuracy: The integration
+of an energy-based loss function and adaptive soft
+clustering enhances segmentation quality, reducing both
+over-segmentation and under-segmentation errors.
+VOLUME 13, 2025
+70905
+
+
+L. Shaheen et al.: Self-Supervised Learning for Precise Individual Tree Segmentation
+• Generalizability Across Forest Types: By leveraging
+geometry-aware feature extraction, the model adapts
+well to varying tree structures, improving segmentation
+robustness in mixed and sparse forests.
+• Preserves Spatial and Structural Integrity: Unlike
+raster-based methods that lose 3D spatial details, the
+proposed approach maintains point cloud geometry,
+leading to more precise individual tree segmentation.
+• Scalability for Large-Scale Forest Monitoring: The
+framework is designed to process large LiDAR datasets
+efficiently, making it suitable for applications such
+as large-scale environmental monitoring and forest
+management.
+B. LIMITATIONS
+While our framework has several advantages, it has some
+limitations that we will address in future work:
+• High Computational Cost: The combination of self-
+supervised learning and soft clustering requires signifi-
+cant computational power. However, this is concerning
+only in training the model, and in the inference phase the
+model can be used in reasonable settings.
+• Limited Testing on Diverse LiDAR Data: Although
+the framework generalizes well across different forest
+structures, additional validation on datasets with varying
+LiDAR acquisition parameters (e.g., pulse density, scan
+angle) is needed to ensure robustness.
+• No Explicit Tree Species Classification: While the
+framework effectively segments individual trees, it does
+not perform species classification.
+• Sensitivity to Hyperparameter Selection: The frame-
+work relies on several hyperparameters, such as those
+used in the energy function and clustering process,
+which require fine-tuning to achieve optimal results
+across different datasets.
+• Potential Challenges in Highly Dense Canopies:
+While the model reduces over-segmentation, distin-
+guishing closely packed trees in highly dense forests
+remains a challenge due to overlapping canopies and
+occlusions.
+Despite these limitations, the proposed framework offers
+a significant step forward in tree segmentation research,
+providing an annotation-free, scalable, and robust solution for
+processing airborne LiDAR data.
+VII. CONCLUSION
+This paper presented a self-supervised learning framework
+for segmenting individual trees from airborne LiDAR point
+clouds, addressing the challenges of labeled data scarcity,
+dense canopies, and diverse tree structures. The frame-
+work integrates transformation-invariant feature learning,
+geometry-aware refinement (height, density, slope), and
+adaptive soft clustering for accurate segmentation across
+various forest types.
+The proposed method achieved high segmentation accu-
+racy with convexity values up to 0.83, solidity of 0.78, and
+an elliptical fit error as low as 0.30 in dense forests. It also
+demonstrated reliable performance in mixed and scattered
+forests, highlighting its adaptability and robustness.
+Future work will focus on optimizing computational
+efficiency and expanding dataset variability for broader
+applicability.
+VIII. FUTURE WORK
+Despite the promising results of the proposed framework,
+there are several directions for future research that could
+further enhance its performance, versatility, and usability.
+• Expanding Dataset Variability: While the current
+model performs well on the dataset used in this
+study, further evaluation is needed on datasets with
+varying LiDAR acquisition parameters, such as pulse
+density, scan angle, and sensor type. These variations
+can significantly affect point cloud quality, requiring
+fine-tuning of the framework for optimal performance
+across diverse environments.
+• Multimodal Data Integration: Incorporating addi-
+tional remote sensing data, such as hyperspectral and
+multispectral imagery, alongside LiDAR data, could
+enhance segmentation accuracy. This would be partic-
+ularly beneficial in dense forest areas with substantial
+canopy cover. Multimodal approaches may also improve
+model generalization across different forest types and
+ecological conditions.
+• Real-Time Segmentation: With the increasing volume
+of LiDAR data, optimizing the model for real-time
+segmentation on edge devices or UAVs is crucial.
+Enhancing computational efficiency while maintaining
+segmentation accuracy would enable real-time appli-
+cations in forest monitoring, urban planning, and
+ecological studies.
+• Post-Segmentation Analysis: Further research could
+explore advanced techniques for analyzing segmented
+tree clusters. These include tree species classification
+and forest biomass estimation, which would increase the
+practical utility of segmentation outcomes in ecological
+monitoring and forest management.
+By addressing these aspects, future studies can enhance
+the
+efficiency,
+adaptability,
+and
+application
+scope
+of
+self-supervised learning for tree segmentation across varied
+forest environments.
+IX. LIST OF ABBREVIATIONS
+The following abbreviations and acronyms are used in this
+study:
+REFERENCES
+[1] T. Yun, K. Jiang, G. Li, M. P. Eichhorn, J. Fan, F. Liu, B. Chen, F. An,
+and L. Cao, ‘‘Individual tree crown segmentation from airborne LiDAR
+data using a novel Gaussian filter and energy function minimization-based
+approach,’’ Remote Sens. Environ., vol. 256, Apr. 2021, Art. no. 112307.
+70906
+VOLUME 13, 2025
+
+
+L. Shaheen et al.: Self-Supervised Learning for Precise Individual Tree Segmentation
+[2] L. Liu, S. Lim, X. Shen, and M. Yebra, ‘‘A hybrid method for segmenting
+individual trees from airborne LiDAR data,’’ Comput. Electron. Agricult.,
+vol. 163, Aug. 2019, Art. no. 104871.
+[3] Y. Fu, Y. Niu, L. Wang, and W. Li, ‘‘Individual-tree segmentation from
+UAV–LiDAR data using a region-growing segmentation and supervoxel-
+weighted fuzzy clustering approach,’’ Remote Sens., vol. 16, no. 4, p. 608,
+Feb. 2024.
+[4] Y. Li, D. Xie, Y. Wang, S. Jin, K. Zhou, Z. Zhang, W. Li, W. Zhang,
+X. Mu, and G. Yan, ‘‘Individual tree segmentation of airborne and UAV
+LiDAR point clouds based on the watershed and optimized connection
+center evolution clustering,’’ Ecol. Evol., vol. 13, no. 7, p. 10297, Jul. 2023.
+[5] K. Calders, H. Verbeeck, A. Burt, N. Origo, J. Nightingale, Y. Malhi,
+P. Wilkes, P. Raumonen, R. G. H. Bunce, and M. Disney, ‘‘Laser scanning
+reveals potential underestimation of biomass carbon in temperate forest,’’
+Ecol. Solutions Evidence, vol. 3, no. 4, p. 12197, Oct. 2022.
+[6] B. Xiang, M. Wielgosz, T. Kontogianni, T. Peters, S. Puliti, R. Astrup,
+and K. Schindler, ‘‘Automated forest inventory: Analysis of high-density
+airborne LiDAR point clouds with 3D deep learning,’’ Remote Sens.
+Environ., vol. 305, May 2024, Art. no. 114078.
+[7] C. Lashford, M. Rubinato, Y. Cai, J. Hou, S. Abolfathi, S. Coupe,
+S. Charlesworth, and S. Tait, ‘‘SuDS & sponge cities: A comparative
+analysis of the implementation of pluvial flood management in the U.K.
+and China,’’ Sustainability, vol. 11, no. 1, p. 213, Jan. 2019.
+[8] M. Mahdian, R. Noori, M. M. Salamattalab, E. Heggy, S. M. Bateni,
+A. Nohegar, M. Hosseinzadeh, S. M. Siadatmousavi, M. R. Fadaei, and
+S. Abolfathi, ‘‘Anzali wetland crisis: Unraveling the decline of Iran’s
+ecological gem,’’ J. Geophys. Res., Atmos., vol. 129, no. 4, p. 2023,
+Feb. 2024.
+[9] Y. Y. Ghadi, S. F. A. Shah, T. Mazhar, T. Shahzad, K. Ouahada, and
+H. Hamam, ‘‘Enhancing patient healthcare with mobile edge computing
+and 5G: Challenges and solutions for secure online health tools,’’ J. Cloud
+Comput., vol. 13, no. 1, p. 93, May 2024.
+[10] Y. Y. Ghadi, T. Mazhar, T. A. Shloul, T. Shahzad, U. A. Salaria, A. Ahmed,
+and H. Hamam, ‘‘Machine learning solutions for the security of wireless
+sensor networks: A review,’’ IEEE Access, vol. 12, pp. 12699–12719, 2024.
+[11] O. Chatrabgoun, R. Karimi, A. Daneshkhah, S. Abolfathi, H. Nouri, and
+M. Esmaeilbeigi, ‘‘Copula-based probabilistic assessment of intensity and
+duration of cold episodes: A case study of Malayer vineyard region,’’
+Agricult. Forest Meteorol., vol. 295, Dec. 2020, Art. no. 108150.
+[12] M.
+Sekar,
+S.
+Sivakumar,
+and
+P.
+Govindaraj,
+‘‘Agroforestry-
+integrating trees into agricultural systems,’’ Tech. Rep., Oct. 2023,
+pp. 246–272. [Online]. Available: https://scholar.google.com/scholar?
+hl=en&as_sdt=0%2C5&q=Agroforestry-+integrating++trees+into+
+agricultural+system&btnG=
+[13] E. Maltezos, A. Doulamis, N. Doulamis, and C. Ioannidis, ‘‘Building
+extraction from LiDAR data applying deep convolutional neural net-
+works,’’ IEEE Geosci. Remote Sens. Lett., vol. 16, no. 1, pp. 155–159,
+Jan. 2019.
+[14] M. Latella, F. Sola, and C. Camporeale, ‘‘A density-based algorithm for
+the detection of individual trees from LiDAR data,’’ Remote Sens., vol. 13,
+no. 2, p. 322, Jan. 2021.
+[15] V. Moudr`y, P. Klápště, M. Fogl, K. Gdulová, V. Barták, and R. Urban,
+‘‘Assessment of LiDAR ground filtering algorithms for determining
+ground surface of non-natural terrain overgrown with forest and steppe
+vegetation,’’ Measurement, vol. 150, Jan. 2020, Art. no. 107047.
+[16] Q. Guo, Y. Su, T. Hu, H. Guan, S. Jin, J. Zhang, X. Zhao, K. Xu, D. Wei,
+M. Kelly, and N. C. Coops, ‘‘LiDAR boosts 3D ecological observations
+and modelings: A review and perspective,’’ IEEE Geosci. Remote Sens.
+Mag. (Replaces Newslett.), vol. 9, no. 1, pp. 232–257, Mar. 2021.
+[17] L. Kouvaras and G. P. Petropoulos, ‘‘A novel technique based on machine
+learning for detecting and segmenting trees in very high resolution digital
+images from unmanned aerial vehicles,’’ Drones, vol. 8, no. 2, p. 43,
+Feb. 2024.
+[18] S. F. Ahmed, M. S. B. Alam, M. Hassan, M. R. Rozbu, T. Ishtiak,
+N. Rafa, M. Mofijur, A. B. M. Shawkat Ali, and A. H. Gandomi, ‘‘Deep
+learning modelling techniques: Current progress, applications, advantages,
+and challenges,’’ Artif. Intell. Rev., vol. 56, no. 11, pp. 13521–13617,
+Nov. 2023.
+[19] T. Jiang, J. L. Gradus, and A. J. Rosellini, ‘‘Supervised machine
+learning: A brief primer,’’ Behav. Therapy, vol. 51, no. 5, pp. 675–687,
+Sep. 2020.
+[20] M. Bouvier, S. Durrieu, R. A. Fournier, and J.-P. Renaud, ‘‘Generalizing
+predictive models of forest inventory attributes using an area-based
+approach with airborne LiDAR data,’’ Remote Sens. Environ., vol. 156,
+pp. 322–334, Jan. 2015.
+[21] G. Mei, L. Yu, Q. Wu, J. Zhang, and M. Bennamoun, ‘‘Unsupervised
+learning on 3D point clouds by clustering and contrasting,’’ 2022,
+arXiv:2202.02543.
+[22] S. Markaki and C. Panagiotakis, ‘‘Unsupervised tree detection and
+counting via region-based circle fitting,’’ in Proc. 12th Int. Conf. Pattern
+Recognit. Appl. Methods, 2023, pp. 95–106.
+[23] A. Merentitis, C. Debes, R. Heremans, and N. Frangiadakis, ‘‘Automatic
+fusion and classification of hyperspectral and LiDAR data using ran-
+dom forests,’’ in Proc. IEEE Geosci. Remote Sens. Symp., Jul. 2014,
+pp. 1245–1248.
+[24] B. G. Weinstein, S. Marconi, S. Bohlman, A. Zare, and E. White,
+‘‘Individual tree-crown detection in RGB imagery using semi-supervised
+deep learning neural networks,’’ Remote Sens., vol. 11, no. 11, p. 1309,
+Jun. 2019.
+[25] U. Kumar, A. Dasgupta, L. S. N. V. V. Krishna, and P. K. Chintakunta,
+‘‘Towards semi-supervised tree canopy detection and extraction from UAV
+images,’’ in Proc. Int. Conf. Comput. Vis. Image Process., Jan. 2022,
+pp. 299–307.
+[26] L. Kong, J. Ren, L. Pan, and Z. Liu, ‘‘LaserMix for semi-supervised LiDAR
+semantic segmentation,’’ in Proc. IEEE/CVF Conf. Comput. Vis. Pattern
+Recognit. (CVPR), Jun. 2023, pp. 21706–21716.
+[27] J. Yang, Z. Kang, S. Cheng, Z. Yang, and P. H. Akwensi, ‘‘An individual
+tree segmentation method based on watershed algorithm and three-
+dimensional spatial distribution analysis from airborne LiDAR point
+clouds,’’ IEEE J. Sel. Topics Appl. Earth Observ. Remote Sens., vol. 13,
+pp. 1055–1067, 2020.
+[28] J. Yu, L. Lei, and Z. Li, ‘‘Individual tree segmentation based on seed points
+detected by an adaptive crown shaped algorithm using UAV-LiDAR data,’’
+Remote Sens., vol. 16, no. 5, p. 825, Feb. 2024.
+[29] J. Hyyppa, O. Kelle, M. Lehikoinen, and M. Inkinen, ‘‘A segmentation-
+based method to retrieve stem volume estimates from 3-D tree height
+models produced by laser scanners,’’ IEEE Trans. Geosci. Remote Sens.,
+vol. 39, no. 5, pp. 969–975, May 2001.
+[30] R. Kaijaluoto, A. Kukko, A. El Issaoui, J. Hyyppä, and H. Kaartinen,
+‘‘Semantic segmentation of point cloud data using raw laser scanner
+measurements and deep neural networks,’’ ISPRS Open J. Photogramm.
+Remote Sens., vol. 3, Jan. 2022, Art. no. 100011.
+[31] Q. Li and Y. Yan, ‘‘Street tree segmentation from mobile laser scanning
+data using deep learning-based image instance segmentation,’’ Urban
+Forestry Urban Greening, vol. 92, Feb. 2024, Art. no. 128200.
+[32] H. Fu, H. Li, Y. Dong, F. Xu, and F. Chen, ‘‘Segmenting individual tree
+from TLS point clouds using improved DBSCAN,’’ Forests, vol. 13, no. 4,
+p. 566, Apr. 2022.
+[33] L. You, Y. Sun, Y. Liu, X. Chang, J. Jiang, Y. Feng, and X. Song, ‘‘Tree
+skeletonization with DBSCAN clustering using terrestrial laser scanning
+data,’’ Forests, vol. 14, no. 8, p. 1525, Jul. 2023.
+[34] E. Orbe-Trujillo, C. J. Novillo, M. Pérez-Ramírez, J. L. Vazquez-Avila,
+and A. Pérez-Ramírez, ‘‘Fast treetops counting using mathematical image
+symmetry, segmentation, and fast k-Means classification algorithms,’’
+Symmetry, vol. 14, no. 3, p. 532, Mar. 2022.
+[35] X. Chen, K. Yu, S. Yu, Z. Hu, H. Tan, Y. Chen, X. Huang, and J. Liu, ‘‘Study
+on single-tree segmentation of Chinese fir plantations using coupled local
+maximum and height-weighted improved K-means algorithm,’’ Forests,
+vol. 14, no. 11, p. 2130, Oct. 2023.
+[36] V. F. Strîmbu and B. M. Strîmbu, ‘‘A graph-based segmentation algorithm
+for tree crown extraction using airborne LiDAR data,’’ ISPRS J.
+Photogramm. Remote Sens., vol. 104, pp. 30–43, Jun. 2015.
+[37] F. Westling, J. Underwood, and M. Bryson, ‘‘Graph-based methods for
+analyzing orchard tree structure using noisy point cloud data,’’ Comput.
+Electron. Agricult., vol. 187, Aug. 2021, Art. no. 106270.
+[38] Z. Xi and C. Hopkinson, ‘‘3D graph-based individual-tree isolation
+(Treeiso) from terrestrial laser scanning point clouds,’’ Remote Sens.,
+vol. 14, no. 23, p. 6116, Dec. 2022.
+[39] T. Dong, X. Zhang, Z. Ding, and J. Fan, ‘‘Multi-layered tree crown
+extraction from LiDAR data using graph-based segmentation,’’ Comput.
+Electron. Agricult., vol. 170, Mar. 2020, Art. no. 105213.
+[40] X. Chen, K. Jiang, Y. Zhu, X. Wang, and T. Yun, ‘‘Individual tree crown
+segmentation directly from UAV-borne LiDAR data using the PointNet of
+deep learning,’’ Forests, vol. 12, no. 2, p. 131, Jan. 2021.
+[41] R. Liu, L. Ren, and F. Wang, ‘‘3D point cloud of single tree branches and
+leaves semantic segmentation based on modified PointNet network,’’ J.
+Phys., Conf. Ser., vol. 2074, no. 1, Nov. 2021, Art. no. 012026.
+[42] D.-H. Kim, C.-U. Ko, D.-G. Kim, J.-T. Kang, J.-M. Park, and H.-J. Cho,
+‘‘Automated segmentation of individual tree structures using deep learning
+over LiDAR point cloud data,’’ Forests, vol. 14, no. 6, p. 1159, Jun. 2023.
+VOLUME 13, 2025
+70907
+
+
+L. Shaheen et al.: Self-Supervised Learning for Precise Individual Tree Segmentation
+[43] W. Ying, T. Dong, Z. Ding, and X. Zhang, ‘‘PointCNN-based individual
+tree detection using LiDAR point clouds,’’ in Adv. Comput. Graphics: 38th
+Comput. Graph. Int. Conf., CGI, Virtual Event, September 6–10, Proc. 38,
+Jan. 2021, pp. 89–100.
+[44] J. Wang, X. Chen, L. Cao, F. An, B. Chen, L. Xue, and T. Yun, ‘‘Individual
+rubber tree segmentation based on ground-based LiDAR data and faster
+R-CNN of deep learning,’’ Forests, vol. 10, no. 9, p. 793, 2019.
+[45] B. G. Weinstein, S. Marconi, S. A. Bohlman, A. Zare, and E. P. White,
+‘‘Cross-site learning in deep learning RGB tree crown detection,’’
+Ecological Informat., vol. 56, Mar. 2020, Art. no. 101061.
+[46] P. Li, X. Shen, J. Dai, and L. Cao, ‘‘Comparisons and accuracy assessments
+of LiDAR-based tree segmentation approaches in planted forests,’’ Scientia
+Silvae Sinicae, vol. 54, no. 12, pp. 127–136, 2018.
+[47] E. L. Board. (2024). Download Elevation Data. Accessed: Oct. 1, 2024.
+[Online].
+Available:
+https://geoportaal.maaamet.ee/eng/spatial-data/
+elevation-data/download-elevation-data-p664.html
+LAMA SHAHEEN is currently pursuing the
+Ph.D. degree with Innopolis University, where her
+research focuses on advanced geospatial data pro-
+cessing and applications. She is a GIS Specialist
+with expertise in geospatial data analysis. With a
+background in GIS technologies and spatial data
+handling, she has contributed to various projects
+aimed at improving the accuracy and efficiency
+of geospatial data utilization. Her interests include
+spatial data integration, environmental monitoring,
+and the development of novel GIS-based solutions for real-world challenges.
+BADER RASHEED received the master’s degree
+from Moscow State Technical University. He is
+currently pursuing the Ph.D. degree in computer
+science with Innopolis University. He is the
+Head of the Recognition Systems Department,
+Innopolis University, and a Senior Researcher with
+the Laboratory of Innovative Technologies for
+Processing Video Content, Innopolis University.
+MANUEL MAZZARA received the Ph.D. degree
+in computing science from the University of
+Bologna, Italy. He is currently a Professor of com-
+puter science with Innopolis University, Russia,
+with a research background in software engineer-
+ing, service-oriented architecture, concurrency
+theory, formal methods, and software verification.
+He is the Dean of the Faculty of Computer Science
+and Engineering and the Head of the International
+Cooperation Office, Innopolis University. He has
+published many relevant and highly cited articles, in particular in the field
+of service engineering and software architectures. He has collaborated with
+European and U.S. industries and governmental and inter-governmental
+organizations, such as the United Nations, always at the edge between
+science and software production. The work conducted by him and his team
+in recent years focuses on the development of theories, methods, tools, and
+programs covering the two major aspects of software engineering, such as
+the process side, related to how we develop software, and the product side.
+70908
+VOLUME 13, 2025

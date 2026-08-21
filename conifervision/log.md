@@ -2,6 +2,78 @@
 
 Chronological record of ingest, query, hypothesis, and lint operations.
 
+## [2026-08-21] ingest | Chen (2025) — Zero-shot tree detection and segmentation with SAM2
+
+- Source: `raw/papers/ZERO-SHOT_TREE_DETECTION_AND_SEGMENTATION_FROM_AERIAL_FOREST_IMAGERY-2506.03114v1.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/paper-zero-shot_tree_detection_and_segmentation_from_aerial_forest_imagery-2506-03114v1]]
+- Updated [[index]], [[methods/dinov3-classification]], [[methods/merge-detections]], [[concepts/dense-stand-detection]]
+
+## [2026-08-21] ingest | Rodríguez-Puerta (2022) — UAV LiDAR for young forest ITD and height
+
+- Source: `raw/papers/UAV-Based_LiDAR_Scanning_for_Individual_Tree_Detection_and_Height_Measurement_in_Young_Forest-5_2021.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/paper-uav-based_lidar_scanning_for_individual_tree_detection_and_height_measurement_in_young_forest-5_2021]]
+- Updated [[index]], [[concepts/canopy-height-model]], [[methods/chm-detection]], [[methods/local-maxima]], [[methods/merge-detections]]
+
+## [2026-08-21] ingest | Vaschetti (2025) — TreePseCo for individual tree crown segmentation
+
+- Source: `raw/papers/TreePseCo_Scaling_Individual_Tree_Crown_Segmentation_using_Large_Vision_Models-isprs-archives-XLVIII-M-7-2025-275-2025.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/paper-treepseco_scaling_individual_tree_crown_segmentation_using_large_vision_models-isprs-archives-xlviii-m-7-2025-275-2025]]
+- Updated [[index]], [[methods/chm-detection]], [[concepts/dense-stand-detection]]
+
+## [2026-08-21] ingest | Holmgren (2022) — 3D density models and mean-shift for understory ITD
+
+- Source: `raw/papers/Tree_crown_segmentation_in_three_dimensions_using_density_models_derived_from_airborne_laser_scanning-holmgren_j_et_al_220114.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/paper-tree_crown_segmentation_in_three_dimensions_using_density_models_derived_from_airborne_laser_scanning-holmgren_j_et_al_220114]]
+- Updated [[index]], [[methods/chm-detection]], [[methods/local-maxima]], [[concepts/canopy-height-model]], [[concepts/dense-stand-detection]]
+
+## [2026-08-21] ingest | Pucino (2025) — CHM and ITS algorithm benchmark across vegetation types
+
+- Source: `raw/papers/The_accuracy_of_image-based_individual_tree_crown_detection_and_delineation_across_vegetation_types-isprs-archives-XLVIII-G-2025-1223-2025.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/paper-the_accuracy_of_image-based_individual_tree_crown_detection_and_delineation_across_vegetation_types-isprs-archives-xlviii-g-2025-1223-2025]]
+- Updated [[index]], [[methods/chm-detection]], [[methods/local-maxima]], [[concepts/canopy-height-model]], [[concepts/dense-stand-detection]]
+
+## [2026-08-21] ingest | Shaheen (2025) — Self-supervised 3D LiDAR tree segmentation
+
+- Source: `raw/papers/Self-Supervised_Learning_for_Precise_Individual_Tree_Segmentation_in_Airborne_LiDAR_Point_Clouds.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/paper-self-supervised_learning_for_precise_individual_tree_segmentation_in_airborne_lidar_point_clouds]]
+- Updated [[index]], [[methods/chm-detection]], [[methods/local-maxima]], [[concepts/dense-stand-detection]]
+
+## [2026-08-21] ingest | Young et al. (2022) — Drone parameters and ITD optimization in complex conifer forests
+
+- Source: `raw/papers/Optimizing_aerial_imagery_collection_and_processing_parameters_for_drone-based_individual_tree_mapping_in_structurally_complex_conifer_forests.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/paper-optimizing_aerial_imagery_collection_and_processing_parameters_for_drone-based_individual_tree_mapping_in_structurally_complex_conifer_forests]]
+- Updated [[index]], [[methods/chm-detection]], [[methods/local-maxima]], [[concepts/canopy-height-model]]
+
+## [2026-08-21] ingest | Lu (2025) — DEN4 unsupervised point cloud denoising
+
+- Source: `raw/papers/LiDAR_point_cloud_denoising_for_individual_tree_extraction_based_on_the_Noise4Denoise-fpls-15-1490660.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/paper-lidar_point_cloud_denoising_for_individual_tree_extraction_based_on_the_noise4denoise-fpls-15-1490660]]
+- Updated [[index]], [[methods/chm-detection]], [[concepts/canopy-height-model]]
+
+## [2026-08-21] ingest | Li (2025) — RDT hybrid tree segmentation using UAV LiDAR
+
+- Source: `raw/papers/Individual_Tree_Segmentation_Based_on_Region-Growing_and_Density-Guided_Canopy_3-D_Morphology_Detection_Using_UAV_LiDAR_Data.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/paper-individual_tree_segmentation_based_on_region-growing_and_density-guided_canopy_3-d_morphology_detection_using_uav_lidar_data]]
+- Updated [[index]], [[methods/chm-detection]], [[methods/local-maxima]], [[concepts/canopy-height-model]], [[concepts/dense-stand-detection]]
+
+## [2026-08-21] ingest | Tong (2025) — StarDist-based tree crown delineation
+
+- Source: `raw/papers/Individual_tree_crown_delineation_in_high_resolution_aerial_RGB_imagery_using_StarDist-based_model-1-s2.0-S0034425725000227-main.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/paper-individual_tree_crown_delineation_in_high_resolution_aerial_rgb_imagery_using_stardist-based_model-1-s2-0-s0034425725000227-main]]
+- Updated [[index]], [[methods/edgecrafter-ecseg]], [[concepts/dense-stand-detection]]
+
+## [2026-08-21] ingest | Xiang (2025) — ForestFormer3D end-to-end 3D forest segmentation
+
+- Source: `raw/papers/ForestFormer3D_A_Unified_Framework_for_End-to-End_Segmentation_of_Forest_LiDAR_3DPoint_Clouds-2506.16991v1.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/paper-forestformer3d_a_unified_framework_for_end-to-end_segmentation_of_forest_lidar_3dpoint_clouds-2506-16991v1]]
+- Updated [[index]], [[methods/chm-detection]], [[methods/merge-detections]], [[concepts/dense-stand-detection]]
+
+## [2026-08-21] ingest | Sparks (2022) — ITD benchmark on low/high pulse density ALS
+
+- Source: `raw/papers/Cross-comparision-of-ITD-methods-using-low-and-hight-pulse-density-ALS-2022-Sparks-et-al.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/paper-cross-comparision-of-itd-methods-using-low-and-hight-pulse-density-als-2022-sparks-et-al]]
+- Updated [[index]], [[methods/local-maxima]], [[methods/chm-detection]], [[concepts/dense-stand-detection]]
+
 ## [2026-08-21] hypothesis | Hypothesis validation loop + Experiment template
 
 - Added [[project/hypothesis-validation-loop]] (scientist ↔ engineer handoff)

@@ -1,0 +1,1086 @@
+IEEE JOURNAL OF SELECTED TOPICS IN APPLIED EARTH OBSERVATIONS AND REMOTE SENSING, VOL. 18, 2025
+8897
+Individual Tree Segmentation Based on
+Region-Growing and Density-Guided Canopy 3-D
+Morphology Detection Using UAV LiDAR Data
+Shihua Li
+, Senior Member, IEEE, Shunda Zhao, Zhilin Tian
+, Hao Tang
+, Student Member, IEEE,
+and Zhonghua Su
+Abstract—Foresttreeinformationiscrucialformonitoringforest
+resources and developing forestry management strategies. Air-
+borne laser scanning is an efﬁcient and rapid method for acquiring
+3-D point cloud data of forests, making up for the shortcomings
+of optical remote sensing. Especially for unmanned aircraft ve-
+hicle laser scanning, the high-density point cloud provides the
+possibility of a detailed depiction of forest structures. Extracting
+individual trees from point cloud data is a prerequisite for ﬁne
+forestry research. Currently, existing methods fail to fully utilize
+the height information, density information, and vertical structure
+details of tree crowns within point cloud data, resulting in complex
+algorithmic processes and reduced reliability. This study proposes
+a novel method that combines the canopy height model (CHM)
+and point cloud data for segmenting individual trees and employs
+height and density information for morphological detection of tree
+canopies. First, based on CHM-based segmentation, the point cloud
+density feature is introduced to identify the wrong segmented
+trees. Next, the height and density information are combined to
+guide the selection of vertical proﬁles. Finally, a 3-D morphological
+detection is conducted on the proﬁles to extract the potential trees.
+We validate the accuracy of the method on German forests. The
+results indicated that the average F1-scores of six study plots were
+0.95, which improved by 5% after the introduction of density
+information. The primary source of errors was the irregularity of
+tree morphology. Our method produced reasonable results across
+different parameter settings, demonstrating its insensitivity to pa-
+rameter conﬁgurations.
+Index Terms—Density, individual tree segmentation, morpho-
+logy,regiongrowing,unmannedaerialvehicle(UAV)lightdetection
+and ranging (LiDAR).
+Received 3 June 2024; revised 17 January 2025; accepted 16 February 2025.
+Date of publication 28 February 2025; date of current version 7 April 2025. This
+work was supported by the National Natural Science Foundation of China under
+Grant 42371382 and Grant 41871247. (Corresponding author: Shihua Li.)
+Shihua Li is with the School of Resources and Environment, University of
+Electronic Science and Technology of China, Chengdu 611731, China, and also
+with the Technology Innovation Center for Southwest Land Space Ecological
+Restoration and Comprehensive Renovation, Ministry of Natural Resources,
+Chengdu 610045, China (e-mail: lishihua@uestc.edu.cn).
+Shunda Zhao, Zhilin Tian, and Hao Tang are with the School of Resources
+and Environment, University of Electronic Science and Technology of China,
+Chengdu611731,China(e-mail:1014728566@qq.com;1114073951@qq.com;
+tangh@std.uestc.edu.cn).
+Zhonghua
+Su
+is
+with
+the
+School
+of
+Computer
+and
+Software
+Engineering,
+Xihua
+University,
+Chengdu
+610039,
+China
+(e-mail:
+suzhonghua@mail.xhu.edu.cn).
+Digital Object Identiﬁer 10.1109/JSTARS.2025.3546651
+I. INTRODUCTION
+F
+ORESTS are important terrestrial ecosystems and natural
+resources [1]. Providing accurate and up-to-date forest
+survey data is important for achieving dynamic monitoring of
+forest resources and formulating reasonable forest management
+policies [2]. The traditional forestry survey methods are mainly
+manual ﬁeld surveys, which are not only human resources-
+consuming but also challenging to cover large forest areas [3].
+In addition, it may be limited by ﬁeld conditions, such as terrain
+obstruction and protected areas off-limits, and cannot conduct a
+comprehensive survey of all trees [4]. Over the past four decades,
+remote sensing (RS) technology has been extensively utilized in
+large-scale forest surveys to gather information on electromag-
+netic radiation from target objects through noncontact remote
+detection [5], [6].
+Individual tree parameter surveys are the basis of forest
+resources surveys, which can obtain accurate forest structural
+parameters (e.g., height, crown width, and diameter at breast
+height) or estimate related attributes by building regression
+models (e.g., aboveground biomass and leaf area index) [7].
+Therefore, individual tree segmentation becomes a prerequisite
+for highly accurate estimation of forestry parameters. Airborne
+laser scanning (ALS) can rapidly acquire large areas of highly
+accurate 3-D structure information for forest surveys. Moreover,
+compared with other optical RS means, the light detection and
+ranging (LiDAR) system can penetrate the forest canopy by ac-
+tively emitting laser pulses, and thus obtain the internal structure
+information of the forest [8], [9], [10]. Unfortunately, the high
+equipment and operational costs of ALS have restricted its use in
+forest inventories [11]. In recent years, unmanned aerial vehicle
+(UAV), with its advantages of low cost, easy operation, and high
+ﬂexibility,isgraduallybecominganewmeansforforestresource
+surveys [12], [13], [14]. UAV LiDAR can acquire high-density
+point cloud data, allowing for a detailed depiction of canopy
+structure [15]. Moreover, in dense forests, it can obtain more
+accurate 3-D terrain information and avoid data errors caused
+by uneven terrain.
+The individual tree segmentation methods for UAV LiDAR
+point clouds are mainly categorized into raster-based and point-
+basedapproaches.Theideaoftheraster-basedmethodistoapply
+image segmentation techniques to the LiDAR-derived raster
+images to segment individual tree canopies. These methods
+© 2025 The Authors. This work is licensed under a Creative Commons Attribution 4.0 License. For more information, see
+https://creativecommons.org/licenses/by/4.0/
+
+
+8898
+IEEE JOURNAL OF SELECTED TOPICS IN APPLIED EARTH OBSERVATIONS AND REMOTE SENSING, VOL. 18, 2025
+typically begin by employing a Gaussian ﬁlter to smooth the
+canopy height model (CHM). Then, a local maximum ﬁlter is
+used to search for local maximum points as tree top points.
+Each of these local maximum points is either marked as the
+initial region for the region-growing algorithm [16], [17] or
+used as markers in the watershed algorithm to simulate water
+injection [3], [18], [19]. However, the reliability of tree top lo-
+calization depends heavily on the local maximum ﬁlter window
+size [20]. Some researchers address this issue by adaptively
+determining the ﬁlter window size. For example, Chen et al.
+[21] constructed a regression equation between canopy size
+and tree height to determine variable window size, resulting in
+an overall accuracy of 64.1%. Dong et al. [22] assumed the
+potential trees to be approximately conical and detected them
+using gradient orientation clustering, avoided manual setting
+of threshold parameters, and achieved the highest matching
+score (RMS_M = 43). Considering the limited segmentation
+capability of the CHM-based method in high-density forests,
+Ma et al. [23] proposed a vegetation point cloud density model
+(PDM) for high-density point cloud data to segment the indi-
+vidual tree, achieving comparable performance to CHM. The
+raster-based method is computationally efﬁcient, but there is a
+loss of information in generating a raster from point cloud data,
+and this method usually oversegments the tree canopies with
+multiple peaks.
+The point-based method is mainly according to the 3-D
+spatial distribution and the vertical structural features described
+by the multiple echo information, using clustering algorithms,
+such as voxel-based clustering [24], region growing [25], [26],
+K-means [27], [28] and mean-shift [9], [29], [30], to complete
+the segmentation. The point cloud-based region-growing algo-
+rithm is a top-down approach that designates the locally highest
+points as tree top points and assigns the remaining points to
+the correct tree based on their spatial relationship with the trees
+[26]. In general, this method will underestimate the number of
+trees. The point-based method has lower information loss and
+also provides opportunities for the segmentation of multilayer
+forests. Ferraz et al. [31] ﬁrst deﬁned the forest layer and then
+used a mean-shift algorithm to complete the clustering of trees.
+Dai et al. [29] combined spatial information and multispectral
+information using a mean-shift algorithm for tree detection. But,
+the mean-shift algorithm with ﬁxed bandwidth is usually not
+satisfactory. Establishing an adaptive estimation of the band-
+width can improve the segmentation accuracy [9], [30]. To
+lessen the effect of tree spatial distribution on the algorithm,
+density features of point clouds are proved to be a solution [32],
+[33]. Point-based algorithms avoid information loss during the
+interpolation of point clouds to generate CHM and have high
+segmentation accuracy, but their high computational load and
+time consumption limit their application.
+Some researchers have now proposed individual tree segmen-
+tation methods that fuse raster and point. The idea of this type
+of method is to obtain initial individual trees by a raster-based
+method, and then reﬁne them according to the distribution of
+point clouds within or between trees. Yang et al. [3] used the wa-
+tershed algorithm to extract initial trees from the CHM and then
+used the K-means algorithm for ﬁne segmentation. However,
+the K-means algorithm cannot account for the different sizes of
+canopies and irregular shapes. Hui et al. [34] ﬁrst segmented the
+initial trees using the watershed algorithm and multiscale fusion
+and then searched for the junction of the two trees according
+to the probability density function. However, this method often
+requires the manual setting of numerous parameters to determine
+whether the initial individual trees are correct, and the process
+is complex, resulting in lower reliability in complex forest
+areas.
+To address the limited segmentation capability of existing
+methods in forests, this article proposed a novel method for
+individual tree segmentation by combining CHM-based and
+point-based methods. Instead of based on the 2-D projection
+morphology of the individual trees, we applied the local density
+maxima points to identify incorrect initial trees. Then we cor-
+rected the erroneous trees according to the 3-D morphology of
+the point cloud within the segments. We validated the proposed
+method on German forest data provided by Weiser et al. [35].
+The main contributions of this article are as follows.
+1) We propose a new method based on CHM and point cloud
+to segment individual trees, which utilizes the advantages
+of high efﬁciency of CHM and high accuracy of point
+cloud. This approach circumvents the information loss in
+CHM methods and the signiﬁcant computational burden
+of point cloud methods.
+2) The study investigates the height and density features of
+forest canopies and analyzes their contribution to individ-
+ual tree segmentation. It also analyzes the morphological
+features of overlapping canopies and proposes different
+segmentation strategies for overlapping tree crowns based
+on their relative distances.
+3) Innovatively combining point cloud density information
+and height information for ﬁne segmentation. Density
+information accurately identiﬁes undersegmentation and
+oversegmentation and also guides the selection of vertical
+proﬁles, thus eliminating the cumbersome judgment pro-
+cess and improving segmentation capability. The contribu-
+tion of density information to segmentation is evaluated.
+II. DATA
+A. Study Area
+In this study, the dataset provided by Weiser et al. [35]
+contains 12 plots in 2 forests. Both study areas are located in
+the temperate forest region of Baden-Württemberg, Germany,
+namely the Bretten municipal forest (49°00′36′′N, 8°41′35′′E)
+and the Hardtwald forest in Karlsruhe-Waldstadt (49°02′04′′N,
+8°25′40′′E), as shown in Fig. 1. The Bretten site is located in
+the hilly landscape of the Kraichgau and the main tree species
+are European beech (Fagus sylvatica L.), Norway spruce (Picea
+abies (L.) H. Karst), Douglas ﬁr (Pseudotsuga Menziesii (Mirb.)
+Franco.), sessile oak (Quercus Petraea (Matt.) Liebl.), and Eu-
+ropean hornbeam (Carpinus Betulus L.). The Karlsruhe site is
+located on the ﬂat terrain of the Upper Rhine Plain and the main
+tree species are Scots pine (Pinus sylvestris L.), red oak (Quercus
+rubra L.), and European beech [35].
+
+
+LI et al.: INDIVIDUAL TREE SEGMENTATION BASED ON REGION-GROWING AND DENSITY-GUIDED
+8899
+TABLE I
+FLYING HEIGHT, SPEED, MEAN POINT CLOUD DENSITY, AND PLOT AREAS FOR THE SIX PLOTS [35]
+Fig. 1.
+Location of the area in Karlsruhe (left) and Bretten (right) in the federal
+state of Baden-Württemberg, Germany [35]. The extent of the six plots is marked
+in yellow.
+B. UAV LiDAR Data
+The UAV LiDAR dataset was acquired with a RIEGL
+miniVUX-1UAV sensor mounted on a DJI Matrice 600 Pro
+hexacopter. The parameters of the scanner are as follows: laser
+pulse repetition rate up to 100 kHz, up to ﬁve target echoes per
+laser shot, and laser wavelength in near-infrared. Considering
+to validate the robustness of the method under different forest
+conditions, experiments in six plots (BR03, BR05, BR07 BR08,
+KA09, and KA11) were conducted. The ﬂights were performed
+on August 24, 2019, May 26, 2020, September 13, 2019, and
+September6,2019[35].TableIshowsﬂyingheight,speed,mean
+point cloud density, and plot areas for the six plots.
+III. METHOD
+This study proposes a tree segmentation method based on
+CHM and point cloud data, which consists of four main steps.
+1) Preprocessing and generation of raster: Ground points
+andnongroundpointsareseparatedbypointcloudﬁltering
+to generate CHM and PDM.
+2) Coarse segmentation based on region-growing algorithm:
+The initial segmentation is derived from the CHM through
+a region-growing algorithm and used as the basis for
+subsequent segmenting.
+3) Classifyerroneoussegmentedtreesbasedonlocaldensity:
+The coarse segmentations are classiﬁed into correct and
+over- and undersegmentation according to the number of
+local density maximum points.
+4) Fine segmentation based on canopy 3-D morphology:
+The error trees are corrected based on 2-D projection
+morphology and upper surface morphology of the canopy
+in vertical proﬁle. Fig. 2 shows the framework of the
+methods in this article.
+A. Preprocessing and Generation of Raster
+The preprocessing aims to mitigate the effects of topographic
+relief on the point cloud, ensuring that the z-value of each
+point accurately reﬂects its height above the ground. The cloth
+simulation ﬁltering (CSF) algorithm [36] ﬁrst turns the point
+cloud upside down, then a cloth drops to the inverted surface,
+and ground and nonground points are distinguished according
+to the ﬁnal shape of the cloth. It has become one of the most
+popular point cloud ﬁltering algorithms with fewer parameters,
+easier setup, and higher accuracy. We ﬁrst applied denoising
+and CSF algorithms to the raw point cloud to extract the ground
+points. A digital elevation model (DEM) was generated from
+the ground points by inverse distance weighted interpolation,
+and a digital surface model (DSM) was generated using the ﬁrst
+echoes of the nonground points. The raster cell size was set at
+0.5 m × 0.5 m. The DEM was subtracted from the DSM to get a
+CHM to eliminate the effect of terrain undulations. Since there
+may be noise in the CHM, which will affect the accuracy of the
+subsequent segmentation, a Gaussian ﬁlter (sigma is set 1) was
+used to smooth the CHM. Then, the normalized point cloud was
+obtained by subtraction of the corresponding raster value in the
+DEM from the elevation of each point.
+Point cloud density refers to the number of laser point pro-
+jections per unit horizontal plane area. All the nonground points
+were projected onto a 2-D horizontal surface, and the horizontal
+surface was divided into a number of square grids with equal
+side lengths, and the count of projected points falling within each
+square grid was recorded as the value of the grid to construct
+a PDM. In this article, the grid size was set to 0.5 m × 0.5 m.
+Similarly, we applied a Gaussian ﬁlter to smooth PDM.
+
+
+8900
+IEEE JOURNAL OF SELECTED TOPICS IN APPLIED EARTH OBSERVATIONS AND REMOTE SENSING, VOL. 18, 2025
+Fig. 2.
+Flowchart of the proposed method.
+Fig. 3.
+Example of the region-growing result. The red points indicate the
+extracted tree tops and the blue polygons indicate the tree crowns. (a) Tree tops
+derived from the local maximum ﬁlter. (b) Crown delineated by region-growing
+algorithm.
+B. Coarse Segmentation Based on Region-Growing Algorithm
+For each region, the region-growing algorithm should ﬁrst
+designate a seed point as the starting of the growth, and then
+compare the raster in the neighborhood with the seed point,
+merging the points that meet certain conditions [37]. The al-
+gorithm continues to grow outward by repeating this process
+until no pixels meet the conditions. First, detect potential tree
+tops by applying a local maximum ﬁlter with a ﬁxed kernel size
+of 5 pixels. In Fig. 3(a), the tree tops are marked in red. These
+potential tree top points were then used as seed points for canopy
+growth.Wedeterminewhetheraneighboringpixelpointbelongs
+to the growing canopy based on the following three conditions.
+1) The height of the neighboring pixel is higher than the seed
+height ∗0.6 and lower than the seed height ∗1.05.
+2) The height of the neighboring pixel is higher than the mean
+height of the current crown ∗0.6.
+3) The maximum radius of the current canopy does not
+exceed 10 m.
+We set these parameters according to the R-package itcSeg-
+ment [38] and adjusted some of them based on the suggestions
+of Dalponte and Coomes [17] and Zörner et al. [16]. All pixels
+that meet the above three conditions are grouped into the same
+canopy. During the process of growing outward from the seed
+point, we deﬁned a circular-like kernel function, instead of using
+a traditional n × n kernel function. This allows the canopy to
+grow outward from the seed point in a circle-like shape rather
+than in the traditional quadrilateral shape, which can better
+simulate the shape of the canopy. In Fig. 3(b), the tree crowns
+are marked in blue polygons. We add all the tree tops to a list.
+C. Classify Erroneous Segmented Trees Based on Local
+Density
+In coarse segmentation, we used a local maximum ﬁlter with
+a ﬁxed window size to search for potential tree tops. How-
+ever, the window size setting largely affects the performance
+of the ﬁltering. If the ﬁltering window size is smaller, more
+local maxima can be detected, but trees with larger canopies
+may be recognized as multiple trees. In contrast, if the ﬁlter
+window size is larger, fewer local maxima can be detected,
+but small trees may not be identiﬁed and merged into a larger
+canopy. Particularly in dense forests with closely spaced trees,
+the CHM-based method usually treats the clustered trees as one
+tree, producing undersegmentation. In the subsequent session,
+the erroneous segmented trees are found by density informa-
+tion, and then their morphology is analyzed to correct them.
+This can address the issue of poor segmentation accuracy in
+densely packed forests to some extent. In general, there is a
+correlation between crown size and tree height, so an adaptive
+ﬁlter window can be set according to tree height to improve the
+accuracy of tree tops search [39]. However, its capability relies
+signiﬁcantly on the regression model correlating tree height
+with crown width. To address these challenges, we performed
+error identiﬁcation and classiﬁcation on the segmented clusters
+after coarse segmentation. Then, we conducted ﬁne segmen-
+tation according to the 3-D morphology analysis of the point
+cloud.
+
+
+LI et al.: INDIVIDUAL TREE SEGMENTATION BASED ON REGION-GROWING AND DENSITY-GUIDED
+8901
+Fig. 4.
+Example of the local height maximum and local density maximum
+for an individual tree. Triangles represent points of local height maxima and
+squares represent points of local density maxima. (a) Frontal perspective of the
+tree point cloud. (b) CHM of the tree.
+The tree top in a forest can be considered as a multimodal
+distribution, with each tree top having a local maximum in
+both height and density, corresponding to a canopy apex [31].
+Fig. 4 shows the distribution of local height maxima and local
+density maxima for the two trees. From Fig. 4, it can be found
+that for trees with regular shapes, the positions of their local
+maximum density and local maximum height in the horizontal
+direction nearly coincide. Therefore, undersegmented trees can
+be identiﬁed by assessing the number of points exhibiting local
+density maxima within each coarsely segmented cluster. Similar
+to the CHM-based tree top detection in Section III-B, we apply a
+local maximum ﬁlter to extract points representing local density
+maxima on the PDM. The coarse-segmented trees were then
+classiﬁed based on the following rules.
+1) If there is only one local density maximum point in a
+segmented tree, it is considered a correct individual tree.
+2) If a coarsely segmented tree does not have any local
+density maximum points, it is classiﬁed as a potential
+oversegmented tree.
+3) If there are two or more local density maxima in a coarse-
+segmentation tree, it is classiﬁed as a potential underseg-
+mented tree and these local density maximum points are
+recorded for subsequent ﬁne segmentation.
+D. Fine Segmentation Based on 3-D Morphology
+Oversegmentation cluster is usually a part of an individual
+tree and is typically not circular but elliptical or elongated in
+shape. Therefore, we can determine if the oversegmentation
+cluster is correct based on the shape of its projection plane. We
+ﬁrst projected all points in the cluster onto the xoy 2-D plane to
+obtain the point set P, and then computed the covariance matrix
+Fig. 5.
+Example of singular value decomposition. a represents the length of
+the major axis, and b represents the length of the minor axis.
+cov of P as follows:
+cov =
+1
+n −1 (P −¯p) (P −¯p)T
+(1)
+where n is the number of the P, and ¯p is the mean of each
+dimension of the P.
+The singular value decomposition is then performed on cov
+to obtain two eigenvalues λ1 and λ2 (λ1 > λ2) and their cor-
+responding eigenvectors α1 and α2. The eigenvector α1 was
+used as the x-axis, and the eigenvector α2 was used as the
+y-axis. Subsequently, all points are individually projected onto
+the x-axis and y-axis, as shown in Fig. 5. The length of the
+majoraxisiscalculatedasthelongestdistancebetweenprojected
+points on the x-axis, and the same approach is employed to
+determine the length of the minor axis. If the ratio of the length of
+the major axis to the minor axis is greater than 3 [40], the cluster
+is considered an oversegmented cluster. It was then assigned to
+the cluster that had the nearest top to that cluster top and removed
+that tree top from the list. Otherwise, the segmentation cluster
+is considered correct.
+For potential undersegmented clusters, since each cluster has
+multiple local density maxima, we only need to determine
+whether these local density maxima are the tree tops of the
+unsegmented tree. In general, the boundary between two tree
+crowns is a local height minimum, the two tree tops are the local
+height maximum. The point cloud height shows a trend of ﬁrst
+decreasing from one tree top to another and then increasing. As
+shown in Fig. 6(a) and (e), the green points represent underseg-
+mented trees, and it can be clearly seen that they are consistent
+with the above trend.
+
+
+8902
+IEEE JOURNAL OF SELECTED TOPICS IN APPLIED EARTH OBSERVATIONS AND REMOTE SENSING, VOL. 18, 2025
+Fig. 6.
+Example of density-guided point cloud 3-D morphological detection.
+(a) and (e) Undersegmented trees. (b) and (f) Positioning vertical proﬁle. (c) and
+(g) Vertical proﬁle analysis. (d) and (h) Results of ﬁne segmentation.
+We searched for the highest points as potential tree top points
+within a 0.5 m radius around each local density maximum point.
+With the highest point as a reference, we evaluated whether
+each other potential tree top point meets the above-mentioned
+relationship. First, we found the plane passing through two
+points and perpendicular to the xoy plane. The equation of the
+plane is as follows:
+ax + by + c = 0.
+(2)
+As shown in Fig. 6(b) and (f), the triangles represent the
+highest points of the clusters, the squares represent the potential
+tree tops found by the local density maxima, and the red dot
+lines represent the vertical proﬁles through these two points. We
+then projected all the points in the segmented cluster onto the
+plane, whose distance to the plane was less than 0.2 m, to get the
+vertical proﬁle. The equation for the distance between the point
+(xp, yp, zp) and the plane is as follows:
+Dp = |axp + byp + c|
+√
+a2 + b2
+.
+(3)
+Next, we extracted the surface points from the proﬁle at
+given intervals to simulate the crown surface. These points were
+subjected to polynomial ﬁtting to obtain the canopy surface
+morphology ﬁtting function. The vertical proﬁle ﬁt is shown
+in Fig. 6(c) and (g), the black points represent the ﬁt points and
+the blue lines represent the canopy surface ﬁtting curve. The
+ﬁtted polynomial function is as follows:
+p (x) = p1 xn + p2xn−1 + . . . + pnx + pn+1
+(4)
+where n is the degree of the polynomial and pi(i = 1,2,...,n+1)
+are the coefﬁcient of a polynomial.
+The point of height minimum between two tree tops in the
+ﬁtting function is considered as the boundary point between
+the two tree crowns. To ﬁnd the minimum point of p(x),
+we calculated its ﬁrst-order derivatives p′(x) and second-order
+derivatives p′′(x). If p′ (x0) = 0 and p′′(x0) > 0, then x0 is the
+Fig. 7.
+3-D morphological detection. Red arrows represent canopy trends, H
+is the tree height, and D is the distance from the top of the tree to the boundary
+line.
+minimum point. The functions are as follows:
+p′ (x) = dp (x)
+dx
+= np1 xn−1 + (n −1) p2xn−2 + . . . + pn
+(5)
+p′′ (x) = dp
+′(x)
+dx
+= n (n −1) p1 xn−2 + . . . + pn−1.
+(6)
+When the height difference between these two tops is small,
+it can be considered that these two trees are of similar size.
+Ideally, their boundary point should be located near the middle
+of the two tops. As shown in Fig. 7(a), there are two overlapping
+trees (A and B) with similar heights. There is a certain distance
+between their tree tops, and the distances DA and DB to the
+boundary line are roughly similar. We should also consider the
+presence of branches. Branches can appear similar to a nearby
+undersegmented tree in terms of height, but their planar distance
+is close. As shown in Fig. 7(c), there is only one tree, including
+its trunk and branches. The presence of branches makes the
+morphology of the tree top similar to that in Fig. 7(a), but the
+difference is that the distance between the trunk and the branches
+in the plane is much smaller. In Fig. 7(b), there is a tall tree and
+a short tree. Due to the signiﬁcant height difference, if there
+is a descending trend followed by an ascending trend, it can
+be considered that the short tree is undersegmented. Therefore,
+when the height difference between the two tops is less than
+1 m, it can be considered that the point does not belong to an
+undersegmented tree if the planar distance between them is less
+than 2 m, or if the ratio of the distances to boundary point is
+greater than 1.5. Otherwise, if the height of the boundary point
+is lower than the height of the shortest top, the point is considered
+to be the top point of the undersegmented tree and added to the
+tree top list. As shown in Fig. 6(c) and (g), the undersegmented
+
+
+LI et al.: INDIVIDUAL TREE SEGMENTATION BASED ON REGION-GROWING AND DENSITY-GUIDED
+8903
+Fig. 8.
+3-D display of segmentation results. (a)–(f) represent plots 1–6.
+trees are successfully detected, the green points represent the
+detected tree tops, the yellow points represent the boundary point
+between two trees, and the red dot lines represent the splitting
+line for segmenting the two individual trees. Fig. 6(d) and (h)
+show the results of reﬁnement for these trees. The red and blue
+points represent corrected trees, and the black points represent
+the reﬁned tree tops. Within each undersegmented cluster, we
+analyzed all potential tree tops according to the above rule with
+reference top points and updated the list.
+Finally, we utilized the updated list of tree tops as seed points
+and applied them to the region-growing algorithm described in
+Section III-B to obtain the ﬁnal individual trees. Fig. 8 shows
+the individual trees extracted from the ﬁne segmentation of six
+plots. In each plot, every tree has been assigned a distinct color
+for visualization.
+E. Evaluation
+We manually extracted individual trees from the test plots as
+reference trees using LiDAR360 (Green Valley International,
+Ltd., Merced, CA, USA). If the planar distance between the
+extracted tree tops and the reference tree tops is less than 0.5 m
+and the difference in their heights is less than 5%, the two trees
+are considered to be successfully matched. In this article, the tree
+is deﬁned as a matched tree if it can ﬁnd a matching reference
+tree. The tree is deﬁned as an oversegmented tree if its top lies
+within a reference tree, but that reference tree has already been
+matched. If a reference tree cannot ﬁnd a matching tree, the tree
+is deﬁned as an undersegmented tree. Five accuracy indicators
+were used for accuracy evaluation, including extraction rate
+(ER), matching rate (MR), commission rate (CR), omission rate
+(OR), and F1-score. The equations are as follows:
+ER = TP + FP
+TP + FN
+(7)
+MR =
+TP
+TP + FN
+(8)
+CR =
+FP
+TP + FP
+(9)
+OR =
+FN
+TP + FN
+(10)
+r =
+TP
+TP + FN
+(11)
+p =
+TP
+TP + FP
+(12)
+F1 = 2 r ∗p
+r + p
+(13)
+where TP is the number of matched trees, FN is the number of
+undersegmented trees, and FP is the number of oversegmented
+trees.
+ER measures the ability to extract trees from the data, MR
+measures the ability to correctly match ﬁeld trees among ex-
+tracted trees. CR measures the error of incorrectly extracting
+a tree that does not exist, OR measures the error of omission
+caused by the lack of recognition tree, and the F1-score is used
+to comprehensively evaluate the performance of an algorithm.
+Inaddition,wealsocomparedwithfourotherairborneLiDAR
+individual tree segmentation algorithms. They are the marker-
+controlled watershed approach (MCW) [21], the point cloud-
+based cluster segmentation (PCS) [26], the Nyström-based spec-
+tral clustering method (NSC) [41], and the density-based method
+(ITDW) [32]. Considering the high density of UAV LiDAR point
+clouds, the comparative shortest-path algorithm (CSP) [42] for
+terrestrial LiDAR data was also compared.
+Finally, we also performed ablation experiments on two im-
+portant parameters, which were the local height maximum ﬁlter
+window size for CHM and the local density maximum ﬁlter
+window size for PDM.
+IV. RESULTS
+A. Individual Tree Detection
+Fig. 9 shows the individual tree segmentation results in six
+plots using the proposed method. In Fig. 9, the coarse-segmented
+trees, ﬁne-segmented trees, and reference trees are represented
+by blue triangles, red diamonds, and black circles. It is shown
+that many trees were not correctly extracted by the coarse
+
+
+8904
+IEEE JOURNAL OF SELECTED TOPICS IN APPLIED EARTH OBSERVATIONS AND REMOTE SENSING, VOL. 18, 2025
+TABLE II
+FIVE ACCURACY INDICATORS OF THE PROPOSED METHOD
+Fig. 9.
+Individual tree segmentation results by the proposed method. Blue
+triangles represent the coarse-segmented trees, red diamonds represent the ﬁne-
+segmented trees, and black circles represent the reference trees.
+segmentation. However, most of these missing trees were suc-
+cessfully extracted by ﬁne segmentation. It means that after ﬁne
+segmentation, most of the trees were extracted correctly.
+The ﬁve accuracy indicators of the six plots are shown in
+Table II. From Table II, it can be seen that compared to coarse
+segmentation, ﬁne segmentation has signiﬁcant improvements
+in both the extraction rate and matching rate by an average of
+TABLE III
+COMPARISON OF AVERAGE ACCURACY INDICATORS OF SIX METHODS
+16% and 12%, respectively. Additionally, there is a signiﬁcant
+decrease in the omission rate by an average of 12%, and a small
+increase in the commission rate and F1-score by an average of
+4% and 5%, respectively. The extraction rates for all six sample
+plots are close to 1. Although plot 5 has the lowest F1-score,
+it still reaches 0.88. It is worth noting that the omission rate in
+plot 5 is signiﬁcantly higher compared to the other plots, which
+results in the lower F1-score in plot 5.
+B. Comparison of Methods
+The comparison of MCW, PCS, NSC, ITDW, CSP, and the
+method of this article (RDT) are shown in Table III. It is worth
+noting that due to the high density of the UAV LiDAR point
+cloud, we resampled the raw point cloud data to 11 pts/m2 as
+input data for the NSC and ITDW methods. It is evident that the
+method of this article achieves the best results in all accuracy
+metrics and has the highest average F1-score of 0.95. The ITDW
+method achieved the same optimal results as the method of this
+article in terms of matching rate and omission rate. The NSC
+method had the lowest F1-score, mainly due to the generation
+of too many oversegmentation errors, which is consistent with
+the ﬁndings of Hui et al. [34]. The CSP method generates a
+signiﬁcant amount of oversegmentation, primarily due to the
+
+
+LI et al.: INDIVIDUAL TREE SEGMENTATION BASED ON REGION-GROWING AND DENSITY-GUIDED
+8905
+TABLE IV
+EFFICIENCY COMPARISON OF THE SIX METHODS ON PLOT 1
+interference of understory vegetation affecting the detection of
+tree trunks.
+Table IV lists the runtime of these six methods in plot 1.
+The computer used to run the six algorithms had the following
+speciﬁcations: Windows 10, Intel Core i7-9700K processor, and
+32 GB RAM. No GPU acceleration was used. Except for NSC
+and ITDW, which used resampled data, the other four methods
+used the raw data. For the method of this article, we separately
+calculated the runtime for the coarse segmentation and ﬁne
+segmentation stages. Furthermore, at each stage, we separately
+calculated the runtime for scenarios with point cloud storage and
+without point cloud storage. The results indicate that the MCW
+method has the shortest runtime, showcasing the advantage of
+the raster-based approach. The method of this article consumes a
+lot of time in storing the point cloud but is efﬁcient in segmenting
+the point cloud.
+V. DISCUSSION
+A. Advantages of Density Guidance
+The method in this article consists of two steps. The ﬁrst is the
+coarse segmentation based on CHM, and the second is the ﬁne
+segmentation based on points using the results of the coarse seg-
+mentation. While the CHM-based algorithm is fast and efﬁcient,
+it can suffer from omission errors [7]. The CHM-based method
+utilizes the height information of the canopy, and the accuracy of
+this algorithm mainly depends on the detection accuracy of the
+tree top points. In plots where the distribution of trees is more
+sparsely dispersed and the distance between each tree is larger,
+the highest point of each canopy is more obvious and easier to
+detect. In this case, the CHM-based method can often achieve
+high accuracy [3], [19]. However, in plots with more trees and
+a more concentrated distribution, the distance between trees is
+smaller and a larger area of overlap between canopies occurs,
+which can be a challenge for tree tops detection. In addition,
+taller trees may overshadow and obstruct the surrounding shorter
+trees, resulting in omissions where the highest points of the
+shorter tree canopies cannot be detected [43]. Fig. 6(a) and (e)
+shows two neighboring trees in the test plot, where one tree is
+taller with a larger crown, and is correctly segmented, while
+Fig. 10.
+Example of leaning tree. The black dotted line indicates the tilted
+direction. (a) Tilted whole tree. (b) Tilted tree crown. (c) CHM image of a tilted
+tree. (d) Vertical proﬁle curve ﬁtting.
+the other tree is shorter, almost obscured, and is not correctly
+segmented.
+In general, the density peaks at the tree center and gradually
+diminishes towards the tree edges [32], [44]. Density informa-
+tion can compensate for the limitations of height information,
+especially in plots that are heavily shaded by trees. Even if
+smaller trees are obscured and unable to be explored to the tree
+top, they can still be detected with the local density maxima.
+Some methods cut point cloud clusters into several proﬁles with
+certain angular intervals and ﬁnd potential tree top points in each
+proﬁle [3], [7]. These methods rely on manually set parameters,
+which may miss tree top points if not set properly, and the com-
+putational process is complex. In contrast, compared to coarse
+segmentation, which does not take any density information into
+account, ﬁne segmentation shows signiﬁcant improvement in
+both extraction rate and matching rate, with increases of 16%
+and 12%, respectively. The F1-score has also improved by 5%.
+Although the ﬁne segmentation is mainly based on point cloud
+processing, it is extremely efﬁcient without storing the point
+cloud, taking only a few seconds. This indicates that our method,
+guided by density information, can quickly and accurately detect
+tree tops in shaded trees, greatly simplifying the computational
+process and improving the detection accuracy.
+B. Inﬂuence of Canopy Structure
+Forest structure is the primary factor that determines the
+accuracy of individual tree segmentation results [45]. The
+
+
+8906
+IEEE JOURNAL OF SELECTED TOPICS IN APPLIED EARTH OBSERVATIONS AND REMOTE SENSING, VOL. 18, 2025
+Fig. 11.
+Effect of local height maximum ﬁlter window size on segmentation results.
+Fig. 12.
+Effect of local density maximum ﬁlter window size on segmentation results.
+method of this article has good segmentation accuracy in conif-
+erous forests where the canopy shape is nearly conical but is
+less adaptable in broadleaf forests with more complex canopy
+shapes. On the one hand, the leaves of deciduous trees have
+a large surface area, which forms a shade layer on the canopy
+surface,greatlyweakeningthepenetratingabilityoflaserbeams,
+resulting in an inability to reﬂect the canopy’s structural infor-
+mation accurately based on point cloud density. On the other
+hand, deciduous trees often have multiple branches, forming a
+multicentered canopy structure, which results in multiple local
+
+
+LI et al.: INDIVIDUAL TREE SEGMENTATION BASED ON REGION-GROWING AND DENSITY-GUIDED
+8907
+height maxima and local density maxima for a single tree, which
+interferes with segmentation. Meanwhile, the scanning method
+of the UAV LiDAR system is top-down, and the point cloud
+informationismainlyconcentratedatthetopoftheforestcanopy
+and decreases with decreasing height. Therefore, the individual
+tree segmentation method based on UAV LiDAR point cloud
+data also adopts a top-down approach to maximize the advantage
+of the rich information in the upper layer of the canopy while
+neglecting the information in the lower layer of the canopy.
+In multilayer forests, it is difﬁcult for UAV LiDAR to acquire
+information about the lower forest due to the shading of the
+upper forest canopy, which leads to the difﬁculty of extracting
+the trees of the lower forest by the morphology-based method.
+To further explore the inﬂuence of canopy structure on the
+methods in this article, we checked plot 5, which had the poorest
+segmentation results. By examining the incorrectly segmented
+trees in plot 5, we found that most of these trees were not
+growing upright, but had varying degrees of inversion, as shown
+in Fig. 10(a). There were also some trees that may have been
+affected by the wind and had a uniform crown tilted in one
+direction, as shown in Fig. 10(b). This irregular canopy struc-
+ture has two effects on the segmentation results. On the one
+hand, shorter trees can be completely obscured by nearby taller
+trees with a high degree of fall, resulting in omission error
+as the CHM-based method can only detect the taller canopy.
+On the other hand, a leaning canopy may disrupt the density
+distribution of the canopy point cloud, resulting in local density
+maximum points in the canopy deviating from the treetop points
+or producing multiple local density maximum points, leading to
+commission error. Fig. 10(c) shows the corresponding CHM
+image for Fig. 10(a). Although the density maximum point of
+the second tree is detected, the point is severely deviated from
+the corresponding tree top due to tilting and the shorter tree
+top is completely occluded, which cannot be detected by the
+vertical proﬁle ﬁtting, as shown in Fig. 10(d) resulting in an
+undersegmentation error.
+C. Inﬂuence of the Parameter Setting
+Morphology-based methods inevitably set a series of pa-
+rameters for judgment when recognizing the morphological
+features of images and points, and the accuracy of the results
+of morphology-based methods is closely related to the setting of
+parameters [46]. In other words, the optimal parameter settings
+in one scene may not yield satisfactory results in another scene.
+Parameter settings have a substantial impact on CHM-based
+methods, and the window size is the most critical parameter.
+A large window makes the canopy height variation of CHM
+smoother and reduces the number of detected trees, whereas
+a small window increases the number of detected trees. Point-
+based methods also require appropriate parameter settings. A
+small two-tree distance threshold is more sensitive to small trees
+butmaydetectsomebranchesastrees. Alargedistancethreshold
+is less likely to misidentify but is prone to omissions.
+To verify the effect of parameter settings on ﬁne segmentation
+results, we conducted experiments in plots 2, 3, 4, and 5, as these
+plots have the most trees, the most complex stands, and different
+seasonal conditions, respectively. The most critical parameters
+are the local height maximum ﬁlter window size for CHM and
+the local density maximum ﬁlter window size for PDM, which
+determine the number of trees detected in the coarse and ﬁne
+segmentation, respectively. We set the local height maximum
+ﬁlter window size to 3, 5, and 7, and the local density maximum
+ﬁlter window size to 4, 6, 8, and 10, respectively. The two sets of
+experiments were independent of each other, and the accuracy
+indicators for each different window size were calculated, as
+shown in Figs. 11 and 12.
+As shown in Fig. 11, with the increase in the window size of
+the local height maximum ﬁlter, there is a noticeable decrease
+in the extraction rate, a clear increase in the omission rate, but
+the F1-score remains stable. This indicates that segmentation
+accuracy is not highly sensitive to the window size of the local
+height maximum ﬁlter. In contrast, the window size of the local
+density maximum ﬁlter has a signiﬁcant impact on the results. As
+shown in Fig. 12, as the window size increases, the extraction
+rate and commission rate decrease signiﬁcantly, the omission
+increases, and the matching rate decreases. That is because the
+smaller the window size, the more local density maximum points
+detected, which means that more points will be involved in the
+judgment of potential tree tops in the ﬁne segmentation stage,
+and more may be recognized as tree tops. On the contrary, the
+larger the window size, the fewer local density maximum points
+are detected and the fewer may be recognized as tree top points.
+F1-scores remain relatively stable in plots 2 and 4 but show a
+decreasing trend when the window size is 10, whereas, there is
+a continuous increasing trend in plots 3 and 5. This may be due
+to the fact that the trees in plots 3 and 5 have more complex
+branch interference and require a larger window size to avoid
+oversegmentation.Therefore,inscenarioswheretreesaredenser
+and there are more short trees, this parameter can be set appro-
+priately smaller to ensure that more trees can be detected. In
+scenarios with more interference, the parameter can be increased
+appropriately.
+VI. CONCLUSION
+This article proposed an individual tree segmentation method
+based on region growing algorithm and density information
+guided 3-D point cloud analysis, using UAV LiDAR point cloud
+data. First, on the basis of CHM coarse segmentation based on
+theregiongrowingalgorithm,thepointclouddensityfeaturewas
+introduced to identify the wrong coarse segmentation segment.
+Second,theheightanddensityinformationwithinthesegmented
+trees was combined to guide the selection of 3-D spatial proﬁles.
+Then, according to the spatial distribution pattern among the
+trees, 3-D spatial analysis of the point cloud was carried out
+to reﬁne the potential tree top location. Finally, the improved
+tree top location was utilized as a regional growth seed point
+to complete the ﬁne segmentation. We validated the accuracy
+and robustness of the method on German forests and compared
+it with the other ﬁve methods. The results indicated that the
+average F1-scores of six study plots were 0.95, which improved
+by 5% after the introduction of density information. Without
+storing the point cloud, the algorithm ran in a few seconds. The
+
+
+8908
+IEEE JOURNAL OF SELECTED TOPICS IN APPLIED EARTH OBSERVATIONS AND REMOTE SENSING, VOL. 18, 2025
+method based on density information-guided 3-D point cloud
+analysis can quickly and accurately locate potential tree tops,
+which greatly improves the accuracy of tree detection, but it is
+less effective in broadleaf forests with more complex canopy
+structures. In the future, our work will focus on methods for
+distinguishing between tree tops and branch points in vertical
+proﬁleanalysis,aswellasautomaticallydeterminingtheoptimal
+parameters.
+REFERENCES
+[1] W. Li et al., “Human ﬁngerprint on structural density of forests globally,”
+Nature Sustain., vol. 6, no. 4, pp. 368–379, 2023.
+[2] T. R. H. Goodbody, N. C. Coops, and J. C. White, “Digital aerial pho-
+togrammetry for updating area-based forest inventories: A review of op-
+portunities, challenges, and future directions,” Curr. Forestry Rep., vol. 5,
+no. 2, pp. 55–75, Jun. 2019.
+[3] J. T. Yang, Z. Z. Kang, S. Cheng, Z. Yang, and P. H. Akwensi, “An
+individual tree segmentation method based on watershed algorithm and
+three-dimensional spatial distribution analysis from airborne LiDAR point
+clouds,” IEEE J. Sel. Topics Appl. Earth Observ. Remote Sens., vol. 13,
+pp. 1055–1067, 2020.
+[4] A. Kangas and M. Maltamo, Forest Inventory: Methodology and Applica-
+tions. Berlin, Germany: Springer-Verlag, 2006.
+[5] P. Krzystek, A. Serebryanyk, C. Schnörr, J. Cervenka, and M. Heurich,
+“Large-scale mapping of tree species and dead trees in Sumava Na-
+tional Park and Bavarian Forest National Park using LiDAR and
+multispectral imagery,” Remote Sens., vol. 12, no. 4, Feb. 2020,
+Art. no. 661.
+[6] F. E. Fassnacht et al., “Review of studies on tree species classiﬁcation
+from remotely sensed data,” Remote Sens. Environ., vol. 186, pp. 64–87,
+Dec. 2016.
+[7] W. Q. Yan, H. Y. Guan, L. Cao, Y. T. Yu, C. Li, and J. Y. Lu, “A self-adaptive
+mean shift tree-segmentation method using UAV LiDAR data,” Remote
+Sens., vol. 12, no. 3, Feb. 2020, Art. no. 515.
+[8] B. Bigdeli, H. A. Amirkolaee, and P. Pahlavani, “DTM extraction un-
+der forest canopy using LiDAR data and a modiﬁed invasive weed
+optimization algorithm,” Remote Sens. Environ., vol. 216, pp. 289–300,
+Oct. 2018.
+[9] Z. Y. Hui, S. G. Jin, Y. P. Xia, Y. J. Nie, X. W. Xie, and N. Li, “A
+mean shift segmentation morphological ﬁlter for airborne LiDAR DTM
+extraction under forest canopy,” Opt. Laser Technol., vol. 136, Apr. 2021,
+Art. no. 106728.
+[10] D. Wang, “Unsupervised semantic and instance segmentation of forest
+point clouds,” ISPRS J. Photogramm. Remote Sens., vol. 165, pp. 86–97,
+Jul. 2020.
+[11] K. L. Cook, “An evaluation of the effectiveness of low-cost UAVs and
+structure from motion for geomorphic change detection,” Geomorphology,
+vol. 278, pp. 195–208, Feb. 2017.
+[12] A. P. Dalla Corte et al., “Measuring individual tree diameter and
+height using GatorEye high-density UAV-LiDAR in an integrated crop-
+livestock-forest system,” Remote Sens., vol. 12, no. 5, Mar. 2020,
+Art. no. 863.
+[13] R. Neuville, J. S. Bates, and F. Jonard, “Estimating forest structure from
+UAV-mounted LiDAR point cloud using machine learning,” Remote Sens.,
+vol. 13, no. 3, Feb. 2021, Art. no. 352.
+[14] F. Moradi, F. D. Javan, and F. Samadzadegan, “Potential evaluation of
+visible-thermal UAV image fusion for individual tree detection based on
+convolutionalneuralnetwork,”Int.J.Appl.EarthObserv.Geoinf.,vol.113,
+Sep. 2022, Art. no. 103011.
+[15] N. C. Swayze, W. T. Tinkham, J. C. Vogeler, and A. T. Hudak, “In-
+ﬂuence of ﬂight parameters on UAS-based monitoring of tree height,
+diameter, and density,” Remote Sens. Environ., vol. 263, Sep. 2021,
+Art. no. 112540.
+[16] J. Zörner, J. Dymond, J. Shepherd, S. Wiser, and B. Jolly, “LiDAR-based
+regional inventory of tall trees—Wellington, New Zealand,” Forests, vol. 9,
+no. 11, Nov. 2018, Art. no. 702.
+[17] M. Dalponte and D. A. Coomes, “Tree-centric mapping of forest carbon
+density from airborne laser scanning and hyperspectral data,” Methods
+Ecol. Evol., vol. 7, no. 10, pp. 1236–1245, Oct. 2016.
+[18] S. Hartling, V. Sagan, and M. Maimaitijiang, “Urban tree species classiﬁ-
+cation using UAV-based multi-sensor data fusion and machine learning,”
+GISci. Remote Sens., vol. 58, no. 8, pp. 1250–1275, Nov. 2021.
+[19] H. M. Qin, W. Q. Zhou, Y. Yao, and W. M. Wang, “Individual tree
+segmentationandtreespeciesclassiﬁcationinsubtropicalbroadleafforests
+using UAV-based LiDAR, hyperspectral, and ultrahigh-resolution RGB
+data,” Remote Sens. Environ., vol. 280, Oct. 2022, Art. no. 113143.
+[20] Q. D. Chen et al., “Individual tree segmentation and tree height estimation
+using leaf-off and leaf-on UAV-LiDAR data in dense deciduous forests,”
+Remote Sens., vol. 14, no. 12, Jun. 2022, Art. no. 2787.
+[21] Q. Chen, D. Baldocchi, P. Gong, and M. Kelly, “Isolating individual trees
+in a savanna woodland using small footprint lidar data,” Photogramm. Eng.
+Remote Sens., vol. 72, no. 8, pp. 923–932, Aug. 2006.
+[22] T. Y. Dong, Q. Z. Zhou, S. B. Gao, and Y. Shen, “Automatic detection of
+single trees in airborne laser scanning data through gradient orientation
+clustering,” Forests, vol. 9, no. 6, Jun. 2018, Art. no. 291.
+[23] K. S. Ma, Y. J. Xiong, F. G. Jiang, S. Chen, and H. Sun, “A novel vegetation
+point cloud density tree-segmentation model for overlapping crowns using
+UAV LiDAR,” Remote Sens., vol. 13, no. 8, Apr. 2021, Art. no. 1442.
+[24] W. Q. Yan, H. Y. Guan, L. Cao, Y. T. Yu, S. Gao, and J. Y. Lu, “An
+automated hierarchical approach for three-dimensional segmentation of
+single trees using UAV LiDAR data,” Remote Sens., vol. 10, no. 12,
+Dec. 2018, Art. no. 1999.
+[25] H. Lee, K. C. Slatton, B. E. Roth, and W. P. Cropper, “Adaptive clustering
+of airborne LiDAR data to segment individual tree crowns in managed
+pine forests,” Int. J. Remote Sens., vol. 31, no. 1, pp. 117–139, 2010.
+[26] W. K. Li, Q. H. Guo, M. K. Jakubowski, and M. Kelly, “A new method for
+segmenting individual trees from the LiDAR point cloud,” Photogramm.
+Eng. Remote Sens., vol. 78, no. 1, pp. 75–84, Jan. 2012.
+[27] J. Vauhkonen et al., “Comparative testing of single-tree detection algo-
+rithms under different types of forest,” Forestry, vol. 85, no. 1, pp. 27–40,
+Jan. 2012.
+[28] Y. Wang et al., “A novel method based on kernel density for estimating
+crown base height using UAV-borne LiDAR data,” IEEE Geosci. Remote
+Sens. Lett., vol. 19, 2022, Art. no. 7004105.
+[29] W. X. Dai, B. S. Yang, Z. Dong, and A. Shaker, “A new method for
+3D individual tree extraction using multispectral airborne LiDAR point
+clouds,” ISPRS J. Photogramm. Remote Sens., vol. 144, pp. 400–411,
+Oct. 2018.
+[30] W. Chen, X. B. Hu, W. Chen, Y. F. Hong, and M. H. Yang, “Airborne
+LiDAR remote sensing for individual tree forest inventory using trunk
+detection-aided mean shift clustering techniques,” Remote Sens., vol. 10,
+no. 7, Jul. 2018, Art. no. 1078.
+[31] A. Ferraz et al., “3-D mapping of a multi-layered Mediterranean forest
+using ALS data,” Remote Sens. Environ., vol. 121, pp. 210–223, Jun. 2012.
+[32] M. Latella, F. Sola, and C. Camporeale, “A density-based algorithm for
+the detection of individual trees from LiDAR data,” Remote Sens., vol. 13,
+no. 2, Jan. 2021, Art. no. 322.
+[33] J. Williams et al., “3D Segmentation of trees through a ﬂexible multiclass
+graph cut algorithm,” IEEE Trans. Geosci. Remote Sens., vol. 58, no. 2,
+pp. 754–776, Feb. 2020.
+[34] Z. Y. Hui, P. G. Cheng, B. S. Yang, and G. Q. Zhou, “Multi-level
+self-adaptive individual tree detection for coniferous forest using air-
+borne LiDAR,” Int. J. Appl. Earth Observ. Geoinf., vol. 114, Nov. 2022,
+Art. no. 103028.
+[35] H. Weiser, J. Schäfer, L. Winiwarter, N. Krasovec, F. E. Fassnacht, and
+B. Höﬂe, “Individual tree point clouds and tree measurements from multi-
+platform laser scanning in German forests,” Earth Syst. Sci. Data, vol. 14,
+no. 7, pp. 2989–3012, Jul. 2022.
+[36] W. M. Zhang et al., “An easy-to-use airborne LiDAR data ﬁltering method
+based on cloth simulation,” Remote Sens., vol. 8, no. 6, Jun. 2016,
+Art. no. 501.
+[37] Q. Chen, W. Xie, P. Zhou, C. S. Zheng, and D. Wu, “Multi-crop convo-
+lutional neural networks for fast lung nodule segmentation,” IEEE Trans.
+Emerg. Topics Comput. Intell., vol. 6, no. 5, pp. 1190–1200, Oct. 2022.
+[38] M. Dalponte, “itcSegment: Individual tree crowns segmentation,” Aug.
+22, 2023. [Online]. Available: https://CRAN.R-project.org/package=
+itcSegment
+[39] Z. Zhen, L. J. Quackenbush, and L. J. Zhang, “Impact of tree-oriented
+growthorderinmarker-controlledregiongrowingforindividualtreecrown
+delineation using airborne laser scanner (ALS) data,” Remote Sens., vol. 6,
+no. 1, pp. 555–579, Jan. 2014.
+[40] K. Sterenczak, B. Kraszewski, M. Mielcarek, Z. Piasecka, M. Lisiewicz,
+and M. Heurich, “Mapping individual trees with airborne laser scanning
+data in an European lowland forest using a self-calibration algorithm,” Int.
+J. Appl. Earth Observ. Geoinf., vol. 93, Dec. 2020, Art. no. 102191.
+[41] Y. Pang et al., “Nyström-based spectral clustering using airborne LiDAR
+point cloud data for individual tree segmentation,” Int. J. Digit. Earth,
+vol. 14, no. 10, pp. 1452–1476, Oct. 2021.
+
+
+LI et al.: INDIVIDUAL TREE SEGMENTATION BASED ON REGION-GROWING AND DENSITY-GUIDED
+8909
+[42] S. L. Tao et al., “Segmenting tree crowns from terrestrial and mobile
+LiDAR data by exploring ecological theories,” ISPRS J. Photogramm.
+Remote Sens., vol. 110, pp. 66–76, Dec. 2015.
+[43] A. Ferraz, S. Saatchi, C. Mallet, and V. Meyer, “LiDAR detection of
+individual tree size in tropical forests,” Remote Sens. Environ., vol. 183,
+pp. 318–333, Sep. 2016.
+[44] M. Rahman and B.G.H. Gorte, “Tree crown delineation from high reso-
+lution airborne LiDAR based on densities of high points,” in Proc. ISPRS
+Workshop Laserscanning, 2009, pp. 123–128.
+[45] Y. Wang et al., “International benchmarking of the individual tree detection
+methods for modeling 3-D canopy structure for silviculture and forest
+ecology using airborne laser scanning,” IEEE Trans. Geosci. Remote Sens.,
+vol. 54, no. 9, pp. 5011–5027, Sep. 2016.
+[46] H. K. You, S. H. Li, Y. F. Xu, Z. He, and D. Wang, “Tree extraction from
+airborne laser scanning data in urban areas,” Remote Sens., vol. 13, no. 17,
+Sep. 2021, Art. no. 3428.
+Shihua Li (Senior Member, IEEE) received the B.S.
+and M.S. degrees from Northwest A&F University,
+Yangling, China, in 1998 and 2001, respectively, and
+the Ph.D. degree in cartography and geographic infor-
+mation system from the Institute of Remote Sensing
+Applications, Chinese Academy of Sciences, Beijing,
+China, in 2007.
+From 2001 to 2004, he was a Lecturer with
+South China Agricultural University, Guangzhou,
+China. He is currently a Professor with the Univer-
+sity of Electronic Science and Technology of China,
+Chengdu, China. His research interests include vegetation remote sensing and
+land use and land cover monitoring.
+Shunda Zhao received the B.S. degree in space infor-
+mation and digital technology and the M.S. degree in
+surveying and mapping from the University of Elec-
+tronic and Technology of China, Chengdu, China, in
+2021 and 2024, respectively.
+His research interests include classiﬁcation and
+parameter retrieval in forest scenes using lidar tech-
+nology.
+ZhilinTianreceivedtheB.S.degreeingeographicin-
+formation science from Southwest Petroleum Univer-
+sity, Chengdu, China, in 2020, and the M.S. degree in
+surveying and mapping from the University of Elec-
+tronic Science and Technology of China, Chengdu, in
+2023.
+His research interests include classiﬁcation and
+parameter retrieval in forest scenes using LiDAR
+technology.
+Hao Tang (Student Member, IEEE) is currently
+working toward the B.S. degree in geoinformation
+science and technology from the University of Elec-
+tronic and Technology of China, Chengdu, China.
+His research interests include terrestrial laser scan-
+ning and backpack laser scanning point cloud feature
+extraction.
+Zhonghua Su received the B.S. degree in remote
+sensing science and technology and M.S. degree in
+surveying and mapping from the Chengdu University
+of Information Technology, Chengdu, China, in 2014
+and 2019, respectively, and the Ph.D. degree in in-
+formation and communication engineering from the
+University of Electronic and Technology of China,
+Chengdu, in 2023.
+From2021to2022,shewasavisitingscholarunder
+thesupervisionofProf.Kai-KuangMa(IEEEFellow)
+with Nanyang University of Technology. She is cur-
+rently a Lecturer with the School of Computer and Software Engineering, Xihua
+University,Chengdu,China.Herresearchinterestsincludefeatureextractionand
+3-D reconstruction of LiDAR point cloud data.

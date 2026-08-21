@@ -1,0 +1,1358 @@
+Title: Optimizing aerial imagery collection and processing parameters for drone-based individual
+tree mapping in structurally complex conifer forests
+Authors:
+Derek J. N. Young; Department of Plant Sciences, University of California, Davis;
+djyoung@ucdavis.edu
+Michael J. Koontz; Earth Lab, University of Colorado, Boulder; mikoontz@gmail.com
+JonahMaria Weeks; Department of Environmental Science and Policy, University of California,
+Davis; jsweeks@ucdavis.edu
+Abstract:
+Recent advances in remotely piloted aerial system (“drone”) and imagery processing
+technologies have enabled individual tree mapping in forest stands across broad areas with
+low-cost equipment and minimal ground-based data collection. One such method, “structure
+from motion” (SfM), involves collecting many partially overlapping aerial photos over a focal area
+and using photogrammetric analysis to infer 3D structure and detect individual trees. SfM-based
+forest mapping involves myriad decisions surrounding the selection of methods and parameters
+for imagery acquisition and processing, but no studies have comprehensively and quantitatively
+evaluated the influence of these parameters on the accuracy of the resulting tree maps.
+We collected and processed drone imagery of a moderate-density, structurally complex
+mixed-conifer stand. We tested 22 imagery collection methods (altering flight altitude, camera
+pitch, and image overlap), 12 imagery processing parameterizations, and 286 tree detection
+methods (algorithms and their parameterizations) to create 7,568 tree maps. We compared
+these maps to a 3.23-ha ground-truth map of 1,916 trees > 5 m tall that we created using
+traditional field survey methods.
+We found that the accuracy of individual tree detection (ITD) and the resulting tree maps was
+generally maximized by collecting imagery at high altitude (120 m) with at least 90%
+image-to-image overlap, photogrammetrically processing images into a canopy height model
+(CHM) with a 2-fold upscaling (coarsening) step, and detecting trees from the CHM using a
+variable window filter after first applying a moving-window mean smooth to the CHM. Using this
+combination of methods, we mapped trees with an accuracy that exceeds expectations for our
+structurally complex forest based on other recent results (for overstory trees > 10 m tall,
+sensitivity = 0.69 and precision = 0.90). Remotely-measured tree heights corresponded to
+ground-measured heights with R2 = 0.95. Accuracy was higher for taller trees and lower for
+understory trees, and it is likely to be higher in lower density and less structurally-complex
+stands.
+1
+
+
+Our results may guide others wishing to efficiently produce individual-tree maps of conifer
+forests over broad extents without investing substantial time tailoring imagery acquisition and
+processing parameters. The resulting tree maps create opportunities for addressing previously
+intractable ecological questions and increasing the efficiency of forest management.
+2
+
+
+Introduction
+Forest inventories, and spatial maps of trees in particular, are critical resources for
+developing and testing ecological theories and informing forest management. Analyses of forest
+inventory data have helped refine theories of disturbance and succession (Bazzaz 1975, Molino
+and Sabatier 2001); species turnover and community assembly (Whittaker 1956, Condit et al.
+2002); demographic rates and tradeoffs (Phillips et al. 2004, Stephenson and Mantgem 2005,
+Wright et al. 2010, Russo et al. 2021); drivers of species diversity and the diversity-productivity
+relationship (Phillips et al. 1994, Lasky et al. 2014); and the determinism vs. stochasticity of
+niche partitioning and occupancy (Hubbell et al. 1999). Inventories have informed assessments
+of the sensitivity of forests to climate and weather variation and to pests and pathogens (van
+Mantgem et al. 2009, Lutz et al. 2010, Young et al. 2019, 2020, Sullivan et al. 2020, Koontz et
+al. 2021); allowed detection and prediction of climate change impacts (Bell et al. 2014, Clark et
+al. 2014); and enabled quantification of ecosystem function, ecosystem services, and their
+drivers (Malhi et al. 2004, Gamfeldt et al. 2013). Inventory data have also allowed for
+parameterization and validation of important forest succession and ecosystem models (Pacala
+et al. 1996, Dixon 2002, Koven et al. 2020) that have enabled further theoretical advances and
+serve as essential tools for forest management. Forest managers require maps of stand
+structure (e.g., tree density) and species composition to design and prioritize treatments,
+including stand thinning/harvest, prescribed fire, and post-disturbance reforestation (Ager et al.,
+2021; North et al., 2019).
+Forest inventories and tree maps have traditionally been completed by ground-based
+field crews and require substantial time, labor, and financial investment (Gray et al., 2012;
+USDA Forest Service, 2016); as a consequence, they are limited in the area they can cover. To
+address these constraints, forest mapping approaches have more recently begun to rely on
+remote sensing data to enable creation of continuous forest maps over broad areas. One
+approach to mapping forests remotely, often called the “area-based approach”, involves
+partitioning the study landscape into “virtual plots” (e.g., 30 m grid cells) and using remote
+sensing data (e.g., spectral data from satellite or aerial imagery) to directly estimate forest
+summary statistics, such as tree density, mean tree height, and aboveground biomass, in these
+cells without first detecting individual trees (De Luca et al., 2019; Jayathunga et al., 2018; Puliti
+et al., 2019; Rodman et al., 2019). Because the relationship between remotely sensed data
+(e.g., a pixel’s spectral signature) and forest metrics (e.g., aboveground biomass) can differ from
+one project area to the next, it is necessary to collect ground-truth training data from each
+project area to fit project area-specific models. The area-based approach is also of limited
+effectiveness for estimating structural heterogeneity (e.g., tree size distribution) within each
+virtual plot (Mehtätalo et al., 2015; White et al., 2016) or at scales finer than the resolution of the
+remote sensing data. Because of these and other limitations, much recent effort in remote forest
+mapping has focused on detecting and mapping individual trees.
+Small remotely piloted aerial systems (RPAS, or “drones”) provide data at a scale
+particularly well suited for individual tree detection (ITD). A fundamental technique in
+drone-based forest mapping involves collecting many partially overlapping images in a dense
+grid over the study area (Dandois & Ellis, 2013; Westoby et al., 2012). The images are supplied
+to a photogrammetry algorithm, which employs principles of perspective and triangulation to
+3
+
+
+estimate the 3D structure of the landscape by quantifying the amount by which landscape
+features move relative to each other between images. This method is commonly referred to as
+“structure from motion” (SfM; Dandois & Ellis, 2013; Westoby et al., 2012) because the many
+optical perspectives from the drone as it moves allows modeling of the 3D structure of objects
+and landscapes. The structure data can be represented as a point cloud in which each point
+identifies a surface (e.g., leaf, stem, ground) that appears in multiple photos. The point cloud
+data can be processed into raster-format vegetation canopy height models (CHMs) (Fig. 1).
+SfM-derived point cloud data share many characteristics with aerial light detection and ranging
+(LiDAR) or aerial laser scanning (ALS) data, which can also be used for ITD (Jeronimo et al.,
+2018; Zaforemska et al., 2019). A major difference is that SfM-derived point clouds are usually
+substantially denser and higher resolution (e.g., > 100 points m-2, this study) than LiDAR-derived
+point clouds (often < 8 points m-2; USGS, 2018; Weinstein et al., 2021). Drone-based data is
+also much less costly to obtain and can be collected from specific focal areas with high
+frequency and little advance planning (Camarretta et al., 2020; Mlambo et al., 2017). However,
+relative to SfM data, airborne LiDAR data usually have larger footprints and may better capture
+sub-canopy structure because some laser pulses penetrate the canopy (Jayathunga et al.,
+2018; Lisein et al., 2013).
+Numerous algorithms have been developed to detect individual trees from CHMs,
+usually based on a moving window local maximum search (Popescu & Wynne, 2004), and
+directly from point clouds (Li et al., 2012; Xiao et al., 2019). ITD accuracy varies considerably
+depending on the stand structural characteristics and algorithms used, with higher accuracy in
+lower-density stands and in overstory vs. understory trees. ITD accuracy is arguably best
+summarized using the F-score, the harmonic mean of the sensitivity (proportion of field trees
+detected) and the precision (proportion of detected trees that match field trees) and which
+ranges between 0 (no field trees detected) and 1 (all field trees detected and no false positive
+detections). Recent ITD work using drone-derived SfM products for overstory trees (Creasy et
+al., 2021; Mohan et al., 2017) or for all trees in low- to moderate-density stands (Belmonte et al.,
+2020; Bonnet et al., 2017; Swayze et al., 2021) has obtained F scores ranging roughly between
+0.75 and 0.85, whereas for higher-density stands or understory trees, performance tends to be
+lower (e.g., F < 0.65; Creasy et al., 2021). In a hybrid ITD--area-based approach, Koontz et al.
+(2021) used SfM data to quantify tree density across multiple structurally complex and relatively
+dense (mean tree density > 450 trees ha-1) yellow pine/mixed-conifer stands (Safford & Stevens,
+2017) in the Sierra Nevada of California with R2 = 0.45. The height and canopy extent of
+automatically detected trees can usually be measured from CHM or point cloud data with high
+accuracy (RMSE: 3-7% and R2 > 0.70; Belmonte et al., 2020; Creasy et al., 2021; Silva et al.,
+2016).
+Despite the promise of drone-based tree mapping using SfM, relatively little work has
+quantitatively evaluated the influence of different imagery collection, imagery processing, and
+tree detection methods on the accuracy of the resulting tree maps. Using an oblique (as
+opposed to directly downward, or “nadir”) camera pitch can increase the accuracy of digital
+terrain models derived from drone images in areas with low vegetation cover (Nesbit &
+Hugenholtz, 2019) and in forests can increase the point cloud density in the understory (Díaz et
+al., 2020), but the only published evaluation of camera pitch specifically in the context of
+individual tree detection (ITD) found that tree detection accuracy was greater with a nadir vs.
+4
+
+
+oblique camera pitch (Swayze et al., 2021). No study to date has directly evaluated the potential
+for combining nadir and oblique imagery to improve ITD accuracy. Flight (image collection)
+altitude may additionally affect 3D reconstruction quality, though previous work has found little
+difference in ITD performance among flights conducted between 65 and 115 m above ground
+level (Swayze et al., 2021) and between 50 and 100 m above ground level (Torres-Sánchez et
+al., 2018). Finally, while increased image collection density (i.e., overlap) is associated with
+increased point cloud quality and density (Dandois & Ellis, 2013; Frey et al., 2018; Ni et al.,
+2018), it also increases image dataset size and acquisition and processing times. Increasing
+image overlap can increase ITD accuracy (Swayze et al., 2021), with diminishing returns to
+accuracy at increasingly high overlap (Torres-Sánchez et al., 2018).
+Once imagery is collected, the analyst has numerous choices of parameters to use for
+subsequent photogrammetric processing to generate point clouds and canopy height models,
+including the image resolution to use for the image alignment and point cloud creation and the
+extent to which potential outliers should be filtered from the point cloud. Using full image
+resolution during processing may increase point cloud detail and density (Jayathunga et al.,
+2018; Lisein et al., 2013), but (a) higher resolution data can substantially increase processing
+times, (b) high-resolution images may be difficult to align and compare when they include small
+surfaces like leaves and branches that move or blow in the wind, and (c) the extent to which any
+increase in point cloud detail translates to improved ITD performance is not well known. Only
+one study to our knowledge has evaluated image resolution and point cloud filtering parameters
+in the context of ITD (Tinkham & Swayze, 2021). Using the Metashape v1.6.4 photogrammetry
+software (Agisoft, LLC), it found that retaining maximal image resolution and minimizing outlier
+filtering during point cloud generation yielded the greatest ITD performance. It did not evaluate
+the influence of image resolution during the alignment stage.
+Finally, once photogrammetric products are generated, there are myriad options for ITD
+algorithm selection and parameterization. Several studies have compared the accuracy of
+different ITD algorithms and/or parameterizations applied to SfM-derived canopy height models
+and point clouds. Mohan et al. (2017) tested 4 different parameterizations of a CHM-based fixed
+window filter, combined factorially with 4 different CHM smoothing intensities, for a total of 16
+parameter sets. Creasy et al. (2021) evaluated 97 different parameterizations of a CHM-based
+variable- and fixed- window filtering method (Plowright, 2021). Shin et al. (2018) tested 16
+parameterizations of a point cloud-based ITD algorithm (Li et al., 2012). Koontz et al. (2021)
+tested a total of 177 parameter sets across 7 different CHM- and point cloud-based ITD
+algorithms, identifying a parameterization of a point cloud-based method (Li et al., 2012) as the
+most accurate. While it also included a test of a variable window filtering algorithm (Plowright,
+2021), it tested only 3 parameter sets for this algorithm and thus provides limited opportunity for
+comparison with previous studies that employed this method.
+Quantitative evaluations of SfM-based ITD methods to date have generally evaluated
+only imagery collection parameters, only imagery processing parameters, or only tree detection
+algorithms. However, evaluating the influence of these categories of variables jointly may allow
+detection of consistent effects vs. idiosyncrasies and may reveal important interactions that
+enable meaningful improvements in ITD accuracy and efficiency. In addition, many evaluations
+of ITD methods have been conducted in stands that are structurally relatively simple and of
+relatively low tree density, potentially yielding parameter selection and tree detection
+5
+
+
+performance different than may be expected in higher-density, more structurally-complex
+stands. In the present study, we evaluate multiple factorial combinations of imagery collection
+parameters (flight altitude, camera pitch, and image overlap), imagery processing parameters
+(image resolution for image alignment and for dense cloud generation, and point cloud outlier
+filtering intensity), and tree detection methods (algorithm and parameterization), for a total of
+7,568 combinations, in a moderately dense, structurally complex mixed-conifer stand in the
+Sierra Nevada of California.
+Methods
+Overview
+We created a ground-truth tree map of 1,916 trees > 5 m tall in a 3.23-ha focal area
+using traditional survey methods. We also used automated algorithms to create 7,568 tree maps
+from aerial imagery collected by drone to evaluate the influence of image acquisition and
+processing parameters on aerial tree mapping accuracy. In Stage 1, we identified the
+best-performing photogrammetry processing processing parameters and automated tree
+detection methods. In Stage 2, we applied those methods to identify the best image acquisition
+parameters (e.g., flight altitude, camera pitch, and image overlap) (Table 1).
+Table 1: The combination of photo set parameters, photogrammetry parameters, and tree
+detection methods tested. Within each row, all factorial combinations of the listed photo set
+parameters, photogrammetry parameters, and tree detection methods were tested.
+Comparison stage
+Photo set
+parameters tested
+(Table 2)
+Photogrammetry
+parameters tested
+(Table 3)
+Tree detection
+methods tested
+(Supplemental
+Data S1 and S2)
+Total resulting tree
+maps evaluated
+Stage 1 (Identify
+best
+photogrammetry
+and tree detection
+parameters)
+High nadir 90/90,
+Low nadir 90/90
+Parameter sets 7-18
+VWF methods
+1-228, Point cloud
+methods 1-58
+6,864
+Stage 2 (Identify
+best flight and
+image overlap
+parameters)
+All 22 listed in Table
+2
+Parameter sets 9,
+11, 15, 16
+VWF methods 109,
+110, 113, 120, 121,
+122, 185, 196
+704
+Focal area
+Our study site was a 3.23 ha mixed-conifer forest (Safford & Stevens, 2017) stand in
+Emerald Bay State Park on the shore of Lake Tahoe in the Sierra Nevada of California (Fig. 1a).
+The stand is co-dominated, in decreasing order of abundance, by ponderosa pine (Pinus
+ponderosa), incense cedar (Calocedrus decurrens), Jeffrey pine (Pinus jeffreyi), and white fir
+6
+
+
+(Abies concolor). The stand has high structural complexity, with a continuous size distribution
+and small trees interspersed with larger trees and often underneath their canopies (Fig. 1b).
+A ground-truth stand inventory (see Ground-based tree mapping) revealed that the 3.23-ha
+focal area contained a total of 2135 trees with DBH > 7.5 cm (661 trees ha-1), 1916 trees with
+DBH > 10 cm (593 trees ha-1), 1780 trees with height > 5 m and DBH > 7.5 cm (551 trees ha-1),
+and 1100 trees with height > 10 m and DBH > 7.5 cm (341 trees ha-1). Of all trees with DBH >
+7.5 cm, 292 (14%) were dead (and still standing, but potentially partially broken).
+Ground-based tree mapping
+We developed a 3.23 ha ground-truth tree map against which to evaluate our
+drone-based maps. To construct the map, we established a grid of “primary centerpoints” with
+approximately 25 m spacing across the focal area. From each primary centerpoint, we
+measured the horizontal distance (using a laser rangefinder/hypsometer) and azimuth (using a
+sighting compass) to each nearby tree with diameter at breast height (DBH) > 7.5 cm. We
+marked trees with chalk to avoid recording the same tree from multiple centeroints and to
+ensure a complete survey. If one or more trees were not visible from a primary centerpoint, we
+established a secondary centerpoint, referenced using distance and azimuth from the nearest
+primary centerpoint, from which to measure the additional trees. We measured the height of
+each tree using a laser hypsometer/rangefinder. We recorded the geographic coordinates of
+each primary centerpoint using a 216-channel L1/L2 GNSS receiver (TRIUMPH-2, Javad
+GNSS, Inc.). We then computed the cartesian geographic coordinates (in the California Albers
+projection) of each tree (and secondary centerpoint) based on its distance and azimuth from its
+respective centerpoint using trigonometric functions.
+The primary centerpoint coordinates measured by GNSS included some error due to
+tree canopy cover and normal atmospheric distortion of GNSS signals. To correct for this error,
+we used a preliminary drone-based stem map (see section Individual tree detection (ITD)) as a
+reference and manually shifted the locations of each primary centerpoint (and thus all trees
+measured relative to that centerpoint) to improve the alignment of prominent ground-measured
+trees with their clearly apparent counterparts in the drone-derived map. The intended
+boundaries of the ground-based tree map were unclear in some areas, and some primary
+centerpoints along the edge could not be confidently aligned because there were few prominent
+trees, so we adjusted the boundary of the focal area inward from the originally planned 4-ha
+square to obtain a 3.23-ha focal area within which we were confident that almost all trees with
+DBH > 7.5 cm were accurately mapped.
+7
+
+
+Fig. 1: (a) RGB orthomosaic of the project vicinity, with the 3.23-ha focal area indicated with a
+red outline. (b) The ground-based tree stem map of all trees > 5 m tall constructed as a basis for
+evaluation of drone-derived stem maps, with larger points indicating taller trees. (c) Spatial
+locations of drone photos from two drone photo sets (Table 3) (“high nadir” 95% front and side
+overlap in yellow; and “high nadir” 90% front and side overlap in purple). (d) Canopy height
+model (lighter indicates taller) of a section of the focal area, with ground-mapped trees shown
+as light blue points, drone-mapped trees shown as dark red points, and pairings between
+ground- and drone-mapped trees shown as purple lines. In (d), the canopy height model was
+created by applying photogrammetry parameter set 16 (Table 4) to the “high nadir” photo set
+with 90% front and side overlap (Table 3). The drone-derived stem map was obtained by
+applying tree detection algorithm “vwf_059” (Supplemental data S1) to this same canopy height
+model.
+Imagery collection and pre-processing
+We collected RGB (red, green, blue) aerial photographs using a DJI Phantom 4
+Advanced quadcopter (SZ DJI Technology Co., Ltd.), which has a 1”, 20 megapixel (5472 x
+3648 pixel) CMOS sensor, an 8.8 mm focal length, and an 84° field of view. We planned and
+8
+
+
+executed missions using the MapPilot software (Drones Made Easy) on an iPad Pro 9.3” (Apple
+Inc.) connected to the drone’s remote controller. The missions consisted of multiple parallel
+straight-line transects across the study area (and extending at least 100 m beyond it on all
+sides) (Fig. 1c), with transect spacing and image spacing along transects set to achieve the
+specified percentage of overlap between adjacent images (Table 3). Actual image overlap
+inevitably differs slightly from the specified overlap (e.g., due to occasionally missed photos, a
+normal occurrence with some common DJI drones; Fig. 1c), so we refer to the overlap amount
+as the “nominal overlap,” reflecting what a future user may expect when using these settings
+with a similar aircraft. We collected multiple image datasets using different flight parameters
+(altitude, gimbal pitch, and image overlap) (Table 2). For the missions with 25° camera gimbal
+pitch (i.e., “oblique”, with camera angled 25° up from nadir), we flew two perpendicular sets of
+transects (N-S and E-W) so that a given point on the landscape would be photographed from
+four directions as opposed to only two. For the nadir missions, the transect orientation was
+irrelevant because all images were taken directly top-down and we therefore only flew N-S
+transects.
+All missions used automatic exposure and automatic white balance settings and were
+flown in MapPilot’s “connectionless” mode. We used the “terrain awareness” function so that the
+aircraft remained at a constant altitude above ground level throughout the mission. Images were
+collected between 11 am and 3 pm local time (where solar noon was c. 1:04 pm) on 9-12
+September, 2019. During the flights, winds were light to moderate, visibility was high, and
+conditions were mostly clear with rare small clouds for brief periods.
+Table 2: Parameters for image collection flights.
+Photo set
+(mission) name
+Altitude above
+ground (m)
+Camera gimbal
+pitch
+Transect
+orientation
+Forward
+overlap (%)
+Side overlap
+(%)
+High nadir (14)
+120
+0° (nadir)
+N-S
+95
+95
+Low nadir (15)
+90
+0° (nadir)
+N-S
+95
+95
+High oblique
+(26)
+120
+25° (oblique)
+N-S
+90
+90
+E-W
+90
+90
+Low oblique (27)
+90
+25° (oblique)
+N-S
+90
+90
+E-W
+90
+90
+To test the effect of image overlap on the quality of the resulting tree maps, we subsetted
+the photo sets to effectively reduce image overlap by retaining every nth image on every nth
+transect. For example, for the missions with 0° gimbal pitch and originally 95% front and side
+overlap, we retained every second image on every second transect to achieve a nominal 90%
+front and side overlap, and we retained every 4th image on every 4th transect to achieve a
+nominal 80% front and side overlap (Fig. 1c). We repeated this process to obtain multiple
+factorial combinations of nominal front and side overlaps. This thinning approach follows that
+used by previous studies (Frey et al., 2018; Torres-Sánchez et al., 2018) except that we
+performed side thinning in addition to forward thinning. In thinning the 25° camera pitch
+9
+
+
+missions, we considered each out-and-back segment (e.g., north-facing and subsequent
+south-facing sequence of photos) to be a single “round-trip transect” and selected every 2nd or
+4th round-trip transect. We did this to avoid obtaining a photo set with cameras facing in only a
+single direction (e.g., only N-facing, as would occur when selecting every other transect of a N-S
+transect flight).
+Prior to photogrammetric processing of the image sets, we combined the photos from
+N-S and E-W flights of the same mission (e.g., the 120 m altitude, 25° gimbal pitch mission).
+Combining the photos from two 90%/90% front/side overlap flights (i.e., two transect
+orientations) resulted in a photo set with twice the image density relative to a mission with
+single-orientation transects (i.e., N-S only) with 90%/90% front/side overlap. We consider these
+photo sets to have a nominal 92.5% front and side overlap (equivalent image density as a
+95%/90% front/side overlap mission or a 90%/95% front/side overlap mission, but without
+explicitly different front vs. side overlaps). Similarly, combining the photos from two 80%/80%
+front/side overlap transect orientations resulted in a mission with a nominal 85%/85% front/side
+overlap.
+Finally, we tested whether combining nadir (0°) and oblique (25°) camera pitch missions
+into a single composite photo set yielded improved photogrammetric performance and ultimately
+more accurate tree maps. For each flight elevation (90 m and 120 m), we prepared two
+composite photo sets. First, we combined the 90%/80% front/side overlap nadir photo set with
+the 85%/85% front/side overlap oblique photo set of the same elevation to obtain a nominal
+90%/90% overlap composite photo set (with photo density equivalent to that of a single
+90%/90% overlap mission). Second, we combined the 95%/90% front/side overlap nadir photo
+set with the 92.5%/92.5% oblique photo set to obtain a nominal 95%/95% overlap composite
+photo set (with equivalent photo density as a single 95%/95% overlap mission). The resultant
+photo sets are listed in Table 3.
+Table 3: The photo set (flight and image overlap) parameters tested to evaluate the effect of
+flight altitude, camera pitch, and image overlap on quality of the resulting photogrammetry
+products for tree mapping (Stage 2). The multiple image overlap values were obtained by
+thinning the originally collected image datasets (Table 2). The bolded text indicates the two
+photo sets that were also used in identifying the best Metashape photogrammetry parameter
+sets (Stage 1).
+Photo set group
+Altitude above
+ground (m)
+Camera gimbal
+pitch
+Nominal image overlaps tested
+(front/side) (%)
+High nadir
+120
+0°
+80/80, 90/80, 80/90, 90/90, 95/90, 90/95,
+95/95
+Low nadir
+90
+0°
+80/80, 90/80, 80/90, 90/90, 95/90, 90/95,
+95/95
+High oblique
+120
+25°
+85/85, 92.5/92.5
+Low oblique
+90
+25°
+85/85, 92.5/92.5
+High composite
+120
+0° and 25°
+90/90, 95/95
+10
+
+
+Low composite
+90
+0° and 25°
+90/90, 95/95
+Ground control points
+To minimize horizontal and vertical errors in digital surface models and 3D point clouds
+produced through photogrammetric processing of drone images, it is common practice to use
+ground control points (GCPs) (James & Robson, 2014). Generally, GCPs are targets that are
+placed in the project area and visible in the drone imagery. Their positions are measured using a
+differentially-corrected GPS or surveyor’s total station and used to inform and constrain the
+locations of the images during photogrammetric matching and alignment. To reduce the field
+time required, we did not place GCPs but instead used existing natural features as GCPs. For
+each of the imagery missions (Table 2), we identified 8 to 9 features at ground level (e.g.,
+crossed logs or a prominent corner of a large rock at ground level) that were visible in both the
+drone imagery and in Google Earth imagery. We used the geospatial coordinates of the features
+in the Google Earth imagery as their “true” horizontal locations and extracted their “true”
+elevations from a 10 m USGS digital elevation model (USGS, 2018) using bilinear interpolation.
+We examined Google Earth imagery in QGIS v3.12 using the Google XYZ web tile service. We
+then identified each of these features in 6 to 8 drone photos and recorded their pixel
+coordinates. For this last step, we used only photos from the most heavily thinned version of the
+photo set so that the same images would be present in all of the thinned photo sets derived
+from the mission (since the most thinned set--e.g., 80% front and side overlap--is a subset of
+the less heavily thinned sets--e.g., 90% and 95% overlaps).
+Photogrammetric processing
+We performed photogrammetric structure-from-motion (SfM) processing of the aerial
+image sets (see Introduction) to produce 3D point clouds and digital surface models using
+Metashape version 1.6.5 (Agisoft, LLC). We interfaced with Metashape via its Python API using
+the UC Davis Metashape workflow software version 0.1.0 (Young et al., 2021), which executes a
+full photogrammetry workflow from end to end, using the processing parameters specified in a
+configuration file by the user, with a single command-line call. The workflow reads GCP location
+data from delimited text files prepared in advance (see Ground control points).
+Our first objective was to determine the combination of photogrammetry processing
+parameters that maximized the quality of the photogrammetric products for the purpose of tree
+mapping (Stage 1). We evaluated all factorial combinations of the photo alignment quality
+parameter (low, medium, or high, corresponding to image upscaling factors of 4, 2, or 1,
+respectively), the dense cloud quality parameter (medium or high, corresponding to image
+upscaling factors of 4 or 2, respectively), and the depth filtering intensity parameter (mild or
+moderate). Upscaling factors refer to the amount by which the image resolution was upscaled
+(coarsened) in each dimension; for example, with an upscaling factor of 4, the resulting image
+resolution in x and y dimensions would be ¼ of its original, with each coarse pixel representing
+the average of 16 original pixels (a 4 x 4 square) (Agisoft, 2020). The three-way factorial
+combination of photo alignment quality, dense cloud quality, and depth filtering parameters
+yielded 12 different processing configurations, which we ran on two different aerial photo sets:
+11
+
+
+the 120 m nadir (0° camera pitch) mission with 90% front and side photo overlap, and the 90 m
+nadir mission with 90% front and side photo overlap.
+After identifying four Metashape parameter sets that yielded the best tree detection
+results for these two photo sets (see Individual tree detection and Identification of
+best-performing methods, below), we used each of these four parameter sets to process all of
+the photo sets (Table 3) to enable an evaluation of the effect of of flight altitude, image overlap,
+and camera pitch on tree mapping performance (Stage 2). Processing all 22 photo sets with the
+four Metashape parameter sets resulted in running 88 photogrammetry workflows. All
+processing parameters besides photo alignment quality, dense cloud quality, and depth filtering
+intensity were held constant across all runs. These included 100 maximum neighbors for dense
+cloud reconstruction, adaptive camera model fitting of all camera model parameters, and default
+Metashape Python API values for all other parameters. The workflow included a modified,
+automated version of a sparse point cloud filtering procedure recommended by the USGS
+(2017). Specifically, it involved removing the worst 20th percentile of points by reconstruction
+uncertainty (or all points with reconstruction uncertainty > 15, whichever removed less),
+removing the worst 30th percentile of points by projection accuracy (or all points with projection
+accuracy < 2, whichever removed less), and removing the worst 5th percentile of points by
+reprojection error (or all points with reprojection error > 0.3, whichever removed less). After then
+adding GCPs and optimizing cameras, the filtering procedure called for repeating the filtering
+based on reprojection accuracy using the same thresholds as previously.
+In full, the Metashape workflow had the following steps: add photos, align photos, filter
+sparse cloud points, add GCPs, optimize cameras (using GCPs only), filter sparse cloud points
+again (by reprojection accuracy only), build dense cloud, and build digital surface model. The
+code we used to automate this workflow is published (Young et al., 2021).
+Table 4: Metashape photogrammetry processing parameter combinations tested (Stage 1). The
+image upscaling factor (in parentheses) refers to the factor by which image resolution was
+upscaled (coarsened), in each dimension, prior to processing (photo alignment or dense cloud
+creation). The four parameter sets that yielded the best tree detection results and were
+subsequently used in the evaluations of flight altitude, camera pitch, and overlap (Stage 2) are
+bolded.
+Photogrammetry
+parameter set ID
+Photo alignment quality
+(image upscaling factor)
+Dense cloud quality
+(image upscaling factor)
+Depth filtering intensity
+7
+low (4)
+medium (4)
+mild
+8
+low (4)
+medium (4)
+moderate
+9
+low (4)
+high (2)
+mild
+10
+low (4)
+high (2)
+moderate
+11
+medium (2)
+medium (4)
+mild
+12
+medium (2)
+medium (4)
+moderate
+13
+medium (2)
+high (2)
+mild
+12
+
+
+14
+medium (2)
+high (2)
+moderate
+15
+high (1)
+medium (4)
+mild
+16
+high (1)
+medium (4)
+moderate
+17
+high (1)
+high (2)
+mild
+18
+high (1)
+high (2)
+moderate
+Post-processing of photogrammetry products
+The photogrammetry workflow was configured to produce a digital surface model (DSM),
+a continuous geospatial raster with the value of each cell representing the height (above sea
+level) of the highest surface detected at each x,y grid cell. Metashape’s DSM raster output
+spatial resolution, which is linked to the ground sampling distance of the aerial photos (and
+ultimately to the flight altitude), was 0.066 m for the 120 m flights and 0.046 m for the 90 m
+flights. To process this DSM into a canopy height model (CHM), we used a 10-m resolution
+USGS digital elevation model (DEM) (USGS, 2018), which we interpolated to the resolution of
+the DSM using bilinear interpolation and then subtracted from the DSM (thus “normalizing” the
+DSM by removing the underlying topography, converting the elevations to “height above
+ground”). We then resampled the resulting CHM to a spatial resolution of 0.12 m because (a)
+this allowed us to compare CHMs derived from different flight altitudes (with different resolutions
+initially) and (b) in preliminary testing, this resolution resulted in slightly better tree detection
+performance than the original 0.046 - 0.066 m resolution (data not shown), potentially because it
+smooths over reconstruction artifacts.
+The photogrammetry workflow also produced a 3D point cloud with a point density of
+roughly 100-500 points m-2 (depending on the dense cloud quality setting). This point density
+was far greater than necessary to achieve maximal tree detection performance (data not shown)
+and resulted in unnecessarily large file sizes and processing times for the tree detection
+algorithms. For this reason, and to produce point clouds of similar density regardless of the
+photogrammetry settings, we thinned (“decimated”) the point cloud to a nominal 50 points m-2
+using an algorithm that aims to yield a uniform point density across space. In practice, this
+algorithm reduced point density to between 70 and 100 points m-2. As with the DSM, the
+elevations of points were initially relative to sea level. To normalize the point cloud and convert
+the point elevations to “height above ground”, we used the same USGS DEM, which we
+interpolated to 0.05 m resolution using bilinear interpolation. We then subtracted from each
+point’s elevation the elevation of the DEM grid cell above which the point was located. We
+performed all point cloud post-processing in R version 3.6.3 (R Core Team, 2020) using
+package lidR version 3.0.4 (Roussel, 2021a).
+Individual tree detection (ITD)
+During Stage 1 of methods evaluation (focused on identifying the best Metashape
+photogrammetry parameters and tree detection algorithms), we tested a wide range of tree
+13
+
+
+detection algorithms. We first tested the “variable window filter” (VWF) algorithm of Popesu and
+Wynne (2004) as implemented in the R package ForestTools version 0.2.1 (Plowright, 2021).
+This function uses the CHM raster and evaluates each pixel as a potential tree top by searching
+all pixels within a particular radius around the focal pixel and labeling the focal pixel as a tree
+top if it has the maximum height value with the search radius. The search radius is determined
+by a linear function of the height of the focal pixel. We tested 76 different combinations of the
+intercept and slope parameters of this linear function (Supplemental Data S1). For each of these
+parameter sets, we also tested three different CHM smoothing options. These smoothing
+functions were implemented as moving window algorithms which, for each pixel, computed the
+mean of all pixels in a n x n pixel square centered around the focal pixel and assigned the
+resulting value to the focal pixel. We tested a 5 x 5 pixel window (Smooth: 1), a 9 x 9 pixel
+window (Smooth: 2), and no smooth (Smooth 0). The smooths were applied prior to running the
+VWF algorithm. We included these smoothing options with the thought that they may smooth
+over 3D reconstruction artifacts of the photogrammetry algorithm. Factorially combining the
+three smooth options with each of the 76 variable window filter parameter sets resulted in
+testing 228 implementations of the VWF-based tree detection algorithm (Supplemental Data
+S1).
+We additionally tested six algorithms designed to identify trees directly from 3D point
+clouds, implemented in the R packages lidR v3.0.4 (Roussel, 2021a) and lidRplugins v0.2.0
+(Roussel, 2021b) (Supplemental Data S2). Most of these algorithms accept one or more
+parameters; we tested a variety of parameter combinations, focusing on those that Koontz et al.
+(2021) found to produce the best tree detection results. Two of the algorithms (‘hamraz’ and
+‘layerstacking’; Supplemental Data S2) were not tested by Koontz et al. The ‘hamraz’ algorithm
+requires no parameters and ‘layerstacking’ requires a single binary parameter for “hardwood” or
+“conifer”; we tested both. Additionally, for each point cloud-based algorithm, we tested the effect
+of thinning (“decimating”) the point cloud to 50 or 10 points m-2 prior to running each algorithm.
+The multiple parameter combinations tested across all the point cloud-based tree detection
+methods resulted in a total of 58 methods tested. Combined with the CHM-based VWF
+methods, we tested a total of 286 tree detection methods for each Metashape photogrammetry
+workflow that was run for the Stage 1 comparisons (Table 4). For the Stage 2 comparisons, we
+used four top-performing tree detection methods (see ITD performance evaluation).
+ITD performance evaluation
+We quantified the accuracy of the drone-derived tree maps by comparing each one
+against the 3.23-ha ground-based stem map. An initial coarse filter was applied to eliminate the
+very poor quality drone-derived maps: if the number of drone-mapped trees > 10 m height was
+more than 5 times the number of ground-mapped trees > 10 m height, or it it was less than 1/10
+the number of ground-mapped trees > 10 m height, it was eliminated from the pool of
+candidates.
+For all remaining drone-derived maps, we performed a comparison to the
+ground-derived map on a tree-by-tree basis, determining whether each ground-mapped tree
+was present in the drone-based map (true positives) and whether there were any additional
+trees in the drone-derived map that were not present in the ground-derived map (false
+14
+
+
+positives). This required determining which tree (if any) from the ground-based map
+corresponded to which tree in the drone-based map (and vice-versa), a challenging and
+subjective exercise given that we never expect trees in a ground-based map to perfectly
+coincide with those in a drone-based map. Differences can arise duo to spatial errors in both
+mapping techniques and also due to the fact that the tree top (the point identified in the
+drone-based map) is often not located precisely above the stem (the point identified in the
+ground-based map).
+For a drone-mapped tree to match with a ground-mapped tree, it was required to be
+within a distance (dmax) of the ground-mapped tree defined as a function of the height (h) of the
+ground-mapped tree as
+dmax = 0.1h + 1,
+where units are in meters. Its height was also required to be within ±50% of the height of the
+ground-mapped tree. Thus, for a ground-mapped tree 10 m tall, a drone-mapped tree needed to
+be within 2 m distance and its height needed to be between 5 and 15 m to match. For a
+ground-mapped tree 30 m tall, a drone-mapped tree needed to be within 4 m distance and its
+height between 15 and 45 m. Our distance matching threshold was generally similar to or more
+conservative than that used by previous studies (e.g., < 4 m used by Swayze et al., 2021 and <
+3 m used by Creasy et al., 2021). We used a more liberal height range for tree mapping than
+previous studies (e.g., ±10% used by Creasy et al., 2021 and ±2 m used by Swayze et al.,
+2021) because (a) we wanted to avoid artificially reducing the estimated error in drone-based
+tree height measurement (as error estimation relies on comparing heights of drone-detected
+trees vs. paired ground-mapped trees) and (b) error in drone- vs. ground-mapped height
+substantially less than the matching threshold would provide confidence that trees were
+matched appropriately.
+For each ground tree, the nearest matching drone tree was assigned as its match. If the
+same drone tree was assigned to multiple ground trees, it was removed from all of the ground
+trees except the one spatially closest to it. This procedure was repeated two more times, each
+time for the ground and drone trees remaining (unmatched) following the previous iteration.
+After the third iteration, no further matches were possible.
+To quantify individual-tree detection (ITD) accuracy, we computed the true-positive rate
+(“sensitivity” or “recall”, the proportion of ground-mapped trees that had a matching
+drone-mapped tree) and the precision (the proportion of drone-mapped trees that matched a
+ground-mapped tree). Because it is possible for a tree detection algorithm to achieve high
+sensitivity at the expense of precision (and vice-versa), we also computed the F score, a
+statistic that integrates sensitivity and precision by computing their harmonic mean, thus
+disproportionately penalizing low values and favoring balanced sensitivity and precision. We
+computed sensitivity, precision, and F score two different tree size groups: trees ≥ 10 m height,
+and trees ≥ 20 m height.
+There is potential for edge effects to confound the tree detection accuracy inferred via
+tree matching. If a ground-mapped tree were just inside the analysis boundary and the
+corresponding drone-mapped tree just outside it, the ground-mapped tree would be considered
+to not have a match (and thus constitute a false-negative detection). To minimize this effect,
+when calculating the proportion of drone-mapped trees that matched ground-mapped trees, we
+considered only drone-mapped trees that were at least 5 m inside the project boundary (so that
+15
+
+
+they all had an opportunity to be matched with ground-mapped trees in any direction). We did
+the same with ground-mapped trees when calculating the proportion of ground-mapped trees
+that matched drone-mapped trees.
+While it is valuable to know the proportion of all ground-truth trees that can be detected
+from aerial imagery, it is unrealistic to expect all trees to be detected, particularly in structurally
+complex stands like ours where small trees may be hidden under large trees or two immediately
+adjacent trees of similar size appear as one. Therefore, in addition to evaluating ITD
+performance across all trees, we evaluated performance in mapping “dominant” trees that did
+not have any immediately adjacent taller neighbors. We defined a ground-mapped tree as
+“dominant” if there was not a taller tree within a distance dmax, defined as a function of the
+difference in height between the two trees Δh as
+dmax = 0.1 * Δh + 1,
+where units are in meters (Fig. S1). Thus, for example, a 20 m tall focal tree with a 30 m tall
+neighbor would be considered “dominant” if the neighbor were at least 2 m away. We consider
+this to be a conservative representation of the distance necessary for two trees to be distinct in
+aerial imagery (i.e., in many cases, a shorter tree more than dmax meters away from its neighbors
+may still be obscured). For each drone-based tree map, we computed an additional set of ITD
+accuracy metrics assuming the only trees present in the ground-based map were “dominant”
+trees. This second set of metrics provides an assessment of the accuracy of the drone-based
+methods for mapping trees that are potentially aerially differentiable. Given the challenges of
+detecting trees hidden under the canopies of other trees, some ITD approaches have focused
+on mapping “tree-approximate objects” (TAOs; e.g., a tall tree with several shorter trees under it;
+Jeronimo et al., 2018), and our classification of “dominant” trees may approximate classification
+of TAOs.
+Identification of best-performing methods
+To identify the best performing photogrammetry and tree-detection parameter sets
+(Stage 1), we first determined, for each factorial combination of photo set (High nadir 90/90,
+Low nadir 90/90; Table 3), photogrammetry parameter set (1-12; Table 4), tree height class (>
+10 m or > 20 m), and tree position class (all trees or dominant trees only), the tree detection
+algorithm that yielded the greatest F score. Using only those tree detection algorithms, we
+identified the photogrammetry parameter sets that most consistently yielded the highest, or
+near-highest, F scores across all factorial combinations of flight altitude, tree height class, and
+tree position class (Supplemental data S3). We selected four photogrammetry parameter sets.
+Using only those four sets, we then selected the tree detection parameter sets that most
+consistently yielded the highest, or near-highest, F scores across different factorial combinations
+of photogrammetry parameter set, flight altitude, tree height class, and tree position class
+(Supplemental data S4). We selected 8 tree detection parameter sets.
+To quantify the influence of flight altitude, image overlap, and camera pitch on ITD
+performance (Stage 2), we used the four best-performing photogrammetry parameter sets,
+combined factorially with the eight best-performing tree detection methods, to produce 32 tree
+maps from each of the 22 different photo sets (Table 3). When plotting or describing tree
+16
+
+
+detection performance achieved with any of these photo sets, we report the F score obtained
+from the tree detection method that produced the maximum F score for that photoset.
+Evaluation of drone-based tree height measurement
+To evaluate the potential to measure tree heights using drone imagery, we extracted tree
+heights from the canopy height model produced by using photogrammetry parameter set 16 on
+the high (120 m) nadir photo set with 90% front and side image overlap. We extracted the height
+value from the CHM pixel beneath each detected tree. We then compared these extracted
+heights to the ground-measured heights of the ground-truth trees to which the drone-detected
+trees were paired (see ITD performance evaluation). Ground-truth trees that were not paired
+with drone-detected trees, and vice versa, were not included in the comparison.
+Results
+Stage 1: Optimal photogrammetry and tree detection parameters
+Photogrammetry parameter combination 16 (medium alignment quality, high dense cloud
+quality, moderate depth filtering) consistently enabled the most accurate tree detection
+performance as quantified by F score (Fig. 2 and Supplemental Data S3), though the
+differences among parameter combinations were relatively small (ΔF < 0.04). Medium alignment
+quality and high dense cloud quality both involve upscaling (coarsening) the image by a factor of
+2 in both dimensions prior to running the algorithm. Parameter set 16 achieved the highest (or
+within 0.005 of the highest) F scores across all factorial combinations of flight altitude (90 m or
+120 m), tree position (all trees or dominant trees), and tree height class (> 10 m or > 20 m).
+Therefore, for further evaluation, we focused on parameter set 16, along with parameter sets 9,
+11, and 15, which were among the best-performing parameter sets for multiple combinations of
+tree height, tree position, and flight altitude (Supplemental Data S5). We thus selected a total of
+four photogrammetry parameter sets for further evaluation.
+The most accurate tree detection methods, as quantified by F score, were all
+CHM-based VWF methods (Supplemental Data S4). This was true across all factorial
+combinations of flight altitude (90 m or 120 m), tree height class (> 10 m or > 20 m), tree
+position (all trees or dominant trees), and photogrammetry parameters (sets 9, 11, 15, and 16).
+Across all of these combinations, methods vwf_121 and vwf_196 most consistently achieved
+the highest (or within 0.005 of the highest) F scores for tree detection accuracy (Supplemental
+Data S4). Therefore, for further evaluation, we focused on these methods, along with six other
+consistently top-performing methods, vwf_109, vwf_110, vwf_113, vwf_120, vwf_122, vwf_185,
+for a total of 8 tree detection methods.
+For a given scenario (e.g., flight altitude, tree position, tree height, camera pitch, and
+photo overlap), the F score achieved by the combination of photogrammetry parameter set 16
+and tree detection method vwf_196 was generally within 0.01 of the maximum F score achieved
+by the optimal combination of photogrammetry parameter set (out of the four best-performing
+options) and tree detection method (out of the eight best-performing options) (e.g., Table 5). The
+17
+
+
+difference in F score was less than 0.01 in approximately 80% of scenarios, particularly those
+with at least 90% front and side photo overlap and nadir images (Supplemental Data S5). In
+photo sets with less overlap and/or oblique images, other photogrammetry and tree detection
+parameters often performed better (F score difference > 0.01), but for these scenarios, even the
+optimal photogrammetry and tree detection parameter combinations yielded inferior tree
+mapping performance relative to higher overlap and/or nadir imagery (see next section).
+For nadir photo sets with at least 90% front and side overlap, the optimal combination of
+photogrammetry and tree detection parameters achieved tree mapping accuracy ranging
+between F =  0.67 and F = 0.87 (Supplemental Data S5). For example, for dominant trees > 10
+m tall, the optimal methods (photogrammetry parameter set 16 paired with tree detection
+method vwf_196) achieved an F score of 0.78, with a sensitivity of 0.69 and a precision of 0.90
+(Table 5). Generally, precision was greater than sensitivity (Table 5 and Supplemental Data S5).
+Table 5: Tree mapping accuracy achieved with the optimal combination of photogrammetry
+parameter set and tree detection method (Category 1) or with the specific combination of
+photogrammetry parameter set 16 and tree detection method vwf_196 (Category 2) for each
+factorial combination of tree position (dominant or all) and tree height class (> 20 m or > 10 m).
+All scenarios use the high (120 m altitude) nadir photo set with 90% front and side overlap. For
+two scenarios (dominant trees > 10 m and all trees > 20 m), the combination of photogrammetry
+parameter set 16 and tree detection method vwf_196 is the optimal combination. For accuracy
+metrics for different flight altitudes, camera pitches, and photo overlaps, see Supplemental Data
+S5.
+Category 1: Photogrammetry and tree detection parameter
+sets yielding maximum F
+Category 2: Photogrammetry
+parameter set 16 and tree detection
+method
+vwf_196
+Canopy
+position
+Tree
+height
+Photogra
+mmetry
+parameter
+set
+Tree
+detection
+method
+F score
+Sensitivity
+Precision
+F score
+Sensitivity
+Precision
+dominant
+> 20 m
+11
+vwf_122
+0.865
+0.838
+0.894
+0.864
+0.841
+0.887
+dominant
+> 10 m
+16
+vwf_196
+0.783
+0.691
+0.903
+0.783
+0.691
+0.903
+all
+> 20 m
+16
+vwf_196
+0.826
+0.756
+0.909
+0.826
+0.756
+0.909
+all
+> 10 m
+15
+vwf_121
+0.672
+0.571
+0.814
+0.665
+0.519
+0.924
+18
+
+
+Fig. 2: Individual tree detection performance of different photogrammetry parameter
+combinations at two flight altitudes, for all trees (a, b) and dominant trees (c,d) with height > 10
+m (a, c) or height > 20 m (b, d). The number in each cell indicates the ID of the tree detection
+method (Supplemental Data S1-S2) that yielded the maximum F score for the particular
+combination of parameters; 3-digit numbers refer to VWF methods, while 4-digit numbers refer
+to point cloud-based methods. The F score itself is indicated by the color. The aerial photo sets
+processed were the high nadir (Alt: 120 m) set and the low nadir (Alt: 90 m) set (both with 90%
+front and side image overlap) (bolded entries in Table 3).
+Stage 2: Optimal image collection parameters
+Tree mapping accuracy tended to increase with increasing image overlap, to a point:
+once overlap reached 90%/80% (front/side), additional increase in overlap (to 90%/90% or
+greater) yielded little increase in accuracy (Fig. 3). At 90%/90% overlap, both 120 m and 90 m
+nadir flights yielded F scores of about 0.78 for dominant trees > 10 m tall and about 0.86 for
+dominant trees > 20 m tall (Table 5). Among nadir image sets, higher-altitude (120 m) sets
+tended to yield greater accuracy than lower-altitude sets when image overlaps were lower
+(below 90%/90%) and similar accuracy when overlaps were greater (90%/90% and greater)
+(Fig. 3). Interestingly, even though the 90%/80% and 80%/90% overlap image sets contained
+roughly the same image density, the former consistently enabled substantially greater tree
+mapping accuracy, for both 120 m and 90 m flights (Fig. 3).
+19
+
+
+Nadir imagery tended to achieve accuracy greater than or comparable to that of oblique
+or nadir-oblique composite imagery. The 120 m composite camera pitch image set performed as
+well as (at 95% front and side overlap) or substantially better than (at 90% front and side
+overlap) the 90 m composite pitch image set. For a similar image density (i.e., number of
+images), a 120 m nadir flight (at, e.g., 90%/80% overlap) yielded similar accuracy as the oblique
+flights (at, e.g., 85%/85% nominal overlap).
+All of the results discussed thus far in this section assume that a given image set is
+processed using the photogrammetry and tree detection parameters that yield the greatest
+accuracy for that set. When using a single top-performing photogrammetry parameter set (16)
+combined with a single top-performing tree detection method (vwf_196), the patterns remain
+qualitatively very similar, with generally only very small shifts in tree detection accuracy (Fig.
+S2).
+Fig. 3: Individual tree detection F score for different flight altitude, camera pitch, and image
+overlap combinations. For each combination, 8 top-performing tree detection methods were
+combined factorially with 4 top-performing photogrammetry processing parameter sets (see
+Table 1: Stage 2), and the F score depicted is the maximum across these 32 factorial
+combinations. For a version of this figure that uses only the single consistently best-performing
+tree detection method (vwf_196) combined with the best-performing photogrammetry parameter
+set (16), see Fig. S2.
+Tree height measurement
+20
+
+
+Tree height measurement was generally highly accurate, with drone-measured and
+ground-measured tree heights corresponding with R2 = 0.95, a mean bias of -0.86 m (with
+drone-derived heights generally shorter than their ground-truth counterparts), and a mean
+absolute error of 1.82 m (Fig. 4). The mean absolute error as a percentage of each tree’s height
+was 9% and the mean bias was -3%.
+Fig. 4: Drone-based tree height measurements (height value of the CHM at each treetop
+location) relative to ground-truth tree heights for the most consistently best-performing tree
+detection method (vwf_196) applied to the CHM produced using the most consistently
+best-performing photogrammetry parameter combination (16) on the high (120 m) nadir 90%
+front and side overlap photo set.
+Discussion
+Imagery acquisition and processing
+Our work helps to identify top-performing approaches to imagery collection and
+processing for SfM-based forest mapping in structurally complex conifer forests. Several clear
+and consistent results can help forest scientists and managers efficiently produce high-quality
+forest maps. First, a high (120 m) flight altitude consistently yielded tree maps with accuracy
+better than or effectively equivalent to those obtained from lower (90 m) flights (Fig. 3),
+consistent with previous observations that flight altitude has minimal impact (Swayze et al.,
+2021; Torres-Sánchez et al., 2018). Even in contexts where stem map quality is insensitive to
+flight altitude (in our case, when image overlap is 90% or greater), 120 m flights will likely be
+preferred given that they require fewer images to cover a landscape (as each image
+encompasses more ground area) and therefore less flight time.
+21
+
+
+Similarly, our work reveals little if any gain in ITD accuracy by increasing image overlap
+above 90% (front and side) (Fig. 3), consistent with previous results showing decreasing
+marginal returns to ITD accuracy with increasingly high overlap (Torres-Sánchez et al., 2018). In
+fact, given that increasing image overlap can substantially increase flight time (e.g., increasing
+side overlap from 90% to 95% doubles the number of transects, thus doubling flight time), flights
+with overlap > 90% may be undesirable. Reducing side overlap to 80% (while keeping front
+overlap at 90%) resulted in only minimal change in ITD accuracy. Therefore, given flight time
+constraints or the need to cover extensive area, 90%/80% front/side overlap may be preferable.
+Surprisingly, photo sets with 90%/80% front/side overlap consistently yielded ITD accuracy
+substantially greater than that from sets with 80%/90% front/side overlap (Fig. 3), despite the
+fact that the image density of these two sets is nominally identical. We speculate that high front
+overlap is more important for photogrammetry quality due to the aspect ratio of the photos (3:2
+width:height). It may be more difficult for the photogrammetry algorithm to match and align
+photos along their short axis because that axis on average has fewer features (“keypoints”) to
+match; therefore, increasing the number of times a given feature appears along that axis by
+increasing the forward overlap may be disproportionately beneficial. Relatedly, optimal overlap
+may depend on image resolution (Ni et al., 2018), a relationship not tested in the present study.
+We note that our approach to testing the effect of image overlap was somewhat artificial:
+rather than flying different missions with different overlaps, we flew a high-overlap (95% front
+and side) mission and progressively thinned the photos from it to produce the lower-overlap
+photo sets (sensu Frey et al., 2018; Ni et al., 2018; Torres-Sánchez et al., 2018). Because the
+flight speed of imaging drones performing SfM missions is generally limited by the speed of
+saving image files to the storage medium, our lower-overlap photo sets were collected with a
+slower flight speed than would likely be used for a mission designed to yield a lower overlap.
+This may mean that motion blur (the amount of ground distance passing during the time the
+shutter is open) may be artificially low for our photo sets. However, we expect this is unlikely to
+affect our inferences given that (a) motion blur of missions conducted at 90% overlap under the
+same lighting conditions do not exceed the camera’s ground sampling distance using automatic
+exposure settings (data not shown), (b) there was substantial room to increase shutter speed
+(and increase aperture to compensate) beyond the settings selected by the automatic exposure
+algorithm, and therefore future missions flown at a high speed could achieve lower motion blur
+with a similarly exposed photo, and (c) the optimal photogrammetry parameters involved
+upscaling (coarsening) the images by a factor of 2 in both dimensions, so even motion blur
+exceeding a single pixel’s ground sampling distance (but not exceeding two pixels’ ground
+sampling distance) should not affect photogrammetric processing.
+Our tests of camera pitch revealed that oblique (25°) and oblique-nadir composite
+imagery, regardless of flight altitude, yielded ITD accuracy worse than nadir imagery collected at
+120 m. This finding is surprising because oblique imagery is known to yield more accurate
+terrain models (Nesbit & Hugenholtz, 2019) and increase understory point cloud density (Díaz et
+al., 2020), but it corroborates existing evidence that for ITD specifically, greater accuracy is
+achieved with nadir imagery (Swayze et al., 2021). Although the improved understory imaging
+that is achieved by using oblique imagery can improve estimates of tree DBH (by enabling more
+accurate 3D modeling of tree stems; Swayze et al., 2021), it apparently does not improve the
+potential for detection of understory trees. This limitation to improvement may be explained by
+22
+
+
+the fact that all CHM-based tree detection algorithms and many point cloud-based tree detection
+algorithms (e.g., Li et al., 2012) are not designed to detect one tree beneath another, so
+improved imaging of the understory cannot translate to improved tree detection. Improvements
+multi-layer tree detection algorithms (e.g., Torresan et al., 2020; Xiao et al., 2019), and
+implementations of them in common point cloud processing platforms (e.g., the R package lidR;
+Roussel, 2021a), may make understory imaging (and thus oblique camera angles) more
+valuable for ITD in the future.
+We expect our results are applicable to many widely used, relatively low cost drones with
+camera resolution and field of view similar to ours. In fact, given that all image processing steps
+utilize images that have been upscaled (coarsened) 2-fold in both dimensions (thus converting a
+20 megapixel image to 5 megapixels), the same dataset could in theory be generated with a 5
+megapixel camera by eliminating the upscaling step. Similarly, imagery from a higher-resolution
+camera could be used optimally by increasing the upscaling factor. While this may represent a
+waste of data, the coarser scale may actually achieve greater mapping accuracy given that tree
+canopies largely consist of small surfaces (e.g., leaves, branches) that are susceptible to
+moving in the wind and thus confounding the image-matching algorithms at the heart of
+photogrammetry software.
+Tree detection algorithms
+Despite testing 6 point cloud-based ITD algorithms (and 58 different parameterizations of
+them), focusing on the algorithms and parameterizations that yielded the best performance for
+Koontz et al. (2021), the CHM-based VWF algorithm consistently performed the best
+(Supplemental Data S4). While variations of the VWF method have performed well for other
+SfM-based ITD work (Creasy et al., 2021; Mohan et al., 2017; Swayze et al., 2021), the method
+was not a top performer in the comparison performed by Koontz et al. (2021). The disagreement
+on top-performing algorithm may be explained by several differences in methodology. First, we
+tested 228 parameterizations of the VWF method (or 76 if the 3 initial CHM smoothing
+alternatives are not considered parameterizations), whereas Koontz et al. (2021) tested 3,
+limiting the likelihood that one would be a top-performing method. Second, before performing
+tree detection, we first smoothed the CHM using a moving-window mean with a 5x5 or 9x9 pixel
+window, whereas Koontz et al. (2021) used a 3x3 window. Finally, the photogrammetry
+algorithm used by Koontz et al. (2021), implemented using Pix4Dmapper Cloud (Pix4D SA),
+appeared to yield digital surface models, and thus CHMs, that capture more fine-scale
+heterogeneity in the canopies of individual trees (datasets accompanying Koontz et al., 2021),
+potentially confounding the VWF algorithm, particularly given the CHMs were smoothed with a
+relatively small moving window.
+Despite the strong performance of CHM-based ITD algorithms in our analysis,
+CHM-based methods have the inherent limitation that a CHM, which takes the form of a 2D
+raster, cannot capture multiple strata of trees (i.e., one tree under another) even if they were
+detected by the sensor and represented as distinct point clouds by the photogrammetry
+algorithm; a CHM only provides the elevation of the tallest surface at each x,y location.
+Multi-stratum tree mapping will thus rely on applying ITD algorithms to point clouds, polygonal
+23
+
+
+models, or other representations of 3D structure. Improvements to current point cloud-based
+algorithms that can detect multiple strata (e.g., Torresan et al., 2020; Xiao et al., 2019) should
+enable improved mapping of understory trees, and with accurate multi-stratum ITD algorithms,
+oblique imagery may become more important (see Discussion section Imagery acquisition).
+As with other SfM-based work (e.g., Creasy et al., 2021; Tinkham & Swayze, 2021) and
+LiDAR-based work (Ferraz et al., 2012; Jeronimo et al., 2018), we observed substantially
+improved ITD performance for taller trees and canopy-dominant trees (e.g., F = 0.78 for
+canopy-dominant trees > 10 m height vs. F = 0.67 for all trees > 10 m height). This pattern
+makes sense considering structure can only be mapped for surfaces that are detected by the
+sensor (which are disproportionately the top-of-canopy objects, especially for SfM; (Jayathunga
+et al., 2018; Lisein et al., 2013). Even when using LiDAR, which usually can penetrate the
+canopy to some extent, understory and mid-story detail, and thus potential to detect trees there,
+is limited (Richardson & Moskal, 2011) and has led some to re-focus detection and mapping of
+individual trees (ITD) toward detection and mapping of tree-approximate objects (TAOs), which
+can include single trees and clusters of trees that are not differentiable (Jeronimo et al., 2018;
+North et al., 2017). Maps of the size and arrangement of TAOs may be valuable for some
+management applications (Jeronimo et al., 2018; North et al., 2017), and important ecological
+questions can be addressed using maps of the specific trees visible from above (Brandt et al.,
+2020; Weinstein et al., 2021) or detectable using SfM that is not canopy-penetrating (Koontz et
+al., 2021). Our calculation of ITD accuracy metrics specifically for “overstory” trees helps to
+provide a sense of TAO mapping accuracy. Given we used a conservative set of parameters for
+classifying a tree as “canopy dominant” (Fig. S1), our accuracy metrics may be underestimates.
+Notably, our ITD precision values were consistently higher than the sensitivity values,
+especially for all trees (as opposed to canopy-dominant trees) (Table 5 and Supplemental Data
+S5), indicating that the ITD algorithm failed to detect some trees at the expense of minimizing
+false-positives. This suggests that there is some potential to select an ITD parameterization with
+greater tree detection sensitivity. This may increase the false-positive rate (resulting in an overall
+lower F score), but future work may incorporate an additional “detected tree screening” stage
+that uses information besides the CHM or point cloud to identify and reject false positives. For
+example, Bonnet et al. (2017) used a machine learning approach to predict tree detections as
+true or false positives based on the textural and spectral characteristics of the detected objects
+and thereby reduced the false-positive rate from 75-82% to 3-8%. Incorporating both structural
+and spectral data (e.g., taking advantage of the fact that points in SfM-derived point clouds, in
+contrast to LiDAR-derived clouds, can be assigned spectral values) in tree detection algorithms
+may improve tree detection sensitivity (Yancho et al., 2019).
+Tree height measurement and matching of ground and drone trees
+The canopy height model resulting from the optimal photogrammetry parameter set
+provided a relatively accurate representation of tree heights (Fig. 4). The small negative height
+bias (CHM heights < field-measured heights) generally increased with increasing tree height,
+suggesting either (a) disproportionate overestimation of tall tree heights during ground surveys
+or (b) disproportionate underestimation of tall tree heights by the photogrammetry algorithm.
+Given that CHM generation involves some degree of interpolation and smoothing of the point
+24
+
+
+cloud, it may make sense that objects that are disproportionately tall relative to their
+surroundings are underestimated by the CHM. Nonetheless, the mean absolute height error
+was relatively small (1.8 m or 9% of tree height). Further, given that our algorithm for matching
+SfM-detected trees with ground-measured trees required the SfM tree to be within ± 50% of the
+height of the ground tree, the fact that the mean height difference was only 9% strongly
+suggests that trees were generally matched correctly. Our SfM-based tree height measurement
+accuracy was generally comparable to or better than other SfM-based approaches, which have
+obtained R2 = 0.71 (Belmonte et al., 2020), RMSE = 9-15% (Creasy et al., 2021), RMSE = 24%
+(Tinkham & Swayze, 2021), and R2 = 0.99 and RMSE = 18% (Swayze et al., 2021).
+Integrative assessment and conclusions
+Potentially due to the comprehensive evaluation of numerous SfM imagery collection,
+imagery processing, and tree detection methods, the ITD performance we achieved meets or
+exceeds expectations based on previous work. With relatively high image overlap (> 90% front
+and side), Swayze et al. (2021) obtained a maximum F score of 0.77 for all trees, and Tinkham
+and Swayze (2021) obtained a maximum F score of 0.72 for overstory trees. The work by
+Tinkham and Swayze (2021) and Swayze et al. (2021) was conducted in a relatively low-density
+forest (trees > 5 m height: 374 ha-1 relative to our 551 ha-1) with low structural complexity
+(generally two distinct size classes that are spatially clustered rather than interspersed with
+layered strata) and a single dominant conifer species, so the F scores we obtained (0.67-0.86
+depending on canopy position and height; Table 5) suggest strong performance. The ITD
+performance we achieved appears improved relative to that observed by Koontz et al. (2021) in
+Sierra Nevada forests of similar or lower density, where RMSE of tree count ranged between
+46% and 75% of ground-mapped tree count. Our understory (F score: 0.67) and overstory (F
+score: 0.78-0.87) ITD accuracy was also greater than that obtained by Creasy et al. (2021) (F
+score: 0.51-0.57 for understory and intermediate trees and F score: 0.75 for overstory trees).
+The stands studied by Creasy et al. (2021) had much greater reported density (1379-1537 trees
+ha-1 for trees > 6-8 m height), though these reported density values may be misreported given
+the forest type (nearly monodominant ponderosa pine) and given that a different study at one of
+the same sites (Swayze et al. 2021) reported density of trees > 5 m height to be 374 trees ha-1.
+In an Arizona ponderosa pine forest, Belmonte et al. (2020) detected trees in low-density stands
+(mean density: 59 trees ha-1) with F = 0.94, in moderate-density stands (mean density: 139
+trees ha-1) with F = 0.8, and in high-density stands (mean density: 778 trees ha-1) with F = 0.44.
+Given the potential for LiDAR data to enable better understory modeling, one may ask
+whether ITD performance would be improved by using LiDAR data relative to SfM applied to
+aerial images. ITD methods applied to airborne LiDAR data  (e.g., Ferraz et al., 2012; Jeronimo
+et al., 2018; Silva et al., 2016; Zaforemska et al., 2019) show a wide range of accuracies, likely
+due to variation in LiDAR point density, stand density, and tree detection method, making
+comparison among methods difficult. Applying ITD to LiDAR data with mean point density of
+9-12 pulses m-2 acquired from mixed-conifer stands in the central Sierra Nevada with tree
+density averaging 391 trees ha-1, Jeronimo et al. (2018) obtained an ITD F score of 0.50 for
+trees with DBH > 25 cm. Higher LiDAR point density, such as that sometimes associated with
+25
+
+
+drone-based LiDAR acquisitions, can enable much more accurate ITD (Zaforemska et al.,
+2019), though the associated costs may be prohibitive in many contexts.
+The majority of SfM-based ITD work to date has been conducted in relatively low density
+monodominant stands with low structural complexity. Our work demonstrates that SfM-based
+ITD can also be a practical approach to tree mapping in denser, more structurally complex
+stands, especially if the focus is on canopy-dominant trees or TAOs. To evaluate the extent to
+which the ITD accuracy and optimal parameter sets we identified may extend to other forest
+stands, perhaps the most important considerations are stand density and structural complexity
+(Jeronimo et al., 2018). In forests with lower tree density and limited multi-stratum structure,
+such as many ponderosa pine-dominated forests of the southwestern U.S. (e.g., Swayze et al.
+2021), we might expect higher accuracy than we achieved; we might expect the reverse for
+denser or more structurally complex stands. Historical densities of trees > 10 cm DBH in the
+yellow pine and mixed-conifer forests of California’s Sierra Nevada averaged roughly 195 trees
+ha-1 (Safford & Stevens, 2017; Young et al., 2020), relative to the 593 trees ha-1 in our
+mixed-conifer stand. With contemporary stands roughly 2-4-fold denser than historically (Safford
+& Stevens, 2017) (therefore, roughly 400-800 trees ha-1), our focal stand may be roughly
+reflective of mean contemporary California mixed-conifer forest structure and thus of expected
+ITD performance. In denser stands with strong multi-stratum structure, the use of oblique
+images, coupled with a point-cloud based ITD algorithm, will likely become more important for
+capturing understory trees (see Discussion section Imagery acquisition). With additional
+refinements (e.g., use of a more sensitive tree detection algorithm with a false-positive filtering
+step, improvement of point cloud-based multi-layer tree detection algorithms, and application of
+deep learning computer vision to tree detection; Weinstein, weinstein), the accuracy and
+applicability of drone-based forest mapping will continue to improve.
+Acknowledgments
+Our Emerald Point study site is located in the territory of the Washoe people. We thank
+data technicians H. de la Calle and S. Sundaram for their careful organization of the drone
+imagery, identification of ground control points, and preparation of the ground-truth stem map
+data. We thank A. Barker and R. Cuevas for assisting with ground-truth stem map data
+collection and D. Shaw for facilitating field logistics. We thank A. Latimer for assistance
+acquiring drone equipment and computing resources. We thank A. Mandel and other
+contributors to the reproducible photogrammetry workflow software library we used.
+26
+
+
+Literature cited
+Ager, A. A., Day, M. A., Waltz, A., Nigrelli, M., Volger, K. C., & Lata, M. (2021). Balancing
+ecological and economic objectives in restoration of fire-adapted forests: Case study
+from the Four Forest Restoration Initiative. Gen. Tech. Rep. RMRS-GTR-424. Fort
+Collins, CO: U.S. Department of Agriculture, Forest Service, Rocky Mountain Research
+Station. 30 p. Https://Doi.Org/10.2737/RMRS-GTR-424., 424.
+https://doi.org/10.2737/RMRS-GTR-424
+Agisoft. (2020). Metashape v1.6 downscale parameter.
+https://www.agisoft.com/forum/index.php?topic=11697.0
+Belmonte, A., Sankey, T., Biederman, J. A., Bradford, J., Goetz, S. J., Kolb, T., & Woolley, T.
+(2020). UAV-derived estimates of forest structure to inform ponderosa pine forest
+restoration. Remote Sensing in Ecology and Conservation, 6(2), 181–197.
+https://doi.org/10.1002/rse2.137
+Bonnet, S., Lisein, J., & Lejeune, P. (2017). Comparison of UAS photogrammetric products for
+tree detection and characterization of coniferous stands. International Journal of Remote
+Sensing, 38(19), 5310–5337. https://doi.org/10.1080/01431161.2017.1338839
+Brandt, M., Tucker, C. J., Kariryaa, A., Rasmussen, K., Abel, C., Small, J., Chave, J.,
+Rasmussen, L. V., Hiernaux, P., Diouf, A. A., Kergoat, L., Mertz, O., Igel, C., Gieseke, F.,
+Schöning, J., Li, S., Melocik, K., Meyer, J., Sinno, S., … Fensholt, R. (2020). An
+unexpectedly large count of trees in the West African Sahara and Sahel. Nature, 1–5.
+https://doi.org/10.1038/s41586-020-2824-5
+Camarretta, N., Harrison, P. A., Bailey, T., Potts, B., Lucieer, A., Davidson, N., & Hunt, M.
+(2020). Monitoring forest structure to guide adaptive management of forest restoration: A
+review of remote sensing approaches. New Forests, 51(4), 573–596.
+https://doi.org/10.1007/s11056-019-09754-5
+Creasy, M. B., Tinkham, W. T., Hoffman, C. M., & Vogeler, J. C. (2021). Potential for Individual
+Tree Monitoring in Ponderosa Pine-Dominated Forests Using Unmanned Aerial System
+Structure from Motion Point Clouds. Canadian Journal of Forest Research,
+cjfr-2020-0433. https://doi.org/10.1139/cjfr-2020-0433
+Dandois, J. P., & Ellis, E. C. (2013). High spatial resolution three-dimensional mapping of
+vegetation spectral dynamics using computer vision. Remote Sensing of Environment,
+136, 259–276. https://doi.org/10.1016/j.rse.2013.04.005
+De Luca, G., N. Silva, J. M., Cerasoli, S., Araújo, J., Campos, J., Di Fazio, S., & Modica, G.
+(2019). Object-Based Land Cover Classification of Cork Oak Woodlands using UAV
+Imagery and Orfeo ToolBox. Remote Sensing, 11(10), 1238.
+https://doi.org/10.3390/rs11101238
+Díaz, G. M., Mohr-Bell, D., Garrett, M., Muñoz, L., & Lencinas, J. D. (2020). Customizing
+unmanned aircraft systems to reduce forest inventory costs: Can oblique images
+substantially improve the 3D reconstruction of the canopy? International Journal of
+Remote Sensing, 41(9), 3480–3510. https://doi.org/10.1080/01431161.2019.1706200
+Ferraz, A., Bretar, F., Jacquemoud, S., Gonçalves, G., Pereira, L., Tomé, M., & Soares, P.
+(2012). 3-D mapping of a multi-layered Mediterranean forest using ALS data. Remote
+Sensing of Environment, 121, 210–223. https://doi.org/10.1016/j.rse.2012.01.020
+Frey, J., Kovach, K., Stemmler, S., & Koch, B. (2018). UAV Photogrammetry of Forests as a
+Vulnerable Process. A Sensitivity Analysis for a Structure from Motion RGB-Image
+Pipeline. Remote Sensing, 10(6), 912. https://doi.org/10.3390/rs10060912
+Gray, A. N., Brandeis, T. J., Shaw, J. D., McWilliams, W. H., & Miles, P. (2012). Forest Inventory
+and Analysis Database of the United States of America (FIA). In: Dengler, J.; Oldeland,
+J.; Jansen, F.; Chytry, M.; Ewald, J., Finckh, M.; Glockler, F.; Lopez-Gonzalez, G.; Peet,
+27
+
+
+R. K.; Schaminee, J .H. J., Eds. Vegetation Databases for the 21st Century. Biodiversity
+and Ecology. 4: 225-231., 225–231. https://doi.org/10.7809/b-e.00079
+James, M. R., & Robson, S. (2014). Mitigating systematic error in topographic models derived
+from UAV and ground-based image networks. Earth Surface Processes and Landforms,
+39(10), 1413–1420. https://doi.org/10.1002/esp.3609
+Jayathunga, S., Owari, T., & Tsuyuki, S. (2018). The use of fixed–wing UAV photogrammetry
+with LiDAR DTM to estimate merchantable volume and carbon stock in living biomass
+over a mixed conifer–broadleaf forest. International Journal of Applied Earth Observation
+and Geoinformation, 73, 767–777. https://doi.org/10.1016/j.jag.2018.08.017
+Jeronimo, S. M. A., Kane, V. R., Churchill, D. J., McGaughey, R. J., & Franklin, J. F. (2018).
+Applying LiDAR Individual Tree Detection to Management of Structurally Diverse Forest
+Landscapes. Journal of Forestry, 116(4), 336–346. https://doi.org/10.1093/jofore/fvy023
+Koontz, M. J., Latimer, A. M., Mortenson, L. A., Fettig, C. J., & North, M. P. (2021). Cross-scale
+interaction of host tree size and climatic water deficit governs bark beetle-induced tree
+mortality. Nature Communications, 12(1), 129.
+https://doi.org/10.1038/s41467-020-20455-y
+Li, W., Guo, Q., Jakubowski, M. K., & Kelly, M. (2012). A New Method for Segmenting Individual
+Trees from the Lidar Point Cloud. Photogrammetric Engineering & Remote Sensing,
+78(1), 75–84. https://doi.org/10.14358/PERS.78.1.75
+Lisein, J., Pierrot-Deseilligny, M., Bonnet, S., & Lejeune, P. (2013). A Photogrammetric Workflow
+for the Creation of a Forest Canopy Height Model from Small Unmanned Aerial System
+Imagery. Forests, 4(4), 922–944. https://doi.org/10.3390/f4040922
+Mehtätalo, L., Virolainen, A., Tuomela, J., & Packalen, P. (2015). Estimating Tree Height
+Distribution Using Low-Density ALS Data With and Without Training Data. IEEE Journal
+of Selected Topics in Applied Earth Observations and Remote Sensing, 8(4),
+1432–1441. https://doi.org/10.1109/JSTARS.2015.2418675
+Mlambo, R., Woodhouse, I. H., Gerard, F., & Anderson, K. (2017). Structure from Motion (SfM)
+Photogrammetry with Drone Data: A Low Cost Method for Monitoring Greenhouse Gas
+Emissions from Forests in Developing Countries. Forests, 8(3), 68.
+https://doi.org/10.3390/f8030068
+Mohan, M., Silva, C., Klauberg, C., Jat, P., Catts, G., Cardil, A., Hudak, A., & Dia, M. (2017).
+Individual tree detection from unmanned aerial vehicle (UAV) derived canopy height
+model in an open canopy mixed conifer forest. Forests, 8(9), 340.
+https://doi.org/10.3390/f8090340
+Nesbit, P. R., & Hugenholtz, C. H. (2019). Enhancing UAV–SfM 3D Model Accuracy in
+High-Relief Landscapes by Incorporating Oblique Images. Remote Sensing, 11(3), 239.
+https://doi.org/10.3390/rs11030239
+Ni, W., Sun, G., Pang, Y., Zhang, Z., Liu, J., Yang, A., Wang, Y., & Zhang, D. (2018). Mapping
+Three-Dimensional Structures of Forest Canopy Using UAV Stereo Imagery: Evaluating
+Impacts of Forward Overlaps and Image Resolutions With LiDAR Data as Reference.
+IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing,
+11(10), 3578–3589. https://doi.org/10.1109/JSTARS.2018.2867945
+North, M. P., Kane, J. T., Kane, V. R., Asner, G. P., Berigan, W., Churchill, D. J., Conway, S.,
+Gutiérrez, R. J., Jeronimo, S., Keane, J., Koltunov, A., Mark, T., Moskal, M., Munton, T.,
+Peery, Z., Ramirez, C., Sollmann, R., White, A., & Whitmore, S. (2017). Cover of tall
+trees best predicts California spotted owl habitat. Forest Ecology and Management, 405,
+166–178. https://doi.org/10.1016/j.foreco.2017.09.019
+North, M. P., Stevens, J. T., Greene, D. F., Coppoletta, M., Knapp, E. E., Latimer, A. M.,
+Restaino, C. M., Tompkins, R. E., Welch, K. R., York, R. A., Young, D. J. N., Axelson, J.
+N., Buckley, T. N., Estes, B. L., Hager, R. N., Long, J. W., Meyer, M. D., Ostoja, S. M.,
+Safford, H. D., … Wyrsch, P. (2019). Tamm Review: Reforestation for resilience in dry
+28
+
+
+western U.S. forests. Forest Ecology and Management, 432, 209–224.
+https://doi.org/10.1016/j.foreco.2018.09.007
+Plowright, A. (2021). ForestTools: Analyzing Remotely Sensed Forest Data. Comprehensive R
+Archive Network (CRAN). https://CRAN.R-project.org/package=ForestTools
+Popescu, S. C., & Wynne, R. H. (2004). Seeing the Trees in the Forest. Photogrammetric
+Engineering & Remote Sensing, 70(5), 589–604.
+https://doi.org/10.14358/PERS.70.5.589
+Puliti, S., Solberg, S., & Granhus, A. (2019). Use of UAV photogrammetric data for estimation of
+biophysical properties in forest stands under regeneration. Remote Sensing, 11(3), 233.
+https://doi.org/10.3390/rs11030233
+R Core Team. (2020). R version 3.6.3. R: A language and environment for statistical computing.
+R Foundation for Statistical Computing, Vienna, Austria.
+Richardson, J. J., & Moskal, L. M. (2011). Strengths and limitations of assessing forest density
+and spatial configuration with aerial LiDAR. Remote Sensing of Environment, 115(10),
+2640–2651. https://doi.org/10.1016/j.rse.2011.05.020
+Rodman, K. C., Veblen, T. T., Saraceni, S., & Chapman, T. B. (2019). Wildfire activity and land
+use drove 20th-century changes in forest cover in the Colorado front range. Ecosphere,
+10(2), e02594. https://doi.org/10.1002/ecs2.2594
+Roussel, J.-R. (2021a, May 20). Airborne LiDAR Data Manipulation and Visualization for
+Forestry Applications [R package lidR version 3.0.4]. Comprehensive R Archive Network
+(CRAN). https://CRAN.R-project.org/package=lidR
+Roussel, J.-R. (2021b, May 20). Extra functions and algorithms for lidR package [R package
+lidRplugins version 0.2.0]. https://github.com/Jean-Romain/lidRplugins
+Safford, H. D., & Stevens, J. T. (2017). Natural range of variation for yellow pine and
+mixed-conifer forests in the Sierra Nevada, southern Cascades, and Modoc and Inyo
+National Forests, California, USA. Gen. Tech. Rep. PSW-GTR-256. Albany, CA: U.S.
+Department of Agriculture, Forest Service, Pacific Southwest Research Station. 229 p.,
+256. https://www.fs.usda.gov/treesearch/pubs/55393
+Shin, P., Sankey, T., Moore, M. M., & Thode, A. E. (2018). Evaluating Unmanned Aerial Vehicle
+Images for Estimating Forest Canopy Fuels in a Ponderosa Pine Stand. Remote
+Sensing, 10(8), 1266. https://doi.org/10.3390/rs10081266
+Silva, C. A., Hudak, A. T., Vierling, L. A., Loudermilk, E. L., O’Brien, J. J., Hiers, J. K., Jack, S.
+B., Gonzalez-Benecke, C., Lee, H., Falkowski, M. J., & Khosravipour, A. (2016).
+Imputation of Individual Longleaf Pine (Pinus palustris Mill.) Tree Attributes from Field
+and LiDAR Data. Canadian Journal of Remote Sensing, 42(5), 554–573.
+https://doi.org/10.1080/07038992.2016.1196582
+Swayze, N. C., Tinkham, W. T., Vogeler, J. C., & Hudak, A. T. (2021). Influence of flight
+parameters on UAS-based monitoring of tree height, diameter, and density. Remote
+Sensing of Environment, 263, 112540. https://doi.org/10.1016/j.rse.2021.112540
+Tinkham, W. T., & Swayze, N. C. (2021). Influence of Agisoft Metashape Parameters on UAS
+Structure from Motion Individual Tree Detection from Canopy Height Models. Forests,
+12(2), 250. https://doi.org/10.3390/f12020250
+Torresan, C., Carotenuto, F., Chiavetta, U., Miglietta, F., Zaldei, A., & Gioli, B. (2020). Individual
+Tree Crown Segmentation in Two-Layered Dense Mixed Forests from UAV LiDAR Data.
+Drones, 4(2), 10. https://doi.org/10.3390/drones4020010
+Torres-Sánchez, J., López-Granados, F., Borra-Serrano, I., & Peña, J. M. (2018). Assessing
+UAV-collected image overlap influence on computation time and digital surface model
+accuracy in olive orchards. Precision Agriculture, 19(1), 115–133.
+https://doi.org/10.1007/s11119-017-9502-0
+USDA Forest Service. (2016). Forest Inventory and Analysis Strategic Plan FS-1079.
+https://www.fia.fs.fed.us/library/bus-org-documents/docs/strategic-plan-docs/FIA%20Stra
+29
+
+
+tegic%20Plan%20FS-1079.pdf
+USGS. (2017). Unmanned Aircraft Systems Data Post-Processing: Structure-from-Motion 
+Photogrammetry. National Unmanned Aircraft Systems (UAS) Project Office.
+https://uas.usgs.gov/nupo/pdf/PhotoScanProcessingDSLRMar2017.pdf
+USGS. (2018). 3DEP products and services: The National Map, 3D Elevation Program,
+https://nationalmap.gov/3DEP/.
+Weinstein, B. G., Marconi, S., Bohlman, S. A., Zare, A., Singh, A., Graves, S. J., & White, E. P.
+(2021). A remote sensing derived data set of 100 million individual tree crowns for the
+National Ecological Observatory Network. ELife, 10, e62922.
+https://doi.org/10.7554/eLife.62922
+Westoby, M. J., Brasington, J., Glasser, N. F., Hambrey, M. J., & Reynolds, J. M. (2012).
+‘Structure-from-Motion’ photogrammetry: A low-cost, effective tool for geoscience
+applications. Geomorphology, 179, 300–314.
+https://doi.org/10.1016/j.geomorph.2012.08.021
+White, J. C., Coops, N. C., Wulder, M. A., Vastaranta, M., Hilker, T., & Tompalski, P. (2016).
+Remote Sensing Technologies for Enhancing Forest Inventories: A Review. Canadian
+Journal of Remote Sensing, 42(5), 619–641.
+https://doi.org/10.1080/07038992.2016.1207484
+Xiao, W., Zaforemska, A., Smigaj, M., Wang, Y., & Gaulton, R. (2019). Mean Shift Segmentation
+Assessment for Individual Forest Tree Delineation from Airborne Lidar Data. Remote
+Sensing, 11(11), 1263. https://doi.org/10.3390/rs11111263
+Yancho, J. M. M., Coops, N. C., Tompalski, P., Goodbody, T. R. H., & Plowright, A. (2019).
+Fine-Scale Spatial and Spectral Clustering of UAV-Acquired Digital Aerial
+Photogrammetric (DAP) Point Clouds for Individual Tree Crown Detection and
+Segmentation. IEEE Journal of Selected Topics in Applied Earth Observations and
+Remote Sensing, 12(10), 4131–4148. https://doi.org/10.1109/JSTARS.2019.2942811
+Young, D., Alex, Alexander, MallikaNocco, & Hereñú, D. (2021). ucdavis/metashape: V0.1.0.
+Zenodo. https://doi.org/10.5281/zenodo.5088962
+Young, D. J. N., Meyer, M., Estes, B., Gross, S., Wuenschel, A., Restaino, C., & Safford, H. D.
+(2020). Forest recovery following extreme drought in California, USA: Natural patterns
+and effects of pre-drought management. Ecological Applications, 30(1), e02002.
+https://doi.org/10.1002/eap.2002
+Zaforemska, A., Xiao, W., & Gaulton, R. (2019). INDIVIDUAL TREE DETECTION FROM UAV
+LIDAR DATA IN A MIXED SPECIES WOODLAND. ISPRS - International Archives of the
+Photogrammetry, Remote Sensing and Spatial Information Sciences, XLII-2/W13,
+657–663. https://doi.org/10.5194/isprs-archives-XLII-2-W13-657-2019
+30

@@ -1,0 +1,1364 @@
+LiDAR point cloud denoising for
+individual tree extraction based
+on the Noise4Denoise
+Xiangfei Lu 1†, Zongyu Ye 2†, Liyong Fu 3, Huaiyi Wang 1,
+Kaiyu Wang 4, Yaquan Dou 1, Dongbo Xie 3 and Xiaodi Zhao 1*
+1Research Institute of Forest Policy and Information, Chinese Academy of Forestry, Beijing, China,
+2School of Mechanical and Materials Engineering, North China University of Technology,
+Beijing, China, 3Research Institute of Forest Resource Information Technique, Chinese Academy of
+Forestry, Beijing, China, 4Information Technology, Belarusian State University, Minsk, Belarus
+The processing of LiDAR point cloud data is of critical importance in the context
+of forest resource surveys, as well as representing a pivotal element in the realm
+of forest physiological and ecological studies.Nonetheless, conventional
+denoising algorithms frequently exhibit deﬁciencies with regard to adaptability
+and denoising efﬁcacy, particularly when employed in relation to disparate
+datasets.To address these issues, this study introduces DEN4, an unsupervised,
+deep learning-based point cloud denoising algorithm designed to improve the
+accuracy of single tree segmentation in LiDAR point clouds.DEN4 introduces a
+multilevel noise separation module that effectively distinguishes between signal
+and noise, thereby improving the signal-to-noise ratio (SNR) and reducing the
+error.The experimental results demonstrate that DEN4 signiﬁcantly outperforms
+traditional denoising methods in several key metrics, including mean square error
+(MSE), SNR, Hausdorff distance, and structural similarity index (SSIM).In the 60
+sample dataset, DEN4 achieved the best mean and standard deviation on all
+metrics: Speciﬁcally, the MSE mean was found to be 0.0094, with a standard
+deviation of 0.0008, the SNR mean was 149.1570, with a standard deviation of
+0.5628, the Hausdorff mean was 0.8503, with a standard deviation of 0.0947, and
+the SSIM mean was 0.8399, with a standard deviation of 0.0054. For instance, in
+the S10 dataset, DEN4 attained a 70.2% diminution in MSE and a 37.8%
+augmentation in SNR in comparison with PTD.The ﬁndings demonstrate the
+efﬁcacy of DEN4 in multiple forest datasets, its ability to maintain geometric
+integrity, and its enhanced stability without the necessity for pre-labelled data.
+The algorithm's superior performance and robustness in diverse forest
+environments underscores its potential application in single tree segmentation
+and forest resource management.
+KEYWORDS
+individual tree extraction, LiDAR point clouds, point cloud denoising, deep learning,
+ecological study
+Frontiers in Plant Science
+frontiersin.org
+01
+OPEN ACCESS
+EDITED BY
+Drandreb Earl O. Juanico,
+University of the Philippines Diliman,
+Philippines
+REVIEWED BY
+Zipeng Zhang,
+Xinjiang University, China
+Jonnifer Sinogaya,
+University of the Philippines Cebu College,
+Philippines
+*CORRESPONDENCE
+Xiaodi Zhao
+Zhaoxiaodi@caf.ac.cn
+†These authors have contributed equally to
+this work
+RECEIVED 03 September 2024
+ACCEPTED 17 December 2024
+PUBLISHED 09 January 2025
+CITATION
+Lu X, Ye Z, Fu L, Wang H, Wang K, Dou Y,
+Xie D and Zhao X (2025) LiDAR point cloud
+denoising for individual tree extraction based
+on the Noise4Denoise.
+Front. Plant Sci. 15:1490660.
+doi: 10.3389/fpls.2024.1490660
+COPYRIGHT
+© 2025 Lu, Ye, Fu, Wang, Wang, Dou, Xie and
+Zhao. This is an open-access article distributed
+under the terms of the Creative Commons
+Attribution License (CC BY). The use,
+distribution or reproduction in other forums
+is permitted, provided the original author(s)
+and the copyright owner(s) are credited and
+that the original publication in this journal is
+cited, in accordance with accepted academic
+practice. No use, distribution or reproduction
+is permitted which does not comply with
+these terms.
+TYPE Original Research
+PUBLISHED 09 January 2025
+DOI 10.3389/fpls.2024.1490660
+
+
+1 Introduction
+Forests constitute a crucial component of the Earth’s ecosystem,
+playing an indispensable role in maintaining ecological balance and
+supporting a myriad of life forms (Menut et al., 2023; Sun et al.,
+2023). They provide an extensive array of ecosystem services, which
+include but are not limited to, biodiversity conservation, carbon
+storage, and the preservation of cultural values (Sabatini et al., 2018;
+Handegard et al., 2024). Firstly, it is estimated that forest ecosystems
+contain more than half of the world’s biodiversity and include
+species of signiﬁcant conservation value (Myers et al., 2000; Lewis
+et al., 2015). Secondly, while conserving energy and reducing
+carbon dioxide emissions, exploring the carbon sequestration
+potential of forest ecosystems is key to achieving carbon
+neutrality (Piao et al., 2022), as forest ecosystems absorb nearly
+one-third of the anthropogenic carbon dioxide emissions each year
+(Harris et al., 2021). Additionally, beyond providing food,
+maintaining soil, and ensuring climate stability (Millennium
+ecosystem assessment, 2005), forest ecosystems can have a
+positive impact on human physical and mental health through
+individual engagement (Daniel et al., 2012), thereby offering
+psychological and cultural beneﬁts to both individuals and society
+(Ko and Son, 2018). In the future development of humanity, forest
+ecosystems play an extremely important role, making the study of
+forest physiology and ecology, as well as the management of forests,
+indispensable (Jandl et al., 2007; Cox et al., 2023).
+Light Detection and Ranging(LIDAR) plays a signiﬁcant role in
+forest physiology and ecology research, providing valuable data for
+forest surveys and management (Yong Pang et al., 2005). Airborne
+LIDAR can accurately extract canopy vertical structures, allowing
+the acquisition of forest parameters at both the stand and individual
+tree scales (Li et al., 2016) Unmanned Aerial Vehicle(UAV)-
+mounted LIDAR can control scanning errors to within
+centimeters or even millimeters, offering signiﬁcant advantages in
+digital ecosystem construction, aboveground biomass estimation,
+and long-term monitoring of stand environments (Guo et al., 2014;
+Liu et al., 2017). It has become a consensus among global forestry
+scholars that using UAV-mounted LIDAR to obtain forest
+ecological data is essential for strengthening forest ecosystem
+management. Currently, image segmentation based on the
+Canopy Height Model (CHM) and point cloud segmentation
+based on normalized point cloud spatial clustering are two typical
+methods for acquiring forest ecological data using UAV-mounted
+LIDAR (Xu et al; Cao et al., 2013; Li et al., 2016). Point cloud
+segmentation based on UAV-mounted LIDAR data is crucial for
+addressing various issues such as measuring canopy height,
+identifying individual trees, estimating leaf area index and canopy
+closure, and calculating biomass (Maltamo et al., 2004; Riaño et al.,
+2004; Zhao et al., 2009; Liu and Pang, 2014).
+However, due to the limitations of the scanning equipment’s
+precision and the inﬂuence of the acquisition environment, point
+cloud data inevitably contains many noise points and outliers (Lu
+and zou, 2019). The presence of these noise points reduces the
+accuracy of the data, severely impacting the subsequent data
+processing and usage. To reduce noise in point cloud data and
+obtain cleaner point clouds, many scholars have conducted in-
+depth research and exploration. Currently, the most widely used
+and mature technology for denoising is ﬁltering-based techniques.
+Choudhury et al. proposed a trilateral ﬁltering method, building on
+the bilateral ﬁltering approach, for denoising 3D mesh models
+(Choudhury and Tumblin, 2003). Schall et al. conﬁned the
+ﬁltering window to the approximate normal vector region for
+normal vector ﬁltering (Schall et al., 2008). On the basis of the
+SUN algorithm, Xinhe Liang et al. ﬁltered both the normal vectors
+of the discrete point model and the positions of the points to
+develop an improved discrete point model ﬁltering method (Liang
+et al., 2010). Dongdong Lu et al. explored the application of
+statistical ﬁltering algorithms and radius ﬁltering algorithms in
+practical denoising tasks and conducted a comparative analysis of
+the advantages and disadvantages of these two typical ﬁlters in
+terms of denoising performance (Lu and zou, 2019). In the ﬁeld of
+LIDAR-based individual tree extraction, ﬁltering methods are also
+widely used. For example, Yushan Guo et al. employed
+morphological ﬁltering methods in their study on individual tree
+crown extraction to ensure that contour information is well
+preserved (Guo et al., 2016). Xiaokang Wu compared multi-level
+surface ﬁltering algorithms, slope ﬁltering algorithms, and CSF
+ﬁltering algorithms, with results showing that in the ﬁeld of
+LIDAR-based individual tree extraction, CSF ﬁltering offers
+higher accuracy than slope ﬁltering and multi-level surface
+ﬁltering methods (Wu et al., 2023). Additionally, Kaisen Ma, Wei
+Li, and others processed LIDAR point cloud data using an improved
+progressive triangulated network ﬁltering method (Ma, 2023; Li and
+Wang, 2024). However, traditional algorithms have certain
+limitations in adaptability and denoising effectiveness, particularly
+when handling different types of data where the performance can
+vary signiﬁcantly.
+With the development of various technologies, point cloud
+denoising based on deep learning and machine learning has
+gradually attracted the attention of many scholars. Duan
+Chaojing et al. proposed a neural network-based 3D point cloud
+denoising framework that can accurately estimate and remove noise
+in point clouds (Duan et al., 2019). Jie Zhang et al. introduced an
+unsupervised deep point cloud denoising algorithm guided by
+density priors, which improves the performance of unsupervised
+deep point cloud denoising algorithms (Jie et al., 2024). Luo Shitong
+and others proposed a neural network architecture designed to
+estimate relevant scores using only noisy point clouds as input and
+developed a denoising algorithm based on the estimated scores (Luo
+and Hu, 2021). Pedro Hermosilla Casajus, Tobias Ritschel, and
+Timo Ropinski proposed an unsupervised point cloud denoising
+method that extends unsupervised image denoising techniques to
+the 3D point cloud domain, introducing spatial priors to guide
+point clouds toward the real manifold (Casajus et al., 2019).
+Currently, point cloud denoising technology is still at a stage
+where deep learning methods and traditional methods are
+developing in parallel. However, compared to traditional
+algorithms, deep learning methods, by utilizing advanced
+architectures such as Convolutional Neural Networks (CNN) and
+Graph Convolutional Networks (GCN), can automatically learn
+and extract complex features from point clouds, signiﬁcantly
+reducing the workload of manual feature design. Through
+Lu et al.
+10.3389/fpls.2024.1490660
+Frontiers in Plant Science
+frontiersin.org
+02
+
+
+training on large datasets, deep learning models can effectively
+adapt to different types of noise and variations in point cloud data.
+For example, the model can learn speciﬁc noise patterns from the
+training data, enabling it to perform denoising more effectively.
+Additionally, deep learning methods excel in handling complex
+scenarios and diverse point cloud data, particularly in challenging
+situations involving non-uniform distributions, high-dimensional
+data, and multi-view point cloud fusion (Menut et al., 2023). These
+methods not only enhance denoising effectiveness but also preserve
+more details and structural information in the point cloud (Mao
+et al., 2022). However, in the ﬁeld of LIDAR-based individual tree
+extraction, traditional algorithms still dominate, and deep learning
+methods have not yet fully replaced traditional methods when
+addressing more detailed and complex data requirements. This
+indicates that there is still room for further optimization and
+development of deep learning methods in individual tree
+extraction tasks.
+This paper aims to develop an unsupervised deep learning
+algorithm for LIDAR-based individual tree extraction, building on
+existing deep learning algorithms. The speciﬁc objectives include:
+collecting and preprocessing LIDAR point cloud data for individual
+tree extraction; selecting suitable algorithms for unsupervised
+learning, and improving and optimizing their design; training and
+optimizing the model to enhance denoising effectiveness;
+conducting detailed quantitative and qualitative analyses of the
+denoising results; and optimizing the denoising process to lay a
+foundation for future data processing and applications, ensuring
+that the data can be more effectively utilized in subsequent analyses
+and research.
+2 Materials and methodology
+2.1 Dataset and data preprocessing
+The data used in this study were collected from 17 forest plots
+located in Qingyuan City, Guangdong Province. The actual
+sampling plots cover an area of 80*80 meters, and this data was
+collected through UAV ﬂight scans following manual ground
+surveys. The data was collected in March 2024 using a BB4 UAV
+equipped with an AS-1300HL Lidar system. The laser scanner
+model used was the Riegl VUX-1LR, with a wavelength of 1550
+nm, a pulse length of 3.5 ns, and a laser beam divergence angle of 0.5
+mrad. The pulse repetition frequency was 50 kHz, with a maximum
+scanning angle of 30°, and a scanning frequency of 49 Hz. The UAV
+followed a grid ﬂight pattern, with a point cloud overlap rate of 50%
+and an average ﬂight speed of 10 m/s. The average point cloud
+density for the plots was 110 pts/m². A schematic of the plot is
+shown in Figure 1.
+The dataset comprises 17 forest plots in Qingyuan City,
+Guangdong Province, selected for their ecological complexity and
+biodiversity. Guangdong’s forests, spanning tropical and
+subtropical climates, present diverse vegetation and challenging
+noise conditions, providing a robust test for the algorithm.
+Compared to some public datasets and datasets provided by other
+research studies, the dataset used in this paper has undergone an
+actual manual ground survey and includes a large amount of ﬁeld
+imagery. These ﬁeld images can be directly correlated with the point
+cloud data, allowing for adjustments and comparisons based on the
+images during later processing, thereby improving the accuracy and
+precision of the data handling.
+Before data cleaning, the collected data underwent preliminary
+processing and classiﬁcation in this study. The point cloud data was
+matched with actual imagery to ensure consistency between the
+point cloud data and the real geographic location. During the
+processing, speciﬁc functions were used to handle the point cloud
+data, generating arrays containing the point cloud data and storing
+them in the required format for use in subsequent steps. After
+segmenting the plot data, 60 samples were selected as
+experimental subjects.
+To improve the stability of model training, accelerate model
+convergence, reduce bias, and facilitate the comparison of various
+algorithms in later stages, the point cloud data was also normalized.
+This step ensured the comparability of the data across different
+algorithms and models, enhancing the reliability and applicability
+of the research results.
+2.2 Foundations of the algorithm
+This study is designed based on the principles of the
+Noise4Denoise(DEN4) (Wang et al., 2024) algorithm. The
+algorithm is redesigned and its steps are organized accordingly to
+meet the requirements of Lidar-based individual tree extraction and
+point cloud denoising. The decision to choose the Noise4Denoise
+algorithm in this study is primarily based on its proven effectiveness
+and well-documented experimental results. Additionally, the
+algorithm’s classiﬁcation as an unsupervised learning method
+offers signiﬁcant advantages. Unsupervised algorithms do not
+require labeled training data, allowing them to learn directly from
+unlabeled datasets. This capability makes them particularly well-
+suited for large-scale, complex datasets, especially in situations
+where labeling is costly or impractical. Furthermore, unsupervised
+algorithms are highly versatile, performing effectively across various
+environments, regardless of whether the data is high-dimensional,
+unstructured, or lacks clear classiﬁcations or labels. This broad
+applicability underlines their potential in a wide range of data
+analysis tasks.
+The training process of the algorithm is based on the following
+fundamental relationships. Consider a clean point cloud P with nnn
+points, where the three-dimensional coordinates of the points are
+given as
+P =
+pi │i = 1, 2, …, n
+
+
+(1)
+where   pi ∈R3   represents the coordinates of a point in three-
+dimensional space. Then, a point cloud with noise can be deﬁned as
+_P =
+_pi │i = 1, 2, …, n
+
+
+= P + N
+(2)
+where N represents the noise. A new noise M is redeﬁned, with
+the same resampling range as N, but M and N are independent and
+not identical. Adding N to _P yields another point cloud _P 0
+Lu et al.
+10.3389/fpls.2024.1490660
+Frontiers in Plant Science
+frontiersin.org
+03
+
+
+_P0 =
+_p
+0
+i│i = 1, 2, …, n
+n
+o
+= _P + M = P + M + N
+(3)
+Here, _P 0   contains double the noise, encompassing noise from both
+N and M. The algorithm assumes that the clean point cloud can be
+estimated based on the input noise. _P0 is set as the prior value,
+representing the observable point cloud with double noise. The
+estimation of the overall surface of the noisy point cloud is expressed
+by the expectation E( _P│_P0).According to Equation 2, we have
+E( _P│_P0) = E(P + N│_P0) = E(P│_P0) + E(N│_P0)
+(4)
+Since M and N are independently and identically distributed,
+and both are sampled from the same distribution range, their
+expected values are the same. That is E(M│_P0) = E(N│_P0).
+Therefore, it can be deduced that:
+2E( _P│_P0) =   E(P│_P0) + E( _P0│_P0)
+(5)
+And then, it can be deduced as
+E(P│_P0) =   2E( _P│_P0) −E( _P0│_P0)
+E(P│_P0) −E( _P0│_P0) =   E( _P│_P0) −E( _P
+0│_P0)
+(6)
+Here, using E(P│_P0) = P、E( _P│_P0) = _P、E( _P
+0│_P0) = _P0, P
+、_P 、_P0   represent the predicted values of P、_P and _P
+0
+respectively, substituting these into Equation 6, we can obtain:
+P −_P = _P −_P0
+(7)
+According to the rules of conditional expectation and the discrete
+nature of the point cloud, it can be derived that _P0 =   E( _P
+0│_P0).
+Assuming that the values in   P、_P、_P0 correspond one-to-one, a
+noise displacement vector can be predicted for each point in _P0′, and
+these vectors can be used to construct an approximate clean point
+cloud P  . This relationship can be expressed as
+FIGURE 1
+Schematic of the plot.
+Lu et al.
+10.3389/fpls.2024.1490660
+Frontiers in Plant Science
+frontiersin.org
+04
+
+
+P =
+pi│i = 1, 2, …, n
+
+
+=
+_p
+0
+i + d
+0
+i│i = 1, 2, …, n
+n
+o
+(8)
+where d
+0
+i represents the predicted displacement vector for the
+point   _p
+0
+i; based on these vectors, the corresponding positions of the
+clean point cloud can be directly estimated.
+Adding another set of displacement vectors to _P
+0 yields the
+predicted value _P, which can be expressed as
+_P =
+_pi│i = 1, 2, …, n
+n
+o
+=
+_p
+0
+i + d
+0
+i│i = 1, 2, …, n
+n
+o
+(9)
+Based on the one-to-one correspondence assumption, by
+substituting the values into Equation 7, it can ultimately be
+proven that the direct prediction d
+0
+i is equivalent to twice di:
+p −_p = _p −_p
+0
+i
+(_p
+0
+i + d
+0
+i) −(_p
+0
+i + di) = (_p
+0
+i + di)−_p
+0
+i
+d
+0
+i −di = di
+d
+0
+i = 2di
+(10)
+2.3 Model architecture
+Noise4Denoise proposes an unsupervised point cloud denoising
+method, with the core idea of using a deep neural network to learn
+the mapping from noisy point clouds to clean point clouds. The
+speciﬁc implementation involves learning a displacement vector
+ﬁeld that enables each noisy point cloud point to move to its
+predicted clean position. This process is achieved by training the
+network to minimize the difference between the denoised point
+cloud and certain criteria. The model is primarily composed of the
+following modules: Input Layer: The input consists of noisy point
+cloud data, typically in the form of double noise (i.e., adding two
+different noise patterns to the original point cloud). Feature
+Extraction Module: A deep learning-based network is used to
+extract both local and global features of the point cloud.
+Displacement Vector Prediction Module: Based on the extracted
+features, the model learns to predict a displacement vector for each
+point, enabling the mapping from noisy points to clean points.
+Output Layer: The output is the denoised point cloud, obtained by
+applying displacement corrections to the noisy points.
+The design of the feature extraction module draws on network
+architectures such as PointNet and DGCNN, learning both local and
+global features to capture the geometric structure of the point cloud.
+To ensure the retention of point cloud details during denoising, the
+feature extraction module includes local neighborhood feature
+extraction. This is achieved by determining the neighborhood of
+each point using the k-Nearest Neighbors (k-NN) method, followed
+by extracting local geometric features through graph convolution.
+Global feature aggregation is achieved through global pooling, which
+integrates local features into a global descriptor.
+The displacement vector prediction module receives the
+features output by the feature extraction module and generates a
+displacement vector for each point. To preserve the structure and
+details of the point cloud, the model is designed to use an MLP
+network to perform nonlinear transformations on the extracted
+features to generate the displacement vectors. A residual connection
+is added between the generated displacement vectors and the
+original point coordinates to ensure the stability and expressive
+power of the model.
+To preserve the structure and details of the point cloud during
+the denoising process, the model incorporates a speciﬁcally
+designed symmetric loss function, ensuring that the overall
+geometric shape of the point cloud is not disrupted; Through
+local feature extraction and the relationship between neighboring
+points, the model can identify and preserve local structures;
+Regularization techniques such as Dropout or weight decay are
+employed to prevent the model from overﬁtting, thereby better
+preserving the details of the original point cloud. Our speciﬁc model
+architecture is shown in Figure 2.
+2.4 Loss function
+Using   _di = _pi −_p
+0
+i, the prediction of the actual value of di in
+Equation 10 guides the estimation of the displacement d0i. A mean
+squared error (MSE) loss function is designed, which can be deﬁned as
+Lmse = ‖ d
+0
+i −2 _di ‖2
+2
+(12)
+To ensure that the point cloud spacing after denoising remains
+appropriate and to avoid potential clustering issues, the algorithm
+incorporates a repulsion loss based on references (Rakotosaona
+et al., 2019; Zhang et al., 2020). This repulsion loss is designed to
+assist in the distribution of the clean point cloud. First, a pseudo-
+clean point cloud ~P   is deﬁned as
+~P =
+_p
+0
+i + 2 _di│i = 1, 2, …, n
+n
+o
+(13)
+where ~P   does not actually exhibit a clean appearance. The
+following process is used to deﬁne the pseudo-clean point cloud:
+~Pi =
+~pj│~pj −_pi
+
+
+2, ~pj∈~P
+
+
+(14)
+Here, since _pi is assumed to be a point cloud less affected by
+noise, ~pj∈~P is used to query ~Pi. Then, the point set ~Pi is normalized.
+Using these, the loss function can be deﬁned as
+Lrep = max
+~pj∈~Pi
+(_p
+0
+i + d
+0
+i) −~pj
+
+
+2
+2
+(15)
+Then the loss function L can be deﬁned as
+L = Lmse + g Lrep
+(16)
+where g   is a factor controlling the inﬂuence of the repulsion
+loss, set to 0.0005.
+Lu et al.
+10.3389/fpls.2024.1490660
+Frontiers in Plant Science
+frontiersin.org
+05
+
+
+3 Results
+3.1 Experimental conditions
+3.1.1 Hardware environment
+The hardware conﬁguration used in this study is as follows: a
+computer equipped with an Intel(R) Core(TM) i5-10500 processor,
+with a base frequency of 3.1GHz, featuring 6 cores and 12 threads; a
+NVIDIA GeForce RTX 2070 SUPER graphics card with 8GB of
+VRAM; the computing platform is also equipped with 32GB of
+RAM and 4TB of storage space to support data processing and
+experimental computations.
+3.1.2 Software environment
+This paper describes the computational experiments conducted
+under the Windows 11 Pro operating system, utilizing CUDA 12.5
+as the parallel computing framework. To facilitate model training
+management, PyCharm was used as the development environment,
+and CloudCompare was employed for the visualization of point
+cloud data.
+3.2 Hyperparameter conﬁguration
+In this experiment, the settings for various parameters were
+determined through exploratory experiments. For the learning rate,
+a cosine annealing algorithm was used to make an initial estimate,
+with a range from 0.1 to 0.0001, and 0.001 was ultimately selected as
+the optimal learning rate. Additionally, the weight parameter in the
+loss function was set to 0.0005, following the original algorithm. For
+the noise addition level, after testing different noise intensities
+ranging from 0.01 to 0.1, 0.1 was chosen as the optimal value.
+The structure of the encoder and decoder was optimized using a
+layer-by-layer approach, resulting in a 3-256-512-1024-2048
+architecture, which struck a good balance between experimental
+results and computation time. A total of 200 training epochs were
+conducted, with each training batch containing 128 samples.
+3.3 Common evaluation metrics for point
+cloud denoising
+The commonly used evaluation methods for Lidar point cloud
+denoising include Mean Squared Error (MSE), Signal-to-Noise
+Ratio (SNR) (Mao et al., 2022), Hausdorff Distance (Javaheri
+et al., 2020), and Structural Similarity Index (SSIM) (Liu et al.,
+2022). This study selects MSE, SNR, Hausdorff Distance, and SSIM
+as evaluation criteria because they comprehensively assess the
+effectiveness of point cloud denoising from different dimensions.
+MSE evaluates the accuracy of the algorithm, SNR measures the
+clarity of the signal, Hausdorff Distance assesses geometric
+precision, and SSIM focuses on structural ﬁdelity. By integrating
+these four metrics, it is possible to evaluate the performance of
+denoising algorithms holistically and accurately, thereby providing
+a better understanding of the algorithm’s effectiveness and
+limitations in practical applications.
+(1) MSE refers to the expected value of the squared difference
+between the estimated parameter and the true parameter value. It is
+used to describe the extent of the difference in the point cloud before
+and after denoising. MSE quantiﬁes the prediction error of the
+algorithm or the accuracy of the model by calculating the average of
+the sum of the squared errors between the predicted values and the
+actual values. The formula can be expressed as
+mse = 1
+mo
+m
+i=1
+(yi −^y i)2
+(17)
+where yi   represents the true value, and ^y i represents the
+predicted value. The smaller the MSE, the closer the model’s
+prediction is to the true value. Therefore, in the evaluation of point
+cloud denoising, a lower MSE indicates better denoising performance.
+FIGURE 2
+Model architecture.
+Lu et al.
+10.3389/fpls.2024.1490660
+Frontiers in Plant Science
+frontiersin.org
+06
+
+
+(2) SNR is used to measure the ratio of the power of a signal to
+the power of the noise, typically expressed in decibels (dB). In point
+cloud processing, SNR describes the relative strength of the signal to
+the noise in the point cloud, reﬂecting the clarity of the signal and
+the degree of noise interference. The ratio of the signal power to the
+noise power is commonly multiplied by 10 in its logarithmic form,
+and the speciﬁc formula is as follows:
+SNR = 10lg Ps
+Pn
+(18)
+where Ps represents the power of the signal, and   Pn represents
+the power of the noise. The logarithmic operation in the formula
+ampliﬁes the difference between the signal and noise power,
+allowing SNR to intuitively express the quality of the signal
+in decibels.
+(3) Hausdorff Distance is a metric used to describe the degree of
+similarity between two sets of points, measuring the maximum
+distance between two point clouds. It is often used to assess the
+geometric differences between point clouds before and after
+denoising. Speciﬁcally, the Hausdorff distance is deﬁned as the
+maximum distance from a point in one set to the nearest point in
+another set. If we consider two point sets AAA and BBB, the one-
+way Hausdorff distance between these two sets can be expressed as
+h(P, _P) = max
+pi∈P min
+_pi∈P pi −_pi
+k
+k
+(19)
+where pi −_pi represents the Euclidean distance between pi and
+_pi, and h(P, _P) is also known as the forward Hausdorff distance (Tie,
+2024). The Hausdorff distance emphasizes the farthest minimum
+distance between two point sets, making it sensitive to capturing the
+maximum differences between point clouds. This makes it a
+powerful tool for evaluating point cloud denoising effectiveness,
+especially in applications where maintaining geometric accuracy
+is crucial.
+(4) SSIM is an important metric for measuring the similarity
+between two images, particularly useful for capturing changes in
+structural information. It is also widely used to assess the structural
+similarity between two point clouds. In 3D point cloud processing,
+SSIM can be calculated by projecting the 3D point cloud onto a 2D
+plane, or by using a voxelization method to segment the point cloud
+for calculation. In this study, we adopt a neighborhood-based
+approach to directly compute SSIM in 3D space. The basic
+formula for SSIM is as follows:
+SSIM(x, y) =
+(2mxmy+C1)(2s xy+C2)
+(m2x+m2y+C1)(s 2x+s 2y+C2)
+(20)
+where mx and my are the mean values of images x and y
+respectively; s 2
+x and s 2
+y are the variances of x and y respectively;
+and sxy is the covariance between images x and y. Where C1 =
+(K1L)2 and C2 = (K2L)2 are two constants added to avoid division
+by a small denominator, with L representing the dynamic range of
+the pixel values. In the application of 3D point clouds, SSIM can be
+used to measure the structural similarity of point clouds before and
+after denoising by analyzing both the local structure and global
+distribution of the point cloud. This method allows for a more
+effective evaluation of the point cloud processing algorithm’s ability
+to preserve geometric structure and details.
+3.4 Results analysis
+3.4.1 Quantitative analysis
+This paper analyzes the experimental results of 60 treated
+sample plots and additionally presents the point cloud data
+processing results of two speciﬁc plots, named S5 and S10. To
+evaluate the accuracy, generality, and effectiveness of the algorithm
+used in Lidar point cloud processing for individual tree extraction,
+this paper compares several common denoising methods, including
+Morphological ﬁltering, Progressive Triangulated Network
+Denoising(PTD), Statistical Outlier Removal(SOR), and Radius
+Outlier Removal(ROR). These methods encompass a range of
+processing dimensions, allowing for a more comprehensive
+comparison that highlights the adaptability of the deep learning
+algorithm in handling diverse data characteristics. By comparing
+these traditional methods, it becomes possible to evaluate the
+robustness and adaptability of the deep learning algorithm across
+various denoising scenarios. This comparative analysis not only
+showcases the innovation and efﬁcacy of the deep learning
+algorithm in point cloud denoising but also clariﬁes its
+advantages over traditional methods in practical applications.
+Moreover, this analysis provides valuable insights into the
+algorithm’s performance, offering essential guidance for its further
+optimization and real-world implementation.
+Plots S5 and S10 were chosen for analysis due to their
+complexity, which makes them highly representative. Firstly,
+these plots encompass both densely forested areas and relatively
+sparse regions, capturing a diverse range of forest conditions.
+Secondly, their rugged terrain further highlights their suitability
+as representative samples for this study.
+To quantify the denoising performance of these methods, this
+paper calculates the Mean Squared Error (MSE), Signal-to-Noise
+Ratio (SNR), Hausdorff Distance, and Structural Similarity Index
+(SSIM), and compares the results across several algorithms. MSE
+and SNR provide distinct yet complementary measures of denoising
+quality. Combining these two metrics allows for a more
+comprehensive evaluation of algorithm performance. SSIM and
+Hausdorff Distance, on the other hand, assess the denoising process
+from different perspectives—structural ﬁdelity and geometric
+accuracy, respectively. By comparing SSIM and Hausdorff
+Distance together, we can evaluate the performance of denoising
+algorithms in terms of both structural similarity (measured by
+SSIM) and geometric precision (measured by Hausdorff
+Distance). This dual analysis offers a more thorough assessment
+of algorithm effectiveness, ensuring that the algorithm not only
+preserves the visual and structural similarity of the point clouds but
+also retains their precise geometric structure.
+This study calculates the standard deviation and mean absolute
+deviation for various algorithms across four key metrics, with the
+results summarized in Table 1. Additionally, the outcomes for plots
+S5 and S10 are discussed in detail, as shown in Tables 2, 3,
+respectively. In Table 1, the ﬁrst metric analyzed is MSE. The
+algorithm DEN4 achieves the lowest mean MSE (0.0094) and the
+smallest standard deviation (0.0008), indicating the least error and
+highest stability. In contrast, other methods, such as Morphological
+and SOR, have mean MSE values ranging from 0.0297 to 0.0300,
+Lu et al.
+10.3389/fpls.2024.1490660
+Frontiers in Plant Science
+frontiersin.org
+07
+
+
+which are signiﬁcantly higher than DEN4.The second metric is
+SNR. DEN4 exhibits the highest mean SNR (149.1570), reﬂecting
+the best signal quality post-denoising. Its smallest standard
+deviation (0.5628) further highlights its consistent performance in
+this regard. For the Hausdorff distance, DEN4 achieves the lowest
+mean value (0.8503), demonstrating superior preservation of the
+point cloud’s geometric structure. Its standard deviation is also the
+smallest (0.0947), underscoring its stability in maintaining
+geometric characteristics. Finally, in terms of SSIM, DEN4
+delivers the highest mean value (0.8399) and the smallest
+standard deviation (0.0054), showcasing its outstanding structural
+similarity performance with minimal variability.
+Speciﬁcally, in the S10 point cloud, the algorithm’s MSE value
+decreased by 70.2% compared to PTD and by 37.8% compared to
+ROR, reaching 0.0105. This indicates that the algorithm effectively
+maintains the accuracy of the point cloud data while reducing noise.
+The algorithm’s SNR value is 1-5 dB higher than other algorithms,
+reaching a maximum of 149.4042, indicating a signiﬁcant advantage
+in enhancing signal quality. Additionally, the algorithm’s Hausdorff
+distance is signiﬁcantly lower than other methods, at 0.8466,
+demonstrating its high precision in preserving the geometric
+structure of the point cloud. The algorithm’s SSIM value is
+slightly lower than that of Morphological Filtering and SOR, but
+the differences are minimal. Moreover, the algorithm exhibits a high
+degree of consistency in processing point cloud data across different
+plots (S5 and S10) and demonstrates good robustness. The MSE
+variation is 0.0001, SNR variation is 0.0523, Hausdorff variation is
+0.0350, and SSIM variation is 0.130, with overall error within the
+range of 0% to 5%. Compared to other algorithms, it shows
+excellent stability.
+This paper employs visualization methods to further present the
+experimental data. Figure 3 illustrates the mean and standard
+deviation of four key metrics—MSE, SNR, Hausdorff distance,
+and SSIM—for different algorithms. Figure 4 shows the Euclidean
+distance distribution of ﬁve algorithms: DEN4, Morphological,
+PTD, SOR, and ROR.
+In Figure 3, DEN4’s distribution is highly concentrated, mainly
+within a small distance range (0 to 1), with the highest density peak.
+This indicates that DEN4 produces more compact denoising results,
+with smaller inter-point distances, reﬂecting superior denoising
+performance and stability. In contrast, the distributions of
+Morphological, PTD, SOR, and ROR are more dispersed,
+particularly with higher densities in the large-distance range (2 to
+5). This suggests weaker denoising performance, potentially leading
+to point cloud diffusion or fragmentation.
+Figure 4 reveals that DEN4 achieves the lowest MSE and the
+smallest standard deviation, demonstrating its signiﬁcant advantage
+in minimizing errors compared to other algorithms. Other
+methods, such as Morphological and PTD, exhibit higher MSE
+values and greater error variability. DEN4 also achieves a
+signiﬁcantly higher SNR than the other algorithms, indicating the
+best signal quality after denoising. While the SNR values of other
+algorithms are relatively close, they are consistently lower
+than DEN4.
+Regarding Hausdorff distance, DEN4 achieves the lowest value,
+highlighting its excellent ability to preserve the geometric structure
+of the point cloud. Other algorithms, particularly Morphological
+and PTD, show much higher Hausdorff distances, indicating poorer
+geometric preservation. Moreover, DEN4 achieves the highest SSIM
+value with minimal variation, conﬁrming its superior ability to
+maintain the structural similarity of the point cloud.
+3.4.2 Visual evaluation
+In Figure 5, this paper examines the denoising effect on the S10
+point cloud by sampling and displaying 10,000 randomly selected
+points from the processed data. The results are very clear. In the
+original point cloud, the areas marked by black boxes exhibit
+uneven thickness and contain a signiﬁcant amount of noise.
+TABLE 1 Overall noise reduction sample standard deviation and absolute mean deviation.
+Methodology
+MSE_mean
+MSE_std
+SNR_mean
+SNR_std
+Hausdorff_mean
+Hausdorff_std
+SSIM_mean
+SSIM_std
+DEN4
+0.0094
+0.0008
+149.1570
+0.5628
+0.8503
+0.0947
+0.8399
+0.0054
+Morphological
+0.0299
+0.0058
+146.1743
+1.1729
+5.3568
+1.2884
+0.7649
+0.0297
+PTD
+0.0297
+0.0056
+146.1301
+1.1254
+5.5593
+1.4601
+0.7752
+0.0306
+ROR
+0.0301
+0.0054
+146.1726
+1.0242
+5.2390
+1.4777
+0.7727
+0.0291
+SOR
+0.0300
+0.0055
+145.8800
+1.0088
+5.3034
+1.3772
+0.7724
+0.0307
+TABLE 2 MSE, SNR, Hausdorff and SSIM after S5 treatment Indicator
+calculation results.
+Methodology
+MSE
+SNR
+Hausdorff
+SSIM
+Morphological
+0.0173
+147.2195
+7.5856
+0.834
+PTD
+0.0296
+144.9017
+7.7872
+0.726
+SOR
+0.021
+146.3831
+7.5609
+0.8348
+ROR
+0.0198
+147.5695
+7.5782
+0.834
+DEN4
+0.0106
+149.3518
+0.8116
+0.7749
+TABLE 3
+MSE, SNR, Hausdorff and SSIM after S5 treatment Indicator
+calculation results.
+Methodology
+MSE
+SNR
+Hausdorff
+SSIM
+Morphological
+0.017
+147.3146
+7.5856
+0.834
+PTD
+0.0353
+144.1307
+7.7872
+0.726
+SOR
+0.0222
+146.1539
+7.5609
+0.8348
+ROR
+0.0169
+147.3146
+7.5782
+0.834
+DEN4
+0.0105
+149.4042
+0.8116
+0.7749
+Lu et al.
+10.3389/fpls.2024.1490660
+Frontiers in Plant Science
+frontiersin.org
+08
+
+
+However, in the point cloud processed by the algorithm, the
+thickness is generally consistent, and the distances between the
+points have reached a more ideal state. The denoising process
+signiﬁcantly improved the overall smoothness of the point cloud,
+reducing the aggregation of large noisy point clusters and
+minimizing ﬂoating noise points, resulting in a more uniform and
+clearer point cloud dataset.
+In Figures 6, 7, we present the results of processing the S5 and
+S10 point cloud data using different algorithms, alongside the
+frontal view of the original point cloud. Compared to other
+methods, our algorithm more accurately captures the contours of
+individual trees, while maximizing the preservation of critical
+features such as canopy width, tree height, and diameter at breast
+height. Speciﬁcally, in the upper regions, our algorithm exhibits
+denser color, indicating that the outer contour areas of the point
+cloud are more densely populated with fewer noise artifacts, and the
+point cloud outside the canopy is more concentrated. This
+highlights the superior performance of our algorithm in canopy
+recognition, with more complete feature retention. Additionally, the
+algorithm excels in trunk recognition, clearly delineating the overall
+outline of the tree trunk. In contrast, other algorithms show
+deﬁciencies in analyzing the overall tree structure and contours,
+FIGURE 3
+Comparison of S10 before and after denoising.
+FIGURE 4
+Euclidean distance distribution across algorithms.
+Lu et al.
+10.3389/fpls.2024.1490660
+Frontiers in Plant Science
+frontiersin.org
+09
+
+
+leading to the loss and deformation of some details. These
+traditional methods struggle to adequately preserve the natural
+contours of trees, particularly in maintaining canopy and trunk
+features. In comparison, our algorithm better retains the overall
+structure of the tree, avoiding signiﬁcant deformation and
+information loss, resulting in more accurate and realistic
+processing outcomes.
+In Figures 8, 9, we present the results of processing the S5 and
+S10 point cloud data using different algorithms, along with the
+overhead view of the original point cloud, to compare the overall
+shape and canopy structure after denoising. The method employed
+in this study demonstrates exceptional performance in preserving
+the overall canopy features, effectively removing most of the noise,
+and rendering the primary shape of the point cloud clearer and
+FIGURE 6
+Front view comparison of S5 point cloud.
+FIGURE 5
+Comparison of S10 before and after denoising.
+Lu et al.
+10.3389/fpls.2024.1490660
+Frontiers in Plant Science
+frontiersin.org
+10
+
+
+more complete. Compared to other algorithms, this method not
+only better retains the canopy characteristics but also signiﬁcantly
+reduces the impact of noise on the point cloud’s shape, thereby
+enhancing the visual quality of the denoised results.
+4 Discussion
+4.1 Results discussed
+In this study, we propose an innovative unsupervised deep
+learning-based point cloud denoising algorithm, DEN4, designed to
+enhance the denoising performance of single-tree segmentation in
+LiDAR point clouds. By improving the denoising process, this
+method aims to facilitate more accurate single-tree segmentation
+and related research.
+DEN4 introduces a multi-level noise separation module into its
+network architecture, effectively distinguishing between signal and
+noise. This mechanism ensures the efﬁcient removal of signiﬁcant
+noise while preserving the ﬁne structures of the point cloud,
+signiﬁcantly reducing errors and improving the signal-to-noise
+ratio (SNR). The dual noise-handling design makes DEN4
+particularly suitable for denoising LiDAR point clouds in complex
+scenarios, ensuring consistent performance across diverse datasets.
+Our results demonstrate that DEN4 achieves an MSE mean of
+0.0094, substantially lower than Morphological (0.0299) and PTD
+(0.0297), with a standard deviation of just 0.0008, indicating
+reduced error and exceptional stability. On the S10 dataset, DEN4
+reduced MSE by 70.2% compared to Progressive Triangulated
+Filtering and by 37.8% compared to Radius Outlier Removal.
+Additionally, DEN4 achieves an average SNR of 149.1570,
+signiﬁcantly outperforming Morphological (146.1743) and PTD
+(146.1301). Notably, in the S5 dataset, DEN4’s SNR increases to
+149.4042, highlighting its superior signal retention capabilities.
+Inspired by PointNet and DGCNN architectures, DEN4 reﬁnes
+the local feature extraction module, capturing intricate details of the
+point cloud with precision. This design ensures the preservation of
+local geometric details, such as tree height and diameter at breast
+height, during the denoising process, effectively mitigating common
+issues in traditional methods, such as detail loss and over-
+smoothing. As a result, DEN4 maintains the core structural
+consistency of point clouds across different scales, signiﬁcantly
+improving geometric shape retention. Experimental results
+corroborate this capability: DEN4 achieves an average Hausdorff
+distance of 0.8503, signiﬁcantly lower than Morphological (5.3568),
+PTD (5.5593), and SOR (5.3034). On the S5 dataset, the Hausdorff
+distance further decreases to 0.8116, demonstrating DEN4’s
+outstanding ability to preserve complex geometric structures.
+By integrating global and local feature learning, DEN4 ensures
+that the denoising process not only focuses on ﬁne details but also
+maintains the overall structural consistency of the point cloud. This
+global feature learning capability effectively prevents the shape
+distortions commonly observed in traditional ﬁltering methods,
+ensuring that the denoised point cloud closely aligns with the
+original data. The unsupervised learning mechanism further
+enhances the algorithm’s adaptability to various datasets, resulting
+in consistent performance across diverse environments. This
+adaptability is reﬂected in the SSIM metric, where DEN4 achieves
+an SSIM of 0.8399, outperforming other algorithms in most
+experiments, with minimal variation (standard deviation of only
+0.0054). This demonstrates DEN4’s stable performance in
+preserving the overall structure of the denoised point cloud.
+As an unsupervised algorithm, DEN4 requires no pre-labeled
+data and can adaptively capture the characteristics of different
+FIGURE 7
+Front view comparison of S10 point cloud.
+Lu et al.
+10.3389/fpls.2024.1490660
+Frontiers in Plant Science
+frontiersin.org
+11
+
+
+datasets. This feature enables DEN4 to maintain consistency and
+robustness across diverse forest point cloud datasets. Particularly in
+complex data environments, the unsupervised learning mechanism
+ensures high consistency between the denoised point cloud and the
+original data, enhancing the algorithm’s generalizability in various
+scenarios. This robustness is evidenced by DEN4’s MSE standard
+deviation of just 0.0008, signiﬁcantly lower than other algorithms,
+indicating minimal error ﬂuctuation during the denoising process.
+Similarly, DEN4’s SNR standard deviation of 0.5628 is far lower
+than Morphological (1.1729) and PTD (1.1254), highlighting its
+stable signal quality.
+This study introduces a comprehensive suite of innovative
+designs—including dual noise processing, local feature extraction,
+global feature learning, and unsupervised learning—that collectively
+elevate the quality and stability of point cloud denoising to a new
+standard. The effectiveness of these advancements is evident in their
+superior performance across key metrics: dual noise processing
+achieves optimized MSE and SNR, local feature extraction
+signiﬁcantly reduces Hausdorff distance while preserving
+geometric structures, global feature learning enhances SSIM
+stability, and the unsupervised learning mechanism ensures
+consistent denoising performance across diverse datasets.
+The seamless integration of these design elements enables
+DEN4 to produce exceptionally clean and accurate point clouds
+while preserving intricate details, offering powerful support for
+single-tree segmentation and forest resource management
+applications. These multifaceted improvements not only validate
+the algorithm’s robustness but also highlight its potential for
+transformative applications in complex ecological environments.
+4.2 Conclusion
+Lidar point cloud data is an invaluable resource in the ﬁeld of
+forest survey and management, providing essential parameters and
+metrics that are vital for the effective monitoring and management
+of forest resources. Despite its importance, traditional point cloud
+processing algorithms frequently encounter limitations pertaining
+FIGURE 8
+Overhead view comparison of S5 point cloud.
+Lu et al.
+10.3389/fpls.2024.1490660
+Frontiers in Plant Science
+frontiersin.org
+12
+
+
+to accuracy, robustness, and the maintenance of contour integrity.
+These constraints impede the ability to fully exploit the data in
+complex, real-world settings. In response to these challenges, this
+study undertook an extensive investigation using a dataset
+comprising 17 forest plots located in Qingyuan City, Guangdong
+Province. Following a comprehensive data preprocessing phase, an
+unsupervised deep learning algorithm, speciﬁcally designed for
+point cloud denoising, was introduced and further reﬁned. The
+structure of the algorithm was meticulously redesigned to more
+closely align with the speciﬁc requirements of individual tree
+extraction tasks. By systematically introducing varying levels of
+noise into the dataset and employing multi-layer deep learning
+techniques, this study was able to effectively generate cleaner and
+more accurate point cloud data. The results highlight the potential
+of the proposed algorithm to enhance the precision and reliability of
+point cloud data, thereby contributing to more effective forest
+resource monitoring and management.
+The experimental results demonstrate that the improved
+algorithm not only adapts effectively to various individual tree
+extraction Lidar point cloud datasets but also signiﬁcantly enhances
+the denoising process, resulting in clearer tree outlines. The algorithm
+excels in preserving crucial features such as tree height and diameter
+at breast height, ensuring that these key characteristics remain intact.
+Compared to traditional algorithms, this method shows remarkable
+superiority in both quantitative analysis and visual results,
+highlighting its robustness and precision in maintaining the
+structural integrity of the point cloud data. The clear improvement
+in noise reduction and feature preservation underscores the
+algorithm’s potential for widespread application in the domain of
+individual tree extraction using Lidar point cloud denoising. Its ability
+to deliver consistent and reliable results across different datasets
+further validates its applicability in practical scenarios, making it a
+promising tool for enhancing the accuracy and effectiveness of forest
+resource monitoring and management.
+FIGURE 9
+Overhead view comparison of S10 point cloud.
+Lu et al.
+10.3389/fpls.2024.1490660
+Frontiers in Plant Science
+frontiersin.org
+13
+
+
+Although this study demonstrates the superiority of the
+algorithm in denoising Lidar point clouds for individual tree
+extraction, there is still room for improvement. Since the dataset
+used primarily consists of plots with a single tree species, the
+algorithm’s effectiveness in processing other single-species and
+multi-species scenarios has yet to be validated. It is recommended
+to further explore the algorithm’s potential applications in complex
+mixed forests or large-scale forest surveys. Special attention should be
+given to investigating the impact of different seasons and
+environmental factors (such as light, humidity, and vegetation
+density) on the algorithm’s performance to further enhance its
+generality and robustness. Therefore, future research should aim to
+diversify the dataset to test the algorithm’s applicability across
+different tree species and complex forest environments.
+Additionally, future studies should focus on developing a
+comprehensive deep learning algorithm for individual tree
+extraction and integrating it with other optimized algorithm models.
+This approach will be instrumental in better addressing the
+challenges encountered in practical applications, particularly when
+handling large-scale forest datasets. The complexity of real-world
+environments, including the diversity offorest types and the varying
+conditions under which data is collected, requires algorithms that
+are not only robust and adaptive but also capable of delivering
+precise results across different contexts. By integrating the strengths
+of multiple algorithms, future research can aim to develop point
+cloud processing methods that are both more efﬁcient and more
+accurate. Such methods will be crucial in meeting the increasingly
+sophisticated demands of forest resource surveying and
+management, where the need for high-resolution, reliable data is
+ever-growing. The development of these advanced methodologies
+will not only enhance the accuracy of individual tree extraction and
+related tasks but will also contribute to the broader ﬁeld of
+environmental monitoring and conservation by providing tools
+that are capable of coping with the complexities of natural
+ecosystems on a large scale.
+Data availability statement
+The original contributions presented in the study are included
+in the article/supplementary material. Further inquiries can be
+directed to the corresponding author.
+Author contributions
+XL: Writing – review & editing, Conceptualization, Data
+curation, Formal Analysis, Methodology, Project administration,
+Resources, Software, Supervision, Validation, Visualization,
+Writing – original draft. ZY: Conceptualization, Data curation,
+Formal Analysis, Writing – original draft, Writing – review &
+editing. LF: Writing – original draft, Investigation, Methodology,
+Project administration, Resources. HW: Writing – review & editing.
+KW: Writing – original draft. YD: Writing – review & editing. DX:
+Writing – review & editing. XZ: Writing – review & editing,
+Funding acquisition, Investigation.
+Funding
+The author(s) declare that ﬁnancial support was received for the
+research, authorship, and/or publication of this article. This study is
+supported by the Fundamental Research Funds of Chinese Academy
+of Forestry: Theoretical Framework and Method for Accurate
+Estimation of the Full Life-Cycle Carbon Sink Potential in Masson
+Pine Artiﬁcial Monoculture Forests (CAFYBB2023MB019); An
+airborne LiDAR-based model for estimating stand volume and
+aboveground biomass of major tree species in Guangdong Province
+(2021KJCX001); the Fundamental Research Funds of Chinese
+Academy of Forestry: Precision Estimation Study of Carbon Sink
+Potential in Deciduous Forests in the Yellow River Basin
+(CAFYBB2023PA006-02).
+Acknowledgments
+We thank the State Forestry and Grassland Administration of
+China for its support and the Guangdong Forestry Planning
+Institute for data support.
+Conﬂict of interest
+The authors declare that the research was conducted in the
+absence of any commercial or ﬁnancial relationships that could be
+construed as a potential conﬂict of interest.
+Publisher’s note
+All claims expressed in this article are solely those of the authors
+and do not necessarily represent those of their afﬁliated
+organizations, or those of the publisher, the editors and the
+reviewers. Any product that may be evaluated in this article, or
+claim that may be made by its manufacturer, is not guaranteed or
+endorsed by the publisher.
+References
+Cao, L., She, G., Dai, J., and Xu, J. (2013). Status and prospects of the LiDAR-based
+forest biomass estimation. J. Nanjing Forestry University(Natural Sci. Edition) 37, 163–
+169. doi: 10.3969/j.issn.1000-2006.2013.03.029
+Casajus, P. H., Ritschel, T., and Ropinski, T. (2019). “Total denoising: unsupervised
+learning of 3D point cloud cleaning,” 2019 IEEE/CVF International Conference on
+Computer Vision (ICCV)). Seoul, Korea (South), 52–60. doi: 10.1109/ICCV.2019.00014
+Lu et al.
+10.3389/fpls.2024.1490660
+Frontiers in Plant Science
+frontiersin.org
+14
+
+
+Choudhury, P., and Tumblin, J. (2003). The trilateral ﬁlter for high contrast images
+and meshes. ACM SIGGRAPH 2005 Courses. doi: 10.1145/1198555.1198565
+Cox, E., Beckley, T. M., and de Graaf, M. (2023). Carbon sequestration and storage
+implications of three forest management regimes in the Wabanaki-Acadian Forest: A
+review of the evidence. Environ. Rev. 32, 1–15. doi: 10.1139/er-2022-0097
+Daniel, T. C., Muhar, A., Arnberger, A., Aznar, O., Boyd, J. W., Chan, K. M. A., et al.
+(2012). Contributions of cultural services to the ecosystem services agenda. Proc. Natl.
+Acad. Sci. 109, 8812–8819. doi: 10.1073/pnas.1114773109
+Duan, C., Chen, S., and Kovacevic, J. (2019). “3D point cloud denoising via deep
+neural network based local surface estimation,” in ICASSP 2019 - 2019 IEEE
+International Conference on Acoustics, Speech and Signal Processing (ICASSP)).
+Brighton, UK. 8553–8557. doi: 10.1109/ICASSP.2019.8682812
+Guo, Q., Liu, J., Tao, S., Xue, P., Li, L., Xu, G., et al. (2014). Perspectives and prospects
+of LiDAR in forest ecosystem monitoring and modeling. Chin. Sci. Bull. 59, 459–478.
+doi: 10.1360/972013-592
+Guo, Y., Liu, Q., Liu, G., and Huang, C. (2016). Individual tree crown extraction of
+high resolution image based on marker-controlled watershed segmentation method. J.
+Geo-information Sci. 18, 1259–1266. doi: 10.3724/SP.J.1047.2016.01259
+Handegard, E., Gjerde, I., Halvorsen, R., Lewis, R., Storaunet, K. O., Sætersdal, M.,
+et al. (2024). How important is Forest Age in explaining the species composition of
+Near-natural Spruce Forests? For. Ecol. Manage. 569, 122170. doi: 10.1016/
+j.foreco.2024.122170
+Harris, N. L., Gibbs, D. A., Baccini, A., Birdsey, R. A., de Bruin, S., Farina, M., et al.
+(2021). Global maps of twenty-ﬁrst century forest carbon ﬂuxes. Nat. Climate Change
+11, 234–240. doi: 10.1038/s41558-020-00976-6
+Jandl, R., Vesterdal, L., Olsson, M., Bens, O., Badeck, F., and Roc, J. (2007). Carbon
+sequestration and forest management. CABI Rev. 2007), 16 pp. doi: 10.1079/
+PAVSNNR20072017
+Javaheri, A., Brites, C., Pereira, F., and Ascenso, J. (2020). “A generalized Hausdorff
+distance based quality metric for point cloud geometry,” in 2020 Twelfth International
+Conference on Quality of Multimedia Experience (QoMEX)). Athlone, Ireland. 1–6. doi:
+10.1109/QoMEX48832.2020.9123087
+Jie, Z., Minghui, N., Jiaxu, W., and Xiuping, L. (2024). Density prior-guided
+unsupervised deep point cloud denoising algorithm. J. Computer-Aided Design
+Comput. Graphics 36, 283–293. doi: 10.3724/SP.J.1089.2024.19907
+Ko, H., and Son, Y. (2018). Perceptions of cultural ecosystem services in urban green
+spaces: A case study in Gwacheon, Republic of Korea. Ecol. Indic. 91, 299–306.
+doi: 10.1016/j.ecolind.2018.04.006
+Lewis, S. L., Edwards, D. P., and Galbraith, D. (2015). Increasing human dominance
+of tropical forests. Science 349, 827–832. doi: 10.1126/science.aaa9932
+Li, W., and Wang, X. (2024). Individual tree segmentation algorithm of Pinus
+massonianaForest based on fusion point cloud data. For. grassland Resour. Res. 02), 92–
+100. doi: 10.13466/j.cnki.lczyyj.2024.02.011
+Li, Z., Liu, Q., and Pang, Y. (2016). Review on forest parameters inversion using
+LiDAR. Natl. Remote Sens. Bull. 20, 1138–1150. doi: 10.11834/jrs.20165130
+Liang, X., Liang, J., Guo, C., and Cao, J. (2010). Study on scatter point cloud
+denoising technology based on self-adaptive optimal neighborhood. China Mechanical
+Eng. 21, 639–643. doi: 10.4028/www.scientiﬁc.net/AMR.97-101.3631
+Liu, L., and Pang, Y. (2014). Applications of airborne laser scanning and terrestrial
+laser scanning to forestry. World Forestry Res. 27, 49–56. doi: 10.13348/
+j.cnki.sjlyyj.2014.01.009
+Liu, Q., Li, S., Li, Z., Fu, L., and Hu, K. (2017). Review on the applications of UAV-
+based liDAR and photogrammetry in forestry. Scientia Silvae Sinicae 53, 134–148.
+doi: 10.11707/j.1001-7488.20170714
+Liu, Y., Zou, B., Xu, J., Yang, S., and Li, Y. (2022). Denoising for 3D point cloud based
+on regularization of a statistical low-dimensional manifold. Sensors (Basel Switzerland)
+22, 2666. doi: 10.3390/s22072666
+Lu, D., and zou, J. (2019). Comparative research on denoising algorithms of 3D laser
+point cloud. Bull. Surveying Mapp. S2), 102–105. doi: 10.13474/j.cnki.11-
+2246.2019.0599
+Luo, S., and Hu, W. (2021). “Score-based point cloud denoising,” in 2021 IEEE/CVF
+International Conference on Computer Vision (ICCV)). Montreal, QC, Canada. 4563–
+4572. doi: 10.1109/ICCV48922.2021.00454
+Ma, K. (2023). Ground-based lidar forest stand point cloud single wood separation
+and parameter extraction study, doctor.Central South University of Forestry and
+Technology. doi: 10.27662/d.cnki.gznlc.2023.001153
+Maltamo, M., Eerikäinen, K., Pitkänen, J., Hyyppä, J., and Vehmas, M. (2004).
+Estimation of timber volume and stem density based on scanning laser altimetry and
+expected tree size distribution functions. Remote Sens. Environ. 90, 319–330.
+doi: 10.1016/j.rse.2004.01.006
+Mao, A., Du, Z., Wen, Y.-H., Xuan, J., and Liu, Y.-J. (2022). “PD-ﬂow: A point cloud
+denoising framework with normalizing ﬂows,” in Computer Vision – ECCV 2022. Eds.
+S. Avidan, G. Brostow, M. Cissé, G. M. Farinella and T. Hassner (Springer Nature
+Switzerland), 398–415.
+Menut, L., Cholakian, A., Siour, G., Lapere, R., Pennel, R., Mailler, S., et al. (2023).
+Impact of Landes forest ﬁres on air quality in France during the 2022 summer. Atmos.
+Chem. Phys. 23, 7281–7296. doi: 10.5194/acp-23-7281-2023
+Millennium ecosystem assessment, M (2005). Ecosystems and human well-being
+(Washington, DC: Island press).
+Myers, N., Mittermeier, R. A., Mittermeier, C. G., da Fonseca, G. A. B., and Kent, J.
+(2000). Biodiversity hotspots for conservation priorities. Nature 403, 853–858.
+doi: 10.1038/35002501
+Piao, S., Yue, C., Ding, J., and Guo, Z. (2022). Perspectives on the role of terrestrial
+ecosystems in the ‘carbon neutrality’ strategy. Sci. China Earth Sci. 65, 1178–1186.
+doi: 10.1007/s11430-022-9926-6
+Rakotosaona, M.-J., Barbera, V. L., Guerrero, P., Mitra, N. J., and Ovsjanikov, M.
+(2019). PointCleanNet: learning to denoise and remove outliers from dense point
+clouds. Comput. Graphics Forum 39. doi: 10.48550/arXiv.1901.01060
+Riaño, D., Valladares, F., Condés, S., and Chuvieco, E. (2004). Estimation of leaf area
+index and covered ground from airborne laser scanner (Lidar) in two contrasting
+forests. Agric. For. Meteorology 124, 269–275. doi: 10.1016/j.agrformet.2004.02.005
+Sabatini, F. M., Burrascano, S., Keeton, W. S., Levers, C., Lindner, M., Pötzschner, F.,
+et al. (2018). Where are Europe’s last primary forests? Diversity Distributions 24, 1426–
+1439. doi: 10.1111/ddi.12778
+Schall, O., Belyaev, A. G., and Seidel, H.-P. (2008). Adaptive feature-preserving non-
+local denoising of static and time-varying range data. Comput. Aided Des. 40, 701–707.
+doi: 10.1016/j.cad.2008.01.011
+Sun, Y., Jiang, L., Pan, J., Sheng, S., and Hao, L. (2023). A satellite imagery smoke
+detection framework based on the Mahalanobis distance for early ﬁre identiﬁcation and
+positioning. Int. J. Appl. Earth Obs. Geoinformation 118, 103257. doi: 10.1016/
+j.jag.2023.103257
+Tie, Z. (2024). Multi-scale linear feature matching using improved Hausdorff
+distance. Geospatial Inf. 22, 62–65. doi: 10. 3969/j.issn.1672-4623.2024.05.012
+Wang, W., Liu, X., Zhou, H., Wei, L., Deng, Z., Murshed, M., et al. (2024).
+Noise4Denoise: Leveraging noise for unsupervised point cloud denoising. Comput.
+Visual Media. 10, 659–669. doi: 10.1007/s41095-024-0423-3
+Wu, X.-k., Wang, H.-y., Feng, B.-k., Wang, C., and Zhang, G.-t. (2023). Individual
+Tree Biomass Estimation Based on UAV Airborne LiDAR. Guilin University of
+Technology. doi: 10.27050/d.cnki.gglgc.2023.000692
+Xu, S., Li, C., and Zhang, C. (2024) Extraction of DBH and height of Pinus
+yunnanensis individual trees by combining backpack laser scanning and unmanned
+aerial vehicle laser scanning. J. Zhejiang A&F Univ. 41 (5), 939–948.
+Yong Pang, Z. L., Chen, X., and Sun, G. (2005). Lidar remote sensing technology and
+its application in forestry. Scientia Silvae Sinicae 03), 129–136.
+Zhang, D., Lu, X., Qin, H., and He, Y. (2020). Pointﬁlter: point cloud ﬁltering via
+encoder-decoder modeling. IEEE Trans. Visualization Comput. Graphics 27, 2015–
+2027. doi: 10.1109/TVCG.2945
+Zhao, K., Popescu, S. C., and Nelson, R. F. (2009). Lidar remote sensing of forest
+biomass: A scale-invariant estimation approach using airborne lasers. Remote Sens.
+Environ. 113, 182–196. doi: 10.1016/j.rse.2008.09.009
+Lu et al.
+10.3389/fpls.2024.1490660
+Frontiers in Plant Science
+frontiersin.org
+15

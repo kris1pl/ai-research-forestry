@@ -1,0 +1,1098 @@
+Remote Sensing of Environment 319 (2025) 114618
+Available online 1 February 2025
+0034-4257/© 2025 The Authors. Published by Elsevier Inc. This is an open access article under the CC BY license (http://creativecommons.org/licenses/by/4.0/).
+Contents lists available at ScienceDirect
+Remote Sensing of Environment
+journal homepage: www.elsevier.com/locate/rse
+Individual tree crown delineation in high resolution aerial RGB imagery
+using StarDist-based model
+Fei Tong ∗, Yun Zhang
+Department of Geodesy and Geomatics Engineering, University of New Brunswick, 15 Dineen Drive, Fredericton, NB E3B 5A3, Canada
+A R T I C L E
+I N F O
+Edited by Marie Weiss
+Keywords:
+Deep learning
+Image segmentation
+StarDist
+Tree crown delineation
+Star-convex polygon
+A B S T R A C T
+The availability of high spatial resolution remote sensing imagery has facilitated forestry attribute estimation
+at the individual tree level. However, producing accurate tree crown delineations for practical applications
+remains challenging, particularly in mixed forests with overlapping tree crowns. In this study, we propose an
+individual tree crown delineation method leveraging the StarDist model to improve the delineation accuracy in
+mixed forests. The StarDist model captures tree crown shapes uniquely through star-convex polygons, which
+are predicted by the U-Net architecture. The final tree crowns are determined by applying non-maximum
+suppression (NMS) to all identified star-convex polygons. Performance evaluation on two mixed forest areas
+reveals a delineation accuracy exceeding 92%, notably outperforming the widely used deep learning model
+MASK R-CNN by over 6%. In terms of tree crown areas estimation, the 𝑅2 for both testing areas is higher
+than 0.85 for both testing areas. Moreover, the evaluations on precision, recall, and F1-score demonstrate that
+the proposed model can generate tree crowns fitting well with the true crowns. This study marks the first
+utilization of the StarDist model for tree crown delineation in mixed forests. Our findings demonstrate the
+effectiveness of the StarDist model for accurately delineating individual tree crowns, thereby advancing the
+field of forestry research.
+1. Introduction
+Accurately estimating forestry attributes is crucial for effective for-
+est management and assessing the impacts of climate change. In recent
+years, there has been a growing interest in automatically estimating
+these attributes from remote sensing imagery due to the high cost and
+time associated with traditional field surveys. Compared to pixel-based
+estimation methods, individual tree-based approaches offer the poten-
+tial for higher accuracy by providing more detailed information on
+individual trees. Well-delineated tree crowns are helpful for improving
+the estimation accuracy of forestry attributes like crown cover (Bai
+et al., 2005), crown size (Zhang et al., 2010), diameter of breast height
+(DBH) (Dalponte et al., 2018), and biomass (Graves et al., 2018).
+However, automatically delineating individual tree crowns from remote
+sensing imagery remains a challenging task.
+For automated delineation of individual tree crowns, two categories
+of methods have been developed: traditional approaches and deep
+learning-based approaches. According to the review by Ke and Quack-
+enbush (2011), traditional tree crown delineation approaches can be
+categorized into three main types: valley following, region growing,
+and watershed segmentation. Valley following relies on shaded gaps
+within the forest to delineate tree crowns (Gougeon et al., 1998).
+∗Corresponding author.
+E-mail address: ftong@unb.ca (F. Tong).
+While it performs well in mature coniferous stands, its accuracy dimin-
+ishes in self-shaded tree crowns or challenging forest conditions where
+detecting shaded gaps becomes problematic. Region growing is also
+widely used for tree crown delineation. It usually utilizes the spectral
+characteristics of tree crowns to conduct the delineation (Culvenor,
+2002; Erikson, 2003; Ferreira et al., 2014; Gu and Congalton, 2021).
+Typically, the region growing algorithm requires seed points to start
+growing and criteria to stop growing. To get accurate seed points,
+it usually requires to detect treetops. However, accurately detecting
+treetops in complex mixed forests is difficult. To get optimal crite-
+ria to stop growing, optimal thresholds are always required to be
+manually determined. However, selecting a forest-wide threshold is
+difficult, especially for complex mixed forests. Watershed segmentation
+approaches are mostly conducted based on the edge information in the
+image. However, the performance of the tree crown delineation is neg-
+atively affected by the noise in the image, resulting in over-segmented
+tree crowns.
+To improve traditional watershed segmentation, two groups of ap-
+proaches were proposed to avoid over-segmentation in results. The first
+group of approaches is multiscale analysis. Jing et al. (2012) conducted
+multiscale watershed segmentation based on images smoothed by three
+https://doi.org/10.1016/j.rse.2025.114618
+Received 20 September 2024; Received in revised form 30 December 2024; Accepted 21 January 2025
+
+
+Remote Sensing of Environment 319 (2025) 114618
+2
+F. Tong and Y. Zhang
+dominant scales of Gaussian filters. Then optimal delineations were se-
+lected from the results of different scales. However, the three dominant
+scales may not adequately capture the variability in real tree crown
+scales. Yang et al. (2014) conducted watershed segmentation based on
+the calculated gradient image. Then multiscale thresholds were adopted
+to generate multiscale delineations. The final segmentation was deter-
+mined by automatically selecting the tree crown in the optimal scale.
+However, since it is difficult to get the optimal scale for every tree
+crown, the delineation result still had a lot of over-segmented tree
+crowns. The second group of approaches to mitigate over-segmentation
+is marker-controlled watershed segmentation, where markers are de-
+tected treetops based on local maxima detection. Wang et al. (2004)
+and Wang (2010) detected two different types of treetops, spectral
+local maxima and spatial local maxima. Since both types of treetops
+were not perfect, the final treetops were spectral local maxima refined
+by spatial local maxima. Lamar et al. (2005) and Tong et al. (2021)
+utilized the spatial local maxima to detect treetops. After adding tree-
+tops as markers for watershed segmentation, the over-segmentations
+are effectively reduced. However, treetop detection always requires
+accurate tree crown border information, which is difficult to obtain
+using traditional image processing methods. Except for commonly used
+delineation approaches, Wagner et al. (2018) conducted tree crown
+delineation using mathematical morphological operations to achieve
+high delineation accuracy in a highly diverse tropical forest. However,
+since this method requires multiple manually assigned parameters, it
+is unsure that this method can work well for the delineations using
+different datasets.
+More recently, deep learning-based approaches has been developed
+for the tree crown delineation task (Zhao et al., 2023; Ozdarici-ok
+and Ok, 2023; Li et al., 2023; Straker et al., 2023; Dersch et al.,
+2024). One category of deep learning approaches combined deep learn-
+ing with watershed segmentation. For instance, Lassalle et al. (2022)
+utilized a CNN model to compute the distance map indicating pix-
+els’ distances to the nearest tree crown borders. Subsequently, tree-
+tops were identified by locating local maxima in the distance map,
+and marker-controlled watershed segmentation was applied to pro-
+duce the final delineation outcome based on the distance map and
+detected treetops. Similarly, Freudenberg et al. (2022) utilized the U-
+Net (Ronneberger et al., 2015) to predict the tree crown mask, tree
+crown outlines, and the distance map. The watershed segmentation was
+then performed based on a combination of these outputs. These ap-
+proaches leverage deep learning to generate the necessary information
+for marker-controlled watershed segmentation, resulting in superior
+performance compared to traditional watershed segmentation algo-
+rithms. Another category of deep learning approaches adopts instance
+segmentation techniques. Specifically, MASK-RCNN (He et al., 2017) is
+the most widely used deep learning model for tree crown delineation
+research (Braga et al., 2020; Hao et al., 2021; Dersch et al., 2023; Ball
+et al., 2023). Braga et al. (2020) adopted the MASK R-CNN to perform
+tree crown detection and delineation on high-resolution satellite images
+from tropical forests. Hao et al. (2021) utilized the MASK R-CNN to
+detect discontinuous tree crowns and predict tree heights on UAV
+imagery. Dersch et al. (2023) evaluated the performance of MASK R-
+CNN for delineating tree crowns on UAV imagery collected from a
+mixed forest stand. Ball et al. (2023) built a model called Detectree2
+based on the Mask R-CNN to delineate tree crowns in on airborne RGB
+imagery collected from tropical forests.
+Overall, deep learning-based delineation methods usually outper-
+form traditional approaches, as they leverage training samples and
+excel at extracting information from imagery. However, several chal-
+lenges remain in deep learning-based delineation methods. For the
+methods combining deep learning with watershed segmentation, since
+watershed segmentation often requires post-processing, such as noise
+removal or determination of markers, some manually assigned hyper-
+parameters are required. Finding optimal values for these hyperpa-
+rameters can be challenging and inconsistent across different images
+or environments. Although instance segmentation can avoid extra hy-
+perparameters, it still has some problems. In instance segmentation
+methods like MASK R-CNN, the Non-Maximum Suppression (NMS)
+process is adopted to suppress redundant detections. However, because
+NMS relies on axis-aligned bounding boxes that do not accurately
+reflect the true shapes of tree crowns, it can result in incorrect delin-
+eation, especially when tree crowns overlap. Moreover, annotating tree
+crowns in dense mixed forests for the training of deep learning models
+is also challenging. Since some tree crowns in the collected imagery are
+indistinguishable, especially when only RGB images are available, it is
+difficult to accurately annotate all tree crowns in the imagery.
+According to the review of existing approaches for tree crown
+delineation, we propose a robust and efficient tree crown delineation
+method based on the StarDist model (Schmidt et al., 2018), which was
+initially developed for cell nuclei segmentation in microscopy images.
+The proposed StarDist-based model focus on overcoming the problems
+existing in instance segmentation methods:
+1. Instead of commonly-used axis-aligned bounding boxes that fail
+to accurately capture tree crown shapes, star-convex polygons,
+which fit the characteristics of tree crowns, are adopted to
+improve delineation accuracy.
+2. Given the challenge of annotating all tree crowns in an image
+for training, we modify the loss function to allow the StarDist
+model to be trained with sparsely annotated tree crowns.
+Since star-convex polygons can accurately capture the shapes of most
+tree crowns, the proposed method can generate more accurate delin-
+eation results in mixed forests. Additionally, because the model can
+be trained with sparsely annotated tree crowns, it is easily applicable
+to mixed forests for delineation. To evaluate the performance of our
+StarDist-based model, we applied it to delineate individual tree crowns
+in a complex mixed forest using commonly available RGB aerial im-
+agery and assessed its accuracy with multiple tree crown delineation
+evaluation metrics. Compared to the widely recognized benchmark
+model MASK R-CNN, our StarDist-based model achieved an accuracy
+improvement of over 6% across two testing areas containing more
+than five different tree species. Furthermore, we analyze the impact
+of hyperparameters and imagery spatial resolutions on delineation
+accuracy to provide guidance for future users in applying the proposed
+model in delineation tasks.
+The rest of this article is organized as follows. Section 2 provides the
+description of study sites, details of the proposed tree crown delineation
+method, and the introduction of tree crown delineation evaluation
+metrics. The experimental results are presented in Section 3, includ-
+ing the description of the delineation results, analysis of delineation
+errors, and the comparison with other methods. Section 4 analyzes the
+parameter settings of the proposed delineation method, analyzes the
+effect of spatial resolution, explores perspectives for forest research,
+and suggests possible further improvements. Section 5 provides the
+overall conclusion for the research.
+2. Materials and methods
+2.1. Study site
+The study site selected for this research is within the Acadia Re-
+search Forest (ARF) located in New Brunswick, Canada (as shown in
+Fig. 1). The forest comprises approximately 9000 hectares of mixed
+forest containing softwood, hardwood, and mixed-wood stands. Among
+the predominant tree species in the forest are: (1) black and red
+spruce, (2) white, red and jack pine, (3) balsam fir, (4) red and sugar
+maple, (5) white, gray and yellow birch, (6) eastern hemlock, and
+(7) eastern white cedar. The climate in the ARF is characterized by
+a blend of maritime and continental influences, with slightly warmer
+temperatures compared to surrounding areas owing to its proximity to
+New Brunswick’s Grand Lake. The average growing season spans 91
+
+
+Remote Sensing of Environment 319 (2025) 114618
+3
+F. Tong and Y. Zhang
+Fig. 1. Training and testing areas in Acadia Research Forest. (For interpretation of the references to color in this figure legend, the reader is referred to the web version of this
+article.)
+days, with an annual precipitation averaging 1143.5 mm. Typically,
+January is the coldest month, while July tends to be the warmest. In
+ARF, one area with mixed tree species was selected for training, while
+two additional areas were reserved for testing purposes, as shown in
+Fig. 1. Testing area 1 is adjacent to the training area while testing
+area 2 is located 1 km away from the raining area. The delineations
+in this research were conducted based on the Aerial RGB images
+collected on July 22, 2021. The RGB images were collected by the RGB
+camera with 150 megapixel resolution in the Riegl VQ-1560i sensor.
+The focal length of the camera lens is 50 mm and the field of view is
+approximately 56.2◦× 43.7◦. Aside from the necessary pre-processing
+to convert raw data into orthoimagery, no additional processing was
+applied to enhance image quality. The spatial resolution of the collected
+image is 15 cm, adequately meeting the requirements for tree crown
+delineation. The training and testing ground truth tree crowns were
+manually delineated based on the RGB image and the canopy height
+model (CHM) image derived from LiDAR data collected in the same
+time period. It is important to note that some tree crowns in the
+forest were indistinguishable to human eyes. To minimize errors in
+manual delineation, most of the selected ground truth tree crowns
+were from the forest’s dominant layer, where tree crowns are more
+distinguishable. Within the training area, a total of 1514 tree crowns
+were manually annotated, while in the two testing areas, 1135 and
+652 tree crowns were respectively annotated for validation. In the
+bottom row of the Fig. 1, two subsections from each area are cropped
+to show manually annotated tree crowns. The dominant tree species
+in selected training and testing areas include red maple, white birch,
+balsam fir, black and red spruce, and white pine. To provide insight
+into the variation of tree crown sizes across all study areas, histograms
+illustrating tree crown sizes are presented in Fig. 2.
+2.2. Tree crown delineation based on StarDist model
+Although the MASK R-CNN model has been widely used in tree
+crown delineation tasks, since the axis-aligned bounding boxes cannot
+
+
+Remote Sensing of Environment 319 (2025) 114618
+4
+F. Tong and Y. Zhang
+Fig. 2. Histograms of tree crown sizes for training and testing areas.
+Fig. 3. Incorrect delineations caused by axis-aligned bounding boxes.
+accurately represent the shape of tree crowns, some incorrect delin-
+eations could be generated in mixed forest. For the image in the first
+row of Fig. 3, the bounding box for the crown 1 caused the omission of
+the crown 2. For the image in the second row of Fig. 3, the bounding
+box for the crown 1 caused the irregular shape of the crown 2.
+In this research, to accurately delineate tree crowns in mixed forests,
+the StarDist model that performed well on cell segmentation (Schmidt
+et al., 2018) is adopted to segment tree crowns. When the StarDist
+model was proposed, it used star-convex polygons to approximate the
+typically roundish shapes of cell nuclei in microscopy images. Since
+most tree crowns also have roundish shapes, the star-convex polygons
+can well approximate tree crowns in remote sensing imagery. The
+StarDist model comprises two primary components: (1) tree crown
+probability and tree crown shape prediction, (2) tree crown determi-
+nation. Specifically, for each pixel (𝑖, 𝑗) in the image, the tree crown
+probability 𝑝(𝑖, 𝑗) is the normalized Euclidean distance to the nearest
+background pixel, and the shape of the tree crown centered at (𝑖, 𝑗)
+is represented by distances {𝑑𝑘(𝑖, 𝑗)}𝑛
+𝑘=1 to the boundary of the cor-
+responding tree crown along a set of 𝑛predefined radial directions
+with equidistant angles. An example of star-convex polygon with 16
+radial distances is shown in Fig. 4. It can be observed that the poly-
+gon recovered from radial distances can well match the contours of
+the object, thus accurately representing the shape of the tree crown.
+Moreover, unlike axis-aligned bounding boxes based methods, the sub-
+sequent segmentation is not required. In this study, the 𝑛is set as
+32 since it is sufficient to accurately describe most of the roundish
+shapes (Schmidt et al., 2018; Hu et al., 2023). For the first component,
+a simple U-Net architecture (Ronneberger et al., 2015) is trained for
+prediction purposes. Subsequently, the second component utilizes non-
+maximum suppression (NMS) (Hosang et al., 2017) on candidate tree
+crowns to determine the final delineation. Further details regarding
+each component are provided in the subsequent sections.
+2.2.1. Tree crown probability and tree crown shapes determined by U-net
+The U-Net utilized in the proposed tree crown delineation method
+is illustrated in Fig. 5. The size of the input image tile is 256 × 256. For
+the encoding part of the U-Net, the image size is progressively down-
+sampled to 32 × 32 by a series of convolutional layers followed by max
+pooling operations. In the decoding part, utilizing skip-connections,
+convolution layers, and upsampling operations, the original spatial
+resolution is reconstructed and high level features are extracted. Af-
+ter U-Net feature extraction, the shape of the output feature map
+is 256 × 256 × 32. To prevent contention for features among two
+subsequent output layers, an additional 3 × 3 convolutional layer with
+128 channels is adopted. A 32-channel convolutional layer with a
+kernel size of 1 × 1 followed by linear activation is utilized to output
+
+
+Remote Sensing of Environment 319 (2025) 114618
+5
+F. Tong and Y. Zhang
+Fig. 4. An example of star-convex polygon: (a) a polygon represented by 16 radial distances; (b) polygon recovered from radial distances (blue line) and real polygon (red dash
+line). (For interpretation of the references to color in this figure legend, the reader is referred to the web version of this article.)
+Fig. 5. U-Net used for tree crown delineation.
+radial distances {𝑑𝑘(𝑖, 𝑗)}𝑛
+𝑘=1. A single-channel convolutional layer with
+a kernel size of 1 × 1 followed by sigmoid activation is employed to
+output the object probability 𝑝(𝑖, 𝑗). The loss function of the model
+comprises two components, the object probability loss and the radial
+distances loss. Assuming that the predicted pixel-wise object probability
+and radial distances are ( ̂𝑝, { ̂𝑑𝑘}𝑛
+𝑘=1), and ground-truths are (𝑝, {𝑑𝑘}𝑛
+𝑘=1),
+the loss function is defined as:
+𝐿(𝑝, ̂𝑝, {𝑑𝑘}𝑛
+𝑘=1, { ̂𝑑𝑘}𝑛
+𝑘=1) = 𝐿𝑜𝑏𝑗(𝑝, ̂𝑝) + 𝜆𝐿𝑑 𝑖𝑠𝑡({𝑑𝑘}𝑛
+𝑘=1, { ̂𝑑𝑘}𝑛
+𝑘=1)
+(1)
+where 𝜆is empirically set as 0.2 as this value demonstrated excellent
+performance in the original StarDist model1 for cell nuclei segmenta-
+tion. The object probability loss 𝐿𝑜𝑏𝑗is calculated using the standard
+binary cross-entropy function:
+𝐿𝑜𝑏𝑗(𝑝, ̂𝑝) = −𝑝log ̂𝑝− (1 −𝑝) log(1 −̂𝑝)
+(2)
+1 https://github.com/stardist/stardist.
+Meanwhile, the radial distances loss is calculated using the mean
+absolute error weighted by the object probability:
+𝐿𝑑 𝑖𝑠𝑡({𝑑𝑘}𝑛
+𝑘=1, { ̂𝑑𝑘}𝑛
+𝑘=1) = 𝑝⋅1
+𝑛⋅
+𝑛
+∑
+𝑘=1
+|𝑑𝑘−̂𝑑𝑘|
+(3)
+Since radial distances loss is weighted by the object probability, the
+accuracy of predictions near object centers is enhanced.
+Since the probability loss 𝐿𝑜𝑏𝑗in original StarDist model considers
+both object and background pixels, it requires fully annotated training
+patches, in which every object is annotated. However, for the tree
+crown delineation task, since some tree crowns in co-dominant or inter-
+mediate layers are not distinguishable in the RGB imagery, only sparse
+annotated tree crowns were available. Therefore, if original StarDist
+model is trained with sparsely annotated tree crowns, only tree crowns
+similar to training samples will have high object probability while other
+tree crowns will have low object probabilities, which will negatively
+affect the delineation performance. From the example training patches
+
+
+Remote Sensing of Environment 319 (2025) 114618
+6
+F. Tong and Y. Zhang
+Fig. 6. Sample image and outputs of U-Net: (a) input image; (b) original object probability map; (c) object probability map with 𝑝 > 0 constraint; (d) the convex-polygon represented
+by radial distances for one pixel.
+shown at the bottom of Fig. 1 (highlighted by purple rectangles), it is
+evident that only portions of the tree crowns were annotated, while
+other parts were treated as background. During training, the model
+aims to increase the object probability for the annotated tree crowns
+while reducing it for the background. However, some tree crowns in the
+background closely resemble the annotated ones, confusing the model
+and reducing the object probability for the annotated tree crowns. In
+Fig. 6(b), it can be observed that trained with the original loss function,
+only a few tree crowns in the center of the image have high object
+probabilities, while other tree crowns have very low probabilities. To
+optimize the object probability map, a constraint 𝑝 > 0 was added to
+the probability loss 𝐿𝑜𝑏𝑗, which means the loss function is exclusively
+computed based on annotated tree crowns (𝑝 > 0), with background
+pixels (𝑝= 0) excluded from consideration. Since the model only con-
+siders annotated tree crowns in the object loss function, the predicted
+object probability by the trained model will be closely relevant to
+the similarity between training tree crowns and testing tree crowns.
+Therefore, if tree crowns in testing images are similar to annotated
+training tree crowns, their object probabilities are high. As shown in
+Fig. 6(c), most tree crowns have high object probabilities after adding
+the constraint.
+To train the U-Net model, two input images are required: (1) the
+RGB image tile with the size of 256 × 256, and (2) the corresponding
+mask image for ground truth tree crowns. The object probability and
+radial distances were calculated from the mask image. The reference
+object probability map was obtained by computing the normalized
+Euclidean distance transform between each pixel and the borders of
+the training tree crowns. The radial distances for each pixel were
+obtained by computing its Euclidean distances to tree crown borders
+in corresponding directions. Given that the image size of the training
+area is 3611 × 3485, after tiling and excluding tiles without ground
+truth, 165 tiles were preserved for training. Since the number of
+training image tiles was insufficient, data augmentation was conducted
+to expand the training set. The data augmentation includes random
+rotations (90◦, 180◦, and 270◦), horizontal and vertical flips, and
+random intensity change. The Adam optimizer with a learning rate of
+0.0003 was adopted for training. The whole training process had 100
+epochs with a batch size of 4. In each epoch, 100 training steps were
+conducted based on the augmented training batch. The U-Net training
+was carried out on a laptop equipped with an Intel(R) Core(TM) i7-
+11800H @ 2.30 GHz processor, 16 GB of RAM, and an NVIDIA GeForce
+RTX 3060 GPU with 6 GB of memory. The code was written and
+executed on Python 3.8.19 using TensorFlow 2.10.0 and CUDA 11.2.
+The total time cost for the training of the U-Net is 123 min.
+2.3. Tree crown determination using non-maximum suppression
+Following the U-Net prediction, every pixel in the image has an
+object probability and 32 radial distances representing the shape of
+the tree crown. Fig. 6(d) shows the output radial distances of one
+pixel in the image, which determines the shape of the tree crown.
+There is a candidate tree crown for every pixel in the image. However,
+not all candidate tree crowns should be included in the final result.
+Given that tree crown centers typically exhibit high object probabilities,
+eliminating those with low probabilities is an effective way to remove
+undesired tree crowns. Therefore, the initial step involves thresholding
+
+
+Remote Sensing of Environment 319 (2025) 114618
+7
+F. Tong and Y. Zhang
+Fig. 7. An example of tree crown determination and removal in NMS.
+the object probabilities using 𝑇𝑐 𝑟𝑜𝑤𝑛= 0.5. Subsequently, as each pixel
+within a real tree crown possesses its own shape prediction, it becomes
+imperative to retain the most accurate representation while discarding
+others. To achieve this, a standard greedy non-maximum suppression
+(NMS) (Hosang et al., 2017) technique is employed. The specifics of the
+non-maximum suppression are outlined below:
+1. Sort all tree crowns by their object probabilities and form a
+candidate tree crowns list.
+2. Save the tree crown with the highest object probability in the
+final result, and remove it from the candidate tree crowns list.
+3. For the tree crown saved by step 2, compute its Intersection over
+Union (IoU) to all of the rest tree crowns in the candidate tree
+crowns list. If the IoU with a tree crown is higher than the pre-
+determined threshold 𝑇𝐼 𝑜𝑈= 0.3, remove this tree crown from
+the candidate tree crowns list.
+4. If the candidate tree crowns list is empty, terminate the NMS
+process. Otherwise, return to step 2 and repeat the procedure
+from step 2 to step 3.
+It is important to note that the IoU is calculated based on the true crown
+polygons and predicted polygons represented by the radial distances.
+Fig. 7 illustrates the application of NMS for removing redundant tree
+crowns.
+2.4. Tree crown delineation evaluation metrics
+To conduct a comprehensive assessment for tree crown delineation
+results, multiple evaluation metrics were selected from previously pub-
+lished literatures. The first and the most important metric focused on
+delineation accuracy. Assuming there are 𝑁reference tree crowns, the
+number of correctly delineated tree crowns is 𝑛, delineation accuracy
+is defined as:
+𝐷 𝑒𝑙 𝑖𝑛𝑒𝑎𝑡𝑖𝑜𝑛 𝐴𝑐 𝑐 𝑢𝑟𝑎𝑐 𝑦= 𝑛
+𝑁
+(4)
+A tree crown is considered as correctly delineated when it share over
+50% IoU with the reference tree crown (Lassalle et al., 2022). The IoU
+is defined as:
+IoU =
+𝑎𝑟𝑒𝑎(𝐶𝑟𝑒𝑓∩𝐶𝑝𝑟𝑒)
+𝑎𝑟𝑒𝑎(𝐶𝑟𝑒𝑓∪𝐶𝑝𝑟𝑒)
+(5)
+where 𝐶𝑟𝑒𝑓represents the reference tree crown and 𝐶𝑝𝑟𝑒represents the
+predicted tree crown.
+Over-segmented, under-segmented, and missed tree crowns are im-
+portant sources of errors in tree crown delineation result. Since not all
+the tree crowns in the image were selected as references, counting the
+number of under-segmented tree crowns will be inaccurate. Therefore,
+the number of over-segmented tree crowns and the number of missed
+tree crowns were counted in this article to show the source of inaccu-
+rate delineations. The definitions of over-segmented tree crowns and
+missed tree crowns follow the descriptions in Jing et al. (2012):
+1. over-segmented tree crown: if more than half the area of multi-
+ple predicted crowns were covered by a single reference crown,
+the reference crown is over-segmented in the automatic delin-
+eation.
+2. missed tree crown: if a reference crown covered more than
+half the area of no predicted crown, the reference crown was
+considered as a crown missed in the automatic delineation.
+Measuring how well the predicted tree crowns fit reference tree
+crowns is also important. For each correctly delineated tree crown
+(IoU > 0.5), the Precision, Recall, and F1-score (Braga et al., 2020)
+were calculated. The Precision is the ratio between the area of the
+intersection and the area of the predicted crown. The Recall is the ratio
+between the area of intersection and the area of reference crown. The
+F1-score is calculated as:
+F1 − scor e = 2 Pr ecision × Recall
+Pr ecision + Recall
+(6)
+The final Precision, Recall, and F1-score for the delineation result
+were calculated by averaging the Precision, Recall, and F1-score for
+all correctly delineated tree crowns. Moreover, to show the agreement
+between predicted tree crown areas and reference tree crown areas,
+the coefficient of determination 𝑅2 and relative Root Mean Square
+Error (rRMSE) of correctly delineated tree crowns were calculated. The
+rRMSE is defined as:
+r RMSE = RMSE
+𝑎𝑚𝑒𝑎𝑛
+(7)
+where 𝑎𝑚𝑒𝑎𝑛represents the mean areas of reference tree crowns, and
+RMSE is defined as:
+RMSE =
+√∑𝑛
+𝑖=1( ̂𝑎𝑖−𝑎𝑖)2
+𝑛
+(8)
+where ̂𝑎𝑖is the predicted tree crown area and 𝑎𝑖is the true tree crown
+area.
+2.5. Comparison with other methods
+To validate the effectiveness of the proposed tree crown delineation
+model, previously existing tree crown delineation methods were also
+conducted on the same dataset for comparison. Since commonly used
+unsupervised traditional tree crown delineation methods are not good
+for complex mixed forests, only deep learning-based tree crown de-
+lineation methods were considered. As mentioned in the introduction
+section, conducting watershed segmentation based on the deep learning
+derived distance map (Lassalle et al., 2022; Freudenberg et al., 2022)
+can generate good delineation results. Therefore, the first method for
+comparison was the U-Net+Watershed. To show the superiority of the
+star-convex polygons, the distance map was predicted by the U-Net
+used in the StarDist model. The distance map is the object probability
+map in the StarDist model. First, the distance map was smoothed using
+a 2D Gaussian filter with a 𝑠𝑖𝑔 𝑚𝑎value of 2. Next, treetops were
+identified by finding the local maxima in the distance map. Finally,
+watershed segmentation was applied based on the detected treetops and
+the distance map to generate the delineation.
+The second method is the MASK R-CNN, which was widely used for
+tree crown delineation in recent years. The Mask R-CNN detects bound-
+ing boxes for tree crowns first, and then perform the segmentation in
+the bounding box to get the final tree crown. A faithful implementation
+of MASK R-CNN in ArcGIS Pro 3.2.2 was adopted to segment tree
+crowns. The training patches of the MASK R-CNN were the same as
+those used in our proposed StarDist model. The batch size, number of
+training epochs, and data augmentation strategy of the MASK R-CNN
+were the same as those used in the StarDist.
+
+
+Remote Sensing of Environment 319 (2025) 114618
+8
+F. Tong and Y. Zhang
+Fig. 8. Delineation maps (red: predicted tree crowns, blue: reference tree crowns) of different methods from 3 subsections of the testing area 1. (For interpretation of the references
+to color in this figure legend, the reader is referred to the web version of this article.)
+3. Experiments
+3.1. Delineation performance
+To show the tree crown delineation performance, the delineation
+accuracy, Precision, Recall, and F1-Score of delineation results were
+calculated. In training area 1, 1055 out of 1135 reference tree crowns
+were correctly delineated. In training area 2, 603 out of 652 refer-
+ence tree crowns were correctly delineated. The delineation accuracy
+reached 92.95% for testing area 1 and 92.48% for testing area 2. For the
+metrics reflecting the fitness to true crowns, the F1-Scores for both test-
+ing areas were higher than 0.88, which shown high agreement between
+predicted and true tree crowns. These results validate the efficacy of
+the proposed model in producing satisfactory delineations within mixed
+forest environments. Examples of delineations in two testing areas are
+shown in the third column of Figs. 8 and 9. It can be observed that
+most of tree crowns were accurately delineated although the model was
+trained with sparse tree crowns. The complete delineation maps for two
+testing areas are provided as supplementary materials for this paper.
+3.2. Comparison with other methods
+To show the superiority of the proposed StarDist model, the delin-
+eation accuracy, Precision, Recall, and F1-Score of three delineation
+methods were listed in Table 1. For delineation accuracy, it can be
+observed that the proposed StarDist model outperformed the other two
+methods. Notably, StarDist achieved accuracy increases of 8.46% and
+6.90% respectively on both testing areas compared to MASK R-CNN.
+While the delineation accuracy of U-Net+Watershed reached 90.03%
+in testing area 2, its F1-Score was notably lower compared to the other
+two methods, indicating poorer alignment with true crowns. There
+were no significant differences between MASK R-CNN and StarDist in
+metrics Precision, Recall, and F1-Scores. While MASK R-CNN exhibited
+higher Precision in testing area 1, StarDist demonstrated higher Preci-
+sion in testing area 2. Regarding Recall and F1-Score, StarDist slightly
+outperformed MASK R-CNN in both testing areas. Overall, StarDist
+accurately identified more tree crowns than MASK R-CNN, with slightly
+better performance in fitting to true crowns.
+To facilitate a better comparison of delineation methods, delineation
+maps from all methods for three subsections of both testing areas
+are presented in Figs. 8 and 9. The results reveal that although U-
+Net+Watershed successfully detected most tree crowns, its boundary
+
+
+Remote Sensing of Environment 319 (2025) 114618
+9
+F. Tong and Y. Zhang
+Fig. 9. Delineation maps (red: predicted tree crowns, blue: reference tree crowns) of different methods from 3 subsections of the testing area 2. (For interpretation of the references
+to color in this figure legend, the reader is referred to the web version of this article.)
+accuracy was inferior to the other two methods. Tree crowns delineated
+by U-Net+Watershed often extended beyond the actual boundaries,
+contributing to its lower Precision and higher Recall values shown
+in Table 1. Additionally, large tree crowns were more prone to over-
+segmentation with this method. Compared with the delineation maps
+generated by MASK R-CNN, the proposed StarDist-based model gener-
+ated more accurate delineations for overlapping and densely connected
+tree crowns, highlighting the advantages of star-convex polygons over
+axis-aligned bounding boxes. Furthermore, the proposed StarDist-based
+model accurately detectd more small tree crowns than MASK R-CNN,
+showcasing its superior capability in handling tree crowns of varying
+sizes.
+3.3. Delineation error analysis
+To better understand the sources of incorrect delineations, the
+numbers of over-segmented and missed tree crowns were counted and
+listed in Table 2. StarDist exhibited the lowest number of missed and
+over-segmented tree crowns in both testing areas. Compared to MASK
+Table 1
+Delineation accuracy, Precision, Recall and F1-Score for different methods.
+Data
+Metrics
+U-Net
++Watershed
+MASK R-CNN
+StarDist
+Testing
+area 1
+Delineation accuracy (%)
+82.38
+84.49
+92.95
+Precision
+0.7085
+0.9085
+0.9014
+Recall
+0.9756
+0.8604
+0.8888
+F1-Score
+0.8140
+0.8773
+0.8897
+Testing
+area 2
+Delineation accuracy (%)
+90.03
+85.58
+92.48
+Precision
+0.7224
+0.9069
+0.9135
+Recall
+0.9719
+0.8519
+0.8725
+F1-Score
+0.8220
+0.8713
+0.8867
+R-CNN, StarDist successfully reduced the number of missed and over-
+segmented tree crowns in the delineation results. Specifically, in testing
+area 1, StarDist showed 15 fewer over-segmented tree crowns and 82
+fewer missed tree crowns compared to MASK R-CNN. In testing area 2,
+StarDist had 17 fewer over-segmented tree crowns and 23 fewer missed
+
+
+Remote Sensing of Environment 319 (2025) 114618
+10
+F. Tong and Y. Zhang
+Table 2
+Numbers of over-segmented and missed tree crowns.
+Data
+Reference
+Error type
+U-Net+Watershed
+MASK R-CNN
+StarDist
+Testing area 1
+1135
+Over-segmented
+40
+35
+20
+Missed
+167
+135
+53
+Testing area 2
+652
+Over-segmented
+27
+29
+12
+Missed
+48
+57
+34
+Fig. 10. Histograms for incorrectly delineated tree crown areas (in pixels).
+tree crowns than MASK R-CNN. Compared to MASK R-CNN, the U-
+Net+Watershed method exhibited a higher number of over-segmented
+and missed tree crowns in the delineation results of testing area 1,
+and marginally fewer over-segmented and missed tree crowns in the
+delineation results of testing area 2.
+Additionally, Fig. 10 illustrates the distributions of incorrectly de-
+lineated reference tree crown areas for different methods in the two
+testing areas. Notably, in both testing areas, StarDist exhibits signifi-
+cantly fewer incorrectly delineated tree crowns when the tree crown
+area is less than 1000 compared to the other two methods. However,
+when the tree crown area exceeds 1000, there is no noticeable differ-
+ence between StarDist and MASK R-CNN. Thus, it can be concluded that
+in the mixed forest with varying tree crown sizes, the proposed StarDist
+surpassed MASK R-CNN in delineating smaller-sized tree crowns.
+3.4. Correlation in crown areas
+The quality of tree crown delineation can also be assessed by
+examining the correlation between true and segmented crown sizes. For
+all correctly delineated tree crowns with an IoU higher than 0.5, their
+areas and corresponding true areas were analyzed, as shown in Fig. 11.
+The first row of Fig. 11 illustrates the relationship between true and
+predicted crown areas, while the second row displays the distribution of
+area differences between true and predicted crowns. Across both testing
+areas, a high coefficient of determination (𝑅2 ≥0.85) was observed.
+Additionally, the r RMSE was calculated to be 21.0% for testing area 1
+and 24.4% for testing area 2. The calculated r RMSE values are not very
+low due to the wide range of tree crown sizes. Especially, errors from
+a small number of large tree crowns significantly impacts the results.
+Furthermore, as evident from the second row of Fig. 10, the majority
+of area differences are centered around 0, with most falling within the
+range of [−250, 250]. Overall, these analyses indicate a strong agreement
+between the areas of true and predicted crowns.
+4. Discussions
+4.1. Parameters analysis
+4.1.1. Effect of different 𝑇𝑐 𝑟𝑜𝑤𝑛on delineation accuracy
+The 𝑇𝑐 𝑟𝑜𝑤𝑛used for extracting tree crown areas can affect the
+delineation accuracy. In this section, the effect of different 𝑇𝑐 𝑟𝑜𝑤𝑛on
+delineation accuracy is investigated. The candidate values of 𝑇𝑐 𝑟𝑜𝑤𝑛
+were set as: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]. The delineation accu-
+racy with different 𝑇𝑐 𝑟𝑜𝑤𝑛was recorded and plotted in Fig. 12. The
+results reveal that increasing 𝑇𝑐 𝑟𝑜𝑤𝑛will not obviously affect delineation
+accuracy before 𝑇𝑐 𝑟𝑜𝑤𝑛reaches 0.7. However, a notable decrease in
+delineation accuracy is observed when 𝑇𝑐 𝑟𝑜𝑤𝑛is raised from 0.7 to 0.8.
+Further increasing 𝑇𝑐 𝑟𝑜𝑤𝑛to 0.9 results in a dramatic decrease in delin-
+eation accuracy, by approximately 35% for both testing areas. Higher
+values of 𝑇𝑐 𝑟𝑜𝑤𝑛lead to the exclusion of certain tree crowns within
+the mixed forest, thus diminishing delineation accuracy. Conversely,
+very low 𝑇𝑐 𝑟𝑜𝑤𝑛values, while maintaining high delineation accuracy,
+result in the misidentification of background areas as tree crowns and
+low prediction efficiency. Based on these observations, the proposed
+StarDist model demonstrates a preference for a 𝑇𝑐 𝑟𝑜𝑤𝑛range of 0.5 to
+0.7 to ensure optimal delineation accuracy.
+4.1.2. Effect of different 𝑇𝐼 𝑜𝑈on delineation accuracy
+The 𝑇𝐼 𝑜𝑈controlling the removal of tree crowns in the NMS pro-
+cess also affects the delineation accuracy. In this section, the effects
+of different 𝑇𝐼 𝑜𝑈([0, 0.1, 0.2, 0.3, 0.4, 0.5]) on delineation accuracy are
+investigated. The recorded delineation accuracy with different 𝑇𝐼 𝑜𝑈
+for both testing areas is plotted in Fig. 13. Observations suggest that
+delineation accuracy in both testing areas increased with higher 𝑇𝐼 𝑜𝑈
+until 𝑇𝐼 𝑜𝑈reached 0.3. After reaching this threshold, further increases
+
+
+Remote Sensing of Environment 319 (2025) 114618
+11
+F. Tong and Y. Zhang
+Fig. 11. (First row) plotted true and predicted crown areas (in pixels), and (second row) area difference distribution between the true and predicted crowns (in pixels).
+Fig. 12. Delineation accuracy with different 𝑇𝑐 𝑟𝑜𝑤𝑛.
+in 𝑇𝐼 𝑜𝑈led to marginal or no improvements in delineation accuracy.
+An appreciable enhancement in delineation accuracy (2.8% for testing
+area 1 and 3.8% for testing area 2) was noticeable when 𝑇𝐼 𝑜𝑈increased
+from 0 to 0.1. While a higher value of 𝑇𝐼 𝑜𝑈can yield improved
+delineation accuracy, it also escalates the incidence of over-segmented
+tree crowns due to the emergence of numerous small fragments in the
+delineation result. Therefore, to balance the delineation accuracy and
+over-segmentation error, the 𝑇𝐼 𝑜𝑈was set as 0.3 for both testing areas
+in this research.
+4.2. Effect of spatial resolution on delineation accuracy
+Since the spatial resolution of the imagery can affect delineation ac-
+curacy, this section investigates the effect of various spatial resolutions
+(15 cm, 30 cm, and 60 cm) on delineation accuracy. The original im-
+agery with a 15 cm spatial resolution was down-sampled to 30 cm and
+60 cm. To maintain the same number of patches used in the training
+process, patch sizes were set to 128 × 128 for the 30 cm resolution and
+64 × 64 for the 60 cm resolution. The training and prediction processes
+
+
+Remote Sensing of Environment 319 (2025) 114618
+12
+F. Tong and Y. Zhang
+Fig. 13. Delineation accuracy with different 𝑇𝐼 𝑜𝑈.
+Table 3
+Delineation accuracy, Precision, Recall and F1-Score with different spatial resolutions.
+Data
+Metrics
+60 cm
+30 cm
+15 cm
+Testing area 1
+Delineation accuracy (%)
+58.15
+88.02
+92.95
+Precision
+0.8129
+0.8299
+0.9014
+Recall
+0.7760
+0.8662
+0.8888
+F1-Score
+0.7835
+0.8393
+0.8897
+Testing area 2
+Delineation accuracy (%)
+66.87
+84.82
+92.48
+Precision
+0.8673
+0.8480
+0.9135
+Recall
+0.7700
+0.8344
+0.8725
+F1-Score
+0.8030
+0.8316
+0.8867
+were then conducted on images with different spatial resolutions. The
+delineation accuracy, Precision, Recall, and F1-Score of all delineations
+are listed in Table 3. When the spatial resolution decreased from
+15 cm to 30 cm, delineation accuracy dropped by 4.93% and 7.66%
+for the two testing areas, respectively, with corresponding decreases
+in Precision, Recall, and F1-Score. A further decrease from 30 cm to
+60 cm resulted in dramatic accuracy drops: 29.87% for testing area 1
+and 17.95% for testing area 2. In conclusion, the delineation with the
+spatial resolution 15 cm is more accurate than those with lower spatial
+resolutions.
+4.3. Perspectives for forestry research
+The proposed StarDist model requires high spatial resolution RGB
+images as input, with the recommended resolution typically higher than
+1 m. Beyond the aerial imagery utilized in this study, other image
+sources such as high spatial resolution satellite imagery and high spatial
+resolution UAV imagery can also be employed for delineation pur-
+poses. Satellite imagery offers expansive coverage, making it suitable
+for applications spanning large geographic areas. On the other hand,
+UAV sensors can capture imagery with very high spatial resolution
+(⩽10 cm) but have limited coverage. Therefore, the flexibility of our
+proposed StarDist model accommodates various forestry applications
+with differing spatial coverage requirements.
+Efficiency of the model is an important issue for forestry appli-
+cations. StarDist, as a deep learning model, requires a large number
+of training samples, making the collection process time-consuming.
+However, once sufficient training samples are available and the model
+is trained, it can automatically delineate tree crowns over a large area
+in a short time. In this research, manually delineating 1514 tree crowns
+took approximately 28 h. However, once trained, the StarDist model
+efficiently delineated over 20 000 tree crowns in two testing areas
+within 2 min. This stark contrast in efficiency demonstrates the benefit
+and power of deep learning model for tree crown delineation tasks,
+making StarDist highly advantageous for forestry applications.
+Our proposed StarDist model demonstrates the capability to ac-
+curately delineate tree crowns within complex mixed forests, thereby
+facilitating forestry research. Tree species classification holds signif-
+icance in forestry research, as precise tree species distribution maps
+support various applications such as resource inventories, biodiversity
+assessment, hazard and stress management, and monitoring of inva-
+sive species (Fassnacht et al., 2016). Several studies have underscored
+the importance of accurately delineated tree crowns in enhancing
+tree species classification accuracy (Korpela et al., 2011; Dalponte
+et al., 2015; Wagner et al., 2018; Qin et al., 2022; Yao et al., 2023).
+Therefore, the proposed StarDist model has the potential to enhance
+tree species classification performance and its subsequent applications.
+Furthermore, accurately delineated tree crowns contribute to improved
+estimation of multiple forestry attributes, thereby facilitating climate
+change monitoring and forest management. For instance, aboveground
+biomass estimation plays a crucial role in climate change monitor-
+ing (Kumar and Mutanga, 2017). Accurate tree crown delineation aids
+in enhancing the estimation of aboveground biomass (Temesgen et al.,
+2015; Graves et al., 2018; Dalponte et al., 2018). In conclusion, the
+enhancement of tree crown delineation through our proposed StarDist
+model can benefit multiple forest applications.
+4.4. Possible improvements
+The experiments in this research employed three RGB bands for de-
+lineation. However, with only three RGB bands, most delineation meth-
+ods struggle to accurately delineate tree crowns in the co-dominant or
+intermediate forest layers, particularly when they are partially covered
+by dominant layer crowns. Although the StarDist model may generate
+incorrect delineations for these tree crowns, it has the potential to
+incorporate additional spectral bands or the LiDAR-derived CHM band
+to improve the delineation accuracy. Integrating more bands into the
+StarDist model is straightforward by adjusting the input shape of the
+U-Net. Given that supplementary information can enhance delineation
+accuracy, further improvement can be achieved by using multispectral
+or hyperspectral high spatial resolution imagery. Adding the CHM
+band derived from LiDAR data is another option, while it involves
+the complex registration problem with the RGB bands. Solving the
+registration problem, combining the RGB bands and the CHM band in
+the delineation will generate more accurate delineation results.
+Improving the variation and size of the training set is another area
+for enhancement. While this research conducted delineation within
+a mixed forest for multiple tree species, the training process encom-
+passed a limited number of tree crowns due to the significant time
+and effort involved in collecting training tree crowns. It is antici-
+pated that a more accurate delineation outcome could be achieved by
+augmenting the training set with additional tree crowns. This augmen-
+tation holds particular significance for instance segmentation methods,
+where augmenting the training set can effectively mitigate the occur-
+rence of missed objects in predictions. Furthermore, by incorporating
+a comprehensive training set for tree crowns, it is envisaged that the
+trained model can be utilized to produce a comprehensive wall-to-wall
+delineation map spanning the entire forest.
+5. Conclusion
+This study introduces a novel method for automatically delineating
+tree crowns on high spatial resolution remote sensing imagery. The
+method employs deep learning to efficiently extract information from
+the image. Different from to existing studies, the proposed model
+utilizes star-convex polygons, which align closely with the natural
+shapes of tree crowns, to accurately describe their contours. Training
+with a small number of tree crowns, the proposed delineation method
+accurately delineated tree crowns in two mixed forest testing areas.
+It outperformed the widely used deep learning model MASK R-CNN
+
+
+Remote Sensing of Environment 319 (2025) 114618
+13
+F. Tong and Y. Zhang
+in delineation accuracy, especially for the delineation of smaller-sized
+tree crowns. Given the critical importance of individual tree crown
+delineation for various forestry applications, the proposed method
+demonstrates promising potential for optimizing results across forestry
+applications.
+CRediT authorship contribution statement
+Fei Tong: Writing – original draft, Visualization, Validation, Soft-
+ware, Methodology, Conceptualization. Yun Zhang: Writing – review
+& editing, Supervision, Funding acquisition, Conceptualization.
+Declaration of generative AI in scientific writing
+During the preparation of this work, the authors used ChatGPT 3.5
+in order to enhance the writing quality. After using this tool, the author
+reviewed and edited the content as needed and take full responsibility
+for the content of the publication.
+Declaration of competing interest
+The authors declare that they have no known competing finan-
+cial interests or personal relationships that could have appeared to
+influence the work reported in this paper.
+Acknowledgments
+This work was supported by the Canadian Space Agency (CSA),
+Canada [grant number 19FANBA36] and the Natural Sciences and
+Engineering Research Council of Canada (NSERC), Canada Discovery
+Program [grant number RGPIN-2021-03164]. We would like to ac-
+knowledge John McMullen from Natural Resources Canada, Atlantic
+Forestry Centre for providing the data set and supporting us with forest
+inventory information.
+Appendix A. Supplementary data
+Supplementary material related to this article can be found online
+at https://doi.org/10.1016/j.rse.2025.114618.
+Data availability
+The authors do not have permission to share data.
+References
+Bai, Y., Walsworth, N., Roddan, B., Hill, D., Broersma, K., Thompson, D., 2005.
+Quantifying tree cover in the forest–grassland ecotone of british columbia using
+crown delineation and pattern detection. For. Ecol. Manag. 212 (1–3), 92–100.
+Ball, J.G., Hickman, S.H., Jackson, T.D., Koay, X.J., Hirst, J., Jay, W., Archer, M., Aubry-
+Kientz, M., Vincent, G., Coomes, D.A., 2023. Accurate delineation of individual tree
+crowns in tropical forests from aerial RGB imagery using mask R-CNN. Remote.
+Sens. Ecol. Conserv. 9 (5), 641–655.
+Braga, J.R., Peripato, V., Dalagnol, R., Ferreira, M.P., Tarabalka, Y., Aragão, L.E.,
+de Campos Velho, H.F., Shiguemori, E.H., Wagner, F.H., 2020. Tree crown
+delineation algorithm based on a convolutional neural network. Remote Sens. 12
+(8), 1288.
+Culvenor, D.S., 2002. TIDA: an algorithm for the delineation of tree crowns in high
+spatial resolution remotely sensed imagery. Comput. Geosci. 28 (1), 33–44.
+Dalponte, M., Ene, L.T., Marconcini, M., Gobakken, T., Næsset, E., 2015. Semi-
+supervised SVM for individual tree crown species classification. ISPRS J.
+Photogramm. Remote Sens. 110, 77–87.
+Dalponte, M., Frizzera, L., Ørka, H.O., Gobakken, T., Næsset, E., Gianelle, D.,
+2018. Predicting stem diameters and aboveground biomass of individual trees
+using remote sensing data. Ecol. Indic. 85, 367–376.
+http://dx.doi.org/10.
+1016/j.ecolind.2017.10.066, URL: https://www.sciencedirect.com/science/article/
+pii/S1470160X17307033.
+Dersch, S., Schöttl, A., Krzystek, P., Heurich, M., 2023. Towards complete tree crown
+delineation by instance segmentation with mask R–CNN and DETR using UAV-based
+multispectral imagery and lidar data. ISPRS Open J. Photogramm. Remote. Sens.
+8, 100037.
+Dersch, S., Schöttl, A., Krzystek, P., Heurich, M., 2024. Semi-supervised multi-class
+tree crown delineation using aerial multispectral imagery and lidar data. ISPRS J.
+Photogramm. Remote Sens. 216, 154–167.
+Erikson, M., 2003. Segmentation of individual tree crowns in colour aerial photographs
+using region growing supported by fuzzy rules. Can. J. Forest Res. 33 (8),
+1557–1563.
+Fassnacht, F.E., Latifi, H., Stereńczak, K., Modzelewska, A., Lefsky, M., Waser, L.T.,
+Straub, C., Ghosh, A., 2016. Review of studies on tree species classifica-
+tion from remotely sensed data. Remote Sens. Environ. 186, 64–87. http://dx.
+doi.org/10.1016/j.rse.2016.08.013, URL:
+http://www.sciencedirect.com/science/
+article/pii/S0034425716303169.
+Ferreira, M.P., Zanotta, D.C., Zortea, M., Körting, T.S., Fonseca, L.M.G.,
+Shimabukuro, Y.E., Filho, C.R.S., 2014. Automatic tree crown delineation
+in tropical forest using hyperspectral data. In: 2014 IEEE Geoscience
+and Remote Sensing Symposium. Quebec City, QC, pp. 784–787.
+http:
+//dx.doi.org/10.1109/IGARSS.2014.6946541.
+Freudenberg, M., Magdon, P., Nölke, N., 2022. Individual tree crown delineation in
+high-resolution remote sensing images based on U-Net. Neural Comput. Appl. 34
+(24), 22197–22207.
+Gougeon, F.A., et al., 1998. Automatic individual tree crown delineation using a
+valley-following algorithm and rule-based system. In: Proc. International Forum on
+Automated Interpretation of High Spatial Resolution Digital Imagery for Forestry,
+Victoria, British Columbia, Canada. pp. 11–23.
+Graves, S.J., Caughlin, T.T., Asner, G.P., Bohlman, S.A., 2018. A tree-based approach to
+biomass estimation from remote sensing data in a tropical agricultural landscape.
+Remote Sens. Environ. 218, 32–43. http://dx.doi.org/10.1016/j.rse.2018.09.009,
+URL: https://www.sciencedirect.com/science/article/pii/S0034425718304206.
+Gu, J., Congalton, R.G., 2021. Individual tree crown delineation from UAS imagery
+based on region growing by over-segments with a competitive mechanism. IEEE
+Trans. Geosci. Remote Sens. 60, 1–11.
+Hao, Z., Lin, L., Post, C.J., Mikhailova, E.A., Li, M., Chen, Y., Yu, K., Liu, J., 2021.
+Automated tree-crown and height detection in a young forest plantation using mask
+region-based convolutional neural network (mask R-CNN). ISPRS J. Photogramm.
+Remote Sens. 178, 112–123.
+He, K., Gkioxari, G., Dollár, P., Girshick, R., 2017. Mask R-CNN. In: 2017 IEEE
+International Conference on Computer Vision. ICCV, pp. 2980–2988. http://dx.doi.
+org/10.1109/ICCV.2017.322.
+Hosang, J., Benenson, R., Schiele, B., 2017. Learning non-maximum suppression. In:
+Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition.
+pp. 4507–4515.
+Hu, L., Xu, X., Wang, J., Xu, H., 2023. Individual tree crown width detection from
+unmanned aerial vehicle images using a revised local transect method. Ecol. Inform.
+75, 102086.
+Jing, L., Hu, B., Noland, T., Li, J., 2012. An individual tree crown delineation method
+based on multi-scale segmentation of imagery. ISPRS J. Photogramm. Remote Sens.
+70, 88–98.
+Ke, Y., Quackenbush, L.J., 2011. A review of methods for automatic individual tree-
+crown detection and delineation from passive remote sensing. Int. J. Remote Sens.
+32 (17), 4725–4747.
+Korpela, I., Heikkinen, V., Honkavaara, E., Rohrbach, F., Tokola, T., 2011. Variation
+and directional anisotropy of reflectance at the crown scale—Implications for tree
+species classification in digital aerial images. Remote Sens. Environ. 115 (8),
+2062–2074.
+Kumar, L., Mutanga, O., 2017. Remote sensing of above-ground biomass. Remote Sens.
+9 (9), 935.
+Lamar, W.R., McGraw, J.B., Warner, T.A., 2005. Multitemporal censusing of a popula-
+tion of eastern hemlock (Tsuga canadensis L.) from remotely sensed imagery using
+an automated segmentation and reconciliation procedure. Remote Sens. Environ.
+94 (1), 133–143.
+Lassalle, G., Ferreira, M.P., La Rosa, L.E.C., de Souza Filho, C.R., 2022. Deep
+learning-based individual tree crown delineation in mangrove forests using very-
+high-resolution satellite imagery. ISPRS J. Photogramm. Remote Sens. 189,
+220–235.
+Li, S., Brandt, M., Fensholt, R., Kariryaa, A., Igel, C., Gieseke, F., Nord-Larsen, T.,
+Oehmcke, S., Carlsen, A.H., Junttila, S., et al., 2023. Deep learning enables image-
+based tree counting, crown segmentation, and height prediction at national scale.
+PNAS Nexus 2 (4), pgad076.
+Ozdarici-ok, A., Ok, A.O., 2023. Using remote sensing to identify individual tree species
+in orchards: A review. Sci. Hortic. 321, 112333.
+Qin, H., Zhou, W., Yao, Y., Wang, W., 2022. Individual tree segmentation and tree
+species classification in subtropical broadleaf forests using UAV-based LiDAR,
+hyperspectral, and ultrahigh-resolution RGB data. Remote Sens. Environ. 280,
+113143.
+Ronneberger, O., Fischer, P., Brox, T., 2015. U-net: Convolutional networks for biomed-
+ical image segmentation. In: Medical Image Computing and Computer-Assisted
+Intervention–MICCAI 2015: 18th International Conference, Munich, Germany,
+October 5-9, 2015, Proceedings, Part III 18. Springer, pp. 234–241.
+
+
+Remote Sensing of Environment 319 (2025) 114618
+14
+F. Tong and Y. Zhang
+Schmidt, U., Weigert, M., Broaddus, C., Myers, G., 2018. Cell detection with star-convex
+polygons. In: Medical Image Computing and Computer Assisted Intervention–
+MICCAI 2018: 21st International Conference, Granada, Spain, September 16-20,
+2018, Proceedings, Part II 11. Springer, pp. 265–273.
+Straker, A., Puliti, S., Breidenbach, J., Kleinn, C., Pearse, G., Astrup, R., Magdon, P.,
+2023. Instance segmentation of individual tree crowns with YOLOv5: A comparison
+of approaches using the ForInstance benchmark LiDAR dataset. ISPRS Open J.
+Photogramm. Remote. Sens. 9, 100045.
+Temesgen, H., Affleck, D., Poudel, K., Gray, A., Sessions, J., 2015. A review of the
+challenges and opportunities in estimating above ground forest biomass using
+tree-level models. Scand. J. Res. 30 (4), 326–335.
+Tong, F., Tong, H., Mishra, R., Zhang, Y., 2021. Delineation of individual tree crowns
+using high spatial resolution multispectral WorldView-3 satellite imagery. IEEE J.
+Sel. Top. Appl. Earth Obs. Remote. Sens. 14, 7751–7761.
+Wagner, F.H., Ferreira, M.P., Sanchez, A., Hirye, M.C., Zortea, M., Gloor, E.,
+Phillips, O.L., de Souza Filho, C.R., Shimabukuro, Y.E., Aragão, L.E., 2018.
+Individual tree crown delineation in a highly diverse tropical forest using very high
+resolution satellite images. ISPRS J. Photogramm. Remote Sens. 145, 362–377.
+Wang, L., 2010. A multi-scale approach for delineating individual tree crowns with
+very high resolution imagery. Photogramm. Eng. Remote Sens. 76 (4), 371–378.
+Wang, L., Gong, P., Biging, G.S., 2004. Individual tree-crown delineation and treetop
+detection in high-spatial-resolution aerial imagery. Photogramm. Eng. Remote Sens.
+70 (3), 351–357.
+Yang, J., He, Y., Caspersen, J., 2014. A multi-band watershed segmentation method for
+individual tree crown delineation from high resolution multispectral aerial image.
+In: Geoscience and Remote Sensing Symposium (IGARSS), 2014 IEEE International.
+IEEE, pp. 1588–1591.
+Yao, Z., Chai, G., Lei, L., Jia, X., Zhang, X., 2023. Individual tree species identification
+and crown parameters extraction based on mask R-CNN: Assessing the applicability
+of unmanned aerial vehicle optical images. Remote Sens. 15 (21), 5164.
+Zhang, W., Ke, Y., Quackenbush, L.J., Zhang, L., 2010. Using error-in-variable regres-
+sion to predict tree diameter and crown width from remotely sensed imagery. Can.
+J. Res. 40 (6), 1095–1108.
+Zhao, H., Morgenroth, J., Pearse, G., Schindler, J., 2023. A systematic review of
+individual tree crown detection and delineation with convolutional neural networks
+(CNN). Curr. Rep. 9 (3), 149–170.
