@@ -125,6 +125,90 @@ bash infra/setup-gcp-wiki.sh
 
 Czytelnicy **nie** potrzebują dostępu do GCP Console — tylko konta Google z dostępem IAP (poniżej).
 
+### Deploy flow (end-to-end)
+
+Architektura (kolejność ruchu):
+
+```text
+git push main
+  → GitHub Actions (.github/workflows/deploy-wiki-gcp.yml)
+    → cp conifervision/ → site/content/
+    → npx quartz build → site/public/
+    → gcloud storage rsync → gs://conifervision-wiki-prod
+    → gcloud run services update wiki-frontend (SYNC_TRIGGER=$GITHUB_SHA)
+      → kontener nginx przy starcie: gcloud storage rsync z GCS → /usr/share/nginx/html
+wiki.conifervision.com
+  → HTTPS Load Balancer + IAP (wiki-backend-v2)
+  → Serverless NEG → Cloud Run wiki-frontend
+```
+
+#### Normalna ścieżka (zalecana)
+
+```bash
+# 1. Sprawdź vault przed push
+make okf-lint
+
+# 2. Commit + push na main → CI robi build + GCS + Cloud Run refresh
+git push origin main
+
+# 3. Status workflow
+# GitHub → Actions → "Deploy Wiki (GCP + IAP)"
+```
+
+Ręczny deploy (gdy CI nie uruchomiłeś / lokalny build):
+
+```bash
+make deploy-wiki-gcp   # wymaga gcloud auth + uprawnień jak wiki-deployer
+```
+
+#### Weryfikacja po deploy
+
+```bash
+# Czy GCS ma świeży build?
+gcloud storage ls -l "gs://conifervision-wiki-prod/index.html" --project=conifer-vision01
+
+# Czy Cloud Run zsynchronizował pliki przy starcie?
+gcloud run services logs read wiki-frontend \
+  --region=europe-central2 \
+  --project=conifer-vision01 \
+  --limit=30
+```
+
+#### Gdy strona wygląda na starą (CI zielony)
+
+CI wgrywa pliki do GCS i wymusza nową rewizję Cloud Run. Jeśli Safari/Chrome nadal pokazuje starą treść:
+
+```bash
+# 1. Wymuś restart kontenera (ponowny sync z GCS)
+gcloud run services update wiki-frontend \
+  --region=europe-central2 \
+  --project=conifer-vision01 \
+  --update-env-vars="SYNC_TRIGGER=$(date +%s)" \
+  --quiet
+
+# 2. Opcjonalnie: wyczyść cache CDN na Load Balancerze
+gcloud compute url-maps invalidate-cdn-cache wiki-url-map \
+  --path="/*" \
+  --global \
+  --project=conifer-vision01
+```
+
+Potem **hard refresh** (Cmd+Shift+R) albo tryb incognito.  
+Uwaga: strony ze `status: draft` **nie trafiają** na wiki (filtr Quartz `RemoveDrafts`) — w Explorerze widać je dopiero po zmianie na `stable`.
+
+#### Znane problemy i fixy
+
+| Objaw | Przyczyna | Fix |
+|-------|-----------|-----|
+| CI: `PERMISSION_DENIED` … `artifactregistry.repositories.downloadArtifacts` | SA `wiki-deployer` nie może czytać obrazu Cloud Run z Artifact Registry | `gcloud artifacts repositories add-iam-policy-binding wiki --project=conifer-vision01 --location=europe-central2 --member="serviceAccount:wiki-deployer@conifer-vision01.iam.gserviceaccount.com" --role="roles/artifactregistry.reader"` |
+| CI: Quartz `can not read a block mapping entry` + linia `P26-08-…T12:00:00Z` | Bug w `tools/wiki_update.py`: `re.sub` z `\1` + datą `2026-…` → oktal `\120` (= `P`) psuje frontmatter | Naprawione (`\g<1>`); lokalnie: `make okf-lint`, popraw `generated:` i push |
+| CI: brak `index.html` / RSS zamiast strony | Vault nie skopiowany do `site/content` | Sprawdź krok „Prepare Quartz content”; treść musi być w `conifervision/` |
+| Wiki bez nowych stron research | `status: draft` | Zmień na `stable` w frontmatter i zrób push |
+| Lokalnie: `util.styleText` / Node engine | Quartz wymaga **Node ≥ 22** | `make build-wiki-docker` albo `nvm use 22` |
+| Cloud Run URL `.run.app` → 404 bez IAP | Serwis jest `--no-allow-unauthenticated` | Czytaj tylko przez `https://wiki.conifervision.com` (IAP) |
+
+GitHub Secrets (WIF): `bash infra/print-github-wiki-secrets.sh` → Settings → Secrets → Actions (`GCP_WORKLOAD_IDENTITY_PROVIDER`, `GCP_SERVICE_ACCOUNT`).
+
 ### Dodawanie nowych użytkowników
 
 Nowa osoba potrzebuje **dwóch** uprawnień (w trybie OAuth *Testing* oba są wymagane):
