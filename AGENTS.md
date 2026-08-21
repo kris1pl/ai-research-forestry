@@ -132,6 +132,21 @@ On each touched **method** or **concept** page, add or refresh **## Replication 
 2. Answer with citations to wiki pages (`[[...]]`).
 3. If the answer is durable (method comparison, synthesis) — save a new page under `conifervision/` (e.g. `concepts/` or `experiments/`) **in English** and update `log.md`.
 
+## Operation: Hypothesis
+
+Propose, refine, and record **testable** hypotheses toward dense-stand tree detection/segmentation. Detail: `conifervision/project/hypothesis-validation-loop.md`. Cursor rule: `.cursor/rules/hypothesis-from-wiki.mdc`.
+
+**Steps:**
+
+1. Read `conifervision/index.md`, `project/research-tree-detection-ensemble.md`, `project/hypothesis-validation-loop.md`, then relevant `methods/`, `concepts/`, and `sources/` pages.
+2. Propose **2–3** candidate hypotheses in chat, each with wiki citations and a one-line kill criterion. Do **not** invent numeric thresholds — use `TBD` or “per field calibration”.
+3. After the human picks one (or names a single hypothesis): create/update `conifervision/experiments/exp-NNN-<slug>.md` from `.templates/experiment.md` (full sections including Pseudocode, Success/Kill, Handoff). Update `experiments/index.md`.
+4. Optionally draft an ADR in `project/decisions.md` (`approved to run` | `rejected`).
+5. Prepend `conifervision/log.md`: `## [YYYY-MM-DD] hypothesis | short title`.
+6. When run results return: fill Results + Conclusion (`accept` | `reject` | `iterate`); refresh **Replication notes** on touched methods; flag contradictions vs `pipeline-overview` / research program.
+
+**Handoff:** Experiment page + high-level pseudocode go to the external coding/GPU module (human-gated). This repo does not store weights, training scripts, or invented production paths (`project/code-repo-integration.md` still TODO).
+
 ## Operation: Lint
 
 Periodically (or on request):

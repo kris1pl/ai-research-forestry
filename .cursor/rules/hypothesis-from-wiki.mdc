@@ -1,0 +1,38 @@
+---
+description: Hypothesis operation — propose/refine/validate experiments from the Conifervision wiki toward dense-stand tree detection.
+globs: conifervision/experiments/**/*.md,conifervision/project/**/*.md
+alwaysApply: false
+---
+
+# Hypothesis from wiki
+
+When the user asks to propose, refine, or record a research hypothesis (e.g. “Propose hypotheses for dense-stand segmentation”), run **Operation: Hypothesis** from `AGENTS.md`. Detail: [[project/hypothesis-validation-loop]].
+
+North star: [[project/research-tree-detection-ensemble]]. Production baseline: [[project/pipeline-overview]].
+
+## Checklist
+
+1. Read `conifervision/index.md`, `project/research-tree-detection-ensemble.md`, `project/hypothesis-validation-loop.md`, plus relevant `methods/`, `concepts/`, `sources/`.
+2. Propose **2–3** candidate hypotheses in chat, each with wiki citations (`[[…]]`) and a one-line kill criterion.
+3. Wait for the human to pick one (unless they already named a single hypothesis).
+4. Create or update `conifervision/experiments/exp-NNN-<slug>.md` from `.templates/experiment.md` — full sections: Hypothesis, Motivation, Pseudocode, Evaluation, Success/Kill, Setup, Runs, Results placeholders, Conclusion stub, Handoff.
+5. Add bullet to `conifervision/experiments/index.md`.
+6. Optionally draft ADR in `project/decisions.md` (`approved to run` | `rejected`).
+7. Prepend `conifervision/log.md`: `## [YYYY-MM-DD] hypothesis | …`
+8. After results return: fill Results + Conclusion (`accept` | `reject` | `iterate`); refresh **Replication notes** on touched methods; flag contradictions.
+
+Vault prose and frontmatter: **English only**. Chat with the user may be Polish.
+
+## Forbidden
+
+- Invent numeric thresholds not in literature; use `TBD` or “per field calibration”
+- Store weights, datasets, secrets, or Delta Lake paths in this repo
+- Invent production code file paths (`code-repo-integration` still TODO)
+- Mass-convert `[[wikilinks]]` to OKF markdown links unless asked
+- Commit without explicit user request
+- Claim to “prove” a hypothesis — use validate / reject / iterate
+- Skip human gate before implying a GPU/training run is approved
+
+## Experiment frontmatter (minimum)
+
+`type: Experiment`, `title`, `description`, `status: draft|stable|deprecated`, `hypothesis`, `area`, `metrics`, `related_methods`, `sources`, `generated.by` / `generated.at`.

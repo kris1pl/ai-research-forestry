@@ -147,12 +147,15 @@ You explicitly need a strategy for limited human annotations. The most robust ap
 
 ## 5. Research workflow in this repo (how to keep the wiki disciplined)
 
+Hypothesis unit and handoff to the coding/GPU module: [[project/hypothesis-validation-loop]]. Agent operation: **Hypothesis** in `AGENTS.md`.
+
 This repo already defines a solid operational workflow in `AGENTS.md`:
 
 | Operation | When | Output |
 |----------|------|--------|
 | Ingest | New paper / dataset / annotation protocol update | `conifervision/sources/` + update `methods/` |
-| Experiment | After each ML run or evaluation batch | `conifervision/experiments/exp-NNN-*.md` |
+| Hypothesis | Propose/refine testable ideas toward this program | candidates in chat → `experiments/exp-NNN-*.md` + optional ADR |
+| Experiment | After each ML run or evaluation batch | update `conifervision/experiments/exp-NNN-*.md` Results/Conclusion |
 | ADR | Team decisions (“ECSeg before ECDet”, fusion strategy change, metric changes) | entry in `conifervision/project/decisions.md` |
 | Lint | Periodic consistency checks | `make okf-lint` |
 | Query | Synthesis questions | answer + optionally new `concepts/` page |
@@ -216,7 +219,6 @@ When you switch to execution/agent mode, the first actionable tasks are:
    - `methods/edgecrafter-ecdet.md` (draft)
    - `methods/edgecrafter-ecseg.md` (draft)
    - `concepts/dense-stand-detection.md` (draft)
-4. Add `ADR-001` to `project/decisions.md`: priority ECSeg vs expanding DEIMv2 complexity.
-5. Prepare experiment templates in `experiments/`:
-   - `exp-001-per-layer-baselines.md` (before the first combined run)
+4. Add `ADR-001` to `project/decisions.md`: ensemble v1 success definition — **proposed** (see [[project/decisions]]).
+5. Experiment skeletons + hypothesis loop: [[project/hypothesis-validation-loop]], [[experiments/exp-001-per-layer-baselines]], [[experiments/exp-002-merge-fusion-v1]].
 

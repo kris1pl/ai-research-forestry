@@ -100,6 +100,8 @@ make build-wiki-docker
 make deploy-wiki-gcp
 ```
 
+**Hipotezy (agent w Cursor):** *„Propose hypotheses for dense-stand segmentation”* (lub po polsku równoważnie). Agent czyta wiki, proponuje 2–3 kandydatów, a po Twoim wyborze zapisuje `conifervision/experiments/exp-NNN-*.md` (pseudokod, success/kill, handoff), aktualizuje `experiments/index.md` + `log.md`, opcjonalnie ADR w `project/decisions.md`. Opis pętli: [`conifervision/project/hypothesis-validation-loop.md`](conifervision/project/hypothesis-validation-loop.md) · reguła [`.cursor/rules/hypothesis-from-wiki.mdc`](.cursor/rules/hypothesis-from-wiki.mdc) · operacja w [`AGENTS.md`](AGENTS.md).
+
 Szczegóły OKF: [`.cursor/rules/100-okf-standards.mdc`](.cursor/rules/100-okf-standards.mdc) · [`tools/README.md`](tools/README.md#okf-open-knowledge-format-v02) · [`AGENTS.md`](AGENTS.md#frontmatter-yaml--okf-v02)
 
 ## Publikacja (GCP + IAP — prywatna)

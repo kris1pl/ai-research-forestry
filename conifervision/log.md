@@ -1,6 +1,14 @@
 # Wiki log
 
-Chronological record of ingest, query, and lint operations.
+Chronological record of ingest, query, hypothesis, and lint operations.
+
+## [2026-08-21] hypothesis | Hypothesis validation loop + Experiment template
+
+- Added [[project/hypothesis-validation-loop]] (scientist ↔ engineer handoff)
+- Strengthened `.templates/experiment.md`; refreshed [[experiments/exp-001-per-layer-baselines]], [[experiments/exp-002-merge-fusion-v1]]
+- ADR-001 proposed in [[project/decisions]] (ensemble v1 success structure)
+- AGENTS.md Operation: Hypothesis; Cursor rule `.cursor/rules/hypothesis-from-wiki.mdc`
+- Linked from [[project/index]], [[project/research-tree-detection-ensemble]], README quick reference
 
 ## [2026-08-21] ingest | Weckman (2021) — UAV-LiDAR individual tree detection comparison
 
