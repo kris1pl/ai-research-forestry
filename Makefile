@@ -22,7 +22,7 @@ extract-pdf:
 ifndef FILE
 	$(error Użycie: make extract-pdf FILE=raw/papers/plik.pdf)
 endif
-	$(PYTHON) tools/extract_pdf_text.py $(FILE)
+	$(PYTHON) tools/extract_pdf_text.py "$(FILE)"
 
 llm-smoke:
 	$(PYTHON) -m tools.llm.smoke
@@ -31,7 +31,7 @@ ingest-paper:
 ifndef FILE
 	$(error Użycie: make ingest-paper FILE=raw/papers/plik.pdf [WRITE=1] [WIKI_ONLY=conifervision/sources/slug.md])
 endif
-	$(PYTHON) -m tools.ingest_paper $(FILE) $(if $(WRITE),--write,) $(if $(NO_WIKI),--no-wiki,) $(if $(WIKI_ONLY),--wiki-only $(WIKI_ONLY),)
+	$(PYTHON) -m tools.ingest_paper "$(FILE)" $(if $(WRITE),--write,) $(if $(NO_WIKI),--no-wiki,) $(if $(WIKI_ONLY),--wiki-only "$(WIKI_ONLY)",)
 
 okf-lint:
 	$(PYTHON) -m tools.okf_lint $(if $(FIX),--fix,)
