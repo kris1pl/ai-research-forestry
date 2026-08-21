@@ -203,10 +203,13 @@ def prepend_log_entry(
         f"- Added {_source_link(slug)}\n"
         f"- Updated {touched_links}\n\n"
     )
-    marker = "Chronological record of ingest, query, and lint operations.\n\n"
-    if marker not in text:
-        raise ValueError(f"log.md missing expected marker: {marker!r}")
-    text = _bump_updated(text.replace(marker, marker + entry, 1), today)
+    # Insert before the first dated section (stable if the intro blurb changes).
+    match = re.search(r"^## \[", text, re.M)
+    if match:
+        text = text[: match.start()] + entry + text[match.start() :]
+    else:
+        text = text.rstrip() + "\n\n" + entry
+    # log.md has no YAML frontmatter (OKF) — do not call _bump_updated here.
     _write(path, text)
     return True
 
