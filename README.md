@@ -78,6 +78,7 @@ Example prompts:
 - *“Ingest `raw/papers/foo.pdf` — update the wiki per AGENTS.md (English), including replication pseudocode if the method is clear enough.”*
 - *“Query: what does the wiki say about merging local maxima with CHM detections?”*
 - *“Lint the wiki against `conifervision/project/pipeline-overview.md`.”*
+- *“Propose hypotheses for dense-stand segmentation”* — see §6 below.
 
 ### 5. Codzienna praca z wiki (quick reference)
 
@@ -100,9 +101,62 @@ make build-wiki-docker
 make deploy-wiki-gcp
 ```
 
-**Hipotezy (agent w Cursor):** *„Propose hypotheses for dense-stand segmentation”* (lub po polsku równoważnie). Agent czyta wiki, proponuje 2–3 kandydatów, a po Twoim wyborze zapisuje `conifervision/experiments/exp-NNN-*.md` (pseudokod, success/kill, handoff), aktualizuje `experiments/index.md` + `log.md`, opcjonalnie ADR w `project/decisions.md`. Opis pętli: [`conifervision/project/hypothesis-validation-loop.md`](conifervision/project/hypothesis-validation-loop.md) · reguła [`.cursor/rules/hypothesis-from-wiki.mdc`](.cursor/rules/hypothesis-from-wiki.mdc) · operacja w [`AGENTS.md`](AGENTS.md).
-
+Hipotezy badawcze → sekcja poniżej.  
 Szczegóły OKF: [`.cursor/rules/100-okf-standards.mdc`](.cursor/rules/100-okf-standards.mdc) · [`tools/README.md`](tools/README.md#okf-open-knowledge-format-v02) · [`AGENTS.md`](AGENTS.md#frontmatter-yaml--okf-v02)
+
+### 6. Praca z hipotezami (research loop)
+
+Cel: systematycznie **proponować, zawężać i walidować/odrzucać** pomysły pod detekcję/segmentację drzew (szczególnie gęste kompleksy przed przecinką), korzystając z wiedzy w wiki — bez mieszania treningu GPU w tym repo.
+
+Pełny opis pętli (EN): [`conifervision/project/hypothesis-validation-loop.md`](conifervision/project/hypothesis-validation-loop.md) · program: [`research-tree-detection-ensemble.md`](conifervision/project/research-tree-detection-ensemble.md) · operacja w [`AGENTS.md`](AGENTS.md) · reguła Cursor [`.cursor/rules/hypothesis-from-wiki.mdc`](.cursor/rules/hypothesis-from-wiki.mdc).
+
+#### Role
+
+| Kto | Gdzie | Co robi |
+|-----|--------|---------|
+| Agent „scientist” | to repo / Cursor | Czyta wiki, proponuje 2–3 hipotezy z cytacjami, po Twoim wyborze zapisuje Experiment |
+| Ty (human gate) | review | Wybierasz hipotezę; zatwierdzasz/odrzucasz run (ADR); interpretujesz wyniki |
+| Agent / kod „engineer” | osobne repo + GPU | Implementuje z sekcji Handoff; zwraca metryki / run ID — **nie** trzymamy wag ani skryptów treningu w tym vault |
+
+Język wyniku: **validate / reject / iterate** — nie „udowadniamy” hipotezy matematycznie.
+
+#### Typowy przebieg
+
+1. **Zaproponuj** (w Cursor, Agent mode), np.:
+   - *„Propose hypotheses for dense-stand segmentation”*
+   - *„Zaproponuj 2–3 hipotezy pod mask-aware merge vs bbox NMS”*
+2. Agent czyta `index.md`, program research, methods/concepts/sources i w czacie podaje **2–3 kandydatów** (cytacje `[[…]]` + kill criterion).
+3. **Wybierasz jedną** (albo od razu wskazujesz konkretną).
+4. Agent tworzy/aktualizuje `conifervision/experiments/exp-NNN-<slug>.md` ze szablonu (hipoteza, motywacja, **pseudokod**, protokół eval, success/kill, handoff), dopisuje `experiments/index.md` + wpis w `log.md`, opcjonalnie ADR w `project/decisions.md`.
+5. Po approve (ADR / Twoja decyzja) uruchamiasz implementację **poza** tym repo (cloud GPU).
+6. Po runie: *„Update experiment exp-NNN with these results: …”* — agent wypełnia Results + Conclusion (`accept` | `reject` | `iterate`) i odświeża Replication notes na methods.
+
+#### Co powstaje w vault
+
+| Plik | Zawartość |
+|------|-----------|
+| `conifervision/experiments/exp-NNN-*.md` | Jednostka hipotezy (OKF `type: Experiment`) |
+| `conifervision/experiments/index.md` | Lista experimentów |
+| `conifervision/log.md` | `## [data] hypothesis \| …` |
+| `conifervision/project/decisions.md` | Opcjonalnie ADR (`approved to run` / rejected) |
+| `.templates/experiment.md` | Szablon nowych experimentów |
+
+Strony ze `status: draft` **nie** publikują się na wiki Quartz — zmień na `stable`, gdy chcesz je na https://wiki.conifervision.com.
+
+#### Zasady (ważne)
+
+- Nie wymyślaj progów numerycznych — `TBD` lub „per field calibration”.
+- Nie commituj wag modeli, dużych datasetów ani ścieżek Delta Lake.
+- Nie wymyślaj ścieżek w repo produkcyjnym (`code-repo-integration` nadal TODO).
+- Przed kosztem GPU zawsze **human gate**.
+
+Przykładowe experimenty (szkielety): [`exp-001`](conifervision/experiments/exp-001-per-layer-baselines.md), [`exp-002`](conifervision/experiments/exp-002-merge-fusion-v1.md). Definicja sukcesu ensemble v1: ADR-001 w [`decisions.md`](conifervision/project/decisions.md) (status: proposed).
+
+W promptach agenta możesz też dodać (sekcja 4):
+
+- *“Propose hypotheses for dense-stand segmentation (per AGENTS.md Hypothesis operation).”*
+- *“Record hypothesis X as exp-003 and draft ADR approved to run.”*
+- *“Update exp-001 conclusion to iterate with these metrics: …”*
 
 ## Publikacja (GCP + IAP — prywatna)
 
