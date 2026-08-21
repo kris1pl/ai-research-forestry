@@ -1,0 +1,2115 @@
+Contents lists available at ScienceDirect
+Ecological Informatics
+journal homepage: www.elsevier.com/locate/ecolinf
+A simple oriented search and clustering method for extracting individual
+forest trees from ALS point clouds
+Wenhui Ding a, Rong Huang a
+,∗, Wei Yao b, Wuming Zhang c, Marco Heurich d,e,f, Xiaohua Tong a
+a College of Surveying and Geoinformatics, Tongji University, Shanghai, China
+b Department of Land Surveying and Geo-Informatics, The Hong Kong Polytechnic University, Hung Hom, Hong Kong
+c School of Geospatial Engineering and Science, Sun Yat-sen University, Zhuhai, China
+d Department for National Park Monitoring and Animal Management, Nationalpark Bayerischer Wald, Grafenau, Germany
+e Faculty of Environment and Natural Resources, University of Freiburg, Freiburg, Germany
+f Department of Forestry and Wildlife Management, Inland Norway University of Applied Sciences, Koppang, Norway
+A R T I C L E
+I N F O
+Dataset link: NEWFOR Dataset, FORinstance Da
+taset, GitHub Repository
+Keywords:
+LiDAR
+Point cloud processing
+Oriented clustering
+Individual tree extraction
+A B S T R A C T
+Accurate extraction of individual trees has theoretical and practical significance for improving forest man-
+agement and productivity levels. Although airborne laser scanning (ALS) technology is frequently utilized for
+large-scale forest mapping and the detection of individual trees, the challenges of detecting individual trees
+in multi-layered and deciduous forests remain for most canopy-based methods. This study aimed to develop
+an efficient individual tree detection method capable of delineating trees with various heights, especially for
+sub-canopy trees. Inspired by the ‘‘from bottom to top" growth characteristics of tree branches, we propose an
+oriented search and clustering method, which clusters tree points upwards to the local tops, making it more
+adaptable to the roughly conical growth characteristics of a forest’s tree canopy. On the NEWFOR dataset,
+our approach demonstrated comparable overall performance to that of state-of-the-art methods. In the non-
+dominant layers of multi-layered forests, our method achieved 𝑅𝑀𝑆𝑚𝑎𝑡𝑐ℎvalues of 30% in the 2–5 m range,
+31% in the 5–10 m range, and 55% in the 10–15 m range, demonstrating the best extraction performance. A
+practical case study was conducted on selected plots of ALS point clouds acquired from the Bavarian Forest
+National Park (BFNP), with 1704 trees identified. This work provides a more reliable and efficient method
+for the future forest point cloud segmentation of individual trees; the method better meets the needs of forest
+inventory and resource management and lays a foundation for good forest management.
+1. Introduction
+As the most significant carbon sinks and pools, forests are important
+in preventing soil erosion and degradation and influencing climate
+change (Wiśniewski and Märker, 2019; Van Kooten, 2020; Huang
+et al., 2022). In order to accurately monitor changes in forests and
+to enhance forest resilience and biodiversity, key parameters (such as
+biomass) are often mapped to indicate the distribution of the biological
+and geometrical characteristics of forests (Wagner et al., 2018; Niţă,
+2021). To accurately and precisely estimate the biomass of forests,
+individual tree segmentation and precise measurement of individual
+tree parameters can provide a precise and optimized solution in forest
+ecology research (Miraki et al., 2021). Through individual tree segmen-
+tation, precise structural parameters (e.g., tree height, crown width,
+and diameter at breast height) can be obtained, providing essential data
+for monitoring forest growth dynamics and assessing tree health (Yao
+et al., 2012; Hu et al., 2023). Thus, accurately segmented individual
+∗Corresponding author.
+E-mail address: rong_huang@tongji.edu.cn (R. Huang).
+trees enable more precise estimates of forest carbon stocks and carbon
+sequestration potential, both of which are important for climate change
+mitigation (Tigges et al., 2017; Fernandez-Tschieder et al., 2024). Over-
+all, individual tree segmentation plays a pivotal role in advancing both
+scientific understanding and practical approaches to forest ecosystem
+management (Hill et al., 2017; Marinelli et al., 2019; Wu et al., 2023).
+However, detecting individual trees within forest environments poses
+unique challenges, including complex tree structures, mixed vegetation
+layers, and terrain variability.
+• Complex tree structures: Trees in forests vary significantly in
+height, size, and branching structure. This variability complicates
+the process of separating trees, especially in multi-layered forests
+with trees at different heights.
+• Mixed vegetation layers: The presence of shrubs, vines, and
+other vegetation types introduces additional complexity. Differ-
+https://doi.org/10.1016/j.ecoinf.2024.102978
+Received 17 June 2024; Received in revised form 22 November 2024; Accepted 22 December 2024
+Ecological Informatics 86 (2025) 102978 
+Available online 8 January 2025 
+1574-9541/© 2025 The Authors. Published by Elsevier B.V. This is an open access article under the CC BY-NC license ( http://creativecommons.org/licenses/by- 
+nc/4.0/ ). 
+
+
+W. Ding et al.
+entiating between trees and other vegetation is often difficult
+without advanced filtering techniques.
+• Terrain variability: Sloped or uneven terrain can distort the
+vertical positioning of point clouds, affecting the segmentation
+process and the accuracy of individual tree extraction.
+In recent decades, light detection and ranging (LiDAR) has been
+widely used in the field of forestry due to its all-day observation ability,
+high precision, and high-level automation compared with traditional
+field inventory work. Among different platforms equipped with LiDAR,
+airborne laser scanning (ALS) can be used to obtain a set of high-density
+3D points covering a large-scale area with high efficiency. Extracting
+individual trees from ALS point clouds is usually an essential step and
+has been widely investigated (Gülci et al., 2021; Xu et al., 2020).
+However, there are still semantic gaps between raw 3D ALS forest point
+clouds and the detached 3D structural information of individual trees.
+Individual tree extraction methods can generally be categorized
+into the following: canopy height model (CHM)-based methods and
+point-cloud-based methods. CHM-based methods include the water-
+shed, marker-controlled watershed, and polynomial fitting methods
+(Wang et al., 2004; Chen et al., 2006; Popescu, 2007; Stereńczak et al.,
+2020; Yu et al., 2024). Although the CHM-based method improves the
+processing efficiency, it is reliant on the accuracy of the CHM. More-
+over, considering that the points in the middle and lower layers are
+barely utilized, the accuracy of detecting individual trees, especially for
+the sub-canopy and understory, is limited. Point-cloud-based methods
+consist of three major categories: clustering, standardized cutting, and
+layer stacking (Reitberger et al., 2009; Morsdorf et al., 2009; Ayrey
+et al., 2017; Wang et al., 2022). These methods have the advantage of
+directly utilizing the 3D coordinates of points. Still, they suffer from low
+processing efficiency, low precision, weak universality, and dependence
+on hyper-parameters, especially in the case of large-size point clouds.
+More importantly, most studies usually examine their methods under
+specific forest conditions, and the accuracy evaluation methods vary,
+making it difficult to evaluate the strengths and weaknesses of these
+methods with a unified standard.
+The key challenge in detecting individual trees, especially for multi-
+layered mixed forests, is to extract the sub-canopy trees occluded
+by the upper canopy (Polewski et al., 2018). Traditional CHM-based
+segmentation methods can only recognize the top canopy of the upper
+trees and are inefficient in extracting the lower trees. It is also difficult
+to accurately extract lower trees in point-cloud-based methods since
+the sparse points can hardly delineate the clear structure of lower
+trees. Many studies have demonstrated that bottom-up approaches offer
+advantages over top-down methods in the understory and in broadleaf
+forests (Ferraz et al., 2012; Jaskierniak et al., 2021). However, exist-
+ing methods often rely on conditions such as the leaf-off period (Lu
+et al., 2014), specific trunk features (Chen et al., 2018), and point
+cloud intensity (Shendryk et al., 2016) or density (Wang et al., 2020),
+limiting their practicality in the diverse forest environment. Therefore,
+we propose an improved point cloud clustering method that solely
+utilizes 3D coordinates, focusing on detecting trees from multi-layered
+mixed structures of forests. This method provides an efficient and
+effective approach that is well suited for ecological applications. The
+key innovations of our approach are oriented search and clustering,
+validity checking, and point updating.
+• Oriented search and clustering: We introduce a novel bottom-
+up search and clustering method that leverages tree growth char-
+acteristics based solely on 3D coordinate information. This im-
+proves the overall applicability, especially in the understory of
+multi-layer sample plots where traditional methods struggle.
+• Validity checking and point updating: Our method includes
+an innovative validity-checking and point-updating mechanism,
+which enhances the precision and F1 score in dense forest en-
+vironments. This makes our approach more robust and reliable
+across varying forest densities.
+The remainder of this article is structured as follows. First, a brief
+review of methods working on extracting individual trees from LiDAR
+point clouds is provided in Section 2. Afterward, in Section 3, the
+proposed method is described. Subsequently, experiments are described
+in Section 4, and the performance of the proposed approach is eval-
+uated in Section 5, with comparisons and discussions being provided
+in Section 6. Finally, conclusions are drawn in Section 7 based on the
+analysis and discussions.
+2. Related work
+2.1. CHM-based methods
+The most widely used individual tree detection method is the
+canopy height model (CHM)-based method, which involves four major
+steps, namely, point cloud filtering, the generation of a CHM, seg-
+mentation based on the CHM, and point cloud segmentation based
+on the projected coordinates (Hyyppa et al., 2001; Duncanson et al.,
+2014; Ma et al., 2021). Point clouds are filtered to obtain forest point
+clouds and ground point clouds. Then, a digital surface model (DSM) is
+generated by interpolating forest point clouds, and the interpolation of
+ground point clouds can be used to generate a digital terrain model
+(DTM). The CHM is obtained by calculating the differences (Koch
+et al., 2006). The ALS point clouds of forests have the following
+characteristics: the crown vertex elevation is larger than the crown edge
+elevation. Thus, the maximum height of an individual tree crown vertex
+is generally selected as the treetop (Yang et al., 2020). Most studies
+using CHM height variation for tree segmentation mainly determine
+the treetop through a local maximum search and use edge detection
+and feature extraction algorithms to determine the tree crown (Liu
+et al., 2015). After segmentation in the CHM, the coarse point clouds
+can be segmented according to their 2D coordinates projected onto the
+CHM (Yang et al., 2020).
+The authors of Wang et al. (2004) developed a two-phase strat-
+egy that included edge identification and marker-controlled watershed
+segmentation. They first obtained the initial crown boundaries using
+edge detection to avoid background errors. The radiometric and spatial
+characteristics unique to treetops were used to obtain the treetop mark-
+ers, which were finally determined to guide watershed delineation. The
+authors of Chen et al. (2006) introduced a marker-controlled watershed
+segmentation algorithm that utilized a variable window to search for
+the local maxima for detecting the treetops in a CHM. They proposed
+that the lower limit of the regression curve between tree height and
+crown width can determine the variable window size. The authors
+of Popescu (2007) proposed a polynomial fitting method to detect the
+crown. The polynomial fitting method was utilized to fit the crown
+boundaries according to the position of the treetop and the shape of
+the individual tree. The authors of Marinelli et al. (2019) presented
+a novel approach based on Bayes’ rule to obtain the minimum error
+in tree detection by exploiting the bitemporal data information. To
+estimate the statistical parameters utilized for the composite approach,
+we obtained the main geometric features of each candidate treetop.
+Multitemporal information was considered by estimating the transition
+probabilities iteratively while considering the temporal dependence
+between LiDAR acquisitions. The authors of Stereńczak et al. (2020)
+developed a self-calibration method that was adaptive to new study
+areas. A hierarchical analysis of the CHM was also conducted for pro-
+cessing segments with different heights. Different settings were applied
+to filter the CHM for every tree height range. Following filtering, a
+pouring method (Soille, 1999) was used to carry out a hierarchical
+segmentation beginning at the uppermost layer of the forest canopy.
+This method achieved superior results, especially for deciduous species.
+The authors of Deng et al. (2024) proposed an approach to segmenting
+individual trees depending on the detection of tree trunks. Initially,
+prospective tree trunk positions (PTPs) were identified via a trunk point
+Ecological Informatics 86 (2025) 102978 
+2 
+
+
+W. Ding et al.
+distribution indicator (TPDI). Next, they segmented individual trees
+by adopting a trunk-based region-growing segmentation method. The
+application of the TPDI-based strategy was especially effective for a
+site with high understory vegetation and relatively low trees. Most
+of the existing methods, especially local maximum (LM)- and CHM-
+based methods, rely heavily on the window size. Without taking the
+window size into account, the authors of Yu et al. (2024) presented
+an adaptive crown-shaped approach for individual tree segmentation.
+To acquire the forest’s surface points, they first twisted and occluded
+at various angles to acquire the normalized point clouds. After that,
+the treetops were identified as seed points, and the crown borders
+were drawn by examining the crown profiles. Eventually, individual
+tree segmentation was achieved by using region growing determined
+by seed points. Many previous methods focus on the parameterization
+of the developed algorithms for correcting errors in individual tree
+detection methods. However, in dense and mixed forests with distinct
+stand structures, it is challenging to apply these methods. In order
+to better accurately identify individual trees, the authors of Lisiewicz
+et al. (2022) devised an approach to adjusting the results from different
+CHM-based individual tree segmentation methods. They first derived
+individual segmentation faults using the classification method, and
+then, they employed an automatic correction method to refine under-
+and over-segmentation mistakes.
+Although algorithms based on a CHM can improve operation effi-
+ciency, the common problem is their dependence on the CHM. After
+interpolation and other operations to generate a CHM, the point clouds
+are transformed into a mesh, resulting in a certain spatial deviation and
+a loss of 3D information (Persson et al., 2002). In addition, the grid
+size greatly influences the segmentation of individual trees (Popescu
+et al., 2002). A larger grid size may lead to under-segmentation.
+Conversely, over-segmentation may occur when the grid size is too
+small. Meanwhile, these methods delineate the position and crown
+width of individual trees on the CHM, which is formed by the topmost
+point cloud (Peuhkurinen et al., 2011). Then, each point is classified
+according to its projected coordinates on the CHM. Due to the low
+utilization rate of the 3D points in the middle and lower layers of the
+canopy, it is difficult to effectively extract middle and lower trees with
+complex forest structures (Kostensalo et al., 2023). In this case, the
+accuracy and application range are quite limited.
+2.2. Point-cloud-based methods
+Point-cloud-based methods usually achieve individual tree segmen-
+tation in point clouds by understanding the actual growth characteris-
+tics of the trees, using the spatial coordinates and intensity information
+of the LiDAR point cloud, and setting discriminative rules to judge
+and segment all of the point clouds (Dai et al., 2018; Harikumar
+et al., 2018). Compared with CHM-based methods, point-cloud-based
+methods directly process 3D points and the radiometric information of
+point clouds and avoid the errors introduced during the interpolation
+process (Lee et al., 2010).
+The authors of Reitberger et al. (2009) used normalized cut in
+combination with a trunk detection method to achieve the 3D seg-
+mentation of individual trees. Additional information extracted from
+the waveform decomposition of reflected laser signals served as a
+significant feature for identifying tree species. In this way, trees lying
+in the sub-canopy can also be detected. The authors of Morsdorf et al.
+(2009) applied the 𝐾-means clustering method for individual tree
+segmentation. First, the local highest point could be identified based
+on a DSM as the clustering seed point. Each point in the point clouds
+was assigned to the nearest seed point. Subsequently, the position
+of the center of each tree was recalculated until the center point’s
+location remained constant or the predetermined number of iterations
+was reached. The authors of Lu et al. (2014) proposed a bottom-up
+segmentation method for LiDAR point clouds. Since the points that
+delineate the main trunks usually outnumber those of the branches and
+dead leaves, the first step is to separate trunk points from whole point
+clouds. Starting from the main trunk points, all points are classified into
+the nearest tree based on the distance threshold, and additional rules
+are set to prevent branches or small shrubs from being misclassified
+into trees. The authors of Ayrey et al. (2017) introduced a layer-
+stacking algorithm to slice whole forest points cloud with a fixed
+height interval, i.e., one m, separate trees at each layer, and merge
+the representative tree contours of all layers. A novel hierarchical
+region-merging algorithm was created by Hao et al. (2021). It initially
+over-segmented the whole forest point cloud using the local density
+as a guide. The over-segmented partitions were then combined into
+groups using a step-by-step optimization process, yielding the final
+segmentation result. To transition from the local recognition of canopy
+characteristics to the overall compactness of forest point clouds, a
+global combination cost was incorporated into the region-merging
+approach. The authors of Yun et al. (2021) designed a dual Gaussian
+filter with automated adaptive parameter assignment and a screening
+strategy for false treetops. This preserved the geometric features of
+sub-canopy trees and eliminated false treetops. Second, an anisotropic
+water expansion controlled by the energy function was applied for
+accurate canopy segmentation. The authors of Wang et al. (2022)
+developed a novel model-based framework named ‘‘crown guess and
+selection’’. This framework automatically produced crown candidates,
+and then the features of candidates and their neighboring information
+were taken into consideration. Eventually, tree crowns were selected
+from the candidates simultaneously.
+Point-cloud-based extraction methods deal directly with 3D points,
+which allows better segmentation of small trees, especially for sub-
+canopy trees. However, they suffer from slow speed, low accuracy,
+weak generalization, and hyper-parameter dependence when dealing
+with large-scale point clouds (Xu et al., 2023; Latella et al., 2021).
+There is an urgent need for a robust, automatic, accurate, and general-
+ized individual tree extraction method, serving as the basis for further
+accurate forest inventory.
+3. Methodology
+In this work, we present a novel method of extracting individual
+trees from ALS point clouds based on a bottom-to-top-oriented search,
+coinciding with the growth characteristics of natural trees. Our method
+is designed for individual tree segmentation in both sparse and dense
+airborne forest point clouds, showcasing robustness in sparse data and
+achieving high precision in dense data. The input data is required to
+be in pcd format, with support for other common formats, such as
+LAS/LAZ, through format conversion. Potential applications include
+extracting individual tree structural parameters, estimating carbon stor-
+age, and supporting ecological monitoring as well as forestry resource
+management.
+Our proposed method consists of three major steps: point cloud
+preprocessing, oriented search and clustering, and validity checking
+and updating of tree points. The first step consists of denoising the
+points through low-pass filtering, ground removal using a cloth simu-
+lation filter (CSF) (Zhang et al., 2016), and separating tree points via a
+height filter, with the aim of generating normalized tree points from the
+initial point clouds. Then, an oriented search and clustering approach is
+introduced to obtain the raw clusters of tree points. Finally, the validity
+of the raw point clusters is checked based on the characteristics of trees
+to address the situation where certain tree branches are incorrectly
+assigned to trees. Finally, the points assigned to each cluster of tree
+points are updated. The flowchart in Fig. 1 illustrates the detailed
+processing steps and the corresponding intermediate results.
+3.1. Point cloud preprocessing
+The original point cloud consists of ground points, noise, and out-
+liers. The preprocessing step includes denoising, ground point removal,
+Ecological Informatics 86 (2025) 102978 
+3 
+
+
+W. Ding et al.
+Fig. 1. Flowchart of our proposed individual tree extraction method. After clustering, different colors denote different trees. (For interpretation of the references to color in this
+figure legend, the reader is referred to the web version of this article.)
+normalization, and height filtering to obtain tree points with normal-
+ized heights.
+Low-pass filtering for denoising involves fitting the plane on a local
+scale, setting an appropriate threshold, and removing points from the
+plane as noise points. We utilized the noise filter (𝑇 𝑜𝑜𝑙 𝑠 > 𝐶 𝑙 𝑒𝑎𝑛 >
+𝑁 𝑜𝑖𝑠𝑒𝑓 𝑖𝑙 𝑡𝑒𝑟) from CloudCompare (2024). The neighbor parameter was
+set using a radius-based approach, while the max error was defined as
+relative. Additionally, the option to remove isolated points was selected
+to further refine the point cloud and eliminate outliers.
+The efficient CSF method then achieved the separation of ground
+and non-ground points. The cloth resolution was 0.5 m, the maxi-
+mum number of iterations was 500, and the classification threshold
+was 0.5 m. Based on the separated ground points, the height of the
+tree points was normalized by subtracting the terrain. Compared with
+the original points, the normalized points eliminate the influence of
+topographic factors caused by the surface undulation in the study area.
+Meanwhile, this operation completely retains the hierarchical charac-
+teristics of the canopy structure, which is extremely useful for im-
+proving the accuracy of individual tree extraction. Specifically, ground
+points are interpolated to obtain a digital terrain model (DTM), and
+point cloud elevations are subtracted from the corresponding DTM
+elevations to obtain the normalized point cloud data. For example,
+each point cloud’s 𝑍-value represents the point’s vertical height from
+the ground. Fig. 2(a) and (b) demonstrate the comparison between the
+initial and normalized tree points.
+In addition to the normalization of points, it is still difficult to
+distinguish tree points from different layers, such as the layers of
+the overstory, understory, and understory shrubs; thus, this influences
+the accurate extraction of trees. Our choice to use a threshold-based
+method is mainly due to the standard definition of the height of a tree
+and the shrub characteristics in the NEWFOR dataset. Here, we use a
+threshold defined in many forestry studies (United Nations Framework
+Convention on Climate Change (UNFCCC), 2005): a tree must reach
+a minimum height of 2 to 5 m at maturity in situ. Additionally, the
+NEWFOR dataset includes a significant presence of understory shrubs,
+which complicates the segmentation process. When using this dataset, a
+height-filtering step with a fixed threshold of 2 or 3 m is usually applied
+to mitigate these challenges (Wang et al., 2023; Xu et al., 2023). In
+our proposed method, we adaptively determine the threshold based on
+the point distribution along the vertical axis. First, we count the point
+distribution along the vertical direction, as depicted in Fig. 3(a). The
+probability function is smoothed with a Gaussian function to reduce
+the influence of slight amplitude movements; then, the first derivative
+is calculated. Troughs were obtained from the first derivative, taking
+the filter height where the first trough was located. Fig. 3(b) shows
+the remaining tree points after the height filter. Some sample plots do
+not contain understory shrubs. Therefore, the filter height is set to a
+maximum of 3 m, i.e., below the height of the lowest trees.
+3.2. Oriented search and clustering
+Based on the retained tree points, we further extracted tree points
+using our proposed oriented search and clustering method, which
+was inspired by the classic mean-shift and 𝑘-means algorithms. The
+traditional 𝑘-means method requires prior knowledge of the number
+of classes (i.e., the 𝑘-value), which is generally difficult to predict and
+is susceptible to the initial clustering center. Mean-shift clusters point
+to the density centroid of points; they do not need the 𝑘-value to be
+preset but generate a new ‘‘process center point’’ and increase the
+algorithm complexity. Instead, we cluster points upwards to the local
+tops, making this method more adaptable to the roughly conical growth
+characteristics of the forest’s tree canopy. In addition, this approach
+does not need the 𝑘-value to be preset and does not generate a new
+‘‘process center point’’, which reduces the algorithm’s complexity.
+The clustering of tree points is converted into a classification pro-
+cess. The process of a point being classified is the process of the point
+being recognized as a specific tree. After the clustering, a cluster of
+points means that an individual tree is extracted and annotated as one
+class. Here, 𝐶(𝑃) represents the cluster to which the point 𝑃belongs.
+For a given center point 𝑃center, a spherical neighborhood 𝑁 𝑒𝑖𝑔 ℎ𝑏𝑜𝑟𝑟𝑎𝑑 𝑖𝑢𝑠
+is considered. The set of all points within this neighborhood is denoted
+as 𝑃𝑘, and 𝑃high refers to the highest point in 𝑃𝑘. In other words, 𝑃high
+is the highest point within the neighborhood of 𝑃center, as described by
+Eq. (1):
+𝑃ℎ𝑖𝑔 ℎ= highest(𝑃𝑘), 
+𝑃𝑘∈𝑁 𝑒𝑖𝑔 ℎ𝑏𝑜𝑟𝑟𝑎𝑑 𝑖𝑢𝑠(𝑃𝑐 𝑒𝑛𝑡𝑒𝑟)
+(1)
+Since 𝑃𝑐 𝑒𝑛𝑡𝑒𝑟is constantly drifting upward, 𝑃𝑝𝑎𝑡ℎis used to store all
+𝑃𝑐 𝑒𝑛𝑡𝑒𝑟points in the upward growth path. The first 𝑃𝑐 𝑒𝑛𝑡𝑒𝑟is randomly
+selected. Then, the highest point within its neighborhood is set as 𝑃ℎ𝑖𝑔 ℎ.
+Then, we check the height and classification of 𝑃ℎ𝑖𝑔 ℎto determine
+Ecological Informatics 86 (2025) 102978 
+4 
+
+
+W. Ding et al.
+Fig. 2. Comparison of the (a) initial and (b) normalized tree points.
+Fig. 3. An illustration of (a) the point height histogram and (b) the remaining tree points after height filtering. The curve 𝑦shows the point distribution, 𝑠𝑦is the Gaussian-smoothed
+version, then, the first derivative 𝑑 𝑦is calculated.
+whether to terminate the search loop. If the loop continues, we add
+the current 𝑃𝑐 𝑒𝑛𝑡𝑒𝑟to 𝑃𝑝𝑎𝑡ℎand set 𝑃ℎ𝑖𝑔 ℎas the new 𝑃𝑐 𝑒𝑛𝑡𝑒𝑟. The 𝑃ℎ𝑖𝑔 ℎfor
+this new 𝑃𝑐 𝑒𝑛𝑡𝑒𝑟is then updated accordingly. This search and clustering
+loop continues recursively until the termination condition is met. Fig. 4
+demonstrates an example of the process. In step 1, we assume that
+all points are initially unclassified. A point 𝑃1 is randomly selected
+as the initial center point 𝑃𝑐 𝑒𝑛𝑡𝑒𝑟, and 𝑃2 is set as 𝑃ℎ𝑖𝑔 ℎ. Since neither
+of the termination conditions are satisfied, as shown in step 2, we
+count 𝑃𝑐 𝑒𝑛𝑡𝑒𝑟(𝑃1) in 𝑃𝑝𝑎𝑡ℎand set 𝑃ℎ𝑖𝑔 ℎ(𝑃2) as the new 𝑃𝑐 𝑒𝑛𝑡𝑒𝑟(𝑃2). We
+then update 𝑃ℎ𝑖𝑔 ℎto 𝑃3. Since neither of the termination conditions
+are satisfied, as shown in step 3, we count 𝑃𝑐 𝑒𝑛𝑡𝑒𝑟(𝑃2) in 𝑃𝑝𝑎𝑡ℎand set
+𝑃ℎ𝑖𝑔 ℎ(𝑃3) as the new 𝑃𝑐 𝑒𝑛𝑡𝑒𝑟(𝑃3). 𝑃ℎ𝑖𝑔 ℎis still 𝑃3. 𝑃𝑐 𝑒𝑛𝑡𝑒𝑟and 𝑃ℎ𝑖𝑔 ℎare the
+same, satisfying one of the two termination cases.
+As shown in Fig. 5, there are two termination cases:
+• Case 1: Treetop found. As shown in Fig. 5(a), 𝑃𝑐 𝑒𝑛𝑡𝑒𝑟is 𝑃ℎ𝑖𝑔 ℎ,
+indicating that a new treetop 𝑃𝑡𝑜𝑝has been found. All 𝑃𝑝𝑎𝑡ℎvalues
+are classified into a newly created class 𝐶(𝑃𝑡𝑜𝑝) with 𝑃𝑡𝑜𝑝as the
+treetop.
+• Case 2: Pathways merged. As shown in Fig. 5(b), 𝑃ℎ𝑖𝑔 ℎhas been
+classified; then, all pathway points are also classified in the same
+class, as they belong to the same tree. 𝐶(𝑃𝑝𝑎𝑡ℎ) = 𝐶(𝑃ℎ𝑖𝑔 ℎ).
+3.3. Validity checking and point updating
+Through the previous step, the raw clusters of tree points are
+obtained. However, the irregularity in the trees’ geometry and the
+instability introduced by the motion of the airborne platform led to
+discontinuities in the point clouds of some tree branches. As shown in
+Fig. 6, this discontinuity may result in some branches being incorrectly
+segmented into separate trees. In this step, discrete branches that were
+misclassified as trees in the previous step will be classified as invalid
+classes, and the clusters to which all points belong will also be updated.
+As shown in Eq. (2), the validity of the raw clusters of tree points
+is judged based on the 𝐴𝑟𝑒𝑎𝑐 𝑙 𝑢𝑠𝑡𝑒𝑟and 𝐻 𝑒𝑖𝑔 ℎ𝑡of the trees. Parameters
+𝜖1, 𝜖1, and 𝜖3 depend on the specific dataset. As indicated in Fig. 7(a),
+for each class, the ellipse is fitted, and the ellipse area 𝐴𝑟𝑒𝑎𝑐 𝑙 𝑢𝑠𝑡𝑒𝑟
+is obtained using the least squares method according to the plane
+projection coordinates.
+𝐴𝑟𝑒𝑎𝑐 𝑙 𝑢𝑠𝑡𝑒𝑟> 𝜖1
+or
+𝐻ℎ𝑖𝑔 ℎ−𝐻𝑙 𝑜𝑤> 𝜖2
+or
+𝐻𝑙 𝑜𝑤< 𝜖3
+(2)
+Due to the cross-cutting nature of trees and the invalid clusters that
+were just authenticated, we need to check the belonging classes for
+all further points. The centers of all valid classes are first calculated,
+Ecological Informatics 86 (2025) 102978 
+5 
+
+
+W. Ding et al.
+Fig. 4. The process of an oriented search.
+Fig. 5. Two possible cases when stopping the search loop. (a) Case 1: Treetop found; (b) Case 2: Pathways merged.
+Fig. 6. Illustration of an abnormal case where some branched are incorrectly segmented as separate trees.
+and the crown width 𝑅𝑐, which is the average distance of all points to
+the class center, is calculated. For individual points, the distance 𝐷𝑝
+𝑐
+represents the distance from the point to the center of the class and
+the distance 𝐸𝑝
+𝑐from the point to the edge of the class, as shown in
+Eq. (3) and Fig. 7(b). The nearest valid class 𝐶𝑛𝑒𝑎𝑟(𝑃) in the neighbor is
+found.
+𝐸𝑝
+𝑐= 𝐷𝑝
+𝑐−𝑅𝑐
+(3)
+In determining the class to which a point belongs, we first check the
+validity of its original class 𝐶(𝑃) and its distance to the nearest valid
+class 𝐸𝑝
+𝑐𝑛𝑒𝑎𝑟. There are three types of cases:
+• If 𝐶(𝑃) is invalid, we assign the point to the closest valid class
+𝐶𝑛𝑒𝑎𝑟(𝑃).
+• If 𝐶(𝑃) is valid, as shown in Eq. (4), if the closest valid class
+𝐶𝑛𝑒𝑎𝑟(𝑃) is closer to the point than the primitive class 𝐶(𝑃) by
+Ecological Informatics 86 (2025) 102978 
+6 
+
+
+W. Ding et al.
+Table 1
+Acquisition parameters for the ALS data and field inventory data (Eysn et al., 2015).
+Region
+Country
+Localization
+Field Inventory
+Airborne Laser Scanning
+No. plots
+Date (month/year)
+Density (pts/m2)
+Sensor
+Date (month/year)
+Saint-Agnan
+France
+44◦52′N, 5◦25′E
+1
+7/2010
+13
+RieglLMS-Q560
+9/2010
+Cotolivier
+Italy
+45◦2′N, 6◦46′E
+3
+9/2012
+11
+Optech ALTM 3100
+7/2012
+Montafon
+Austria
+47◦4′N, 9◦58′E
+1
+6/2009
+22
+RieglLMS-Q560
+9/2011
+Pellizzano
+Italy
+46◦18′N, 10◦46′E
+2
+8/2013
+95–121
+Riegl LMS-Q680i
+9/2012
+Asiago
+Italy
+45◦49′N, 11◦30E
+3
+10/2012
+11
+Optech ALTM 3100
+7/2012
+Leskova
+Slovenia
+45◦39′N, 14◦28′E
+4
+11/2008
+30
+RieglLMS-Q560
+10/2009
+Fig. 7. Two major steps in validating the raw tree point clusters: (a) ground projection
+of points and (b) point-to-tree distance measurement.
+more than one m, and if the point is lower than the height of the
+highest point of the nearest class 𝐻𝑐𝑛𝑒𝑎𝑟, we reassign the point to
+the closest valid class 𝐶𝑛𝑒𝑎𝑟(𝑃).
+• Otherwise, we leave the primitive class unchanged.
+𝐸𝑝
+𝑐−𝐸𝑝
+𝑐𝑛𝑒𝑎𝑟> 1
+and
+𝐻𝑝< 𝐻𝑐𝑛𝑒𝑎𝑟
+(4)
+After the validity check, the tree points of the cluster are updated,
+achieving more accurate canopy segmentation. A cluster of tree points
+is then recognized as an extracted individual tree.
+4. Experiments
+4.1. Benchmark tests
+4.1.1. The NEWFOR dataset
+The first benchmarking dataset comes from the NEWFOR (NEW
+technologies for a better mountain FORest timber mobilization) project
+funded by the Alpine space program (Eysn et al., 2015). The project
+aims to improve forest assessment and provides researchers with an
+airborne LiDAR-based dataset that includes several study regions and
+forest types, allowing various individual tree detection algorithms to be
+compared regarding cross-sectional accuracy. Specifically, the dataset
+contains ALS point clouds and forest inventory field data for a total of
+18 plots. In this work, we used 14 publicly available plots that were
+acquired in five countries. Detailed information on the sample plots is
+presented in Tables 1 and 2.
+4.1.2. The FOR-instance dataset
+The FOR-instance dataset is another benchmarking dataset that in-
+cludes dense airborne laser scanning data to advance forest point cloud
+segmentation (Puliti et al., 2023b). It consists of five data collections
+from distinct global locations covering different forest types. All of
+the individual trees are manually labeled. Detailed information on the
+sample plots is presented in Table 3.
+Table 2
+Statistical description of the forest plots. The forest classes correspond to single- or
+multi-layered (SL or ML)/mixed or coniferous (M or C) classes (Eysn et al., 2015).
+Plot_ID
+Region
+Plot Size
+(ha)
+Number
+of trees
+Mean
+height
+(m)
+Stand
+density
+index
+Forest
+type
+1
+Saint-Agnan
+1
+359
+17.1
+485
+ML/M
+2
+Cotolivier
+0.13
+106
+18.1
+889
+ML/C
+3
+Cotolivier
+0.13
+49
+16.5
+514
+SL/C
+4
+Cotolivier
+0.13
+22
+12.9
+166
+ML/M
+5
+Montafon
+0.13
+107
+13.9
+401
+ML/C
+6
+Pellizzano
+0.13
+49
+25.6
+823
+SL/C
+7
+Pellizzano
+0.13
+235
+13.7
+974
+ML/M
+8
+Asiago
+0.13
+80
+23.6
+921
+SL/C
+9
+Asiago
+0.13
+110
+16.9
+779
+ML/M
+10
+Asiago
+0.13
+183
+13.9
+660
+ML/M
+11
+Leskova
+0.2
+53
+22.9
+439
+SL/M
+12
+Leskova
+0.2
+37
+24.6
+359
+SL/M
+13
+Leskova
+0.2
+117
+20.6
+603
+ML/M
+14
+Leskova
+0.2
+92
+24.6
+708
+ML/M
+4.1.3. Treetop-matching criteria
+The NEWFOR dataset (Eysn et al., 2015) only provides treetop
+positions for validation and introduces a fully automated tree-matching
+procedure for linking the different results to the reference treetops.
+To be specific, this automated tree-matching method for the NEWFOR
+dataset includes three main steps: candidate search, candidate voting,
+and candidate testing.
+• Candidate search: The test trees are arranged in descending or-
+der of height, initiating the matching procedure with the tallest
+test tree. For each test tree, reference trees are included in the
+candidate set if their horizontal difference (𝛥𝐷) and vertical
+difference (𝛥𝐻) fall within a predefined threshold range, which
+was determined by the height of the test tree (𝐻𝑡𝑒𝑠𝑡) (refer to
+Table 4).
+• Candidate voting: Other local candidates are systematically tested
+for a superior 𝛥𝐻from the nearest candidate. If a candidate
+exhibits a better 𝛥𝐻, and its 𝛥𝐷is at most 2.5 m greater than the
+initial candidate’s 𝛥𝐷, the candidate becomes the new best-voted
+candidate.
+• Candidate testing: The matching challenge is reciprocal. A test
+tree must identify the best-matching reference tree and vice versa.
+Success in matching is only acknowledged when both the test tree
+and the reference data mutually emerge as the best-voted trees for
+each other.
+The evaluation parameters and their calculation methods are de-
+fined as follows:
+• 𝑁𝑡𝑒𝑠𝑡: Number of extracted trees;
+• 𝑁𝑚𝑎𝑡𝑐 ℎ: Number of matched trees;
+• 𝑁𝑟𝑒𝑓: Number of reference trees;
+• 𝑅𝑒𝑥𝑡𝑟𝑎(extraction rate): 𝑅𝑒𝑥𝑡𝑟𝑎= 𝑁𝑡𝑒𝑠𝑡/𝑁𝑟𝑒𝑓;
+• 𝑅𝑚𝑎𝑡𝑐 ℎ(matching rate): 𝑅𝑚𝑎𝑡𝑐 ℎ= 𝑁𝑚𝑎𝑡𝑐 ℎ/𝑁𝑟𝑒𝑓;
+• 𝑅𝑐 𝑜𝑚(commission rate): 𝑅𝑐 𝑜𝑚= (𝑁𝑡𝑒𝑠𝑡−𝑁𝑚𝑎𝑡𝑐 ℎ)∕𝑁𝑡𝑒𝑠𝑡, where the
+commission represents the unrecognized part of the test result;
+Ecological Informatics 86 (2025) 102978 
+7 
+
+
+W. Ding et al.
+Table 3
+Summary of the key characteristics of the FOR-instance benchmark data (Puliti et al., 2023b).
+Collection
+Country
+Reference
+No. plots
+No. trees
+Total
+annotated
+area (ha)
+Forest type
+Sensor
+Average
+point density
+(pts/m2)
+NIBIO
+Norway
+Puliti
+et al.
+(2023a)
+20
+575
+1.21
+Coniferous-
+dominated boreal
+forest
+Riegl miniVUX
+-1 UAV
+9529
+CULS
+Czech
+Republic
+Kuželka
+et al.
+(2020)
+3
+47
+0.33
+Coniferous-
+dominated
+temperate forest
+Riegl VUX -1
+UAV
+2585
+TU_WIEN
+Austria
+Weiser
+et al.
+(2022)
+1
+150
+0.55
+Deciduous-
+dominated alluvial
+forest
+Riegl VUX -1
+UAV
+1717
+RMIT
+Australia
+Unpub-
+lished
+1
+223
+0.37
+Native dry
+sclerophyll eucalypt
+forest
+Riegl miniVUX
+-1 UAV
+498
+SCION
+New
+Zealand
+Unpub-
+lished
+5
+135
+0.33
+Non-native pure
+coniferous
+temperate forest
+Riegl miniVUX
+-1 UAV
+4576
+Table 4
+Height and neighborhood criteria for the candidate search (Eysn et al., 2015).
+Criterion
+Height test
+Height difference
+Distance difference
+1
+𝐻𝑡𝑒𝑠𝑡≤10 m
+𝛥𝐻 < 3 m
+𝛥𝐷 < 3 m
+2
+10 m < 𝐻𝑡𝑒𝑠𝑡≤15 m
+𝛥𝐻 < 3 m
+𝛥𝐷 < 4 m
+3
+15 m < 𝐻𝑡𝑒𝑠𝑡≤25 m
+𝛥𝐻 < 4 m
+𝛥𝐷 < 5 m
+4
+25 m < 𝐻𝑡𝑒𝑠𝑡
+𝛥𝐻 < 5 m
+𝛥𝐷 < 5 m
+• 𝑅𝑜𝑚(omission rate): 𝑅𝑜𝑚= (𝑁𝑟𝑒𝑓−𝑁𝑚𝑎𝑡𝑐 ℎ)∕𝑁𝑟𝑒𝑓, where omission
+represents the leakage of the recognition of the reference data;
+• 𝐻𝑚𝑒𝑎𝑛: Mean horizontal difference of the matching trees;
+• 𝑉𝑚𝑒𝑎𝑛: Mean tree height difference of the matching trees.
+In addition, the root mean square (RMS) was used to evaluate the accu-
+racy of model predictions. The evaluation parameters of the RMS were
+defined as follows: 𝑅𝑀 𝑆𝑒𝑥𝑡𝑟𝑎, 𝑅𝑀 𝑆𝑚𝑎𝑡𝑐 ℎ, 𝑅𝑀 𝑆𝑐 𝑜𝑚, 𝑅𝑀 𝑆𝑜𝑚, 𝑅𝑀 𝑆𝐻,
+and 𝑅𝑀 𝑆𝑉.
+4.1.4. Canopy overlap rate
+The advanced nature of the FOR-instance (Puliti et al., 2023b)
+validation comes from its detailed tree crown delineation and the
+manual labeling of every point. This meticulous approach allows an
+exceptionally precise validation process by calculating overlap rates.
+This method is more effective than using only treetop positions because
+it offers a more accurate assessment of how trees interact within the
+canopy, leading to a superior validation process for complex canopy
+regions.
+The point cloud of the tree extraction result is denoted as set 𝐼, and
+the reference point cloud of the trees is denoted as set 𝐽. A tree 𝑇𝑖in set
+𝐼and a tree 𝑇𝑗in set 𝐽are considered to be the same tree if and only
+if Eq. (5) holds. Specifically, this criterion is met when the number of
+overlapping points between 𝑇𝑖and 𝑇𝑗exceeds half of the total points
+of 𝑇𝑖and exceeds half of the total points of 𝑇𝑗.
+𝑇𝑖∩𝑇𝑗
+𝑇𝑖
+> 50%
+and
+𝑇𝑖∩𝑇𝑗
+𝑇𝑗
+> 50%
+(5)
+For a tree 𝑇𝑖in 𝐼, if there exists a tree 𝑇𝑗satisfying 𝑇𝑖= 𝑇𝑗, then 𝑇𝑖is
+noted as a true positive (TP) case; if there does not exist 𝑇𝑗satisfying
+𝑇𝑖= 𝑇𝑗, then 𝑇𝑖is noted as a false positive (FP) case. For a tree 𝑇𝑗in
+𝐽, if there does not exist a tree 𝑇𝑖satisfying 𝑇𝑖= 𝑇𝑗, then 𝑇𝑗is noted
+as a false negative (FN). The object-based accuracy rating includes the
+following three metrics: precision, recall, and F1 score.
+Pr ecision =
+TP
+TP + FP
+(6)
+Recall =
+TP
+TP + FN
+(7)
+F1 = 2 ∗ Pr ecision ∗ Recall
+Pr ecision + Recall
+(8)
+4.2. Field experiment
+Apart from experiments using benchmark datasets, we also con-
+ducted a field experiment in the Bavarian Forest National Park (BFNP)
+(49◦3′19′′N, 13◦12′9′′E), which is located along the border between
+Germany and the Czech Republic (Wong et al., 2024). The authority’s
+policy protects the park from human intervention, resulting in a total
+tree mortality rate of 22% (Müller and Job, 2009); it is dominated by
+Norway spruce (i.e., Picea abies), European beech (i.e., Fagus sylvatica),
+European silver fir (i.e., Abies alba), and other spruce trees (Van der
+Knaap et al., 2020).
+ALS point clouds measuring trees’ leaf-on situation were acquired in
+2016 for the BFNP’s administration within the framework of the data
+pool initiative for the Bohemian Forest Ecosystem (Latifi et al., 2021).
+Specifically, three transects of ALS point clouds, covering a total area
+of 13.5 km2, were acquired with an LMS-Q680i 400 kHz scanner on
+a flight operated by Milan Geoservice GmbH. The flying altitude was
+300 m above sea level, and the point density was estimated at around
+70 points/m2. The raw data were processed to LAZ 1.2 format, with
+𝑥, 𝑦, 𝑧, and intensity. We applied our proposed individual forest tree
+extraction method to 25 plots of point clouds from all three transects
+of the ALS point clouds. Fig. 8 shows a visualization of the ALS point
+clouds, their locations at the BFNP, and examples of tested plots.
+5. Results
+5.1. Benchmark results
+In Fig. 9, a visualization of the individual tree extraction results
+using our proposed method on three plots is given. As seen in the
+figure, it is clear that most of the forest trees are successfully extracted.
+Our proposed method shows especially high performance on coniferous
+trees with cone-shapes in the case given in Fig. 9(a). When the trees
+grow quite densely with their branches and leaves crossing, our method
+can still perform well, keeping individual trees’ shapes.
+Evaluation results of the individual tree extraction for each plot of
+the NEWFOR dataset are shown in Table 5. The results for each forest
+type in the NEWFOR dataset are shown in Table 6. For all fourteen
+plots, eleven plots have 𝑅𝑚𝑎𝑡𝑐 ℎvalues that are greater than 50%, and six
+plots have 𝑅𝑚𝑎𝑡𝑐 ℎvalues that are greater than 60%. All forest types have
+𝑅𝑚𝑎𝑡𝑐 ℎvalues that are more than 51%, with SL/C having the highest
+𝑅𝑚𝑎𝑡𝑐 ℎvalue of 70%. According to all of the results, the approach can
+identify the majority of the trees in the dataset correctly.
+For different forest types, the 𝑅𝑀 𝑆𝑚𝑎𝑡𝑐 ℎvalue for single-layered
+coniferous forests reaches 70%, while the 𝑅𝑀 𝑆𝑚𝑎𝑡𝑐 ℎvalue is 58%
+for single-layered mixed forests. Multi-layered coniferous forests have
+an 𝑅𝑀 𝑆𝑚𝑎𝑡𝑐 ℎvalue of 59%, and multi-layered mixed forests have an
+Ecological Informatics 86 (2025) 102978 
+8 
+
+
+W. Ding et al.
+Fig. 8. Field experiment in the Bavarian Forest National Park (BFNP). (a) Three transects of ALS point clouds (marked in blue), with their locations referenced using Google Maps
+and (b) four examples of test plots (heights rendered with gray colors). (For interpretation of the references to color in this figure legend, the reader is referred to the web version
+of this article.)
+Fig. 9. Extracted individual trees in three selected plots from the NEWFOR dataset. (a) Plot 6, (b) plot 3, and (c) plot 2. Different colors represent different trees. (For interpretation
+of the references to color in this figure legend, the reader is referred to the web version of this article.)
+Table 5
+Evaluation results for plots in the NEWFOR dataset.
+Plot
+𝑅𝑒𝑥𝑡𝑟𝑎(%)
+𝑅𝑚𝑎𝑡𝑐 ℎ(%)
+𝑅𝑐 𝑜𝑚(%)
+𝑅𝑜𝑚(%)
+𝑅𝐻(m)
+𝑅𝑉(m)
+1
+147
+59
+60
+41
+2.2
+1.4
+2
+136
+62
+54
+38
+2.4
+0.8
+3
+141
+76
+46
+24
+2.4
+1.0
+4
+141
+41
+71
+59
+1.5
+1.8
+5
+145
+56
+61
+44
+1.8
+1.1
+6
+135
+71
+47
+29
+2.2
+1.4
+7
+120
+38
+68
+62
+2.6
+0.7
+8
+139
+61
+56
+39
+1.7
+0.9
+9
+134
+55
+59
+45
+2.5
+0.8
+10
+79
+34
+57
+66
+2.3
+1.1
+11
+147
+57
+62
+43
+1.9
+1.2
+12
+143
+59
+58
+41
+1.8
+1.6
+13
+144
+61
+58
+39
+2.8
+1.0
+14
+147
+62
+58
+38
+2.2
+1.2
+𝑅𝑀 𝑆𝑚𝑎𝑡𝑐 ℎvalue of 51%. The extraction difficulty of multi-layered
+mixed coniferous forests is high, and the three aforementioned plots
+with 𝑅𝑚𝑎𝑡𝑐 ℎless than 50% are all of this type. Since the taller trees in
+the vicinity easily shade the lower trees, there is only a sparse cloud of
+corresponding points of lower trees, which makes it difficult to extract
+lower trees in multi-layered forests. As the distribution of trees in mixed
+forests is complex, the canopy of one broad-leaf tree tends to show
+multiple localized peaks. This characterization easily segments a tree
+into several trees, decreasing the 𝑅𝑚𝑎𝑡𝑐 ℎvalue in mixed forests. On the
+contrary, coniferous trees usually exhibit a single peak at the top of
+the tree and have a higher 𝑅𝑚𝑎𝑡𝑐 ℎ. Fig. 10 takes plots 3 (SL/C) and 11
+(ML/M) as examples to demonstrate the variability of forest types.
+Table 7 gives the results on the FOR-instance dataset. The per-
+formance was particularly good in the first two coniferous-dominated
+regions, which were extracted almost completely accurately. The pre-
+cision of the four plots is 100%, meaning that the extracted trees all
+match the corresponding reference trees. The recall is slightly less than
+100 because some small reference trees are blocked by the taller trees
+beside them and are missed. The recall of the latter three regions is just
+13%–24%, and the F1 scores of the latter three regions are just 20%–
+37%. It is hard for our proposed method to handle such complex sample
+plots because they are all in broad-leaf forests with inconspicuous
+treetops and high canopy crossing rates.
+5.2. Field experiment results
+In the field experiment using the BFNP datasets, there are a total
+of more than seven million points from 25 plots. Each plot is a circle
+with a radius of 30 m. All 25 plots cover a total of 106 acres. As
+shown in Fig. 11, a minimum of 47 trees and a maximum of 86
+trees were extracted from a single sample plot, with an average of
+68 trees. The visualization results of the extracted trees are given in
+Fig. 12, with 1704 trees that were identified. Most of the tree species
+in the plots are coniferous forests in which the feature of the highest
+local treetops is quite obvious. Moreover, most trees in this dataset
+have uniform tree heights and an even distribution. That is why our
+method achieved so exact extraction in most areas. This is especially
+true for plots with tree species of European silver fir and Norway
+spruce (e.g., te6 and tr11), which have apparent conical shapes. Fig. 13
+Ecological Informatics 86 (2025) 102978 
+9 
+
+
+W. Ding et al.
+Table 6
+Evaluation results for forest types in the NEWFOR dataset.
+Forest type
+𝑅𝑀 𝑆𝑒𝑥𝑡𝑟𝑎(%)
+𝑅𝑀 𝑆𝑚𝑎𝑡𝑐 ℎ(%)
+𝑅𝑀 𝑆𝑐 𝑜𝑚(%)
+𝑅𝑀 𝑆𝑜𝑚(%)
+𝑅𝑀 𝑆𝐻(m)
+𝑅𝑀 𝑆𝑉(m)
+SL/C
+138
+70
+50
+31
+2.1
+1.1
+SL/M
+145
+58
+60
+42
+1.8
+1.4
+ML/C
+140
+59
+58
+41
+2.1
+1.0
+ML/M
+132
+51
+62
+51
+2.3
+1.2
+Fig. 10. The point clouds and tree positions in plots 3 and 11. The green circle points are tree point clouds, the green rhombus points are treetops, and the red points are
+reference treetops. (For interpretation of the references to color in this figure legend, the reader is referred to the web version of this article.)
+Table 7
+Evaluation results for plots in the FOR-instance dataset.
+Region
+Plot
+Precision (%)
+Recall (%)
+𝐹1 (%)
+CULS
+1
+100
+1
+1
+3
+100
+90
+95
+SCION
+35
+100
+78
+88
+87
+100
+71
+83
+NIBIO
+1
+75
+24
+37
+2
+64
+23
+33
+TUWIEN
+train
+28
+22
+25
+RMIT
+train
+40
+13
+20
+depicts the detailed performance on five trees taken from plot tr11 as
+an example. Our method can also show good results on plots (e.g., tr10)
+planted with European beech with wide-spread crowns, but some points
+in the understory area theoretically do not belong to the crown or
+trunks. For such cases, methods based on identifying trunks, such as
+that of Deng et al. (2024), would perform better. Regarding these plots,
+the trees grow one next to the other; there is a certain degree of under-
+segmentation caused by the high density of points showing crossing
+and intersected branches and leaves, so points of different trees can
+hardly be separated by the validity check. For some plots with very
+sparse points (i.e., te10, te14, and te15), our approach suffers from
+over-segmentation, which is partially caused by the wrongly recognized
+treetops, corresponding to local peaks of understory points.
+6. Discussion
+6.1. Sensitivity analysis
+Plot 3 of the NEWFOR dataset is taken as an example to discuss
+the parameter sensitivity of the method. As shown in Fig. 14, as the
+radius increases, some small or secondary trees are partially ignored,
+and 𝑅𝑚𝑎𝑡𝑐 ℎslightly decrease. However, as cases of detecting a single
+tree with multiple treetops as multiple trees decrease, both 𝑅𝑒𝑥𝑡𝑟𝑎
+dramatically decrease. According to the results, we set the radius for
+plot 3 to 1.8 m as a more appropriate value. Overall, the segmentation
+effect is less affected by the radius, so the matching rate remains
+stable.
+6.2. Analysis of the impacts of components on segmentation performance
+We conducted a detailed ablation study to assess the impacts of
+different components of our model on the segmentation performance.
+Specifically, we evaluated the influence of three key steps: shrub re-
+moval, bottom-up search and clustering, and subsequent validity check-
+ing and updating. We implemented three experimental groups, modify-
+ing each step of the pipeline to isolate its contribution. The overall and
+layered results are shown in Tables 8 and 9. The control group, which
+involved shrub removal, bottom-up search and clustering, and validity
+checking and updating, achieved an overall extraction 𝑅𝑀 𝑆𝑒𝑥𝑡𝑟𝑎value
+of 136% and an 𝑅𝑀 𝑆𝑚𝑎𝑡𝑐 ℎvalue of 58%. For the 2–5 m interval, the
+𝑅𝑀 𝑆𝑚𝑎𝑡𝑐 ℎvalue was 30%, and for the 5–10 m interval, it was 33%.
+The results reflect the excellent extraction ability of our method, espe-
+cially in the lower layer of the forest. In the first experimental group,
+shrub removal was omitted, and bottom-up clustering was performed,
+followed by updating. Although the 𝑅𝑀 𝑆𝑚𝑎𝑡𝑐 ℎvalue of 37% in the 2–
+5 m interval was marginally higher than that of the control group, the
+overall 𝑅𝑀 𝑆𝑚𝑎𝑡𝑐 ℎvalue increased to 163%, indicating significant over-
+segmentation. These findings suggest that shrub removal plays a crucial
+role in preventing over-segmentation in multi-layered forests. In the
+second experimental group, shrub removal was implemented, and the
+clustering method was replaced with the top-down distance-threshold
+clustering method proposed by Li et al. (2012), followed by updating.
+This method sequentially classifies points from high to low, comparing
+each point with its nearest neighbor tree. If the distance exceeds the
+threshold, a new tree is created; otherwise, the point is merged with
+the nearest tree. This approach is available in the lidR package (Roussel
+et al., 2020). However, this configuration resulted in poor performance,
+with an 𝑅𝑀 𝑆𝑚𝑎𝑡𝑐 ℎvalue of only 4% in the 2–5 m interval, indicating
+that our original clustering method is more effective, especially in the
+low layers. In the third experimental group, shrub removal and bottom-
+up clustering were maintained, but the validity checking and updating
+step was omitted. The lack of significant improvement in this config-
+uration was likely due to the sparse nature of the NEWFOR dataset
+Ecological Informatics 86 (2025) 102978 
+10 
+
+
+W. Ding et al.
+Fig. 11. Number of trees in each plot of the BFNP dataset.
+Fig. 12. Tree extraction results in all the 25 plots of the BFNP dataset, with different colors representing different trees. (For interpretation of the references to color in this
+figure legend, the reader is referred to the web version of this article.)
+and the irregular shapes of the trees, which limited the effectiveness of
+the updating step. However, when applied to the FOR-instance dataset,
+which features higher point densities, particularly in the canopy region,
+the third step led to a notable improvement in performance.
+The detailed performance is much better with the validity checking
+and updating of tree points. Taking the SCION sample plot 35 in the
+FOR-instance dataset as an example, Fig. 15 shows the optimization
+performance in detail. In Fig. 15(a), a small number of trunks appeared
+to be cross-classified due to the order in which the point cloud was
+arranged. With updating, the classification of the trunks and crowns
+of the trees on the left becomes unified. In addition, the module for
+validity checking and point updating enhanced the point classification
+accuracy in overlapping tree regions. In Fig. 15(b), in the middle of
+the purple tree on the right, a branch was incorrectly divided into
+Ecological Informatics 86 (2025) 102978 
+11 
+
+
+W. Ding et al.
+Table 8
+Precision among the three experimental groups and a control group for all plots using the NEWFOR dataset.
+No.
+Method
+Precision
+Shrub removal
+Clustering method
+Generate
+𝑅𝑀 𝑆𝑒𝑥𝑡𝑟𝑎(%)
+𝑅𝑀 𝑆𝑚𝑎𝑡𝑐 ℎ(%)
+𝑅𝑀 𝑆𝑐 𝑜𝑚(%)
+𝑅𝑀 𝑆𝑜𝑚(%)
+𝑅𝑀 𝑆𝐻(m)
+𝑅𝑀 𝑆𝑉(m)
+1
+N
+Oriented search
+Y
+163
+58
+61
+43
+2.1
+1.1
+2
+Y
+Li et al. (2012)
+Y
+118
+50
+55
+50
+2.2
+1.1
+3
+Y
+Oriented search
+N
+140
+58
+57
+43
+2.1
+1.2
+4
+Y
+Oriented search
+Y
+136
+58
+57
+43
+2.1
+1.2
+Table 9
+Precision among three experimental groups and a control group for different height layers.
+No.
+Method
+Precision
+Shrub removal
+Clustering method
+Generate
+2–5 m
+5–10 m
+10–15 m
+15–20 m
+20–25 m
+1
+N
+Oriented search
+Y
+37
+33
+54
+75
+74
+2
+Y
+Li et al. (2012)
+Y
+4
+16
+41
+64
+74
+3
+Y
+Oriented search
+N
+31
+33
+54
+75
+74
+4
+Y
+Oriented search
+Y
+30
+33
+56
+75
+74
+Fig. 13. Detailed performance in plot 11 of the BFNP dataset, with different colors
+representing different trees. (For interpretation of the references to color in this figure
+legend, the reader is referred to the web version of this article.)
+Fig. 14. Precision of different parameters.
+a separate tree, which was examined and judged to be invalid, and
+all points were re-updated to the correct tree. Nonetheless, the part
+where the blue and purple trees cross cannot be effectively segmented,
+which is also a shortcoming of this method, and we look forward to the
+subsequent improvements.
+The CULS and SCION regions are taken as examples to see the
+improvements with validity checking and tree point updating. As seen
+in Table 10, with updating, the invalid trees (FPs) are decreased to 0,
+Table 10
+Improvements on the FOR-instance dataset with validity checking and tree point
+updating.
+Precision (%)
+Recall (%)
+F1 (%)
+Overlap (%)
+Raw trees
+51
+82
+63
+88
+With validity
+checking and
+updating
+100
+82
+90
+92
+so the precision increases from 51% to 100%. The number of TP trees
+is retained, so the recall remains the same, and F1 increases. Moreover,
+overlap increases from 88% to 92%.
+6.3. Comparison with other methods
+To better verify the effectiveness of the method proposed in this pa-
+per, the segmentation results are compared with those of twelve other
+single tree segmentation methods using publicly available datasets,
+namely, the NEWFOR dataset. Of the compared methods, methods 1–
+8 come from Eysn et al. (2015). The authors of Yun et al. (2024)
+provide a systematic review of the applications and prospects of deep
+learning methods for individual tree segmentation. Based on this con-
+text, we selected three representative deep learning-based methods
+for comparison: Method 9 (Yan et al., 2018), method 10 (Shi et al.,
+2020), and method 11 (Wang et al., 2023). Method 12 (Pang et al.,
+2021) introduced 𝐾-nearest-neighbor-based sampling (KNNS) with the
+Nyström approximation of voxels. In this study, they only offer the
+𝑅𝑀 𝑆𝑒𝑥𝑡𝑟𝑎and 𝑅𝑀 𝑆𝑚𝑎𝑡𝑐 ℎvalues.
+Table 11 shows the detection performance of different models for
+all plots. The deep-learning-based methods (methods 9–11) exhibit
+notably high 𝑅𝑀 𝑆𝑒𝑥𝑡𝑟𝑎values, indicating a tendency toward over-
+segmentation. In contrast, our method strikes a strong balance between
+𝑅𝑀 𝑆𝑒𝑥𝑡𝑟𝑎and 𝑅𝑀 𝑆𝑚𝑎𝑡𝑐 ℎ, achieving 136% and 58%, respectively. This
+balance allows our method to accurately identify more correct trees
+while minimizing misidentification. Table 12 displays the matching
+results in various height ranges when using these methods, illustrating
+the effectiveness of our method in understory vegetation. Concerning
+the methods (i.e., nos. 1–4 and 6–8) based on a CHM, if the layers are
+<10 m, their 𝑅𝑀 𝑆𝑚𝑎𝑡𝑐 ℎvalues are lower than 10%. These methods
+search for local maxima as treetops in the CHM, which is equivalent
+to a top view of a point cloud. The higher upper forests often occlude
+the lower forests, so they cannot show the local maxima, and they
+are always missed. Other methods (i.e., nos. 5, 9, 10, 11, and 12)
+operate directly on point clouds, avoiding the limitations of a CHM, and
+the 𝑅𝑀 𝑆𝑚𝑎𝑡𝑐 ℎvalues of these methods are higher in the understory.
+Still, the deep-learning-based methods (methods 9–11) are limited
+in accuracy, as the lack of sufficient semantic information in sparse
+Ecological Informatics 86 (2025) 102978 
+12 
+
+
+W. Ding et al.
+Fig. 15. Optimization of performance with validity checking and updating of adjacent trees in plot 35, with different colors representing different trees. (a) Unified classification
+of trunks and crowns after updating; (b) corrected branch misclassification in overlapping tree segmentation. (For interpretation of the references to color in this figure legend,
+the reader is referred to the web version of this article.)
+Table 11
+Detection performance of different models for all plots in the NEWFOR dataset.
+ID
+Method
+𝑅𝑀 𝑆𝑒𝑥𝑡𝑟𝑎(%)
+𝑅𝑀 𝑆𝑚𝑎𝑡𝑐 ℎ(%)
+𝑅𝑀 𝑆𝑐 𝑜𝑚(%)
+𝑅𝑀 𝑆𝑜𝑚(%)
+𝑅𝑀 𝑆𝐻(m)
+𝑅𝑀 𝑆𝑉(m)
+1
+LM + Filtering
+51
+45
+9
+59
+1.6
+0.9
+2
+LM + Region Growing
+57
+43
+20
+61
+1.8
+1.2
+3
+LM + Multi CHM
+101
+46
+61
+57
+1.7
+0.7
+4
+LM + Watershed
+86
+49
+49
+55
+1.6
+1.1
+5
+Segment + Clustering
+139
+53
+95
+51
+1.7
+1.0
+6
+LM3 × 3
+154
+54
+113
+51
+1.6
+0.9
+7
+LM5 × 5
+52
+41
+16
+63
+1.8
+1.1
+8
+Polyn.Fitting + Watersh
+54
+44
+13
+59
+1.8
+1.1
+9
+SECOND (Yan et al., 2018)
+156
+47
+64
+59
+2.6
+1.3
+10
+PV_RCNN (Shi et al., 2020)
+153
+55
+55
+54
+2.3
+1.3
+11
+TREE RCNN (Wang et al., 2023)
+147
+61
+55
+42
+2.4
+1.4
+12
+NSC (Pang et al., 2021)
+126
+54
+–
+–
+–
+–
+13
+Our proposed method
+136
+58
+57
+43
+2.1
+1.2
+Table 12
+Detection performance of different models for different height layers.
+ID
+Method
+Height layers (m)
+2–5
+5–10
+10–15
+15–20
+20–25
+1
+LM + Filtering
+0
+3
+16
+35
+72
+2
+LM + Region Growing
+0
+5
+15
+30
+72
+3
+LM + Multi CHM
+0
+3
+32
+46
+68
+4
+LM + Watershed
+4
+7
+20
+36
+76
+5
+Segment + Clustering
+15
+17
+32
+45
+76
+6
+LM3 × 3
+4
+6
+28
+44
+82
+7
+LM5 × 5
+2
+4
+14
+24
+66
+8
+Polyn.Fitting + Watersh
+2
+9
+16
+40
+73
+9
+SECOND (Yan et al., 2018)
+8
+31
+23
+48
+60
+10
+PV_RCNN (Shi et al., 2020)
+9
+32
+41
+58
+66
+11
+TREE RCNN (Wang et al., 2023)
+20
+38
+48
+61
+75
+12
+NSC (Pang et al., 2021)
+–
+15
+54
+84
+87
+13
+Our proposed method
+30
+31
+55
+73
+74
+data constrains their performance. In contrast, for the layers with an
+elevation of 2–5 m, 5–10 m, and 10–15 m, our method shows the best
+performance, with values of 30%, 31%, and 55%, which reflects its
+excellent extraction ability in the lower layer of the forest.
+6.4. Performance on field data
+In the context of individual tree extraction, there is relatively lim-
+ited research published in this journal that specifically addresses the use
+of airborne LiDAR (You et al., 2023). Much of the existing literature
+focuses on other data or other techniques, such as imagery (Miraki
+et al., 2021; Li et al., 2023), ground-based LiDAR, or deep learning
+methods (Martins et al., 2021; Weinstein et al., 2020). We present a
+novel application of airborne LiDAR for individual tree segmentation
+in forest environments, which may contribute to an application in fast
+key parameter estimation (such as for biomass) using individual tree
+segmentation results. Our proposed method offers several significant
+advantages over traditional approaches.
+• Efficiency: It is capable of completing large-scale forest surveys
+within a short period of time, significantly improving the speed of
+data collection compared with conventional field-based methods.
+Ecological Informatics 86 (2025) 102978 
+13 
+
+
+W. Ding et al.
+• Low dependency on prior knowledge: Unlike methods that rely
+heavily on prior knowledge or specific datasets, our approach
+shows broad adaptability across different geographic locations,
+tree species, and forest densities. It is not overly dependent on
+specific parameters, making it a versatile tool for global forest
+monitoring.
+• Performance in multi-layered forests: One of the key strengths
+of our method is its ability to perform exceptionally well in multi-
+layered forests, especially in lower canopy layers. In these chal-
+lenging environments, it outperforms some of the latest methods
+in the field.
+However, we also acknowledge that our method has notable limita-
+tions. In some dense forest plots, where trees are closely spaced and
+their crowns overlap, our method struggles to distinguish between
+neighboring trees that lack clear treetop features, leading to some
+degree of under-segmentation. Despite these limitations, the overall
+performance of our approach suggests that it could provide fast and
+accurate individual tree segmentation, enabling the further analysis of
+forests.
+7. Conclusions
+The rising demand for aerial LiDAR in forest planning and manage-
+ment has brought individual tree detection to the forefront of research.
+Nevertheless, accurate segmentation methods for multi-layered and
+deciduous forests remain a pressing challenge. We propose a new
+oriented search and clustering method based on tree shape and growth
+characteristics that consists of two key procedures. The first one is
+oriented search and clustering, which enables tree detection in multi-
+layered and mixed forest structures using only 3D coordinates. The
+second part is a mechanism for point updating and validity checking
+that enhances the robustness and reliability of our method across forests
+with varying densities. Compared with other methods, our method
+achieves the highest 𝑅𝑀 𝑆𝑚𝑎𝑡𝑐 ℎvalue of 58% on the NEWFOR dataset.
+For layers with elevations of 2–5 m, 5–10 m, and 10–15 m, our method
+shows the best performance, with values of 30%, 31%, and 55%, which
+reflects its excellent extraction ability in the lower layer of forests.
+However, the method presented in this work relies on local elevation
+maxima to extract tree vertices, which is excellent for coniferous forests
+but less effective for broad-leaf trees. In future work, we will consider
+the topology of broad-leaf trees by applying graph-based methods to en-
+hance the performance in individual tree detection. Moreover, further
+calculation of forest parameters (such as biomass) will be conducted
+based on the former individual tree segmentation results.
+CRediT authorship contribution statement
+Wenhui Ding: Writing – original draft, Methodology, Investigation,
+Formal analysis, Data curation. Rong Huang: Writing – review & edit-
+ing, Supervision, Project administration, Methodology, Investigation,
+Funding acquisition, Conceptualization. Wei Yao: Writing – review &
+editing, Supervision, Investigation. Wuming Zhang: Writing – review
+& editing, Supervision, Conceptualization. Marco Heurich: Writing
+– review & editing, Resources. Xiaohua Tong: Writing – review &
+editing, Supervision, Resources.
+Acknowledgments
+The work described in this paper was jointly supported by the
+National Natural Science Foundation of China under Grants 42221002
+and 42201478, and in part by the Chenguang Scholars of Shanghai,
+China (22CGA22).
+Table 13
+Values of key parameters implemented in the NEWFOR dataset (all values in meters,
+m). The parameters for our method are in the second column, while the parameters
+used in Li’s method are in the last three columns.
+ID
+Height
+Radius (our method)
+𝑑𝑡1 (Li)
+𝑑𝑡2 (Li)
+𝑍𝑢(Li)
+1
+1.4
+1.7
+1.2
+1.7
+20
+2
+2.8
+1.0
+1.0
+1.5
+20
+3
+1.8
+1.8
+1.0
+1.5
+10
+4
+1.4
+1.8
+1.3
+1.8
+15
+6
+2.0
+1.3
+1.0
+1.5
+20
+7
+3.0
+1.6
+1.0
+1.5
+25
+8
+2.2
+1.0
+0.5
+1.0
+20
+9
+2.4
+1.3
+1.0
+1.5
+20
+10
+1.4
+1.2
+1.0
+1.5
+25
+11
+1.8
+1.1
+1.0
+1.5
+20
+15
+3.0
+1.9
+1.0
+1.5
+10
+16
+3.0
+2.4
+1.3
+1.8
+20
+17
+1.4
+1.5
+1.1
+1.6
+25
+18
+2.6
+2.0
+1.0
+1.5
+25
+Appendix
+Table 13 shows the values used for each parameter required by the
+segmentation methods for the NEWFOR dataset. For the approach by
+Li et al. a description of the thresholds 𝑍𝑢, 𝑑𝑡1, and 𝑑𝑡2 can be found in
+the original paper. The radius for our method used in the FOR-instance
+dataset is 1.5 m.
+Eq. (9) describes the validity rules for the NEWFOR dataset and the
+FOR-instance dataset.
+{
+𝐴𝑟𝑒𝑎𝑐 𝑙 𝑢𝑠𝑡𝑒𝑟> 5 m2
+or
+𝐻ℎ𝑖𝑔 ℎ−𝐻𝑙 𝑜𝑤> 3 m
+𝐴𝑟𝑒𝑎𝑐 𝑙 𝑢𝑠𝑡𝑒𝑟> 3 m2
+or
+𝐻𝑙 𝑜𝑤< 2 m
+(9)
+Data availability
+This study utilized the following datasets:
+∙NEWFOR Dataset: LiDAR-based single tree detection benchmarks
+using heterogeneous forest data from the Alpine region Eysn et al.
+(2015). Available at: NEWFORDataset.
+∙FORinstance Dataset: UAV laser scanning dataset for semantic
+and instance segmentation of individual trees Puliti et al. (2023b).
+Available at: FORinstanceDataset.
+The codes and processing results for these datasets are available at:
+GitHubRepository. Instructions for running the provided codes and
+using the datasets are detailed in the repository’s README file.
+References
+Ayrey, E., Fraver, S., Kershaw, J.A., Kenefic, L.S., Hayes, D., Weiskittel, A.R., Roth, B.E.,
+2017. Layer stacking a novel algorithm for individual forest tree segmentation from
+LiDAR point clouds. Can. J. Remote Sens. 43 (1), 16–27.
+Chen, Q., Baldocchi, D.D., Gong, P., Kelly, M., 2006. Isolating individual trees in a
+savanna woodland using small footprint LiDAR data. Photogramm. Eng. Remote
+Sens. 72, 923–932.
+Chen, W., Hu, X., Chen, W., Hong, Y., Yang, M., 2018. Airborne LiDAR remote sensing
+for individual tree forest inventory using trunk detection-aided mean shift clustering
+techniques. Remote Sens. 10 (7), 1078.
+CloudCompare, 2024. CloudCompare 3D point cloud and mesh processing software:
+Open source project (v2.13.1).. (Accessed 20 March 2024).
+Dai, W., Yang, B., Dong, Z., Shaker, A., 2018. A new method for 3D individual tree
+extraction using multispectral airborne LiDAR point clouds. ISPRS J. Photogramm.
+Remote Sens. 144, 400–411.
+Deng, S., Xu, Q., Yue, Y., Jing, S., Wang, Y., 2024. Individual tree detection and
+segmentation from unmanned aerial vehicle-LiDAR data based on a trunk point
+distribution indicator. Comput. Electron. Agric. 218, 108717.
+Duncanson, L., Cook, B., Hurtt, G., Dubayah, R., 2014. An efficient, multi-layered
+crown delineation algorithm for mapping individual tree structure across multiple
+ecosystems. Remote Sens. Environ. 154, 378–386.
+Ecological Informatics 86 (2025) 102978 
+14 
+
+
+W. Ding et al.
+Eysn, L., Hollaus, M., Lindberg, E., Berger, F., Monnet, J.-M., Dalponte, M., Kobal, M.,
+Pellegrini, M., Lingua, E., Mongus, D., Pfeifer, N., 2015. A benchmark of lidar-based
+single tree detection methods using heterogeneous forest data from the alpine space.
+Forests 6 (5), 1721–1747.
+Fernandez-Tschieder, E., Marshall, J.D., Binkley, D., 2024. Carbon budget at the
+individual-tree scale: dominant eucalyptus trees partition less carbon belowground.
+New Phytol. 242 (5), 1932–1943.
+Ferraz, A., Bretar, F., Jacquemoud, S., Gonçalves, G., Pereira, L., Tomé, M., Soares, P.,
+2012. 3-D mapping of a multi-layered mediterranean forest using ALS data. Remote
+Sens. Environ. 121, 210–223.
+Gülci, S., Akay, A.E., Gülci, N., Taş, İ., 2021. An assessment of conventional and drone-
+based measurements for tree attributes in timber volume estimation: A case study
+on stone pine plantation. Ecol. Inform. 63, 101303.
+Hao, Y., Widagdo, F.R.A., Liu, X., Liu, Y., Dong, L., Li, F., 2021. A hierarchical region-
+merging algorithm for 3-D segmentation of individual trees using UAV-LiDAR point
+clouds. IEEE Trans. Geosci. Remote Sens. 60, 1–16.
+Harikumar, A., Bovolo, F., Bruzzone, L., 2018. A local projection-based approach to
+individual tree detection and 3-D crown delineation in multistoried coniferous
+forests using high-density airborne LiDAR data. IEEE Trans. Geosci. Remote Sens.
+57 (2), 1168–1182.
+Hill, S., Latifi, H., Heurich, M., Müller, J., 2017. Individual-tree-and stand-based
+development following natural disturbance in a heterogeneously structured forest:
+a LiDAR-based approach. Ecol. Inform. 38, 12–25.
+Hu, L., Xu, X., Wang, J., Xu, H., 2023. Individual tree crown width detection from
+unmanned aerial vehicle images using a revised local transect method. Ecol. Inform.
+75, 102086.
+Huang, R., Yao, W., Xu, Z., Cao, L., Shen, X., 2022. Information fusion approach for
+biomass estimation in a plateau mountainous forest using a synergistic system
+comprising UAS-based digital camera and LiDAR. Comput. Electron. Agric. 202,
+107420.
+Hyyppa, J., Kelle, O., Lehikoinen, M., Inkinen, M., 2001. A segmentation-based method
+to retrieve stem volume estimates from 3-D tree height models produced by laser
+scanners. IEEE Trans. Geosci. Remote Sens. 39 (5), 969–975.
+Jaskierniak, D., Lucieer, A., Kuczera, G., Turner, D., Lane, P., Benyon, R., Haydon, S.,
+2021. Individual tree detection and crown delineation from unmanned aircraft
+system (UAS) LiDAR in structurally complex mixed species eucalypt forests. ISPRS
+J. Photogramm. Remote Sens. 171, 171–187.
+Koch, B., Heyder, U., Weinacker, H., 2006. Detection of individual tree crowns in
+airborne LiDAR data. Photogramm. Eng. Remote Sens. 72 (4), 357–363.
+Kostensalo, J., Mehtätalo, L., Tuominen, S., Packalen, P., Myllymäki, M., 2023.
+Recreating structurally realistic tree maps with airborne laser scanning and ground
+measurements. Remote Sens. Environ. 298, 113782.
+Kuželka, K., Slavík, M., Surov`y, P., 2020. Very high density point clouds from UAV
+laser scanning for automatic tree stem detection and direct diameter measurement.
+Remote Sensing 12 (8), 1236.
+Latella, M., Sola, F., Camporeale, C., 2021. A density-based algorithm for the detection
+of individual trees from LiDAR data. Remote Sens. 13 (2), 322.
+Latifi, H., Holzwarth, S., Skidmore, A., Br˘una, J., Červenka, J., Darvishzadeh, R.,
+Hais, M., Heiden, U., Homolová, L., Krzystek, P., et al., 2021. A laboratory for
+conceiving essential biodiversity variables (EBVs)—The ‘data pool initiative for the
+bohemian forest ecosystem’. Methods Ecol. Evol. 12 (11), 2073–2083.
+Lee, H., Slatton, K.C., Roth, B.E., Cropper, W.P., 2010. Adaptive clustering of airborne
+LiDAR data to segment individual tree crowns in managed pine forests. Int. J.
+Remote Sens. 31 (1), 117–139.
+Li, W., Guo, Q., Jakubowski, M., Kelly, M., 2012. A new method for segmenting
+individual trees from the LiDAR point cloud. Photogramm. Eng. Remote Sens. 78,
+75–84.
+Li, R., Sun, G., Wang, S., Tan, T., Xu, F., 2023. Tree trunk detection in urban scenes
+using a multiscale attention-based deep learning method. Ecol. Inform. 77, 102215.
+Lisiewicz, M., Kamińska, A., Kraszewski, B.o., Stereńczak, K., 2022. Correcting the
+results of CHM-based individual tree detection algorithms to improve their accuracy
+and reliability. Remote Sens. 14 (8), 1822.
+Liu, T., Im, J., Quackenbush, L.J., 2015. A novel transferable individual tree crown
+delineation model based on fishing net dragging and boundary classification. ISPRS
+J. Photogramm. Remote Sens. 110, 34–47.
+Lu, X., Guo, Q., Li, W., Flanagan, J., 2014. A bottom-up approach to segment individual
+deciduous trees using leaf-off LiDAR point cloud data. ISPRS J. Photogramm.
+Remote Sens. 94, 1–12.
+Ma, K., Xiong, Y., Jiang, F., Chen, S., Sun, H., 2021. A novel vegetation point cloud
+density tree-segmentation model for overlapping crowns using UAV LiDAR. Remote
+Sens. 13 (8), 1442.
+Marinelli, D., Paris, C., Bruzzone, L., 2019. An approach to tree detection based on
+the fusion of multitemporal LiDAR data. IEEE Geosci. Remote Sens. Lett. 16 (11),
+1771–1775.
+Martins, J.A.C., Menezes, G., Gonçalves, W., Sant’Ana, D.A., Osco, L.P., Liesenberg, V.,
+Li, J., Ma, L., Oliveira, P.T., Astolfi, G., et al., 2021. Machine learning and SLIC
+for tree canopies segmentation in urban areas. Ecol. Inform. 66, 101465.
+Miraki, M., Sohrabi, H., Fatehi, P., Kneubuehler, M., 2021. Individual tree crown
+delineation from high-resolution UAV images in broadleaf forest. Ecol. Inform. 61,
+101207.
+Morsdorf, F., Nichol, C., Malthus, T., Woodhouse, I.H., 2009. Assessing forest structural
+and physiological information content of multi-spectral LiDAR waveforms by
+radiative transfer modelling. Remote Sens. Environ. 113 (10), 2152–2163.
+Müller, M., Job, H., 2009. Managing natural disturbance in protected areas: Tourists’
+attitude towards the bark beetle in a german national park. Biol. Conserv. 142 (2),
+375–383.
+Niţă, M.D., 2021. Testing forestry digital twinning workflow based on mobile LiDAR
+scanner and ai platform. Forests 12 (11), 1576.
+Pang, Y., Wang, W., Du, L., Zhang, Z., Liang, X., Li, Y., Wang, Z., 2021. Nyström-
+based spectral clustering using airborne LiDAR point cloud data for individual tree
+segmentation. Int. J. Digit. Earth 14 (10), 1452–1476.
+Persson, Å., Holmgren, J., Söderman, U., 2002. Detecting and measuring individual
+trees using an airborne laser scanner. Photogramm. Eng. Remote Sens. 68 (9),
+925–932.
+Peuhkurinen, J., Mehtätalo, L., Maltamo, M., 2011. Comparing individual tree detection
+and the area-based statistical approach for the retrieval of forest stand characteris-
+tics using airborne laser scanning in Scots pine stands. Can. J. Forest Res. 41 (3),
+583–598.
+Polewski, P., Yao, W., Heurich, M., Krzystek, P., Stilla, U., 2018. Learning a constrained
+conditional random field for enhanced segmentation of fallen trees in ALS point
+clouds. ISPRS J. Photogramm. Remote Sens. 140, 33–44.
+Popescu, S.C., 2007. Estimating biomass of individual pine trees using airborne LiDAR.
+Biomass Bioenergy 31 (9), 646–655.
+Popescu, S.C., Wynne, R.H., Nelson, R.F., 2002. Estimating plot-level tree heights with
+LiDAR: local filtering with a canopy-height based variable window size. Comput.
+Electron. Agric. 37 (1–3), 71–95.
+Puliti, S., McLean, J.P., Cattaneo, N., Fischer, C., Astrup, R., 2023a. Tree height-
+growth trajectory estimation using uni-temporal UAV laser scanning data and deep
+learning. Forestry 96 (1), 37–48.
+Puliti, S., Pearse, G., Surov`y, P., Wallace, L., Hollaus, M., Wielgosz, M., Astrup, R.,
+2023b. For-instance: a UAV laser scanning benchmark dataset for semantic and
+instance segmentation of individual trees. arXiv preprint arXiv:2309.01279.
+Reitberger, J., Schnörr, C., Krzystek, P., Stilla, U., 2009. 3D segmentation of single trees
+exploiting full waveform LIDAR data. ISPRS J. Photogramm. Remote Sens. 64 (6),
+561–574.
+Roussel, J.-R., Auty, D., Coops, N.C., Tompalski, P., Goodbody, T.R.H., Meador, A.S.,
+Bourdon, J.-F., de Boissieu, F., Achim, A., 2020. lidR: An r package for analysis of
+Airborne Laser Scanning (ALS) data. Remote Sens. Environ. 251, 112061.
+Shendryk, I., Broich, M., Tulbure, M.G., Alexandrov, S.V., 2016. Bottom-up delineation
+of individual trees from full-waveform airborne laser scans in a structurally complex
+eucalypt forest. Remote Sens. Environ. 173, 69–83.
+Shi, S., Guo, C., Jiang, L., Wang, Z., Shi, J., Wang, X., Li, H., 2020. Pv-rcnn: Point-voxel
+feature set abstraction for 3d object detection. In: Proceedings of the IEEE/CVF
+Conference on Computer Vision and Pattern Recognition. pp. 10529–10538.
+Soille, P., 1999. Morphological Image Analysis: Principles and Applications, vol. 2,
+Springer, Berlin, pp. 170–171.
+Stereńczak, K., Kraszewski, B., Mielcarek, M., Piasecka, Ż., Lisiewicz, M., Heurich, M.,
+2020. Mapping individual trees with airborne laser scanning data in an European
+lowland forest using a self-calibration algorithm. Int. J. Appl. Earth Obs. Geoinf.
+93, 102191.
+Tigges, J., Churkina, G., Lakes, T., 2017. Modeling above-ground carbon storage: a
+remote sensing approach to derive individual tree species information in urban
+settings. Urban Ecosyst. 20, 97–111.
+United Nations Framework Convention on Climate Change (UNFCCC), 2005. Report of
+the conference of the parties serving as the meeting of the parties to the kyoto
+protocol on its first session, held at montreal from 28 november to 10 december
+2005. Addendum. Part two: Action taken by the conference of the parties serving
+as the meeting of the parties to the kyoto protocol at its first session.
+Van der Knaap, W.O., van Leeuwen, J.F., Fahse, L., Szidat, S., Studer, T., Baumann, J.,
+Heurich, M., Tinner, W., 2020. Vegetation and disturbance history of the Bavarian
+Forest National Park, Germany. Veg. Hist. Archaeobotany 29, 277–295.
+Van Kooten, G.C., 2020. How effective are forests in mitigating climate change? Forest
+Policy Econ. 120, 102295.
+Wagner, F.H., Ferreira, M.P., Sanchez, A., Hirye, M.C., Zortea, M., Gloor, E.,
+Phillips, O.L., de Souza Filho, C.R., Shimabukuro, Y.E., Aragão, L.E., 2018.
+Individual tree crown delineation in a highly diverse tropical forest using very high
+resolution satellite images. ISPRS J. Photogramm. Remote Sens. 145, 362–377.
+Wang, P., Cao, D., Xia, S., Wang, C., 2022. A crown guess and selection framework
+for individual tree detection from ALS point clouds. IEEE J. Sel. Top. Appl. Earth
+Obs. Remote Sens. 15, 3533–3538.
+Wang, L., Gong, P., Biging, G., 2004. Individual tree-crown delineation and treetop
+detection in high-spatial-resolution aerial imagery. Photogramm. Eng. Remote Sens.
+70, 351–357.
+Wang, Z., Li, P., Cui, Y., Lei, S., Kang, Z., 2023. Automatic detection of individual trees
+in forests based on airborne LiDAR data with a tree region-based convolutional
+neural network (RCNN). Remote Sens. 15 (4), 1024.
+Wang, X., Zhang, Y., Luo, Z., 2020. Combining trunk detection with canopy segmen-
+tation to delineate single deciduous trees using airborne LiDAR data. IEEE Access
+8, 99783–99796.
+Ecological Informatics 86 (2025) 102978 
+15 
+
+
+W. Ding et al.
+Weinstein, B.G., Marconi, S., Bohlman, S.A., Zare, A., White, E.P., 2020. Cross-site
+learning in deep learning RGB tree crown detection. Ecol. Inform. 56, 101061.
+Weiser, H., Schäfer, J., Winiwarter, L., Krašovec, N., Fassnacht, F.E., Höfle, B., 2022.
+Individual tree point clouds and tree measurements from multi-platform laser
+scanning in German forests. Earth System Science Data 14 (7), 2989–3012.
+Wiśniewski, P., Märker, M., 2019. The role of soil-protecting forests in reducing soil
+erosion in young glacial landscapes of Northern-Central Poland. Geoderma 337,
+1227–1235.
+Wong, T.-C., Sani-Mohammed, A., Wang, J., Wang, P., Yao, W., Heurich, M., 2024.
+Classification of single tree decay stages from combined airborne LiDAR data and
+CIR imagery. Geo-Spat. Inf. Sci. 1–16.
+Wu, F., Wu, B., Zhao, D., 2023. Real-time measurement of individual tree structure
+parameters based on augmented reality in an urban environment. Ecol. Inform.
+77, 102207.
+Xu, X., Iuricich, F., De Floriani, L., 2023. A topology-based approach to individual tree
+segmentation from airborne LiDAR data. GeoInformatica 27 (4), 759–788.
+Xu, Z., Shen, X., Cao, L., Coops, N.C., Goodbody, T.R., Zhong, T., Zhao, W., Sun, Q.,
+Ba, S., Zhang, Z., et al., 2020. Tree species classification using UAS-based digital
+aerial photogrammetry point clouds and multispectral imageries in subtropical
+natural forests. Int. J. Appl. Earth Obs. Geoinf. 92, 102173.
+Yan, Y., Mao, Y., Li, B., 2018. Second: Sparsely embedded convolutional detection.
+Sensors 18 (10), 3337.
+Yang, J., Kang, Z., Cheng, S., Yang, Z., Akwensi, P.H., 2020. An individual tree
+segmentation method based on watershed algorithm and three-dimensional spatial
+distribution analysis from airborne LiDAR point clouds. IEEE J. Sel. Top. Appl.
+Earth Observ. Remote Sens. 13, 1055–1067, Conference Name: IEEE Journal of
+Selected Topics in Applied Earth Observations and Remote Sensing.
+Yao, W., Krzystek, P., Heurich, M., 2012. Tree species classification and estimation
+of stem volume and DBH based on single tree extraction by exploiting airborne
+full-waveform LiDAR data. Remote Sens. Environ. 123, 368–380.
+You, H., Liu, Y., Lei, P., Qin, Z., You, Q., 2023. Segmentation of individual mangrove
+trees using UAV-based LiDAR data. Ecol. Inform. 77, 102200.
+Yu, J., Lei, L., Li, Z., 2024. Individual tree segmentation based on seed points detected
+by an adaptive crown shaped algorithm using UAV-LiDAR data. Remote Sens. 16
+(5), 825.
+Yun, T., Jiang, K., Li, G., Eichhorn, M.P., Fan, J., Liu, F., Chen, B., An, F., Cao, L.,
+2021. Individual tree crown segmentation from airborne LiDAR data using a novel
+Gaussian filter and energy function minimization-based approach. Remote Sens.
+Environ. 256, 112307.
+Yun, T., Li, J., Ma, L., Zhou, J., Wang, R., Eichhorn, M.P., Zhang, H., 2024. Status,
+advancements and prospects of deep learning methods applied in forest studies.
+Int. J. Appl. Earth Obs. Geoinf. 131, 103938.
+Zhang, W., Qi, J., Wan, P., Wang, H., Xie, D., Wang, X., Yan, G., 2016. An easy-to-use
+airborne LiDAR data filtering method based on cloth simulation. Remote Sens. 8
+(6), 501.
+Ecological Informatics 86 (2025) 102978 
+16

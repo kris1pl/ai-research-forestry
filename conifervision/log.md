@@ -2,6 +2,30 @@
 
 Chronological record of ingest, query, and lint operations.
 
+## [2026-08-21] ingest | Weckman (2021) — UAV-LiDAR individual tree detection comparison
+
+- Source: `raw/papers/Comparison_of_individual_tree-twec21_public.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/paper-comparison_of_individual_tree-twec21_public]]
+- Updated [[index]], [[methods/local-maxima]], [[methods/chm-detection]], [[methods/merge-detections]]
+
+## [2026-08-21] ingest | Mu (2020) — K-means watershed segmentation for canopy LiDAR
+
+- Source: `raw/papers/CANOPY_LIDAR_POINT_CLOUD_DATA_K-MEANS_CLUSTERING_WATERSHED_SEGMENTATION_METHOD-isprs-annals-VI-3-W1-2020-67-2020.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/paper-canopy_lidar_point_cloud_data_k-means_clustering_watershed_segmentation_method-isprs-annals-vi-3-w1-2020-67-2020]]
+- Updated [[index]], [[methods/chm-detection]], [[methods/local-maxima]], [[methods/merge-detections]]
+
+## [2026-08-21] ingest | Schladebach (2025) — BorFIT LiDAR dataset & species classification
+
+- Source: `raw/papers/BorFIT_A_Novel_LiDAR-Based_Training_Dataset_for_Individual_Tree-essd-2025-340.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/paper-borfit_a_novel_lidar-based_training_dataset_for_individual_tree-essd-2025-340]]
+- Updated [[index]], [[methods/dinov3-classification]], [[concepts/canopy-height-model]]
+
+## [2026-08-21] ingest | Ding (2025) — bottom-up oriented search and clustering for ALS
+
+- Source: `raw/papers/A simple oriented search and clustering method for extracting individual forest trees from ALS point clouds-1-s2.0-S157495412400520X-main.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/paper-a simple oriented search and clustering method for extracting individual forest trees from als point clouds-1-s2-0-s157495412400520x-main]]
+- Updated [[index]], [[methods/chm-detection]], [[methods/local-maxima]], [[concepts/pseudo-tree-crown]]
+
 ## [2026-08-20] ingest | Yun (2026) — LGINet text-guided diffusion for tree species generation
 
 - Source: `raw/papers/Linguistic_guided_image_diffusion_model_for_tree_species_generation.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)

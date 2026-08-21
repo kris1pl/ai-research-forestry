@@ -1,0 +1,633 @@
+Comparison of individual tree
+detection methods
+Aino Weckman
+School of Science
+Bachelor’s thesis
+Espoo 7.9.2021
+Supervisor
+Assoc. Prof. Pauliina Ilmonen
+Advisor
+Prof., Dos. Juha Hyyppä
+
+
+Copyright © 2021 Aino Weckman
+The document can be stored and made available to the public on the open in-
+ternet pages of Aalto University.
+All other rights are reserved.
+
+
+Aalto University, P.O. BOX 11000, 00076 AALTO
+www.aalto.fi
+Abstract of the bachelor’s thesis
+Author Aino Weckman
+Title Comparison of individual tree detection methods
+Degree programme Engineering Physics and Mathematics
+Major Mathematics and Systems Sciences
+Code of major SCI3029
+Teacher in charge Assoc. Prof. Pauliina Ilmonen
+Advisor Prof., Dos. Juha Hyyppä
+Date 7.9.2021
+Number of pages 15+1
+Language English
+Abstract
+Forests have a significant economic value in Finland and the forest industry is the only
+globally competitive industry branch in regional areas of Finland. Forest inventory
+provides the fundamental information for decision-making in the forest industry
+relevant to forest ecosystems. This information is usually stand-wise and can contain
+e.g. tree species and total volume of timber. These characteristics can be obtained
+by using individual tree detection.
+This thesis compares three individual tree detection methods. The methods are
+applied to an airborne laser scanning point cloud data. The trunk detection method
+finds the trees directly from a point cloud by detecting vertical elongated structures.
+The local maxima method is based on the idea that treetops are local maxima of the
+canopy height model. Local maxima are detected from rasterised data. The point
+density method assumes that there are more laser hits on tree trunks than other
+parts of the trees and thus, trees can be detected from point densities.
+The local maxima method had the best overall performance. It did find over 90
+percent of trees with over 20 cm diameter at the breast height and 60 percent of
+all the trees. The trunk detection method was the most accurate, i.e. it gave least
+made-up trees as an output. However, it found only 17 percent of the trees. Both,
+local maxima method and trunk detection method, worked better for bigger trees.
+By contrast, the point density method’s performance did not depend on a diameter
+at the breast height.
+Keywords Forest inventory, airborne laser scanning, individual tree detection
+
+
+Aalto-yliopisto, PL 11000, 00076 AALTO
+www.aalto.fi
+Tekniikan kandidaatintyön tiivistelmä
+Tekijä Aino Weckman
+Työn nimi Yksinpuintulkintamenetelmien vertailu
+Koulutusohjelma Teknillinen fysiikka ja matematiikka
+Pääaine Matematiikka ja systeemitieteet
+Pääaineen koodi SCI3029
+Vastuuopettaja Prof. Pauliina Ilmonen
+Työn ohjaaja Prof., Dos. Juha Hyyppä
+Päivämäärä 7.9.2021
+Sivumäärä 15+1
+Kieli Englanti
+Tiivistelmä
+Metsillä on Suomessa paljon taloudellista arvoa ja metsäteollisuus onkin ainoa kan-
+sainvälisesti kilpailukykyinen teollisuudenala Suomessa. Metsäteollisuudessa pää-
+töksenteon apuna voidaan käyttää metsävaratietoja, jotka koostuvat muun muassa
+metsikköjen puulajeista ja runkojen kokonaistilavuuksista. Nämä tiedot voidaan
+kerätä yksinpuintulkinnan avulla.
+Tässä kandidaatintyössä vertaillaan kolmea yksinpuintulkintamenetelmää. Me-
+netelmiä sovelletaan ilmalaserkeilattuun pistepilvidataan. Runkomenetelmä etsii
+pistepilvestä puiden runkoihin kuuluvat pisteet ja tunnistaa näin puiden sijainnit.
+Runkoihin kuuluvat pisteet saavat korkeat lineaarisuus- ja vertikaalisuusarvot, jotka
+lasketaan pistettä ympäröivien pisteiden avulla. Maksimimenetelmä perustuu oletuk-
+seen, jossa puiden latvat löytyvät korkeusmallista paikallisten maksimien kohdalta.
+Pistetiheysmenetelmä olettaa, että laser osuu herkemmin runkoihin kuin muihin
+osiin puissa. Tällöin runkojen kohdalle syntyy pistepilvessä tihentymiä, joiden avulla
+voidaan saada puiden sijainnit.
+Näistä kolmesta menetelmästä parhaiten suoriutui maksimimenetelmä. Se löysi
+yli 90 prosenttia puista, joiden halkaisija rinnan korkeudella on yli 20 senttimetriä, ja
+lähes 60 prosenttia kaikista puista. Kaikista tarkin menetelmä oli runkomenetelmä.
+Se antoi vähiten sellaisia sijainteja, joissa ei oikeasti ole puuta. Toisaalta menetelmä
+löysin vain 17 prosenttia puista. Runkomenetelmä ja maksimimenetelmä suorituivat
+molemmat paremmin isoilla puilla kuin pienillä. Pistetiheysmenetelmän suoritusky-
+kyyn taas ei vaikuttanut puun halkaisija, vaan se suoriutui tasaisesti kaiken kokoisilla
+puilla.
+Avainsanat Metsävaratieto, ilmalaserkeilaus, yksinpuintulkinta
+
+
+5
+Contents
+Abstract
+3
+Abstract (in Finnish)
+4
+Contents
+5
+1
+Introduction
+6
+2
+Previous Research
+7
+3
+Data
+8
+3.1
+Study area . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+8
+3.2
+Field data . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+9
+3.3
+Airborne laser scanning data . . . . . . . . . . . . . . . . . . . . . . .
+9
+4
+Methods
+9
+4.1
+Local maxima method
+. . . . . . . . . . . . . . . . . . . . . . . . . .
+10
+4.2
+Trunk detection method . . . . . . . . . . . . . . . . . . . . . . . . .
+10
+4.3
+Point density method . . . . . . . . . . . . . . . . . . . . . . . . . . .
+10
+4.4
+Evaluation of accuracy . . . . . . . . . . . . . . . . . . . . . . . . . .
+10
+5
+Results and discussion
+11
+Acknowledgements
+13
+
+
+6
+1
+Introduction
+In Finland, about 77 percent of the land area is forest (Lier et al., 2019). Furthermore,
+the forests are the most significant renewable natural resource of the country. Forests
+have an increasing role in mitigating climate change and maintaining biodiversity.
+(Berg-Andersson et al., 2021)
+Forests also have a significant economic value in Finland. Finland has 20 million
+hectares of economically-exploited forests. The volume of Finnish forest resources
+is 2473 million cubic meters and the corresponding annual increment is about 107
+million cubic meters, out of which 75-90 million cubic meters is harvested. The
+Finnish forest sector accounts for significant share of export revenue and is the only
+globally competitive industry branch in regional areas of Finland. Finland has more
+than 600 000 forest owners with 2 Be gross stumpage earnings, several thousands of
+harvesting companies, 1000+ transportation companies with hundreds of millions
+euro transportation costs and more than 1000 industrial companies with around 20
+Be total direct turnover. The Finnish forest companies are among the top forest
+and paper products companies in Europe. (Personal communication with Prof., Dos.
+Juha Hyyppä, National Land Survey of Finland)
+Forest inventory provides the fundamental information for decision-making in
+society and forest industry relevant to forest ecosystems. In forest resource inventories
+stand characteristics, like stem volume, species and information about tree canopies,
+are necessary (Næsset et al., 2004). To obtain these characteristics one can use
+area-based approach (ABA) or individual tree detection (ITD). ABA can rely on
+calculating metrics from the point cloud collected with airborne laser scanning (ALS)
+(Hyyppä et al., 2017) or generalising field-measured attributes over a whole study
+area (Holopainen et al., 2014). When inventorying the forests at individual tree level,
+several benefits can be reached: Measurements of the quality of wood can be done,
+trees can be matched with their origin, and bucking of trees can be better predicted.
+As well, when forest inventory data is more accurate and updated more often, forests
+can serve as wood storages and the estimation of the value of forest can be improved.
+(Holopainen et al., 2014)
+The aim of this thesis is to analyse three approaches for individual tree detection
+using airborne laser scanning point cloud data. The data is collected from Evo,
+Finland, and thus the approaches are tested in boreal forests. The algorithms will
+be compared to reference data and quality measures will be calculated and analysed.
+In ITD the method used in calculations plays the key role in tree inventory
+accuracy. When ITD is done by using laser scanning data, the accuracy depends
+more on the ITD method than the point density of the data. Thus, it is profitable
+to focus on selecting the right methods rather than increasing the point density.
+(Hyyppä et al., 2012)
+This thesis will first introduce the previous research of the individual tree detection
+from laser scanning data. Then the data and methods used in the ITD will be
+presented. Next, the results are introduced and at last there will be the discussion of
+the results and future prospects for ITD.
+
+
+7
+2
+Previous Research
+Most of the individual tree detection methods uses point cloud data as an input, and
+currently, laser scanning is the main technique in producing 3D point clouds (Yu
+et al., 2015). Laser scanning is an optical remote-sensing method based on distance
+and orientation between a laser scanning sensor and a reflecting object. The location
+of the laser scanner sensor is known either by using Global Navigation Satellite
+System and Inertial Measurement Unit on-board the carriage platform or by other
+means. Thus, with the distance and incidence angle of the measurements, obtained
+with laser pulse, the coordinates of the reflecting point on object (x, y, z) can be
+calculated. With these coordinates the forest plot can be modelled as a point cloud.
+(Hyyppä and Inkinen, 1999)
+In airborne laser scanning (ALS) the scanner is attached to an aircraft and
+a point cloud is collected from above the forest. The ALS has many advantages
+compared to other forest inventory methods, like field inventory or aerial images. Use
+of the ALS results in smaller costs per hectare than field inventory when considering
+the information and data collecting (Kangas et al., 2019). Field inventory is also
+time consuming compared to the ALS. With a sufficiently accurate individual tree
+detection algorithm, it could be possible to provide wider forest resource information
+in reasonable time. Additionally, the weather and amount of light do not affect to
+quality of the airborne laser scanning data as it does to aerial images (Kangas et al.,
+2019). With the ALS one can directly measure the 3D structure of vegetation and
+because of that its very promising method in above-ground biomass estimations
+(Hyyppä et al., 2017).
+First individual tree detection (ITD) method was introduced by Hyyppä and
+Inkinen (1999). It showed that with laser scanning it is possible to detect individual
+trees in boreal forest zone and thus calculate accurate stand characteristics i.e. stem
+volume and mean height. In this method first the point cloud was transformed into a
+grid. The resolution of this grid was 0.5 meters. The digital crown model (DCM) and
+digital terrain model (DTM) were calculated by using the highest and lowest points
+of the pixels in the grid. If a pixel had no points, the value was interpolated using the
+values of neighbouring pixels. Then by subtracting DTM from DCM a canopy height
+model (CHM) was obtained. CHM was filtered with low-pass filter to reduce falsely
+detected trees. Tree locations were obtained by looking at local maxima in CHM.
+After this, the tree crowns were segmented with modified watershed segmentation
+algorithm. (Hyyppä and Inkinen, 1999)
+Many of the most recent ITD methods use the 3D structure of a point cloud
+instead of 2D raster grid. Kaartinen et al. (2012) states that smaller trees can be
+found more accurately with methods using the original point cloud than with the
+raster-based methods. Thus, point cloud or voxel based methods can provide better
+results in individual tree detection.
+One point-based algorithm was introduced by Wang et al. (2016). In this method,
+the point cloud was normalised first using a digital terrain model. Then it was moved
+to a local voxel space with voxel-size of 0.5 m × 0.5 m × 0.5 m. Every voxel with at
+least one point inside was added to a vox-point cloud. The coordinates of a vox-point
+
+
+8
+were the center coordinates of the corresponding voxel. The treetops were detected
+from the 3D structures of the vox-cloud with the following assumptions: There is
+always open space above a treetop and the treetop is a local maximum. Treetops
+are always supported by crowns, i.e. in the neighbourhood of every treetop there
+exists a cluster describing a tree crown. Last, there must be a certain 3D distance
+between two treetops. More detailed explanation of the tree detection procedure can
+be found at (Wang et al., 2016). This method outperformed its competitors in the
+comparison done by Wang et al. (2016). The methods were applied to point cloud
+with a point density of density of 8 pts
+m2. Of all the methods in the comparison, this
+method performed best on subordinate trees. Other point-based ITD methods can
+be found for example at (Hyyppä et al., 2020) and (Chen et al., 2018).
+Figure 1: Airborne laser scanning point cloud
+3
+Data
+3.1
+Study area
+The data was collected from Evo (61.19◦N, 25.11◦E) in 2014. The area is 120 km
+north of Helsinki and belongs to the southern Boreal Forest Zone. The elevation of
+the 5 km×5 km test site varies between 125 m and 185 m above sea level. The study
+area consists of different kinds of forest stands, from highly managed to natural, and
+its dominant tree species are Scots pine, Norway spruce, and birch that are 40%,
+
+
+9
+35% , and nearly 24% of the total volume, respectively. The same test site is used in
+other studies like Yu et al. (2020), Kankare et al. (2015).
+3.2
+Field data
+The study area is divided to 91 sample plots size of 32 m × 32 m. In this thesis I will
+be using 18 of the plots and there is up to two thousand trees in total. For each plot
+the reference data was collected by doing field measurements in 2014. Only the trees
+with bigger diameter at breast height than 5 cm were measured, with error limit of 2
+mm. Tree attributes like location, tree species, diameter at breast height, crown level
+and height are recorded for every tree. Average values for three height (H), diameter
+at breast height (DBH) and volume (V) are calculated for sample plots and results
+are represented in Table 1.
+Table 1: Descriptive statistics of field reference data
+Attribute
+Min
+Max
+Mean
+Standard deviation
+H (m)
+1.50
+36.50
+14.83
+6.74
+DBH (cm)
+4.80
+64.70
+14.97
+9.13
+V (m3)
+0.0053
+4.25
+0.24
+0.4193
+3.3
+Airborne laser scanning data
+The airborne laser scanning data was collected with a built-in unmanned aerial
+vehicle (UAV) system. The UAV-system consisted of Riegl VQ-480-U laser scanner
+and inertial measurement unit and it was attached to a helicopter. The scanner
+has a 60 degree scan angle and it uses wavelength of 1550 nm. The targeted flying
+speed was 50 kilometres per hour and the acquisition altitude was around 75 metres.
+The scanner was operated at 550 kHz point measurement height and thus, the pulse
+density of the laser scanning is 140 pts
+m2.
+The data is stored as a point cloud where location of every reflecting point of the
+laser beam is recorded in xyz-coordinates. One of the point clouds is visualised in
+Figure 1.
+4
+Methods
+In this study, three individual tree detection algorithms were tested using airborne
+laser scanning data introduced in previous section. The detected trees were matched
+against the field reference data. Completeness, correctness, and F-score are used as
+quality indicator of the tree detection. The methods were implemented in Matlab.
+
+
+10
+4.1
+Local maxima method
+The local maxima method was introduced in Yu et al. (2011). The method is based
+on a minimum curvature-based region detector. It segments the tree crowns from
+canopy height model and during this process the locations of the individual trees are
+determined. Following procedure is used to detect the trees: First a raster canopy
+height model (CHM) is constructed from normalised data. To remove small variation
+that could induce false results, the CHM is smoothed with a Gaussian filter. Then
+minimum curvature value is calculated for each raster cell. Minimum curvature is one
+of the two principal curvatures and it measures the bending of the surface. Higher
+values of minimum curvature in CHM describes the tree tops and lower values the
+areas between the trees. After these calculations, the CHM is contrast-stretched in
+respect of minimum curvature values. Local maxima are then searched from this
+newly scaled image and they are considered as treetops.
+4.2
+Trunk detection method
+The trunk detection method was developed by Matti Lehtomäki (National Land
+Survey of Finland) and it has not been published yet. The method finds the trees
+directly from the point cloud using the fact that trunks are usually vertical elongated
+structures. The algorithm calculates linearity and verticality values for each point
+and compares them to threshold values given as an input. If the values exceed the
+threshold, the point is considered to be part of the trunk. Trunk points with a
+sufficiently small horizontal distance from each other are considered to belong to the
+same tree. From these clusters the tree locations are calculated. The method uses
+function called edgesKNNgraph.m that is based on function introduced by Wang
+(2020). Trunk detection method works best for trees where there are not many
+branches and the trunk is well visible, e.g. Scots pines.
+4.3
+Point density method
+The point density method is modified from Valtteri Soininen’s tree detection method
+based on finding local maxima. The method assumes that there are more laser hits
+on the trunks than elsewhere and thus, the trees can be detected from point densities.
+First, a grid is formed in which the value of each pixel is the number of points in
+it. Then, the grid is smoothed using a Gaussian filtering and the local maxima are
+detected. These local maxima are seen as treetops. The accurate tree location is the
+location of the highest point in the pixel.
+4.4
+Evaluation of accuracy
+After the algorithm is used to detect the individual trees from point cloud, the
+founded trees are matched to field-measured trees using a method based on the
+
+
+11
+Hausdorff distance. The Hausdorff distance is defined as
+h(A, B) = max
+a∈A
+{︄
+min
+b∈B {d(a, b)}
+}︄
+,
+(1)
+where A and B are two point sets and a and b points belonging to them, respec-
+tively, and d(a, b) is any metric between points a and b. In this case, the Euclidean
+distance is used. It measures how close the points of the one set are to some point of
+the other set. Hausdorff distance is asymmetric and therefore h(A, b) is not necessarily
+h(B, A). First are calculated the distances from the laser scanned trees to the field
+measured trees, where every tree can be seen as a point in a point set. Then the
+distances are calculated from the field-measured trees to laser scanned trees. Trees
+closest to each other are matched. (Yu et al., 2006)
+To evaluate the accuracy of different individual tree detection methods we will
+calculate correctness, completeness and F-score. These measures are got by comparing
+trees in reference data to the trees found with the algorithm. The completeness
+(omission) represents the tree detection rate i.e. how many of the actual trees is
+found and correctness (commission) tells if the detected trees are found also from
+the reference data. F-score takes both omission and commission errors to a account
+(Goutte and Gaussier, 2005). The values for these tree measures vary from 0 to 1.
+If F-score is one the trees were detected without any errors and if the value is zero
+none of the actual trees were found.
+The measures are calculated with following formulas (Li et al., 2012):
+completeness =
+Nt
+Nt + No
+(2)
+correctness =
+Nt
+Nt + Nc
+(3)
+F1 = 2 · completeness · correctness
+completeness + correctness
+(4)
+where Nt is the number of the correctly matched trees and No and Nc are the
+omission and commission errors, respectively.
+5
+Results and discussion
+Indicators measuring the goodness of the ITD methods were calculated to all 18 plots
+and the mean values are represented in Table 2. The completeness is also calculated
+for trees with different DBHs that are shown in Table 3.
+
+
+12
+Table 2: Means of the quality measures
+Method
+Statistic
+Completeness
+Correctness
+F-score
+Local Maxima
+0.5740
+0.6555
+0.5861
+Trunk Detection
+0.1700
+0.9658
+0.2731
+Point Density
+0.3226
+0.6905
+0.4205
+Table 3: Completeness for different tree sizes
+Method
+DBH
+5-20 cm
+20-40 cm
+> 40 cm
+Local Maxima
+0.3970
+0.9194
+0.9597
+Trunk Detection
+0.1208
+0.1935
+0.3166
+Point Density
+0.3118
+0.3775
+0.3488
+Local maxima method got the biggest f-score and completeness of all tree methods.
+As it can be seen in Table 3, local maxima method works very well for trees with
+DBH bigger than 20 cm: it found over 90% of those trees.
+Trunk detection method was very accurate. It got correctness value of over
+0.95, so it gave almost no made-up trees as output. The method detected larger
+trees notably better than smaller ones. Trunk detection method did not get good
+completeness values: it detected only 17% of the trees. However, with denser point
+cloud there would be more trunk hits and thus, the method could detect a bigger
+share of the trees.
+Point density method got a little bit bigger correctness value as local maxima
+method but it did find less trees. So, its overall performance was not as good. Unlike
+other methods, point density method performed relatively similarly regardless of the
+DBH. This method, as well, could work better with higher point density because of
+the increasing number of trunk hits.
+In summary, local maxima method had the best overall performance with the
+highest f-score value. Trunk detection method was the most accurate. Both, point
+density method and trunk detection method, would probably work better with denser
+point cloud.
+In the future research it might be worthwhile to try to combine existing methods
+to achieve better and more accurate results in individual tree detection. For example,
+canopy can be shaped so that there is no clear maximum at the treetop in the canopy
+height model. Despite this, there can be high point density at the trunk and thus, the
+tree could be seen from the density model. Therefore, combination of local maxima
+method and density method might lead to better results.
+Future research should also combine raster, voxel and point cloud based approaches
+where it is possible to process the same tree computationally effectively with these
+different data structures. For example, 2D raster data is expected to be beneficial
+
+
+13
+for finding dominant trees. Voxel approach may be beneficial for discriminating
+co-dominant trees from dominant trees together with pulse mode information, and
+point clouds based approaches should suit for finding suppressed trees and trees in the
+intermediate layer. Using the last pulse data, an improvement of 6% for individual
+tree detection was obtained in Hyyppä et al. (2012) when compared to using the first
+pulse data since it was easier to distinguish near-by trees with pulses penetrating
+more to the foliage than those coming from tree tops. The improvement increased
+with decreasing diameter breast height. The methods was based on two-dimensional
+CHMs.
+Acknowledgements
+The author would like to thank Matti Lehtomäki (National Land Survey of Finland,
+Research Scientist) for trunk detection method, Xiaowei Yu (National Land Survey
+of Finland, Specialist Research Scientist) for local maxima method, and Valtteri
+Soininen (National Land Survey of Finland, Summer trainee, Aalto university) for
+providing the basis for point density method.
+References
+1. B.
+Berg-Andersson,
+V.
+Kaitila,
+M.
+Kulvik,
+and
+J.
+Lintunen.
+Suomen
+metsäteollisuuden
+näkymiä
+vuoteen
+2025.
+Technical re-
+port,
+ETLA,
+2021.
+URL
+https://www.etla.fi/julkaisut/
+suomen-metsateollisuuden-nakymia-vuoteen-2025/.
+2. W. Chen, X. Hu, W. Chen, Y. Hong, and M. Yang.
+Airborne lidar remote
+sensing for individual tree forest inventory using trunk detection-aided mean
+shift clustering techniques. Remote Sensing, 10(7), 2018. ISSN 2072-4292. doi:
+10.3390/rs10071078. URL https://www.mdpi.com/2072-4292/10/7/1078.
+3. C. Goutte and E. Gaussier. A probabilistic interpretation of precision, recall
+and f-score, with implication for evaluation.
+In D. E.
+Losada and J. M.
+Fernández-Luna, editors, Advances in Information Retrieval, pages 345–359,
+Berlin, Heidelberg, 2005. Springer Berlin Heidelberg. ISBN 978-3-540-31865-1.
+4. M. Holopainen, M. Vastaranta, and J. Hyyppä. Outlook for the next generation’s
+precision forestry in finland. Forests, 5(7):1682–1694, 2014. ISSN 1999-4907.
+doi: 10.3390/f5071682. URL https://www.mdpi.com/1999-4907/5/7/1682.
+5. J. Hyyppä, X. Yu, H. Hyyppä, M. Vastaranta, M. Holopainen, A. Kukko,
+H. Kaartinen, A. Jaakkola, M. Vaaja, J. Koskinen, et al. Advances in forest
+inventory using airborne laser scanning. Remote sensing, 4(5):1190–1207, 2012.
+6. E. Hyyppä, J. Hyyppä, T. Hakala, A. Kukko, M. A. Wulder, J. C. White,
+J. Pyörälä, X. Yu, Y. Wang, J.-P.
+Virtanen, O. Pohjavirta, X. Liang,
+
+
+14
+M. Holopainen, and H. Kaartinen.
+Under-canopy uav laser scanning for ac-
+curate forest field measurements.
+ISPRS Journal of Photogrammetry and
+Remote Sensing, 164:41–60, 2020. ISSN 0924-2716. doi: 10.1016/j.isprsjprs.
+2020.03.021. URL https://www.sciencedirect.com/science/article/pii/
+S0924271620300915.
+7. J. Hyyppä and M. Inkinen.
+Detecting and estimating attributes for single
+trees using laser scanner.
+Photogramm J Finland, 16:27–42, 1999.
+URL
+https://ci.nii.ac.jp/naid/10015710972/en/.
+8. J. Hyyppä, X. Yu, H. Kaartinen, A. Kukko, A. Jaakkola, X. Liang, Y. Wang,
+M. Holopainen, M. Vastaranta, and H. Hyyppä. Forest inventory using laser
+scanning. In J. Shan and C. K. Toth, editors, Topographic Laser Ranging and
+Scanning: Principles and Processing, chapter 12, pages 379 – 414. CRC Press,
+second edition, 2017. doi: 10.1201/9781315154381.
+9. H. Kaartinen, J. Hyyppä, X. Yu, M. Vastaranta, H. Hyyppä, A. Kukko,
+M. Holopainen, C. Heipke, M. Hirschmugl, F. Morsdorf, E. Næsset, J. Pitkänen,
+S. Popescu, S. Solberg, B. M. Wolf, and J.-C. Wu. An international comparison
+of individual tree detection and extraction using airborne laser scanning. Remote
+Sensing, 4(4):950–974, 2012. ISSN 2072-4292. doi: 10.3390/rs4040950. URL
+https://www.mdpi.com/2072-4292/4/4/950.
+10. A. Kangas, A. Haara, M. Holopainen, V. Luoma, P. Packalen, T. Packalen,
+R. Ruotsalainen, and N. Saarinen.
+Kaukokartoitukseen perustuvan metsä-
+varatiedon hyötyanalyysi: Metku-hankkeen loppuraportti.
+Luonnonvara- ja
+biotalouden tutkimus, 6/2019, 2019.
+11. V. Kankare, J. Vauhkonen, M. Holopainen, M. Vastaranta, J. Hyyppä, H. Hyyppä,
+and P. Alho. Sparse density, leaf-off airborne laser scanning data in aboveground
+biomass component prediction. Forests, 6(6):1839–1857, 2015. ISSN 1999-4907.
+doi: 10.3390/f6061839. URL https://www.mdpi.com/1999-4907/6/6/1839.
+12. W. Li, Q. Guo, M. K. Jakubowski, and M. Kelly. A new method for segmenting
+individual trees from the lidar point cloud. Photogrammetric Engineering Remote
+Sensing, (1):75–84, 2012. doi: 10.14358/PERS.78.1.75. URL ingentaconnect.
+com/content/asprs/pers/2012/00000078/00000001/art00006#.
+13. M. Lier, K. T. Korhonen, T. Packalen, T. Sauvula-Seppälä, T. Tuomainen,
+J. Viitanen, A. Mutanen, E. Vaahtera, and J. Hyvärinen. Finland’s forests 2019 :
+Based on forest europe criteria and indicators of sustainable forest management.
+Brochure by Luonnonvarakeskus (Luke), 2019. URL http://urn.fi/URN:NBN:
+fi-fe2019091628400.
+14. E. Næsset, T. Gobakken, J. Holmgren, H. Hyyppä, J. Hyyppä, M. Maltamo,
+M. Nilsson, H. Olsson, Åsa Persson, and U. Söderman. Laser scanning of forest
+resources: the nordic experience. Scandinavian Journal of Forest Research, 19
+
+
+15
+(6):482–499, 2004. doi: 10.1080/02827580410019553. URL https://doi.org/
+10.1080/02827580410019553.
+15. D. Wang. Unsupervised semantic and instance segmentation of forest point clouds.
+ISPRS Journal of Photogrammetry and Remote Sensing, 165:86–97, 2020. ISSN
+0924-2716. doi: https://doi.org/10.1016/j.isprsjprs.2020.04.020. URL https:
+//www.sciencedirect.com/science/article/pii/S0924271620301180.
+16. Y. Wang, J. Hyyppä, X. Liang, H. Kaartinen, X. Yu, E. Lindberg, J. Holmgren,
+Y. Qin, C. Mallet, A. Ferraz, H. Torabzadeh, F. Morsdorf, L. Zhu, J. Liu, and
+P. Alho. International benchmarking of the individual tree detection methods for
+modeling 3-d canopy structure for silviculture and forest ecology using airborne
+laser scanning. IEEE Transactions on Geoscience and Remote Sensing, 54(9):
+5011–5027, 2016. doi: 10.1109/TGRS.2016.2543225.
+17. X. Yu, J. Hyyppä, A. Kukko, M. Maltamo, and H. Kaartinen.
+Change
+detection techniques for canopy height growth measurements using airborne
+laser scanner data.
+Photogrammetric Engineering
+Remote Sensing, 72
+(12):1339–1348, 2006.
+ISSN 0099-1112.
+doi:
+doi:10.14358/PERS.72.12.
+1339.
+URL https://www.ingentaconnect.com/content/asprs/pers/2006/
+00000072/00000012/art00001.
+18. X. Yu, J. Hyyppä, M. Vastaranta, M. Holopainen, and R. Viitala. Predicting
+individual tree attributes from airborne laser point clouds based on the random
+forests technique.
+ISPRS Journal of Photogrammetry and Remote Sensing,
+66(1):28–37, 2011. ISSN 0924-2716. doi: https://doi.org/10.1016/j.isprsjprs.
+2010.08.003. URL https://www.sciencedirect.com/science/article/pii/
+S0924271610000651.
+19. X. Yu, J. Hyyppä, M. Karjalainen, K. Nurminen, K. Karila, M. Vastaranta,
+V. Kankare, H. Kaartinen, M. Holopainen, E. Honkavaara, A. Kukko, A. Jaakkola,
+X. Liang, Y. Wang, H. Hyyppä, and M. Katoh. Comparison of laser and stereo
+optical, sar and insar point clouds from air- and space-borne sources in the
+retrieval of forest inventory attributes.
+Remote Sensing, 7(12):15933–15954,
+2015.
+ISSN 2072-4292.
+doi: 10.3390/rs71215809.
+URL https://www.mdpi.
+com/2072-4292/7/12/15809.
+20. X. Yu, A. Kukko, H. Kaartinen, Y. Wang, X. Liang, L. Matikainen, and
+J. Hyyppä. Comparing features of single and multi-photon lidar in boreal forests.
+ISPRS Journal of Photogrammetry and Remote Sensing, 168:268–276, 2020. ISSN
+0924-2716. doi: https://doi.org/10.1016/j.isprsjprs.2020.08.013. URL https:
+//www.sciencedirect.com/science/article/pii/S0924271620302197.

@@ -1,0 +1,906 @@
+CANOPY LIDAR POINT CLOUD DATA K-MEANS CLUSTERING WATERSHED 
+KEY WORDS: forest, single tree canopy, segmentation, 𝐾−𝑚𝑒𝑎𝑛𝑠, watershed, LiDAR 
+ABSTRACT: 
+Airborne laser LiDAR has widely applied in the accurate extraction of single tree canopy for inventory of precision forestry. Due to 
+the 
+over-segmentation phenomenon occurring 
+in 
+the 
+traditional 
+watershed 
+single-wood 
+segmentation, 
+this 
+paper 
+presents a method, called 𝐾−𝑚𝑒𝑎𝑛𝑠 clustering watershed for single tree segmentation. This method consists of four aspects: The 
+first step is to filter the point cloud to eliminate the interference factors such as ground elevation and other factors that interfere with 
+the LiDAR point cloud segmentation; The second step is to optimize the generation of 𝐶𝐻𝑀 , generate a 𝐶𝑀𝑀 based on 𝐶𝐻𝑀 
+variable window detection, and obtain the treetop position to provide the pixel center position for subsequent 𝐾−𝑚𝑒𝑎𝑛𝑠 cluster 
+segmentation; The third step is to use the 𝐾−𝑚𝑒𝑎𝑛𝑠 clustering algorithm to perform initial cluster segmentation to extract the target 
+pixels of interest. At this time, the local maximum value detected by the variable window in the second step is used as the center pixel 
+of the cluster; In the fourth step, an improved watershed algorithm based on the similarity of 4 neighborhoods is proposed. The 
+improved watershed algorithm is applied to the 𝐾−𝑚𝑒𝑎𝑛𝑠  initial clustering image to segment the target area, and the over-
+segmentation results are subsequently processed, and the over-segmentation blocks are combined according to certain criteria. Identify 
+the contour of single canopy from the 𝐶𝐻𝑀 images of the experimental forest data. The experimental results show that the proposed 
+algorithm can effectively solve the over-segmentation problem happening the traditional watershed algorithm. The accuracy of F, R 
+and P parameters can be improved by 7.1%, 11% and 9.8%. 
+1. INTRODUCTION:
+Due to China's regular forest resource inventory system, there is 
+an urgent need for accurate and effective control and 
+management of forest information. Traditional passive remote 
+sensing technology methods, such as multi-spectral imaging 
+technology, are affected by weather and surface coverage 
+(Gougeon et al., 2001; Sajdak et al., 2014; Unger et al., 2014 ) . 
+Airborne laser LiDAR technology has unique advantages over 
+passive remote sensing technology, providing theoretical basis 
+and technical support for the accurate extraction of single tree 
+canopy and the development of precision forestry (Zhou et al., 
+2004; Zhou et al., 2014; Zhou et al., 2018; Mu et al., 2020). At 
+present, there are roughly three types of existing single-wood 
+segmentation algorithms (Jakubowski et al., 2013; Lu et al., 
+2014 ): 
+①Pre-process the point cloud data, such as denoising, filtering,
+classification to obtain vegetation point cloud and ground point
+cloud, and then use Triangulated Irregular Network interpolation
+(TIN) to generate digital surface model (DSM), interpolating the
+ground points to generate a digital elevation model (DEM),
+calculating the difference between the two to obtain a canopy
+height model (𝐶𝐻𝑀 ), and then according to the method of
+computer graphics to the 𝐶𝐻𝑀  The model is divided into
+regions.
+②Use the spatial structure relationship between LiDAR point
+cloud data and the true characteristics of trees to set up
+classification rules and directly segment the three-dimensional
+point cloud. Lin Yi et al. (2017) Based on the theory of circle
+ Corresponding author: Guoqing Zhou; E-mail: gzhou@glut.edu.cn 
+detection in 2017, obtained local extreme points as the center 
+point, and judged the distance from other point clouds to the 
+center point for clustering to extract information such as the 
+position, height and DBH(Diameter at Breast Height) of a single 
+tree, Use the aerial imagery of the same position to extract the 
+single wood position. In 2014, the iterative watershed method of 
+Coops et al. (2007) was used to better identify the lower canopy 
+in forests dominated by coniferous forests, but it is not good for 
+small and dense canopies of the same height. 
+③Combining the characteristics of the 𝐶𝐻𝑀 gray image and
+the spatial structure characteristics of the real point cloud of the
+tree, segment the point cloud and single tree. Li Xiang (2015)
+used LiDAR data, orthophotos, and second-class survey data in
+2015 to conduct single tree canopy extraction studies using
+coniferous forests and broad-leaved forests with high canopy
+density using the marker-controlled area growth method. It was
+found that this method can extract the canopy of the forest area
+very well. By controlling the threshold, the algorithm is more
+flexible and the processing speed is faster. Guo Yushan et al.
+(2016) used the mark control watershed segmentation method to
+extract the canopy of the sparse forest area and dense forest area
+respectively. Khosravipour et al. Proposed a new algorithm in
+2014, as Part of the laser pulse passes through the canopy and is
+directly reflected from the ground, forming a "close pits" in the
+canopy，which uses a subset of LiDAR points to close pits to
+generate a pitless CHM grid, and then uses the variable window
+local maximum method for single wood recognition .
+Among these methods, the watershed transformation algorithm 
+combined with morphological algorithm and regional growth 
+SEGMENTATION METHOD 
+Y. Mu, G. Zhou∗, H. Wang 
+Guangxi Key Laboratory of Spatial Information and Geomatics, Guilin University of Technology, No. 12 Jian’gan Road, 
+Guilin, Guangxi 541004, China, E-mail: gzhou@glut.edu.cn  
+Commission IV
+ISPRS Annals of the Photogrammetry, Remote Sensing and Spatial Information Sciences, Volume VI-3/W1-2020, 2020 
+Gi4DM 2020 – 13th GeoInformation for Disaster Management conference, 30 November–4 December 2020, Sydney, Australia (online)
+This contribution has been peer-reviewed. The double-blind peer-review was conducted on the basis of the full paper. 
+https://doi.org/10.5194/isprs-annals-VI-3-W1-2020-67-2020 | © Authors 2020. CC BY 4.0 License.
+67
+
+
+idea has the advantages of good closed edge extraction effect and 
+high target segmentation accuracy. Watershed transformation 
+has been widely used in image segmentation and processing. It 
+has the advantages of fast, simple and direct. It also has better 
+segmentation effect for images with lower contrast, which can 
+simplify subsequent processing procedures, but this method is 
+more sensitive to noise. There is a problem of image over-
+segmentation. To this end, this paper proposes a 𝐾−𝑚𝑒𝑎𝑛𝑠 
+clustering watershed algorithm based on grid 𝐶𝑀𝑀 (Canopy 
+maximum model) to segment the single wood based on the 
+problems of over-segmentation and noise sensitivity of the 
+watershed segmentation algorithm. 
+ 
+2. K-MEANS CLUSTERING IMPROVED WATERSHED 
+ALGORITHM 
+Watershed is a region-based widespread technique for image 
+segmentation. This method originated from mathematical 
+morphology (Serra, 1982), and a break-through in applicability 
+was achieved by Vincent and Soille (1991), since it can 
+effectively extract the area of interest (AOI) of the imagery. 
+Moreover, the watershed algorithm has the characteristics of less 
+time-consuming, highly accurate locating at imagery edges, 
+simple formulas and operation, and can carry out the parallel 
+processing 
+using 
+computer 
+relative 
+to 
+morphological 
+segmentation algorithms. In order to simulate the flood process, 
+it is necessary to first calculate the complement set of CHM and 
+CHM (Figure 1), which is similar to the two catchment basins 
+(Chen et al., 2006).  
+ 
+ 
+Figure 1. (a) CHM model (b) complement set of CHM (c) 
+Watershed algorithm (Courtesy of Bernhard Preim, Charl Botha 
+(2013)) 
+The basic idea of the watershed algorithm is that an imaged 
+LiDAR data set is regarded as a topographic landscape with 
+ridges and valleys (Preim and Botha 2013). The elevation values 
+of the LiDAR point cloud data are quantified by the gray values 
+of the respective pixels. Based on such a gray (3D) 
+representation, the watershed transform decomposes the imagery 
+into catchment basins. For each of local minimum values, a 
+catchment basin comprises all points whose path of steepest 
+descent terminates at this minimum value. The watershed 
+transform algorithm separates the basins from each other, and 
+decomposes an imagery completely and thus assigns each pixel 
+either to a region or a watershed. Due to noisy image data, the 
+watershed algorithm could cause a large number of small regions 
+segmentations. This phenomenon is known as the “over-
+segmentation” problem.  
+ 
+In order to overcome these shortcomings above, many scholars 
+have proposed many algorithms to improve the watershed 
+algorithm. The improvement methods can be roughly divided 
+into: image pre-processing before watershed transformation and 
+region merging after watershed transformation. The pre-
+processing before segmentation generally focuses on the noise 
+reduction of the image. Its purpose is to filter out the irrelevant 
+small targets in the image, ignore the small details inside the 
+target, and then perform a watershed transformation to obtain a 
+better segmentation. Most of the current improved watershed 
+algorithms are the method of the pre-processing before 
+segmentation. This article presents the K-means clustering 
+algorithm to improve the over-segmentation caused by the 
+watershed algorithm, the median filter is used to remove noise 
+from the 𝐶𝐻𝑀 image, and the improved K-means clustering 
+algorithm is used to perform multi-threshold segmentation on 
+the gradient image to obtain the continuous boundary contour of 
+the target area, thereby improving the over-segmentation 
+problem of the watershed algorithm. 
+ 
+2.1 Coarse Segmentation of 𝑲−𝒎𝒆𝒂𝒏𝒔 Clustering 
+The  𝐾−𝑚𝑒𝑎𝑛𝑠  clustering algorithm is an unsupervised 
+clustering algorithm. It performs initial clustering on areas with 
+similar gray levels in the image to remove noise (Liu et al., 2012; 
+Ren et al., 2013 ). The highest point of the local pixel maximum 
+detection combined with the crown maximum model is taken as 
+the highest point of the tree, and then each local highest point is 
+used as the seed point of  𝐾−𝑚𝑒𝑎𝑛𝑠 clustering for clustering 
+(Morsdorf et al., 2004) . The method is: 
+Suppose (𝑥, 𝑦) is the pixel coordinate of the digital image, and 
+𝑓(𝑥, 𝑦)  is its gray scale function. Q𝑙
+(𝑖)  represents the 𝑙 -th 
+region after the 𝑖 -th clustering, and m𝑗
+(𝑖+1)  represents the 
+average value of the 𝑙-th category (cluster center) after the 𝑖+
+1th clustering. 
+ 
+Step 1. Suppose the initial clustering center is: 𝑚1, 𝑚2,…,𝑚𝑘, 
+The first clustering centers 𝑚1, 𝑚2,…,𝑚𝑘 represent the pixels 
+at the treetop located by the variable window; 
+Step 2. For each point (𝑥, 𝑦), find the closest clustering center 
+according to a given criterion, and assign it to the area of this 
+type, namely: 
+ 
+(
+)
+( )
+(
+)
+( )
+,
+m
+,
+m
+i
+i
+l
+j
+f x y
+f x y
+−
+
+−
+      （1） 
+ 
+In the formula, m𝑙
+(𝑖)(𝑖= 1,2, … , ) represents the average value 
+of the 𝑙-th class after the i-th cluster, then 𝑓(𝑥, 𝑦) ∈Q𝑙
+(𝑖). After 
+the completion, update the clustering center after i + 1 clusters 
+ISPRS Annals of the Photogrammetry, Remote Sensing and Spatial Information Sciences, Volume VI-3/W1-2020, 2020 
+Gi4DM 2020 – 13th GeoInformation for Disaster Management conference, 30 November–4 December 2020, Sydney, Australia (online)
+This contribution has been peer-reviewed. The double-blind peer-review was conducted on the basis of the full paper. 
+https://doi.org/10.5194/isprs-annals-VI-3-W1-2020-67-2020 | © Authors 2020. CC BY 4.0 License.
+68
+
+
+to get a new clustering center m𝑙
+(𝑖+1);  
+Step 3. The new clustering center of Q𝑙
+(𝑖) obtained in step 2 is 
+m𝑙
+(𝑖+1).  
+ 
+𝜉2 = ∑
+∑
+|𝑓(𝑥, 𝑦) − m𝑙
+(𝑖+1)|
+2
+(𝑚,𝑛)𝜖Q𝑗
+(𝑖)
+𝐾
+𝑗=1
+    （2） 
+ 
+Let the value of 𝜉2 be the smallest, 𝑙= 1, 2, … , k. Then: 
+ 
+m𝑙
+(𝑖+1) =
+1
+𝑁𝑙∑
+𝑓(𝑥, 𝑦)
+(𝑥,𝑦)𝜖Q𝑙
+(𝑖)
+       （3） 
+ 
+𝑁𝑙 is the number of samples in Q𝑙
+(𝑖); 
+Step 4. For all 𝑙= 1，2，… ，k , if m𝑙
+(𝑖+1) = m𝑙
+(𝑖) , the 
+iteration is terminated, otherwise the above process loop is 
+continued. 
+ 
+After 𝐾−𝑚𝑒𝑎𝑛𝑠 divides the image cluster into K categories, 
+the tree canopy contour is generally an irregular and complete 
+area under the influence of 𝐶𝐻𝑀 . Therefore, the maximum 
+connected component 𝑆𝑖(𝑖= 1,2, . . , k) is taken as the single-
+wood area. Let 𝑆𝑖 be a subset of pixels in the image. If there is 
+a path between all pixels of 𝑆𝑖, the pixels are considered to be 
+connected. In order to extract the target of interest to the 
+maximum, this paper adopts the four-neighbored method. In the 
+binary image, the contour line is extracted by judging the gray 
+levels of other pixels in the four neighborhoods of each pixel of 
+the CHM. There are: 
+ 
+𝑆𝑖= 𝑎𝑟𝑔𝑚𝑎𝑥(𝑆1, … , 𝑆𝑖, 𝑆𝑗… , 𝑆𝑘)       （4） 
+ 
+2.2 Watershed Segmentation Based on K-means Clustering 
+In order to effectively solve the problem of over-segmentation in 
+the traditional watershed algorithm for image segmentation. 
+Continue to use the watershed algorithm on the basis of the 
+above K-means algorithm processing, the specific steps are as 
+follows: 
+ 
+Step 1. Let K-means segment the image into 𝑁 blocks, Let each 
+block be 𝑆𝑖, (𝑥𝑖, 𝑦𝑖) ∈𝑆, (𝑥, 𝑦), the gray value is 𝐼(𝑥𝑖, 𝑦𝑖), and 
+the size of each block is 𝑛𝑖, 0 < 𝑖< 𝑁 . Calculate the gray 
+variance of each block 𝑀𝑖
+2. 
+Step 2. Let 𝑆𝑖 and 𝑆𝑗 be the two adjacent blocks, then define 
+the gray-scale variance of the two adjacent blocks 𝑀𝑖𝑗
+2 as: 
+ 
+𝑀𝑖𝑗
+2 = (𝑀𝑖−𝑀𝑗)
+2           （5） 
+ 
+Step 3. Let 𝑆𝑖 and 𝑆𝑗 be adjacent segment blocks, (𝑥𝑖, 𝑦𝑖) ∈
+𝑆𝑖, (𝑥𝑗, 𝑦𝑗) ∈𝑆𝑗, (𝑥𝑖, 𝑦𝑖) are adjacent points on the edge of the 
+segment block, (𝑥𝑖, 𝑦𝑖)  and (𝑥𝑗, 𝑦𝑗)  satisfy the four-
+neighborhood relationship. 𝑁𝑖𝑗 is the number of pixels on the 
+edge of the divided block that satisfy the four-neighborhood 
+relationship, and the mean value of the standard deviation of the 
+gray value of the four-neighbored pixels on the edge of the 
+divided block is: 
+ 
+𝑃𝑖𝑗=
+1
+𝑁𝑖𝑗∑
+√(𝐼(𝑥𝑖, 𝑦𝑖) −𝐼(𝑥𝑗, 𝑦𝑗))
+2
+(𝑥𝑖,𝑦𝑖),(𝑥𝑗,𝑦𝑗)
+  （6） 
+ 
+Step 4. Define the similarity between two adjacent partitions as: 
+ 
+(
+)
+2
+2
+ij
+ij
+ij
+M
+P
+C
+−
+=
+             （7） 
+ 
+Suppose that a threshold is initially selected to maximize the 
+variance between 𝐶1 and 𝐶2 , 𝐶1 is the pixel with gray level 
+{0,1, … , 𝑘} , 𝐶2  is a group of pixels with gray level [𝑘+
+1, … , 𝐿−1] . The ratio of the between-class variance to the 
+overall gray-scale variance of the image can divide the image 
+gray into two categories. Generally, the value that can divide the 
+image into two categories on the gray scale is called the optimal 
+threshold, as follows: 
+ 
+( )
+( )
+2
+k
+B
+G
+k
+k
+
+
+
+=
+             （8） 
+ 
+The value range is [0,1], and the generated threshold T is used 
+to threshold the neighboring divided blocks. 
+ 
+ and 
+are not merge
+,
+ 
+ 
+,
+d
+ merged with 
+ 
+i
+j
+i
+j
+j
+ij
+i
+S
+S
+S
+if
+C
+S
+T
+f
+C
+T
+→
+
+→
+
+＞
+＜
+   （9） 
+ 
+3. EXPERIMENT AND ANALYSIS 
+3.1 Summary of The Study Area 
+The Saihanba forest area is located at the northernmost tip of 
+Hebei Province, and is divided into two geomorphic units: the 
+upper plateau of the dam and the mountainous area of northern 
+Hebei. Saihanba belongs to a temperate semi-humid and semi-
+arid monsoon climate zone. It is 58.6km long from north to south 
+and 65.6km wide from east to west. The geographical 
+coordinates are longitude l16 ° 51 '~ 117 ° 39' east, latitude 42 ° 
+02 '~ 42 ° 36' north, the forest area of Saihanba is 68708.05m2, 
+and the forest coverage is 72.3 %. The experimental area selected 
+for this study is 760 m2, the average flight speed when collecting 
+data is 61.7m / s, the flight altitude is 150-200m, the zonal 
+overlap is 67%, the data includes four echoes, and the point 
+cloud density is 50 ( pts / m2). The tree species in the study area 
+selected in this experiment are mainly pine trees, a total of 175 
+trees, with an average height of 20-30 m. 
+ 
+ 
+Figure 2. Point cloud display of test area 
+ 
+3.2 Data Preprocessing 
+3.2.1 Point Cloud Filtering 
+When acquiring point cloud data, while receiving accurate 
+echoes, due to the influence of equipment accuracy and 
+environmental factors, there will be some errors. Such error-free 
+ISPRS Annals of the Photogrammetry, Remote Sensing and Spatial Information Sciences, Volume VI-3/W1-2020, 2020 
+Gi4DM 2020 – 13th GeoInformation for Disaster Management conference, 30 November–4 December 2020, Sydney, Australia (online)
+This contribution has been peer-reviewed. The double-blind peer-review was conducted on the basis of the full paper. 
+https://doi.org/10.5194/isprs-annals-VI-3-W1-2020-67-2020 | © Authors 2020. CC BY 4.0 License.
+69
+
+
+points are generally significantly higher or lower than the feature 
+points. The presence of noise points will affect the accuracy of 
+subsequent work such as segmentation and parameter extraction. 
+In this paper, the radius filter is used to denoise the point cloud. 
+A circle is drawn around a point to calculate the number of points 
+that fall outside the circle. Jiao Yitao chose 20m as the average 
+tree height of forest stand based on the airborne LiDAR point 
+cloud The radius, combined with the actual situation in this paper 
+to determine 15m as a radius to draw a circle, when the number 
+is less than the given value, then delete the point, the number is 
+less than the given value to retain the point (Jiao et al., 2015 ). 
+Since this method relies on empirical values, the error is 
+relatively large. 
+ 
+ 
+Figure 3. Point cloud filtering diagram, (a) before filtering, (b) 
+after filtering 
+ 
+3.2.2 Optimized Generation of 𝑪𝑯𝑴 
+𝐶𝐻𝑀 is a surface model that expresses the height of the forest 
+vegetation canopy surface from the ground.In the process of 
+acquiring and generating 𝐶𝐻𝑀 data, it is easy to produce pits, 
+that is, pixels in the local range of the 𝐶𝐻𝑀 gray image are 
+smaller than the pixels in the neighborhood. The formation of 
+pits is related to many factors, such as: 
+ 
+1. 
+In the process of LiDAR data acquisition, inaccurate 
+stitching of the flight belts is likely to cause elevation 
+errors between points of the same name in the overlapping 
+area. Using this point cloud data interpolation to generate 
+𝐶𝐻𝑀 is prone to pits;  
+2. 
+Due to the existence of the canopy gap, the laser pulse is 
+penetrative to it, so the echo signals of the shrubs and 
+ground under the forest canopy can be obtained, and the 
+grid size when processing such laser point cloud 
+interpolation to generate 𝐶𝐻𝑀 Too small can easily cause 
+pits;  
+3. 
+In addition, because the values of DSM and DEM are 
+different from the interpolation method, improper 
+interpolation method is likely to cause pits in DSM, and 
+then there are pits in the generated 𝐶𝐻𝑀. 
+ 
+3.3 Variable Window Detection Treetop 
+Popescu and Wynne (2003) proposed a variable window method 
+for detection of a tree height and crown size from LiDAR point 
+cloud data. This Section presents the tree height is manually 
+measured; and the crown size is measured through their average 
+crown diameter along two vertical profiles. 
+The window size can be calculated by: 
+ 
+𝑊𝑖𝑛𝑑𝑜𝑤 𝑆𝑖𝑧𝑒= 29.77 −1.46 × 𝑇𝐶+ 0.03 × 𝑇𝐻2 （10） 
+ 
+where TC is the crown diameter of each individual tree, TH is 
+the average tree height of individual single tree.  
+ 
+The window size for tree crown detection is predicted by 
+Equation (11) and is used to accurately detects the position of the 
+treetop. In order to obtain canopy surface model, "on" operation 
+to the 𝐶𝐻𝑀 image generated by the above operation is carried 
+out. That is, the image is first eroded and then expanded, which 
+is used to eliminate small objects, smooth the shape boundary, 
+and do not change its area. It can remove small particle noise and 
+break the adhesion between objects, in which each grid unit 
+value is replaced by the height of the point cloud data in the 
+neighborhood. Get the largest model of the canopy, that is, form 
+the CMM model, and is expressed by 
+ 
+𝐻𝑥,𝑦
+𝐶𝑀𝑀= 𝑚𝑎𝑥(𝑥−1)(𝑦−1)≤𝑖×𝑗≤(𝑥+1)(𝑦+1)𝑍𝑖,𝑗
+𝐶𝐻𝑀 （11） 
+ 
+The experimental result for 𝐶𝑀𝑀 model generation using Eq. 
+(11) is depicted in Figure 4b. A comparison analysis with 𝐶𝐻𝑀 
+model is conducted and the result is depicted in Figure 4a. The 
+experimental results demonstrate that the false treetops can be 
+significantly eliminated, and the phenomenon of the missing 
+treetops is largely reduced. 
+ 
+ 
+Figure 4 Comparison analysis for the 175 treetops extraction by 
+two models: (a) 𝐶𝐻𝑀 model, (b) 𝐶𝑀𝑀 model 
+ 
+3.4 𝑪𝑴𝑴 Gaussian Filtering 
+Gaussian filtering to smooth the generated 𝐶𝑀𝑀 , thereby 
+obtaining 𝐺𝐶𝑀𝑀. Gaussian filtering is a common method for 
+suppressing insignificant local maxima in treetop detection, and 
+it can flexibly apply standard deviation.The two-dimensional 
+isotropic Gaussian function can be calculated using formula (12), 
+where x is the distance from the horizontal axis to the origin, y 
+is the distance from the vertical axis to the origin, and σ is the 
+deviation of the standard Gaussian distribution. 
+ 
+𝐺(𝑥, 𝑦) =
+1
+2𝜋𝜎2 × 𝑒−𝑥2+𝑦2
+2𝜎2        （12） 
+ 
+𝐺𝐶𝑀𝑀= 𝐺× 𝐶𝑀𝑀         （13） 
+ 
+The 𝐺𝐶𝑀𝑀 calculated by equation (13) is used as the basic 
+data for the subsequent extraction of single tree structure 
+parameters. Using 𝐺𝐶𝑀𝑀 to extract single tree crown vertices 
+can effectively reduce false detection of tree crown vertices. 
+ 
+3.5 Accuracy Assessment and Comparative Analysis 
+In order to quantitatively evaluate the accuracy of the proposed 
+K-means watershed algorithm for single tree extraction from 
+LiDAR point cloud data, the tree recognition rate (noted as, R), 
+recognition accuracy rate (noted as, P), and F value (F-score) 
+were used as indexes, and are expressed by 
+ 
+2
+R P
+F
+R
+P
+
+= 
++
+             （14） 
+ 
+ 
+ISPRS Annals of the Photogrammetry, Remote Sensing and Spatial Information Sciences, Volume VI-3/W1-2020, 2020 
+Gi4DM 2020 – 13th GeoInformation for Disaster Management conference, 30 November–4 December 2020, Sydney, Australia (online)
+This contribution has been peer-reviewed. The double-blind peer-review was conducted on the basis of the full paper. 
+https://doi.org/10.5194/isprs-annals-VI-3-W1-2020-67-2020 | © Authors 2020. CC BY 4.0 License.
+70
+
+
+ 
+Figure 5 . Comparison of experimental results of traditional watershed and improved watershed: (a) CMM model, (b) gray scale 
+display CMM model, (c) watershed algorithm, (d) K-means clustering based on 𝐶𝑀𝑀, (e) gray scale display CMM K-means 
+clustering, (f) Improved watershed algorithm 
+ 
+TP
+R
+TP
+FN
+=
++
+             （15） 
+ 
+TP
+P
+TP
+FP
+=
++
+             （16） 
+ 
+In the above formula, TP is the number of correctly divided trees;  
+FN is the number of trees that have not been divided, but have 
+been mistakenly divided into other trees, also known as missing 
+points; FP is the number of trees that are more divided. 
+ 
+Where the extents of the F, R and P values are between 0 and 1. 
+According to the F, R, P scores of the segmentation results, 
+Precision quantitative analysis of the traditional watershed 
+algorithm and K-means watershed algorithm. 
+ 
+(
+)
+(
+)
+(
+)
+-
+100%
+F
+k watershed
+watershed
+watershed
+F
+F
+M
+F
+−
+=
+•
+  （17） 
+ 
+(
+)
+(
+)
+(
+)
+-
+100%
+R
+k watershed
+watershed
+watershed
+R
+R
+M
+R
+−
+=
+•
+  （18） 
+ 
+(
+)
+(
+)
+(
+)
+-
+100%
+P
+k watershed
+watershed
+watershed
+P
+P
+M
+P
+−
+=
+•
+  （19）  
+ 
+Table 1. LiDAR single-wood split F score verification 
+Index for 
+accuracy 
+assessments 
+Traditional 
+watershed 
+algorithm 
+K-means 
+watershed 
+algorithm 
+Precision 
+quantitative 
+analysis
+（(100%)） 
+R 
+0.85 
+0.91 
++7 
+P 
+0.8 
+0.89 
++11 
+F 
+0.82 
+0.9 
++9.8 
+ 
+It can be seen from Table 1 that the F value based on 𝐾−
+𝑚𝑒𝑎𝑛𝑠 combined with the improved watershed segmentation 
+method can reach 0.9 in the experimental area, which is better 
+than the traditional watershed 𝐶𝐻𝑀  segmentation accuracy. 
+Compared with the traditional watershed segmentation method, 
+the improved watershed segmentation method combined with 
+𝐾−𝑚𝑒𝑎𝑛𝑠  clustering has higher tree recognition rate and 
+segmentation accuracy rate. In addition, we can find that the 
+recognition rate of traditional watershed segmentation is close to 
+the improved watershed segmentation method, but its accuracy 
+is low. Therefore, based on the data in the experimental area, 
+from the three aspects of the F-score, Recall, and Precision 
+segmentation accuracy judgment parameters, the following 
+conclusions can be drawn: 𝐾−𝑚𝑒𝑎𝑛𝑠  combined with 
+improved watershed segmentation can more effectively achieve 
+crown segmentation, and effectively solve the emergence of 
+traditional segmentation The problem of over-segmentation. 
+ 
+The 𝐾−𝑚𝑒𝑎𝑛𝑠 watershed algorithm proposed in This article 
+is compared with the traditional watershed algorithm. 𝐾−
+𝑚𝑒𝑎𝑛𝑠 clustering method is used to segment initial coarse gray 
+𝐶𝑀𝑀  image, the result is shown in Figure 5(d); while the 
+traditional watershed algorithm does and the result is depicted in 
+Figure 5(c); the improvement based on 
+𝐾−𝑚𝑒𝑎𝑛𝑠 
+clusteringThe watershed algorithm divides the 𝐶𝑀𝑀, as shown 
+in Figure 5(f). 
+ 
+ 
+Finally, a single-wood segmentation result display based on K-
+means clustering watershed segmentation algorithm is formed 
+(see Figure 6). The number at the top of the tree represents the 
+tree ID. 
+ 
+ 
+Figure 6. (a) Overall test area segmentation result map, (b) 
+Partially enlarged 3D display 
+ISPRS Annals of the Photogrammetry, Remote Sensing and Spatial Information Sciences, Volume VI-3/W1-2020, 2020 
+Gi4DM 2020 – 13th GeoInformation for Disaster Management conference, 30 November–4 December 2020, Sydney, Australia (online)
+This contribution has been peer-reviewed. The double-blind peer-review was conducted on the basis of the full paper. 
+https://doi.org/10.5194/isprs-annals-VI-3-W1-2020-67-2020 | © Authors 2020. CC BY 4.0 License.
+71
+
+
+4. CONCLUSION AND ANALYSIS
+In order to overcome the problem of over-segmentation and 
+noise encountered in traditional watershed algorithm, This 
+article presents 𝐾 − 𝑚𝑒𝑎𝑛𝑠 watershed algorithm for extraction 
+of single treetop from airborne LiDAR point cloud data. In this 
+method, 𝐾 − 𝑚𝑒𝑎𝑛𝑠  initializes clustering, then threshold 
+segmentation is further conducted, finally the watershed 
+transformation is applied to segment the single treetop regions.  
+This method was confirmed in the airborne LiDAR data of 
+theSaihanba Forest Proving Ground, which is 58.6 kilometers 
+long from north to south and 65.6 kilometers wide from east to 
+west. 
+ The experimental results show that the P and R values 
+calculated by the traditional watershed algorithm are lower than 
+the K-means cluster watershed algorithm, which is the main 
+factor affecting the comprehensive segmentation accuracy index 
+F. The traditional watershed algorithm has a lot of over-
+segmentation 
+and 
+omission-segmentation 
+and 
+K-means 
+clustering watershed algorithm can solve this problem to a large 
+extent. Through quantitative precision analysis, it can be found 
+that compared with the traditional watershed algorithm, the 
+improved watershed algorithm has F, R, and P parameters 
+increased by 7.1%, 11%, and 9.8%, respectively. It can be 
+analyzed by the formula that the number of unsplit trees and 
+wrongly split trees are reduced. Therefore, the segmentation 
+result of the improved watershed algorithm is more accurate. 
+Due to the high degree of forest canopy, the internal adhesion of 
+CHM images is caused, and the clarity of the CHM image itself 
+is limited, resulting in some trees not being well recognized. This 
+will also be the next direction that this research needs to explore. 
+It will consider improving the model from the internal 
+enhancement and external contour recognition of the CHM 
+image to improve the research of the internal segmentation line 
+trend.
+ACKNOWLEDGEMENT 
+This paper is financially supported by the National Natural 
+Science of China (the grant #: 41961065 and 41431179), 
+Guangxi Science and Technology Base and Talent Project (the 
+grant #: Guike AD19254002); the Guangxi Innovative 
+Development Grand Program (the grant #: GuikeAA18118038 
+and GuikeAA18242048); Guangxi Natural Science Foundation 
+for 
+Innovation 
+Research 
+Team 
+(the 
+grant 
+#: 
+2019GXNSFGA245001), Guilin Research and Development 
+Plan  Program (the grant #:20190210-2), the National Key 
+Research and Development Program of China (the grant #: 
+2016YFB0502501) and the BaGuiScholars program of Guangxi. 
+REFERENCES: 
+Chen, Q. (2006). Isolating Individual Trees in a Savanna 
+Woodland 
+using 
+Small 
+Footprint 
+LiDAR 
+data. 
+Photogrammetric Engineering & Remote Sensing, 72(8): 
+923-932.
+Coops, C., Hilker, T., Wulder, M. A., St-Onge, B., 
+Newnham, G., Siggins, A. (2007). Estimating canopy 
+structure of Douglas-fir forest stands from discrete-return lidar. 
+Trees, 21(3), 295-310. 295-310.
+Gougeon, F.A.; Leckie, D.G. Page (2001). Individual tree 
+crown image analysis - A step towards precision forestry. in 
+First Int. Precision Forestry Symposium (CD-ROM), June 
+17-20, 2001, Seattle, Washington, USA. 4725-4727.
+Guo, Y., Liu, Q., Liu, G. (2016) Single tree canopy
+extraction of high-resolution remote sensing image based on 
+marker control watershed segmentation method. Journal 
+of Earth Information Science, 18 (9):1259-1266.(Chinese)
+Jakubowski, M., Jakubowski, K., Li, W., Guo, Q. (2013).
+Delineating individual trees from lidar data: a comparison of 
+vector- and raster-based segmentation approaches. Remote 
+Sensing, 5(9):4163-4186 September 2013.
+Jiao, Y., Xing, Y., Huo, D. (2015). Estimating the average tree 
+height of forest stand based on airborne LiDAR point cloud. 
+Journal of Northwest Forestry University, 030 (003): 
+170-174. (Chinese).
+Jean 
+Serra 
+(1986). 
+Introduction 
+to 
+mathematical
+morphology, Computer Vision, Graphics, and Image
+Processing, 35, 283-305.
+Khosravipour A, Skidmore A K, Isenburg M.(2014)
+Generating Pit-free  Canopy Height Models from
+Airborne LiDAR. Photogrammetric Engineering &
+Remote Sensing, 80(9):863-872.
+Lu, X., Guo, Q., Li, W., Flanagan, J. (2014). A bottom-up
+approach to segment individual deciduous trees using leaf-off 
+lidar 
+point 
+cloud 
+data. 
+ISPRS 
+Journal 
+of
+Photogrammetry & Remote Sensing, 94(8):1-12.
+Li (2015). Single tree canopy extraction based on LiDAR data 
+and marker-controlled area growth method. Ph.D.
+Dissertation, Northeast Forestry University, Harbin City,
+China.215-233.
+Lin, Y., Ji, H., Ye, Q. (2017). Research on single tree
+extraction method based on Li DAR point cloud.
+Computer Measurement and Control, 25 (6): 142-147.
+(Chinese).
+Morsdorf, F., Meier, E., Kötz, B., Itten, K., Dobbertin, M.,
+Allgöwer, 
+B. 
+(2004). 
+LiDAR-based 
+geometric
+reconstruction of boreal type forest stands at single tree level 
+for forest and wildland fire management. Remote Sensing of 
+Environment, 92(3):353-362.
+Mu, Y., Zhou, G., Zhou, X., Gao, J., Peng, X. (2020). HPR and 
+OPK angle element conversion method based on airborne 
+LiDAR alignment axis error calibration. The International 
+Archives of the Photogrammetry, Remote Sensing and 
+Spatial Information Sciences, 71-75.
+Popescu S C, Wynne R H, Nelson R F. (2003). Measuring
+individual tree crown diameter with LiDAR and assessing its 
+influence on estimating forest volume and biomass.
+Canadian journal of remote sensing, 29(5): 564-577.
+Preim, B., Botha, C. (2013). Visual Computing for
+Medicine: Theory, Algorithms, and Applications, 2nd
+Edition, ISBN: 9780124158733, Morgan Kaufmann, 25th
+November 2013, 836 Pages.
+Ren, L., Lai, H., Chen, Q. (2013). Cotton segmentation
+algorithm based on improved K-means clustering and HSV 
+model. Computer Engineering and Design, 34 (5): 1772-1776.
+ISPRS Annals of the Photogrammetry, Remote Sensing and Spatial Information Sciences, Volume VI-3/W1-2020, 2020 
+Gi4DM 2020 – 13th GeoInformation for Disaster Management conference, 30 November–4 December 2020, Sydney, Australia (online)
+This contribution has been peer-reviewed. The double-blind peer-review was conducted on the basis of the full paper. 
+https://doi.org/10.5194/isprs-annals-VI-3-W1-2020-67-2020 | © Authors 2020. CC BY 4.0 License.
+72
+
+
+Sajdak, M., Velázquez-Martí, B., López-Cortés, I., 
+Fernández-Sarría, A., Estornell, J. (2014). Prediction 
+models 
+for 
+estimating 
+pruned 
+biomass 
+obtained from 
+Platanus hispanica Münchh. used for material surveys in 
+urban forests, Renewable Energy, 66, June 2014, pp. 178-184.
+Unger, D. R., Hung, I. K., Brooks, R., Williams, H. (2014). 
+Estimating number of trees, tree height and crown width using 
+lidar data. GIScience & remote sensing, 51(3), 227-238.
+Vincent, L. and Soille, P. (1991) Watersheds in Digital 
+Spaces: An Efficient Algorithm Based on Immersion 
+Simulations. IEEE Transactions on Pattern Analysis and
+Machine Intelligence, vol. 13, no. 6, June 1991, 583-598. 
+Zhou, G., Song, C., Simmers, J., Cheng, P. (2004). Urban 3d 
+GIS from LiDAR and digital aerial images. Computers & 
+geosciences, 30(4), p. 345-353.
+Zhou, G., Yang, B., Zhang, W., Tao, X., Yang, C. (2013). 
+Simulation study of new generation of airborne 
+scannerless 
+LiDAR 
+system. 
+IEEE 
+International 
+Geoscience and Remote Sensing Symposium, 21-26 July 2013, 
+Melbourne, Australia. 524-527.
+Zhou, G., Zhou, X. (2018): Technology and Applications for 
+Array LiDAR Imager. Wuhan University Press, ISBN:
+987-307-19683-4. (Chinese)
+ISPRS Annals of the Photogrammetry, Remote Sensing and Spatial Information Sciences, Volume VI-3/W1-2020, 2020 
+Gi4DM 2020 – 13th GeoInformation for Disaster Management conference, 30 November–4 December 2020, Sydney, Australia (online)
+This contribution has been peer-reviewed. The double-blind peer-review was conducted on the basis of the full paper. 
+https://doi.org/10.5194/isprs-annals-VI-3-W1-2020-67-2020 | © Authors 2020. CC BY 4.0 License.
+73
