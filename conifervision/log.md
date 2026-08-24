@@ -2,6 +2,13 @@
 
 Chronological record of ingest, query, hypothesis, and lint operations.
 
+## [2026-08-24] hypothesis | Queue H1 → H3 → H2 approved (ADR-002)
+
+- Human selected sequence: baselines → RGB seg backend ceiling → mask-aware fusion
+- Updated [[experiments/exp-001-per-layer-baselines]] (H1), [[experiments/exp-002-merge-fusion-v1]] (H2)
+- Added [[experiments/exp-003-rgb-seg-backend-ceiling]] (H3)
+- ADR-002 accepted in [[project/decisions]]; Current focus + [[experiments/index]] updated
+
 ## [2026-08-24] lint | Visibility lift — north star on index + literature map
 
 - Primary objective made explicit in `AGENTS.md` Purpose (dense ITD/segmentation, ensemble)

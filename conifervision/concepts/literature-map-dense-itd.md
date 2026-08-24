@@ -64,9 +64,12 @@ This page does **not** replace individual [[sources/index]] summaries. Refresh a
 ## Implications for the hypothesis loop
 
 1. Run [[experiments/exp-001-per-layer-baselines]] with **open vs dense** before comparing new algorithms (Sparks / Young lesson).
-2. Prefer **mask-aware fusion** experiments ([[experiments/exp-002-merge-fusion-v1]]) once RGB seg (ECSeg / StarDist / SAM-prompted) has a ceiling.
-3. Treat pure 3D end-to-end models as **parallel track** unless AREA workflow already commits to dense UAV LiDAR as primary input.
-4. Species and synthetic data stay **downstream** of instance detection quality.
+2. Optionally compare RGB instance backends on dense tiles ([[experiments/exp-003-rgb-seg-backend-ceiling]]) before locking ECSeg for fusion.
+3. Prefer **mask-aware fusion** ([[experiments/exp-002-merge-fusion-v1]]) once RGB seg has a chosen ceiling.
+4. Treat pure 3D end-to-end models as **parallel track** unless AREA workflow already commits to dense UAV LiDAR as primary input.
+5. Species and synthetic data stay **downstream** of instance detection quality.
+
+Approved queue: **ADR-002** (H1 → H3 → H2) in [[project/decisions]].
 
 ## Related
 
