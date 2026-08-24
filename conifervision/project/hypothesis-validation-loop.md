@@ -3,11 +3,11 @@ title: Hypothesis validation loop
 type: Project
 description: "How humans and LLM agents propose, refine, and validate/reject experiments toward dense-stand tree detection — wiki scientist vs GPU engineer handoff."
 tags: [research, hypothesis, experiment, workflow, ensemble]
-status: draft
-updated: 2026-08-21
+status: stable
+updated: 2026-08-24
 generated:
   by: agent:conifervision-wiki
-  at: 2026-08-21T12:00:00Z
+  at: 2026-08-24T12:00:00Z
 related_methods:
   - methods/merge-detections
   - methods/deimv2-canopy

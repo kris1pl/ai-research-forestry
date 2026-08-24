@@ -2,6 +2,14 @@
 
 Chronological record of ingest, query, hypothesis, and lint operations.
 
+## [2026-08-24] lint | Visibility lift — north star on index + literature map
+
+- Primary objective made explicit in `AGENTS.md` Purpose (dense ITD/segmentation, ensemble)
+- Root [[index]]: Current focus + links to research program, hypothesis loop, experiments; OKF frontmatter only `okf_version`
+- Added [[concepts/literature-map-dense-itd]] (Tier A/B/C synthesis)
+- Promoted to `stable`: research program, hypothesis loop, dense-stand, edgecrafter-ecseg, exp-001, exp-002
+- `wiki_update.append_index_source` no longer bumps root index frontmatter (OKF)
+
 ## [2026-08-21] ingest | Chen (2025) — Zero-shot tree detection and segmentation with SAM2
 
 - Source: `raw/papers/ZERO-SHOT_TREE_DETECTION_AND_SEGMENTATION_FROM_AERIAL_FOREST_IMAGERY-2506.03114v1.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)

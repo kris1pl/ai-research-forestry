@@ -3,8 +3,8 @@ title: exp-001 per-layer baselines (open vs dense)
 type: Experiment
 description: "Baseline measurements per ensemble layer before fusion, stratified by open vs dense stands and small vs large trees."
 tags: [ensemble, baseline, evaluation, dense-stands, edgecrafter]
-status: draft
-updated: 2026-08-21
+status: stable
+updated: 2026-08-24
 area: "AREA split TBD — stratify open vs dense; size bins per CHM/DEIMv2 layers"
 hypothesis: "Layer-wise performance ceilings and dense-specific error taxonomy are necessary inputs for robust fusion design; global (non-stratified) eval hides the failure modes that matter before thinning."
 metrics:

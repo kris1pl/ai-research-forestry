@@ -3,8 +3,8 @@ title: exp-002 merge / fusion v1 (segmentation-aware)
 type: Experiment
 description: "First fusion design iteration: compare bbox-centric NMS vs mask-aware merge under dense-stand conditions."
 tags: [ensemble, merge, fusion, dense-stands]
-status: draft
-updated: 2026-08-21
+status: stable
+updated: 2026-08-24
 area: "Same AREA eval set as exp-001 once available; report open vs dense separately"
 hypothesis: "Mask-aware fusion rules reduce dense-stand duplicates and under-segmentation artifacts compared to bbox-only priority NMS, without catastrophic regression on open stands."
 metrics:

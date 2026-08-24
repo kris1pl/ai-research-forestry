@@ -1,18 +1,25 @@
 ---
 okf_version: "0.2"
-updated: 2026-08-21
-generated:
-  by: agent:conifervision-wiki
-  at: 2026-08-21T12:00:00Z
 ---
 # Conifervision Research Wiki
 
-Compiled team knowledge on tree detection and classification methodology (drones, CHM, AI models, weak labels). Maintained by an LLM agent per `AGENTS.md` at the repository root.
+Compiled team knowledge for **individual tree detection and segmentation** from drone imagery (orthophoto + CHM/3D), especially in **dense stands before thinning**. Also covers the current AREA production pipeline and species classification. Maintained by an LLM agent per `AGENTS.md` at the repository root.
+
+## Current focus
+
+1. **Research north star:** [[project/research-tree-detection-ensemble]] — multi-layer ensemble (LM, CHM/DEIMv2, RGB det/seg, fusion).
+2. **Hypothesis loop:** [[project/hypothesis-validation-loop]] — propose → Experiment page → human gate → GPU module → validate/reject.
+3. **Near-term experiments:** [[experiments/exp-001-per-layer-baselines]] (open vs dense ceilings), then [[experiments/exp-002-merge-fusion-v1]] (mask-aware merge).
+4. **Literature map (dense ITD):** [[concepts/literature-map-dense-itd]] — what to test first vs background reading.
+
+Production baseline (what ships today): [[project/pipeline-overview]]. Success structure: ADR-001 in [[project/decisions]] (proposed until eval numbers are locked).
 
 ## Project
 
-- [[project/pipeline-overview]] — current production pipeline
-- [[project/decisions]] — methodological decisions (ADR)
+- [[project/research-tree-detection-ensemble]] — **research north star** (ensemble, dense stands, data strategy)
+- [[project/hypothesis-validation-loop]] — scientist ↔ engineer handoff for experiments
+- [[project/pipeline-overview]] — current production AREA pipeline
+- [[project/decisions]] — methodological ADRs (incl. ADR-001 ensemble v1)
 - [[project/code-repo-integration]] — **TODO:** link to production code repository
 
 ## Pipeline methods
@@ -21,12 +28,16 @@ Compiled team knowledge on tree detection and classification methodology (drones
 
 ## Concepts
 
-- [[concepts/canopy-height-model]] — CHM (DSM − DTM); satellite SSL curation link (Vo 2024)
+- [[concepts/literature-map-dense-itd]] — synthesis: priorities among ingested ITD/segmentation papers
+- [[concepts/dense-stand-detection]] — evaluation concept for dense plots (before clearing)
+- [[concepts/canopy-height-model]] — CHM (DSM − DTM); LiDAR and satellite SSL links
 - [[concepts/pseudo-tree-crown]] — PTC input reformation for species CNNs (UAV)
 
 ## Experiments
 
-- (pages under `experiments/` — hypothesis, metrics, conclusions)
+- [[experiments/index]] — hypothesis units (baselines, fusion, …)
+- [[experiments/exp-001-per-layer-baselines]] — per-layer ceilings, open vs dense
+- [[experiments/exp-002-merge-fusion-v1]] — bbox NMS vs mask-aware fusion
 
 ## Literature sources
 
@@ -35,7 +46,7 @@ Compiled team knowledge on tree detection and classification methodology (drones
 - [[sources/paper-treepseco_scaling_individual_tree_crown_segmentation_using_large_vision_models-isprs-archives-xlviii-m-7-2025-275-2025]] — TreePseCo — adapts PseCo framework using SAM and Faster R-CNN for robust individual tree crown segmentation in aerial imagery
 - [[sources/paper-tree_crown_segmentation_in_three_dimensions_using_density_models_derived_from_airborne_laser_scanning-holmgren_j_et_al_220114]] — Holmgren et al. (2022) — Introduces 3D tree crown density models and mean-shift clustering to detect understory trees in multi-layered forest canopies.
 - [[sources/paper-the_accuracy_of_image-based_individual_tree_crown_detection_and_delineation_across_vegetation_types-isprs-archives-xlviii-g-2025-1223-2025]] — Pucino (2025) — Evaluates combinations of 3 CHM and 4 ITS algorithms across 15 Australian vegetation classes, finding Pit-Free CHM and DalPonte segmentation yield the highest accuracy.
-- [[sources/paper-self-supervised_learning_for_precise_individual_tree_segmentation_in_airborne_lidar_point_clouds]] — Shaheen (2025) — Self-supervised 3D LiDAR point cloud segmentation using transformation-invariant pretext tasks and energy-based soft clustering.
+- [[sources/paper-self_supervised_learning_for_precise_individual_tree_segmentation_in_airborne_lidar_point_clouds]] — Shaheen (2025) — Self-supervised 3D LiDAR point cloud segmentation using transformation-invariant pretext tasks and energy-based soft clustering.
 - [[sources/paper-optimizing_aerial_imagery_collection_and_processing_parameters_for_drone-based_individual_tree_mapping_in_structurally_complex_conifer_forests]] — Young et al. (2022) — Comprehensive evaluation of 7,568 combinations of drone flight parameters, photogrammetry settings, and ITD algorithms in a complex mixed-conifer stand.
 - [[sources/paper-lidar_point_cloud_denoising_for_individual_tree_extraction_based_on_the_noise4denoise-fpls-15-1490660]] — Lu (2025) — Introduces DEN4, an unsupervised deep learning-based point cloud denoising algorithm that improves individual tree segmentation accuracy.
 - [[sources/paper-individual_tree_segmentation_based_on_region-growing_and_density-guided_canopy_3-d_morphology_detection_using_uav_lidar_data]] — Li (2025) — introduces RDT, a hybrid tree segmentation framework combining CHM region-growing with point cloud density-guided vertical profile morphology analysis

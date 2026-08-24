@@ -3,11 +3,11 @@ title: EdgeCrafter ECSeg — instance segmentation
 type: Method
 description: "Instance segmentation layer based on EdgeCrafter (ECSeg) for tree crown instances, designed to improve dense-stand separation and fusion."
 tags: [edgecrafter, ecseg, instance-segmentation, detection, rgb]
-status: draft
-updated: 2026-08-21
+status: stable
+updated: 2026-08-24
 generated:
   by: agent:conifervision-wiki
-  at: 2026-08-21T12:00:00Z
+  at: 2026-08-24T12:00:00Z
 related_methods:
   - methods/merge-detections
   - methods/deimv2-canopy

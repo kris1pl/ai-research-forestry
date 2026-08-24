@@ -3,11 +3,11 @@ title: Dense stand detection (before clearing)
 type: Concept
 description: "Evaluation concept for tree detection in dense stands where crown overlap breaks bbox-centric NMS and segmentation boundaries drive errors."
 tags: [dense-stands, evaluation, detection, instance-segmentation, dense/open]
-status: draft
-updated: 2026-08-21
+status: stable
+updated: 2026-08-24
 generated:
   by: agent:conifervision-wiki
-  at: 2026-08-21T12:00:00Z
+  at: 2026-08-24T12:00:00Z
 related_methods:
   - methods/merge-detections
   - methods/deimv2-canopy

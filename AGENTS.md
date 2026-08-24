@@ -13,14 +13,18 @@ Schema for agents (Cursor, Codex, Claude Code) maintaining this knowledge base. 
 
 ## Purpose
 
-Research and documentation of **forest area (AREA) analysis methodology**:
+**Primary research objective:** build methodology for **individual tree detection and segmentation** from **drone orthophotos + 3D/CHM**, with emphasis on **dense stands before thinning**. Target path: multi-layer ensemble (local maxima, CHM/DEIMv2, RGB detection, instance segmentation e.g. EdgeCrafter ECSeg, fusion/NMS) — see `conifervision/project/research-tree-detection-ensemble.md`. Hypotheses: `project/hypothesis-validation-loop.md` and Operation: Hypothesis below.
 
-- Drone orthophotos, local maxima (sliding window), CHM, DEIMv2, detection merge
-- Classification: DINOv3, clustering, weak labels, Delta Lake (operational data outside this repo)
+Also documented (secondary / production context):
+
+- Forest area (AREA) pipeline as it runs today: LM, CHM, DEIMv2, merge — `project/pipeline-overview.md`
+- Species classification: DINOv3, clustering, weak labels, Delta Lake (operational data outside this repo)
 
 The wiki **compiles** knowledge from PDFs, web articles, and experiment results — it does not replace the production pipeline or Delta Lake.
 
 **Production code repo:** lives in a separate repository (not linked yet). See `conifervision/project/code-repo-integration.md` — integration is **TODO**; do not add code paths or cross-repo automation until that page is marked done.
+
+**Agent entry point:** always read `conifervision/index.md` (Current focus + Project links) before Query / Hypothesis / Lint.
 
 ## Repository layout
 

@@ -3,11 +3,11 @@ title: Tree detection ensemble — research program
 type: Project
 description: "North star and phased plan for a multi-layer (bbox+mask) ensemble, including dense-stand detection and data strategy."
 tags: [research, ensemble, tree-detection, segmentation, edgecrafter, semi-supervised, evaluation]
-status: draft
-updated: 2026-08-19
+status: stable
+updated: 2026-08-24
 generated:
   by: agent:conifervision-wiki
-  at: 2026-08-19T12:00:00Z
+  at: 2026-08-24T12:00:00Z
 related_methods:
   - methods/local-maxima
   - methods/chm-detection

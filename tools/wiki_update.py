@@ -225,7 +225,8 @@ def append_index_source(slug: str, blurb: str, *, today: str | None = None) -> b
     marker = "## Literature sources\n\n"
     if marker not in text:
         raise ValueError("index.md missing ## Literature sources section")
-    text = _bump_updated(text.replace(marker, marker + line, 1), today)
+    text = text.replace(marker, marker + line, 1)
+    # Root index.md is OKF-reserved: only okf_version in frontmatter — do not _bump_updated.
     _write(path, text)
     return True
 
