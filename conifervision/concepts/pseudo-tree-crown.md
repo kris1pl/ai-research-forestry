@@ -4,15 +4,16 @@ type: Concept
 description: "A synthetic side/3D view of an individual tree crown generated from a nadir UAV (or aerial) patch, used as classifier input instead of a conventional top-down crop. Introduced by Miao et al. (2024) t…"
 tags: [ptc, uav, orthophoto, species-classification, deep-learning]
 status: stable
-updated: 2026-08-21
+updated: 2026-08-31
 generated:
   by: agent:conifervision-wiki
-  at: 2026-08-21T12:00:00Z
+  at: 2026-08-31T12:00:00Z
 related_methods:
   - methods/dinov3-classification
 sources:
   - sources/paper-treeflow
   - sources/paper-a simple oriented search and clustering method for extracting individual forest trees from als point clouds-1-s2-0-s157495412400520x-main
+  - sources/paper-insid3_in_context_segmentation_dinov3
   - sources/miao-zhang-2024-ptc-uav-species
 ---
 # Pseudo tree crown (PTC)
@@ -56,3 +57,4 @@ Procedure summary: [[sources/miao-zhang-2024-ptc-uav-species#Replication pseudoc
 
 - Does training species classifiers on features extracted from TreeFlow-generated 3D point clouds outperform classifiers trained on 2D pseudo tree crowns (PTC)?
 - Can clean 3D point clusters extracted via bottom-up oriented search improve the geometric fidelity of generated pseudo tree crowns?
+- Can INSID3's training-free agglomerative clustering and self-similarity aggregation replace SAM/SAM2 for delineating pseudo-tree-crowns directly from DINOv3 features?

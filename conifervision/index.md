@@ -42,6 +42,7 @@ Production baseline (what ships today): [[project/pipeline-overview]]. Success s
 
 ## Literature sources
 
+- [[sources/paper-insid3_in_context_segmentation_dinov3]] — INSID3 — training-free in-context segmentation using SVD-debiased DINOv3 features
 - [[sources/paper-zero-shot_tree_detection_and_segmentation_from_aerial_forest_imagery-2506-03114v1]] — Chen (2025) — Evaluates SAM2 zero-shot tree crown segmentation prompted by DeepForest bounding boxes.
 - [[sources/paper-uav-based_lidar_scanning_for_individual_tree_detection_and_height_measurement_in_young_forest-5_2021]] — Rodríguez-Puerta (2022) — Evaluates ITD and height extraction on young pine plantations, finding 10 cm CHM optimal and point cloud height extraction unbiased.
 - [[sources/paper-treepseco_scaling_individual_tree_crown_segmentation_using_large_vision_models-isprs-archives-xlviii-m-7-2025-275-2025]] — TreePseCo — adapts PseCo framework using SAM and Faster R-CNN for robust individual tree crown segmentation in aerial imagery

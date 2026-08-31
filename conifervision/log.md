@@ -2,6 +2,12 @@
 
 Chronological record of ingest, query, hypothesis, and lint operations.
 
+## [2026-08-31] ingest | Cuttano (2026) — INSID3 training-free in-context segmentation with DINOv3
+
+- Source: `raw/papers/insid3_in_context_segmentation_dinov3.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/paper-insid3_in_context_segmentation_dinov3]]
+- Updated [[index]], [[methods/dinov3-classification]], [[concepts/pseudo-tree-crown]]
+
 ## [2026-08-24] hypothesis | Queue H1 → H3 → H2 approved (ADR-002)
 
 - Human selected sequence: baselines → RGB seg backend ceiling → mask-aware fusion
