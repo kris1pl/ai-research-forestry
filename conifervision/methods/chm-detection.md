@@ -1,13 +1,13 @@
 ---
 title: CHM and height-layer detection
 type: Method
-description: "CHM from the 3D model and ground model (laser / DTM). Object detection on height layers (small / large trees) — in production with DEIMv2 (deimv2-canopy)."
-tags: [chm, lidar, detection]
+description: "CHM from photogrammetric point clouds (CSF ground filter). DEIMv2 detection on height-stratified CHM bands — lower, upper, and R-class."
+tags: [chm, photogrammetry, detection]
 status: stable
-updated: 2026-08-21
+updated: 2026-09-02
 generated:
   by: agent:conifervision-wiki
-  at: 2026-08-21T12:00:00Z
+  at: 2026-09-02T12:00:00Z
 related_methods:
   - methods/deimv2-canopy
   - methods/local-maxima
@@ -31,11 +31,25 @@ sources:
 ---
 # Canopy Height Model (CHM)
 
-CHM from the 3D model and **ground model** (laser / DTM). Object detection on height layers (small / large trees) — in production with **DEIMv2** ([[deimv2-canopy]]).
+CHM from the **photogrammetric point cloud** (LAZ): CSF ground filtering → DTM → terrain-normalised canopy surface → CHM raster. Detection is **2D on CHM rasters** with **DEIMv2** ([[deimv2-canopy]]) — not learned 3D point-cloud detection.
+
+LiDAR-assisted terrain correction is **not** part of the current production repo; external reference data may be used outside this chain.
 
 ## In the pipeline
 
-Feeds [[merge-detections]] together with [[local-maxima]].
+Height-stratified CHM bands feed DEIMv2 + SAHI inference, then [[merge-detections]] together with [[local-maxima]].
+
+## Production height bands
+
+Configured via `LAYER_MODE` (`lower` | `upper` | `both`) and `preprocess_2d_raster_layer.py`:
+
+| Band | Default height range | Role |
+|------|---------------------|------|
+| Lower | 0.3–4 m | Regeneration / low canopy |
+| Upper | 4–30 m | Overstory |
+| R-class | ~0–7.77 m (dedicated pipeline) | Small trees — separate DEIMv2 scales (100 px / 50 px) → [[methods/merge-detections]] |
+
+CHM rasterisation may apply Gaussian smoothing (`smooth_sigma` in `chm_rasterizer.py`).
 
 ## Literature
 
@@ -136,7 +150,13 @@ Pseudocode: [[sources/paper-treeflow#Replication pseudocode]].
 
 ## Production parameters
 
-_(height thresholds, CHM resolution, ground model version)_
+| Parameter | Typical value | Notes |
+|-----------|---------------|-------|
+| `LOWER_MIN_M` / `LOWER_MAX_M` | 0.3 / 4 | Lower band |
+| `UPPER_MIN_M` / `UPPER_MAX_M` | 4 / 30 | Upper band |
+| R-class band | 0–7.77 m | Small-tree pipeline defaults |
+| Ground filter | CSF | Photogrammetric LAZ, not LiDAR DTM in-repo |
+| Inference | SAHI tiled | `run_cloud_preds_chm_skip_empty_multiprocess.py` |
 
 ## Related
 

@@ -4,10 +4,10 @@ type: Method
 description: "Combine detections from local-maxima and the CHM/DEIMv2 path into a final tree set per AREA."
 tags: [merge, nms, detection]
 status: stable
-updated: 2026-08-21
+updated: 2026-09-02
 generated:
   by: agent:conifervision-wiki
-  at: 2026-08-21T12:00:00Z
+  at: 2026-09-02T12:00:00Z
 related_methods:
   - methods/local-maxima
   - methods/chm-detection
@@ -24,9 +24,31 @@ sources:
 
 Combine detections from [[local-maxima]] and the CHM/DEIMv2 path into a final tree set per AREA.
 
-## Rules
+## Production merge (current)
 
-_(NMS, priorities, distances — align with production code)_
+Rule-based fusion runs **after** height-stratified DEIMv2 inference and **before** species classification. Two merge paths cover the standard CHM bands and the R-class small-tree pipeline.
+
+### Standard CHM flow (`nms_ai_lm.py`)
+
+| Input | Source |
+|-------|--------|
+| AI — lower band | DEIMv2 on CHM layer 0.3–4 m (`preds_under4`) |
+| AI — upper band | DEIMv2 on CHM layer 4–30 m (`preds_above4`) |
+| Geometry | Precomputed local maxima GeoJSON |
+
+Merge logic uses **height thresholds**, **box-in-box** rules, and **IoS-based suppression** (e.g. IoS 0.85) to reconcile AI boxes with LM candidates and remove duplicates. NMS runs within and across contributing paths.
+
+### R-class flow (`merge_rclass_ai_lm.py`)
+
+For the dedicated small-tree band (default ~0–7.77 m): DEIMv2 at **100 px** and **50 px** tile scales merged with local maxima via the same geometry- and height-aware rule set.
+
+### Ordering constraint
+
+Species attribution (DINOv3) runs **only on fused** tree hypotheses — merge output is `preds.json` per AREA.
+
+### Research (not production)
+
+Mask-aware ensemble fusion for dense stands is tracked in [[project/research-tree-detection-ensemble]] and [[experiments/exp-002-merge-fusion-v1]] — not the rule set above.
 
 ## Replication notes
 

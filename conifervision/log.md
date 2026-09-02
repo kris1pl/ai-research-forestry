@@ -2,6 +2,13 @@
 
 Chronological record of ingest, query, hypothesis, and lint operations.
 
+## [2026-09-02] sync | Operational pipeline flow from processing-chain diagram
+
+- Updated [[project/pipeline-overview]] — Mermaid overview + **full end-to-end operational diagram** + ML/R&D diagram
+- Updated [[methods/merge-detections]] — production rules (under4/above4/LM, R-class merge)
+- Updated [[methods/chm-detection]] — photogrammetry CHM, height bands, production parameters
+- Source: `raw/assets/PROCESSING_CHAIN_DIAGRAM.md` + verified items from `raw/assets/eic_comments.md`
+
 ## [2026-08-31] ingest | Cuttano (2026) — INSID3 training-free in-context segmentation with DINOv3
 
 - Source: `raw/papers/insid3_in_context_segmentation_dinov3.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
