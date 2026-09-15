@@ -2,6 +2,39 @@
 
 Chronological record of ingest, query, hypothesis, and lint operations.
 
+## [2026-09-15] lint | exp-001 rename sahi eval package to rgb_deimv2_sahi_800_001
+
+- Renamed result package for readability vs slice-400: `rgb_deimv2_sahi_800_001` (pair with `rgb_deimv2_sahi_400_001`)
+- Layer ids remain `rgb_deimv2_sahi_800` / `rgb_deimv2_sahi_400`; preds under `preds_rgb_deimv2_sahi_{800,400}/`
+
+## [2026-09-15] hypothesis | exp-001 SAHI slice 400 small-tree ablation
+
+- Same `svk_full` on golden `kaxen_197_1`: SAHI 400 vs prior 800 (no merge)
+- 400: n_pred 734, R≈0.199, R_small≈0.122, AP_small≈0.068 (vs 800: R_small≈0.063, AP_small≈0.03)
+- Tile size helps small crowns ~2× but gap remains; updated [[experiments/exp-001-per-layer-baselines]]
+
+## [2026-09-15] lint | exp-001 drop oracle SAM from H1 narrative
+
+- Archived engineer eval `sam_baseline_001` → `results/_archive/sam_oracle_raw_001` (raw SAM→box oracle; not clipped; not fair detector)
+- Removed from [[experiments/exp-001-per-layer-baselines]] Runs/Results tables; silver clipped kept for exp-003
+- H1 primary RGB remains `rgb_deimv2_sahi`
+
+## [2026-09-15] hypothesis | exp-001 RGB SAHI vs no-slice (iterate)
+
+- Same `svk_full` on golden `kaxen_197_1`: SAHI (800 / conf 0.3) vs prior no-slice
+- SAHI: n_pred 433, R≈0.134, AP_small≈0.03, AP_large≈0.48 (vs no-slice R≈0.012 / AP_large≈0.09)
+- Updated [[experiments/exp-001-per-layer-baselines]] — SAHI is primary RGB ceiling; conclusion still **iterate**
+- Small R-class gap remains the dominant H1 signal
+
+## [2026-09-15] hypothesis | exp-001 provisional dense RGB baseline (iterate)
+
+- Engineer return from `conifervision-ai-train` (`research/exp-001/`)
+- Data: golden `kaxen_197_1` (2534 CVAT boxes, dense R); silver SAM+clip under `research/annotations/silver/`
+- Run `rgb_deimv2_001`: big-trees DEIMv2 vs golden — AP_small=0, AP_large≈0.09, R≈0.012, under_seg≈0.99 (FN-dominated)
+- Run `sam_baseline_001`: oracle SAM (GT-prompted) recorded as proxy only, not fair H1 ceiling
+- Updated [[experiments/exp-001-per-layer-baselines]] Results / Conclusion → **iterate**; kill not triggered
+- Still missing for full H1: open-stand GT, LM, CHM+DEIMv2 layers
+
 ## [2026-09-02] sync | Operational pipeline flow from processing-chain diagram
 
 - Updated [[project/pipeline-overview]] — Mermaid overview + **full end-to-end operational diagram** + ML/R&D diagram

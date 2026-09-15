@@ -9,7 +9,7 @@ Compiled team knowledge for **individual tree detection and segmentation** from 
 
 1. **Research north star:** [[project/research-tree-detection-ensemble]] — multi-layer ensemble (LM, CHM/DEIMv2, RGB det/seg, fusion).
 2. **Hypothesis loop:** [[project/hypothesis-validation-loop]] — propose → Experiment page → human gate → GPU module → validate/reject.
-3. **Approved experiment queue (ADR-002):** [[experiments/exp-001-per-layer-baselines]] (**H1**, run first) → [[experiments/exp-003-rgb-seg-backend-ceiling]] (**H3**) → [[experiments/exp-002-merge-fusion-v1]] (**H2**).
+3. **Approved experiment queue (ADR-002):** [[experiments/exp-001-per-layer-baselines]] (**H1**, run first — *provisional dense RGB baseline 2026-09-15, iterate*) → [[experiments/exp-003-rgb-seg-backend-ceiling]] (**H3**) → [[experiments/exp-002-merge-fusion-v1]] (**H2**).
 4. **Literature map (dense ITD):** [[concepts/literature-map-dense-itd]] — what to test first vs background reading.
 
 Production baseline (what ships today): [[project/pipeline-overview]]. Success structure: ADR-001 in [[project/decisions]] (proposed until eval numbers are locked).
