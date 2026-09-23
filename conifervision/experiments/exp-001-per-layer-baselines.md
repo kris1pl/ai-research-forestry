@@ -4,7 +4,7 @@ type: Experiment
 description: "H1 — Baseline measurements per ensemble layer before fusion, stratified by open vs dense stands and small vs large trees. First in queue: H1 → H3 → H2."
 tags: [ensemble, baseline, evaluation, dense-stands, edgecrafter, H1]
 status: stable
-updated: 2026-09-15
+updated: 2026-09-21
 area: "kaxen_197_1 (AREA 197, R-class / pre-thinning) — dense only so far; open GT TBD"
 hypothesis: "In dense stands, dominant failure modes differ from open stands; per-layer performance ceilings (LM, CHM/DEIMv2, RGB detection, RGB instance segmentation) on an open/dense split are a prerequisite for sensible fusion — a global AP without stratification hides the errors that matter before thinning."
 metrics:
@@ -32,7 +32,7 @@ generated:
 
 **Queue:** **H1 (run first)** → [[experiments/exp-003-rgb-seg-backend-ceiling]] → [[experiments/exp-002-merge-fusion-v1]].  
 **Gate:** ADR-002 — sequence approved to run (see [[project/decisions]]).  
-**Status (2026-09-15):** provisional **dense** baselines started; conclusion **iterate**. Kill criteria not triggered.
+**Status (2026-09-22):** weak-GT FT **smoke** done (1 AREA, hold-out golden); conclusion **iterate** — positive Δ, scale to multi-AREA. Kill criteria not triggered.
 
 ## Hypothesis
 
@@ -111,7 +111,7 @@ Planned runs (no fusion):
 
 - Local maxima / LM baseline — **pending**
 - CHM + DEIMv2 baseline — **pending**
-- RGB detection baseline — **done** (no-slice + SAHI 800 primary + SAHI **400** small-tree ablation; no merge)
+- RGB detection baseline — **done** (no-slice + SAHI 800/400/**200** tile ladder; no merge)
 - RGB instance segmentation (ECSeg) — deferred to exp-003; interim SAM silver GT built for later seg work (not a fair H1 detector layer)
 
 ## Runs
@@ -122,7 +122,10 @@ All RGB runs use DEIMv2 `svk_full`. Dense only; **no merge**.
 |--------|------|------:|-----:|------|
 | `rgb_deimv2_sahi_800_001` | SAHI | 800 | 0.3 | **Primary** ceiling (overlap 0.2) |
 | `rgb_deimv2_sahi_400_001` | SAHI | 400 | 0.3 | Small-tree ablation vs 800 |
+| `rgb_deimv2_sahi_200_001` | SAHI | 200 | 0.3 | Smallest-tile ablation vs 400/800 |
 | `rgb_deimv2_001` | no-slice | — | 0.5 | Ablation (understates small recall) |
+| `rgb_deimv2_r_weak_sahi_{800,400,200}_001` | SAHI | 800/400/200 | 0.3 | **Smoke FT** — weak R GT (AREA 540 tiles), init `svk_full`; golden hold-out |
+| `rgb_deimv2_r_weak_*` | SAHI | 800/400/200 | 0.3 | **Next** — multi-AREA weak FT (same protocol) |
 
 Data prep: CVAT → golden; SAM full-image + clip-to-GT → silver (`instances_tree_sam_clipped.json` for exp-003).
 
@@ -138,6 +141,7 @@ Protocol: density=`dense`, small=<0.1% image area, IoU=0.5, n_gt=2534. No open s
 |-----|--:|--:|---:|-------:|
 | SAHI 800 (primary) | 0.78 | **0.134** | 0.229 | 433 |
 | SAHI 400 | 0.69 | **0.199** | 0.308 | 734 |
+| SAHI 200 | 0.51 | **0.349** | 0.414 | 1736 |
 | no-slice | 0.89 | **0.012** | 0.024 | 35 |
 
 ### By size (AP / recall)
@@ -146,6 +150,7 @@ Protocol: density=`dense`, small=<0.1% image area, IoU=0.5, n_gt=2534. No open s
 | ------------------ | ---------: | ---------: | --------: | --------: |
 | SAHI 800 (primary) | **0.0299** | **0.4793** |     0.063 | **0.617** |
 | SAHI 400           |  **0.068** |     0.4739 | **0.122** | **0.718** |
+| SAHI 200           | **0.1567** |     0.3673 | **0.279** | **0.825** |
 | no-slice           |        0.0 |     0.0909 |         — |         — |
 
 ### Primary run extras (SAHI 800)
@@ -157,10 +162,22 @@ Protocol: density=`dense`, small=<0.1% image area, IoU=0.5, n_gt=2534. No open s
 
 ### Error taxonomy (RGB SAHI, dense)
 
-- Dominant mode still **FN**; SAHI 800: FN=2195, FP=94; SAHI 400: FN=2031, FP=231.
-- Slice **400** ~doubles R_small (0.063 → 0.122) and lifts AP_small (0.03 → 0.068); AP_large ≈ unchanged (~0.47–0.48).
-- Cost: lower precision (0.78 → 0.69) from more FP — expected with denser tiling.
-- Implication: tile size matters for small crowns but **does not close** the R-class gap; keep 800 as default single-pass ceiling; dual-scale merge (800+400) is exp-002, not H1. Fine-tune / LM/CHM still needed.
+- Dominant mode still **FN**; 800: FN=2195 FP=94; 400: FN=2031 FP=231; **200: FN=1650 FP=852** (dup≈0.011).
+- Tile ladder R_small / AP_small: 800 → 0.063 / 0.03; 400 → 0.122 / 0.068; **200 → 0.279 / 0.157**.
+- Cost of 200: P 0.78→0.51; AP_large 0.48→0.37 — more FP and weaker large-box AP.
+- Implication: smaller tiles help small crowns but do not close the R-class gap (domain of `svk_full`). Keep **800** as default single-pass.
+
+### Smoke FT Δ vs `svk_full` (2026-09-22) — provisional
+
+Train: weak GT from AREA **540** only (tiled COCO + ad-hoc tile split); init `svk_full`; ~24 epochs. Eval: golden `kaxen_197_1` SAHI 800/400/200 conf 0.3 — **never in train**. Artifacts: `results/rgb_deimv2_r_weak_sahi_{800,400,200}_001/`.
+
+| Slice | ΔP | ΔR | ΔF1 | ΔR_small | ΔAP_small | ΔR_large |
+|------:|---:|---:|----:|---------:|----------:|---------:|
+| 800 | +0.002 | **+0.019** | **+0.027** | +0.011 | +0.001 | **+0.074** |
+| 400 | +0.003 | **+0.021** | **+0.025** | +0.020 | +0.006 | +0.025 |
+| 200 | **+0.025** | +0.007 | +0.013 | +0.011 | **+0.042** | −0.022 |
+
+Reading: **positive direction** (esp. 800/400: more recall at stable P). Absolute small-tree gap remains large (800 R_small still ~0.07). **Not** H1 success — smoke only. Next = multi-AREA weak FT, then re-ladder; merge still deferred. LM/CHM layers still pending for full H1.
 
 ### Return package (engineer) — primary SAHI run
 
@@ -181,30 +198,35 @@ metrics:
     under_segmentation_rate: 0.8662
     duplicate_rate: 0.0004
 split_notes: kaxen_197_1 dense R. SAHI 800/0.3 vs prior no-slice ablation. No open GT yet.
-conclusion: iterate
+conclusion: iterate  # smoke FT positive Δ; next: multi-AREA weak FT; merge deferred
 kill_triggered: no
 ```
 
-Artifacts: `results/rgb_deimv2_sahi_800_001/`, `results/rgb_deimv2_sahi_400_001/`, `results/rgb_deimv2_001/`, `notes.md`. Oracle SAM archived at `results/_archive/sam_oracle_raw_001/`.
+Artifacts: `results/rgb_deimv2_sahi_800_001/`, `results/rgb_deimv2_sahi_400_001/`, `results/rgb_deimv2_sahi_200_001/`, `results/rgb_deimv2_r_weak_sahi_{800,400,200}_001/`, `results/rgb_deimv2_001/`, `notes.md`. Oracle SAM archived at `results/_archive/sam_oracle_raw_001/`.
 
 ## Conclusion
 
 **iterate**
 
 - Pipeline-realistic RGB (`svk_full` + SAHI **800**) on dense R: usable on **large** (R≈0.62), weak on **small** (AP_small≈0.03, R≈0.06).
-- SAHI **400** ablation: R_small ≈2× (→0.12), AP_small→0.068; still far from usable; more FP. Tile size helps but is not enough alone.
-- No-slice understated the ceiling (R 0.012) — keep SAHI for H1 RGB reporting; dual-scale merge deferred to exp-002.
-- Success criteria **not met** yet (missing open slice + LM/CHM layers).
-- Next: LM and/or CHM+DEIMv2; open-stand golden; human gate before exp-003.
+- SAHI tile ladder 800→400→**200**: R_small 0.06→0.12→**0.28**, AP_small 0.03→0.07→**0.16**; P falls to ~0.51 at 200.
+- **Smoke weak-GT FT (2026-09-22):** 1 AREA (540) → golden hold-out ladder. Positive Δ vs `svk_full` especially at **800/400** (ΔR ≈ +0.02, P stable; 800 ΔR_large ≈ +0.07). Absolute small gap remains (800 R_small ~0.07). Direction validated; **not** H1 closed.
+- No-slice understated the ceiling (R 0.012) — keep SAHI for H1 RGB reporting.
+- **Next RGB step:** scale weak-GT FT to **multiple R AREAs** (same init/`svk_full`, golden hold-out); re-run SAHI 800/400/200 and report Δ vs this smoke + baseline. Run family: `rgb_deimv2_r_weak_*`.
+- **Deferred:** multi-scale RGB merge (800+400+200) until after multi-AREA Δ; full fusion remains [[experiments/exp-002-merge-fusion-v1]].
+- Success criteria **not met** yet (missing open slice + LM/CHM as separate layers; smoke FT only).
 - Silver SAM (clipped) ready for exp-003 — not an H1 detector ceiling.
 
 ## Handoff to coding module
 
-- Eval AREA: `kaxen_197_1` (dense R); open AREA still needed
-- Layer list: RGB DEIMv2 no-slice + SAHI 800 + SAHI 400 done; LM, CHM+DEIMv2 pending; ECSeg → exp-003
-- Return: Results + taxonomy above filled from local runs
-- Out of scope here: weights, training loops, GPU orchestration details
-- After accept/iterate: human gate before starting exp-003 (prefer more H1 layers first)
+- Eval AREA (hold-out): `kaxen_197_1` (dense R) — do **not** use in train
+- Smoke done: AREA 540 weak tiles + `rgb_deimv2_r_weak_sahi_*_001` on golden
+- Next train: more R-class AREAs via `prepare_r_weak_coco_from_areas.py` (split by AREA, not tiles); exclude golden
+- Init checkpoint: `gs://conifer-vision/big-trees/summer/models/detection/deimv2_dinov3_s_trees_svk_full/best_stg2.pth` (or continue from smoke FT weights)
+- After multi-AREA FT: same SAHI 800/400/200 conf 0.3 → Δ vs baseline + vs smoke; ladder script `research/exp-001/run_rgb_deimv2_r_weak_sahi_ladder.sh`
+- Layer list so far: RGB no-slice + SAHI 800/400/200 + smoke FT; LM / CHM+DEIMv2 as separate H1 layers still pending; ECSeg → exp-003
+- Out of scope until multi-AREA Δ: multi-scale RGB merge, exp-002 fusion design
+- After accept/iterate on scaled FT: human gate before exp-003
 
 ## Related
 

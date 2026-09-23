@@ -2,6 +2,25 @@
 
 Chronological record of ingest, query, hypothesis, and lint operations.
 
+## [2026-09-22] hypothesis | exp-001 smoke weak-GT FT positive Δ (iterate)
+
+- Smoke FT: AREA 540 weak tiles, init `svk_full`, ~24e; golden hold-out SAHI 800/400/200
+- Δ vs baseline: 800 ΔR≈+0.019 / ΔR_large≈+0.074 (P stable); 400 ΔR≈+0.021; 200 ΔAP_small≈+0.042, small ΔR
+- Direction OK; absolute small gap remains — **not** H1 success. Next: multi-AREA weak FT
+- Updated [[experiments/exp-001-per-layer-baselines]] Runs/Results/Conclusion; runs `rgb_deimv2_r_weak_sahi_*_001`
+
+## [2026-09-21] hypothesis | exp-001 next: R-class weak-GT DEIMv2 FT (iterate)
+
+- Decision: train DEIMv2 RGB R-class on weak labels from production R detections (CHM→LM→merge); init `svk_full`
+- Golden `kaxen_197_1` = hold-out eval only; re-run SAHI 800/400/200 vs baseline before multi-scale RGB merge
+- Updated [[experiments/exp-001-per-layer-baselines]] Conclusion / Handoff; planned run `rgb_deimv2_r_weak_*`
+
+## [2026-09-21] hypothesis | exp-001 SAHI slice 200 smallest-tile ablation
+
+- Same `svk_full` on golden `kaxen_197_1`: SAHI 200 vs prior 400/800 (no merge)
+- 200: n_pred 1736, R≈0.349, R_small≈0.279, AP_small≈0.157, P≈0.51 (vs 400: R_small≈0.122; 800: ≈0.063)
+- Updated [[experiments/exp-001-per-layer-baselines]] — tile ladder complete for H1 RGB; multi-scale merge → exp-002
+
 ## [2026-09-15] lint | exp-001 rename sahi eval package to rgb_deimv2_sahi_800_001
 
 - Renamed result package for readability vs slice-400: `rgb_deimv2_sahi_800_001` (pair with `rgb_deimv2_sahi_400_001`)
