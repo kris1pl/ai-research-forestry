@@ -179,6 +179,75 @@ Train: weak GT from AREA **540** only (tiled COCO + ad-hoc tile split); init `sv
 
 Reading: **positive direction** (esp. 800/400: more recall at stable P). Absolute small-tree gap remains large (800 R_small still ~0.07). **Not** H1 success — smoke only. Next = multi-AREA weak FT, then re-ladder; merge still deferred. LM/CHM layers still pending for full H1.
 
+### Statistical box comparison vs golden GT (2026-09-24) — matched pairs
+
+Hypothesis: production weak labels (esp. local-maxima) often **under-cover** crowns → FT might learn systematically **too-small** boxes.
+
+Protocol: IoU≥0.5 greedy match pred↔GT on golden `kaxen_197_1`; conf≥0.3. Script: `research/exp-001/analyze_box_size_vs_gt.py` → `results/box_size_vs_gt_r_weak.json`.
+
+Definitions:
+- `area` = area_pred / area_gt
+- `covGT` = inter / area_gt (1 ⇒ GT fully inside pred)
+- `covPr` = inter / area_pred
+- `ctr` = center distance in px
+
+#### Smoke FT (`r_weak`) vs baseline — medians (all matched)
+
+| Slice | model | n | IoU | area | covGT | covPr | ctr_px |
+|------:|-------|--:|----:|-----:|------:|------:|-------:|
+| 800 | `svk_full` | 339 | 0.717 | **1.373** | 1.000 | 0.725 | 2.93 |
+| 800 | `r_weak` | 387 | 0.727 | **1.351** | 1.000 | 0.736 | 3.05 |
+| 400 | `svk_full` | 503 | 0.722 | **1.339** | 1.000 | 0.734 | 2.88 |
+| 400 | `r_weak` | 555 | 0.731 | **1.315** | 1.000 | 0.750 | 2.81 |
+| 200 | `svk_full` | 884 | 0.711 | **1.321** | 1.000 | 0.738 | 2.91 |
+| 200 | `r_weak` | 901 | 0.717 | **1.293** | 0.997 | 0.751 | 2.97 |
+
+#### `r_weak` area_pred/gt by GT size bin
+
+| Slice | all | small | large |
+|------:|----:|------:|------:|
+| 800 | 1.351 | **1.454** | 1.298 |
+| 400 | 1.315 | **1.370** | 1.242 |
+| 200 | 1.293 | **1.329** | 1.221 |
+
+Reading:
+- **No shrink vs golden on TP matches** — median area ≈ **1.29–1.35**; `covGT` median ≈ **1.0** ⇒ matched GT almost always fully contained in pred (pred wraps GT).
+- `covPr` ≈ 0.73–0.75 ⇒ ~25% of pred area is outside GT — consistent with mild oversize, not under-size.
+- Centers well aligned (median ~3 px). IoU median ~0.71–0.73.
+- Oversize is **stronger on small GT** (area med 1.33–1.45) than large (1.22–1.30).
+- Smoke FT slightly **closer** to GT size than `svk_full` (area Δ ≈ −0.02); IoU slightly higher.
+- At 200, `frac(area<1)` ≈12% (vs ≈9% baseline) — small under-size tail only.
+- Caveat: matched TPs only; FNs still dominate (match-rate of GT: 15% @800 → 36% @200).
+
+### Visual QA vs golden GT (2026-09-24)
+
+Overlays: **lime = golden GT**, **red = smoke FT pred** (conf≥0.3), same tiles as eval.
+Paths: `results/preds_rgb_deimv2_r_weak_sahi_{200,400,800}/overlays_vs_gt/` (script `visualize_coco_overlays.py --gt-ann-file …`). Assets (in vault): `experiments/assets/exp001_r_weak_vs_gt_*`.
+
+Same tile `01_01`, SAHI ladder (800 → 400 → 200) — FN fills as slice shrinks:
+
+![[exp001_r_weak_vs_gt_800_tile0101.jpg|700]]
+
+*800 — sparse preds, many lime-only FNs*
+
+![[exp001_r_weak_vs_gt_400_tile0101.jpg|700]]
+
+*400 — more hits; red boxes still wrap GT*
+
+![[exp001_r_weak_vs_gt_200_tile0101.jpg|700]]
+
+*200 — denser coverage, more clutter/FP*
+
+Extra tile at 400 (`01_03`):
+
+![[exp001_r_weak_vs_gt_400_tile0103.jpg|700]]
+
+Conclusions from QA + metrics:
+- Dominant error remains **missed crowns (FN)** — many lime boxes without a red partner, especially at **800** (sparse preds vs dense GT).
+- Where preds exist, red boxes typically **cover the crown at least as generously as GT** (often slightly larger) — aligns with median area_pred/gt > 1; no systematic “tight LM hole” on TPs.
+- **200** fills more of the stand (higher recall) but adds clutter / FP; size bias still not “too small vs GT”.
+- Practical takeaway: next gains should come from **more recall / multi-AREA FT**, not from “inflate boxes to fix LM shrink” on this hold-out.
+
 ### Return package (engineer) — primary SAHI run
 
 ```text
@@ -202,7 +271,7 @@ conclusion: iterate  # smoke FT positive Δ; next: multi-AREA weak FT; merge def
 kill_triggered: no
 ```
 
-Artifacts: `results/rgb_deimv2_sahi_800_001/`, `results/rgb_deimv2_sahi_400_001/`, `results/rgb_deimv2_sahi_200_001/`, `results/rgb_deimv2_r_weak_sahi_{800,400,200}_001/`, `results/rgb_deimv2_001/`, `notes.md`. Oracle SAM archived at `results/_archive/sam_oracle_raw_001/`.
+Artifacts: `results/rgb_deimv2_sahi_800_001/`, `results/rgb_deimv2_sahi_400_001/`, `results/rgb_deimv2_sahi_200_001/`, `results/rgb_deimv2_r_weak_sahi_{800,400,200}_001/`, `results/preds_rgb_deimv2_r_weak_sahi_{200,400,800}/overlays_vs_gt/`, `results/box_size_vs_gt_r_weak.json`, `results/rgb_deimv2_001/`, `notes.md`. Oracle SAM archived at `results/_archive/sam_oracle_raw_001/`.
 
 ## Conclusion
 
@@ -211,6 +280,7 @@ Artifacts: `results/rgb_deimv2_sahi_800_001/`, `results/rgb_deimv2_sahi_400_001/
 - Pipeline-realistic RGB (`svk_full` + SAHI **800**) on dense R: usable on **large** (R≈0.62), weak on **small** (AP_small≈0.03, R≈0.06).
 - SAHI tile ladder 800→400→**200**: R_small 0.06→0.12→**0.28**, AP_small 0.03→0.07→**0.16**; P falls to ~0.51 at 200.
 - **Smoke weak-GT FT (2026-09-22):** 1 AREA (540) → golden hold-out ladder. Positive Δ vs `svk_full` especially at **800/400** (ΔR ≈ +0.02, P stable; 800 ΔR_large ≈ +0.07). Absolute small gap remains (800 R_small ~0.07). Direction validated; **not** H1 closed.
+- **Box stats + visual QA vs golden (2026-09-24):** matched TPs — median area_pred/gt ≈1.3, covGT≈1.0 (GT inside pred), centers ~3 px; small GT oversized more than large. Overlays confirm dominant **FN**. Do **not** prioritize anti-shrink inflation; prioritize multi-AREA FT / recall.
 - No-slice understated the ceiling (R 0.012) — keep SAHI for H1 RGB reporting.
 - **Next RGB step:** scale weak-GT FT to **multiple R AREAs** (same init/`svk_full`, golden hold-out); re-run SAHI 800/400/200 and report Δ vs this smoke + baseline. Run family: `rgb_deimv2_r_weak_*`.
 - **Deferred:** multi-scale RGB merge (800+400+200) until after multi-AREA Δ; full fusion remains [[experiments/exp-002-merge-fusion-v1]].

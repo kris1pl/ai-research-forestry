@@ -2,6 +2,14 @@
 
 Chronological record of ingest, query, hypothesis, and lint operations.
 
+## [2026-09-24] hypothesis | exp-001 statistical + visual box QA vs golden GT
+
+- Question: do weak-LM labels cause smoke FT to under-size boxes vs golden?
+- Stats (IoU≥0.5): median area_pred/gt ≈1.29–1.35; covGT≈1.0 (GT inside pred); covPr≈0.74; center≈3 px; small GT more oversized than large
+- Visual QA: `overlays_vs_gt/` — dominant FN; hits not systematically too small
+- Conclusion: shrink hypothesis **not supported** on TPs; next = multi-AREA FT / recall, not box inflation
+- Updated [[experiments/exp-001-per-layer-baselines]]; artifact `box_size_vs_gt_r_weak.json`
+
 ## [2026-09-22] hypothesis | exp-001 smoke weak-GT FT positive Δ (iterate)
 
 - Smoke FT: AREA 540 weak tiles, init `svk_full`, ~24e; golden hold-out SAHI 800/400/200
