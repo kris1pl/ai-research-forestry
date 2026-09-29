@@ -2,6 +2,35 @@
 
 Chronological record of ingest, query, hypothesis, and lint operations.
 
+## [2026-09-28] hypothesis | exp-001 Round2 plan: small expert + SAHI bank
+
+- Drop single-checkpoint AP_large protection; multilayer: large=`svk_full@800`, small=FT@**400**, slice **200** = bank ablation ± size-gate
+- Next: Round2 more AREAs (small expert) + oracle/NMS bank eval `800∪400(∪200)` before full exp-002
+- Updated [[experiments/exp-001-per-layer-baselines]], [[methods/merge-detections]], [[experiments/index]], [[index]]
+
+## [2026-09-28] hypothesis | exp-001 scope revision v1.1 (open/dense deferred)
+
+- Golden `kaxen_197_1` = small crowns + sparse overlap (AREA “dense” tag ≠ closed-canopy ITD)
+- H1 hypothesis rewritten: size-stratified R-class ceilings + weak-FT small↔large tradeoff; open/dense deferred to data program
+- Success/Kill updated; under_seg/dup de-emphasized as dense-merge signals
+- Updated [[experiments/exp-001-per-layer-baselines]], [[experiments/index]], [[index]]
+
+## [2026-09-28] hypothesis | exp-001 box + lateral-shift plots vs golden
+
+- Rebuilt matched TP stats + charts (`plot_box_vs_gt.py`): area ratio, IoU, lateral dx/dy (LM peak-offset hypothesis)
+- Lateral shift on hits is small (~1.5–1.8 px; ~3–5% GT width); Round1 slightly higher |dx|; mean slightly left
+- Area ratio closer to 1 for Round1 vs baseline; LM center-bias **not** dominant on matched TPs
+- Updated [[experiments/exp-001-per-layer-baselines]] with plots in `experiments/assets/exp001_*`
+- Artifacts: `research/exp-001/results/box_vs_gt_plots/`
+
+## [2026-09-28] hypothesis | exp-001 Round 1 multi-AREA weak FT golden ladder (`002`)
+
+- Train: AREAs 473–479 / val 480 / test 481 (`r_weak_v1_a473_481`), init `svk_full`; eval golden SAHI 800/400/200
+- vs `svk_full`: 800 ΔR≈+0.13 / ΔAP_small≈+0.14 / ΔAP_large≈−0.33; 400 similar pattern; 200 nearly flat
+- vs smoke `001`: better small/recall at 800/400; large-AP regression is the new risk
+- Conclusion: **iterate** — keep scaling AREAs, mitigate large-box drop before merge
+- Updated [[experiments/exp-001-per-layer-baselines]]; artifacts `rgb_deimv2_r_weak_sahi_*_002/`, `delta_r_weak_vs_baseline_002.json`
+
 ## [2026-09-24] hypothesis | exp-001 statistical + visual box QA vs golden GT
 
 - Question: do weak-LM labels cause smoke FT to under-size boxes vs golden?

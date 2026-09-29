@@ -4,7 +4,7 @@ type: Concept
 description: "Evaluation concept for tree detection in dense stands where crown overlap breaks bbox-centric NMS and segmentation boundaries drive errors."
 tags: [dense-stands, evaluation, detection, instance-segmentation, dense/open]
 status: stable
-updated: 2026-08-24
+updated: 2026-09-28
 generated:
   by: agent:conifervision-wiki
   at: 2026-08-24T12:00:00Z
@@ -47,8 +47,9 @@ Expected dense-specific error modes:
 
 Used to structure experiments in `[[project/research-tree-detection-ensemble]]`:
 
-- baseline measurements per layer in open vs dense splits
-- error taxonomy specialized for dense plots
+- baseline measurements per layer in open vs dense splits (**deferred** on current golden — see [[experiments/exp-001-per-layer-baselines]] H1 v1.1: `kaxen_197_1` is small-sparse R-class, not closed-canopy overlap)
+- H1 interim: size-stratified ceilings + domain FT on that hold-out
+- error taxonomy specialized for dense plots (requires measurable crown-overlap GT)
 - fusion strategy validation where segmentation boundary quality matters
 
 ## Design notes (hypotheses)
@@ -56,6 +57,8 @@ Used to structure experiments in `[[project/research-tree-detection-ensemble]]`:
 Working hypothesis:
 
 - segmentation-first fusion (or mask-aware merge rules) yields better separation in dense stands than pure bbox voting.
+
+**Caveat (2026-09-28):** Do not treat AREA class “dense” / pre-thinning alone as operational dense — confirm crown overlap / canopy closure before claiming dense-ITD results.
 
 ## Metrics we likely need (without locking numbers yet)
 
