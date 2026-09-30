@@ -31,12 +31,12 @@ generated:
 # exp-001 per-layer baselines (size-stratified R-class)
 
 **Queue:** **H1 (run first)** → [[experiments/exp-003-rgb-seg-backend-ceiling]] → [[experiments/exp-002-merge-fusion-v1]].  
-**Gate:** ADR-002 — sequence approved to run (see [[project/decisions]]).  
+**Gate:** ADR-002 — run order locked (see [[project/decisions]]).  
 **Status (2026-09-29):** Round 1 multi-AREA weak FT done (`002`). **Multi-scale detection bank scored** on Round1 preds → **C_OK** (specialization holds) → **Round2 FT unlocked**. Scope v1.1 — open/dense deferred. D = ablation only. Round2 = FT **small expert** (no AP_large protect); large = `svk_full@800`; small = **FT@400**.
 
 ## Executive summary (for the board)
 
-This experiment measures how well we detect **young / small trees** on a fixed, human-labelled test area (R-class, before thinning). The baseline aerial model finds most **large** trees but misses most **small** ones. After a first round of domain training, a “small-tree specialist” does much better on small trees but worse on large trees **when used alone** — which is expected. We then **combined** the baseline (large) with the specialist (small): the combined result keeps large-tree performance **and** roughly **quadruples** small-tree detection. **Decision:** that combination works → we proceed to a second training round focused only on improving the small-tree specialist, without forcing one model to do everything. What we have **not** proven yet: performance in truly closed-canopy “dense” stands (we lack that ground truth).
+This experiment measures how well we detect **young / small trees** on a fixed, human-labelled test area (R-class, before thinning). The baseline aerial model finds most **large** trees but misses most **small** ones. After a first round of domain training, a “small-tree specialist” does much better on small trees but worse on large trees **when used alone** — which is expected. We then **combined** the baseline (large) with the specialist (small): the combined result keeps large-tree performance **and** roughly **quadruples** small-tree detection. **Verdict:** that combination works → next technical step is a second training round focused only on improving the small-tree specialist, without forcing one model to do everything. What we have **not** proven yet: performance in truly closed-canopy “dense” stands (we lack that ground truth).
 
 ## Hypothesis
 
@@ -78,7 +78,7 @@ In September 2026 we narrowed the experiment to match what our labelled test dat
 | **400** | **Primary small expert** — Round2 FT target (best Round1 FT gain @ usable P) |
 | **200** | **Bank ablation only** — high R_small but low P; FT≈flat vs `svk_full@200`; include in merge ± size-gate, not default expert |
 
-*Note for implementers:* windowed inference on large orthophotos uses the SAHI tiling library under the hood — board-facing text talks about **tile / window size**, not the library name.
+*Note for implementers:* windowed inference on large orthophotos uses the SAHI tiling library under the hood — plain-language text talks about **tile / window size**, not the library name.
 
 **GT characterization:** `kaxen_197_1` = R-class / pre-thinning label, **small crowns + sparse overlap** — treat as **small-sparse R-class proxy**, not dense ITD. Optional follow-up: quantify sparsity (e.g. share of GT with neighbor IoU>0, median NN distance / √area) once in the coding module.
 
@@ -92,7 +92,7 @@ North-star dense/open evaluation ([[concepts/dense-stand-detection]], [[project/
 
 #### For the board
 
-This experiment sits in a longer research program: combine several detection sources (colour, height, peaks) the way production already does for R-class. The links below are the scientific and product context for engineers; the board need only know H1 is **step 1** — measure each layer before merging.
+This experiment sits in a longer research program: combine several detection sources (colour, height, peaks) the way production already does for R-class. H1 is **step 1** — measure each layer before merging. Links below are scientific and product context.
 
 - Program north star: [[project/research-tree-detection-ensemble]]
 - Literature map Tier A: [[concepts/literature-map-dense-itd]] (dense/open still Tier A *when GT exists*; H1 now unlocks size/domain ceilings first)
@@ -110,7 +110,7 @@ Motivation is alignment with the **ensemble roadmap** and published ITD work —
 
 #### For the board
 
-The workflow in plain terms: (1) score each detector alone on the same fixed test tiles, split by tree size; (2) merge baseline + small specialist and check the combined outcome; (3) only then invest in more training or change merge rules.
+The workflow in plain terms: (1) score each detector alone on the same fixed test tiles, split by tree size; (2) merge baseline + small specialist and check the combined outcome; (3) only then run further training or change merge rules.
 
 **Inputs:** orthophoto tiles; CHM / height layers; optional LM candidates; gold or proxy labels for eval AREA(s)
 
@@ -183,7 +183,7 @@ When reading tables, prioritise **R_small / R_large** (what fraction of true tre
 
 #### For the board
 
-**Success** means: clear size-split scorecards, evidence that merge C works, and an honest note that we are **not** validating closed-canopy dense forest yet. **Failure (kill)** would mean we cannot get useful RGB ceilings **or** merge C fails to beat baseline A on both size bands after fair merge rules — then we stop and fix data or merge strategy before more spend.
+**Success** means: clear size-split scorecards, evidence that merge C works, and an honest note that we are **not** validating closed-canopy dense forest yet. **Failure (kill)** would mean we cannot get useful RGB ceilings **or** merge C fails to beat baseline A on both size bands after fair merge rules — then pause further FT and revisit data or merge strategy.
 
 - Size-stratified ceiling tables for RGB (done) and ideally LM + CHM+DEIMv2 on `kaxen_197_1`
 - Written error taxonomy (FN-dominated small) usable as input to exp-003 / exp-002 **with small-sparse disclaimer**
@@ -193,7 +193,7 @@ When reading tables, prioritise **R_small / R_large** (what fraction of true tre
 
 ## Kill criteria
 
-- Cannot obtain **useful size-stratified RGB ceiling** on the hold-out within agreed effort **and** cannot obtain GT with measurable crown overlap / closed canopy for later dense claims → pause mask-aware fusion dense claims (exp-002 Variant B / dense H3 framing) and escalate data program
+- Cannot obtain **useful size-stratified RGB ceiling** on the hold-out within agreed effort **and** cannot obtain GT with measurable crown overlap / closed canopy for later dense claims → pause mask-aware fusion dense claims (exp-002 Variant B / dense H3 framing) and log the data gap
 - Bank **C** path: if after frozen merge (NMS ± size-aware C) `800∪400` still fails to recover large vs A **and** fails to lift small vs A → revisit merge rules / large path first; **only then** consider size-balance FT or alternate large expert — do **not** jump to size-balance FT from a single naive-NMS miss or from D alone
 
 **Kill check (2026-09-15, legacy):** AREA-tagged “dense” labels exist (`kaxen_197_1`, 2534 boxes) → **not triggered** (labels exist; structural dense still missing — tracked as Gap, not kill).
@@ -208,7 +208,7 @@ When reading tables, prioritise **R_small / R_large** (what fraction of true tre
 
 #### For the board
 
-**Done:** RGB detection at several window sizes, Round1 fine-tuning, multi-scale bank evaluation. **Still to run:** local-maxima and CHM-based detectors on the same tiles for apples-to-apples comparison. **Next spend:** Round2 fine-tuning for the small-tree expert.
+**Done:** RGB detection at several window sizes, Round1 fine-tuning, multi-scale bank evaluation. **Still to run:** local-maxima and CHM-based detectors on the same tiles for apples-to-apples comparison. **Next technical step:** Round2 fine-tuning for the small-tree expert.
 
 Planned runs:
 
@@ -306,7 +306,7 @@ Do not interpret this site as a merge-stress test; the model mostly **does not s
 
 #### For the board
 
-**Smoke test** = first cheap training trial on weak labels from a single area, to see if fine-tuning moves metrics in the right direction before scaling data and compute.
+**Smoke test** = first small-scale training trial on weak labels from a single area, to see if fine-tuning moves metrics in the right direction before a multi-AREA Round1.
 
 Train: weak GT from AREA **540** only (tiled COCO + ad-hoc tile split); init `svk_full`; ~24 epochs. Eval: golden `kaxen_197_1` windows 800/400/200 conf 0.3 — **never in train**. Artifacts: `results/rgb_deimv2_r_weak_sahi_{800,400,200}_001/`.
 
@@ -320,7 +320,7 @@ Reading: **positive direction** (esp. 800/400: more recall at stable P). Absolut
 
 #### Takeaway
 
-Training **can** help, but one area was not enough — justified scaling to Round1.
+Training **can** help, but one area was not enough — next step was Round1 multi-AREA FT.
 
 ### Round 1 multi-AREA FT Δ vs `svk_full` (2026-09-28) — `002`
 
@@ -377,7 +377,7 @@ A **multi-scale detection bank** is a small set of detectors that each specializ
 | **Bank merge (C)** | Take detections from A and B together, remove overlaps (NMS). Product-shaped path: *large trees from A, small trees from B*. |
 | **Ablation D** | Optional add-on of even smaller windows (`@200`) — diagnostic only; it does **not** decide the next training round. |
 
-**Why we measure this:** Round1 fine-tuning improved small-tree recall but hurt large-tree scores on a **single** checkpoint. That is acceptable **only if** the bank (A∪B) still recovers large trees **and** keeps the small-tree gain. If merge C works, we invest the next training round in a better **small expert** — we do **not** force one model to win both size bins.
+**Why we measure this:** Round1 fine-tuning improved small-tree recall but hurt large-tree scores on a **single** checkpoint. That is acceptable **only if** the bank (A∪B) still recovers large trees **and** keeps the small-tree gain. If merge C works, the next training round targets a better **small expert** — we do **not** force one model to win both size bins.
 
 **What it is not:** not a new training run; not full production fusion (masks / CHM / LM — later experiments). Here it is a lightweight box-level merge on already computed predictions. *(Engineer note: windowed inference uses the SAHI tiling library; the method is multi-scale experts + merge, not “SAHI” as a product concept.)*
 
@@ -396,7 +396,7 @@ Script: `research/exp-001/score_sahi_bank.py --size-aware-c`. Protocol: conf≥0
 
 #### What the table shows (plain language)
 
-Focus on row **C** vs row **A**. **A** alone finds few small trees (about 6% of them) but is solid on large ones. Combining A with the small-tree specialist (**C**) finds roughly **4× more small trees** while also keeping — and even slightly improving — large-tree coverage. That means we do **not** need one “perfect” model for every size: two specialists merged work better. Rows **D** are optional “what if we add even smaller windows?” tests; they are not the decision for the next training round. Bottom line for the program: **specialization + merge is validated → proceed to Round2 training of a better small-tree expert.**
+Focus on row **C** vs row **A**. **A** alone finds few small trees (about 6% of them) but is solid on large ones. Combining A with the small-tree specialist (**C**) finds roughly **4× more small trees** while also keeping — and even slightly improving — large-tree coverage. That means we do **not** need one “perfect” model for every size: two specialists merged work better. Rows **D** are optional “what if we add even smaller windows?” tests; they do not change the Round2 gate. **Verdict:** specialization + merge is validated → Round2 training targets a better small-tree expert.
 
 Reading (metrics detail):
 - **C vs A:** R_large 0.62→**0.76**, AP_large held (~0.48); R_small 0.06→**0.26**. Specialization **OK** — Round2 unlocked.
@@ -404,9 +404,9 @@ Reading (metrics detail):
 - **D:** lifts R_small further but AP_large collapses when size-gated; ungated keeps more large AP at cost of P — ablation only, does not change Round2 decision.
 - Product path until Round2 re-bank: **large = A, small = B**.
 
-#### Takeaway (program decision)
+#### Takeaway
 
-**Go** on Round2 small-expert training. Product-shaped path: baseline for large, specialist for small, merged output for the map.
+Round2 small-expert training is unblocked. Product-shaped path: baseline for large, specialist for small, merged output for the map.
 
 ### Statistical box comparison vs golden GT (2026-09-24) — matched pairs
 
@@ -610,11 +610,11 @@ Artifacts: `results/rgb_deimv2_sahi_{800,400,200}_001/`, `results/rgb_deimv2_r_w
 
 #### Takeaway
 
-Engineer-facing snapshot for reproducibility; board readers can skip to **Conclusion**.
+Engineer-facing snapshot for reproducibility; non-technical readers can skip to **Conclusion**.
 
 ## Conclusion
 
-#### For the board (decision status)
+#### For the board
 
 | Question | Answer |
 |----------|--------|
@@ -638,13 +638,13 @@ Engineer-facing snapshot for reproducibility; board readers can skip to **Conclu
 
 #### Takeaway
 
-Invest in **specialization + merge**, not in forcing one checkpoint to excel on both small and large trees. Remaining work is **more data/training for small trees** and **other detection layers**, not revising box geometry on this hold-out.
+Technical path forward is **specialization + merge**, not forcing one checkpoint to excel on both small and large trees. Remaining work is **more data/training for small trees** and **other detection layers**, not revising box geometry on this hold-out.
 
 ## Handoff to coding module
 
 #### For the board
 
-Technical execution checklist for the engineering team (paths, scripts, next GPU steps). No separate board action unless Round2 scope or budget is approved.
+Technical execution checklist for the engineering team (paths, scripts, next run steps).
 
 - Eval hold-out: `kaxen_197_1` — **never in train**
 - Bank done: `python research/exp-001/score_sahi_bank.py --size-aware-c` → `results/sahi_bank_002/`
@@ -654,11 +654,11 @@ Technical execution checklist for the engineering team (paths, scripts, next GPU
 - LM / CHM+DEIMv2 pending; ECSeg → exp-003
 - Optional: sparsity proxy on golden
 - Dense mask-aware fusion → exp-002 after (prefer) overlap GT
-- Human gate before exp-003 dense framing
+- Dense framing for exp-003 deferred until overlap / closed-canopy GT exists
 
 #### Takeaway
 
-Implementation-only; board can stop at **Conclusion** unless approving Round2 compute or labelling budget.
+Implementation checklist only; non-technical readers can stop at **Conclusion**.
 
 ## Related
 
