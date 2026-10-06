@@ -4,7 +4,7 @@ type: Experiment
 description: "H1 v1.1 — Size-stratified R-class ceilings; multi-scale detection bank on Round1 preds (gate=C); Round2 FT after C OK; D=+200 ablation. Open/dense deferred. Queue: H1 → H3 → H2."
 tags: [ensemble, baseline, evaluation, R-class, small-trees, multi-scale-bank, H1]
 status: stable
-updated: 2026-09-29
+updated: 2026-10-06
 area: "kaxen_197_1 (AREA 197, R-class / pre-thinning) — small crowns, sparse overlap (not closed-canopy dense); open/dense GT TBD"
 hypothesis: "On R-class hold-out with small, sparsely overlapping crowns (kaxen_197_1), the dominant RGB failure mode is FN on small trees; size-stratified per-layer ceilings and a multi-scale detection bank (large from baseline@800, small from FT@400, optional@200) are prerequisites for sensible fusion — before crown-overlap GT can validate dense-stand claims."
 metrics:
@@ -32,11 +32,11 @@ generated:
 
 **Queue:** **H1 (run first)** → [[experiments/exp-003-rgb-seg-backend-ceiling]] → [[experiments/exp-002-merge-fusion-v1]].  
 **Gate:** ADR-002 — run order locked (see [[project/decisions]]).  
-**Status (2026-09-29):** Round 1 multi-AREA weak FT done (`002`). **Multi-scale detection bank scored** on Round1 preds → **C_OK** (specialization holds) → **Round2 FT unlocked**. Scope v1.1 — open/dense deferred. D = ablation only. Round2 = FT **small expert** (no AP_large protect); large = `svk_full@800`; small = **FT@400**.
+**Status (2026-10-06):** **exp-001a (RGB + bank C) closed** — ship `results/sahi_bank_002/` (C: R_small 0.257, R_large 0.761 @ conf 0.3). Round 2 tag **`003`** / verify runs = **Round 1** preds (no v2 golden gain). Weak test **481** closed (`compare_481_*`). **exp-001b (LM/CHM on golden)** deferred. **Next program step:** [[experiments/exp-003-rgb-seg-backend-ceiling]]. Product: large = `svk_full@800`; small = **FT@400 Round 1**.
 
 ## Executive summary (for the board)
 
-This experiment measures how well we detect **young / small trees** on a fixed, human-labelled test area (R-class, before thinning). The baseline aerial model finds most **large** trees but misses most **small** ones. After a first round of domain training, a “small-tree specialist” does much better on small trees but worse on large trees **when used alone** — which is expected. We then **combined** the baseline (large) with the specialist (small): the combined result keeps large-tree performance **and** roughly **quadruples** small-tree detection. **Verdict:** that combination works → next technical step is a second training round focused only on improving the small-tree specialist, without forcing one model to do everything. What we have **not** proven yet: performance in truly closed-canopy “dense” stands (we lack that ground truth).
+This experiment measures how well we detect **young / small trees** on a fixed, human-labelled test area (R-class, before thinning). The baseline aerial model finds most **large** trees but misses most **small** ones. After domain training (Round 1), a “small-tree specialist” does much better on small trees but worse on large trees **when used alone** — which is expected. **Combining** baseline (large) + specialist (small) keeps large-tree performance **and** roughly **quadruples** small-tree detection (**bank C**, 2026-09-29). A **second training round** (more AREAs, Oct 2026) improved weak **val** but **did not** improve golden hold-out or weak test **481** vs Round 1 in scored artifacts. Merge **C** from Round 1 is the **shipping reference**. What we have **not** proven yet: performance in truly closed-canopy “dense” stands (we lack that ground truth).
 
 ## Hypothesis
 
@@ -208,7 +208,7 @@ When reading tables, prioritise **R_small / R_large** (what fraction of true tre
 
 #### For the board
 
-**Done:** RGB detection at several window sizes, Round1 fine-tuning, multi-scale bank evaluation. **Still to run:** local-maxima and CHM-based detectors on the same tiles for apples-to-apples comparison. **Next technical step:** Round2 fine-tuning for the small-tree expert.
+**Done:** RGB at several window sizes, Round1 + Round2 fine-tuning, multi-scale bank on Round1 preds (C_OK). **Still to run:** re-infer golden preds from Round2 checkpoint + re-score bank; weak test **481** A/B; LM + CHM on same tiles.
 
 Planned runs:
 
@@ -222,7 +222,7 @@ Planned runs:
 
 #### For the board
 
-Inventory of model runs (baseline, training rounds, merge test). Window column = crop size in pixels. **Done** rows support the bank decision; **next** = Round2 training.
+Inventory of model runs (baseline, training rounds, merge test). Window column = crop size in pixels. **Done** rows include Round2 golden ladder `003`; **next** = bank re-score with Round2 B + LM/CHM layers.
 
 All RGB runs use DEIMv2 `svk_full` init where FT applies. Eval = `kaxen_197_1` (small-sparse R-class). Legacy “dense” = AREA tag only. Single-pass tables below; **bank merge done** (`sahi_bank_002`, C_OK).
 
@@ -234,8 +234,8 @@ All RGB runs use DEIMv2 `svk_full` init where FT applies. Eval = `kaxen_197_1` (
 | `rgb_deimv2_001` | full-frame | — | 0.5 | Ablation (understates small recall) |
 | `rgb_deimv2_r_weak_sahi_{800,400,200}_001` | tiled | 800/400/200 | 0.3 | **Smoke FT** — weak R GT (AREA 540 tiles), init `svk_full`; golden hold-out |
 | `rgb_deimv2_r_weak_sahi_{800,400,200}_002` | tiled | 800/400/200 | 0.3 | **Round 1 multi-AREA FT** — train 473–479 / val 480 / test 481 (`r_weak_v1_a473_481`); **small-expert candidate @400** |
-| `sahi_bank_002` | merge | A/B/C/C_sa/D | — | **Done** — C_OK → Round2 unlocked; D ablation |
-| `rgb_deimv2_r_weak_*` | tiled | 800/400/200 | 0.3 | **Round 2 (next)** — more AREAs; small expert (**no** AP_large protect); re-score bank after |
+| `sahi_bank_002` | merge | A/B/C/C_sa/D | — | **Done** — C_OK on Round1 B; re-score with Round2 B **pending** |
+| `rgb_deimv2_r_weak_sahi_{800,400,200}_003` | tiled | 800/400/200 | 0.3 | **Round 2 multi-AREA FT** — train **473–479 + 482–492** / val **480** / test **481** (`r_weak_v2_a473_492`); init `svk_full`; FT → `deimv2_dinov3_s_trees_r_weak_ft_v2/` |
 
 Data prep: CVAT → golden; SAM full-image + clip-to-GT → silver (`instances_tree_sam_clipped.json` for exp-003).
 
@@ -385,14 +385,14 @@ A **multi-scale detection bank** is a small set of detectors that each specializ
 
 Script: `research/exp-001/score_sahi_bank.py --size-aware-c`. Protocol: conf≥0.3, NMS IoU=0.5, size_gate=0.1%. Preds: A=`svk_full@800`, B=FT `002`@400, D uses `svk_full@200`. Artifacts: `results/sahi_bank_002/`.
 
-| Bank | P | R | F1 | R_small | R_large | AP_small | AP_large | n_pred |
-|------|--:|--:|---:|--------:|--------:|---------:|---------:|-------:|
-| A `svk@800` | 0.783 | 0.134 | 0.229 | 0.063 | 0.617 | 0.030 | 0.479 | 433 |
-| B `FT@400` | 0.716 | 0.310 | 0.433 | 0.252 | 0.706 | 0.157 | 0.217 | 1098 |
-| **C A∪B NMS** | 0.680 | 0.322 | 0.437 | **0.257** | **0.761** | 0.136 | **0.484** | 1200 |
-| C_sa (size-aware) | 0.677 | 0.320 | 0.435 | 0.255 | 0.761 | 0.135 | 0.494 | 1200 |
-| D (+200 gated) | 0.620 | 0.382 | 0.472 | 0.323 | 0.776 | 0.246 | 0.194 | 1560 |
-| D_ungated | 0.492 | 0.408 | 0.446 | 0.342 | 0.856 | 0.191 | 0.378 | 2103 |
+| Bank              |     P |     R |    F1 |   R_small |   R_large | AP_small |  AP_large | n_pred |
+| ----------------- | ----: | ----: | ----: | --------: | --------: | -------: | --------: | -----: |
+| A `svk@800`       | 0.783 | 0.134 | 0.229 |     0.063 |     0.617 |    0.030 |     0.479 |    433 |
+| B `FT@400`        | 0.716 | 0.310 | 0.433 |     0.252 |     0.706 |    0.157 |     0.217 |   1098 |
+| **C A∪B NMS**     | 0.680 | 0.322 | 0.437 | **0.257** | **0.761** |    0.136 | **0.484** |   1200 |
+| C_sa (size-aware) | 0.677 | 0.320 | 0.435 |     0.255 |     0.761 |    0.135 |     0.494 |   1200 |
+| D (+200 gated)    | 0.620 | 0.382 | 0.472 |     0.323 |     0.776 |    0.246 |     0.194 |   1560 |
+| D_ungated         | 0.492 | 0.408 | 0.446 |     0.342 |     0.856 |    0.191 |     0.378 |   2103 |
 
 #### What the table shows (plain language)
 
@@ -407,6 +407,101 @@ Reading (metrics detail):
 #### Takeaway
 
 Round2 small-expert training is unblocked. Product-shaped path: baseline for large, specialist for small, merged output for the map.
+
+### Round 2 multi-AREA FT — golden SAHI (`003`, 2026-10-02)
+
+#### For the board
+
+**Round 2** added more R-class training areas (482–492) on top of Round 1, still starting from the baseline aerial model — goal: a **better small-tree specialist** without trying to fix large-tree scores in one checkpoint. We re-measured on the **same fixed human-labelled hold-out** as before (`kaxen_197_1`, never used in training).
+
+**Headline:** on that hold-out, Round 2 **matches Round 1 exactly** on every window size (800 / 400 / 200). The **merge test from September (bank C)** is therefore **unchanged** for now. Next engineering checks: confirm predictions were generated from the new Round 2 model file, compare on weak test area **481**, then re-run the bank with the new specialist.
+
+Train: weak GT AREAs **473–479 + 482–492** (train) / **480** (val) / **481** (test); dataset `r_weak_v2_a473_492`; init **`svk_full`** (not Round1 weights); checkpoint `deimv2_dinov3_s_trees_r_weak_ft_v2/`. Eval: golden `kaxen_197_1`, windows 800/400/200, conf 0.3. Artifacts: `results/rgb_deimv2_r_weak_sahi_{800,400,200}_003/`, `delta_r_weak_vs_baseline_003.json` (empty rows — use tables below).
+
+Absolute (small-sparse R-class / dense all):
+
+| Slice | Run | P | R | F1 | R_small | R_large | AP_small | AP_large | n_pred |
+|------:|-----|--:|--:|---:|--------:|--------:|---------:|---------:|-------:|
+| 800 | `svk_full` | 0.783 | 0.134 | 0.229 | 0.063 | 0.617 | 0.030 | 0.479 | 433 |
+| 800 | Round1 `002` | 0.716 | 0.260 | 0.382 | 0.213 | 0.580 | 0.166 | 0.153 | 921 |
+| 800 | **Round2 `003`** | **0.716** | **0.260** | **0.382** | **0.213** | **0.580** | **0.166** | **0.153** | **921** |
+| 400 | `svk_full` | 0.685 | 0.199 | 0.308 | 0.122 | 0.718 | 0.068 | 0.474 | 734 |
+| 400 | Round1 `002` | 0.716 | 0.310 | 0.433 | 0.252 | 0.706 | 0.157 | 0.217 | 1098 |
+| 400 | **Round2 `003`** | **0.716** | **0.310** | **0.433** | **0.252** | **0.706** | **0.157** | **0.217** | **1098** |
+| 200 | `svk_full` | 0.509 | 0.349 | 0.414 | 0.279 | 0.825 | 0.157 | 0.367 | 1736 |
+| 200 | Round1 `002` | 0.558 | 0.336 | 0.419 | 0.266 | 0.810 | 0.188 | 0.211 | 1526 |
+| 200 | **Round2 `003`** | **0.558** | **0.336** | **0.419** | **0.266** | **0.810** | **0.188** | **0.211** | **1526** |
+
+Δ vs `svk_full` (Round2 `003` — **same numbers as Round1 `002`**):
+
+| Slice | ΔP | ΔR | ΔF1 | ΔR_small | ΔAP_small | ΔAP_large |
+|------:|---:|---:|----:|---------:|----------:|----------:|
+| 800 | −0.067 | **+0.126** | **+0.153** | **+0.150** | **+0.136** | **−0.326** |
+| 400 | **+0.031** | **+0.112** | **+0.125** | **+0.130** | **+0.089** | **−0.257** |
+| 200 | **+0.049** | −0.013 | +0.005 | −0.013 | +0.031 | −0.157 |
+
+Δ vs Round1 `002`: **0** on all reported metrics (identical preds counts and splits).
+
+Reading:
+- **Hold-out:** Round2 did **not** beat Round1 on `kaxen_197_1` — primary small path (@400) still **R_small≈0.25**, **AP_small≈0.16** vs baseline **0.06 / 0.03**.
+- **Specialization pattern unchanged:** large-tree AP still low on FT alone; product path remains **bank C** (baseline@800 + FT@400).
+- **Engineer note:** eval dirs `*_003` point to the shared preds path `results/preds_rgb_deimv2_r_weak_sahi_*` (not tag-suffixed). If ladder was run with `SKIP_INFER=1` or Round1 `MODEL_PATH`, metrics would duplicate `002` — **re-run** with `MODEL_PATH=…/deimv2_dinov3_s_trees_r_weak_ft_v2/best_stg2.pth` and fresh infer before claiming “no gain from Round2 training.”
+- **Still open:** weak test **481** tile-COCO compare (`run_compare_r_weak_vs_svk.sh`); `score_sahi_bank.py` with Round2 B@400; LM/CHM layers.
+
+#### Takeaway
+
+More training data did **not** move the golden hold-out in this eval package — **bank C from Round 1 remains the validated product path.** Treat Round2 as **inconclusive on golden** until preds are verified from the v2 checkpoint and the bank is re-scored; check weak test **481** for signal that golden is simply saturated.
+
+### Weak COCO monitoring during FT (val **480** / test **481**) — `eval_stats` + `log.txt`
+
+#### For the board
+
+While the model trains, we automatically score it on **weak-labelled forest tiles** (not the human golden hold-out). This is the dashboard used to see whether more training areas help **before** running expensive golden + SAHI eval. Metrics here are **standard COCO on fixed-size training tiles** (~800 px), **not** the multi-window “detection bank” protocol on `kaxen_197_1`.
+
+**Artifacts (copied into research for the wiki):**
+
+| Run | Folder under `research/exp-001/results/` |
+|-----|------------------------------------------|
+| Round 1 FT | `deimv2_dinov3_s_trees_r_weak_ft/` (`log.txt`, `eval_stats.csv`) |
+| Round 2 FT | `deimv2_dinov3_s_trees_r_weak_ft_v2/` (`log.txt`, `eval_stats.csv`) |
+
+**What each file is:**
+
+| File | Meaning |
+|------|---------|
+| `log.txt` | Per-epoch **`test_coco_eval_bbox`** on **val AREA 480** during training (COCO AP/AR, incl. size bins). |
+| `eval_stats.csv` | One-off COCO row when loading a checkpoint into `det_solver.val()` (here tagged `best_stg1.pth` in the export). |
+
+#### In-training val curve (AREA **480**, from `log.txt`)
+
+Round 1 used **two stages** (24 + 36 epochs logged); Round 2 = **36 epochs** from `svk_full` on the expanded train set.
+
+| Run | Best **AP50** on val 480 | @ epoch | AP_small | AP_large |
+|-----|-------------------------:|--------:|---------:|---------:|
+| Round 1 — stage 2 | **0.085** | 2 | 0.002 | 0.052 |
+| Round 1 — stage 1 (ref.) | 0.075 | 18 | 0.000 | 0.162 |
+| **Round 2** | **0.112** | 5 | 0.002 | 0.076 |
+| Round 2 — last epoch | 0.107 | 35 | 0.001 | 0.072 |
+
+**Reading:** Round 2 **does** lift weak-val **AP50** (~+3 pp vs Round 1 stage-2 peak, ~+31% relative). **AP_small on val stays near zero** (~0.002) in both runs — the weak COCO size bin is not where we see small-tree gains; those show up later on **golden SAHI** (Round 1) and in **bank C**, not in this training dashboard.
+
+#### Snapshot `eval_stats.csv` (checkpoint eval)
+
+| Timestamp | Run | AP50 | AP_small | AP_large | AR_small |
+|-----------|-----|-----:|---------:|---------:|---------:|
+| 2026-09-25 | Round 1 | 0.094 | 0.011 | 0.006 | 0.013 |
+| 2026-10-01 | Round 2 | **0.099** | 0.011 | 0.004 | 0.011 |
+
+Round 2 ≈ **+0.005 AP50** vs Round 1 on this snapshot; **AP_small flat**; **AP_large** slightly lower — consistent with **small-expert** skew (acceptable if large trees stay on `svk_full@800` in the bank).
+
+#### Takeaway
+
+**Two eval layers must not be confused:**
+
+1. **Weak COCO (480/481, tile eval)** — Round 2 **improved** overall detection score on the weak validation distribution.
+2. **Golden SAHI (`kaxen_197_1`)** — Round 2 **did not beat** Round 1 in the current artifact set (and may still reflect stale preds).
+
+So Round 2 training **did work on its own val tiles**, but **generalization to the golden hold-out is not automatic** — that is why we keep golden + bank as the product gate, and why the next step is fresh infer from `ft_v2` + weak **test 481** compare, not more AREA-only FT without a golden check.
 
 ### Statistical box comparison vs golden GT (2026-09-24) — matched pairs
 
@@ -601,16 +696,52 @@ metrics:
     detection_ap_large: 0.4793
     under_segmentation_rate: 0.8662
     duplicate_rate: 0.0004
-split_notes: kaxen_197_1 small-sparse R-class. Multi-scale detection bank on Round1 (gate=C; D ablation). Open/dense deferred (H1 v1.1).
-conclusion: iterate  # bank C before Round2; no AP_large protect in FT; LM/CHM after bank
+split_notes: kaxen_197_1 small-sparse R-class. Bank C (sahi_bank_002) = product reference. 481 tile-COCO closed; no v2 switch. exp-001b LM/CHM deferred.
+conclusion: accept_partial  # exp-001a RGB+bank closed; exp-001b deferred; proceed exp-003
 kill_triggered: no
 ```
 
-Artifacts: `results/rgb_deimv2_sahi_{800,400,200}_001/`, `results/rgb_deimv2_r_weak_sahi_{800,400,200}_{001,002}/`, `results/delta_r_weak_vs_baseline_002.json`, `results/box_size_vs_gt_r_weak.json`, `results/rgb_deimv2_001/`, `notes.md`. Oracle SAM archived at `results/_archive/sam_oracle_raw_001/`. Bank: `results/sahi_bank_002/`.
+Artifacts: … `compare_481_{r1_vs_svk,r2_vs_svk,r2_v2_ckpt}/`, `deimv2_dinov3_s_trees_r_weak_ft{,_v2}/`, `notes.md`.
 
 #### Takeaway
 
 Engineer-facing snapshot for reproducibility; non-technical readers can skip to **Conclusion**.
+
+## Closure / verify (2026-10-06)
+
+#### For the board (PL)
+
+| Pytanie | Odpowiedź |
+|---------|-----------|
+| Czy tag `003` był na starych predykcjach? | **Tak** — metryki `002`=`003` (identyczne pliki); wspólny `preds_coco` bez sufiksu run (`preds_rgb_deimv2_r_weak_sahi_*`). |
+| Czy bank po „Round 2” się zmienił? | **Nie** — `sahi_bank_003` = `sahi_bank_002` (B z Round 1 preds). |
+| Workbench `003_verify` (2026-10-06) | **Nie v2** — użyto R1 `best_stg1`; metryki = `002`. Ladder naprawiony (brak cichego fallbacku). |
+| Test 481 (tile-COCO) | **Done:** `compare_481_*` — R1≫svk; v2 runs = same JSON as R1 ckpt path on VM; **no v2 product switch**. |
+| Artefakty w repo | Sync `results/`: preds, bank 002/003, **`compare_481_{r1_vs_svk,r2_vs_svk,r2_v2_ckpt}/`**, logi FT v1/v2. |
+| Checkpoint produktowy (small@400) | **Round 1** w banku **C** — 481 zamknięte bez przełączenia na v2. |
+| Zakres zamknięty vs otwarty | **exp-001a** RGB+bank **closed**; **exp-001b** LM/CHM golden **deferred**. |
+
+#### For the board (EN)
+
+| Question | Answer |
+|----------|--------|
+| Was tag `003` scored on stale preds? | **Yes** — metrics identical to `002`; shared `preds_rgb_deimv2_r_weak_sahi_*` paths (no run suffix on preds). |
+| Did the multi-scale bank change for Round 2? | **No** — `sahi_bank_003` matches `sahi_bank_002` (B still Round 1 infer). |
+| Workbench `003_verify` (Oct 6) | **Not v2** — R1 stg1; metrics = `002`. No further v2 golden runs planned. |
+| Weak test 481 | **Closed** — R1≫svk; `r2_v2_ckpt` duplicate; no v2 gain documented. |
+| Artifacts in repo | `compare_481_{r1_vs_svk,r2_vs_svk,r2_v2_ckpt}/`, `sahi_bank_002`. |
+| Product checkpoint (small@400) | **Round 1** in bank **C** — no evidence to switch to v2. |
+| Closed vs deferred | **exp-001a** RGB+bank **closed**; **exp-001b** LM/CHM on golden **deferred**. |
+
+**Eval folder naming (golden):**
+
+| Pattern | Meaning |
+|---------|---------|
+| `rgb_deimv2_sahi_{800,400,200}_001` | Baseline **`svk_full`** (not weak FT) |
+| `rgb_deimv2_r_weak_sahi_*_001` | Weak FT **smoke** (AREA 540) |
+| `rgb_deimv2_r_weak_sahi_*_002` | Round 1 FT golden ladder |
+| `rgb_deimv2_r_weak_sahi_*_003` | Round 2 FT **eval tag** — currently same preds as `002` |
+| `preds_rgb_deimv2_r_weak_sahi_*` | Shared infer output (use **`PRED_TAG`** on ladder to avoid overwrite) |
 
 ## Conclusion
 
@@ -621,20 +752,17 @@ Engineer-facing snapshot for reproducibility; non-technical readers can skip to 
 | Is small-tree detection the main gap? | **Yes** — most errors are missed small trees. |
 | Did domain training help? | **Yes** on recall for small trees; **no** as a single model for all sizes. |
 | Can we combine baseline + specialist? | **Yes** — merge **C** validated (2026-09-29). |
-| What happens next? | **Round2** training to improve the small-tree expert; then re-test merge. |
-| What is explicitly not proven? | Closed-canopy **dense** stands; full fusion with height/peaks (pending LM/CHM runs). |
+| What happens next? | **exp-003** (seg backend); **exp-001b** LM/CHM when AREA 197 pipeline exists; production bank C integration. |
+| What is explicitly not proven? | Closed-canopy **dense** stands; full per-layer table (LM/CHM on golden). |
 
-**Status:** **iterate** (continue experiment — not stop, not “done”)
-
-**iterate** (H1 v1.1 — bank C_OK → Round2 next)
+**Status:** **exp-001a closed** (RGB + bank C); **exp-001b deferred** (LM/CHM)
 
 - **Scope:** open/dense **deferred**; golden = **small-sparse R-class**.
-- **Bank (2026-09-29):** C recovers large and lifts small vs A → specialization OK; **do not** size-balance FT. D ablation only.
-- **Slice roles:** **400** = primary small path; **200** = optional bank ablation; **800** = large from `svk_full`.
-- Pipeline-realistic single-pass `svk@800` still weak on small; FT@400 + bank is the product-shaped path.
-- **Next:** (1) Round2 FT — more R AREAs, small@400, no AP_large protect; re-score bank with new B; (2) LM + CHM+DEIMv2 on same tiles.
-- **Deferred:** crown-overlap GT; full mask-aware exp-002.
-- Success **partial** (bank C done; LM/CHM + Round2 pending; FN still dominant).
+- **Bank (2026-09-29):** C recovers large and lifts small vs A → specialization OK; reference `sahi_bank_002`.
+- **Round2 tag `003`:** same preds as `002`; **481** audit closed — no v2 product switch.
+- **Slice roles:** **400** = small expert (R1); **800** = large (`svk_full`); **200** = bank ablation only.
+- **Next:** **exp-003** → exp-002; **exp-001b** LM/CHM backfill.
+- **Deferred:** open/dense GT; mask-aware fusion without overlap labels.
 
 #### Takeaway
 
@@ -648,10 +776,11 @@ Technical execution checklist for the engineering team (paths, scripts, next run
 
 - Eval hold-out: `kaxen_197_1` — **never in train**
 - Bank done: `python research/exp-001/score_sahi_bank.py --size-aware-c` → `results/sahi_bank_002/`
-- **Round2 train (next):** more R AREAs; goal = better **small expert @400** — **no** size-balance / AP_large protect
-- Ladder after Round2: `MODEL_PATH=… RUN_TAG=003 bash research/exp-001/run_rgb_deimv2_r_weak_sahi_ladder.sh`
-- Re-run bank with new B after Round2; product path: **large = A, small = B**
-- LM / CHM+DEIMv2 pending; ECSeg → exp-003
+- **exp-001a:** closed — bank `sahi_bank_002/`; weak FT Round 1; golden + **481** documented in `research/exp-001/notes.md` Closure
+- Tags `003` / `003_verify`: audit only (duplicate of `002`) — **not** Round 2 product evidence
+- **exp-001b:** LM / CHM+DEIMv2 on golden — deferred (AREA 197)
+- **Next experiment:** exp-003 (RGB seg backend); then exp-002 (fusion)
+- Product path: **large = A (`svk@800`), small = B (R1 FT@400)**, merge **C**
 - Optional: sparsity proxy on golden
 - Dense mask-aware fusion → exp-002 after (prefer) overlap GT
 - Dense framing for exp-003 deferred until overlap / closed-canopy GT exists
