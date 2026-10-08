@@ -9,7 +9,7 @@ Compiled team knowledge for **individual tree detection and segmentation** from 
 
 1. **Research north star:** [[project/research-tree-detection-ensemble]] — multi-layer ensemble (LM, CHM/DEIMv2, RGB det/seg, fusion).
 2. **Hypothesis loop:** [[project/hypothesis-validation-loop]] — propose → Experiment page → human gate → GPU module → validate/reject.
-3. **Approved experiment queue (ADR-002):** [[experiments/exp-001-per-layer-baselines]] (**H1**, run first — *v1.1; Round2 small-expert + SAHI bank; iterate*) → [[experiments/exp-003-rgb-seg-backend-ceiling]] (**H3**) → [[experiments/exp-002-merge-fusion-v1]] (**H2**).
+3. **Approved experiment queue (ADR-002):** [[experiments/exp-001-per-layer-baselines]] (**H1**, run first — *v1.1; Round2 small-expert + SAHI bank; iterate*) → [[experiments/exp-002-rgb-seg-backend-ceiling]] (**H3**) → [[experiments/exp-003-merge-fusion-v1]] (**H2**).
 4. **Literature map (dense ITD):** [[concepts/literature-map-dense-itd]] — what to test first vs background reading.
 
 Production baseline (what ships today): [[project/pipeline-overview]]. Success structure: ADR-001 in [[project/decisions]] (proposed until eval numbers are locked).
@@ -37,8 +37,8 @@ Production baseline (what ships today): [[project/pipeline-overview]]. Success s
 
 - [[experiments/index]] — hypothesis units (queue H1 → H3 → H2)
 - [[experiments/exp-001-per-layer-baselines]] — **H1** per-layer ceilings, size-stratified R-class (open/dense deferred)
-- [[experiments/exp-003-rgb-seg-backend-ceiling]] — **H3** RGB seg backend A/B on dense
-- [[experiments/exp-002-merge-fusion-v1]] — **H2** bbox NMS vs mask-aware fusion
+- [[experiments/exp-002-rgb-seg-backend-ceiling]] — **H3** RGB seg backend A/B on dense
+- [[experiments/exp-003-merge-fusion-v1]] — **H2** bbox NMS vs mask-aware fusion
 
 ## Literature sources
 

@@ -220,5 +220,5 @@ When you switch to execution/agent mode, the first actionable tasks are:
    - `methods/edgecrafter-ecseg.md` (draft)
    - `concepts/dense-stand-detection.md` (draft)
 4. Add `ADR-001` to `project/decisions.md`: ensemble v1 success definition — **proposed** (see [[project/decisions]]).
-5. Experiment skeletons + hypothesis loop: [[project/hypothesis-validation-loop]], [[experiments/exp-001-per-layer-baselines]], [[experiments/exp-002-merge-fusion-v1]].
+5. Experiment skeletons + hypothesis loop: [[project/hypothesis-validation-loop]], [[experiments/exp-001-per-layer-baselines]], [[experiments/exp-003-merge-fusion-v1]].
 

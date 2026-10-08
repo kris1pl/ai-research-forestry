@@ -93,4 +93,4 @@ Define per experiment; align with [[project/decisions]] ADR-001 when accepted.
 - [[project/pipeline-overview]]
 - [[concepts/dense-stand-detection]]
 - [[experiments/exp-001-per-layer-baselines]]
-- [[experiments/exp-002-merge-fusion-v1]]
+- [[experiments/exp-003-merge-fusion-v1]]

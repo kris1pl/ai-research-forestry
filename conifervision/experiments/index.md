@@ -2,8 +2,8 @@
 
 Progressive disclosure listing for research runs and evaluation results.
 
-**Approved queue (ADR-002):** H1 → H3 → H2
+**Approved queue (ADR-002):** **exp-001 → exp-002 → exp-003** (hypothesis ids **H1 → H3 → H2** — see [[project/decisions]] ADR-002)
 
-* [exp-001 per-layer baselines (size-stratified R-class)](/experiments/exp-001-per-layer-baselines.md) — **H1 (run first)** — v1.1; Round2 = small expert + SAHI bank (800∪400, 200 ablation); **iterate**
-* [exp-003 RGB instance-seg backend ceiling](/experiments/exp-003-rgb-seg-backend-ceiling.md) — **H3** — ECSeg vs StarDist / SAM2-prompted (dense claims need overlap GT)
-* [exp-002 merge / fusion v1 (segmentation-aware)](/experiments/exp-002-merge-fusion-v1.md) — **H2 (run last)** — bbox NMS vs mask-aware merge
+* [exp-001 per-layer baselines (size-stratified R-class)](/experiments/exp-001-per-layer-baselines.md) — **H1** — v1.1; **exp-001a closed**; bank C
+* [exp-002 RGB instance-seg backend ceiling](/experiments/exp-002-rgb-seg-backend-ceiling.md) — **H3** — mask backend + prompt policy (H3 v1.1); **next**
+* [exp-003 merge / fusion v1 (segmentation-aware)](/experiments/exp-003-merge-fusion-v1.md) — **H2** — bbox NMS vs mask-aware merge; **run last**

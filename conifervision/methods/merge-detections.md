@@ -48,7 +48,7 @@ Species attribution (DINOv3) runs **only on fused** tree hypotheses — merge ou
 
 ### Research (not production)
 
-Mask-aware ensemble fusion for dense stands is tracked in [[project/research-tree-detection-ensemble]] and [[experiments/exp-002-merge-fusion-v1]] — not the rule set above.
+Mask-aware ensemble fusion for dense stands is tracked in [[project/research-tree-detection-ensemble]] and [[experiments/exp-003-merge-fusion-v1]] — not the rule set above.
 
 **exp-001 precursor (2026-09-28):** RGB SAHI **bank** on golden — large from `svk_full@800`, small from weak-FT@**400**, slice **200** as optional size-gated bank member — scored as oracle/NMS before full H2. Rationale: FT AP_large drop is specialization under multilayer, not a single-checkpoint must-fix. See [[experiments/exp-001-per-layer-baselines]].
 

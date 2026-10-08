@@ -64,8 +64,8 @@ This page does **not** replace individual [[sources/index]] summaries. Refresh a
 ## Implications for the hypothesis loop
 
 1. Run [[experiments/exp-001-per-layer-baselines]] with **size-stratified ceilings** first (H1 v1.1 — current golden is small-sparse R-class). **Open vs dense** remains Tier A once crown-overlap GT exists (Sparks / Young lesson); do not block H1 on it.
-2. Optionally compare RGB instance backends ([[experiments/exp-003-rgb-seg-backend-ceiling]]) before locking ECSeg for fusion — dense boundary claims need overlap GT; plumbing on current tiles is proxy-only.
-3. Prefer **mask-aware fusion** ([[experiments/exp-002-merge-fusion-v1]]) once RGB seg has a chosen ceiling (dense Variant B gated on overlap GT).
+2. Optionally compare RGB instance backends ([[experiments/exp-002-rgb-seg-backend-ceiling]]) before locking ECSeg for fusion — dense boundary claims need overlap GT; plumbing on current tiles is proxy-only.
+3. Prefer **mask-aware fusion** ([[experiments/exp-003-merge-fusion-v1]]) once RGB seg has a chosen ceiling (dense Variant B gated on overlap GT).
 4. Treat pure 3D end-to-end models as **parallel track** unless AREA workflow already commits to dense UAV LiDAR as primary input.
 5. Species and synthetic data stay **downstream** of instance detection quality.
 

@@ -107,8 +107,8 @@ Chronological record of ingest, query, hypothesis, and lint operations.
 ## [2026-08-24] hypothesis | Queue H1 → H3 → H2 approved (ADR-002)
 
 - Human selected sequence: baselines → RGB seg backend ceiling → mask-aware fusion
-- Updated [[experiments/exp-001-per-layer-baselines]] (H1), [[experiments/exp-002-merge-fusion-v1]] (H2)
-- Added [[experiments/exp-003-rgb-seg-backend-ceiling]] (H3)
+- Updated [[experiments/exp-001-per-layer-baselines]] (H1), [[experiments/exp-003-merge-fusion-v1]] (H2)
+- Added [[experiments/exp-002-rgb-seg-backend-ceiling]] (H3)
 - ADR-002 accepted in [[project/decisions]]; Current focus + [[experiments/index]] updated
 
 ## [2026-08-24] lint | Visibility lift — north star on index + literature map
@@ -194,7 +194,7 @@ Chronological record of ingest, query, hypothesis, and lint operations.
 ## [2026-08-21] hypothesis | Hypothesis validation loop + Experiment template
 
 - Added [[project/hypothesis-validation-loop]] (scientist ↔ engineer handoff)
-- Strengthened `.templates/experiment.md`; refreshed [[experiments/exp-001-per-layer-baselines]], [[experiments/exp-002-merge-fusion-v1]]
+- Strengthened `.templates/experiment.md`; refreshed [[experiments/exp-001-per-layer-baselines]], [[experiments/exp-003-merge-fusion-v1]]
 - ADR-001 proposed in [[project/decisions]] (ensemble v1 success structure)
 - AGENTS.md Operation: Hypothesis; Cursor rule `.cursor/rules/hypothesis-from-wiki.mdc`
 - Linked from [[project/index]], [[project/research-tree-detection-ensemble]], README quick reference

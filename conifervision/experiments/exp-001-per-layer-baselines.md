@@ -30,9 +30,9 @@ generated:
 
 # exp-001 per-layer baselines (size-stratified R-class)
 
-**Queue:** **H1 (run first)** → [[experiments/exp-003-rgb-seg-backend-ceiling]] → [[experiments/exp-002-merge-fusion-v1]].  
+**Queue:** **H1 (run first)** → [[experiments/exp-002-rgb-seg-backend-ceiling]] → [[experiments/exp-003-merge-fusion-v1]].  
 **Gate:** ADR-002 — run order locked (see [[project/decisions]]).  
-**Status (2026-10-06):** **exp-001a (RGB + bank C) closed** — ship `results/sahi_bank_002/` (C: R_small 0.257, R_large 0.761 @ conf 0.3). Round 2 tag **`003`** / verify runs = **Round 1** preds (no v2 golden gain). Weak test **481** closed (`compare_481_*`). **exp-001b (LM/CHM on golden)** deferred. **Next program step:** [[experiments/exp-003-rgb-seg-backend-ceiling]]. Product: large = `svk_full@800`; small = **FT@400 Round 1**.
+**Status (2026-10-06):** **exp-001a (RGB + bank C) closed** — ship `results/sahi_bank_002/` (C: R_small 0.257, R_large 0.761 @ conf 0.3). Round 2 tag **`003`** / verify runs = **Round 1** preds (no v2 golden gain). Weak test **481** closed (`compare_481_*`). **exp-001b (LM/CHM on golden)** deferred. **Next program step:** [[experiments/exp-002-rgb-seg-backend-ceiling]]. Product: large = `svk_full@800`; small = **FT@400 Round 1**.
 
 ## Executive summary (for the board)
 
@@ -64,7 +64,7 @@ In September 2026 we narrowed the experiment to match what our labelled test dat
 |---|---|
 | Size bins (small/large) as **primary** stratification | Open vs dense split as success gate |
 | RGB ceiling + weak-GT FT as **small expert** (Round2: more AREAs; **not** size-balance to protect AP_large) | Interpreting results as dense-ITD literature alignment |
-| **Multi-scale detection bank** + merge ablation (800 baseline ∪ 400 FT ∪ optional 200) | Full mask-aware exp-002 / dense H3 claims |
+| **Multi-scale detection bank** + merge ablation (800 baseline ∪ 400 FT ∪ optional 200) | Full mask-aware exp-003 / dense H3 claims |
 | LM / CHM+DEIMv2 on same tiles (layer comparison) | under_seg / duplicate as *dense merge* signals |
 | Empiric FN/FP taxonomy; box geometry vs GT | Claiming one FT checkpoint must win both size bins |
 
@@ -129,7 +129,7 @@ The workflow in plain terms: (1) score each detector alone on the same fixed tes
    c. D = C ∪ (prefer svk_full@200, optional FT@200) ± size-gate — **ablation only**.
 4. Verdict on C vs A (R_large recover + R_small lift); do not equate D failure with specialization fail.
 5. If C OK → Round2 FT (more AREAs, small@400). If C fail after frozen merge + size-aware C → revisit merge / large path (not size-balance FT on blind).
-6. Emit ceilings + bank verdict → feed exp-003 / exp-002 (mask-aware later).
+6. Emit ceilings + bank verdict → feed exp-002 / exp-003 (mask-aware later).
 ```
 
 ### Prerequisites
@@ -142,7 +142,7 @@ The workflow in plain terms: (1) score each detector alone on the same fixed tes
 - LM preds and CHM+DEIMv2 R-band preds on same tiles — not run yet
 - Multi-scale **detection bank** scored 2026-09-29 (`sahi_bank_002`) — **C_OK**; Round2 unlocked; D ablation only
 - Size bins currently by **relative bbox area** (small < 0.1% of image), not CHM height layers
-- ECSeg / multi-backend comparison deferred to exp-003
+- ECSeg / multi-backend comparison deferred to exp-002
 - `under_segmentation_rate` on bbox eval may conflate misses with crown merging — de-emphasize until mask/overlap GT
 - Production R-class tiles are **100/50 px** — research windows 800/400/200 are a proxy scale, not a 1:1 map
 
@@ -186,14 +186,14 @@ When reading tables, prioritise **R_small / R_large** (what fraction of true tre
 **Success** means: clear size-split scorecards, evidence that merge C works, and an honest note that we are **not** validating closed-canopy dense forest yet. **Failure (kill)** would mean we cannot get useful RGB ceilings **or** merge C fails to beat baseline A on both size bands after fair merge rules — then pause further FT and revisit data or merge strategy.
 
 - Size-stratified ceiling tables for RGB (done) and ideally LM + CHM+DEIMv2 on `kaxen_197_1`
-- Written error taxonomy (FN-dominated small) usable as input to exp-003 / exp-002 **with small-sparse disclaimer**
+- Written error taxonomy (FN-dominated small) usable as input to exp-002 / exp-003 **with small-sparse disclaimer**
 - Bank **C** scored vs A/B: multilayer recovers large and lifts small without FT AP_large protection
 - Bank **D** scored as ablation (does not block Round2 if C OK)
 - Explicit verdict that this GT does **not** validate dense-stand fusion — data gap logged for overlap / closed-canopy golden
 
 ## Kill criteria
 
-- Cannot obtain **useful size-stratified RGB ceiling** on the hold-out within agreed effort **and** cannot obtain GT with measurable crown overlap / closed canopy for later dense claims → pause mask-aware fusion dense claims (exp-002 Variant B / dense H3 framing) and log the data gap
+- Cannot obtain **useful size-stratified RGB ceiling** on the hold-out within agreed effort **and** cannot obtain GT with measurable crown overlap / closed canopy for later dense claims → pause mask-aware fusion dense claims (exp-003 Variant B / dense H3 framing) and log the data gap
 - Bank **C** path: if after frozen merge (NMS ± size-aware C) `800∪400` still fails to recover large vs A **and** fails to lift small vs A → revisit merge rules / large path first; **only then** consider size-balance FT or alternate large expert — do **not** jump to size-balance FT from a single naive-NMS miss or from D alone
 
 **Kill check (2026-09-15, legacy):** AREA-tagged “dense” labels exist (`kaxen_197_1`, 2534 boxes) → **not triggered** (labels exist; structural dense still missing — tracked as Gap, not kill).
@@ -216,7 +216,7 @@ Planned runs:
 - CHM + DEIMv2 baseline — **pending**
 - RGB detection baseline — **done** (full-frame + tiled windows 800/400/**200**)
 - Multi-scale detection bank on Round1 preds (A/B/C gate; D ablation) — **done** (`sahi_bank_002`, C_OK); Round2 FT **next**
-- RGB instance segmentation (ECSeg) — deferred to exp-003; interim SAM silver GT built for later seg work (not a fair H1 detector layer)
+- RGB instance segmentation (ECSeg) — deferred to exp-002; interim SAM silver GT built for later seg work (not a fair H1 detector layer)
 
 ## Runs
 
@@ -237,7 +237,7 @@ All RGB runs use DEIMv2 `svk_full` init where FT applies. Eval = `kaxen_197_1` (
 | `sahi_bank_002` | merge | A/B/C/C_sa/D | — | **Done** — C_OK on Round1 B; re-score with Round2 B **pending** |
 | `rgb_deimv2_r_weak_sahi_{800,400,200}_003` | tiled | 800/400/200 | 0.3 | **Round 2 multi-AREA FT** — train **473–479 + 482–492** / val **480** / test **481** (`r_weak_v2_a473_492`); init `svk_full`; FT → `deimv2_dinov3_s_trees_r_weak_ft_v2/` |
 
-Data prep: CVAT → golden; SAM full-image + clip-to-GT → silver (`instances_tree_sam_clipped.json` for exp-003).
+Data prep: CVAT → golden; SAM full-image + clip-to-GT → silver (`instances_tree_sam_clipped.json` for exp-002).
 
 > Oracle SAM (raw masks → boxes, GT-prompted) — **archived**, not an H1 detector ceiling. Silver under `research/annotations/silver/`.
 
@@ -697,7 +697,7 @@ metrics:
     under_segmentation_rate: 0.8662
     duplicate_rate: 0.0004
 split_notes: kaxen_197_1 small-sparse R-class. Bank C (sahi_bank_002) = product reference. 481 tile-COCO closed; no v2 switch. exp-001b LM/CHM deferred.
-conclusion: accept_partial  # exp-001a RGB+bank closed; exp-001b deferred; proceed exp-003
+conclusion: accept_partial  # exp-001a RGB+bank closed; exp-001b deferred; proceed exp-002
 kill_triggered: no
 ```
 
@@ -752,7 +752,7 @@ Engineer-facing snapshot for reproducibility; non-technical readers can skip to 
 | Is small-tree detection the main gap? | **Yes** — most errors are missed small trees. |
 | Did domain training help? | **Yes** on recall for small trees; **no** as a single model for all sizes. |
 | Can we combine baseline + specialist? | **Yes** — merge **C** validated (2026-09-29). |
-| What happens next? | **exp-003** (seg backend); **exp-001b** LM/CHM when AREA 197 pipeline exists; production bank C integration. |
+| What happens next? | **exp-002** (seg backend); **exp-001b** LM/CHM when AREA 197 pipeline exists; production bank C integration. |
 | What is explicitly not proven? | Closed-canopy **dense** stands; full per-layer table (LM/CHM on golden). |
 
 **Status:** **exp-001a closed** (RGB + bank C); **exp-001b deferred** (LM/CHM)
@@ -779,11 +779,11 @@ Technical execution checklist for the engineering team (paths, scripts, next run
 - **exp-001a:** closed — bank `sahi_bank_002/`; weak FT Round 1; golden + **481** documented in `research/exp-001/notes.md` Closure
 - Tags `003` / `003_verify`: audit only (duplicate of `002`) — **not** Round 2 product evidence
 - **exp-001b:** LM / CHM+DEIMv2 on golden — deferred (AREA 197)
-- **Next experiment:** exp-003 (RGB seg backend); then exp-002 (fusion)
+- **Next experiment:** exp-002 (RGB seg backend); then exp-003 (fusion)
 - Product path: **large = A (`svk@800`), small = B (R1 FT@400)**, merge **C**
 - Optional: sparsity proxy on golden
-- Dense mask-aware fusion → exp-002 after (prefer) overlap GT
-- Dense framing for exp-003 deferred until overlap / closed-canopy GT exists
+- Dense mask-aware fusion → exp-003 after (prefer) overlap GT
+- Dense framing for exp-002 deferred until overlap / closed-canopy GT exists
 
 #### Takeaway
 
@@ -797,5 +797,5 @@ Implementation checklist only; non-technical readers can stop at **Conclusion**.
 - [[concepts/literature-map-dense-itd]]
 - [[methods/merge-detections]]
 - [[methods/edgecrafter-ecseg]]
-- [[experiments/exp-003-rgb-seg-backend-ceiling]]
-- [[experiments/exp-002-merge-fusion-v1]]
+- [[experiments/exp-002-rgb-seg-backend-ceiling]]
+- [[experiments/exp-003-merge-fusion-v1]]

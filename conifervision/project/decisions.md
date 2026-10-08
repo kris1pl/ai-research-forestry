@@ -62,8 +62,8 @@ ADR format: **Context → Decision → Consequences**. The agent adds an entry a
 
 1. **Order (approved to run):**
    - **H1** — [[experiments/exp-001-per-layer-baselines]] first
-   - **H3** — [[experiments/exp-003-rgb-seg-backend-ceiling]] next (optional narrow parallel only if H1 tiles/labels already ready)
-   - **H2** — [[experiments/exp-002-merge-fusion-v1]] last, using mask backend from H3 when available
+   - **H3** — [[experiments/exp-002-rgb-seg-backend-ceiling]] next (optional narrow parallel only if H1 tiles/labels already ready)
+   - **H2** — [[experiments/exp-003-merge-fusion-v1]] last, using mask backend from H3 when available
 2. Human gate after each experiment Conclusion before starting the next GPU tranche.
 3. If H1 kill criteria fire (no dense labels) → pause H3/H2 and escalate data program (Phase 3).
 4. If H3 kill criteria fire (all masks unusable) → do not treat H2 Variant B as the primary path.
@@ -74,3 +74,5 @@ ADR format: **Context → Decision → Consequences**. The agent adds an entry a
 - Coding/GPU module should prioritize handoff from exp-001.
 - Index / Current focus should list this queue.
 - Future reordering requires a superseding ADR.
+
+**Renumbering note (2026-10-08):** **`exp-NNN` now matches execution order** `001 → 002 → 003`. Hypothesis ids **H1 / H2 / H3** are unchanged (H3 = seg = **exp-002**; H2 = merge = **exp-003**). Do not confuse with exp-001 run tags such as `sahi_bank_003` or ladder tag `003` — those are inference labels, not experiment ids.
