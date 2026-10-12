@@ -3,15 +3,20 @@ title: exp-002 RGB instance-seg backend ceiling (H3 v1.1)
 type: Experiment
 description: "H3 v1.1 — Compare RGB instance-segmentation backends on the same small-sparse R-class hold-out as exp-001a (kaxen_197_1), with silver clipped mask reference, before locking mask source + prompt policy for exp-003 (merge)."
 tags: [ensemble, instance-segmentation, small-sparse-r-class, edgecrafter, stardist, sam2, H3]
-status: stable
-updated: 2026-10-09
+status: closed
+hypothesis_status: closed_preliminary
+updated: 2026-10-12
 area: "Golden kaxen_197_1 (5 tiles, AREA 197) — same as exp-001a; closed-canopy dense-ITD deferred"
 hypothesis: "On small-sparse R-class hold-out with silver clipped mask reference, differences among runnable seg backends and among H1 box-prompt sources (bank C vs svk-only vs FT-only) are large enough to recommend a single mask_backend + prompt_policy for exp-003; if all are similarly weak, do not bet on mask-aware fusion."
 metrics:
-  mask_iou_matched: "0.851 (C1 smoke, matched golden only)"
-  mask_iou_matched_small: "0.839 (C1 smoke)"
-  mask_iou_matched_large: "0.881 (C1 smoke)"
-  match_rate_ref_e2e: "0.355 (C1 smoke — bank C coverage vs golden)"
+  mask_iou_matched_c1: "0.851 (C1 bank C, matched only)"
+  mask_iou_matched_c2: "0.870 (C2 svk@800, matched only)"
+  mask_iou_matched_c3: "0.855 (C3 FT@400, matched only)"
+  match_rate_ref_c1: "0.355 (C1 e2e)"
+  match_rate_ref_c2: "0.143 (C2 e2e)"
+  match_rate_ref_c3: "0.340 (C3 e2e)"
+  recommended_prompt_policy: C1_bank_c
+  recommended_mask_backend: sam_prompted_vit_h
   under_segmentation_rate: TBD
   over_segmentation_rate: TBD
   detection_ap_regression: TBD
@@ -29,8 +34,8 @@ generated:
   at: 2026-08-24T12:00:00Z
 revised:
   by: human+agent
-  at: 2026-10-06T12:00:00Z
-  reason: "H3 v1.1 — align with exp-001a closure (small-sparse, bank C, silver GT); dense split deferred"
+  at: 2026-10-12T12:00:00Z
+  reason: "H3 closed — preliminary segmentation quality assessment; detection gap on small trees; C1/C2/C3 complete"
 renumbered:
   at: 2026-10-08
   note: "exp-NNN now matches run order 001→002→003; hypothesis id remains H3 (was exp-003 before renumber)"
@@ -40,11 +45,21 @@ renumbered:
 
 **Queue:** [[experiments/exp-001-per-layer-baselines]] (H1) → **exp-002 / H3 (this page)** → [[experiments/exp-003-merge-fusion-v1]] (H2).  
 **Gate:** ADR-002 — sequence approved (see [[project/decisions]]). **Start after exp-001a closure** (bbox bank + golden protocol frozen). exp-001b (LM/CHM) may run in parallel; not required for H3 RGB mask bake-off.  
-**Status (2026-10-09):** **H3 v1.1 protocol locked**; **eval harness + sanity OK**; **C1 end-to-end scored** on Workbench (`smoke_c1_bank_c_001`, SAM **vit_h**, bank C, 5 tiles). **Next:** prompt ablations **C2/C3**; optional A/B backends; formal recommendation after comparisons.
+**Status (2026-10-12):** **H3 closed (preliminary).** C1/C2/C3 scored on Workbench (SAM **vit_h**, 5 golden tiles). See **Closure** and [[#Results]]. Optional ECSeg/StarDist **deferred**. Not a claim of production-ready **end-to-end** crown deployment at high business confidence.
 
 ## Executive summary (for the board)
 
-exp-001 answered **“where are the trees?”** (bounding boxes) on a fixed young-forest test area: we combine a **large-tree** model and a **small-tree** specialist (**bank C**). exp-002 answers the next product question: **“what is the shape of each crown?”** (instance masks). We compare **how** we generate those masks from the same aerial photos — mainly **AI that follows our detection boxes** (SAM-family), and optionally other published crown-segmentation tools — and score them against a **silver** reference (AI masks clipped to human boxes, not a second human paint job on every pixel). We also test whether mask quality depends on **which boxes we use as hints** (full product merge vs large-only vs small-only). **Outcome for leadership:** either a clear **recommended mask pipeline** before we invest in advanced merge (exp-003), or a **stop signal** if masks are too weak — then we improve labels/data instead of building fusion on shaky crowns. We are **not** claiming closed dense-canopy forest behaviour on this test set (same limitation as exp-001).
+**Closure — preliminary crown segmentation quality (exp-002 / H3)**
+
+On the same young-forest hold-out as exp-001 (**five tiles**, **2534** reference trees), we ran a **controlled check of crown outline quality**: AI segmentation (SAM) guided by **detection boxes**, scored against a **silver** reference (machine crowns clipped to human boxes — not a second full manual paint of every pixel). We compared three box sources: **product merge (bank C)**, **large-tree model only**, and **small-tree specialist only**.
+
+**Where a tree was detected and segmented**, outline agreement with the reference is **strong** (about **85%** overlap on average; severe shape failures are **rare**). **Which box source we use changes mainly how many trees get a box**, not a dramatic change in crown shape quality. The **merged product path** reaches the **best coverage** on this test set; **large-model-only** detection leaves most **small** trees without a box.
+
+This closes H3 as a **preliminary technical assessment of segmentation** under **today’s detection**. It does **not** mean we can roll out crown segmentation **at much higher product confidence** across the estate: a **large share of reference trees still have no matching detection** (especially **small** trees). Until **small-tree detection** improves, end-to-end certainty will stay limited — crowns are only evaluated when a box exists.
+
+**Working technical choice from this experiment:** generate crowns with **SAM (vit_h)** on boxes from **bank C (C1)**. Further product direction on detection will be informed after **literature and data ingest** into the wiki — not specified on this page.
+
+Same scope limit as exp-001: **not** closed-canopy dense forest.
 
 ## Hypothesis
 
@@ -224,19 +239,28 @@ The run table is the **audit trail** for which tool and which box hints were use
 
 #### For the board
 
-First scored runs (2026-10-09): we can **draw crowns** from product **bank C** boxes with SAM and score them against **silver** on the same five tiles as exp-001 (**2534** golden trees). Two numbers matter:
+Scored **2026-10-09 – 2026-10-12** on Workbench (`ai-train-deimv2`, env `deimv2_311`): same **SAM vit_h** + `center+box` + clip; only **which detection boxes** change (C1 product merge vs C2 large-only vs C3 small-expert). **2534** golden trees, **5** tiles, mask reference = **silver clipped**.
 
-1. **End-to-end coverage** — did bank C leave a box we could segment? (**~35%** of golden trees had a matching prediction.)
-2. **Outline quality where both exist** — when a pred box matched golden, mask vs silver was **strong** (**~85%** average overlap).
+**Read two metrics separately:**
 
-Low coverage is mostly the **detection** story from exp-001 (missed small trees), not “SAM failed on every crown.” **Kill criteria not triggered** on mask quality for matched cases; we still need **C2/C3** before locking prompt policy for exp-003.
+| Metric | Question | C1 wins on… |
+|--------|----------|-------------|
+| **match_rate_ref** | End-to-end: did we find the tree *and* segment it? | **Coverage** — best overall and on **small** bin vs C2/C3 |
+| **mask_iou_mean** | Given a match, is the **crown shape** like silver? | **~0.85–0.87** for all three — **no meaningful winner**; C2 slightly higher but on **far fewer** trees |
 
-Protocol: golden-indexed eval; bbox match IoU **0.5**; size small = bbox area **&lt; 0.1%** of image (same as H1). Primary ref = silver clipped. Code: `research/exp-002/eval_seg_masks.py`.
+**C2 alone is not viable** for product crowns (only **14%** golden matched; **7%** small). **Bank C (C1)** adds merge value vs @800 and edges **@400-only (C3)** on coverage. **Kill criteria not triggered.**
+
+Protocol: golden-indexed; bbox match IoU **0.5**; small = area **&lt; 0.1%** of image. Code: `research/exp-002/eval_seg_masks.py`; scripts `run_c1.sh`, `run_c2.sh`, `run_c3.sh`. Artifacts: `research/exp-002/results/<run_id>/`.
 
 ```mermaid
 flowchart LR
-  BC[bank C boxes] --> SAM[SAM vit_h center+box]
-  SAM --> CLIP[clip to GT box]
+  subgraph prompts [Box prompts from exp-001]
+    C1[bank C merge]
+    C2[svk_full SAHI 800]
+    C3[weak FT SAHI 400]
+  end
+  prompts --> SAM[SAM vit_h center+box]
+  SAM --> CLIP[clip to prompt box]
   CLIP --> EVAL[eval vs silver clipped]
   GOLD[golden bbox GT] --> EVAL
 ```
@@ -245,75 +269,85 @@ flowchart LR
 
 | Run ID | mask_iou_mean | match_rate_ref | Notes |
 |--------|--------------:|---------------:|-------|
-| `sanity_silver_self_001` | **1.0** | **1.0** | Silver pred = silver ref — proves metric code |
+| `sanity_silver_self_001` | **1.0** | **1.0** | Metric self-check |
 
-### C1 — SAM prompted + bank C (product path)
+### Prompt policy comparison (headline)
 
-| Field | Value |
-|-------|-------|
-| **run_id** | `smoke_c1_bank_c_001` |
-| **When** | 2026-10-09 (Workbench `ai-train-deimv2`, env `deimv2_311`) |
-| **Backend** | SAM (`segment_anything`), **vit_h**, prompt `center+box` |
-| **Box prompts** | `exp-001/results/sahi_bank_002/preds/bank_C.json` (**n_pred = 1200** on 5 tiles) |
-| **code git_sha** | `e8fc202` |
-| **Artifacts** | `research/exp-002/results/smoke_c1_bank_c_001/` (COCO, overlays, `eval/results.json`) |
+| Run | Box source | n_bbox segmented | match_rate_ref | mask_iou_mean | ref FN | low_mask_iou_rate |
+|-----|------------|----------------:|---------------:|--------------:|-------:|------------------:|
+| **C1** `c1_bank_c_001` | bank C (A∪B NMS) | **1200** | **0.355** | 0.851 | 1634 | 0.0022 |
+| **C2** `c2_svk_800_001` | svk_full @800 only | 433 | 0.143 | **0.870** | 2171 | 0.0 |
+| **C3** `c3_ft_400_001` | Round1 FT @400 only | 1098 | 0.340 | 0.855 | 1672 | 0.0023 |
 
-#### Mask metrics vs silver (golden-indexed)
-
-| Split | n_ref (golden) | match_rate_ref | mask_iou_mean | mask_iou_median | low_mask_iou_rate (&lt;0.5) |
-|-------|---------------:|---------------:|--------------:|----------------:|----------------------------:|
-| **all** | 2534 | **0.355** | **0.851** | 0.878 | **0.002** |
-| **small** | 2208 | **0.293** | **0.839** | 0.868 | 0.003 |
-| **large** | 326 | **0.776** | **0.881** | 0.912 | 0.0 |
-
-| Diagnostic | Count | Interpretation |
-|------------|------:|----------------|
-| Golden with **no** matching pred (FN) | **1634** | Mostly **missing bank C box** — same small-tree gap as H1 |
-| Pred **no** golden match (FP) | **300** | Extra detections segmented anyway |
-| Pred matched (used for mask IoU) | **900** | **75%** of preds align to a golden tree |
+*`smoke_c1_bank_c_001` (2026-10-09) matches C1 full-run metrics — reproducibility check.*
 
 ```mermaid
 xychart-beta
-    title "Mask IoU mean (matched instances only)"
-    x-axis ["all", "small", "large"]
-    y-axis "IoU" 0.75 --> 0.95
-    bar [0.851, 0.839, 0.881]
+    title "End-to-end golden match rate (all trees)"
+    x-axis ["C1 bank C", "C2 svk 800", "C3 FT 400"]
+    y-axis "match_rate_ref" 0 --> 0.4
+    bar [0.355, 0.143, 0.340]
 ```
 
 ```mermaid
 xychart-beta
-    title "Golden match rate (end-to-end: bank C → mask eval)"
-    x-axis ["all", "small", "large"]
-    y-axis "rate" 0 --> 1
-    bar [0.355, 0.293, 0.776]
+    title "Mask IoU mean (matched golden only)"
+    x-axis ["C1 bank C", "C2 svk 800", "C3 FT 400"]
+    y-axis "mask_iou_mean" 0.82 --> 0.90
+    bar [0.851, 0.870, 0.855]
 ```
 
-#### Clip step (SAM raw → product box)
+```mermaid
+xychart-beta
+    title "Small-tree golden match rate"
+    x-axis ["C1", "C2", "C3"]
+    y-axis "match_rate_ref small" 0 --> 0.35
+    bar [0.293, 0.070, 0.287]
+```
 
-On **1200** bank-C instances: clip to GT box **reduced spill outside box** (mean fraction outside box **0.147 → 0.017**); mask–box IoU vs GT **0.679 → 0.776** mean. Instances with mask–box IoU &lt; 0.5: **123 → 45** after clip. Report: `…/smoke_c1_bank_c_001/clip_report.json`.
+### By size bin (all)
 
-#### Engineer commands (replay)
+| Run | split | match_rate_ref | mask_iou_mean | n_pred_matched |
+|-----|-------|---------------:|--------------:|---------------:|
+| C1 | all | 0.355 | 0.851 | 900 |
+| C1 | small | **0.293** | 0.839 | 647 |
+| C1 | large | **0.776** | 0.881 | 253 |
+| C2 | all | 0.143 | 0.870 | 363 |
+| C2 | small | 0.070 | 0.850 | 154 |
+| C2 | large | 0.641 | 0.885 | 209 |
+| C3 | all | 0.340 | 0.855 | 862 |
+| C3 | small | 0.287 | 0.842 | 633 |
+| C3 | large | 0.703 | 0.889 | 229 |
+
+### Per-run notes
+
+| run_id | When | Box preds path | Overlays |
+|--------|------|----------------|----------|
+| `c1_bank_c_001` | 2026-10-12 | `exp-001/.../sahi_bank_002/preds/bank_C.json` | `results/c1_bank_c_001/overlays/` |
+| `c2_svk_800_001` | 2026-10-12 | `exp-001/.../preds_rgb_deimv2_sahi_800/.../instances_default.json` | `results/c2_svk_800_001/overlays/` |
+| `c3_ft_400_001` | 2026-10-12 | `exp-001/.../preds_rgb_deimv2_r_weak_sahi_400/.../instances_default.json` | `results/c3_ft_400_001/overlays/` |
+
+**Clip (C1 example):** 1200 masks; spill outside box median **0.079 → 0.012** after clip; mask–box IoU median **0.695 → 0.793**. See `clip_report.json` per run.
+
+#### Engineer replay
 
 ```bash
 cd research/exp-002
-./run_eval_sanity.sh
 export SAM_CHECKPOINT=/path/to/sam_vit_h_4b8939.pth
-export SAM_MODEL_TYPE=vit_h DEVICE=cuda
-./run_smoke_c1.sh   # RUN_TAG defaults to smoke_c1_bank_c_001
+export DEVICE=cuda
+./run_c1.sh && ./run_c2.sh && ./run_c3.sh
 ```
 
-### Results backlog (not run yet)
+### Optional backlog (not run)
 
-| Run | mask_iou_mean | match_rate_ref | Status |
-|-----|--------------:|---------------:|--------|
-| **C2** svk@800 boxes only | — | — | pending |
-| **C3** FT@400 boxes only | — | — | pending |
-| **A** ECSeg | — | — | optional |
-| **B** StarDist | — | — | optional |
+| Run | Status |
+|-----|--------|
+| **A** ECSeg | optional — skip if no env |
+| **B** StarDist | optional — skip if no weights |
 
 #### Takeaway
 
-**Mask outlines look usable where we have a product box** (high IoU vs silver, rare catastrophic mask failures). **We cannot yet recommend prompt policy** — only C1 is scored. Leadership should read **match_rate_ref** as “detection + segmentation pipeline,” not pure seg quality.
+**Preliminary seg quality is acceptable where boxes exist; bank C is the right prompt source on this hold-out.** End-to-end product confidence is still capped by **missed small-tree detections**, not by crown drawing.
 
 ### Return package (wiki sync)
 
@@ -322,39 +356,72 @@ exp_id: exp-002
 hypothesis: H3
 code_repo: conifervision-ai-train
 code_git_sha: e8fc202
-entrypoints: research/exp-002/eval_seg_masks.py, run_eval_sanity.sh, run_smoke_c1.sh
-commands: see C1 block above
+entrypoints: eval_seg_masks.py, run_seg_prompt_policy.sh, run_c1.sh, run_c2.sh, run_c3.sh
 gcs_results: []
 mlflow_run_ids: []
 metrics:
-  sanity_silver_self_001: { mask_iou_mean: 1.0, match_rate_ref: 1.0 }
-  smoke_c1_bank_c_001: { mask_iou_mean: 0.851, match_rate_ref: 0.355, mask_iou_mean_small: 0.839, mask_iou_mean_large: 0.881 }
+  c1_bank_c_001: { match_rate_ref: 0.355, mask_iou_mean: 0.851, n_bbox: 1200 }
+  c2_svk_800_001: { match_rate_ref: 0.143, mask_iou_mean: 0.870, n_bbox: 433 }
+  c3_ft_400_001: { match_rate_ref: 0.340, mask_iou_mean: 0.855, n_bbox: 1098 }
 split_notes: small-sparse R-class kaxen_197_1; golden-indexed; IoU match 0.5
-conclusion: iterate
+conclusion: accept_preliminary
+hypothesis_status: closed_preliminary
 kill_triggered: no
-recommended_mask_backend: sam_prompted (provisional — only C1 run)
-recommended_prompt_policy: C1_bank_c (provisional — C2/C3 pending)
+recommended_mask_backend: sam_prompted (vit_h, center+box, clip to det box)
+recommended_prompt_policy: C1_bank_c
+scope_limit: "Preliminary seg quality only; not high-confidence estate-wide crown rollout without better small-tree detection"
 ```
 
-## Conclusion
-
-<!-- iterate -->
+## Closure (2026-10-12)
 
 #### For the board
 
-**Verdict: iterate (2026-10-09).** The **C1 product path works technically**: SAM crowns on **bank C** boxes score **~85%** mask overlap vs silver when a golden tree was matched; catastrophic mask errors are **rare**. **Not ready to accept** as final exp-003 package: we have **not** compared **C2/C3** (does merge help outlines vs large-only / small-only hints?), and **~65%** of golden trees still have **no** pred box in this end-to-end view — dominated by H1 small-tree recall, not mask backend failure.
+**Hypothesis H3 — closed as a preliminary segmentation quality assessment.**
 
-| Verdict | Meaning for leadership |
-|---------|-------------------------|
-| **accept** | One mask pipeline recommended → proceed to exp-003 mask-aware merge with that choice |
-| **iterate** | **Current** — C1 scored; run C2/C3 (+ optional A/B) then decide |
-| **reject** | Masks not usable on reference → **data/label program**, not mask-merge as primary bet |
+| Item | Outcome |
+|------|---------|
+| **Question answered** | Can we score and choose a **sensible crown-generation path** on this hold-out with silver reference? **Yes.** |
+| **Technical default** | **SAM vit_h** + clip; box prompts from **bank C (C1)** |
+| **Not claimed** | Production-ready **wide rollout** of crowns at **high business confidence** |
+| **Main limiter** | **Detection gaps** — especially **small trees** without a matching box (~65% of reference trees unmatched end-to-end on C1) |
+| **Optional runs (A/B)** | ECSeg, StarDist — **deferred**; not required to close H3 |
+| **Kill criteria** | **Not triggered** (mask quality on matched trees is not “all backends unusable”) |
 
-**Kill criteria:** **not triggered** (matched-mask quality is strong; experiment is not “all backends weak”).
+**Headline metrics (see Results):** C1 `match_rate_ref` **0.36**, `mask_iou_mean` **0.85**; C2 coverage **0.14**; C3 **0.34** with similar mask IoU when matched.
+
+**Single follow-on theme (no engineering plan on this page):** improving **small-tree detection** is necessary before segmentation can materially raise **end-to-end** product confidence. Direction to be refined after **paper ingest** and leadership review.
 
 #### Takeaway
 
-**Proceed with H3 comparisons**, not with exp-003 mask-merge as fully decided. Boxes remain the bottleneck for **coverage**; outlines look **good enough to keep testing** on matched trees.
+H3 is **done for its stated scope** — preliminary crown quality and prompt choice. **Detection of small trees** remains the weak link for the overall vision product story.
+
+## Conclusion
+
+<!-- accept_preliminary -->
+
+#### For the board
+
+**Verdict: accept (preliminary) — 2026-10-12**
+
+| Decision | Choice |
+|----------|--------|
+| **Scope** | **Preliminary** segmentation quality on `kaxen_197_1` with **current** detection |
+| **mask_backend** | SAM (**vit_h**), `center+box`, clip to detector box |
+| **prompt_policy** | **C1 — bank C** (exp-001a product merge) |
+
+C2/C3 confirm that prompt policy affects **coverage** more than **crown shape** on matched trees. **Without better small-tree detection**, segmentation alone cannot deliver **much higher** deployment confidence.
+
+| Verdict | Meaning |
+|---------|---------|
+| **accept (preliminary)** | **Closed** — documented default for crown generation under current boxes |
+| **reject** | **Not triggered** |
+| **iterate** | Only if leadership requests optional backends (A/B) |
+
+**Kill criteria:** **not triggered.**
+
+#### Takeaway
+
+Treat exp-002 as **evidence on crown drawing**, not as proof that the **full tree-finding + outlining** product is ready at scale. **Small-tree detection** must improve for confidence to follow.
 
 ## Handoff to coding module
 
@@ -365,11 +432,11 @@ Engineering delivers **numbers, recommendation id, and example images** back int
 - Wiki: this page (H3 v1.1). Engineer: `conifervision-ai-train/research/exp-002/notes.md` + `manifest.yaml`
 - Return: Results table + `recommended_mask_backend` + `recommended_prompt_policy` + failure examples
 - No weights committed to this vault
-- After conclusion: human gate before exp-003
+- H3 **closed (preliminary)** — artifacts under `research/exp-002/results/` in coding repo
 
 #### Takeaway
 
-Handoff = **decision package** for product and merge experiment owners, not a code dump.
+Handoff complete for H3 scope. Any **next program bets** (detection, merge, literature) are **out of scope** for this closure note.
 
 ## Related
 
