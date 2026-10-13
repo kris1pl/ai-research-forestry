@@ -4,7 +4,7 @@ type: Experiment
 description: "H2 — First fusion design iteration: bbox-centric NMS vs mask-aware merge under dense stands. Run after H1 (exp-001) and exp-002 (H3 mask backend pick)."
 tags: [ensemble, merge, fusion, dense-stands, H2]
 status: stable
-updated: 2026-10-08
+updated: 2026-10-13
 area: "Same AREA eval set as exp-001; report open vs dense separately"
 hypothesis: "In dense stands, mask-aware fusion rules (mask-first / mask-overlap conflict resolution) reduce duplicates and under-segmentation relative to bbox-only NMS with layer priorities, without catastrophic regression on open stands."
 metrics:
@@ -27,8 +27,8 @@ generated:
 
 # exp-003 merge / fusion v1 (segmentation-aware)
 
-**Queue:** [[experiments/exp-001-per-layer-baselines]] (H1) → [[experiments/exp-002-rgb-seg-backend-ceiling]] (H3) → **exp-003 / H2 (this page)**.  
-**Gate:** ADR-002 — sequence approved to run (see [[project/decisions]]). Do not treat as first GPU spend.
+**Queue:** [[experiments/exp-001-per-layer-baselines]] (H1) → [[experiments/exp-002-rgb-seg-backend-ceiling]] (H3, closed preliminary) → [[experiments/exp-004-rgb-small-student-pseudo-v2]] → **exp-003 / H2 (this page)**.  
+**Gate:** ADR-002 sequencing note (2026-10-13) — **do not start** until exp-004 meets its small-tree usefulness gate ([[project/decisions]]).
 
 ## Hypothesis
 
@@ -85,7 +85,7 @@ In dense stands, **mask-aware fusion rules** (mask-first / mask-overlap conflict
 
 ## Kill criteria
 
-- Mask-aware fusion does not improve dense metrics after agreed tuning budget
+- Mask-aware fusion does not improve dense metrics after the agreed tuning effort
 - Masks unavailable or too low quality to define Variant B → fall back to data/seg workstream (exp-002 / Phase 3)
 
 ## Setup

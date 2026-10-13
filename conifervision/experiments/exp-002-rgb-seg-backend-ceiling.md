@@ -128,7 +128,7 @@ In plain terms: (1) use the **same five test images** and **silver** crown refer
 
 #### For the board
 
-Before significant GPU cost, we agree the **minimum credible comparison**: product boxes + SAM-family (**C1**) and scoring vs silver reference. Extra tools (ECSeg, StarDist) and box ablations (C2/C3) are prioritized in the table below — leadership can trim optional tiers if budget is tight.
+Before a long GPU run, we agree the **minimum credible comparison**: product boxes + SAM-family (**C1**) and scoring vs silver reference. Extra tools (ECSeg, StarDist) and box ablations (C2/C3) are prioritized in the table below — optional tiers can be dropped if the run list is too long.
 
 | Tier | Item |
 |------|------|
@@ -177,7 +177,7 @@ When reading future tables, prioritise **small-tree mask quality** and **under/o
 
 #### For the board
 
-**Success** means leadership can approve **one mask pipeline** (tool + which detection hints to use) for the merge experiment, with example failure images on file. **Near-tie** is acceptable if we document trade-offs (speed, cost, licence).
+**Success** means we can name **one mask pipeline** (tool + which detection hints to use) for the merge experiment, with example failure images on file. **Near-tie** is acceptable if we document trade-offs (speed, what the tool can run on).
 
 - Clear ranking or documented near-tie among **runnable** backends **and** among prompt policies on silver clipped
 - Written **`recommended_mask_backend`** + **`recommended_prompt_policy`** for exp-002
@@ -191,9 +191,9 @@ Success is a **decision-ready recommendation**, not “we tried three papers.”
 
 #### For the board
 
-**Kill** means: after fair effort, **no** segmentation option is clearly usable on silver reference (especially small crowns) — so we **pause mask-based merge** as the main product bet and fund **better ground truth / labels** first. That is a **responsible stop**, not a failed quarter.
+**Kill** means: after fair effort, **no** segmentation option is clearly usable on silver reference (especially small crowns) — so we **pause mask-based merge** and go back to **ground truth / labels** first.
 
-- All backends and prompt variants in budget yield similarly weak / unusable masks on silver clipped (especially small bin) → prioritize gold/pseudo label program; **do not** proceed to exp-003 mask-aware fusion as primary bet
+- All backends and prompt variants in the agreed run list yield similarly weak / unusable masks on silver clipped (especially small bin) → prioritize gold/pseudo label program; **do not** proceed to exp-003 mask-aware fusion as primary bet
 
 #### Takeaway
 
@@ -427,7 +427,7 @@ Treat exp-002 as **evidence on crown drawing**, not as proof that the **full tre
 
 #### For the board
 
-Engineering delivers **numbers, recommendation id, and example images** back into this wiki page; no model weights stored in the research vault. **Human gate** before exp-003 spend.
+Engineering delivers **numbers, recommendation id, and example images** back into this wiki page; no model weights stored in the research vault. **Human gate** before exp-003 runs.
 
 - Wiki: this page (H3 v1.1). Engineer: `conifervision-ai-train/research/exp-002/notes.md` + `manifest.yaml`
 - Return: Results table + `recommended_mask_backend` + `recommended_prompt_policy` + failure examples

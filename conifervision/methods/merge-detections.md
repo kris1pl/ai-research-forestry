@@ -4,10 +4,10 @@ type: Method
 description: "Combine detections from local-maxima and the CHM/DEIMv2 path into a final tree set per AREA."
 tags: [merge, nms, detection]
 status: stable
-updated: 2026-09-28
+updated: 2026-10-12
 generated:
   by: agent:conifervision-wiki
-  at: 2026-09-02T12:00:00Z
+  at: 2026-10-12T12:00:00Z
 related_methods:
   - methods/local-maxima
   - methods/chm-detection
@@ -18,6 +18,7 @@ sources:
   - sources/paper-forestformer3d_a_unified_framework_for_end-to-end_segmentation_of_forest_lidar_3dpoint_clouds-2506-16991v1
   - sources/paper-uav-based_lidar_scanning_for_individual_tree_detection_and_height_measurement_in_young_forest-5_2021
   - sources/paper-zero-shot_tree_detection_and_segmentation_from_aerial_forest_imagery-2506-03114v1
+  - sources/paper-multi_llm_detections
   - sources/popescu-wynne-2004-seeing-the-trees
 ---
 # Merge local maxima + CHM
@@ -68,7 +69,14 @@ Mask-aware ensemble fusion for dense stands is tracked in [[project/research-tre
 | Merge overlapping blocks using global score-ranking and NMS | TBD |
 | Query raw normalized point cloud for maximum Z-coordinate within crown | aligned |
 | Polygon-based Non-Maximum Suppression (IoU = 0.05) | TBD |
+| Extract bounding boxes, class labels, and confidence scores from multiple layers | aligned |
+| Normalize coordinates to shared pixel coordinate system | aligned |
+| Harmonize labels to canonical class IDs | aligned |
+| Apply score calibration (e.g., Isotonic Regression) | TBD |
+| Execute Weighted Boxes Fusion (WBF) or Probabilistic Ensembling (ProbEn) | TBD |
 
+
+Pseudocode: [[sources/paper-multi_llm_detections#Replication pseudocode]].
 
 Pseudocode: [[sources/paper-zero-shot_tree_detection_and_segmentation_from_aerial_forest_imagery-2506-03114v1#Replication pseudocode]].
 
@@ -94,3 +102,4 @@ _(overlapping detections, duplicates at window boundaries)_
 - Can the 0.5 m boundary mask discarding threshold from ForestFormer3D's cylindrical block merging be adapted to resolve edge-effect double-detections in our large-area 2D/2.5D tiling and merging steps?
 - Does point cloud-based height extraction maintain its unbiased performance when applied to lower-density point clouds where the true treetop apex may not be sampled?
 - Does transitioning from bounding box NMS to polygon-based NMS with a low IoU threshold (e.g., 0.05) reduce commission errors in our detection merging stage without suppressing true neighboring trees?
+- Can Probabilistic Ensembling (ProbEn) or Weighted Boxes Fusion (WBF) replace our rule-based `nms_ai_lm.py` to resolve overlaps between CHM geometric local maxima and deep learning DEIMv2/DINOv3 predictions without introducing prohibitive computational overhead?

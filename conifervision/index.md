@@ -9,7 +9,7 @@ Compiled team knowledge for **individual tree detection and segmentation** from 
 
 1. **Research north star:** [[project/research-tree-detection-ensemble]] — multi-layer ensemble (LM, CHM/DEIMv2, RGB det/seg, fusion).
 2. **Hypothesis loop:** [[project/hypothesis-validation-loop]] — propose → Experiment page → human gate → GPU module → validate/reject.
-3. **Approved experiment queue (ADR-002):** [[experiments/exp-001-per-layer-baselines]] (**H1**, run first — *v1.1; Round2 small-expert + SAHI bank; iterate*) → [[experiments/exp-002-rgb-seg-backend-ceiling]] (**H3**) → [[experiments/exp-003-merge-fusion-v1]] (**H2**).
+3. **Experiment queue:** H1 and H3 preliminary are done. **Next:** [[experiments/exp-004-rgb-small-student-pseudo-v2]] (single RGB small-student). **ADR-002:** H2 ([[experiments/exp-003-merge-fusion-v1]]) and H3 follow-ups **wait** on the exp-004 gate ([[project/decisions]]).
 4. **Literature map (dense ITD):** [[concepts/literature-map-dense-itd]] — what to test first vs background reading.
 
 Production baseline (what ships today): [[project/pipeline-overview]]. Success structure: ADR-001 in [[project/decisions]] (proposed until eval numbers are locked).
@@ -32,16 +32,20 @@ Production baseline (what ships today): [[project/pipeline-overview]]. Success s
 - [[concepts/dense-stand-detection]] — evaluation concept for dense plots (before clearing)
 - [[concepts/canopy-height-model]] — CHM (DSM − DTM); LiDAR and satellite SSL links
 - [[concepts/pseudo-tree-crown]] — PTC input reformation for species CNNs (UAV)
+- [[concepts/pseudo-label-audit-cvat]] — human precision sample in CVAT before exp-004 fine-tune
 
 ## Experiments
 
-- [[experiments/index]] — hypothesis units (queue H1 → H3 → H2)
+- [[experiments/index]] — hypothesis units (next: exp-004; H2 waits)
 - [[experiments/exp-001-per-layer-baselines]] — **H1** per-layer ceilings, size-stratified R-class (open/dense deferred)
-- [[experiments/exp-002-rgb-seg-backend-ceiling]] — **H3** RGB seg backend A/B on dense
-- [[experiments/exp-003-merge-fusion-v1]] — **H2** bbox NMS vs mask-aware fusion
+- [[experiments/exp-002-rgb-seg-backend-ceiling]] — **H3** RGB seg backend (closed preliminary)
+- [[experiments/exp-004-rgb-small-student-pseudo-v2]] — **next** — single RGB small-student, pseudo v2
+- [[experiments/exp-003-merge-fusion-v1]] — **H2** bbox NMS vs mask-aware fusion (waits on exp-004)
 
 ## Literature sources
 
+- [[sources/paper-refdrone_llms]] — introduces RefDrone benchmark and Number GroundingDINO (NGDINO) for multi-target and no-target aerial referring expression comprehension
+- [[sources/paper-multi_llm_detections]] — Iwanowski (2025) — Survey of multi-LLM/VLM consensus frameworks for object detection, categorizing prompt-level, reasoning, box-level, and hybrid consensus.
 - [[sources/paper-insid3_in_context_segmentation_dinov3]] — INSID3 — training-free in-context segmentation using SVD-debiased DINOv3 features
 - [[sources/paper-zero-shot_tree_detection_and_segmentation_from_aerial_forest_imagery-2506-03114v1]] — Chen (2025) — Evaluates SAM2 zero-shot tree crown segmentation prompted by DeepForest bounding boxes.
 - [[sources/paper-uav-based_lidar_scanning_for_individual_tree_detection_and_height_measurement_in_young_forest-5_2021]] — Rodríguez-Puerta (2022) — Evaluates ITD and height extraction on young pine plantations, finding 10 cm CHM optimal and point cloud height extraction unbiased.

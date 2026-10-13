@@ -43,7 +43,7 @@ ADR format: **Context → Decision → Consequences**. The agent adds an entry a
    - Improvement on **dense** primary detection/segmentation metric family vs the agreed baseline (e.g. current LM+CHM/DEIMv2 merge) — threshold TBD.
    - No catastrophic regression on **open** stands — tolerance TBD.
    - Documented fusion/merge rule in [[methods/merge-detections]] matching the winning experiment.
-4. **Kill / do not ship v1** if dense primary metric does not improve after the agreed label and tuning budget, or if fusion only shifts error modes without net dense gain.
+4. **Kill / do not ship v1** if dense primary metric does not improve after the agreed label and tuning effort, or if fusion only shifts error modes without net dense gain.
 5. Language: experiments **validate** or **reject** (or iterate); they do not “prove” success.
 
 **Consequences:**
@@ -76,3 +76,5 @@ ADR format: **Context → Decision → Consequences**. The agent adds an entry a
 - Future reordering requires a superseding ADR.
 
 **Renumbering note (2026-10-08):** **`exp-NNN` now matches execution order** `001 → 002 → 003`. Hypothesis ids **H1 / H2 / H3** are unchanged (H3 = seg = **exp-002**; H2 = merge = **exp-003**). Do not confuse with exp-001 run tags such as `sahi_bank_003` or ladder tag `003` — those are inference labels, not experiment ids.
+
+**Sequencing note (2026-10-13):** H1 (exp-001a) and H3 (exp-002, closed preliminary) are done. The remaining bottleneck is **small-tree detection**, not mask choice. **[[experiments/exp-004-rgb-small-student-pseudo-v2]]** is the next GPU tranche. **H2 ([[experiments/exp-003-merge-fusion-v1]]) and any H3 follow-up** (deferred ECSeg / StarDist) **wait** until exp-004 meets its single-checkpoint SAHI-400 usefulness gate versus Round 1 FT. This note inserts exp-004; it does not reopen H3 or replace ADR-002. A later ADR is required only if the team drops H2 entirely.

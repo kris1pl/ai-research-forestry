@@ -200,7 +200,7 @@ This repo already defines a solid operational workflow in `AGENTS.md`:
   - gold-only
   - gold + pseudo
   - gold + pseudo + targeted synthetic/augmentation
-- Goal: quantify how quickly performance improves with label budget.
+- Goal: quantify how quickly performance improves as the labelled set grows.
 
 ### Phase 4 — Ensemble v1 (≈ 2–4 weeks)
 

@@ -4,14 +4,15 @@ type: Method
 description: "Tree detection with DEIMv2 on multiple CHM height layers (small vs large trees)."
 tags: [deimv2, detection, ai]
 status: stable
-updated: 2026-08-20
+updated: 2026-10-12
 generated:
   by: agent:conifervision-wiki
-  at: 2026-08-20T12:00:00Z
+  at: 2026-10-12T12:00:00Z
 sources:
   - sources/paper-edgecrafter
   - sources/paper-deimv2
   - sources/paper-fine-tuning_matters_and_parallel_decoder_helps
+  - sources/paper-refdrone_llms
   - sources/paper-fsod-vfm
 ---
 # DEIMv2
@@ -40,3 +41,4 @@ _(after ingest)_
 - Can the simple bilinear interpolation and linear projection multi-scale feature generation from EdgeCrafter replace the feature pyramid network in DEIMv2-canopy to reduce edge latency on drone hardware?
 - How does the optimal ratio of stacked-to-parallel decoder layers (K vs L-K) scale when adapting DEIMv2-canopy for multi-height tree crown detection?
 - Can the graph diffusion-based confidence reweighting mechanism from FSOD-VFM be adapted to resolve overfragmentation (e.g., multiple sub-crown detections) in DEIMv2 canopy predictions?
+- Can the auxiliary number prediction head and learnable number-queries from NGDINO be integrated into DEIMv2-canopy to reduce false positives in empty canopy gaps and improve multi-tree counting?

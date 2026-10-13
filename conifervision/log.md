@@ -2,6 +2,56 @@
 
 Chronological record of ingest, query, hypothesis, and lint operations.
 
+## [2026-10-13] hypothesis | exp-004 locked for the coding repo
+
+- Train COCO = weak boxes on AREAs 473–479 plus proposals kept by Round 1 FT @400 confirmed at @200. Audit does not drop the rest. 480, 481, golden, and AREA 540 stay out of that train set
+- B1 inits from Round 1 FT. DINOv3 and VLM off on the first pass. Run id for the 400∪200 fallback is `B400u200` (not C1). No H4
+- Two TBD bars before A0 CVAT opens: audit precision, and the margin over Round 1 `R_small` 0.252 / `AP_small` 0.157
+
+## [2026-10-13] hypothesis | exp-004 and audit diagrams
+
+- Mermaid on [[experiments/exp-004-rgb-small-student-pseudo-v2]] and [[concepts/pseudo-label-audit-cvat]] for the flow, the score gate, tile sampling, and the box verdict
+- Skill: Mermaid for concepts; jpg/png only when a script wrote the figure
+
+## [2026-10-13] lint | drop financial wording from research pages
+
+- Research pages no longer frame decisions as budget, payment, or funding
+- Sample-size caps stay as technical limits; paper quotes that report a source’s own cost figures are unchanged
+
+## [2026-10-13] hypothesis | restore CVAT audit page; pilot on AREA 540
+
+- Restored [[concepts/pseudo-label-audit-cvat]] after accidental delete
+- First CVAT pass is AREA 540 (procedure only). Train-gate sample stays 20×150 on Round 1 tiles
+- Tile halves ordered by weak-box count, not by eye and not by a new segmentation or height filter
+
+## [2026-10-13] hypothesis | exp-004 CVAT pseudo-label audit procedure
+
+- Added [[concepts/pseudo-label-audit-cvat]]: 20 tiles / 150 new boxes, no full train upload, accept/reject/accept_resize
+- Linked from [[experiments/exp-004-rgb-small-student-pseudo-v2]] human gate
+
+## [2026-10-13] hypothesis | exp-004 board-language section intros
+
+- Added executive summary plus “for the board” / takeaway blocks on [[experiments/exp-004-rgb-small-student-pseudo-v2]], same pattern as exp-001 / exp-002
+
+## [2026-10-13] hypothesis | exp-004 RGB small-student (pseudo v2)
+
+- Next detection track: one DEIMv2 student, primary eval SAHI 400, train on gap-filled pseudo v2 — not more AREA of the same weak GT
+- Large-tree AP on that checkpoint is out of scope; no 800∪400 bank inside the experiment
+- ADR-002 note: H2 (exp-003) and H3 follow-ups wait on the exp-004 usefulness gate (H3 preliminary close stands)
+- Added [[experiments/exp-004-rgb-small-student-pseudo-v2]]; updated [[project/decisions]], [[experiments/index]], [[index]], [[experiments/exp-003-merge-fusion-v1]], [[concepts/literature-map-dense-itd]]
+
+## [2026-10-12] ingest | Sun (2025) — RefDrone benchmark and NGDINO for drone REC
+
+- Source: `raw/papers/RefDrone_llms.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/paper-refdrone_llms]]
+- Updated [[index]], [[methods/deimv2-canopy]], [[concepts/dense-stand-detection]]
+
+## [2026-10-12] ingest | Iwanowski (2025) — Multi-LLM/VLM consensus for object detection
+
+- Source: `raw/papers/multi_llm_detections.pdf` (LLM: `gemini-3.5-flash` via `make ingest-paper`)
+- Added [[sources/paper-multi_llm_detections]]
+- Updated [[index]], [[methods/merge-detections]], [[concepts/literature-map-dense-itd]]
+
 ## [2026-09-28] hypothesis | exp-001 Round2 plan: small expert + SAHI bank
 
 - Drop single-checkpoint AP_large protection; multilayer: large=`svk_full@800`, small=FT@**400**, slice **200** = bank ablation ± size-gate

@@ -25,7 +25,7 @@ North star program: [[project/research-tree-detection-ensemble]]. Agent operatio
 | Role | Where | Responsibility |
 |------|--------|----------------|
 | **Scientist agent** | This wiki repo | Read compiled knowledge; propose 2–3 hypotheses with citations; after human pick, write full `experiments/exp-NNN-*.md` (pseudocode, metrics, success/kill) |
-| **Human gate** | Review | Choose hypothesis; approve/reject run (ADR); interpret results; prevent GPU spend on non-falsifiable ideas |
+| **Human gate** | Review | Choose hypothesis; approve/reject run (ADR); interpret results; do not start GPU runs on non-falsifiable ideas |
 | **Engineer agent** | External code repo + cloud GPU | Implement from Experiment handoff; run jobs; return metrics/run IDs — **not** maintained in this vault |
 
 Language of truth: we **validate** or **reject** (or iterate). We do not “prove” hypotheses in a mathematical sense.
@@ -76,7 +76,7 @@ Required substance:
 - **Motivation** — wiki citations (`[[methods/…]]`, `[[sources/…]]`, `[[concepts/…]]`)
 - **Pseudocode** — procedural sketch for the engineer module
 - **Evaluation** — open vs dense, size bins (see [[concepts/dense-stand-detection]])
-- **Success / kill criteria** — when to stop spending GPU
+- **Success / kill criteria** — when to stop further GPU runs
 - **Conclusion** — `accept` | `reject` | `iterate`
 
 ## Success and kill criteria (examples)
@@ -84,7 +84,7 @@ Required substance:
 Define per experiment; align with [[project/decisions]] ADR-001 when accepted.
 
 - **Success (example structure):** improvement on dense split for a named metric family vs a named baseline, without catastrophic regression on open stands — numeric thresholds **TBD** until evaluation protocol is locked.
-- **Kill (examples):** no lift vs baseline after agreed label budget; fusion increases duplicates without dense gain; cannot run eval on held-out AREA.
+- **Kill (examples):** no lift vs baseline after the agreed labelling effort; fusion increases duplicates without dense gain; cannot run eval on held-out AREA.
 
 ## Related
 

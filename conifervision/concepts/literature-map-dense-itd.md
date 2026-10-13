@@ -4,10 +4,10 @@ type: Concept
 description: "Prioritized synthesis of ingested papers for dense-stand tree detection/segmentation from drone RGB and LiDAR/CHM — what to test first vs background."
 tags: [literature-map, dense-stands, itd, segmentation, ensemble, synthesis]
 status: stable
-updated: 2026-09-28
+updated: 2026-10-13
 generated:
   by: agent:conifervision-wiki
-  at: 2026-08-24T12:00:00Z
+  at: 2026-10-12T12:00:00Z
 related_methods:
   - methods/local-maxima
   - methods/chm-detection
@@ -20,9 +20,9 @@ sources:
   - sources/paper-individual_tree_crown_delineation_in_high_resolution_aerial_rgb_imagery_using_stardist-based_model-1-s2-0-s0034425725000227-main
   - sources/paper-edgecrafter
   - sources/paper-deimv2
+  - sources/paper-multi_llm_detections
   - sources/paper-fsod-vfm
 ---
-
 # Literature map — dense ITD
 
 Living synthesis for agents and humans: among ~25 ingested sources, **what matters first** for the Conifervision objective (drone ortho + CHM/3D, **dense stands before thinning**, ensemble path). North star: [[project/research-tree-detection-ensemble]]. Dense eval concept: [[concepts/dense-stand-detection]].
@@ -69,7 +69,7 @@ This page does **not** replace individual [[sources/index]] summaries. Refresh a
 4. Treat pure 3D end-to-end models as **parallel track** unless AREA workflow already commits to dense UAV LiDAR as primary input.
 5. Species and synthetic data stay **downstream** of instance detection quality.
 
-Approved queue: **ADR-002** (H1 → H3 → H2) in [[project/decisions]].
+Approved queue: **ADR-002** (H1 → H3 → H2) in [[project/decisions]]. Sequencing note (2026-10-13): [[experiments/exp-004-rgb-small-student-pseudo-v2]] runs before H2; H3 follow-ups wait on that gate.
 
 ## Related
 

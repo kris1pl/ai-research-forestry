@@ -4,10 +4,10 @@ type: Concept
 description: "Evaluation concept for tree detection in dense stands where crown overlap breaks bbox-centric NMS and segmentation boundaries drive errors."
 tags: [dense-stands, evaluation, detection, instance-segmentation, dense/open]
 status: stable
-updated: 2026-09-28
+updated: 2026-10-12
 generated:
   by: agent:conifervision-wiki
-  at: 2026-08-24T12:00:00Z
+  at: 2026-10-12T12:00:00Z
 related_methods:
   - methods/merge-detections
   - methods/deimv2-canopy
@@ -22,6 +22,7 @@ sources:
   - sources/paper-tree_crown_segmentation_in_three_dimensions_using_density_models_derived_from_airborne_laser_scanning-holmgren_j_et_al_220114
   - sources/paper-treepseco_scaling_individual_tree_crown_segmentation_using_large_vision_models-isprs-archives-xlviii-m-7-2025-275-2025
   - sources/paper-zero-shot_tree_detection_and_segmentation_from_aerial_forest_imagery-2506-03114v1
+  - sources/paper-refdrone_llms
   - sources/paper-fsod-vfm
 ---
 # Dense stand detection (before clearing)
@@ -94,3 +95,4 @@ TBD:
 - How does the computational complexity of 3D mean-shift clustering scale on high-density drone photogrammetric point clouds in dense stands?
 - Can point-prompted SAM mask proposals effectively resolve under-segmentation in extremely dense, multi-layered conifer stands without high-resolution CHM inputs?
 - How does the boundary delineation accuracy of box-prompted SAM2 scale in extremely dense conifer stands compared to specialized instance segmentation models like EdgeCrafter ECSeg?
+- How does the performance of explicit numerical reasoning (like NGDINO's count bins) scale when applied to extremely dense conifer stands containing hundreds of overlapping tree crowns?

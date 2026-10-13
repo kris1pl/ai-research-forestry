@@ -294,7 +294,7 @@ Before training or merging: how does the **standard aerial model** behave if we 
 
 - Dominant mode still **FN**; 800: FN=2195 FP=94; 400: FN=2031 FP=231; **200: FN=1650 FP=852** (dup≈0.011).
 - Tile ladder R_small / AP_small: 800 → 0.063 / 0.03; 400 → 0.122 / 0.068; **200 → 0.279 / 0.157**.
-- Cost of 200: P 0.78→0.51; AP_large 0.48→0.37 — more FP and weaker large-box AP.
+- Tradeoff at 200: P 0.78→0.51; AP_large 0.48→0.37 — more FP and weaker large-box AP.
 - Implication: smaller tiles help small crowns but do not close the R-class gap (domain of `svk_full`). Keep **800** as default single-pass.
 - Duplicate rate ≈0 — consistent with **sparse** crowns (NMS/merge not the main failure). Treat published `under_segmentation_rate` as descriptive only, not closed-canopy merge evidence.
 
@@ -401,7 +401,7 @@ Focus on row **C** vs row **A**. **A** alone finds few small trees (about 6% of 
 Reading (metrics detail):
 - **C vs A:** R_large 0.62→**0.76**, AP_large held (~0.48); R_small 0.06→**0.26**. Specialization **OK** — Round2 unlocked.
 - C_sa ≈ C (size-aware not required for this hold-out).
-- **D:** lifts R_small further but AP_large collapses when size-gated; ungated keeps more large AP at cost of P — ablation only, does not change Round2 decision.
+- **D:** lifts R_small further but AP_large collapses when size-gated; ungated keeps more large AP and lower P — ablation only, does not change Round2 decision.
 - Product path until Round2 re-bank: **large = A, small = B**.
 
 #### Takeaway

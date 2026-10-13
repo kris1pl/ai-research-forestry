@@ -6,3 +6,4 @@ Cross-cutting ideas referenced by multiple pipeline methods.
 * [Dense stand detection (before clearing)](/concepts/dense-stand-detection.md) — evaluation concept for dense plots
 * [Canopy height model (CHM)](/concepts/canopy-height-model.md) — DSM − DTM; LiDAR and satellite SSL links
 * [Pseudo tree crown (PTC)](/concepts/pseudo-tree-crown.md) — UAV crown reprojection before species CNN input
+* [Pseudo-label audit in CVAT](/concepts/pseudo-label-audit-cvat.md) — fixed-size human check; pilot on AREA 540, then 20×150; not a full dataset upload

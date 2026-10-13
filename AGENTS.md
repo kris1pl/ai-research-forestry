@@ -11,6 +11,8 @@ Schema for agents (Cursor, Codex, Claude Code) maintaining this knowledge base. 
 - Source papers may be any language; summaries and integration into the wiki are **English**. Original quotes may stay in the source language with an English gloss if needed.
 - Commit messages: **English**, imperative mood (e.g. `ingest: Smith 2024 CHM detection review`).
 
+**Voice for readers:** when writing or editing experiment and procedure pages, follow `.cursor/skills/conifervision-wiki-voice/SKILL.md` — plain-language summary on each section, Mermaid for flows, jpg/png when a script produced the figure, and no budget or other financial framing. This repo is technical research.
+
 ## Purpose
 
 **Primary research objective:** build methodology for **individual tree detection and segmentation** from **drone orthophotos + 3D/CHM**, with emphasis on **dense stands before thinning**. Target path: multi-layer ensemble (local maxima, CHM/DEIMv2, RGB detection, instance segmentation e.g. EdgeCrafter ECSeg, fusion/NMS) — see `conifervision/project/research-tree-detection-ensemble.md`. Hypotheses: `project/hypothesis-validation-loop.md` and Operation: Hypothesis below.
