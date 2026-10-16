@@ -4,7 +4,7 @@ type: Concept
 description: "Fixed-size human precision check of new weak-label boxes before exp-004 fine-tune. First pass is AREA 540 only. CVAT never receives the full training set."
 tags: [cvat, pseudo-labels, audit, exp-004, small-trees, annotation]
 status: stable
-updated: 2026-10-13
+updated: 2026-10-16
 area: "exp-004 Phase A — pilot on AREA 540, then Round 1 train tiles; golden kaxen_197_1 and AREA 481 excluded"
 generated:
   by: agent:conifervision-wiki
@@ -70,6 +70,8 @@ Audit = precision of **kept proposals** (tree and box size). Not a second golden
 | **A0** | Round 1 train AREAs (not 540-only, not hold-out) | The precision number that can unlock fine-tune. Sample caps below. |
 
 A passing pilot means the **procedure** works. It does not mean the student may be trained on 540 alone and compared to Round 1 as the exp-004 gate.
+
+**2026-10-16.** The AREA 540 pack under review is `research/exp-004/results/a0_pilot_540/svk800_gap_core`. Context boxes are the full `svk_full` SAHI 800 crowns. New boxes are the kept Round 1 proposals (SAHI 400 confirmed at 200, center outside the 800-box core). Each pack is its own task. The reviewer still only sets the verdict. This sample does not open A0.
 
 ## Sample caps (locked for pass A0)
 

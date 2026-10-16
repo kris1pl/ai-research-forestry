@@ -4,7 +4,7 @@ type: Experiment
 description: "Single RGB DEIMv2 student for small trees, trained on teacher–student pseudo v2 (not more AREA of the same weak GT). Primary eval is one checkpoint at SAHI 400. H2 merge and H3 follow-ups wait on the usefulness gate."
 tags: [ensemble, detection, R-class, small-trees, pseudo-labels, teacher-student, DEIMv2]
 status: stable
-updated: 2026-10-13
+updated: 2026-10-16
 area: "Train: R-class weak tiles outside hold-out. Eval: golden kaxen_197_1 (never in train); weak test AREA 481 monitor only. Small-sparse R-class — not closed-canopy dense."
 hypothesis: "On kaxen_197_1, a single DEIMv2 checkpoint scored only at SAHI 400, initialized from Round 1 FT and trained on weak boxes from AREAs 473–479 plus proposals kept by a 400-confirmed-at-200 filter, improves R_small and AP_small over Round 1 FT at 400 (0.252 / 0.157) by a pre-agreed margin. AP_large is not a success criterion. Audit precision is a separate pre-agreed bar."
 metrics:
@@ -29,7 +29,7 @@ generated:
 
 **Queue:** after [[experiments/exp-001-per-layer-baselines]] (H1 / exp-001a closed) and [[experiments/exp-002-rgb-seg-backend-ceiling]] (H3 closed preliminary). **Before** [[experiments/exp-003-merge-fusion-v1]] (H2). **No hypothesis id** — this is a small-tree detection follow-up, not H4.  
 **Gate:** ADR-002 sequencing note (2026-10-13) — H2 and any H3 follow-up wait until this page’s small-tree usefulness gate. GPU Phase B starts only after a human accepts the Phase A audit.  
-**Status (2026-10-13):** proposed; no runs yet.
+**Status (2026-10-16):** AREA 540 procedure pilot has been run. Human review of the `svk_full` @ 800 pack is open. Training has not started. Gates stay TBD.
 
 ## Executive summary (for the board)
 
@@ -41,7 +41,7 @@ This experiment trains **one** photo-based detector aimed at small trees. We do 
 
 The new idea is the **training set**, not another geography dump: use the current specialist to propose trees that the rough labels missed, keep only proposals that pass a check, spot-check them with people, then train. A language/vision model may help flag suspicious gaps; it does not draw the final boxes.
 
-**Nothing has been run yet.** GPU training starts only after that spot-check looks honest. Merge of detection layers (exp-003) waits until this model clears an agreed bar on small trees.
+The procedure check on one area is done. The next training run is meant to find small trees the photo model misses, not to redraw crowns it already has. Slice-100 height-map boxes and local-maxima boxes put several marks on one crown, so proposals on top of them mostly glued those pieces together. They did not point at an empty gap. The pack a person is about to review uses the existing large-tree photo model, which usually puts one box on one crown, and the current small-tree specialist to propose trees in the gaps and on the rim of those crowns. People still only accept, reject, or mark a bad box size. They do not draw. This review does not approve training. The wide training areas and the human test site are unchanged. GPU training starts only after the later wide-area spot-check looks honest. Merge of detection layers (exp-003) waits until this model clears an agreed bar on small trees.
 
 Same limit as before: the test site is young forest with **space between crowns**, not a closed dense canopy.
 
@@ -126,6 +126,8 @@ Phase C — only if Phase B misses the gate:
    If that also misses, iterate Phase A (teacher), do not add AREAs of unchanged weak GT.
 10. A second backbone is a later run only after A passed audit and B failed to beat Round 1.
 ```
+
+**Procedure pilot, 2026-10-16 (candidate filter, not an opened A0).** The training goal is fewer missed small trees: a kept box should be a crown that had no mark. On AREA 540 the production CHM weak map plus IoU 0.5 did the opposite. A proposal covering many fragments of one crown scored as a new tree. Local-maxima ellipses made that worse under IoU, because a small box inside a large ellipse has a low overlap and was also counted as new. A center-in-box test cut that count, but the ellipses and the slice-100 CHM boxes still put several marks on one crown, so the kept proposals were mostly a redraw of a crown that was already marked. `svk_full` at SAHI 800 usually places one box on one crown, so a Round 1 box kept only when its center is outside that core is a gap or a tree on the rim. The pack now in CVAT uses that skeleton: `svk_full` at SAHI 800 marks crowns already found; Round 1 FT at SAHI 400, confirmed at SAHI 200, proposes the rest. A proposal is kept when its center lies outside the core of every 800 box (central 50% of width and height). The reviewer sees the full 800 box. `svk_full` is not the student and is not the B1 init. This does not replace the 473–479 train recipe and does not open A0.
 
 What is scored, and what is only written down:
 
@@ -252,7 +254,7 @@ Setup stays **one photo model, small trees, checked labels**.
 |-----|-------------------|-------|
 | A0-pilot | AREA 540 only + CVAT sample | Procedure check; not the train gate |
 | A0 | pseudo v2 on Round 1 train + CVAT 20×150 | Gate before any train |
-| B1 | student, init TBD, eval SAHI 400 | Primary |
+| B1 | student, init Round 1 FT, eval SAHI 400 | Primary. Not `svk_full` |
 | B1-200 | same weights, SAHI 200 | Ablation, no merge |
 | B400u200 | windows 400 ∪ 200, size gate | Only if B1 misses the gate. Not exp-002 run C1 |
 
@@ -264,25 +266,29 @@ No training run is “the experiment” until **A0** (not the 540 pilot alone) h
 
 #### For the board
 
-No numbers yet. When they arrive, the board table should show: spot-check quality of new boxes, then small-tree find rate versus today’s specialist — not a blended score with large trees.
+The procedure pilot on AREA 540 has counts. No golden `R_small` or `AP_small` exists for this experiment, so those cells stay empty. Do not quote a gain on the human test site. The 800 pass also saw one notebook-checkpoint image (46 images in that file); ignore it. The audit sample is 20 real tiles. Teacher for the 400 and 200 windows: Round 1 FT `best_stg1`, confidence 0.3, overlap 0.2. `svk_full` pass: `best_stg2`, config `deimv2_dinov3_s_trees.yml`, slice 800, same confidence and overlap.
 
-| Run | Metric | Value | Split | Notes |
-|-----|--------|-------|-------|-------|
-| | | | | Not run |
+| Weak map | Gap rule | Weak boxes | 400 boxes with no match | Kept after 200 | Audit context boxes |
+|----------|----------|----------:|------------------------:|---------------:|-------------------:|
+| Production CHM | IoU 0.5 | 20231 | 3814 | 2345 | 9699 |
+| Local-maxima ellipses | IoU 0.5 | 13575 | 5267 | 3517 | 6526 |
+| Local-maxima ellipses | center inside any box | 13575 | 923 | 546 | 6238 |
+| CHM raster, slice 100 px | center inside any box | 6485 | 1067 | 640 | 3060 |
+| `svk_full` SAHI 800 | center outside the core | 2502 | 4504 | 2853 | 1247 |
+
+Of the 2853 boxes kept against `svk_full`, 459 have their center inside a full 800 box but outside its core (a tree on the rim of a large crown). In the 150-box audit sample, 32 are rim cases and 118 have their center outside every 800 box. Two proposal pairs overlap at IoU 0.38 and 0.46. None reach 0.5. People still have to say whether a rim box is its own tree.
 
 #### Takeaway
 
-**Not run.** Do not quote a gain until A0 and B1 are filled in.
-
-When numbers exist, add a chart from the scoring script as `jpg` or `png` next to the table (same pattern as exp-001 box plots). Do not draw a result chart before the run.
+**Pilot counts only.** Do not quote a gain until A0 and B1 are filled in. No result chart until a golden score exists.
 
 ## Conclusion
 
 #### For the board
 
-**Not started.** This page is the agreed next detection project. Layer-merge and extra crown-model comparisons stay queued until small-tree finding improves.
+**Procedure pilot complete.** Human review of the `svk_full` @ 800 pack is the current step. Training has not started. Layer-merge and extra crown-model comparisons stay queued until small-tree finding improves.
 
-**not run** — page records the agreed next detection track. Do not start [[experiments/exp-003-merge-fusion-v1]] or deferred H3 backends on the assumption that small-tree detection is already good enough.
+Do not start [[experiments/exp-003-merge-fusion-v1]] or deferred H3 backends on the assumption that small-tree detection is already good enough. The AREA 540 review does not fill that gate.
 
 #### Takeaway
 
