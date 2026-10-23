@@ -13,7 +13,6 @@ related_methods:
   - methods/deimv2-canopy
   - methods/local-maxima
   - methods/chm-detection
-sources: []
 sources:
   - sources/paper-a crown width-diameter model for natural even-aged black pine forest management-forests-09-00610-v2
   - sources/paper-allometric relationships of selected european tree-gp_eudor_pdfa1b_euna20855enc_001

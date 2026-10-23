@@ -124,6 +124,14 @@ def _add_source_to_frontmatter(text: str, slug: str, today: str | None = None) -
     source_entry = f"  - sources/{slug}"
     if f"sources/{slug}" in fm:
         pass
+    elif re.search(r"^sources:\s*\[\s*\]\s*$", fm, re.M):
+        fm = re.sub(
+            r"^sources:\s*\[\s*\]\s*$",
+            f"sources:\n{source_entry}",
+            fm,
+            count=1,
+            flags=re.M,
+        )
     elif re.search(r"^sources:\s*\n", fm, re.M):
         fm = re.sub(
             r"(^sources:\s*\n(?:  - .+\n)*)",
