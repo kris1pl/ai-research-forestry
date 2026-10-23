@@ -30,9 +30,9 @@ generated:
 
 # exp-001 per-layer baselines (size-stratified R-class)
 
-**Queue:** **H1 (run first)** → [[experiments/exp-002-rgb-seg-backend-ceiling]] → [[experiments/exp-003-merge-fusion-v1]].  
+**Queue:** **H1 (run first)** → [[experiments/r-class-itd/exp-002-rgb-seg-backend-ceiling]] → [[experiments/r-class-itd/exp-003-merge-fusion-v1]].  
 **Gate:** ADR-002 — run order locked (see [[project/decisions]]).  
-**Status (2026-10-06):** **exp-001a (RGB + bank C) closed** — ship `results/sahi_bank_002/` (C: R_small 0.257, R_large 0.761 @ conf 0.3). Round 2 tag **`003`** / verify runs = **Round 1** preds (no v2 golden gain). Weak test **481** closed (`compare_481_*`). **exp-001b (LM/CHM on golden)** deferred. **Next program step:** [[experiments/exp-002-rgb-seg-backend-ceiling]]. Product: large = `svk_full@800`; small = **FT@400 Round 1**.
+**Status (2026-10-06):** **exp-001a (RGB + bank C) closed** — ship `results/sahi_bank_002/` (C: R_small 0.257, R_large 0.761 @ conf 0.3). Round 2 tag **`003`** / verify runs = **Round 1** preds (no v2 golden gain). Weak test **481** closed (`compare_481_*`). **exp-001b (LM/CHM on golden)** deferred. **Next program step:** [[experiments/r-class-itd/exp-002-rgb-seg-backend-ceiling]]. Product: large = `svk_full@800`; small = **FT@400 Round 1**.
 
 ## Executive summary (for the board)
 
@@ -797,5 +797,5 @@ Implementation checklist only; non-technical readers can stop at **Conclusion**.
 - [[concepts/literature-map-dense-itd]]
 - [[methods/merge-detections]]
 - [[methods/edgecrafter-ecseg]]
-- [[experiments/exp-002-rgb-seg-backend-ceiling]]
-- [[experiments/exp-003-merge-fusion-v1]]
+- [[experiments/r-class-itd/exp-002-rgb-seg-backend-ceiling]]
+- [[experiments/r-class-itd/exp-003-merge-fusion-v1]]

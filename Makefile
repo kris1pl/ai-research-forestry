@@ -1,4 +1,4 @@
-.PHONY: venv venv-recreate install extract-pdf llm-smoke ingest-paper okf-lint build-wiki build-wiki-docker deploy-wiki-gcp serve-wiki serve-wiki-docker prepare-content
+.PHONY: venv venv-recreate install extract-pdf llm-smoke ingest-paper okf-lint concept-gate build-wiki build-wiki-docker deploy-wiki-gcp serve-wiki serve-wiki-docker prepare-content
 
 VENV := .venv
 PYTHON := $(VENV)/bin/python
@@ -33,8 +33,24 @@ ifndef FILE
 endif
 	$(PYTHON) -m tools.ingest_paper "$(FILE)" $(if $(WRITE),--write,) $(if $(NO_WIKI),--no-wiki,) $(if $(WIKI_ONLY),--wiki-only "$(WIKI_ONLY)",)
 
+# Po partii nowych PDF-ów, w tej kolejności:
+# 1. make ingest-paper FILE=raw/papers/plik.pdf WRITE=1
+#    Strona w conifervision/sources/ plus log, index i powiązane methods/concepts.
+#    Nazwę ze spacjami podaj w cudzysłowie. Bez WRITE=1 jest tylko podgląd.
+# 2. make okf-lint
+#    Frontmatter i indeksy. Bez modelu. FIX=1 poprawia bezpieczne pola.
+# 3. make concept-gate
+#    Model czyta katalog koncepcji i źródeł. Zapisuje arkusz
+#    conifervision/project/concept-proposals.md. Strony koncepcji nie tworzy.
+# 4. W arkuszu ustaw decision: accept albo reject.
+#    Korekta to edycja name, slug i why, potem accept.
+# 5. make concept-gate APPLY=1
+#    Tworzy stronę tylko dla accept. Model się nie odpala.
 okf-lint:
 	$(PYTHON) -m tools.okf_lint $(if $(FIX),--fix,)
+
+concept-gate:
+	$(PYTHON) -m tools.concept_gate $(if $(APPLY),--apply,)
 
 # Lokalny build (wymaga Node >= 20.19; przy starszym Node użyj build-wiki-docker)
 build-wiki:

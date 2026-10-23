@@ -37,6 +37,24 @@ def _split_messages(
     return system_instruction, contents
 
 
+def _thinking_level(model_name: str) -> str | None:
+    """Lowest thinking level the model accepts.
+
+    Gemini 3.0–3.5 accept ``minimal``. Gemini 3.6 and later reject it
+    (HTTP 400 THINKING_LEVEL_MINIMAL); their lowest level is ``low``.
+    """
+    name = model_name.strip().lower()
+    if not name.startswith("gemini-3"):
+        return None
+    head = name.removeprefix("gemini-").split("-", 1)[0]
+    parts = head.split(".")
+    try:
+        minor = int(parts[1]) if len(parts) > 1 else 0
+    except ValueError:
+        return "low"
+    return "low" if minor >= 6 else "minimal"
+
+
 class VertexLLMClient:
     def __init__(self, config: LLMConfig) -> None:
         if not config.vertex_project or not config.vertex_location:
@@ -71,9 +89,10 @@ class VertexLLMClient:
             config_kwargs["system_instruction"] = system_instruction
         if max_tokens is not None:
             config_kwargs["max_output_tokens"] = max_tokens
-        if model_name.startswith("gemini-3"):
+        thinking_level = _thinking_level(model_name)
+        if thinking_level is not None:
             config_kwargs["thinking_config"] = types.ThinkingConfig(
-                thinking_level="minimal",
+                thinking_level=thinking_level,
             )
 
         try:

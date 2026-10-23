@@ -101,7 +101,7 @@ make extract-pdf FILE=raw/papers/2405.15613v2.pdf   # opcjonalnie — ingest rob
 make ingest-paper FILE=raw/papers/2405.15613v2.pdf WRITE=1
 ```
 
-Bez `WRITE=1` wypisuje markdown na stdout (podgląd). Z `WRITE=1` skrypt **automatycznie** aktualizuje `log.md`, `index.md` oraz powiązane strony `methods/` / `concepts/` (drugi call LLM → `tools/wiki_update.py`). Idempotentne — ponowny ingest nie duplikuje wpisów.
+Bez `WRITE=1` wypisuje markdown na stdout (podgląd). Z `WRITE=1` skrypt **automatycznie** aktualizuje `log.md`, `index.md`, `sources/index.md` oraz powiązane strony `methods/` / `concepts/` (drugi call LLM → `tools/wiki_update.py`). Idempotentne — ponowny ingest nie duplikuje wpisów.
 
 ```bash
 # tylko odśwież wiki z istniejącej strony source (bez ponownego LLM na PDF)
@@ -115,6 +115,8 @@ Vault `conifervision/` jest bundle OKF zgodnym ze [specyfikacją Google](https:/
 ```bash
 make okf-lint          # walidacja frontmatter, indexów, log.md
 make okf-lint FIX=1    # auto-fix: status, generated, description, typy Title Case
+make concept-gate           # po partii ingestów; zapisuje arkusz decyzji, nie tworzy stron
+make concept-gate APPLY=1   # tworzy strony z decision: accept
 ```
 
 Lint sprawdza m.in. `okf_version` w root `index.md`, brak frontmatter w `log.md` i `*/index.md`, wymagane `type` + zalecane `generated`/`description` na conceptach.

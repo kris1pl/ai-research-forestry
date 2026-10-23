@@ -43,7 +43,7 @@ renumbered:
 
 # exp-002 RGB instance-seg backend ceiling (H3 v1.1)
 
-**Queue:** [[experiments/exp-001-per-layer-baselines]] (H1) → **exp-002 / H3 (this page)** → [[experiments/exp-003-merge-fusion-v1]] (H2).  
+**Queue:** [[experiments/r-class-itd/exp-001-per-layer-baselines]] (H1) → **exp-002 / H3 (this page)** → [[experiments/r-class-itd/exp-003-merge-fusion-v1]] (H2).  
 **Gate:** ADR-002 — sequence approved (see [[project/decisions]]). **Start after exp-001a closure** (bbox bank + golden protocol frozen). exp-001b (LM/CHM) may run in parallel; not required for H3 RGB mask bake-off.  
 **Status (2026-10-12):** **H3 closed (preliminary).** C1/C2/C3 scored on Workbench (SAM **vit_h**, 5 golden tiles). See **Closure** and [[#Results]]. Optional ECSeg/StarDist **deferred**. Not a claim of production-ready **end-to-end** crown deployment at high business confidence.
 
@@ -69,7 +69,7 @@ We test whether **crown outline quality** differs enough between segmentation ap
 
 **H3 v1.1 (active):**
 
-On the **same hold-out as H1 v1.1** — **small-sparse R-class** crowns on `kaxen_197_1` (not closed-canopy dense) — with **silver clipped** masks as the mask reference, differences between **runnable** RGB instance-seg backends and between **box-prompt policies** inherited from exp-001a are **systematic enough** (especially on **small** size bin) that we can recommend one **`mask_backend` + `prompt_policy`** for [[experiments/exp-003-merge-fusion-v1]]. If backends and prompt variants are similarly weak or near-tie, **do not** proceed to mask-aware fusion as the primary bet (data / label program instead).
+On the **same hold-out as H1 v1.1** — **small-sparse R-class** crowns on `kaxen_197_1` (not closed-canopy dense) — with **silver clipped** masks as the mask reference, differences between **runnable** RGB instance-seg backends and between **box-prompt policies** inherited from exp-001a are **systematic enough** (especially on **small** size bin) that we can recommend one **`mask_backend` + `prompt_policy`** for [[experiments/r-class-itd/exp-003-merge-fusion-v1]]. If backends and prompt variants are similarly weak or near-tie, **do not** proceed to mask-aware fusion as the primary bet (data / label program instead).
 
 **H3 v1.0 (superseded):** On **dense** tiles, ECSeg vs Tier A (StarDist / SAM2-prompted) mask ceilings differ enough that backend choice changes merge ROI **more than adding another bbox detector**. *Misaligned with exp-001a:* golden is small-sparse; H1 already fixed the bbox story (multi-scale bank **C** = `svk_full@800` ∪ `FT@400`). Dense-ITD and open/dense structural split remain **deferred** until overlap GT exists.
 
@@ -87,7 +87,7 @@ Production vision moves from **points/boxes** toward **crown shapes** for invent
 - H1 showed **FN on small trees** dominates bbox error on this hold-out; mask quality may hinge on **which boxes prompt** SAM-family (bank C vs ablations), not only on seg model family
 - Silver reference: clipped SAM pseudo-GT (not raw SAM oracle as a detector ceiling — see exp-001 archive note)
 - Literature context for dense ITD remains useful for **future** tiles: [[concepts/literature-map-dense-itd]], [[concepts/dense-stand-detection]] — **out of scope** for this H3 iteration
-- Feeds [[experiments/exp-003-merge-fusion-v1]] Variant B (mask-aware merge)
+- Feeds [[experiments/r-class-itd/exp-003-merge-fusion-v1]] Variant B (mask-aware merge)
 
 #### Takeaway
 
@@ -440,8 +440,8 @@ Handoff complete for H3 scope. Any **next program bets** (detection, merge, lite
 
 ## Related
 
-- [[experiments/exp-001-per-layer-baselines]]
-- [[experiments/exp-003-merge-fusion-v1]]
+- [[experiments/r-class-itd/exp-001-per-layer-baselines]]
+- [[experiments/r-class-itd/exp-003-merge-fusion-v1]]
 - [[project/research-tree-detection-ensemble]]
 - [[project/hypothesis-validation-loop]]
 - [[concepts/literature-map-dense-itd]]

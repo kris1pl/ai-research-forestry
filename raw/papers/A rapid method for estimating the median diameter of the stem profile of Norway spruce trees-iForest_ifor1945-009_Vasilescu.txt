@@ -1,0 +1,814 @@
+i F o r e s t
+F o r e s t
+Biogeosciences and Forestry
+Biogeosciences and Forestry
+A rapid method for estimating the median diameter of the stem profile 
+of Norway spruce (Picea abies Karst) trees
+Maria Magdalena Vasilescu, 
+Cornel Cristian Teresneu, 
+Florin Dinulica
+The median diameter of a longitudinal section of the stem may be used to
+determine the stem volume. However, to calculate stem volume, many mea-
+surements  of  diameter  at  different  heights  along  the  stem  are  required.
+Therefore, this approach is not generally applied because time-consuming and
+expensive. Here, we propose a novel, more rapid method to obtain median
+diameter using the area of the stem profile. A total of 218 height/diameter
+classes from more than 5000 spruce trees (Picea abies Karst.) were used to
+compute the median diameter using the classical method. In parallel, a regres-
+sion model to assess the median diameter was developed. The strongest pre-
+dictor of the median diameter for the stem profile was the diameter at breast
+height (R2 = 0.9985). Statistical analysis revealed that the height of the median
+diameter on the stem profile was 0.3 × H (tree height). The model was verified
+on standing and felled trees, revealing that differences between classical com-
+putations and the proposed model were less than 2% in most cases (86.24% of
+trees). The median diameter of the stem profile provides valuable information
+on stand architecture that could help in advancing our understanding on the
+mechanical stability of Norway spruce trees (i.e., delineating breakage point),
+growth model predictions, and competition among trees.
+Keywords: Forest Mensuration, Median Diameter, Stem, Structure, Tree Stabil-
+ity
+Introduction
+Various methods are used to estimate the
+volume of both standing and felled trees.
+Of the many methods applied to estimate
+the bole volume of felled trees, Smalian’s,
+Huber’s and Newton’s formulae are usually
+adopted. All three methods provide good
+results for a frustum of a paraboloid and a
+cylinder (Giurgiu 1979,  Hamilton 1988,  Le-
+ahu 1994,  2007,  Philip 1994,  Giurgiu et al.
+2004, Tomusiak & Zarzynski 2007, Van Laar
+& Akça 2007, West 2009, Soares et al. 2010,
+Akossou et al. 2013). For standing trees, dif-
+ferent  formulae  with  three  parameters
+(breast height diameter, height, and form)
+are used based on several recommenda-
+tions  (Schiffel  1899,  Pollanschütz  1965,
+Giurgiu 1979, Avery & Burkhart 1983, Philip
+1994,  Husch et al. 2003,  Parent & Moore
+2003,  Giurgiu  et  al.  2004,  Leahu  2007,
+Tomusiak  &  Zarzynski  2007,  Van  Laar  &
+Akça 2007). Alternatively, stem diameter at
+the center of wind resistance may be used
+to compute volume. This diameter is lo-
+cated at the center of gravity of the tree
+crown.  The  relative  height  of  this  point
+above the ground was used by Jonson in
+1928; however, this model was abandoned
+in favor of more efficient ways to estimate
+stem volume (Van Laar & Akça 1997).
+Nonetheless,  some  equations  use  sec-
+tions other than the cross-sectional area at
+the midpoint, or the cross-sectional area at
+the lower and upper end of the bole (For-
+slund 1982,  Wiant et al. 1991,  Yavuz 1999,
+Coble  &  Wiant  2000,  Wiant  et  al.  2002,
+Coble  &  Lee  2003,  Ozcelik  et  al.  2006).
+Hossfeld outlines the  importance  of  the
+cross-sectional  area  at  one-third  of  the
+stem  length/height  (Giurgiu  1979,  Leahu
+1994,  Leahu 2007,  Van Laar & Akça 2007,
+West 2009, Ducey & Williams 2011, Durkaya
+& Durkaya 2011). A similar theory uses the
+true form quotient defined by diameters
+measured above the ground at 0.1 of tree
+height (H) and 0.3 × H (Giurgiu et al. 2004).
+If the median diameter value of the stem
+profile is known, the stem volume may be
+computed using the Mathiesen’s formula
+(Mathiesen 1925 – eqn. 1):
+where  DM is the median diameter of the
+stem profile; and A is the total area of the
+stem profile (∑ Ai). The area of each sec-
+tion, Ai (L × Di) is based on L, the length of
+the stem sections, while Di represents the
+diameter at the middle of the sections i (i
+=1, 2, …, n). This method was proposed in
+1925, with its principle considering the cen-
+ter of gravity of the median diameter in
+relation to the area of the stem profile. The
+median diameter is defined as the diameter
+that divides the stem profile into two equal
+parts of the area. However, because labori-
+ous calculation is required, Mathiesen’s for-
+mula is avoided in practice, with Huber’s
+formula being preferred to determine the
+precise  volume  of  the  tree  stem  (Ichim
+1954,  Leahu  2007).  The  size  of  median
+diameter  may  be  found  from  the  area
+when  the  profile  shape  is  known,  using
+graphical softwares such as those used in
+geodesy (Teresneu & Ionescu 2011,  Teres-
+neu 2012). However, in practice, it is diffi-
+© SISEF http://www.sisef.it/iforest/
+328
+iForest 10: 328-333
+Department of Forest Engineering, Forest Management Planning and Terrestrial Measure-
+ments, Faculty of Silviculture and Forest Engineering, Transilvania University of Brasov, Sirul 
+Beethoven 1, 500123, Brasov (Romania)
+@ Maria Magdalena Vasilescu (vasilescumm@unitbv.ro)
+Received: Dec 12, 2015 - Accepted: Sep 07, 2016
+Citation: Vasilescu MM, Teresneu CC, Dinulica F (2017). A rapid method for estimating the 
+median diameter of the stem profile of Norway spruce (Picea abies Karst) trees. iForest 10: 
+328-333. – doi: 10.3832/ifor1945-009 [online 2017-02-11]
+Communicated by: Emanuele Lingua
+Research Article
+Research Article
+doi: 
+doi: 10.3832/ifor1945-009
+10.3832/ifor1945-009
+vol. 10, pp. 328-333
+vol. 10, pp. 328-333
+v=3
+4⋅DM⋅A
+
+
+Vasilescu MM et al. - iForest 10: 328-333
+cult to measure the shape of the profile,
+making this method inefficient.
+This study aimed to develop a more rapid
+method for assessing the median diameter
+of the stem profile of Norway spruce trees
+(Picea abies Karst.). Such a method allows
+the Mathiesen’s formula to become a feasi-
+ble  tool  for  practical  use.  In  addition,
+because tree resistance is related to stem
+mass (Peltola 2006, Urata et al. 2011), the
+median diameter computed for the area of
+the stem profile could be used to study
+tree resistance against the wind. Given the
+importance and forested area covered by
+Norway spruce in Romania (22% - Sofletea
+& Curtu 2007), the study focused on this
+tree species.
+Materials and methods
+Materials
+A database was established in 2012 by
+compiling the stem diameters of 5403 Nor-
+way spruce trees from Romania, grouped
+into 218 diameter-height classes (Tab. S1 in
+Supplementary  material).  Original  mea-
+surements were performed by the FRMPI
+(Forest Research and Management Plan-
+ning Institute of Romania) before 1950 in
+200  plots,  located  in  the  Romanian
+Carpathians. The database consists of Nor-
+way spruce trees with breast height diame-
+ter (DBH) between 12 and 60 cm, and total
+height between 10 and 42 m. These data
+were published in 1957 as “General tables
+on decrease of stem diameter” (Popescu-
+Zeletin et al. 1957). For all 218 classes of
+trees, Vasilescu (2013) computed (Tab. S1 in
+Supplementary material) the median diam-
+eter of the stem profile (Fig. 1) using sec-
+tions of 2 m for the longitudinal section of
+the stem area (eqn. 2), the absolute height
+from the lower end of the trunk where
+median diameter is measured (HDM – eqn.
+3), and the relative height from the lower
+end  of  the  trunk  where  this  diameter
+occurs (HDMrel – eqn. 4).
+The median diameter of the stem profile
+(DM) may be obtained as (eqn. 2):
+where ADM1 and ADM2 are the areas with val-
+ues under and above A/2 in the row of the
+cumulated areas of the sections;  DM1 and
+DM2 are the corresponding values for diam-
+eters  of  ADM1 and  ADM2, respectively. The
+parameter HDM can be estimated using eqn.
+3:
+where HDM1 and HDM2 are the distances be-
+tween the lower end of the trunk and the
+point where  DM1 and  DM2 occur.  Conse-
+quently,  HDMrel may be derived as follows
+(eqn. 4):
+Data analysis
+From the previous work (Vasilescu 2013),
+data  for  breast  height  diameters  were
+grouped into 25 diameter classes of size 2
+cm. Total heights were also assigned to
+classes of 2 m in size.
+A correlation analysis was applied to test
+the association between the median diam-
+eter at breast height (DBH) and  DM, HDM,
+and HDMrel. Similarly, the association of tree
+height (H) with DM, HDM, and HDMrel was also
+tested. Moreover, DBH and H were used as
+independent variables in regression analy-
+sis to establish a rapid method for estimat-
+ing the median diameter. The best fitted
+models  to  express  the  relationship  be-
+tween median diameter or its height and
+tree size data were examined using the  F
+(Fisher) test. The accuracy of the models
+for the median diameter of the stem pro-
+file was estimated by computing the bias
+as (eqn. 5):
+The coefficient of variation within each
+breast  height  diameter  class  was  com-
+puted for height, median diameter of the
+stem  profile,  and  absolute  and  relative
+height of the median diameter, in order to
+assess data homogeneity. 
+Results and discussion
+Relationship between median diameter 
+and tree size
+The evolution of the median diameter of
+the stem profile as a function of breast
+height diameter for Norway spruce trees in
+Romania is shown in Fig. 2a. A significant,
+positive relationship was found by regres-
+sion analysis (R2 = 0.9985; F = 143871.1; df =
+1, 216;  P  < 0.0001), and the following re-
+gression model was obtained (eqn. 6):
+The  same  values  of  median  diameter
+grouped by total tree height indicated a
+large variation for each tree height class
+(Fig. 2b). Using pairs, defined by median
+diameter and tree height, the coefficient of
+329
+iForest 10: 328-333
+Fig. 1 - Position of the median diameter (DM) on the stem profile. (HDM): height of the
+median diameter along the stem; (A): area of the stem profile; (Ai): area of the i-th lon-
+gitudinal section. DM divides the stem profile into two parts of equal area (A/2).
+Fig. 2 - Regression analysis of the median diameter of the stem profile in Picea abies
+Karst. With: (a) breast height diameter; and (b) height. Best fitting models are shown
+by solid lines (F test: n = 218, P < 0.001).
+iForest – Biogeosciences and Forestry
+DM =0.7061⋅DBH +3.235
+DM =DM 1−( DM 1−DM 2)⋅A/2−ADM 1
+ADM 2−ADM 1
+H DM =H DM 1+(H DM 2−H DM 1)⋅DM 1−DM
+DM 1−DM 2
+H DMrel= H DM
+H
+BiasDM= DM est−DM obs
+DM obs
+⋅100
+
+
+Median diameter estimation of the stem profile in Norway spruce
+determination  (R2)  was  only  0.5523.  The
+best fitted model in this case was a polyno-
+mial expression (eqn. 7): 
+(R2  = 0.5523;  F  = 132.6324;  df =  2, 215;  P  <
+0.0001). However, the model accuracy was
+lower than that obtained using eqn. 6.
+Analysis of the absolute height of 
+median diameter
+The relationships of the absolute height
+of the median diameter with the diameter
+at breast height (DBH) and the total height
+(H) are shown in Fig. 3a and Fig. 3b, respec-
+tively. The polynomial regression applied
+indicated a weaker relationship in the first
+case (R2 = 0.4573; F = 90.5741; df = 2, 215; P <
+0.0001) as compared with the second case
+(R2  = 0.9876;  F  = 17234.41;  df =  1, 216;  P  <
+0.0001). The best fitted models using DBH
+and H as predictors were as follows (eqn. 8
+and eqn. 9, respectively):
+The low accuracy of the first model (eqn.
+8) was confirmed by the large dispersion of
+values of HDM, as depicted in Fig. 3a.
+A positive correlation was detected be-
+tween the absolute height of the median
+diameter and tree height (r = 0.9937).
+Analysis of the relative height of 
+median diameter
+The core of this study is the analysis of
+the relationship of the relative height of
+median diameter (HDMrel) with DBH and H in
+Norway spruce trees. Our results showed
+that the relative height along the stem pro-
+file where the median diameter is recorded
+was  poorly  correlated  with  the  breast
+height diameter (Fig. 4a). HDMrel values were
+mainly distributed along and around a hori-
+zontal asymptote (intercept = 0.2961, t[216] =
+103.0696, P < 0.0001), according to the fol-
+lowing relationship (eqn. 10):
+The mean HDMrel value computed using all
+the 218 tree size classes was 0.298695 ±
+0.001936 (95% confidence interval), with a
+low coefficient of variation (4.88%), indicat-
+ing fairly homogenous samples.
+The  results  revealed  that  the  median
+diameter of the longitudinal sections of the
+stem  could  be  determined  as  approxi-
+mately  0.3  ×  H  in  the  case  of  Norway
+spruce trees in Romania.
+The  relationship  between  the  relative
+height of the median diameter along the
+stem and total tree height (Fig. 4b) was
+modeled  using  a  polynomial  regression,
+obtaining the following best-fitting model
+(R2  = 0.5344;  F  = 123.4187;  df =  2, 215;  P  <
+0.0001 – eqn. 11):
+Data variability
+The  coefficient  of  variation  was  com-
+puted  for  each  breast  height  diameter
+class of each studied variable of the stem
+profile:  tree  height,  median  diameter  of
+the longitudinal section, and absolute and
+relative height of median diameter.
+The classes of diameter at breast height
+were homogenous for all the studied vari-
+ables.  The  coefficient  of  variation  was
+lower than 30% in most cases, ranging be-
+tween 13.99% and 25.78% for total height,
+and  between  15.73%  and  31.64%  for  the
+absolute height of the median diameter on
+the  stem.  For  comparison,  the  median
+diameter  values  (range:  0.60%  to  1.64%)
+and the relative location of median diame-
+ter values (range: 2.04% to 6.74%) were sig-
+nificantly lower. Due to high data homo-
+geneity,  arithmetic  means  of  the  DBH
+classes were used. In this case, the arith-
+metic mean of all  HDMrel mean values was
+0.2978. The observed variation of values in
+all 25 breast height diameter classes was
+extremely low (coefficient of  variation =
+1.99%).
+Accuracy of predictive models
+The median diameter of the stem profile
+assessed using DBH (eqn. 6) was compared
+with  the  “true”  median  diameter  using
+classical  methods  (eqn.  2),  obtaining  a
+maximum absolute difference of 0.88 cm.
+For 57.34% of the analyzed trees, even a
+lower difference was observed (between
+-3 and 3 mm).
+We also calculated the relative deviation
+of  median  diameter  estimates  obtained
+with  the  two  aforementioned  methods
+using both DBH and H as predictors (Fig. 5a,
+Fig. 5b). Results showed that such devia-
+tion was lower than 2% in 86.24% of the
+analyzed trees. The observed relative dif-
+ferences  amounted  to  7.60%  for  smaller
+trees in the range 12-14 cm for DBH, or 10-14
+m for H. Similar differences were obtained
+when  comparing  diameters  measured  at
+0.3 × H to the median diameter of the stem
+iForest 10: 328-333
+330
+Fig. 3 - Relationship of the absolute height of the median diameter along the stem
+profile with: (a) breast height diameter; and (b) tree height. Best fitting models are
+shown by solid lines (F test: n = 218; P < 0.001).
+Fig. 4 - Values of the relative height of median diameter along the stem with respect
+to: (a) the class of breast height diameter; and (b) the tree height class. The best fit-
+ting model is shown by a solid line (F test: n = 218; P < 0.001), while the dashed line
+represents the horizontal asymptote, HDMrel = 0.2961  (F test: n = 218; P < 0.001).
+iForest – Biogeosciences and Forestry
+H DMrel≈0.3
+H DMrel=0.22738+0.004132⋅H−0.000052⋅H
+2
+H DM =0.3288⋅H−0.7621
+H DM =−0.0030⋅DBH
+2+0.3421⋅DBH+0.3698
+DM =−0.0111⋅H
+2+1.5076⋅H−3.4374
+
+
+Vasilescu MM et al. - iForest 10: 328-333
+profile using the classical method.
+Tab. 1 displays the best fitted models for
+the median diameter of the stem profile,
+and  absolute  and  relative  height  of  the
+median  diameter  position.  As  expected,
+DM, HDM, and HDMrel were best predicted by
+using both independent variables (DBH and
+H) as predictors.
+Model selection for practice
+Our results indicated that two aforemen-
+tioned methods could be used to obtain a
+rapid assessment of median diameter of
+the stem profile for Norway spruce trees in
+Romania, specifically: (i) using eqn. 6 based
+on tree  DBH, or its simplified form to be
+applied  when  less  accuracy  is  required
+(eqn. 12):
+(ii) measuring the stem diameter at 0.3 × H
+distance from the base of the trunk.
+The first method only involves measuring
+breast height diameter and a simple calcu-
+lation for both standing and felled trees.
+The second method requires the measure-
+ment  of  tree  length  (considered  to  be
+equal  to  tree  height),  followed  by  the
+direct measurement of the median diame-
+ter at 0.3 × H distance from the stem base.
+These  results  support  the  empirical  evi-
+dence  of  Forslund  (1982),  whereby  the
+average center of gravity of aspen boles
+without branches is located at 3/10 of the
+bole  height  from  its  base.  Wood  et  al.
+(1990) also showed the importance of the
+point on the stem at a relative height of
+approximately 0.3. They obtained a mini-
+mum bias in the estimation of tree volume,
+using  centroid  sampling  for 114  trees  of
+radiata pine, where the point of sampling
+was fixed at the height of the centroid.
+Perspectives of easier computation of 
+the median diameter
+The  practical  implications  of  the  pro-
+posed methods  are  relevant,  particularly
+when  the  relative  height  of  the  median
+diameter is correlated with the distribution
+of volume in trees. These methods should
+be applied to other species to validate their
+use, especially in the case of conifers. The
+Mathiesen’s formula for volume estimation
+could be modified and improved by using
+the proposed models. Our results demon-
+strated  the  feasibility  of  assessing  the
+stand volume using the median diameter
+of  the  stem  profile.  For  two  species  of
+pines (loblolly and ponderosa pine), Coble
+& Wiant (2000) illustrated the accuracy of
+the centroid method for determining vol-
+umes of standing trees, requiring only the
+diameter measurement of one upper stem.
+The median diameter of the stem profile
+could be used to study stand architecture
+and competition  between trees  (Fig.  6).
+Indeed,  median  diameter  distributions
+from forest inventories provide a more pre-
+cise way of describing forest stand struc-
+ture and the relationships between trees.
+Moreover, DM may allow the development
+of forest growth models (similar to those
+used  in  Switzerland)  to  estimate  the
+growth of single trees based on  DBH, H,
+and a given upper stem diameter (Van Laar
+& Akça 2007). Furthermore, the possibility
+of using the 0.3 × H estimated in this study
+as an index of tree competition could be
+explored.  Biging & Dobbertin (1995) pro-
+posed several crown competition indexes
+based on evaluation at one-third, one-half,
+two-thirds  and  other  relative  heights  of
+study trees.
+Compared to  DBH, DM provides a more
+accurate prediction of the stem form. It
+also provides a better way of indicating the
+response of tree form to variability in envi-
+331
+iForest 10: 328-333
+Tab. 1 - Predictive models of median diameter and its absolute and relative height
+along the stem obtained by multiple regression analysis.
+Best fitted models
+R2
+df
+F
+P
+DM = 2.716099 + 0.688689 DBH + 0.041612 H
+0.999055
+2, 215
+113689.80
+< 0.0001
+HDM = -0.703391 - 0.029121 DBH + 0.365176 H
+0.998636
+2, 215
+78681.77
+< 0.0001
+HDMrel = 0.264829 - 0.000983 DBH + 0.002511 H
+0.873587
+2, 215
+742.88
+< 0.0001
+Fig. 5 - Relative difference (%) of median diameter estimates with: (a) the class of
+breast height diameter; (b) the tree height class. The depicted model for predicting
+median diameter values is: DM = 0.7061 DBH + 3.235.
+Fig. 6 - Schematic
+representation of
+the stand struc-
+ture using the
+median diameter
+of stem profile as a
+descriptor. The
+horizontal projec-
+tion of the cross-
+sectional area at
+the height of the
+median diameter
+of trees could be
+considered an al-
+ternative approach
+to study tree
+growth, tree resis-
+tance to wind, and
+forest dynamics.
+iForest – Biogeosciences and Forestry
+DM =0.7⋅DBH +3
+
+
+Median diameter estimation of the stem profile in Norway spruce
+ronmental  factors.  For  instance,  Pollan-
+schütz (1965) used a three-variate (DBH, H,
+and diameter at 0.3 × H) model to calculate
+the form factor. This point along the stem
+better characterizes the ability of a tree to
+respond to ecological factors. Fifty percent
+of the area of the stem profile and approxi-
+mately 50% of the stem volume are concen-
+trated  below  the  cross-sectional  area  at
+the height of median diameter (0.3  × H,
+according  to  our  study).  Moreover,  the
+horizontal projection of the cross-sectional
+area corresponding to DM might represent
+a new approach to assess tree stability and
+failure. Furthermore, the core of juvenile
+wood below the crown is more or less con-
+stant, whereas that of adult wood covering
+this core decreases from the base to the
+tip (Brüchert et al. 2000). Therefore, the
+cross section of the stem located near the
+median  diameter  exhibits  a  particular
+mechanical  behavior.  Indeed,  Young’s
+modulus seems to be at its lowest in the
+bottom part of Norway spruce trees (Brü-
+chert et al. 2000).
+Resistance of a tree depend on many fac-
+tors.  Gardiner et al. (2008) observed that
+stem characteristics (diameter and wood
+strength),  root  plate  morphology,  soil
+type, and soil moisture vary widely depend-
+ing  on  the  location  of  the  tree  crown
+within the canopy, tree species, stand loca-
+tion, and wind exposure. A tree is assumed
+to  break when the stress acting on the
+stem exceeds a critical value of the modu-
+lus of rupture (Peltola et al. 1999). Based
+on this assumption,  Peltola et al. (1999)
+developed a model to assess the risk of
+wind and snow damage to single trees and
+stands  of  Norway  spruce.  For  individual
+Scots pine and Norway spruce, Gardiner et
+al.  (2000) compared  two  models  devel-
+oped  to  predict  the  critical  wind  speed
+required to damage coniferous trees with
+varying  tree  height  and  stem  taper
+(DBH/H). The ratio defined by the median
+diameter  of  the  stem  profile  and  tree
+height  (DM/H)  helps  to  determine  the
+breaking strength of the stem and, hence,
+tree resistance to overturning.  Ancelin et
+al. (2004) also developed a model of tree
+response to wind, based on the numerical
+description of tree structure. This concept
+is compatible with a model of coniferous
+forest  stand  dynamics.  Thus,  we  recom-
+mend using the median diameter of the
+stem profile to predict the sensitivity of
+trees breakage and bending.
+Conclusions
+Our  study  developed  two  methods  to
+assess the median diameter of the stem
+profile without measuring multiple diame-
+ters at different heights along the stem.
+The  median  diameter  may  be  obtained
+without classical computations that require
+the area of the stem profile. We demon-
+strated that diameter at 0.3  × height is a
+good approximation of the median diame-
+ter.  Accuracy  analysis  of  the  proposed
+models indicates differences < 2% in most
+cases.  Tree  distribution  based  on  the
+median diameter of the stem profile repre-
+sents a new direction for forest dynamics
+studies.  The  ratio  between  the  median
+diameter  of  stem  profile  and  the  tree
+height (DM/H) could be applied for measur-
+ing other economically important factors,
+including  the  breaking  strength  of  the
+stem and tree resistance to overturning.
+Acknowledgements
+We thank Andres Kiviste and Allan Sims
+(Institute of Forestry and Rural Engineer-
+ing, Estonian University of Life Science) for
+providing  Mathiesen’s  original  paper
+(1925).  We  thank  Paolo  Cherubini  (WSL
+Swiss  Federal  Institute  for  Forest,  Snow
+and Landscape Research), Tudor Stancioiu,
+and Alexandru Borz (Faculty of Silviculture
+and Forest  Engineering,  Transilvania Uni-
+versity of  Brasov)  for providing valuable
+comments on the manuscript.
+Author contributions
+MMV originally formulated the concept
+and  elaborated  the  database;  MMV  and
+CCT  developed  the  methodology;  MMV,
+FD, and CCT analysed the data; MMV for-
+mulated  the  mathematical  models;  and
+MMV and FD wrote the manuscript.
+References
+Akossou A, Arzouma S, Attakpa E, Fonton N,
+Kokou K (2013). Scaling of teak (Tectona gran-
+dis) logs by the xylometer technique: accuracy
+of volume equations and influence of the log
+length. Diversity 5: 99-113. - doi: 10.3390/d5010
+099
+Ancelin P, Courbaud B, Fourcaud T (2004). De-
+velopment of an individual tree-based mechani-
+cal model to predict wind damage within forest
+stands. Forest Ecology and Management 203:
+101-121. - doi: 10.1016/j.foreco.2004.07.067
+Avery TE, Burkhart H (1983). Forest measure-
+ments. McGraw-Hill, New York, USA, pp. 331.
+[online]  URL:  http://www.cabdirect.org/cabdi
+rect/abstract/19830684098
+Biging  GS, Dobbertin  M (1995).  Evaluation of
+competition indices in individual tree growth
+models.  Forest  Science  41:  360-377.  [online]
+URL: http://www.ingentaconnect.com/content/
+saf/fs/1995/00000041/00000002/art00013
+Brüchert F, Becker G, Speck T (2000). The mech-
+anics of Norway spruce [Picea abies (L.) Karst]:
+mechanical properties of standing trees from
+different thinning regimes. Forest Ecology and
+Management 135: 45-62. - doi:  10.1016/S0378-
+1127(00)00297-8
+Coble DW, Wiant HV (2000). Centroid method:
+comparison of simple and complex proxy tree
+taper  functions.  Forest  Science  46:  473-477.
+[online] URL: http://www.ingentaconnect.com/
+content/saf/fs/2000/00000046/00000004/art0
+0001
+Coble DW, Lee YJ (2003). Use of the centroid
+method to estimate volumes of Japanese red
+cedar trees in southern Korea. Korean Journal
+of Ecology 26: 123-127. - doi: 10.5141/JEFB.2003.
+26.3.123
+Ducey M, Williams M (2011). Comparison of Hoss-
+feld’s method and two modern methods for
+volume estimation of standing trees. Western
+Journal of Applied Forestry 26: 19-23. [online]
+URL: http://www.ingentaconnect.com/content/
+saf/wjaf/2011/00000026/00000001/art00003
+Durkaya B, Durkaya A (2011). Tomruk hacminin
+hesaplanmasinda  kullanilan ciesitli  hacim  for-
+müllerinin  karsilasitirilmasi  [Comparing  differ-
+ent  formulas  using  log volume  estimations].
+Bartin  Orman  Fakültesi  Dergisi  13:  18-22.  [in
+Turkish]
+Forslund R (1982). A geometrical tree volume
+model based on the location of the centre of
+gravity of the bole. Canadian Journal of Forest
+Research 12: 215-221. - doi: 10.1139/x82-033
+Gardiner B, Peltola H, Kellomäki S (2000). Com-
+parison of two models for predicting the criti-
+cal wind speeds required to damage coniferous
+trees.  Ecological  Modelling  129:  1-23.  -  doi:
+10.1016/S0304-3800(00)00220-9
+Gardiner  B,  Byrne  K,  Hale  S,  Kamimura  K,
+Mitchell S, Peltola H, Ruel JC (2008). A review
+of mechanistic modelling of wind damage risk
+to forests. Forestry 81: 447-463. - doi: 10.1093/
+forestry/cpn022
+Giurgiu V (1979). Dendrometrie si auxologie fo-
+restiera [Forest biometry]. Ed. Ceres, Bucha-
+rest, Romania, pp. 692. [in Romanian]
+Giurgiu V, Decei I, Draghiciu D (2004). Metode si
+tabele dendrometrice [Methods and tables of
+forest  mensuration].  Ed.  Ceres,  Bucharest,
+Romania, pp. 575. [in Romanian]
+Hamilton GJ (1988). Forest mensuration hand-
+book. Forestry Commission Booklet 39, HMSO,
+London, UK, pp. 275.
+Husch B, Beers TH, Kershaw J (2003). Forest
+mensuration. John Wiley and Sons, New Jersey,
+USA, pp. 433.
+Ichim R (1954). Cubajul bustenilor si al arborilor
+fara  varf  prin  metoda  centrului  de  greutate
+(Procedeul Guldin - Mathiesen II) [Bole volume
+and tree volume using centre of gravity meth-
+od - second method by Guldin - Mathiesen].
+Revista Padurilor 11: 25-31. [in Romanian]
+Leahu I (1994). Dendrometrie [Forest mensura-
+tion]. EDP, Bucharest, Romania, pp. 374. [in
+Romanian]
+Leahu I (2007). Dendrometrie [Forest mensura-
+tion]. Transilvania University Press, Brasov, Ro-
+mania, pp. 130. [in Romanian]
+Mathiesen A (1925). Tüve pikuti läbilõike pind
+faktor tüve massi määramiseks [The area of the
+stem’s longitudinal section - predictor of the
+volume estimation]. Ed. Bergmann, Tartu, EE,
+pp. 31. [in Estonian]
+Ozcelik R, Wiant Jr H, Brooks J (2006). Estimat-
+ing log volumes of three tree species in Turkey
+by six formulae. Forest Product Journal 56: 84-
+86. [online] URL: http://search.proquest.com/o
+penview/8569fffaff7a27a08293a2e72e17b184/1
+Parent D, Moore J (2003). A stand volume equa-
+tion for cruising small-diameter material. Jour-
+nal of Forestry 101: 5-6. [online] URL:  http://
+www.ingentaconnect.com/content/saf/jof/200
+3/00000101/00000005/art00004
+Peltola H (2006). Mechanical stability of trees
+under static loads. American Journal of Botany
+93: 1501-1511. - doi: 10.3732/ajb.93.10.1501
+Peltola H, Kellomäki S, Väisänen H, Ikonen VP
+(1999). A mechanistic model for assessing the
+risk of wind and snow damage to single trees
+and stands of Scots pine, Norway spruce, and
+iForest 10: 328-333
+332
+iForest – Biogeosciences and Forestry
+
+
+Vasilescu MM et al. - iForest 10: 328-333
+birch. Canadian Journal of Forest Research 29:
+647-661. - doi: 10.1139/x99-029
+Philip M (1994). Measuring trees and forests.
+Cab  International,  London,  UK,  pp.  320.
+[online]  URL:  http://www.cabdirect.org/cabdi
+rect/abstract/19940600622
+Pollanschütz J (1965). Eine neue methode der
+formzahl  und  massenbestimmung  stehender
+stämme [A new method of determining form
+factor and volume of standing trees]. Österre-
+ichischer Agrarverlag, Vienna, Austria, pp. 186.
+[in German]
+Popescu-Zeletin I, Toma G, Armasescu S, Decei I,
+Dissescu R, Petrescu L, Dorin T, Stanescu M,
+Predescu  GH  (1957).  Tabele  dendrometrice
+[Tables of forest mensuration]. Ed. Agro-silvica
+de  Stat,  Bucharest,  Romania,  pp.  1319.  [in
+Romanian]
+Schiffel  A (1899). Form  and  inhalt  der Fichte
+[Form and volume of spruce trees]. Wien Frick,
+Vienna, AT, pp. 139. [in German]
+Soares CPB, Da Silva GF, Martins FB (2010). Influ-
+ence on section lengths on volume determina-
+tion in Eucalyptus tree. Cerne 16: 155-162. - doi:
+10.1590/S0104-77602010000200006
+Sofletea N, Curtu L (2007). Dendrologie [Den-
+drology]. Transilvania University Press, Brasov,
+Romania, pp. 540. [in Romanian]
+Teresneu C, Ionescu M (2011). Infografica pentru
+topografie si cadastru [Informatics for topogra-
+phy and cadastre]. Ed. Lux Libris, Brasov, Ro-
+mania, pp. 404. [in Romanian]
+Teresneu C (2012). Prelucrarea automata a date-
+lor geodezice [Automation of geodetic data].
+Transilvania University Press, Brasov, Romania,
+pp. 251. [in Romanian]
+Tomusiak R, Zarzynski P (2007). The old trees
+trunk’s volume determination with use of theo-
+dolite. Rocznik Dendrologiczny 55: 9-16.
+Urata T, Shibuya M, Koizumi A, Torita H, Cha JY
+(2011). Both stem and crown mass affect tree
+resistance to uprooting. Journal of Forest Re-
+search 17: 65-71. - doi: 10.1007/s10310-011-0249-6
+Van Laar A, Akça A (1997). Forest mensuration.
+Cuvillier Verlag, Göttingen, Gemany, pp. 418.
+Van Laar A, Akça A (2007). Forest mensuration.
+Springer,  Dordrecht,  Netherlands,  pp.  383.
+[online] URL:  http://books.google.com/books?
+id=ybjdxL2lHOQC
+Vasilescu MM (2013). The relative level of me-
+dian diameter on the longitudinal section of
+Norway spruce (Picea abies (L.) Karst) stem. In:
+“Forest and Sustainable Development”. Transil-
+vania University Press, Brasov, Romania, pp.
+129-132.  [online]  URL:  http://www.cabdirect.
+org/cabdirect/abstract/20133203661
+West PW (2009). Tree and forest measurement.
+Springer-Verlag, Berlin, Germany, pp. 191. - doi:
+10.1007/978-3-319-14708-6
+Wiant H, Wood G, Forslund R (1991). Comparison
+of centroid and paracone estimates of tree vol-
+ume. Canadian Journal of Forest Research 21:
+714-717. - doi: 10.1139/x91-099
+Wiant H, Spangler M, Baumgras J (2002). Com-
+parison of estimates of hardwood bole volume
+using importance sampling, the centroid meth-
+od, and some taper equations. Northern Jour-
+nal of Applied Forestry 19: 141-142. [online] URL:
+http://www.nrs.fs.fed.us/pubs/jrnl/2002/ne_200
+2_wiant_001.pdf
+Wood G, Wiant Jr H, Loy R, Miles J (1990). Cen-
+troid sampling: a variant of importance sam-
+pling for estimating the volume of sample trees
+of radiata pine. Forest Ecology and Manage-
+ment 36: 233-243. - doi:  10.1016/0378-1127(90)
+90027-9
+Yavuz  H  (1999).  Comparison  of  the  centroid
+method and four standard formulas for esti-
+mating log volumes. Turkish Journal of Agricul-
+ture and Forestry 23: 597-602. [online] URL:
+http://journals.tubitak.gov.tr/agriculture/abstra
+ct.htm?id=3607
+Supplementary Material
+Tab. S1 - Classical computation of the me-
+dian diameter.
+Link: Vasilescu_1945@suppl001.pdf
+333
+iForest 10: 328-333
+iForest – Biogeosciences and Forestry

@@ -1,0 +1,1825 @@
+ORIGINAL ARTICLE
+Contrasted allometries between stem diameter, crown area,
+and tree height in ﬁve tropical biogeographic areas
+Elodie Blanchard1 • Philippe Birnbaum1,2 • Thomas Ibanez1 • Thomas Boutreux1 •
+Ce´cile Antin3 • Pierre Ploton3 • Gre´goire Vincent3 • Robin Pouteau1 •
+Herve´ Vandrot1 • Vanessa Hequet4 • Nicolas Barbier3 • Vincent Droissart3,5 •
+Bonaventure Sonke´5 • Nicolas Texier3,5 • Narcisse Guy Kamdem5 •
+Donatien Zebaze5 • Moses Libalah5 • Pierre Couteron3
+Received: 9 September 2015 / Accepted: 3 June 2016
+ Springer-Verlag Berlin Heidelberg 2016
+Abstract
+Key message Across ﬁve biogeographic areas, DBH-CA
+allometry was characterized by inter-site homogeneity and
+intra-site heterogeneity, whereas the reverse was observed
+for DBH-H allometry.
+Abstract Tree crowns play a central role in stand dynam-
+ics. Remotely sensed canopy images have been shown to
+allow inferring stand structure and biomass which suggests
+that allometric scaling between stems and crowns may be
+tight, although insufﬁciently investigated to date. Here, we
+report the ﬁrst broad-scale assessment of stem vs. crown
+scaling exponents using measurements of bole diameter
+(DBH), total height (H), and crown area (CA) made on
+4148 trees belonging to 538 species in ﬁve biogeographic
+areas across the wet tropics. Allometries were ﬁtted with
+power functions using ordinary least-squares regressions
+on log-transformed data. The inter-site variability and
+intra-site (sub-canopy vs. canopy trees) variability of the
+allometries were evaluated by comparing the scaling
+exponents. Our results indicated that, in contrast to both
+DBH-H and H-CA allometries, DBH-CA allometry shows
+no signiﬁcant inter-site variation. This fairly invariant
+scaling calls for increased effort in documenting crown
+sizes as part of tree morphology. Stability in DBH-CA
+allometry, indeed, suggests that some universal constraints
+are sufﬁciently pervasive to restrict the exponent variation
+to a narrow range. In addition, our results point to inverse
+changes in the scaling exponent of the DBH-CA vs. DBH-
+H allometries when shifting from sub-canopy to canopy
+trees, suggesting a change in carbon allocation when a tree
+reaches direct light. These results pave the way for further
+advances in our understanding of niche partitioning in tree
+species, tropical forest dynamics, and to estimate AGB in
+tropical forests from remotely sensed images.
+Keywords Allometry  Tree architecture  Stem size 
+Ontogeny  Crown light exposure  Rainforest
+Introduction
+Forest
+ecosystems
+are
+complex
+three-dimensional
+arrangements of individual trees. Most models of forest
+structure and dynamic still rely on diameters at breast
+height (DBH) as an easy-to-measure proxy for 3D tree
+dimensions, such as tree height and crown sizes. In fact,
+data on tree height (H) and crown dimensions are more
+difﬁcult to acquire than DBH, especially from very large
+tropical trees that predominantly contribute to forest
+Communicated by E. Beck.
+& Elodie Blanchard
+blanchard@iac.nc
+1
+Institut Agronomique Ne´o-Cale´donien (IAC), Diversite´
+Biologique et Fonctionnelle des E´cosyste`mes terrestres,
+Laboratoire de Botanique et d’E´cologie Ve´ge´tale Applique´es,
+BP A5, 98848 Noumea, New Caledonia
+2
+Centre de Coope´ration Internationale en Recherche
+Agronomique Pour le De´veloppement (CIRAD), UMR
+51-AMAP, Boulevard de la Lironde, TA A-51/PS2,
+34398 Montpellier Cedex 5, France
+3
+Institut de Recherche Pour le De´veloppement (IRD),
+UMR AMAP, Boulevard de la Lironde, TA A-51/PS2,
+34398 Montpellier Cedex 5, France
+4
+Institut de Recherche Pour le De´veloppement (IRD),
+BP A5, 98848 Noume´a, New Caledonia
+5
+Laboratoire de Botanique Syste´matique et d’Ecologie,
+De´partement des Sciences Biologiques, Ecole Normale
+Supe´rieure, Universite´ de Yaounde´ I, BP 047, Yaounde´,
+Cameroon
+123
+Trees
+DOI 10.1007/s00468-016-1424-3
+
+
+structure (Lindenmayer et al. 2012; Lutz et al. 2013) and to
+carbon and biomass storage (AGB, Slik et al. 2013; Fauset
+et al. 2015; Bastin et al. 2015). Data on H are increasingly
+integrated in forest models (e.g., Kohyama et al. 2003;
+Feldpausch et al. 2012), notably with the recent use of
+airborne LiDAR (light detection and ranging) to measure
+forest height (e.g., Clark et al. 2004; Kennel et al. 2013). In
+comparison, crown size, shape, and position are seldom
+used (but see Harja et al. 2012; Bohlman and Pacala 2012;
+Taubert et al. 2015; Farrior et al. 2016), while it has been
+shown that they are appropriate variables to predict tree
+growth and mortality (Moravie et al. 1999; King 2005;
+Muller-Landau et al. 2006). To improve models in spite of
+difﬁculties in data acquisition, authors used tree allometries
+to estimate tree H and crown dimensions from DBH (e.g.,
+Harja et al. 2012; Bohlman and O’Brien 2006; Antin et al.
+2013).
+In recent decades, the variability of allometries between
+tree DBH and H, and its consequences for understanding
+stand dynamics and forest AGB estimation have raised
+increasing interest (e.g., Aiba and Kohyama 1996; Thomas
+1996; Feldpausch et al. 2011; Banin et al. 2012; Lines et al.
+2012; Harja et al. 2012; Thomas et al. 2015). In compar-
+ison, the allometries between crown dimensions and either
+DBH or H have received a very little interest. Most studies
+focused on the trade-off between investments in H versus
+crown expansion during ontogeny by comparing species
+adult stature (King 1996; Henry and Aarssen 1999;
+Kohyama et al. 2003; Poorter et al. 2003, 2006; Osunkoya
+et al. 2007; King and Clark 2011). Nevertheless, recent
+publications highlighted the importance of crown allome-
+tries in understanding the structural organization of forest
+stands and their productivity (Ma¨kela¨ and Valentine 2006;
+Coomes et al. 2012; Attocchi and Skovsgaard 2015; Mul-
+ler-Landau et al. 2006), the diversiﬁcation of tree archi-
+tecture (Olson et al. 2009), niche partitioning in trees
+within a forest stand (Lines et al. 2012; Antin et al. 2013),
+and the variations in canopy structure (Bohlman and
+O’Brien 2006; Bohlman and Pacala 2012; Palace et al.
+2015; Farrior et al. 2016). It was also recently demon-
+strated that including information on crown widths in
+classical AGB allometric models (i.e., based on DBH, H
+and wood density, Chave et al. 2005, 2014) greatly
+improved model ﬁt, particularly in the case of large trees
+(Goodman et al. 2014; Ploton et al. 2016).
+Allometries are of increasing importance in the devel-
+opment of remote sensing surveys of forests to estimate
+forest AGB at landscape and regional scales. Both tree
+H and crown sizes have been shown to be good predictors
+of AGB, and may be measured by remotely sensed infor-
+mation. For instance, AGB was modelled from canopy
+height data derived from airborne LiDAR (Asner 2009;
+Saatchi et al. 2011; Baccini et al. 2012; Zolkos et al. 2013;
+Bouvier et al. 2015) or from assessments of crown size
+distribution of canopy trees derived from textural analysis
+of very high spatial resolution (VHR) optical images
+(Proisy et al. 2007; Barbier et al. 2010; Ploton et al. 2013;
+Bastin et al. 2014; Singh et al. 2015). However, neither
+LiDAR nor VHR optical data provide direct data on tree
+DBH, which is the traditional biomass predictor and the
+main stand structure variable measured in the ﬁeld. To be
+comparable with DBH-based data, remote sensing infor-
+mation needs to be complemented by allometric relation-
+ships, which is the missing link to infer DBH-based stand
+variables from canopy metrics.
+Patterns of tree allometries partly reﬂect the funda-
+mental concepts in plant architecture deﬁned by the bal-
+ance between plant form and functions (Halle´ et al. 1978;
+Barthe´le´my and Caraglio 2007). During tree ontogeny,
+tree growth results from a trade-off between vertical
+growth of the stem to reach the sunniest layer of the
+vegetation and horizontal expansion of the crown to
+maximize light interception. Hence, dense stands promote
+vertical growth (Montgomery and Chazdon 2001; Osun-
+koya et al. 2007; Bohlman and Pacala 2012), while
+increasing light availability and lateral empty space pro-
+mote horizontal crown expansion. In turn, this expansion
+is associated with the thickening of the stem base required
+for mechanical support at the expense of vertical growth
+(Sterck and Bongers 2001; King 1996; Yamada et al.
+2005). Mechanical interactions between trees limit lateral
+crown extension through branch abrasion of moving
+canopies, which is illustrated by the so-called ‘‘crown
+shyness gap’’ in the canopy layer (Jacobs 1955; Putz et al.
+1984). Tree strategies for resource allocation and their
+inﬂuence on allometries are, thus, mainly driven by
+competition for space (Hajek et al. 2015) and light (Banin
+et al. 2012; Lines et al. 2012), which mainly depend on
+the position of the crown within the 3D structure of the
+forest stand.
+In parallel, several studies have shown that allocation
+patterns between tree dimensions can differ among species,
+according to different species-speciﬁc traits, such as the
+adult stature (Aiba and Kohyama 1996; Kohyama et al.
+2003; Bohlman and O’Brien 2006; Iida et al. 2011), wood
+density (Anten and Schieving 2010; Iida et al. 2012;
+Thomas et al. 2015), or responses to resource availability
+(Poorter et al. 2003; Kitajima et al. 2005; Quesada et al.
+2012). In allometric equations, the scaling exponent of the
+power function can also be shaped by the environmental
+conditions of the stand (e.g., Sterck and Bongers 2001;
+Osada et al. 2004; Nogueira et al. 2008; Lang et al. 2010;
+Heineman et al. 2011), the local environment of an indi-
+vidual tree, and by the diversity of tree communities (e.g.,
+Iwasa et al. 1985; King and Maindonald 1999; Poorter
+et al. 2003; Kitajima et al. 2005).
+Trees
+123
+
+
+In reverse to all these sources of variation, some general
+mechanical growth constraints promote stability in the
+allometric relationship between DBH and crown size.
+Indeed, the mechanical constraints exerted by leaves on
+stems supporting them and the hydraulic constraints suf-
+fered by stems that have to supply water to leaves may
+drive the size and total area of leaves deployed by the
+stems (Niklas 1992; Westoby et al. 2002; Westoby and
+Wright 2003). The metabolic theory of ecology (MTE,
+West et al. 1999; Brown et al. 2004) has generated speciﬁc
+allometric predictions by some of these constraints. The
+MTE theory is based on the assumption that the metabolic
+scaling is invariably reﬂected into the morphological
+scaling. However, several studies suggest that the MTE
+fails to predict the observed scaling exponent of the
+H-DBH allometry (Poorter et al. 2003; Coomes et al. 2003;
+Bohlman and O’Brien 2006; Muller-Landau et al. 2006),
+whereas the MTE may better predict the scaling exponent
+of the crown allometries [i.e., DBH-crown area (CA)
+allometry] (Antin et al. 2013). Furthermore, the correlation
+between canopy metrics (computed from remotely sensed
+data) and stand parameters (measured in the ﬁeld) supports
+the hypothesis of a fairly stable allometric relationship
+between the dimensions of the crown and of the stem (Read
+et al. 2003; Couteron et al. 2005; Broadbent et al. 2008).
+While it has been shown that DBH-H allometry is lar-
+gely site-dependent in tropical forests (Feldpausch et al.
+2011; Banin et al. 2012; Vincent et al. 2012), the variability
+of DBH-CA allometry across biogeographic areas has, to
+our knowledge, never been addressed. Is the scaling
+exponent of the DBH-CA allometry as variable as the
+scaling exponent of the DBH-H allometry? Does scaling
+vary between biogeographic contexts or does it depend on
+the position of the trees in the local stand arrangement? To
+address these questions, data from ﬁve tropical forests
+located in different biogeographic areas with different
+climates and disturbance levels were gathered. First, inter-
+site variability and intra-site variability of DBH-CA, DBH-
+H, and H-CA allometries were compared. A stable scaling
+exponent between DBH and CA across tropical forests
+would allow the use of simple crown area parameters to
+improve AGB allometric models and to predict stand
+structure variables at large scale from airborne and space
+borne sensors. Second, allometries of species able to reach
+the canopy at maturity were analyzed to determine to what
+extent intra-site variability can be consistently interpreted
+as a consequence of the ‘‘liberation’’ effect (Cusset 1980),
+i.e., the full extension of crown when a tree reaches the
+upper canopy layer. This ‘‘liberation’’ effect should result
+in a higher allocation of biomass to crown expansion when
+a tree reaches the canopy layer. Thanks to our multi-site
+analysis of some sources of variability of the allometries
+implying the three fundamental dimensions of a tree, we
+are able to provide guidelines for the future research now
+needed to better link and model crown and stem dynamics
+at individual and stand levels.
+Materials and methods
+Study data sets
+We compiled data sets with diameter at breast height
+(DBH), height (H), and crown area (CA) of trees with a
+DBH C10 cm in ﬁve contrasted tropical forests: in the
+South-West Paciﬁc (New Caledonia, NC), South-East
+Asia (Indonesia, ID), South Asia (India, IN), eastern
+Amazonia (French Guiana, FG), and equatorial Africa
+(Cameroon and Gabon, CM–GA) (Fig. 1). The compiled
+data
+sets
+combine
+measurements
+from
+4148
+trees
+belonging to 538 species originating from published data
+sets (Indonesia from Harja et al. 2012, India from Antin
+et al. 2013 and French Guiana from both Birnbaum 2001
+and Sabatier et al. 1997), and from original unpublished
+data sets (from New Caledonia and equatorial Africa).
+The tree sampling method differed among the ﬁve data
+sets, and was either based on sampling of (1) selected tree
+species, (2) species adult stature (notably to distinguish
+canopy species from sub-canopy species) (Gourlet-Fleury
+et al. 2005), (3) the position of the tree crown in the
+vertical canopy layer at the time of sampling according to
+a crown light exposure index (Dawkins 1963) (notably
+distinguishing canopy trees from sub-canopy trees, cor-
+responding to the Dawkins’s indices 4/5 and 1/2/3,
+Fig. 1 Location of the ﬁve study sites. The Indonesia site includes the islands of Sumatra and Kalimantan islands. The rainforests are in green on
+the map; the GIS layer was downloaded from The Nature Conservation website (http://maps.tnc.org/index.html) (color ﬁgure online)
+Trees
+123
+
+
+respectively), (4) DBH classes, and (5) trees according to
+slope classes (Table 1). It should be noted that, except for
+India, the majority of the sampled trees belonged to
+species that reach the canopy when mature.
+Tree measurements
+In all data sets, three dimensions (DBH, H, and CA) were
+measured in the ﬁeld. In IN and NC, the crown area was
+computed from the cumulated projected area of four
+quarters of an ellipse, which were approximated from four
+orthogonal radii deﬁned from the distance from the trunk
+to the vertical projection of the crown edge. In ID, FG,
+and CM–GA, crown area was computed as the area of a
+circle with a radius estimated as the arithmetical average
+of two diameters of the crown projection in two perpen-
+dicular directions, including the largest diameter. When
+the crown was considered to be symmetrical, the radius
+was estimated in only one direction measurement (in
+CM–GA). Tree crown areas were measured using a
+standard measuring tape (in ID, IN, and FG) or a laser
+rangeﬁnder device (in NC and CM–GA). Tree heights
+were measured at all sites as the vertical distance from
+the ground to the highest point of the tree crown using a
+graduated pole for small trees (in IN), a clinometer and a
+standard measuring tape (in ID, IN, and FG), or a laser
+rangeﬁnder (in NC and CM–GA). Differences in the
+methods used to measure the crown area could lead to
+over-estimation of crown area in ID, FG, and CM–GA,
+but have no effect on the allometric scaling exponent,
+apart from preventing a comparison of the intercept of the
+allometries.
+Tree DBH, height, and crown area distribution
+in the data sets
+The distribution of DBH reﬂected the combination of both
+the particular forest structure and the sampling strategy at
+each study site. In fact, the IN data set was a quasi-random
+sample of the forest and its DBH distribution reﬂected a
+majority of small trees (median = 17 cm). The distribution
+of DBH was less skewed towards small trees in the four
+other data sets (26 cm \ median \ 31 cm). Conversely,
+the data sets from CM–GA and FG contained a high pro-
+portion of large trees (third quartiles of 53 and 47 cm,
+respectively, see Fig. 2 and Table 2). As a consequence, H
+distribution was characterized by a higher proportion of tall
+trees in these two data sets (medians of 21 and 27 m and
+third quartiles of 30 and 33 m, respectively, see Fig. 2 and
+Table 2). Logically, the distribution of CA was also
+heterogeneous among sites, and was characterized by a
+higher proportion of small-crown trees in the NC data set
+(median of 15 m2) and a higher proportion of large crowns
+Table 1 Five tropical forest areas studied and their site characteristics
+Biogeographic
+region
+Country
+Anthropogenic
+impact
+Forest types
+Sampling
+area
+Sampling strategy
+Elevation
+(m)
+Mean rainfall
+(mm year-1)
+Dry season
+(months)
+South-West Paciﬁc
+New Caledonia
+(NC)
+Undisturbed
+Montane evergreen forest
+Plot
+Crown light exposure
+species adult stature
+200–850
+1700
+4
+South-East Asia
+Indonesia (ID)
+Sumatra
+Disturbed
+Mixed agroforests
+Plot
+Crown light exposure tree species
+0–100
+2000
+3
+Kalimantan
+Disturbed
+Mono-cultural stands
+Stand
+Crown light exposure tree species
+100–300
+3400
+3
+South-Central Asia
+India (IN)
+Undisturbed
+Wet montane evergreen
+monsoon forests
+Plot
+Crown light exposure species adult
+stature slope classes
+300–600
+5000
+5
+Amazonia
+French Guiana
+(FG)
+Undisturbed
+Dense lowland evergreen
+tropical rainforest
+Plot
+Crown light exposure
+10–50
+4000
+2
+Equatorial Africa
+Cameroon–Gabon
+(CM–GA)
+Undisturbed
+Lowland evergreen and
+semi-evergreen moist
+forests
+Plot
+DBH classes
+100–700
+1800
+4
+The dry season is the number of calendar months with average rainfall \100 mm
+Trees
+123
+
+
+in the CM–GA and FG data sets (median of 50 and 52 m2,
+respectively). The IN and ID data sets contained a higher
+proportion of intermediate crowns (median of 25 and
+31 m2, respectively, see Fig. 2 and Table 2).
+Sub-sampling of canopy and sub-canopy trees
+At each site, we sub-sampled the data set according to the
+position of the trees in the canopy layer: (1) canopy trees
+(i.e., trees whose crown was entirely exposed to light at the
+time of sampling); and (2) sub-canopy trees (i.e., trees
+whose crown was partially or poorly exposed to light at the
+time of sampling) (Table 3). These two sub-samples were
+selected using a site-speciﬁc threshold related to canopy
+height. When the exposure of the crown to light (sensus
+Dawkins 1963) was known (NC, ID, IN, and FG), the mean
+height of the recorded canopy trees was computed, other-
+wise the canopy height was extracted from some of our
+unpublished data for CM–GA. Thus, a tree was considered
+to be a canopy tree when its height was greater than or
+equal to 16 m in NC, 17 m in ID, 24 m in IN, 25 m in CM–
+GA, and 28 m in FG.
+Fitting allometries
+Allometries were ﬁtted based on: (1) all the trees taken
+together; and (2) representative sub-samples of trees from
+the canopy and the sub-canopy layer. Because of missing
+data, DBH-H, DBH-CA, and H-CA relationships were
+ﬁtted on slightly different data sets (i.e., 4148 individuals
+of 538 species, 4097 of 492 species, and 3431 individuals
+of 446 species, respectively). Allometric relationships were
+ﬁtted to power functions using ordinary least-squares
+regression
+on
+log-transformed
+data:
+y ¼ b  xa ,
+logðyÞ ¼ log b þ a  log x where y was alternatively H or
+CA, and x was alternatively DBH or H. In the allometry,
+a is the scaling exponent and b is the intercept. In this
+study, we checked that power functions acceptably ren-
+dered the allometries and compared their variability
+through the comparison of scaling exponents and intercepts
+of the log–log-linear regression, even though this has been
+questioned, especially with respect to DBH-H allometry
+(Picard et al. 2015). As the relationship between allometric
+variables is theoretically bidirectional, with errors on all
+the variables, this could require ﬁtting allometries using a
+Fig. 2 DBH, tree height, and crown area distributions of all trees with DBH C10 cm at the ﬁve study sites: Indonesia (ID), New Caledonia (NC),
+India (IN), Cameroon–Gabon (CM–GA), and French Guiana (FG)
+Table 2 Distribution of the
+diameter at breast height
+(DBH), height, and crown area
+at each site
+DBH
+Height
+Crown area
+Q1
+Median
+Q3
+Q1
+Median
+Q3
+Q1
+Median
+Q3
+New Caledonia
+17
+28
+39
+11
+15
+21
+8
+15
+28
+Indonesia
+17
+26
+38
+11
+16
+23
+17
+31
+58
+India
+13
+17
+28
+13
+17
+22
+15
+25
+48
+French Guiana
+19
+31
+47
+21
+27
+33
+26
+52
+96
+Cameroon–Gabon
+17
+30
+54
+15
+21
+30
+20
+50
+113
+Q1 ﬁrst quartile, Q3 the third quartile. See Table 1 for a list of abbreviations used for the sites
+Trees
+123
+
+
+linear regression model of the reduced major axis (RMA)
+type, (see Sokal and Rohlf 2012). However, assuming that
+the estimated uncertainty on the DBH (typically B1 cm)
+was far lower than on the H and CA, and that the uncer-
+tainty on H was lower than on the CA, we chose to use an
+ordinary least-squares (OLS) regression (Henry and Aars-
+sen 1999).
+For all the ﬁtted allometric relationships, the conditions
+of normality and homoscedasticity of residuals were
+checked with a Kolmogorov–Smirnov test and Breusch–
+Pagan test, respectively. The signiﬁcance of the scaling
+exponents and intercepts was checked with Student’s t tests
+(Sokal and Rohlf 1981). A standard variance decomposi-
+tion procedure (ANOVA type I sum of squares) was used
+to determine the relative contribution of independent
+variables (DBH and H) to the variance of the dependent
+variables (CA and H).
+As our study only concerned the allometries of trees
+with DBH C10 cm and H C 4 m, we calculated the pre-
+dicted intercept of the dependent variables (H and CA) for
+DBH = 10 cm (Int10) and H = 4 m (Int4), which was the
+lower limit of the independent variable. A correction factor
+e
+MSE
+2
+ð
+Þ, where MSE is the mean square error of the ﬁtted
+linear model (Baskerville 1972), was applied to back-
+transformed predicted values, so as to remove the bias from
+predictions made on log-transformed data (Chave et al.
+2005; Mascaro et al. 2014).
+Testing for inter-site variability and intra-site
+variability of allometries
+Using the whole data set (i.e., all the trees), we tested
+whether the scaling exponent of allometries varied among
+the ﬁve study sites. We also tested the signiﬁcance of the
+interaction sites-DBH and sites-H (i.e., covariance analy-
+sis) using an F test to evaluate the additional amount of
+variance explained by the interaction term. When the
+interaction term was signiﬁcant for either scaling expo-
+nents or intercepts, we applied inter-site pairwise com-
+parisons (Student’s test with a Bonferroni correction for the
+P value adjustment in the case of multiple testing). To
+facilitate the comparison of intra-site variability among
+allometries and between CA and H, coefﬁcients of varia-
+tion were calculated for: (1) each allometry with the root-
+mean-square error expressed as a percentage of the mean of
+the explained variable, and (2) CA and H with the standard
+deviations expressed as a percentage of the mean. Within
+each site, we used a t test to compare the observed scaling
+exponents of the DBH-CA and DBH-H allometries in the
+whole data set with the scaling exponent predicted by the
+MTE (West et al. 1999; Brown et al. 2004). Finally, we
+tested variations in the three allometries within each site
+according to the position of the tree crowns (i.e., canopy vs.
+sub-canopy trees) through a t test applied to the scaling
+exponents.
+We also assessed how the observed scaling exponent
+varies during tree ontogeny using DBH as a proxy, and
+using a two-step breakpoint procedure applied to the allo-
+metric regression of all the trees in the ﬁve biogeographic
+areas. The ﬁrst step used a Davies’ test (Davies 1987) with
+adjusted P values for multiple comparisons to identify
+signiﬁcant variations in the scaling exponent of each log-
+linear relationship for 1000 regularly spaced DBH values.
+The second step used the DBH value of the most signiﬁcant
+breakpoint as an initial value of a segmented regression
+(Muggeo 2003). All statistical analyses were conducted
+with the R software (3.1.2, R Development Core Team
+2014) and the ‘‘segmented’’ add-on package (Muggeo
+2008) for the two-step breakpoint procedure.
+Results
+Site-wise allometric relationships
+All allometric relationships between DBH, H, and CA
+(Fig. 3) followed a log-linear model (F tests, P \ 0.001),
+all scaling exponents, and intercepts being highly signiﬁ-
+cant (t tests, P \ 0.001). For all the ﬁtted allometric rela-
+tionships, the conditions of normality and homoscedasticity
+of residuals were fulﬁlled, respectively, with P \ 0.050
+(Kolmogorov–Smirnov test) and P [ 0.050 (Breusch–Pa-
+gan test). The ﬁt of the log-linear model was better for
+DBH-CA and DBH-H allometries (0.51 \ R2 \ 0.68) than
+Table 3 Description of the data
+sets in the ﬁve geographical
+sites
+Indonesia
+New Caledonia
+India
+Cameroon–Gabon
+French Guiana
+(ID)
+(NC)
+(IN)
+(CM–GA)
+(FG)
+All trees
+664 (11)
+830 (105)
+1600 (71)
+661 (156)
+342 (148)
+Canopy trees
+290 (11)
+546 (89)
+315 (35)
+252 (77)
+319 (137)
+Sub-canopy trees
+374 (11)
+284 (71)
+1285 (70)
+409 (119)
+23 (22)
+Only trees with a DBH C10 cm were considered. At each site, we distinguished trees whose crown was
+entirely exposed to light at the time of sampling (canopy trees) and trees whose crown was partially or
+poorly exposed to light at the time of sampling (sub-canopy trees). Numbers in brackets indicate the
+corresponding number of species in each data set
+Trees
+123
+
+
+for H-CA allometry (0.18 \ R2 \ 0.44). Except for the
+DBH-CA allometry in NC and ID, the site-wise scaling
+exponents of the DBH-CA and DBH-H allometries were
+signiﬁcantly lower than predicted by the MTE (scaling
+exponent = 4/3; t test, P \ 0.050, Table 3).
+According to the general allometric models (including
+all trees at all sites), DBH explained 52 % of H variability
+and 49 % of CA variability, while H only explained 32 %
+of the variation in CA. The proportion of variance
+explained by DBH in the DBH-CA and DBH-H allometries
+was also more uniform among sites (56–59 and 50–68 %,
+respectively) compared to the variability of the variance
+portion explained by H in the H-CA allometry (18–44 %,
+Table 3). The scaling exponents varied far less across sites
+for the DBH-CA allometry (1.212–1.354) than the DBH-
+H (0.374–0.631) and H-CA allometries (0.828–1.795). At
+each site, the comparison between the coefﬁcients of
+variation of the three allometries showed that the disper-
+sion of points was higher for the DBH-CA and H-CA
+allometries than for the DBH-H allometry (Table 4). For a
+given range of DBH, the coefﬁcient of variation of CA was
+three-to-ﬁve times higher than the coefﬁcient of variation
+of H, depending on the sites, for both canopy trees and sub-
+canopy trees (Table 5).
+When computed at each site separately, Davies’ test
+revealed signiﬁcant breakpoints for all the allometric
+relationships (P \ 0.050) except for the DBH-CA and H-
+CA allometries in the NC and ID data sets. Compared to
+the DBH-CA and DBH-H allometries, all the signiﬁcant
+breakpoints of the H-CA allometries occurred within a
+narrow range of H across sites (12.8–14.5 m). Moreover, in
+the IN site, there was consistency between the breakpoints
+of the DBH-CA and DBH-H allometries (DBH = 15.5 and
+17.6 cm, respectively), which was not the case in the other
+data sets.
+Inter-site variations in allometric relationships
+The scaling exponent of the DBH-CA allometry revealed
+no signiﬁcant variations (F test, P = 0.091) across the ﬁve
+study sites. The scaling exponent of the mean DBH-CA
+allometry (across all sites) was 1.237 (with a conﬁdence
+interval ranging from 1.198 to 1.275), i.e., signiﬁcantly
+lower than the MTE prediction of 4/3. However, the scal-
+ing exponents of the DBH-H and H-CA allometries showed
+highly signiﬁcant inter-site variations (F test, P \ 0.001;
+Table 3). According to the post-hoc pairwise comparison
+tests, the majority of pairs of sites showed signiﬁcantly
+different scaling exponents (t test, P \ 0.050), except the
+pairs ID/IN and NC/CM–GA for the DBH-H allometry and
+the pair FG/CM–GA for the H-CA allometry. On the other
+hand, inter-site homogeneity was also observed in DBH-
+CA scaling exponents when the comparison was limited to
+the sub-samples of canopy trees. However, inter-site
+heterogeneity was observed for the sub-canopy trees, since
+only four pairs out of ten displayed no signiﬁcant differ-
+ences (ID/NC, ID/IN, NC/IN, and NC/CM–GA).
+Pairwise comparison between site intercepts distin-
+guished three groups of DBH-CA allometric relationships
+(Table 4): CM–GA, FG, and IN displayed the highest
+intercepts, ID had an intermediate intercept value, and NC
+had the lowest intercept. There was no congruence between
+these differences and the variation in the method of crown
+measurement which differentiated IN and NC from the rest.
+For the DBH-H allometry, besides the NC/IN pair, pairwise
+intercepts differed signiﬁcantly (F test, P \ 0.05). Finally,
+Fig. 3 Log-linear allometric relationships for all trees with a
+DBH C 10 cm at the ﬁve study sites, between a stem diameter at
+breast height (DBH) and crown area, b DBH and tree height, and
+c tree height and crown area
+Trees
+123
+
+
+Table 4 Results of regression analyses with the log-linear model, including all trees at each of the ﬁve reference sites
+DBH-CA allometry
+DBH-H allometry
+RSE
+R2
+CV
+Intercept
+Int10
+Slope
+BreakP
+RSE
+R2
+CV
+Intercept
+Int10
+Slope
+BreakP
+NC
+0.60
+0.59
+12.81
+0.169 (0.131–0.219)
+4.57
+1.354j (1.277–1.431)
+18.470
+0.28
+0.51
+7.40
+2.689i
+(2.419–2.988)
+8.76
+0.496i*** (0.464–0.528)
+80.340
+ID
+0.58
+0.59
+8.15
+0.427i (0.324–0.564)
+11.09
+1.341jk (1.256–1.426)
+33.150
+0.33
+0.50
+7.79
+2.066 (1.766–2.417)
+9.35
+0.632j***
+(0.585–0.680)
+39.18**
+IN
+0.63
+0.56
+9.44
+0.6315ijb
+(0.540–0.739)
+13.73
+1.256ij**
+(1.203–1.308)
+15.50**
+0.25
+0.67
+5.78
+2.562i
+(2.406–2.727)
+11.20
+0.6243j***
+(0.604–0.645)
+17.55***
+FG
+0.59
+0.57
+7.02
+0.811k (0.554–1.186)
+15.73
+1.212i* (1.101–1.323)
+79.32*
+0.20
+0.59
+3.86
+6.187 (5.436–7.045)
+16.82
+0.4254*** (0.388–0.463)
+13.94*
+CM GA
+0.76
+0.57
+7.74
+0.718jk (0.540–0.958)
+16.63
+1.24ik* (1.158–1.322)
+27.21*
+0.25
+0.68
+5.21
+3.617 (3.293–3.973)
+11.96
+0.5069i***
+(0.480–0.533)
+36.48***
+H-CA allometry
+RSE
+R2
+CV
+Intercept
+Int10
+Slope
+BreakP
+NC
+0.76
+0.22
+12.50
+0.333ij (0.098–1.150)
+3.36
+1.462 (1.049–1.876)
+12.12
+ID
+0.89
+0.18
+11.58
+3.294 (2.254–4.814)
+14.59
+0.828 (0.693–0.963)
+36.32
+IN
+0.80
+0.29
+12.05
+0.957j (0.748–1.224)
+1.45
+1.182 (1.094–1.269)
+14.50***
+FG
+0.72
+0.37
+8.54
+0.157i (0.071–0.349)
+2.33
+1.76i (1.516–2.003)
+14.12*
+CM GA
+0.86
+0.44
+8.75
+0.223i (0.141–0.353)
+3.87
+1.795i (1.645–1.946)
+12.83***
+Residual standard error (RSE), squared coefﬁcient of regression (R2), coefﬁcient of variation (CV ¼ RMSE=y, in %,), intercepts, and scaling exponent (or scaling exponents) with their
+conﬁdence interval in brackets are given for the ﬁve sites: New Caledonia (NC), India (IN), Indonesia (ID), Central Africa (CM–GA), and French Guiana (FG). Int10 and Int4 are the predicted
+height (H) and crown area (CA) for DBH = 10 cm and H = 4 m, respectively. BreakP stem diameter at the breakpoint given by Davies’ test, P value (P): P \ 0.100, *P \ 0.050,
+**P \ 0.010, ***P \ 0.001. Results of the t tests on the slope parameter versus expectations based on the metabolic theory of ecology (MTE = 1.333 for DBH-CA and 0.666 for DBH-H) are
+indicated as follows: *P \ 0.05, **P \ 0.01, ***P \ 0.001. The letters (i, j, k) indicate the results of the pairwise post-hoc test between the slopes and the intercepts (t test)
+Trees
+123
+
+
+three groups were separated from the intercepts of the H-
+CA allometry: CM–GA/FG/NC, IN/NC, and ID (NC was
+assigned to two groups due to the large conﬁdence interval
+around the estimated intercept).
+For a reference DBH of 10 cm (Int10, i.e., census
+threshold), the estimated mean crown size was ranked in
+ascending order from NC, ID, IN, and FG to CM–GA, and
+increased from 4.57 to 16.63 m2. Ranking was almost the
+same for mean tree height at DBH = 10 cm, and mean
+H values ranged from 8.76 to 16.82 m. For a height
+threshold of 4 m (Int4), the estimated mean CA was in
+ascending order from FG, NC, and CM–GA, to IN and ID,
+and ranged from 2.33 to 14.59 m2 (Table 4).
+Variability between allometries of canopy and sub-
+canopy trees
+When the analysis was limited to either canopy trees or
+sub-canopy trees, all allometries between DBH, H, and CA
+ﬁtted the log-linear model well (F tests, P \ 0.001). The
+scaling exponents and intercepts were highly signiﬁcant
+(t tests, P \ 0.001) except for the FG sub-canopy trees,
+because too few were sampled (23 trees, Fig. 3).
+The scaling exponent differed signiﬁcantly (t test,
+P \ 0.010) between canopy trees and sub-canopy trees for
+the allometries in NC, IN, CM–GA, and FG, while the
+scaling exponent of canopy and sub-canopy trees differed
+only for the DBH-CA allometry in the ID data set. The
+scaling exponent of the DBH-CA and H-CA allometries
+increased systematically from the sub-canopy trees to the
+canopy trees, while the scaling exponent of the DBH-
+H allometry systematically decreased (Table 6; Fig. 4). A
+higher contrast in scaling exponents between canopy tree
+and sub-canopy tree sub-samples was observed for the
+DBH-H and H-CA allometries compared to the DBH-CA
+allometry (Table 6; Fig. 4).
+Discussion
+Towards a better understanding of the 3D structure
+of trees and stands
+The three-dimensional forest structure and its dynamics
+are usually approximated by considering the DBH as a
+proxy for both the vertical expansion and the horizontal
+expansion of trees. However, if the DBH increases con-
+tinuously with the age of the tree due to xylem expansion,
+a few quantitative data are available to infer height and
+crown dimensions from the DBH parameter alone and,
+hence, to understand which changes in resource allocation
+may co-vary with the DBH increment. If the collection of
+DBH-H measurements from all over the world has sig-
+niﬁcantly increased in the last decade, incorporating
+crown dimensions in a large-scale study of tree allometry
+remained challenging as crown area is one among the
+most complicated parameters to acquire in the ﬁeld.
+Nevertheless,
+the
+recent
+interest
+in
+tree
+allometries
+between crown and stem dimensions shows that the crown
+is a key parameter in assessing and monitoring tropical
+Table 5 Coefﬁcient of
+variation (%) of tree crown area
+and height, calculated for each
+of the ﬁve study sites, for all
+trees and each individual tree
+sub-sampled
+Crown area
+Height
+All
+Canopy
+Sub-canopy
+All
+Canopy
+Sub-canopy
+New Caledonia
+102
+85
+81
+42
+23
+24
+Indonesia
+124
+112
+87
+47
+26
+25
+India
+126
+89
+84
+46
+23
+29
+French Guiana
+94
+–
+–
+29
+–
+–
+Cameroon–Gabon
+125
+87
+111
+41
+15
+29
+Table 6 Differences in the scaling exponent of the allometric relationships found for canopy trees and sub-canopy trees
+DBH-CA allometry
+DBH-H allometry
+H-CA allometry
+NC
+IN
+ID
+CM GA
+FG
+NC
+IN
+ID
+CM GA
+FG
+NC
+IN
+ID
+CM GA
+FG
+Canopy trees
+1.495
+1.581
+1.716
+1.446
+1.156
+0.212
+0.318
+0.273
+0.21
+0.403
+1.367
+2.014
+0.547
+3.089
+1.635
+Sub-canopy
+trees
+1.240
+1.223
+1.351
+1.007
+–
+0.287
+0.511
+0.287
+0.367
+–
+0.729
+0.611
+0.718
+1.314
+–
+***
+***
+***
+***
+***
+***
+NS
+***
+**
+***
+NS
+***
+Delta (%)
+17
+23
+21
+30
+–
+35
+61
+5
+75
+–
+47
+70
+31
+57
+–
+Delta = [(canopy trees - sub-canopy trees)/canopy trees] 9 100. The signiﬁcance of differences was tested with an F test: NS non-signiﬁcant,
+** P \ 0.010, and *** P \ 0.001
+Trees
+123
+
+
+Fig. 4 Allometric relationships
+(log–log-linear regressions) of
+stem diameter at breast height
+(DBH) with crown area (ﬁrst
+column), height (second
+column), and height with crown
+area (third column) at the ﬁve
+sites investigated. At each site,
+relationships were computed
+and plotted for canopy trees and
+sub-canopy trees, separately
+Trees
+123
+
+
+forest structure and dynamics (e.g., Muller-Landau et al.
+2006; Bohlman and Pacala 2012; Goodman et al. 2014).
+In fact, to our knowledge, the present paper is the ﬁrst
+attempt
+to
+provide
+a
+worldwide
+picture
+of
+crown
+allometries of tropical trees using data collected in ﬁve
+different biogeographic areas.
+Our data set was compiled from tree inventories in ﬁve
+parts of the world, with different climates, topographical
+conditions, disturbance levels, types of tropical forests,
+pools of species, and DBH size distributions. Such
+heterogeneity is favorable to test the stability of tree
+allometries at inter- and intra-site scales. However, the
+different sampling designs used in these inventories pre-
+vented us from exploring all aspects of inter- and intra-site
+variations in the allometries. For instance, the imbalance
+between canopy and sub-canopy trees in the data sets did
+not allow analyzing the inﬂuence of species adult stature on
+the scaling exponent and intercept values of allometries, as
+evidenced in former studies (e.g., King 1990, 1996;
+Kohyama et al. 2003; Yamada et al. 2005; Bohlman and
+O’Brien 2006; Antin et al. 2013). The inter-site difference
+in sampling may also have inﬂuenced results relating to
+intercept values or breaking points, which failed to reveal
+any easily interpretable pattern.
+Inter-site stability of DBH-CA allometry
+The scaling exponent of the DBH-CA allometry remained
+strikingly stable across the ﬁve biogeographic areas for
+both the whole data set and the sub-set of canopy trees. We
+acknowledge that a relatively low P value of the F test
+(0.091) was found and that the failure to reject the null
+hypothesis may result from a lack of power (may be due to
+strong intra-site variability). However, the small range of
+variation observed for the scaling exponents of DBH-CA
+allometries (1.212–1.354) includes the mean value (1.311)
+found in Kalimantan (Borneo, Indonesia) by Kohyama
+et al. (2003) as well as the value of 1.28 reported by Farrior
+et al. (2016) for Barro Colorado (Panama). It is also close
+to the value reported by Muller-Landau et al. (2006) (1.36)
+for the same site. Moreover, this inter-site stability is
+somewhat puzzling, as it was observed across a set of
+different forest environments featuring several strong
+causes for variations in stand structure. In addition, the
+inter-site variability of the average crown area computed
+for trees with a DBH of 10 cm (i.e., the intercept of the
+scaling relationship) highlights the heterogeneity of the
+types of forest in our data set. Finally, our results on DBH-
+CA allometry did not clearly reject the prediction of the
+metabolic theory of ecology (MTE), since the inter-site
+range of variation in scaling exponents included the value
+of 4/3 and two sites yielded values that did not differ sig-
+niﬁcantly from the MTE predictions.
+The convergence towards a universal scaling exponent
+of the DBH-CA allometry in tropical trees has been
+observed notwithstanding the impressive variability of tree
+shapes and sizes observed across species and environments
+(e.g., Barthe´le´my and Caraglio 2007; Clark et al. 2015) and
+which call for interpretations that are still largely lacking
+(or, at best, incomplete) in the literature. Scaling between
+stem diameter and total leaf area has been proposed to be
+one consequence of the mechanical constraints exerted by
+the leaves on the stems that support them (Niklas 1992;
+Westoby et al. 2002). This scaling relationship has also
+been interpreted by hydraulic constraints (expressed by the
+pipe-model theory, see Shinozaki et al. 1964), as the result
+of the hydraulic supply through stems, which may deter-
+mine the size of the leaves deployed by the stems (Westoby
+et al. 2002; Westoby and Wright 2003). Another possible
+explanation for this allometric scaling is metabolic con-
+straints. Based on the assumption that similar amounts of
+photosynthates are produced per unit crown area (Olson
+et al. 2009), the scaling between DBH and CA would be
+expected to result from the metabolic demand of living
+cells in the stem for a given quantity of leaves as photo-
+synthetic sources (Niklas 1994; Enquist 2002). All these,
+by no means mutually exclusive explanations, contribute to
+the MTE, which predicted ﬁxed allometries for an idealised
+individual tree (West et al. 2009; Smith et al. 2013; Bentley
+et al. 2013). However, the stability of tree allometric
+scaling relations predicted by these theoretical predictions
+has often been invalidated by empirical studies, suggesting
+that intra-speciﬁc (Poorter et al. 2003; Bohlman and
+O’Brien 2006) and inter-site variability (Coomes et al.
+2003; Muller-Landau et al. 2006) in tree architectural
+development lead to substantial deviations from theoretical
+predictions. Likewise, variations in allometries are expec-
+ted to reﬂect the magnitude of the actual responses of trees
+to the availability of resources as well as to local spatial
+crowding (Iwasa et al. 1985; King and Maindonald 1999;
+Poorter et al. 2003; Kitajima et al. 2005).
+Moreover, the overall inter-site stability of scaling
+exponents of DBH-CA allometries contrasted signiﬁcantly
+with the high inter-site variability found for scaling expo-
+nents of the two other allometries studied (DBH-H and the
+H-CA). These inter-site differences are in agreement with
+the results of several previous studies showing that DBH-H
+allometry is subject to strong inter-site variability. This
+variability
+may
+be
+due
+to
+environmental
+conditions
+(Nogueira et al. 2008; Feldpausch et al. 2011; Vincent et al.
+2012), forest structure, such as the proportion of trees with
+a small or large DBH (Molto et al. 2014), as well as the
+ﬂoristic composition, because some biogeographic areas
+may be dominated by families with particularly tall tree
+species (Banin et al. 2012). The average height reached at a
+given ontogenetic stage by the subpopulation of ‘dominant’
+Trees
+123
+
+
+(i.e., the most vigorous) trees is known to be a proxy for
+site productivity and, to some extent, to be independent of
+stand density (Vanclay 1992; Skovsgaard and Vanclay
+2008). In contrast to the intrinsic interdependency of DBH
+and age, the height of a tree is an adjustable parameter
+which, in a given species, depends to a great extent on the
+abiotic environment. In line with the previous empirical
+studies (Muller-Landau et al. 2006; Coomes and Allen
+2009; Pretzsch and Dieler 2012), our results concerning
+DBH-H allometries once again clearly reject the prediction
+of a universal scaling exponent, such as that made by the
+MTE.
+Change in CA and H allometries as evidence of tree
+‘‘liberation’’
+Our results support the hypothesis that the transition of a
+tree from the sub-canopy to the canopy layer leads to an
+increase in the DBH-CA scaling exponent and to a bigger
+decrease in the DBH-H scaling exponent. These con-
+comitant variations could be linked to the fundamental
+architectural concept of metamorphosis (Halle´ and Ng
+1981), deﬁned as the inner reprogramming of an expanding
+tree crown, in which the early branching pattern is repeated
+in each of the sub-crowns, thereby contributing to the
+development of the whole crown (Oldeman 1990). The
+height at which the architectural metamorphosis occurs is
+named the ‘‘liberation point’’ (Oldeman 1974, 1990; Cusset
+1980; Halle´ et al. 1978). This point marks a shift in
+resource allocation towards less investment in vertical stem
+growth to the beneﬁt of thickening of the bole base to
+support the horizontal expansion of the crown, to maximize
+light interception (Richards 1996; Henry and Aarssen
+1999; Montgomery and Chazdon 2001; King et al. 2005).
+The resulting asymptotic growth in height has been
+reported in the other studies (Thomas 1996; Yamada et al.
+2005; Bohlman and Pacala 2012). The increase in the
+DBH-CA scaling exponent evidenced here has long been
+suggested to be another likely consequence of the libera-
+tion point connected with the decrease in the scaling
+exponent
+of
+the
+DBH-H
+allometry
+(Oldeman
+1974;
+Richards 1996). However, among the few case studies on
+the topic, only a small number supported an increase in
+crown area when trees reach the canopy (Wyckoff and
+Clark 2005; Russo et al. 2007; Antin et al. 2013), while
+Muller-Landau et al. (2006) concluded the reverse.
+Some authors have suggested that wood density explains
+the trade-off between effective vertical stem expansion and
+horizontal crown expansion (Anten and Schieving 2010).
+Species with high wood density were found to have more
+slender (and shorter) stems, but larger crowns than simi-
+larly sized trees of species having lower wood density (e.g.,
+Kohyama and Hotta 1990; Kohyama et al. 2003; King et al.
+2005; Poorter et al. 2008; Iida et al. 2012). However, it has
+been shown that this pattern weakens in tall trees
+([17–18 m) (King et al. 2006; Iida et al. 2012), suggesting
+that it rather reﬂects inter-species trade-offs in resource
+allocation than a direct, overall effect of liberation.
+Evidence of crown plasticity
+The high intra-site variability of the scaling exponent of the
+DBH-CA allometry compared to the relative stability of the
+scaling exponent of the DBH-H allometry suggests a high
+level of plasticity in the crown development for a given
+DBH. This variability in the lateral crown expansion could
+be explained by the combined ontogeny, asymmetrical
+competition for light, canopy shyness, and inter-speciﬁc
+differences in architectural patterns. First, for a given type
+of crown architecture, canopy trees are characterized by
+complex lateral branching processes, due to the multiple
+processes of architectural adjustment and compensation
+that crowns initiate when and after the trees reached the
+canopy layer (Oldeman 1990; Barthe´le´my and Caraglio
+2007). These processes often result in a large fragmented
+crown whose fragmentation tends to increase with senes-
+cence (Halle´ et al. 1978; Rutishauser et al. 2011). Second,
+the crown architecture of sub-canopy trees varies among
+species depending on their adult stature, and sub-canopy
+species have been shown to invest more in the width and
+depth expansion of their crown, unlike canopy species,
+which invest more in the height (e.g., Poorter et al. 2006;
+Bohlman and O’Brien 2006; Osunkoya et al. 2007; Iida
+et al. 2011). Third, in a closed canopy forest, competition
+for light and space is strongly asymmetrical depending on
+the irregular structure of the vegetation surrounding a given
+tree (Umeki 1995; Purves et al. 2007; Strigul et al. 2008),
+leading to locally highly variable lateral crown expansion.
+Finally, measuring crown dimensions becomes more dif-
+ﬁcult as tree size increases, since large crowns tend to be
+irregular and fragmented.
+Conclusion
+To our knowledge, the present study is the ﬁrst to evaluate
+and compare the main tree dimensions (DBH, H, and CA)
+across the tropics. In contrast to DBH-H allometry, inter-
+site variability of the scaling exponent of DBH-CA
+allometry was strikingly low compared to intra-site vari-
+ability. This inter-site stability suggests that, despite great
+diversity in tree crown architecture, some universal con-
+straints would be sufﬁciently strong to shape the range of
+possible scalings between crown area and stem diameter.
+Such constraints seem to determine stand-level DBH-CA
+allometry
+patterns,
+irrespective
+of
+the
+biogeographic
+Trees
+123
+
+
+context, even though they are known—and conﬁrmed
+here–to be locally modiﬁed by inter-species differences
+and by the morphological plasticity of individual trees. Our
+results also showed that the scaling exponent of DBH-CA
+and DBH-H allometries changed in opposite directions
+when computed for canopy or sub-canopy trees. This
+switch supports the hypothesis of enhanced biomass allo-
+cation for crown expansion once a tree reaches direct light.
+Finally, our ﬁndings suggest that the relative importance of
+errors linked to the prediction of crown dimensions from
+DBH, which is substantial for individual trees, may
+decrease at regional scales. Our results also suggest that
+calibration over a small number of reference sites seems to
+be sufﬁcient to predict stand structure variables (e.g., mean
+quadratic
+DBH)
+and
+AGB
+using
+crown
+dimensions
+extracted from remotely sensed data. DBH-CA allometry is
+indeed a fundamental link in combining ﬁeld and zenithal
+information to better understand, model, and map the
+spatio-temporal variability of stand structure and AGB in
+complex tropical forests.
+Author contribution statement
+EB conceived the study, collected
+data from New Caledonia, compiled the data sets, analyzed the data,
+and led the writing of the manuscript. PC conceived the study and
+actively contributed to the writing. PB conceived the study, actively
+contributed to the writing, and was involved in the New Caledonian
+ﬁeld work. TI revised the manuscript and was involved in the ﬁeld
+work in New Caledonia. PP commented on the manuscript and was
+involved in the ﬁeld work in Cameroon and Gabon. CA, GV, and RP
+commented on the manuscript. HV, TB, and VH were involved in the
+ﬁeld work in New Caledonia. NB, VD, BS, NT, NGK, DZ, and ML
+performed the ﬁeld work in Cameroon and Gabon.
+Acknowledgments This study was funded by the Direction for
+Economic and Environmental Development (DDEE) of the North
+Province of New Caledonia. Data acquisition for IRD plots (data from
+Africa) was supported by Eramet, IRD-PPR FTH-AC, the World
+Bank, WWF, EIT-Climate KIC, the African Development Bank, and
+COMIFAC. We thank the Institut Agronomique ne´o-Cale´donien
+(IAC) for co-funding E. Blanchard’s Ph.D. We are grateful to the
+many ﬁeld workers, technicians, engineers, and researchers who
+contributed to the long-term monitoring of the plots used in the
+analyses. We also thank Santiago Trueba-Sanchez (IRD) and two
+anonymous reviewers for their helpful comments on the manuscript.
+Compliance with ethical standards
+Conﬂict of interest The authors declare that they have no conﬂict of
+interest.
+References
+Aiba SI, Kohyama T (1996) Tree species stratiﬁcation in relation to
+allometry and demography in a warm-temperate rain forest.
+J Ecol 84:207–218. doi:10.2307/2261356
+Anten NPR, Schieving F (2010) The role of wood mass density and
+mechanical constraints in the economy of tree architecture. Am
+Nat 175:250–260. doi:10.1086/649581
+Antin C, Pe´lissier R, Vincent G, Couteron P (2013) Crown
+allometries are less responsive than stem allometry to tree size
+and habitat variations in an Indian monsoon forest. Trees Struct
+Funct 27:1485–1495
+Asner GP (2009) Tropical forest carbon assessment: integrating
+satellite and airborne mapping approaches. Environ Res Lett.
+doi:10.1088/1748-9326/4/3/034009
+Attocchi G, Skovsgaard JP (2015) Crown radius of pedunculate oak
+(Quercus robur L.) depending on stem size, stand density and
+site productivity. Scand J For Res 30:289–303. doi:10.1080/
+02827581.2014.1001782
+Baccini A et al (2012) Estimated carbon dioxide emissions from
+tropical deforestation improved by carbon-density maps. Nat
+Clim Change 2:182–185. doi:10.1038/nclimate1354
+Banin L et al (2012) What controls tropical forest architecture?
+Testing environmental, structural and ﬂoristic drivers. Glob Ecol
+Biogeogr 21:1179–1190. doi:10.1111/j.1466-8238.2012.00778.x
+Barbier N, Couteron P, Proisy C, Malhi Y, Gastellu-Etchegorry JP
+(2010) The variation of apparent crown size and canopy
+heterogeneity across lowland Amazonian forests. Glob Ecol
+Biogeogr 19:72–84
+Barthe´le´my D, Caraglio Y (2007) Plant architecture: a dynamic,
+multilevel and comprehensive approach to plant form, structure
+and ontogeny. Ann Bot Lond 99:375–407. doi:10.1093/aob/
+mcl260
+Baskerville GL (1972) Use of logarithmic regression in the estimation
+of plant biomass. Can J For Res 2:49–53. doi:10.1139/x72-009
+Bastin JF, Barbier N, Couteron P, Adams B, Shapiro A, Bogaert J, De
+Canniere C (2014) Aboveground biomass mapping of African
+forest mosaics using canopy texture analysis: toward a regional
+approach. Ecol Appl 24:1984–2001. doi:10.1890/13-1574.1
+Bastin JF et al (2015) Seeing Central African forests through their
+largest trees. Sci Rep 5:13156. doi:10.1038/srep13156
+Bentley LP et al (2013) An empirical assessment of tree branching
+networks and implications for plant allometric scaling models.
+Ecol Lett 16:1069–1078. doi:10.1111/ele.12127
+Birnbaum P (2001) Canopy surface topography in a French Guiana
+forest and the folded forest theory. Plant Ecol 153:293–300.
+doi:10.1023/a:101756380925
+Bohlman S, O’Brien S (2006) Allometry, adult stature and regener-
+ation requirement of 65 tree species on Barro Colorado Island,
+Panama. J Trop Ecol 22:123–136
+Bohlman S, Pacala S (2012) A forest structure model that determines
+crown layers and partitions growth and mortality rates for
+landscape-scale
+applications
+of
+tropical
+forests.
+J
+Ecol
+100:508–518. doi:10.1111/j.1365-2745.2011.01935.x
+Bouvier M, Durrieu S, Fournier RA, Renaud J-P (2015) Generalizing
+predictive models of forest inventory attributes using an area-
+based approach with airborne LiDAR data. Remote Sens
+Environ 156:322–334. doi:10.1016/j.rse.2014.10.004
+Broadbent EN, Asner GP, Pena-Claros M, Palace M, Soriano M (2008)
+Spatial partitioning of biomass and diversity in a lowland Bolivian
+forest: linking ﬁeld and remote sensing measurements. For Ecol
+Manag 255:2602–2616. doi:10.1016/j.foreco.2008.01.044
+Brown JH, Gillooly JF, Allen AP, Savage VM, West GB (2004)
+Toward a metabolic theory of ecology. Ecology 85:1771–1789
+Chave J et al (2005) Tree allometry and improved estimation of
+carbon stocks and balance in tropical forests. Oecologia
+145:87–99. doi:10.1007/s00442-005-0100-x
+Chave J et al (2014) Improved allometric models to estimate the
+aboveground biomass of tropical trees. Glob Change Biol
+20:3177–3190. doi:10.1111/gcb.12629
+Clark ML, Clark DB, Roberts DA (2004) Small-footprint lidar
+estimation of sub-canopy elevation and tree height in a tropical
+rain forest landscape. Remote Sens Environ 91:68–89. doi:10.
+1016/j.rse.2004.02.008
+Trees
+123
+
+
+Clark DB, Hurtado J, Saatchi SS (2015) Tropical rain forest structure,
+tree growth and dynamics along a 2700-m elevational transect in
+Costa Rica. PLoS One 10:e0122905. doi:10.1371/journal.pone.
+0122905
+Coomes DA, Allen RB (2009) Testing the metabolic scaling theory of
+tree growth. J Ecol 97:1369–1373. doi:10.1111/j.1365-2745.
+2009.01571.x
+Coomes DA, Duncan RP, Allen RB, Truscott J (2003) Disturbances
+prevent stem size-density distributions in natural forests from
+following scaling relationships. Ecol Lett 6:980–989. doi:10.
+1046/j.1461-0248.2003.00520.x
+Coomes DA, Holdaway RJ, Kobe RK, Lines ER, Allen RB (2012) A
+general integrative framework for modelling woody biomass
+production and carbon sequestration rates in forests. J Ecol
+100:42–64. doi:10.1111/j.1365-2745.2011.01920.x
+Couteron P, Pe´lissier R, Nicolini EA, Dominique P (2005) Predicting
+tropical forest stand structure parameters from Fourier transform
+of very high-resolution remotely sensed canopy images. J Appl
+Ecol 42:1121–1128. doi:10.1111/j.1365-2664.2005.01097.x
+Cusset G (1980) Les parame`tres intervenant dans la croissance des
+arbres: la relation hauteur-diame`tre de l’axe primaire ae´rien.
+Candollea 35:231–255
+Davies RB (1987) Hypothesis testing when a nuisance parameter is
+present only under the alternative—linear model case. Biome-
+trika 74:33–43
+Dawkins HC (1963) The productivity of tropical highforest trees and
+their reaction to controllable environment. Commonwealth
+Forestry Institute, Oxford
+Enquist BJ (2002) Universal scaling in tree and vascular plant
+allometry: toward a general quantitative theory linking plant form
+and function from cells to ecosystems. Tree Physiol 22:1045–1064
+Farrior CE, Bohlman SA, Hubbell S, Pacala SW (2016) Dominance
+of the suppressed: power-law size structure in tropical forests.
+Science 351:155–157. doi:10.1126/science.aad0592
+Fauset S et al (2015) Hyperdominance in Amazonian forest carbon
+cycling. Nat Commun. doi:10.1038/ncomms7857
+Feldpausch TR et al (2011) Height-diameter allometry of tropical forest
+trees. Biogeosciences 8:1081–1106. doi:10.5194/bg-8-1081-2011
+Feldpausch TR et al (2012) Tree height integrated into pantropical
+forest biomass estimates. Biogeosciences 9:3381–3403. doi:10.
+5194/bg-9-3381-2012
+Goodman RC, Phillips OL, Baker TR (2014) The importance of
+crown dimensions to improve tropical tree biomass estimates.
+Ecol Appl 24:680–698
+Gourlet-Fleury S, Blanc L, Picard N, Sist P, Dick J, Nasi R, Swaine
+MD, Forni E (2005) Grouping species for predicting mixed
+tropical forest dynamics: looking for a strategy. Ann For Sci
+62:785–796. doi:10.1051/forest:2005084
+Hajek P, Seidel D, Leuschner C (2015) Mechanical abrasion, and not
+competition for light, is the dominant canopy interaction in a
+temperate mixed forest. For Ecol Manag 348:108–116. doi:10.
+1016/j.foreco.2015.03.019
+Halle´ F, Ng FSP (1981) Crown construction in mature Dipterocarp
+trees. Malays For 44:222–223
+Halle´ F, Oldeman R, Tomlinson P (1978) Tropical trees and forests:
+an architectural analysis. Springer, Berlin
+Harja D, Vincent G, Mulia R, van Noordwijk M (2012) Tree shape
+plasticity in relation to crown exposure. Trees Struct Funct
+26:1275–1285
+Heineman KD, Jensen E, Shapland A, Bogenrief B, Tan S, Rebarber
+R, Russo SE (2011) The effects of belowground resources on
+aboveground allometric growth in Bornean tree species. For Ecol
+Manag 261:1820–1832. doi:10.1016/j.foreco.2011.02.005
+Henry H, Aarssen L (1999) The interpretation of stem diameter–
+height allometry in trees: biomechanical constraints, neighbour
+effects, or biased regressions? Ecol Lett 2:89–97
+Iida Y, Kohyama TS, Kubo T, Kassim AR, Poorter L, Sterck F, Potts
+MD (2011) Tree architecture and life-history strategies across
+200
+co-occurring
+tropical
+tree
+species.
+Funct
+Ecol
+25:1260–1268. doi:10.1111/j.1365-2435.2011.01884.x
+Iida Y, Poorter L, Sterck FJ, Kassim AR, Kubo T, Potts MD,
+Kohyama TS (2012) Wood density explains architectural
+differentiation across 145 co-occurring tropical tree species.
+Funct Ecol 26:274–282. doi:10.1111/j.1365-2435.2011.01921.x
+Iwasa Y, Cohen D, Leon JA (1985) Tree height and crown shape, as
+results of competitive games. J Theor Biol 112:279–297. doi:10.
+1016/s0022-5193(85)80288-5
+Jacobs MR (1955) Growth habits of the eucalyptus. Forestry and
+timber Bureau, Canberra
+Kennel P, Tramon M, Barbier N, Vincent G (2013) Canopy height
+model characteristics derived from airbone laser scanning and its
+effectiveness in discriminating various tropical moist forest types.
+Int J Remote Sens 34:8917–8935. doi:10.1080/01431161.2013.
+858846
+King DA (1990) Allometry of samplings and understorey trees of
+Panamanian forest. Funct Ecol 4:27–32. doi:10.2307/2389648
+King DA (1996) Allometry and life history of tropical trees. J Trop
+Ecol 12:25–44
+King DA (2005) Linking tree form, allocation and growth with an
+allometrically explicit model. Ecol Model 185:77–91. doi:10.
+1016/j.ecolmodel.2004.11.017
+King DA, Clark DA (2011) Allometry of emergent tree species from
+saplings to above-canopy adults in a Costa Rican rain forest.
+J Trop Ecol 27:573–579. doi:10.1017/s0266467411000319
+King DA, Maindonald JH (1999) Tree architecture in relation to leaf
+dimensions and tree stature in temperate and tropical rain forests.
+J Ecol 87:1012–1024. doi:10.1046/j.1365-2745.1999.00417.x
+King D, Davies S, Supardi MN, Tan S (2005) Tree growth is related
+to light interception and wood density in two mixed dipterocarp
+forests of Malaysia. Funct Ecol 19:445–453
+King DA, Davies SJ, Tan S, Noor NSM (2006) The role of wood density
+and stem support costs in the growth and mortality of tropical trees.
+J Ecol 94:670–680. doi:10.1111/j.1365-2745.2006.01112.x
+Kitajima K, Mulkey SS, Wright SJ (2005) Variation in crown light
+utilization characteristics among tropical canopy trees. Ann Bot
+Lond 95:535–547. doi:10.1093/aob/mci051
+Kohyama T, Hotta M (1990) Signiﬁcance of allometry in tropical
+saplings. Funct Ecol 4:515–521. doi:10.2307/2389319
+Kohyama T, Suzuki E, Partomihardjo T, Yamada T, Kubo T (2003)
+Tree species differentiation in growth, recruitment and allometry
+in relation to maximum height in a Bornean mixed dipterocarp
+forest. J Ecol 91:797–806. doi:10.1046/j.1365-2745.2003.00810.x
+Lang AC et al (2010) Tree morphology responds to neighbourhood
+competition and slope in species-rich forests of subtropical
+China. For Ecol Manag 260:1708–1715
+Lindenmayer DB et al (2012) Interacting factors driving a major loss
+of large trees with cavities in a forest ecosystem. PLoS One
+7:e41864. doi:10.1371/journal.pone.0041864
+Lines ER, Zavala MA, Purves DW, Coomes DA (2012) Pre-
+dictable changes in aboveground allometry of trees along
+gradients of temperature, aridity and competition. Glob Ecol
+Biogeogr 21:1017–1028. doi:10.1111/j.1466-8238.2011.00746.x
+Lutz JA, Larson AJ, Freund JA, Swanson ME, Bible KJ (2013) The
+importance of large-diameter trees to forest structural hetero-
+geneity. PLoS One 8:e82784. doi:10.1371/journal.pone.0082784
+Ma¨kela¨ A, Valentine HT (2006) Crown ratio inﬂuences allometric
+scaling in trees. Ecology 87:2967–2972. doi:10.1890/0012-
+9658(2006)87[2967:criasi]2.0.co;2
+Mascaro J, Litton CM, Hughes RF, Uowolo A, Schnitzer SA (2014) Is
+logarithmic transformation necessary in allometry? Ten, one-
+hundred, one-thousand-times yes. Biol J Linn Soc 111:230–233.
+doi:10.1111/bij.12177
+Trees
+123
+
+
+Molto Q, Herault B, Boreux JJ, Daullet M, Rousteau A, Rossi V
+(2014) Predicting tree heights for biomass estimates in tropical
+forests—a
+test
+from
+French
+Guiana.
+Biogeosciences
+11:3121–3130. doi:10.5194/bg-11-3121-2014
+Montgomery RA, Chazdon RL (2001) Forest structure, canopy
+architecture, and light transmittance in tropical wet forests.
+Ecology 82:2707–2718
+Moravie MA, Durand M, Houllier F (1999) Ecological meaning and
+predictive ability of social status, vigour and competition indices
+in a tropical rain forest (India). For Ecol Manag 117:221–240.
+doi:10.1016/s0378-1127(98)00480-0
+Muggeo VM (2003) Estimating regression models with unknown
+break-points. Stat Med 22:3055–3071
+Muggeo VM (2008) Segmented: an R package to ﬁt regression
+models with broken-line relationships. R news 8:20–25
+Muller-Landau HC et al (2006) Testing metabolic ecology theory for
+allometric scaling of tree size, growth and mortality in tropical
+forests. Ecol Lett 9:575–588. doi:10.1111/j.1461-0248.2006.
+00904.x
+Niklas KJ (1992) Plant biomechanics: an engineering approach to
+plant form and function. University of Chicago Press, Chicago
+Niklas KJ (1994) Plant allometry: the scaling of form and process.
+University of Chicago Press, Chicago
+Nogueira EM, Fearnside PM, Nelson BW, Barbosa RI, Hermanus
+Keizer EW (2008) Estimates of forest biomass in the Brazilian
+Amazon: new allometric equations and adjustments to biomass
+from
+wood-volume
+inventories.
+For
+Ecol
+Manag
+256:1853–1867. doi:10.1016/j.foreco.2008.07.022
+Oldeman
+RAA
+(1974)
+L’architecture
+de
+la
+foreˆt
+guyanaise.
+ORSTOM, Paris
+Oldeman RAA (1990) Forests: elements of silvology. Springer, Berlin
+Olson ME, Aguirre-Herna´ndez R, Rosell JA (2009) Universal foliage-
+stem scaling across environments and species in dicot trees:
+plasticity, biomechanics and Corner’s rules. Ecol Lett 12:210–219
+Osada N, Tateno R, Hyodo F, Takeda H (2004) Changes in crown
+architecture with tree height in two deciduous tree species:
+developmental constraints or plastic response to the competition
+for light? For Ecol Manag 188:337–347. doi:10.1016/j.foreco.
+2003.08.003
+Osunkoya OO, Omar-Ali K, Amit N, Dayan J, Daud DS, Sheng TK
+(2007) Comparative height-crown allometry and mechanical
+design in 22 tree species of Kuala Belalong rainforest, Brunei,
+Borneo. Am J Bot 94:1951–1962. doi:10.3732/ajb.94.12.1951
+Palace MW, Sullivan FB, Ducey MJ, Treuhaft RN, Herrick C,
+Shimbo JZ, Mota-E-Silva J (2015) Estimating forest structure in
+a tropical forest using ﬁeld measurements, a synthetic model and
+discrete return lidar data. Remote Sens Environ 161:1–11.
+doi:10.1016/j.rse.2015.01.020
+Picard N, Rutishauser E, Ploton P, Ngomanda A, Henry M (2015)
+Should tree biomass allometry be restricted to power models?
+For Ecol Manag 353:156–163. doi:10.1016/j.foreco.2015.05.035
+Ploton P, Pe´lissier R, Proisy C, Flavenot T, Barbier N, Rai S, Couteron P
+(2013) Assessing aboveground tropical forest biomass using
+Google Earth canopy images. Ecol Appl 22:993–1003
+Ploton P et al (2016) Closing a gap in tropical forest biomass
+estimation:
+taking crown
+mass
+variation
+into account
+in
+pantropical allometries. Biogeosciences 13:1571–1585. doi:10.
+5194/bg-13-1571-2016
+Poorter L, Bongers F, Sterck FJ, Woll H (2003) Architecture of 53 rain
+forest tree species differing in adult stature and shade tolerance.
+Ecology
+84:602–608.
+doi:10.1890/0012-9658(2003)084
+[0602:aorfts]2.0.co;2
+Poorter L, Bongers L, Bongers F (2006) Architecture of 54 moist-
+forest tree species: traits, trade-offs, and functional groups.
+Ecology
+87:1289–1301.
+doi:10.1890/0012-9658(2006)87
+[1289:aomtst]2.0.co;2
+Poorter L et al (2008) Are functional traits good predictors of
+demographic rates? Evidence from ﬁve neotropical forests.
+Ecology 89:1908–1920. doi:10.1890/07-0207.1
+Pretzsch H, Dieler J (2012) Evidence of variant intra-and interspeciﬁc
+scaling of tree crown structure and relevance for allometric
+theory. Oecologia 169:637–649
+Proisy C, Couteron P, Fromard F (2007) Predicting and mapping
+mangrove biomass from canopy grain analysis using Fourier-
+based textural ordination of IKONOS images. Remote Sens
+Environ 109:379–392. doi:10.1016/j.rse.2007.01.009
+Purves DW, Lichstein JW, Pacala SW (2007) Crown plasticity and
+competition for canopy space: a new spatially implicit model
+parameterized for 250 North American tree species. PLoS One
+2:e870. doi:10.1371/journal.pone.0000870
+Putz FE, Parker GG, Archibald RM (1984) Mechanical abrasion and
+intercrown spacing. Am Midl Nat 112:24–28. doi:10.2307/
+2425452
+Quesada CA et al (2012) Basin-wide variations in Amazon forest
+structure and function are mediated by both soils and climate.
+Biogeosciences 9:2203–2246. doi:10.5194/bg-9-2203-2012
+R Core Team (2014) R: a language and environment for statistical
+computing. R Foundation for Statistical Computing, Vienna,
+Austria. http://www.R-project.org/. Accessed 17 June 2016
+Read JM, Clark DB, Venticinque EM, Moreira MP (2003) Applica-
+tion of merged 1-m and 4-m resolution satellite data to research
+and management in tropical forests. J Appl Ecol 40:592–600.
+doi:10.1046/j.1365-2664.2003.00814.x
+Richards PW (1996) The tropical rain forest, 2nd edn. Cambridge
+University Press, Cambridge
+Russo SE, Wiser SK, Coomes DA (2007) Growth-size scaling
+relationships of woody plant species differ from predictions of
+the metabolic ecology model. Ecol Lett 10:889–901. doi:10.
+1111/j.1461-0248.2007.01079.x
+Rutishauser E, Barthelemy D, Blanc L, Nicolini E-A (2011) Crown
+fragmentation assessment in tropical trees: method, insights and
+perspectives. For Ecol Manag 261:400–407. doi:10.1016/j.foreco.
+2010.10.025
+Saatchi SS et al (2011) Benchmark map of forest carbon stocks in
+tropical regions across three continents. Proc Natl Acad Sci USA
+108:9899–9904. doi:10.1073/pnas.1019576108
+Sabatier D, Grimaldi M, Prevost MF, Guillaume J, Godron M, Dosso
+M, Curmi P (1997) The inﬂuence of soil cover organization on
+the ﬂoristic and structural heterogeneity of a Guianan rain forest.
+Plant Ecol 131:81–108. doi:10.1023/a:1009775025850
+Shinozaki K, Yoda K, Hozumi K, Kira T (1964) A quantitative
+analysis of plant form—the pipe model theory: I. basic analyses.
+Jpn J Ecol 14:97–105
+Singh M, Evans D, Friess DA, Tan BS, Nin CS (2015) Mapping
+above-ground biomass in a tropical forest in Cambodia using
+canopy textures derived from Google Earth. Remote Sens
+7:5057–5076. doi:10.3390/rs70505057
+Skovsgaard JP, Vanclay JK (2008) Forest site productivity: a review
+of the evolution of dendrometric concepts for even-aged stands.
+Forestry 81:13–31. doi:10.1093/forestry/cpm041
+Slik JWF et al (2013) Large trees drive forest aboveground biomass
+variation in moist lowland forests across the tropics. Glob Ecol
+Biogeogr 22:1261–1271. doi:10.1111/geb.12092
+Smith AR, Lukac M, Hood R, Healey JR, Miglietta F, Godbold DL
+(2013) Elevated CO2 enrichment induces a differential biomass
+response in a mixed species temperate forest plantation. New
+Phytol 198:156–168. doi:10.1111/nph.12136
+Sokal RR, Rohlf FJ (1981) Biometry: the principles and practice of
+statistics in biological research, 2nd edn. W. H. Freeman, San
+Francisco
+Trees
+123
+
+
+Sokal RR, Rohlf FJ (2012) Biometry: the principles and practice of
+statistics in biological research. W. H. Freeman and Co, New
+York
+Sterck FJ, Bongers F (2001) Crown development in tropical rain
+forest trees: patterns with tree height and light availability. J Ecol
+89:1–13
+Strigul N, Pristinski D, Purves D, Dushoff J, Pacala S (2008) Scaling
+from trees to forests: tractable macroscopic equations for forest
+dynamics. Ecol Monogr 78:523–545. doi:10.1890/08-0082.1
+Taubert F, Jahn MW, Dobner H-J, Wiegand T, Huth A (2015) The
+structure of tropical forests and sphere packings. Proc Natl Acad
+Sci USA 112:15125–15129
+Thomas SC (1996) Asymptotic height as a predictor of growth and
+allometric characteristics Malaysian rain forest trees. Am J Bot
+83:556–566. doi:10.2307/2445913
+Thomas SC, Martin AR, Mycroft EE (2015) Tropical trees in a wind-
+exposed island ecosystem: height-diameter allometry and size at
+onset of maturity. J Ecol 103:594–605. doi:10.1111/1365-2745.
+12378
+Umeki K (1995) Modeling the relationship between the asymmetry in
+crown display and local environment. Ecol Model 82:11–20.
+doi:10.1016/0304-3800(94)00081-r
+Vanclay JK (1992) Assessing site productivity in tropical moist
+forests—a review. For Ecol Manag 54:257–287. doi:10.1016/
+0378-1127(92)90017-4
+Vincent G, Caron F, Sabatier D, Blanc L (2012) LiDAR shows that
+higher forests have more slender trees. Bois et Foreˆts des Trop
+314:51–56
+West GB, Brown JH, Enquist BJ (1999) A general model for the
+structure and allometry of plant vascular systems. Nature
+400:664–667
+West GB, Enquist BJ, Brown JH (2009) A general quantitative theory
+of forest structure and dynamics. Proc Nat Acad Sci USA
+106:7040–7045. doi:10.1073/pnas.0812294106
+Westoby M, Wright IJ (2003) The leaf size-twig size spectrum and its
+relationship to other important spectra of variation among species.
+Oecologia 135:621–628. doi:10.1007/s00442-003-1231-6
+Westoby M, Falster DS, Moles AT, Vesk PA, Wright IJ (2002) Plant
+ecological strategies: some leading dimensions of variation
+between species. Annu Rev Ecol Syst 33:125–159. doi:10.1146/
+annurev.ecolsys.33.010802.150452
+Wyckoff PH, Clark JS (2005) Tree growth prediction using size and
+exposed crown area. Can J For Res 35:13–20. doi:10.1139/x04-142
+Yamada T, Ngakan OP, Suzuki E (2005) Differences in growth
+trajectory and strategy of two sympatric congeneric species in an
+Indonesian ﬂoodplain forest. Am J Bot 92:45–52. doi:10.3732/
+ajb.92.1.45
+Zolkos SG, Goetz SJ, Dubayah R (2013) A meta-analysis of terrestrial
+aboveground biomass estimation using lidar remote sensing.
+Remote Sens Environ 128:289–298. doi:10.1016/j.rse.2012.10.017
+Trees
+123

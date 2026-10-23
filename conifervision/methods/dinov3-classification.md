@@ -4,10 +4,10 @@ type: Method
 description: "1. Object detection with DINOv3, crops, feature vectors."
 tags: [dinov3, classification, weak-labels, orthophoto, species]
 status: stable
-updated: 2026-08-31
+updated: 2026-10-23
 generated:
   by: agent:conifervision-wiki
-  at: 2026-08-31T12:00:00Z
+  at: 2026-10-23T12:00:00Z
 related_methods:
   - methods/merge-detections
 sources:
@@ -20,6 +20,11 @@ sources:
   - sources/paper-borfit_a_novel_lidar-based_training_dataset_for_individual_tree-essd-2025-340
   - sources/paper-zero-shot_tree_detection_and_segmentation_from_aerial_forest_imagery-2506-03114v1
   - sources/paper-insid3_in_context_segmentation_dinov3
+  - sources/paper-appiahmensah_et _al-2022_yield capacity
+  - sources/paper-site index models for main forest-forming tree species in poland_forests-11-00301
+  - sources/paper-alder_allometry_cpi023
+  - sources/paper-beech allometry_bgc4810s1
+  - sources/paper-biomass and stem volume_951-40-1984-9
   - sources/paper-linguistic_guided_image_diffusion_model_for_tree_species_generation
 ---
 # DINOv3 classification
@@ -75,7 +80,10 @@ Stage 3 in [[project/pipeline-overview]] — runs on per-tree crops after detect
 | Fine-grained agglomerative clustering on target features | TBD |
 | Seed-cluster selection via debiased cross-image similarity | TBD |
 | Cluster aggregation using original and debiased prototypes | TBD |
+| Species attribution for parameter selection | Aligned (DINOv3 patch classification separates spruce and pine) |
 
+
+Pseudocode: [[sources/paper-appiahmensah_et _al-2022_yield capacity#Replication pseudocode]].
 
 Pseudocode: [[sources/paper-insid3_in_context_segmentation_dinov3#Replication pseudocode]].
 
@@ -118,3 +126,5 @@ _(model version, crop size, augmentations — link when code repo integrated)_
 - How does the inclusion of BorFIT's 11 structural metrics and 2 spectral indices as auxiliary features alongside DINOv3 embeddings affect classification accuracy for overlapping boreal conifer species?
 - Can prompting SAM2 with DEIMv2 canopy bounding boxes reliably isolate individual tree crowns in dense conifer stands to eliminate background noise before DINOv3 feature extraction?
 - Can the SVD-based debiasing projection from INSID3 be applied to DINOv3 feature extraction in our species classification pipeline to improve cross-orthophoto matching and reduce spatial coordinate bias?
+- Can DINOv3 crown-level confidence scores be propagated to weight mixed-species parameter sets when predicting plot-level basal area and yield capacity?
+- Can crown morphology or vertical crown base height extracted from photogrammetric point clouds complement RGB patch features in distinguishing *Alnus incana* from *Alnus glutinosa*?

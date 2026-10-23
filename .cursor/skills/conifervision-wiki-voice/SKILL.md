@@ -17,7 +17,7 @@ Vault prose stays **English** (`AGENTS.md`). This skill is how those pages are s
 
 Add it on **experiments** and on **procedure concepts** a non-technical reader will open (audit, labelling, decision gates). Skip it on paper-source pages and on one-line index bullets.
 
-Match the pattern already used in `conifervision/experiments/exp-004-rgb-small-student-pseudo-v2.md` and `exp-002-rgb-seg-backend-ceiling.md`.
+Match the pattern already used in `conifervision/experiments/r-class-itd/exp-004-rgb-small-student-pseudo-v2.md` and `exp-002-rgb-seg-backend-ceiling.md`.
 
 1. After the status line, add `## Executive summary (for the board)` — a few short paragraphs: what we already know, what this page decides, what is not started, what the result does **not** prove.
 2. For every later `##` section, in this order:

@@ -4,10 +4,10 @@ type: Method
 description: "CHM from photogrammetric point clouds (CSF ground filter). DEIMv2 detection on height-stratified CHM bands — lower, upper, and R-class."
 tags: [chm, photogrammetry, detection]
 status: stable
-updated: 2026-09-02
+updated: 2026-10-23
 generated:
   by: agent:conifervision-wiki
-  at: 2026-09-02T12:00:00Z
+  at: 2026-10-23T12:00:00Z
 related_methods:
   - methods/deimv2-canopy
   - methods/local-maxima
@@ -27,6 +27,13 @@ sources:
   - sources/paper-tree_crown_segmentation_in_three_dimensions_using_density_models_derived_from_airborne_laser_scanning-holmgren_j_et_al_220114
   - sources/paper-treepseco_scaling_individual_tree_crown_segmentation_using_large_vision_models-isprs-archives-xlviii-m-7-2025-275-2025
   - sources/paper-uav-based_lidar_scanning_for_individual_tree_detection_and_height_measurement_in_young_forest-5_2021
+  - sources/paper-appiahmensah_et_al_2023_site_index_sis_rs
+  - sources/paper-extraction_of_individual_tree_attributes_using_ultra-high-density_point_clouds_acquired_by_low-cost uav-lidar_in_eucalyptus_plantations
+  - sources/paper-a_linkage_among_tree_diameter_height_crown_base_he
+  - sources/paper-beech allometry_bgc4810s1
+  - sources/paper-biomass and stem volume_951-40-1984-9
+  - sources/paper-blanchard_tsaf_2016
+  - sources/paper-crown_and_root_biomass_equations_fo
   - sources/popescu-wynne-2004-seeing-the-trees
 ---
 # Canopy Height Model (CHM)
@@ -117,7 +124,38 @@ CHM build pseudocode: [[sources/popescu-wynne-2004-seeing-the-trees#Replication 
 | Generate 10 cm CHM | aligned |
 | Detect treetops using Dalponte and Coomes (2016) | aligned |
 | Segment individual tree crowns | aligned |
+| Filter point cloud returns to [1.5 m, 50.0 m] above ground | aligned |
+| Extract area-based height percentiles (Hp90, Hp95) on grid | aligned |
+| Calculate growing-season normalized height increment (delta_Hp95) | not used |
+| Species-specific MLR prediction of site index (SIS) | not used |
+| Layered HDBSCAN stem base detection (2–4 m slices) | not used (production pipeline is top-down 2D CHM/ortho) |
+| Chi-square radial distribution DBH fitting | not used |
+| 3D stem vector extrapolation to CHM apex | TBD (relevant to leaning stem apex-to-base offset) |
+| 10th-order polynomial pseudo-waveform height filtering | TBD |
+| Extract individual tree height (H) from CHM peak | aligned |
+| Condition 4-variate Vasicek SDE covariance on H and CW for DBH estimation | not used |
+| Retrieve species parameters for height-DBH curve | TBD |
+| Invert Mund power formula to solve DBH from CHM height | TBD |
+| Compute expected crown area from double-logistic DBH curve | TBD |
+| Compare predicted crown area against CHM/mask segmentation | TBD |
+| Fit power allometry log(CA) ~ log(DBH) across canopy strata | TBD |
+| Apply Baskerville log back-transformation correction exp(MSE/2) | TBD |
+| Compute Iterative Hegyi Index aboveground competition intensity within 10 m radius | TBD |
+| Fit component log-transformed power models with crown widths and competition | TBD |
+| Apply transformation ratio correction factor k = sum(Y) / sum(exp(ln_Y)) | TBD |
 
+
+Pseudocode: [[sources/paper-crown_and_root_biomass_equations_fo#Replication pseudocode]].
+
+Pseudocode: [[sources/paper-blanchard_tsaf_2016#Replication pseudocode]].
+
+Pseudocode: [[sources/paper-beech allometry_bgc4810s1#Replication pseudocode]].
+
+Pseudocode: [[sources/paper-a_linkage_among_tree_diameter_height_crown_base_he#Replication pseudocode]].
+
+Pseudocode: [[sources/paper-extraction_of_individual_tree_attributes_using_ultra-high-density_point_clouds_acquired_by_low-cost uav-lidar_in_eucalyptus_plantations#Replication pseudocode]].
+
+Pseudocode: [[sources/paper-appiahmensah_et_al_2023_site_index_sis_rs#Replication pseudocode]].
 
 Pseudocode: [[sources/paper-uav-based_lidar_scanning_for_individual_tree_detection_and_height_measurement_in_young_forest-5_2021#Replication pseudocode]].
 
@@ -180,3 +218,9 @@ Pseudocode: [[sources/paper-treeflow#Replication pseudocode]].
 - Can empirical 3D crown density templates be dynamically scaled using predicted heights from our 2D CHM-detection models to improve understory detection?
 - How does the latency of the heavy SAM ViT-H encoder in TreePseCo scale when deployed in production pipelines compared to lighter CNN/ViT backbones?
 - Can specialized sub-models or deep learning approaches reduce the high omission rates (RE ~15%) observed for young conifer trees under 1.0 m in height?
+- Can area-based site index priors (12.5 m SIS rasters) constrain height-growth expectations and improve crown tracking across repeated drone flight epochs?
+- Can the 10th-order polynomial pseudo-waveform filter be applied directly to 3D photogrammetric canopy points to prevent stray multipath noise and sparse apex overshoots in height estimation?
+- Can the 4-variate SDE conditional covariance between CHM height and crown width be used as a biophysical consistency prior to filter out false-positive tree detections or split oversegmented crowns?
+- Can species-specific asymptotic height caps in the inverted Mund allometric equations reliably handle CHM over-estimates without producing runaway DBH predictions?
+- Does the observed shift in crown-area vs. height allometric scaling at canopy emergence justify distinct allometric inversion models for lower vs. upper CHM height layers?
+- Can horizontal crown dimensions and spatial competition indices derived from 2D crown detections substitute for unreliable sub-canopy photogrammetric heights when estimating understory sapling biomass?

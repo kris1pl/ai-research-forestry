@@ -2,6 +2,149 @@
 
 Chronological record of ingest, query, hypothesis, and lint operations.
 
+## [2026-10-23] query | Concept accepted: Point Cloud Individual Tree Segmentation
+
+- Added [[concepts/point-cloud-individual-tree-segmentation]] from [[project/concept-proposals]]
+
+## [2026-10-23] ingest | Wang et al. (2013) — Understory Pinus koraiensis crown & root allometry
+
+- Source: `raw/papers/Crown_and_root_biomass_equations_fo.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-crown_and_root_biomass_equations_fo]]
+- Updated [[index]], [[methods/chm-detection]], [[sources/index]]
+
+## [2026-10-23] ingest | Blanchard et al. (2016) — Invariant DBH-crown area allometry across tropical sites
+
+- Source: `raw/papers/Blanchard_TSAF_2016.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-blanchard_tsaf_2016]]
+- Updated [[index]], [[methods/chm-detection]], [[methods/edgecrafter-ecseg]], [[sources/index]]
+
+## [2026-10-23] ingest | Zianis et al. (2005) — European tree biomass and stem volume equations compilation
+
+- Source: `raw/papers/Biomass and stem volume_951-40-1984-9.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-biomass and stem volume_951-40-1984-9]]
+- Updated [[index]], [[methods/dinov3-classification]], [[methods/chm-detection]], [[sources/index]]
+
+## [2026-10-23] ingest | Schorn et al. (2025) — Beech & Deciduous Allometric Scaling (DBH, Height, Crown Area)
+
+- Source: `raw/papers/Beech allometry_BGC4810s1.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-beech allometry_bgc4810s1]]
+- Updated [[index]], [[methods/chm-detection]], [[methods/dinov3-classification]], [[concepts/tree-allometry]], [[sources/index]]
+
+## [2026-10-23] query | Concept accepted: Understory tree detection
+
+- Added [[concepts/understory-tree-detection]] from [[project/concept-proposals]]
+- Holmgren et al. (2022) and Ding (2025). Separate from [[concepts/dense-stand-detection]].
+
+## [2026-10-23] query | Concept accepted: Tree-Level Allometric Scaling
+
+- Added [[concepts/tree-allometry]] from [[project/concept-proposals]]
+
+## [2026-10-23] ingest | Widlowski et al. (2003) — Allometric Relationships of European Tree Species
+
+- Source: `raw/papers/allometric relationships of selected european tree-gp_eudor_PDFA1B_EUNA20855ENC_001.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-allometric relationships of selected european tree-gp_eudor_pdfa1b_euna20855enc_001]]
+- Updated [[index]], [[concepts/site-index-and-yield]], [[concepts/crown-ownership]], [[methods/deimv2-canopy]], [[sources/index]]
+
+## [2026-10-23] ingest | Johansson (2005) — Alder stem volume equations and wood density
+
+- Source: `raw/papers/Alder_allometry_cpi023.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-alder_allometry_cpi023]]
+- Updated [[index]], [[methods/dinov3-classification]], [[concepts/site-index-and-yield]], [[sources/index]]
+
+## [2026-10-23] ingest | Rupšys & Petrauskas (2017) — 4-variate SDE for DBH, height, crown width, and volume
+
+- Source: `raw/papers/A_Linkage_among_Tree_Diameter_Height_Crown_Base_He.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-a_linkage_among_tree_diameter_height_crown_base_he]]
+- Updated [[index]], [[methods/chm-detection]], [[methods/deimv2-canopy]], [[sources/index]]
+
+## [2026-10-23] ingest | Vasilescu et al. (2017) — stem profile median diameter and taper allometry
+
+- Source: `raw/papers/A rapid method for estimating the median diameter of the stem profile of Norway spruce trees-iForest_ifor1945-009_Vasilescu.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-a rapid method for estimating the median diameter of the stem profile of norway spruce trees-iforest_ifor1945-009_vasilescu]]
+- Updated [[index]], [[concepts/site-index-and-yield]], [[sources/index]]
+
+## [2026-10-23] ingest | Raptis et al. (2018) — nonlinear crown width and DBH allometry
+
+- Source: `raw/papers/A Crown Width-Diameter Model for Natural Even-Aged Black Pine Forest Management-forests-09-00610-v2.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-a crown width-diameter model for natural even-aged black pine forest management-forests-09-00610-v2]]
+- Updated [[index]], [[methods/deimv2-canopy]], [[concepts/crown-ownership]], [[concepts/dense-stand-detection]], [[sources/index]]
+
+## [2026-10-23] query | Concept gate on the current source set
+
+- Reviewed ingested sources against [[concepts/index]] before the next paper batch.
+- Added [[concepts/site-index-and-yield]] for dominant height, site index, and stand volume (five sources). Moved those open questions off [[concepts/canopy-height-model]].
+- Left GADA, Eichhorn's rule, and Heureka on their source pages. Tree-level stem measurements stay on the eucalyptus UAV-LiDAR source. The allometry row in [[project/domains]] is still not a started program.
+- Later ingests print concept proposals and do not create the page.
+
+## [2026-10-23] lint | sources index lists every ingested paper
+
+- Replaced the short highlight list in [[sources/index]] with one bullet per source page (34).
+- Later `make ingest-paper WRITE=1` prepends new papers to that list.
+- Fixed the Shaheen (2025) slug (`self-supervised`, not `self_supervised`) on [[index]] and [[concepts/literature-map-dense-itd]].
+
+## [2026-10-23] ingest | Socha et al. (2020) — GADA Site Index and Height Growth Models for Central European Species
+
+- Source: `raw/papers/Site Index Models for Main Forest-Forming Tree Species in Poland_forests-11-00301.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-site index models for main forest-forming tree species in poland_forests-11-00301]]
+- Updated [[index]], [[concepts/canopy-height-model]], [[methods/local-maxima]], [[methods/dinov3-classification]]
+
+## [2026-10-23] ingest | Tarmu et al. (2020) — dominant vs mean height modeling under thinning
+
+- Source: `raw/papers/Mean_height_or_dominant_height_–_what_to_prefer_for_modelling_the_site_index_of_Estonian_forests.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-mean_height_or_dominant_height_–_what_to_prefer_for_modelling_the_site_index_of_estonian_forests]]
+- Updated [[index]], [[concepts/canopy-height-model]], [[methods/local-maxima]]
+
+## [2026-10-23] ingest | Zhou et al. (2025) — Bottom-up ITD and DBH via Ultra-High-Density UAV-LiDAR
+
+- Source: `raw/papers/Extraction_of_individual_tree_attributes_using_ultra-high-density_point_clouds_acquired_by_low-cost UAV-LiDAR_in_Eucalyptus_plantations.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-extraction_of_individual_tree_attributes_using_ultra-high-density_point_clouds_acquired_by_low-cost uav-lidar_in_eucalyptus_plantations]]
+- Updated [[index]], [[methods/chm-detection]], [[methods/local-maxima]], [[concepts/canopy-height-model]], [[concepts/crown-ownership]]
+
+## [2026-10-23] ingest | Fahlvik et al. (2014) — Heureka growth model evaluation
+
+- Source: `raw/papers/Evaluation of growth functions used in the Swedish Forest Planning System Heureka_article1013.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-evaluation of growth functions used in the swedish forest planning system heureka_article1013]]
+- Updated [[index]], [[concepts/canopy-height-model]], [[concepts/dense-stand-detection]]
+
+## [2026-10-23] ingest | Appiah Mensah et al. (2023) — bi-temporal ALS site index (SIS) mapping
+
+- Source: `raw/papers/AppiahMensah_et_al_2023_Site_Index_SIS_RS.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-appiahmensah_et_al_2023_site_index_sis_rs]]
+- Updated [[index]], [[methods/chm-detection]], [[concepts/canopy-height-model]]
+
+## [2026-10-23] ingest | Appiah Mensah et al. (2022) — Potential yield capacity and allometric volume modeling in Swedish conifers
+
+- Source: `raw/papers/AppiahMensah_et _al.2022_yield capacity.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-appiahmensah_et _al-2022_yield capacity]]
+- Updated [[index]], [[methods/dinov3-classification]], [[concepts/canopy-height-model]]
+
+## [2026-10-22] query | normal-forest flow for discussion
+
+- Added [[project/normal-forest-flow]]: condensed path from the ownership sample through labels, a score, a detector student, and outlines
+- Does not accept ADR-003, does not sign the 0.95 bar, and does not number any experiment after exp-005
+- exp-005 gate now names four locks before CVAT: height floor, precision bar, small-set count, read cap
+
+## [2026-10-22] hypothesis | ownership sample does not certify a large pool
+
+- Unread candidates become ground truth only on a small set, or when the lower end of a 95% Wilson interval reaches the proposed 0.95 bar. Both paths stay proposals to lock before CVAT
+- A raw 0.95 on 150 boxes does not promote the rest. The small-set count and the read cap are TBD. ADR-003 stays proposed. exp-005 stays draft
+
+## [2026-10-21] lint | experiments grouped by domain
+
+- `experiments/exp-001-per-layer-baselines.md` → `experiments/r-class-itd/exp-001-per-layer-baselines.md`
+- `experiments/exp-002-rgb-seg-backend-ceiling.md` → `experiments/r-class-itd/exp-002-rgb-seg-backend-ceiling.md`
+- `experiments/exp-003-merge-fusion-v1.md` → `experiments/r-class-itd/exp-003-merge-fusion-v1.md`
+- `experiments/exp-004-rgb-small-student-pseudo-v2.md` → `experiments/r-class-itd/exp-004-rgb-small-student-pseudo-v2.md`
+- `experiments/exp-005-normal-forest-ownership-smoke.md` → `experiments/normal-forest/exp-005-normal-forest-ownership-smoke.md`
+- Added [[project/domains]]. Ids stay global. Species classification, stand segmentation, and allometry have no folder yet
+
+## [2026-10-21] hypothesis | ADR-003 proposed; normal-forest priority
+
+- Proposed ADR-003: close [[experiments/exp-004-rgb-small-student-pseudo-v2]] before Phase B; park [[experiments/exp-003-merge-fusion-v1]]; current proposal is [[project/research-normal-forest]]
+- Added [[concepts/normal-forest]], [[concepts/crown-ownership]], [[experiments/exp-005-normal-forest-ownership-smoke]] (draft smoke; no training)
+- AREA 540 counts on exp-004 stay. Gates on exp-004 stay TBD. The 0.95 / 0.80 bar and the height floor are proposed, not signed
+- 2026-10-13 sequencing note: proposed superseded by ADR-003. ADR-002 is not rewritten. ADR-003 is not accepted
+
 ## [2026-10-13] hypothesis | exp-004 locked for the coding repo
 
 - Train COCO = weak boxes on AREAs 473–479 plus proposals kept by Round 1 FT @400 confirmed at @200. Audit does not drop the rest. 480, 481, golden, and AREA 540 stay out of that train set

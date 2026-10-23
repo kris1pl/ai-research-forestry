@@ -91,6 +91,10 @@ make ingest-paper FILE=raw/papers/foo.pdf WRITE=1
 make okf-lint
 make okf-lint FIX=1
 
+# Po partii nowych papierów: arkusz propozycji, potem akceptacja
+make concept-gate
+make concept-gate APPLY=1
+
 # Podgląd strony
 make serve-wiki
 
@@ -103,6 +107,16 @@ make deploy-wiki-gcp
 
 Hipotezy badawcze → sekcja poniżej.  
 Szczegóły OKF: [`.cursor/rules/100-okf-standards.mdc`](.cursor/rules/100-okf-standards.mdc) · [`tools/README.md`](tools/README.md#okf-open-knowledge-format-v02) · [`AGENTS.md`](AGENTS.md#frontmatter-yaml--okf-v02)
+
+#### Po partii nowych papierów
+
+Sam plik w `raw/papers/` wiki nie aktualizuje. Kolejność:
+
+1. `make ingest-paper FILE="raw/papers/plik.pdf" WRITE=1` dla każdego PDF-a. Zapisuje stronę źródła, `log.md`, indeksy i akapity na powiązanych stronach. Bez `WRITE=1` jest tylko podgląd na stdout.
+2. `make okf-lint` — sprawdza frontmatter. `FIX=1` poprawia bezpieczne pola. Ta komenda nie woła modelu.
+3. `make concept-gate` — woła model i zapisuje arkusz [`conifervision/project/concept-proposals.md`](conifervision/project/concept-proposals.md). Nowej strony koncepcji jeszcze nie ma.
+4. W arkuszu ustaw `decision: accept` albo `decision: reject`. Żeby skorygować propozycję, zmień `name`, `slug` i `why`, a potem ustaw `accept`. `pending` nic nie tworzy.
+5. `make concept-gate APPLY=1` — tworzy stronę koncepcji tylko dla `accept`. Model się nie odpala i nie powstaje folder eksperymentu.
 
 ### 6. Praca z hipotezami (research loop)
 
@@ -127,7 +141,7 @@ Język wyniku: **validate / reject / iterate** — nie „udowadniamy” hipotez
    - *„Zaproponuj 2–3 hipotezy pod mask-aware merge vs bbox NMS”*
 2. Agent czyta `index.md`, program research, methods/concepts/sources i w czacie podaje **2–3 kandydatów** (cytacje `[[…]]` + kill criterion).
 3. **Wybierasz jedną** (albo od razu wskazujesz konkretną).
-4. Agent tworzy/aktualizuje `conifervision/experiments/exp-NNN-<slug>.md` ze szablonu (hipoteza, motywacja, **pseudokod**, protokół eval, success/kill, handoff), dopisuje `experiments/index.md` + wpis w `log.md`, opcjonalnie ADR w `project/decisions.md`.
+4. Agent tworzy/aktualizuje `conifervision/experiments/<domain>/exp-NNN-<slug>.md` ze szablonu (hipoteza, motywacja, **pseudokod**, protokół eval, success/kill, handoff), dopisuje `experiments/<domain>/index.md` + wpis w `log.md`, opcjonalnie ADR w `project/decisions.md`.
 5. Po approve (ADR / Twoja decyzja) uruchamiasz implementację **poza** tym repo (cloud GPU).
 6. Po runie: *„Update experiment exp-NNN with these results: …”* — agent wypełnia Results + Conclusion (`accept` | `reject` | `iterate`) i odświeża Replication notes na methods.
 
@@ -135,7 +149,7 @@ Język wyniku: **validate / reject / iterate** — nie „udowadniamy” hipotez
 
 | Plik | Zawartość |
 |------|-----------|
-| `conifervision/experiments/exp-NNN-*.md` | Jednostka hipotezy (OKF `type: Experiment`) |
+| `conifervision/experiments/<domain>/exp-NNN-*.md` | Jednostka hipotezy (OKF `type: Experiment`). Numery są globalne |
 | `conifervision/experiments/index.md` | Lista experimentów |
 | `conifervision/log.md` | `## [data] hypothesis \| …` |
 | `conifervision/project/decisions.md` | Opcjonalnie ADR (`approved to run` / rejected) |
@@ -150,7 +164,7 @@ Strony ze `status: draft` **nie** publikują się na wiki Quartz — zmień na `
 - Nie wymyślaj ścieżek w repo produkcyjnym (`code-repo-integration` nadal TODO).
 - Przed kosztem GPU zawsze **human gate**.
 
-Przykładowe experimenty (szkielety): [`exp-001`](conifervision/experiments/exp-001-per-layer-baselines.md), [`exp-002`](conifervision/experiments/exp-002-merge-fusion-v1.md). Definicja sukcesu ensemble v1: ADR-001 w [`decisions.md`](conifervision/project/decisions.md) (status: proposed).
+Przykładowe experimenty (szkielety): [`exp-001`](conifervision/experiments/r-class-itd/exp-001-per-layer-baselines.md), [`exp-002`](conifervision/experiments/exp-002-merge-fusion-v1.md). Definicja sukcesu ensemble v1: ADR-001 w [`decisions.md`](conifervision/project/decisions.md) (status: proposed).
 
 W promptach agenta możesz też dodać (sekcja 4):
 

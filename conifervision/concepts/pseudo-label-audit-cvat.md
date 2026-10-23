@@ -4,7 +4,7 @@ type: Concept
 description: "Fixed-size human precision check of new weak-label boxes before exp-004 fine-tune. First pass is AREA 540 only. CVAT never receives the full training set."
 tags: [cvat, pseudo-labels, audit, exp-004, small-trees, annotation]
 status: stable
-updated: 2026-10-16
+updated: 2026-10-21
 area: "exp-004 Phase A — pilot on AREA 540, then Round 1 train tiles; golden kaxen_197_1 and AREA 481 excluded"
 generated:
   by: agent:conifervision-wiki
@@ -17,7 +17,7 @@ sources: []
 
 # Pseudo-label audit in CVAT
 
-Procedure for the human gate in [[experiments/exp-004-rgb-small-student-pseudo-v2]] Phase A. People judge a **fixed sample of new boxes**. They do not redraw the training forest.
+Procedure for the human gate in [[experiments/r-class-itd/exp-004-rgb-small-student-pseudo-v2]] Phase A. People judge a **fixed sample of new boxes**. They do not redraw the training forest.
 
 ## Executive summary (for the board)
 
@@ -56,7 +56,7 @@ Audit = precision of **kept proposals** (tree and box size). Not a second golden
 - Asking reviewers to find unlabeled trees (“missing 10 here”)
 - Editing or deleting existing weak labels
 - Drawing new boxes for the rest of the training set
-- Using [[experiments/exp-001-per-layer-baselines]] hold-out `kaxen_197_1` or weak test AREA **481** as audit or train material
+- Using [[experiments/r-class-itd/exp-001-per-layer-baselines]] hold-out `kaxen_197_1` or weak test AREA **481** as audit or train material
 - Requiring a human accept on every box that will be used in fine-tune
 - Choosing dense vs sparse tiles by looking at the map
 - Training a segmentation model, or a local-maxima height filter, **only** to pick the audit sample
@@ -216,7 +216,11 @@ precision = accept / (accept + reject + accept_resize)
 
 ## Related
 
-- [[experiments/exp-004-rgb-small-student-pseudo-v2]]
-- [[experiments/exp-001-per-layer-baselines]]
+- [[experiments/r-class-itd/exp-004-rgb-small-student-pseudo-v2]]
+- [[experiments/r-class-itd/exp-001-per-layer-baselines]]
 - [[project/research-tree-detection-ensemble]]
 - [[methods/local-maxima]]
+
+## Reuse
+
+[[concepts/crown-ownership]] and [[experiments/normal-forest/exp-005-normal-forest-ownership-smoke]] reuse the verdict list (accept, reject, `accept_resize`), the precision formula, and the cap of 20 tiles by 150 boxes. The AREA 540 procedure, those caps, and the exp-004 training rule on this page are unchanged.

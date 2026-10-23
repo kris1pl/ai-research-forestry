@@ -1,0 +1,2514 @@
+© Institute of Chartered Foresters, 2005. All rights reserved. 
+Forestry, Vol. 78, No. 3, 2005. doi:10.1093/forestry/cpi023
+For Permissions, please email: journals.permissions@oupjournals.org 
+Advance Access publication date 23 May 2005
+ Stem volume equations and basic 
+density for grey alder and common 
+alder in Sweden 
+ TORD  JOHANSSON * 
+ SLU, Department of Bioenergy, Box 7060, S-750 07 Uppsala, Sweden 
+ *  E-mail:  tord.johansson@bioenergi.slu.se or  tordj@mail1.slu.se 
+ Summary 
+ The objective was to determine stem volume models for grey and common alders and, based on the 
+models, stand volume for naturally regenerated grey and common alder stands was summarized. 
+Basic density for grey and common alders and mean annual growth for stands was estimated. Net 
+volume accretion data were collected from 24 stands of grey alder ( Alnus incana (L.) Moench) and 
+31 stands of common alder ( Alnus glutinosa (L.) Gaertner) in Sweden. The stands ranged in latitude 
+from 58 to 64° N and from 56 to 62° N for grey and common alder, respectively. The mean age of 
+grey and common alder stands was 41 years and 48 years, respectively, the mean stand density 1726 
+stems ha ␣-␣1  and 1078 stems ha ␣-␣1 , and the mean diameter at breast height (over bark) was 20 cm and 
+21 cm. Stem volume equations were developed for grey and common alders. The adopted model for 
+grey alder was based on diameter at breast height and height. For common alder, crown height was 
+added to diameter and height. Mean standing volume (over bark) for grey and common alder stands 
+was 428 and 374 m 3  ha ␣-␣1 . Mean annual growth for grey and common alder stands was 12.0 m 3  and 
+8.4 m 3  a ␣-␣1  ha ␣-␣1 , respectively. Basic density (under bark), for grey and common alder stems was 359 
+and 427 kg m ␣-␣3 , respectively. The basic density (under bark) for the lowest twigs in the crown and in 
+the lateral part of the crown was 415 and 421 kg m ␣-␣3  for grey alder and 423 and 423 kg m ␣-␣3  for 
+common alder. 
+ Introduction 
+ Common ( Alnus glutinosa (L.) Gaertn.) and grey 
+( Alnus incana (L.) Moench.) alders are widely 
+distributed throughout the northern hemisphere 
+and common alder is also planted in North Amer-
+ica ( Evans, 1984 ). Common alder can be found 
+throughout the Nordic countries south of  latitude 
+60° N as well as in middle and southern Europe 
+and parts of Russia. If climate data for the whole 
+ natural range of common alder are taken into 
+account, the mean annual temperatures range 
+from 1 to 17°C and the mean annual rainfall 
+ranges from 400 to 1300 mm. The species grows 
+on peat and eutrophic soils as well as on light 
+clays, coarse sands and gravels. Common alder is 
+frost hardy but the resistance varies from season 
+to season ( Matthews, 1986 ). The species is very 
+tolerant of ﬂ ooding, but will not grow well in dry 
+conditions. 
+Downloaded from academic.oup.com/forestry/article/78/3/249/520689 by Umeå universitetsbibliotek / Umeå University library user on 12 October 2026
+
+
+250 
+FORESTRY
+ Grey alder is distributed throughout the Nor-
+dic countries, extending far to the north (lat. 71° 
+30′ N, 1100 m a.s.l.) and is found in most parts 
+of Europe and Asia. Grey alder was introduced to 
+Denmark in 1765 ( Møller, 1965 ). This Danish 
+author stated that grey alder grows taller than 
+common alder but has a shorter rotation period. 
+The species is frost hardy ( Rytter, 1996 ). Grey 
+alder does not tolerate long periods of ﬂ ooding. 
+The species is able to grow on acid and infertile 
+soils. In Sweden, common alder grows mainly in 
+the southern to middle part of the country, while 
+grey alder is found in central and northern 
+ Sweden. Co-occurrence is limited to central 
+ Sweden. According to the Swedish National Sur-
+vey, the growing stock of common and grey alder 
+is 23.0 and 9.2 million m 3 , respectively, which 
+corresponds to 0.9 and 0.3 per cent of the total 
+growing stock ( Anon., 2004 ). 
+ Alders generally grow in small stands (0.1 – 
+1.0 ha). Both species have nitrogen-ﬁ xation 
+ nodules on their roots with a capacity to ﬁ x 
+atmospheric nitrogen. This ability is exploited 
+successfully in reclamation work. By ﬁ xing nitro-
+gen, alders can thrive on otherwise nitrogen-
+ deﬁ cient soils and produce nitrogen-rich foliage. 
+Consequently, the soil will be enriched by the lit-
+ter, which is readily decomposed. Alders are often 
+used as nurse stands for other species such as com-
+mon ash ( Fraxinus excelsior L.), common hazel 
+( Corylus avellana L.), silver birch ( Betula pendula 
+Roth), downy birch ( Betula pubescens Ehrh.) and 
+Norway spruce ( Picea abies (L.) Karst.).  Rytter 
+(1996) reviewed knowledge concerning the use of 
+grey alder in forestry.  Schrötter (1983 ,  1996 ) and 
+ Melzer (1990) studied grey alder in middle Europe, 
+mostly with regard to the utilization and silvicul-
+ture of mixed stands of alder and Scots pine ( Pinus 
+sylvestris L.) or alder and Norway spruce. 
+ Studies on yield of alder for Nordic conditions 
+have been conducted during the last decade. In 
+Sweden there is no available tree volume equation 
+for grey alder. But  Eriksson (1973) has developed 
+volume functions for common alder. In Norway, 
+ Børset and Langhammer (1966) presented tree 
+volume equations and yield tables for grey alders 
+growing in 47 localities (lat. 59 – 64° N). The 
+stands ranged in age between 14 and 47 years. 
+They reported a volume production for the 47 
+stands of 90 – 470 m 3  ha ␣-␣1  depending on stand 
+age. In Finland,  Kärki  et al . (1999) presented 
+ volume functions and tables for grey alder 
+growing in Finland, and  Appelroth (1952) reviewed 
+the occurrence and yield of grey alder. He studied 
+the invasion of grey alder on areas close to the 
+Baltic Sea where the yield was 175 m 3  ha ␣-␣1  for 
+20- year-old stands.  Murnieks (1950) studied grey 
+alder growing in Latvia and presented volume 
+tables for 5- to 49-year-old trees. In Scotland, 
+ Mitchell  et al . (1981) measured three stands of 
+common alder and presented yields of 12- to 
+22-year-old alder stands. In Germany,  Schrötter 
+(1983) studied grey alder stands and presented 
+tree volume functions and yield tables and  Lockow 
+(1995) presented tree volume functions for com-
+mon alder. The interest in managing broadleaved 
+trees has increased during the last decade 
+ ( Johansson, 1999 ). Therefore, tree  volume func-
+tions for grey and common alder based on stands 
+growing in a wide range of latitudes are still 
+needed especially for Swedish  conditions. 
+ There are several methods for estimating tree 
+volume ( Clutter  et al ., 1983 ). The volume of tree 
+sections is calculated, for example, by using for-
+mulae for a cylinder where section length and 
+diameter are parameters. Complete tree volume is 
+found by summation of the sections. Functions 
+describing tree volume have tree height and diam-
+eter as the main parameters, but also height to the 
+crown and crown length are used as supplements 
+in some functions. Including crown height in 
+ volume equations has been successful because of 
+the correlation between stem form and crown 
+length. Theoretically, stem form is better  estimated 
+without crown length ( Larson, 1963 ). 
+ Basic density of stem and twigs for common 
+and grey alder has been studied. However, there 
+are incomplete data on basic density for stem and 
+twigs for grey and common alders growing in 
+stands of different stem density and site index. 
+Samples for predicting basic density of a stem are 
+taken at different heights of a tree. However, in a 
+Finnish study the sample taken at breast height 
+predicted the density well and the true stem aver-
+age was best calculated from a sample taken at 
+25 per cent height of an alder ( Hakkila, 1970 ). In 
+a Norwegian study the basic density for grey 
+alder stems increased with increasing height at 
+which the sample was taken ( Nagoda, 1968 ). In 
+Finland,  Hakkila (1970) and  Lehtonen  et al . 
+(1975) reported a basic density for grey alder of 
+361 kg m ␣-␣3  and common alder of 415 kg m ␣-␣3 , 
+Downloaded from academic.oup.com/forestry/article/78/3/249/520689 by Umeå universitetsbibliotek / Umeå University library user on 12 October 2026
+
+
+ 
+STEM VOLUME EQUATIONS AND BASIC DENSITY FOR ALDERS 
+ 251
+respectively.  Stemsrud (1964) reported a basic 
+density of 369 kg m ␣-␣3  and  Nagoda (1966) 
+reported 365 kg m ␣-␣3  in Norway. In another Nor-
+wegian study, basic density for 29- to 73-year-old 
+grey alders was 340 kg m ␣-␣3  (324 – 358) ( Vadla, 
+1999 ). 
+ The objective of the present study was to deter-
+mine stem volume models for grey and common 
+alders. Based on the models, stand volume for 
+naturally regenerated grey and common alder 
+stands was summarized. Variation in basic den-
+sity between grey and common alder and stand 
+characteristics was examined. Mean annual 
+growth for stands was estimated. 
+ Materials and methods 
+ Data from grey and common alder stands in Swe-
+den growing in 24 and 31 localities, respectively, 
+were used ( Figure 1 ). All stands were naturally 
+regenerated.  Johansson (1999) used these stands 
+in his study of site index for grey and common 
+alders. Two of the grey alder stands appearing in 
+Johansson’s study have since been clearcut and 
+were excluded. Some of the alder stands had been 
+thinned once prior to the present study. Stands 
+accepted for this study had to be free from severe 
+damage caused by herbivore wild game. The 
+stands of grey alder ranged in age from 22 to 67 
+years and those of common alder from 22 to 92 
+years ( Table 1 ). 
+ In each stand the number of stems per hectare 
+and their diameters at breast height were observed. 
+The mean number of stems per hectare was calcu-
+lated based on the numbers of stems counted in 
+the 0.10 – 0.15-ha stands. A 5-m-wide buffer strip 
+was established along the border of each stand 
+sampled in order to avoid the effects of wind, 
+open areas, ditches and shading by adjacent 
+stands, etc. Site index was calculated for the stand 
+( Johansson, 1999 ). Soil types for the alder stands 
+were adapted from  Johansson (1999) . The root-
+ing depth was 15 – 40 cm and the groundwater 
+level stood at 20 – 40 cm depth. 
+ Twenty trees per stand were selected for meas-
+uring tree height, live crown height and diameter 
+at breast height ( Appendix A ). The diameter 
+range for the selected 20 trees was based on the 
+mean diameter and the diameter range for the 
+entire stand. Five trees in each stem diameter 
+quartile were selected. The difference in mean 
+diameter between the total number of stems on 
+the stand and the sampled stems was ␣-␣2.5 mm 
+(␣-␣33 to +29) for grey alders and ␣-␣1 mm (␣-␣23 
+to +15) for common alders. 
+ Construction of a stem volume model for 
+grey and common alders 
+ Among the stands sampled, 15 grey alder and 20 
+common alder stands were used for estimation of 
+tree volume ( Table 1 ). The remaining stands 
+(9 and 11, respectively) were used as test material 
+for the predicted stem volume functions. The dif-
+ferences in mean age, diameter, height and crown 
+height between stands used for prediction and 
+test of the function are small ( Table 1 ). 
+ Trees growing outside the 15 grey and 20 com-
+mon alder stands were used for tree volume esti-
+mation. Five undamaged grey and common alders 
+per stand were chosen. One tree with a diameter 
+ Figure 1. Geographical location of sample plots of 
+grey alder ( Alnus incana (L.) Moench.) (open circles) 
+and common alder ( Alnus glutinosa (L.) Gaertner) 
+(closed circles). 
+Downloaded from academic.oup.com/forestry/article/78/3/249/520689 by Umeå universitetsbibliotek / Umeå University library user on 12 October 2026
+
+
+252 
+FORESTRY
+ Table 1 :  Main characteristics for stands of grey and common alder (upper) and mean values for ﬁ ve sample trees per stand (lower) growing in 
+northern and middle Sweden 
+ 
+ Age  
+ Diameter  
+ Dominant height  
+ 
+ Basal area  
+ Site index  
+ 
+(years) 
+(mm) 
+(m) 
+ No. of stems ha ␣-␣1   
+(m 2  ha ␣-␣1 ) 
+H 40  (m)  *  
+ Grey alder (24) 
+ 
+ 
+ 
+ 
+ 
+ 
+  Mean ± SE 
+ 41 ± 2 
+ 196 ± 9 
+ 20.2 ± 0.7 
+ 1726 ± 232 
+ 44.5 ± 4.4 
+ 20.3 ± 0.6 
+ Range 
+ 22 – 67 
+ 115 – 264 
+ 13.6 – 26.2 
+ 507 – 4266 
+ 25.9 – 63.1 
+ 17.0 – 27.0 
+ Common alder (31) 
+ 
+ 
+ 
+ 
+ 
+ 
+ Mean ± SE 
+ 48 ± 3 
+ 214 ± 7 
+ 19.8 ± 0.5 
+ 1078 ± 99 
+ 37.3 ± 1.6 
+ 20.0 ± 0.5 
+ Range 
+ 22 – 92 
+ 155 – 292 
+ 13.8 – 25.4 
+ 524 – 2994 
+ 19.0 – 62.0 
+ 14.0 – 24.0 
+ Estimation of tree volume equations 
+ 
+ 
+ Diameter  
+ Height  
+ Crown height  
+ Volume  
+ Diameter 
+ Height  
+ Crown  
+ Volume  
+ 
+(mm) 
+(m) 
+(m) 
+(m 3  tree ␣-␣1 ) 
+ (mm) 
+(m) 
+height (m) 
+(m 3  tree ␣-␣1 )
+ 
+ Grey alder (15) 
+ Common alder (20) 
+ Mean ± SE 
+ 193 ± 11 
+ 19.0 ± 0.8 
+ 11.6 ± 0.6 
+ 0.300 ± 0.118 
+ 231 ± 10 
+ 19.6 ± 0.6 
+ 12.0 ± 0.5 
+ 0.508 ± 0.053 
+ Range 
+ 127 – 274 
+ 13.1 – 24.0 
+ 5.3 – 13.7 
+ 0.139 – 0.557 
+ 153 – 308 
+ 14.3 – 24.1 
+ 6.3 – 15.4 
+ 0.176 – 1.093 
+ Test stands 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Grey alder (9) 
+ 
+ Common alder (11) 
+ 
+ 
+ 
+ 
+ 
+ Mean ± SE 
+ 200 ± 20 
+ 18.4 ± 1.2 
+ 10.9 ± 0.7 
+ 0.327 ± 0.053 
+ 212 ± 15 
+ 18.5 ± 0.8 
+ 11.0 ± 0.6 
+ 0.375 ± 0.060 
+ Range 
+ 113 – 272 
+ 13.5 – 23.8 
+ 7.9 – 15.0 
+ 0.111 – 0.548 
+ 142 – 311 
+ 12.7 – 21.5 
+ 5.8 – 13.9 
+ 0.151 – 0.805 
+ The number of stands is given in parenthesis. 
+ * Site index was deﬁ ned according to  Johansson (1999) . 
+Downloaded from academic.oup.com/forestry/article/78/3/249/520689 by Umeå universitetsbibliotek / Umeå University library user on 12 October 2026
+
+
+ 
+STEM VOLUME EQUATIONS AND BASIC DENSITY FOR ALDERS 
+ 253
+close to the estimated basal area weighted mean 
+diameter in the stand, one close to the smallest 
+diameter and one tree close to largest diameter 
+were then felled. The two remaining trees repre-
+sented the upper and the lower limit of quartiles. 
+Felled trees with evidence of root rot were rejected 
+and replaced by one of the remaining trees outside 
+the stand. Furthermore, alders growing in large 
+openings were excluded from consideration. 
+Selected trees were then felled and diameter, height, 
+and live crown length were measured. The stem 
+was divided into 2-m-long sections on which diam-
+eters at midpoint of the section were registered. 
+The volume of stem section was calculated as a 
+cylinder. The top section volume was calculated as 
+a cone. Then the stem volume of the felled tree was 
+estimated by summation of the volume for the 
+stem sections. 
+ Functions including diameter, height and/or 
+crown height for estimation of tree volume of 
+grey and common alder were tested. The nitial 
+test showed that no model including crown height 
+improved the grey alder tree volumes. The fol-
+lowing equations were examined further:
+ V  = b 0 × D b
+ 
+1
+ 
+ × H Grey  alder 
+ (1) 
+ V = b 0 + b 1 × D 2 + b 2 × D × H Grey  alder 
+ (2) 
+ V = b 0 × D b
+ 
+1
+ 
+ × H b
+ 
+2
+ 
+  Common  alder 
+ (3) 
+ V = b 0 × D b
+ 
+1  × H b 2
+ 
+ × CH b
+ 
+3
+ 
+   Common  alder 
+ (4) 
+ V = b 0 + b 1 × D 2 + b 2 × D 2  × H 
+  + b 3 × D 2 × CH Common  alder 
+ (5) 
+ V = b 0 ×  D b
+ 
+1
+ 
+ × H b
+ 
+2
+ 
+ 0.00182 × D 2 × CH 
+ 
+  Grey  alder (Schrötter, 1983) 
+ (6) 
+ V = b 0 × D 2 + b 1 × D 2 × H + b 2 × D × CH + b 3 
+ 
+  × D × H + b 4 × H + b 5 × D 3  
+ Common  alder (Eriksson, 1973) 
+ (7) 
+ V = e a   Common  alder (Lockow, 1995) 
+ (8) 
+a = (b 0 + b 1 ×  ln D + b 2 ×  ln H + b 3  ×  ln  2 D 
+  + b 4  ×  ln  2 H)
+ where  V = stem volume (dm 3  tree ␣-␣1 ),  D = dia meter 
+at breast height (over bark) (cm),  H = tree height 
+(m),  CH = crown height (m);  b  0  – b  5  = parameters 
+to be estimated. 
+ Model selection criterion 
+ The observed ( V  o ) and estimated ( V  e ) volume for 
+individual stems was evaluated. The corresponding 
+standard deviations were also assessed. The mean 
+differences were assessed with two-tailed  t tests. 
+The total Type 1 Error was controlled using the 
+Boniferroni  t test ( Miller, 1981 ). 
+ Calculations of stand volume 
+ Using data from the subsample (20 trees per 
+stand), cf.  Appendix A , calculations were made on 
+single stem volume for the alder stands. For every 
+stand, height/diameter and crown height/diameter 
+curves based on the 20 sample trees per stand 
+were made. Then predicted height and live crown 
+height based on diameter for each of the trees in 
+the stand was estimated. The stand  volume for 
+stands was then calculated by summarizing esti-
+mated stem volumes by the stem models 2 and 4 
+for grey and common alders, respectively. The 
+mean annual increment (MAI) for the stands was 
+correlated with different stand parameters (total 
+age, stem number and site index). 
+ Estimation of basic density of stems and twigs 
+ Basic density was estimated according to the 
+water-immersion method described by  Andersson 
+and Tuimala (1980) . One tree per stand growing 
+outside the plot was used for basic density estima-
+tion. The tree evaluated had a diameter close to 
+the mean weighted basal diameter. A disc was cut 
+from the chosen tree at the height of 4 m accord-
+ing to the methods from long-term experiments at 
+the Forest Faculty. A sample of a twig from the 
+lowest branches of the crown and one sample in 
+the lateral part of the crown were cut. The 10-cm-
+long samples were cut close to the stem. The stem 
+disc and the twig samples were saturated in water 
+for 24 h and the fresh weight was converted to 
+volume. The volume of the disc and the twig sam-
+ples was determined. The dry matter content of 
+the wood proportion (kg) of the disc and the twig 
+samples was determined after drying at 105°C in 
+an air-ventilated oven for 24 h. Dry weight to 
+fresh volume of the debarked disc and twigs was 
+then calculated as basic density (kg m ␣-␣3 ). 
+ Data were analysed by linear and non-linear 
+regression using the SAS/STAT system for per-
+sonal computers ( Anon., 1999 ). A measure of the 
+ﬁ t of the non-linear regressions was based on the 
+Downloaded from academic.oup.com/forestry/article/78/3/249/520689 by Umeå universitetsbibliotek / Umeå University library user on 12 October 2026
+
+
+254 
+FORESTRY
+ Table 2 : Estimated parameters, asymptotic standard errors of equation models, conﬁ dence interval, mean 
+squared residuals (RMSE) and coefﬁ cient of determination ( R  2 ) for tree volume estimations of grey and 
+common alders growing on forest land 
+ 
+ No. of  
+ 
+ Parameter 
+ Asymptotic  
+ Conﬁ dence  
+ 
+ Model 
+observations 
+ Parameter 
+ estimates 
+SE 
+interval 
+ RMSE 
+ R  2  
+ Grey alder 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ (1E) 
+ 75 
+ B  0  
+ 0.000128 
+ 0.000014 
+ 0.000100 –0.000160 
+ 0.02602  0.99 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ B  1  
+ 1.577100 
+ 0.033700 
+ 1.509900 –1.644400 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ (2E) 
+ 75 
+ B  0  
+ 0.006090 
+ 0.002020 
+ 0.002060 –0.010120 
+ 0.00562  0.99 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ B  1  
+ 0.000640 
+ 0.000009 
+ 0.000620 – 0.000660 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ B  2  
+ 0.000065 
+ 0.000014 
+ 0.000040 – 0.000090 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ (6E) 
+ 
+ B  0  
+ 9.33933 
+ Schrötter,  
+ 
+ 
+ 
+ 
+ 
+ 
+× 10 ␣-␣5 
+1983
+ 
+ 
+ B  1  
+ 1.80770 
+ 
+ 
+ 
+ 
+ 
+ 
+ B  2  
+ 0.87541 
+ 
+ 
+ 
+ 
+ Common alder 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ (3E) 
+ 100 
+ B  0  
+ 0.000049 
+ 0.000003 
+ 0.000044 – 0.000054 
+ 0.01072  0.99 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ B  1  
+ 1.929100 
+ 0.006950 
+ 1.915300 – 1.942900 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ B  2  
+ 1.004000 
+ 0.019300 
+ 0.965700 – 1.042300 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  (4E) 
+ 100 
+ B  0  
+ 0.000057 
+ 0.000002 
+ 0.000053 – 0.000061 
+ 0.00632  0.99 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ B  1  
+ 1.966900 
+ 0.004990 
+ 1.957000 – 1.976800 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ B  2  
+ 0.829200 
+ 0.017200 
+ 0.795000 – 0.863400 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ B  3  
+ 0.101300 
+ 0.007440 
+ 0.085500 – 0.116100 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ (5E) 
+ 100 
+ B  0  
+ 0.005749 
+ 0.001735 
+ 0.002318 – 0.009182 
+ 0.00728  0.99 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ B  1  
+ 0.000060 
+ 0.000013 
+ 0.000034 – 0.000087 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ B  2  
+ 0.000031 
+ 0.000001 
+ 0.000016 – 0.000046 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ B  3  
+ 0.000008 
+ 0.000001 
+ 0.000007 – 0.000009 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ (7E) 
+ 
+ B  0  
+ 0.18790 
+ Eriksson  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+(1973)
+ 
+ 
+ B  1  
+ 0.04899 
+ 
+ 
+ 
+ 
+ 
+ 
+ B  2  
+ 0.00182 
+ 
+ 
+ 
+ 
+ 
+ 
+ B  3  
+ ␣-␣0.25880 
+ 
+ 
+ 
+ 
+ 
+ 
+ B  4  
+ 0.86990 
+ 
+ 
+ 
+ 
+ 
+ 
+ B  5  
+ ␣-␣0.00866 
+ 
+ 
+ 
+ 
+ (8E) 
+ 
+ B  0  
+ ␣-␣10.26275 
+ Lockow  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+(1995)
+ 
+ 
+ B  1  
+ 2.15550 
+ 
+ 
+ 
+ 
+ 
+ 
+ B  2  
+ 0.97668 
+ 
+ 
+ 
+ 
+ 
+ 
+ B  3  
+ ␣-␣0.04315 
+ 
+ 
+ 
+ 
+ 
+ 
+ B  4  
+ 0.01072 
+ 
+ 
+Downloaded from academic.oup.com/forestry/article/78/3/249/520689 by Umeå universitetsbibliotek / Umeå University library user on 12 October 2026
+
+
+ 
+STEM VOLUME EQUATIONS AND BASIC DENSITY FOR ALDERS 
+ 255
+coefﬁ cient of determination ( Zar, 1999 ):  R  2  = 1 
+ – [SSE/SStotal (corrected)]. The total Type 1 Error 
+was tested by the Boniferroni  t test. Throughout 
+the report, means are presented together with 
+standard error (SE). 
+ Results 
+ Stem volume estimations 
+ As shown by  Table 2 the asymptotic standard errors 
+for the parameters were lower than the parameter 
+values. A comparison between observed volume 
+( V  o ) and volume estimated ( V  e ) by the above models 
+was made ( Table 3 ). Model (2E) for grey alder has 
+the lowest level of unexplained variation (RMSE, 
+31.6 × 10 ␣-␣6 ) with model (4E) having the lowest for 
+common alder (40.2 × 10 ␣-␣6 ) ( Table 3 ). The pre-
+dicted mean volume for grey alder by model (2E) 
+was the same as the observed mean volume and the 
+predicted mean volume for common alder by model 
+(4E) was closest to the observed mean volume 
+( Table 3 ). Based on the above it was decided to 
+adopt model (2E) for the estimation of stem volume 
+for grey alder and model (4E) for common alder. 
+ Stem volume estimations by model (2E) for 
+grey alder were compared with a model (6E) made 
+by  Schrötter (1983) for German stands. Estima-
+tions of stem volume by model (4E) for common 
+alder were compared with estimations made by a 
+model (7E) determined by  Eriksson (1973) for 
+Swedish stands and a model (8E) determined by 
+ Lockow (1995) for German stands ( Table 2 ). 
+ Tree characteristics for test stands were used 
+for the comparison ( Table 1 ). Comparisons with 
+the Swedish and German models are shown in 
+ Figure 2 . As for data used for stem functions 
+above, the mean residuals ( M  res ) between observed 
+and estimated volume for Swedish and German 
+models were evaluated ( Table 3 ). The correspond-
+ing standard deviations were also assessed. The 
+statistical signiﬁ cance of the mean differences, i.e. 
+if systematically differences occurred, was 
+assessed with two-tailed  t tests. Using the Bonif-
+erroni  t test controlled the total Type 1 Error. 
+ The German model (6E) for grey alder estimated 
+stem volumes with values both lesser and greater 
+than the observed volumes. Model (2E) ﬁ tted the 
+grey alder material better than model (6E) ( Figure 
+2 ). The slope of the line ﬁ tted for residuals of model 
+(6E) indicates that the  function overestimates tree 
+ Table 3 :  Means ± SE of and residual ( M  res ) between observed volume ( V  o ) and estimated volume ( V  e ) (m 3 ) 
+ according to tested model, standard deviation for the residuals (SD) as percentages of observed mean ( V  o ) for 
+the main set and the mean squared residuals (RMSE) 
+ Model no. 
+ No. of observations 
+ Observed mean ( V  o ) 
+ Estimated mean ( V  e ) 
+ RMSE 
+ Grey alder 
+ 
+ 
+ 
+ 
+ 
+ 1E 
+ 75 
+ 0.300 ± 0.022 
+ 0.279 ± 0.021 
+ 
+ 677.5 × 10 ␣-␣6  
+ 2E 
+ 75 
+ 0.300 ± 0.022 
+ 0.300 ± 0.022 
+ 
+ 31.6 × 10 ␣-␣6  
+ Common alder 
+ 
+ 
+ 
+ 
+ 
+ 3E 
+ 100 
+ 0.508 
+ ␣-␣63.810 × 10 ␣-␣6  
+ 2.0 
+ 114.8 × 10 ␣-␣6  
+ 4E 
+ 100 
+ 0.508 
+ ␣-␣64.762 × 10 ␣-␣6  
+ 1.2 
+ 40.2 × 10 ␣-␣6  
+ 5E 
+ 100 
+ 0.508 
+ ␣-␣154.286 × 10 ␣-␣6  
+ 1.4 
+ 52.9 × 10 ␣-␣6  
+ Model no. 
+ No. of observations 
+ Observed mean ( V ) 
+ M  Res  
+ SD (%) 
+ Grey alder 
+ 
+ 
+ 
+ 
+ 2E 
+ 45 
+ 0.327 
+ 0.221 × 10 ␣-␣6  
+ 0.7 
+ 6E 
+ 45 
+ 0.327 
+ 3.730 × 10 ␣-␣6  
+ 10.7 
+ Common alder 
+ 
+ 
+ 
+ 
+ 4E 
+ 55 
+ 0.373 
+ ␣-␣42.593 × 10 ␣-␣6  
+ 1.9 
+ 7E 
+ 55 
+ 0.373 
+ ␣-␣11.870 × 10 ␣-␣6  
+ 2.0 
+ 8E 
+ 55 
+ 0.373 
+ 131.556 × 10 ␣-␣6  
+ 3.1 
+ Model test of tree volume (upper) and comparison between adopted model and models reported by other 
+ researchers (below). 
+Downloaded from academic.oup.com/forestry/article/78/3/249/520689 by Umeå universitetsbibliotek / Umeå University library user on 12 October 2026
+
+
+256 
+FORESTRY
+volume for big trees and underestimates small tree 
+volumes (cf.  Figure 2 ). The mean residuals ( M  res ) 
+between observed and estimated volumes were 
+lower for model (2E), 0.221 × 10 ␣-␣6 , than model 
+(6E), 3.730 × 10 ␣-␣6  ( Table 3 ). The standard devi-
+ation for the differences between observed volume 
+and estimated volume as percentages of observed 
+mean volume (SD) was lower (0.7 per cent) for 
+model (2E) than for model (6E) (10.7 per cent). 
+ Model (4E) estimated stem volumes for common 
+alder with lower mean residuals than model (8E). 
+Model (8E) for common alder underestimated stem 
+volume ( Figure 2 ). The mean residuals between 
+observed and estimated volume were lowest 
+(␣-␣11.870 × 10 ␣-␣6 ) for model (7E) and greatest 
+(131.556 × 10 ␣-␣6 ) for model (8E) ( Table 3 ). There 
+were small differences in percentage SD (1.9 – 2.0 per 
+cent) for model (4E) and model (7E), but they were 
+higher (3.1 per cent) for model (8E) ( Table 3 ). 
+ Stand volume and increment 
+ When summarizing stand volumes, the mean 
+stand volume for grey alder stands was 428 m 3  
+ha ␣-␣1  and 314 m 3  ha ␣-␣1  for common alder stands 
+( Table 4 ). The MAI for grey alder was 12.0 ± 
+0.7 m 3  a ␣-␣1  and for common alder 8.4 ± 0.5 m 3  a ␣-␣1  
+( Table 4 ). Different parameters for the models 
+were tested, but the coefﬁ cient of determination 
+( R  2 ) was low for all of them. MAI for grey alder 
+was better correlated with total age than com-
+mon alder ( Figure 3 ). 
+ Basic density 
+ Basic density for grey alder stems was 359 (230 –
+ 440) kg m ␣-␣3  and for common alder 427 (370 –
+ 490) kg m ␣-␣3  ( Table 5 ). A pair-wise  t test of the 
+basic density for twigs showed no statistically 
+signiﬁ cant differences between the two crown 
+levels for either species. A pair-wise  t test of 
+means of twigs from the two crown levels and 
+the stem did not show any statistically signiﬁ -
+cance differences. The results were 415 (320 –
+ 460) kg m ␣-␣3  and 421  (250 – 510) kg m ␣-␣3  for the 
+lower twigs, and 423 (310 – 510) kg m ␣-␣3  and 423 
+(270 – 490) kg m ␣-␣3  for the lateral twigs of grey 
+and common alder crowns,  respectively. 
+ Discussion 
+ Stem volume 
+ Stem form has been deﬁ ned as the relative rate of 
+change in stem diameter with increasing tree height, 
+which is synonymous with stem taper ( Larson, 
+1963 ). When estimating stem volume, a model, 
+which can describe the stem taper, is important. In 
+the present study, a model, which contained both 
+stem height and live crown height, gave the best 
+correlation with measured common alder stem vol-
+umes. For grey alder, crown height did not add to 
+predictive ability perhaps because most of the grey 
+alder stands were dense even if some of them were 
+thinned. This resulted in short crowns and the 
+ Figure 2. Residuals for observed – estimated stem 
+volume (m 3  tree ␣-␣1 ) by observed volume (m 3 ) for 
+grey alder (a) (ﬁ lled circles, model (2E); open circles, 
+model (6E)) and common alder (b) (ﬁ lled circles, 
+model (4E); open circles, model (7E); crosses, model 
+(8E)). The solid line represents the slope of ﬁ t line 
+for residuals of models (2E and 4E), models (6E and 
+7E) and represents model (8E). 
+Downloaded from academic.oup.com/forestry/article/78/3/249/520689 by Umeå universitetsbibliotek / Umeå University library user on 12 October 2026
+
+
+ 
+STEM VOLUME EQUATIONS AND BASIC DENSITY FOR ALDERS 
+ 257
+ Table 4 :  Stand volume m 3  ha ␣-␣1  and mean annual increment (MAI) (m 3  ha ␣-␣1  a ␣-␣1 ) for the studied stands of grey and common alder and reported yield 
+and MAI 
+ 
+ Age  
+ Basal area   Height  
+ SI (H 40 )   No. of stems  
+ Yield  
+ MAI (m 3   
+ Lat.  
+ Long.  
+ 
+ No. 
+(years) 
+(m 2  ha ␣-␣1 ) 
+(m) 
+(m) 
+(ha ␣-␣1 ) 
+(m 3  ha ␣-␣1 ) 
+ha ␣-␣1  a ␣-␣1 ) 
+(N) 
+(E) 
+ Reference 
+ Grey alder 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Mean ± SE 
+ 
+  
+ 
+ 
+ 
+ 428 ± 19 
+ 12.0 ± 0.7 
+ 
+ 
+ Present study 
+ Range 
+ 
+  
+ 
+ 
+ 
+ 251 – 575 
+ 5.5 – 17.0 
+ 
+ 
+ 
+ 1 
+ 26 
+ 23.0 
+ 15.2 
+ 19 
+ 1 940 
+ 175 
+ 6.7 
+ 63° 47␣′␣ 
+ 11° 40␣′␣ 
+ Wisth (1945) 
+ 
+ 41 
+ 35.9 
+ 19.3 
+ 
+ 1 800 
+ 347 
+ 8.5 
+ 
+ 
+ 
+ 2 
+ 40 
+ 37.3 
+ 16.5 
+ 18 
+ 2 050 
+ 307 
+ 9.3 
+ 63° 47␣′␣ 
+ 11° 40␣′␣ 
+ Lysberg (1956) 
+ 3 
+ 24 
+ 80.3 
+ 14.5 
+ 19 
+ 4 860 
+ 337 
+ 14.0 
+ 64° 30␣′␣ 
+ 12° 00′␣ 
+ Lysberg (1956) 
+ 4 
+ 20 
+ 36  
+12.1 
+ 18 
+ 4 500 
+ 182 
+ 11.2 
+ 60° 17␣′␣ 
+ 11° 15␣′␣ 
+ Børset and 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Langhammer 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+(1966) 
+ 
+ 30 
+ 39  
+15.4 
+ 
+ 2 550 
+ 242 
+ 12.1 
+ 
+ 
+ 
+ 
+ 40 
+ 39  
+17.5 
+ 
+ 1 900 
+ 282 
+ 11.7 
+ 
+ 
+ 
+ 5 
+ 20 
+ 33  
+ 10.2 
+ 16 
+ 5 300 
+ 142 
+ 7.9 
+ 59 – 64° 
+ 10 – 12° 
+ Børset and 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Langhammer 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+(1966) 
+ 
+ 30 
+ 37  
+13.2 
+ 
+ 2 950 
+ 201 
+ 9.1 
+ 
+ 
+ 
+ 
+ 40 
+ 36  
+15.1 
+ 
+ 1 900 
+ 236 
+ 9.1 
+ 
+ 
+ 
+ 6 
+ 30 
+ 26.8 
+ 18.5 
+ 21 
+ 1 497 
+ 307 
+ 10.2 
+ 54 – 56° 
+ 21 – 25° 
+ Murnieks 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+(1954) 
+ 
+ 40 
+ 36.4 
+ 20.4 
+ 
+ 1 183 
+ 354 
+ 8.8 
+ 
+ 
+ 
+ 
+ 50 
+ 36.5 
+ 21.2 
+ 
+ 1 035 
+ 373 
+ 7.5 
+ 
+ 
+ 
+ 7 
+ 20 
+ 30  
+12.0 
+ 19 
+ 4 400 
+ 195 
+ 9.8 
+ 54 – 56° 
+ 21 – 25° 
+ Ozols and 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Hiebners 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+(1927) 
+ 
+ 30 
+ 35  
+ 17.5 
+ 
+ 3 600 
+ 247 
+ 8.2 
+ 
+ 
+ 
+ 
+ 40 
+ 36  
+ 19.0 
+ 
+ 1 800 
+ 302 
+ 7.5 
+ 
+ 
+ 
+ 8 
+ 20 
+ 27  
+ 8.4 
+ 15 
+ 9 400 
+ 141 
+ 7.1 
+ 61 – 63° 
+ 27 – 29° 
+ Miettinen 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+(1932) 
+ 
+ 30 
+ 31  
+ 11.3 
+ 
+ 4 700 
+ 228 
+ 7.6 
+ 
+ 
+ 
+ 
+ 40 
+ 33  
+ 13.6 
+ 
+ 2 530 
+ 307 
+ 7.7 
+ 
+ 
+ 
+Downloaded from academic.oup.com/forestry/article/78/3/249/520689 by Umeå universitetsbibliotek / Umeå University library user on 12 October 2026
+
+
+258 
+FORESTRY
+ Table 4: Continued 
+ 
+ Age  
+ Basal area   Height  
+ SI (H 40 )   No. of stems  
+ Yield  
+ MAI (m 3   
+ Lat.  
+ Long.  
+ 
+ No. 
+(years) 
+(m 2  ha ␣-␣1 ) 
+(m) 
+(m) 
+(ha ␣-␣1 ) 
+(m 3  ha ␣-␣1 ) 
+ha ␣-␣1  a ␣-␣1 ) 
+(N) 
+(E) 
+ Reference 
+ Common alder 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Mean ± SE 
+ 
+  
+ 
+ 
+ 314 ± 22 
+ 8.4 ± 0.5 
+ 
+ 
+ 
+ Present study 
+ Range 
+ 
+  
+ 
+ 
+ 118 – 640 
+ 3.2 – 14.9 
+ 
+ 
+ 
+  1 
+ 40 
+ 22.6 
+ 13.1 
+ 14 
+ 1 352 
+ 149 
+ 4.8 
+ 56° 15␣′␣ 
+ 12° 50␣′␣ 
+Results from 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+long-term 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+experiments at 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+the Faculty of 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Forestry 
+ 
+ 53 
+ 16.3 
+ 15.6 
+ 
+ 656 
+ 122 
+ 5.3 
+ 
+ 
+ 
+  2 
+ 40 
+ 16.8 
+ 13.6 
+ 15 
+ 1 136 
+ 111 
+ 3.7 
+ 58° 50␣′␣ 
+ 15° 39␣′␣ 
+ 
+ 
+ 53 
+ 10.3 
+ 15.1 
+ 
+ 372 
+ 75 
+ 4.3 
+ 
+ 
+ 
+ 
+ 70 
+ 16.2 
+ 16.0 
+ 
+ 368 
+ 120 
+ 3.5 
+ 
+ 
+ 
+  3 
+ 32 
+ 20.2 
+ 16.4 
+ 19 
+ 903 
+ 158 
+ 8.0 
+ 59° 31␣′␣ 
+ 16° 36␣′␣ 
+ 
+ 
+ 46 
+ 16.0 
+ 19.0 
+ 
+ 355 
+ 146 
+ 8.3 
+ 
+ 
+ 
+ 
+ 62 
+ 14.8 
+ 20.8 
+ 
+ 229 
+ 150 
+ 7.1 
+ 
+ 
+ 
+  4 
+ 60 
+ 40.4 
+ 20.5 
+ 17 
+ 950 
+ 394 
+ 8.0 
+ 59° 31␣′␣ 
+ 16° 36␣′␣ 
+ 
+ 
+ 69 
+ 23.2 
+ 22.3 
+ 
+ 375 
+ 239 
+ 10.5 
+ 
+ 
+ 
+ 
+ 79 
+ 22.3 
+ 23.1 
+ 
+ 260 
+ 231 
+ 10.0 
+ 
+ 
+ 
+  5 
+ 40 
+ 17.5 
+ 14.0 
+ 14 
+ 594 
+ 124 
+ 5.9 
+ 55° 36␣′␣ 
+ 13° 26␣′␣ 
+ 
+ 
+ 64 
+ 27.1 
+ 17.3 
+ 
+ 450 
+ 221 
+ 5.8 
+ 
+ 
+ 
+  6 
+ 38 
+ 15.3 
+ 13.8 
+ 15 
+ 544 
+ 107 
+ 5.1 
+ 55° 36␣′␣ 
+ 13° 26␣′␣ 
+ 
+ 
+ 67 
+ 24.8 
+ 19.4 
+ 
+ 399 
+ 234 
+ 5.3 
+ 
+ 
+ 
+  7 
+ 20 
+ 15.1 
+ 9.0 
+ 17 
+ 2 109 
+ 71 
+ 7.5 
+ 55° 43␣′␣ 
+ 13° 16␣′␣ 
+ 
+ 
+ 60 
+ 23.8 
+ 20.9 
+ 
+ 297 
+ 244 
+ 8.6 
+ 
+ 
+ 
+  8 
+ 41 
+ 17.8 
+ 20.0 
+ 21 
+ 380 
+ 172 
+ 6.8 
+ 58° 57␣′␣ 
+ 16° 50␣′␣ 
+ 
+ 
+ 62 
+ 22.3 
+ 23.3 
+ 
+ 241 
+ 253 
+ 7.5 
+ 
+ 
+ 
+ 
+ 75 
+ 28.3 
+ 24.5 
+ 
+ 241 
+ 333 
+ 7.6 
+ 
+ 
+ 
+  9 
+ 67 
+ 32.0 
+ 21.3 
+ 19 
+ 500 
+ 375 
+ 5.6 
+ 58° 22␣′␣ 
+ 13° 42␣′␣ 
+ 
+ 
+ 80 
+ 26.4 
+ 23.6 
+ 
+ 308 
+ 319 
+ 4.0 
+ 
+ 
+ 
+ 10 
+ 40 
+ 23.0 
+ 21.0 
+ 21 
+ 665 
+ 228 
+ 5.7 
+ Germany 
+ 
+ Schober (1975) 
+ 
+ 60 
+ 23.9 
+ 24.7 
+ 17 
+ 363 
+ 283 
+ 4.7 
+ 
+ 
+ 
+ 
+ 40 
+ 20.5 
+ 17.1 
+ 13 
+ 723 
+ 171 
+ 4.3 
+ 
+ 
+ 
+ 
+ 60 
+ 21.5 
+ 20.7 
+ 
+ 395 
+ 216 
+ 3.6 
+ 
+ 
+ 
+ 
+ 40 
+ 13.5 
+ 18.4 
+ 
+ 989 
+ 113 
+ 2.8 
+ 
+ 
+ 
+ 
+ 60 
+ 16.7 
+ 19.0 
+ 
+ 523 
+ 156 
+ 2.6 
+ 
+ 
+ 
+Downloaded from academic.oup.com/forestry/article/78/3/249/520689 by Umeå universitetsbibliotek / Umeå University library user on 12 October 2026
+
+
+ 
+STEM VOLUME EQUATIONS AND BASIC DENSITY FOR ALDERS 
+ 259
+ differences in crown length did not differ with age 
+or stem density. Model (6E) for grey alder ( Schröt-
+ter, 1983 ) did not include crown height either. In 
+practice, estimation of stem volume is facilitated if 
+the diameter at breast height and tree height but 
+not crown length are the main parameters, as the 
+estimation of crown length involves an element of 
+subjectivity to decide the lower limit. 
+ Stand volume and increment 
+ When comparing the yield estimated in the 
+present study with corresponding estimates made 
+in previous studies, it is important to keep in 
+mind that some of the stands in the present stands 
+had not yet been thinned. Measured values 
+ represent actual stand volume. On some localities 
+the observed stand volume was higher than 
+expected according to the calculated site 
+index. Mostly these phenomena depend on poor 
+or no management of the stands causing a high 
+number of stems. Further, as some of the 
+stands have not been properly managed, the vol-
+ume of mortality by competition (self-thinning) 
+and damage caused by pathogens and insects is 
+not known. 
+ The stand volume for grey and common alder 
+stands in the present study is in accordance with 
+the ﬁ ndings of other studies and comparisons 
+with old long-term experiments. However, most 
+of the published yield values for grey alder are 
+based on conditions of management similar to 
+those of the present study. Optimal yields will be 
+found if the alder stands are cleaned and thinned 
+according to recommended programmes. The 
+range of stem diameter is smaller in a managed 
+stand than in an unmanaged stand. This means 
+that timber yields in managed stands of old alders 
+(50 – 70 years) could be higher than predicted by 
+the present model. 
+ The mean annual increment (MAI) was 12.0 ± 
+0.7 m 3  ha ␣-␣1  a ␣-␣1  for grey alder and 8.4 ± 0.5 m 3  
+ha ␣-␣1  a ␣-␣1 . According to  Møller (1965) grey alder in 
+Denmark had a height of 14.4 m and mean annual 
+increment of 6.6 m 3  ha ␣-␣1  at 37 years of age. In the 
+present study, stand nos 1, 18 and 24 correspond 
+in age with the Danish stand. MAI for these 
+stands are 12.3, 7.5 and 8.3 m 3  ha ␣-␣1  a ␣-␣1 . How-
+ever, the alders in the Swedish stands were taller 
+(14.9 – 22.5 m) than in the Danish stand.  Otherwise 
+ﬁ ndings in the present study correspond with 
+those presented by others. 
+ Basic density 
+ In the present study, basic density for common 
+alder stems was higher (427 kg m ␣-␣3 ) than for grey 
+alder (359 kg m ␣-␣3 ). Density for twigs was at the 
+same level for both species. Different studies 
+ support the present ﬁ nding. In the study by 
+ Hakkila (1970) basic density was higher for 
+fast-growing alders than for slow-growing ones. 
+He could not explain the stem-to-stem variation 
+by external tree characteristics such as age, 
+growth rate and stem size. The best individual 
+variable, age, explained only 10 per cent of the 
+variance. Hakkila stated, ␣‘␣A considerable propor-
+tion of the basic density variation is probably 
+caused by genetic factors␣’␣. 
+ Figure 3. Mean annual growth (m 3  ha ␣-␣1  a ␣-␣1 ) in rela-
+tion to total age (years) for grey (a) and common 
+alder (b). In (a) MAI = 43.463 ␣-␣ 8.811 × ln(AGE); 
+ R  2  = 0.51. In (b) MAI = 24.372 ␣-␣ 4.1989 × ln(AGE); 
+ R  2  = 0.30. 
+Downloaded from academic.oup.com/forestry/article/78/3/249/520689 by Umeå universitetsbibliotek / Umeå University library user on 12 October 2026
+
+
+260 
+FORESTRY
+ Conclusions 
+ In the present study alder stands have not been 
+managed at all or thinnings have been made too 
+late with a light removal with the result that the 
+stands may have too many stems. The most 
+important operation is to thin the alder stands at 
+an early phase, e.g. when the trees are 3 – 4 m high. 
+After thinning the stem number should not exceed 
+3000 stems ha ␣-␣1 . Otherwise competition will 
+decrease timber yield. 
+ Acknowledgements 
+ J.-E. Lundh and K.-A. Öh measured and cut the stands. 
+E. Hurtig, P. Björkens, H. Johansson and M. Johansson 
+weighed and dried the tree components. E. Hurtig 
+ carried out the tree-ring analyses, the soil analyses and 
+the leaf characteristic measurements. Anonymous 
+reviewers have made many constructive improvements 
+to the manuscript. D. Tilles provided a linguistic 
+ revision. All of the above persons are gratefully 
+acknowledged. The Brattå␣ś␣ Foundation, Östads Foun-
+dation and Hildur and Sven Wingquist’s Foundation 
+gave ﬁ nancial support. 
+ References 
+ Andersson, E. and Tuimala, A.  1980 Deﬁ nitioner, mm, 
+vid vedundersökningar [Deﬁ nitions for wood inves-
+tigations]. The Nordic Joint Group in Wood Tech-
+nology.  Research Note No. 4, 53 – 66. [In Swedish]. 
+ Anon.  1999  SAS/STAT Users guide. Version 8.2 . SAS 
+Institute, Cary, NC. 
+ Anon.  2004  Skogsstatistisk årsbok 2004 [ Statistical 
+yearbook of forestry 2004 ]. Ofﬁ cial Statistics of 
+Sweden. National Board of Forestry, 106. 
+ Table 5 :  Basic density (kg m ␣-␣3 ) for grey and common alders in the present study and reported basic 
+density (kg m ␣-␣3 ) 
+ 
+ Basic density (kg m ␣-␣3 ) 
+ 
+ 
+ Twigs  *  
+ 
+ Age (years)  Diameter (cm) 
+Stem 
+Lateral 
+ Lower 
+ Mean 
+ Grey alder 
+ 
+ 
+ 
+ 
+ 
+ 
+ Means ± SE 
+ 41 ± 2 
+ 196 ± 9 
+ 359 ± 12.41 
+ 423 ± 5.7 
+ 415 ± 4.4 
+ 419 ± 3.4 
+ Range 
+ 22 – 67 
+ 115 – 264 
+ 230 – 440 
+ 310 – 510 
+ 320 – 460 
+ 310 – 520 
+ Common alder 
+ 
+ 
+ 
+ 
+ 
+ 
+ Means ± SE 
+ 48 ± 3 
+ 214 ± 7 
+ 427 ± 6.1 
+ 423 ± 6.4 
+ 421 ± 6.7 
+ 422 ± 4.4 
+ Range 
+ 22 – 92 
+ 155 – 292 
+ 370 – 490 
+ 270 – 490 
+ 250 – 510 
+ 250 – 510 
+ 
+ Age  
+ Diameter   Height  
+ Basic density  
+ Lat.  
+ Long.  
+ 
+ No. 
+(years) 
+(cm) 
+(m) 
+(kg m ␣-␣3 ) 
+ (N) 
+ (E) 
+ Reference
+ Grey alder 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 1 
+ 
+ 
+ 
+ 369 
+ 62 – 64° 
+ 7 – 10° 
+ Stemsrud 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+(1964) 
+ 2 
+ 
+ 12.3 
+ 12.4 
+ 365 
+ 62 – 64° 
+ 7 – 10° 
+ Nagoda 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+(1968) 
+ 3 
+ 29 – 73 
+ 16.6 
+ 11.4 
+ 340 (324 – 358) 
+ 68 – 70° 
+ 18 – 20° 
+ Vadla 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+(1999) 
+ 4 
+ 23 
+ 7.0 
+ 9.0 
+ 361 
+ 62 – 68° 
+ 20 – 31° 
+ Hakkila 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+(1970) 
+ Common alder 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 1 
+ 36 – 49 
+ 13.8 
+ 14 
+ 415 (361 – 460) 
+ 61° 46␣′␣ 
+ 29° 18 ′␣ 
+ Lehtonen  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+et al . (1978) 
+ 2 
+ 50 
+ 
+ 
+ 410 – 460 
+ 
+ 
+ Hedenberg 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+(1997) 
+ * Samples taken in the lower and the lateral parts of the crown. 
+Downloaded from academic.oup.com/forestry/article/78/3/249/520689 by Umeå universitetsbibliotek / Umeå University library user on 12 October 2026
+
+
+ 
+STEM VOLUME EQUATIONS AND BASIC DENSITY FOR ALDERS 
+ 261
+ Appelroth, E.  1952 Ett bidrag till kännedom om 
+gråalens ( Alnus incana (L.) Moench.) förekomst 
+och produktionsförlopp inom den Österbottniska 
+skärgårdens nordligaste del. [A contribution to the 
+knowledge of the presence and yield of grey alder 
+( Alnus incana (L.) Moench.) growing in the archi-
+pelago of Eastern Botnia].  Skogsbruket  22 ,  122 – 129 
+[In Swedish]. 
+ Børset, O. and Langhammer, A.  1966 Vekst og produk-
+sjon i bestand av gråor ( Alnus incana ) [Growth and 
+yield in stands of grey alder ( Alnus incana )].  Scien-
+tiﬁ c Reports of the Agricultural College of Norway 
+ 45 (24),  1 – 34. 
+ Clutter, J.L., Fortson, J.C., Pienaar, L.V., Brister, G.H. 
+and Bailey, R.L.  1983  Timber Management: a Quan-
+titative Approach . John Wiley & Sons, New York. 
+ Eriksson, H.  1973 Volymfunktioner för stående träd 
+av ask, asp, klibbal och contorta-tall [Tree volume 
+ functions for ash, aspen, alder and lodgepole pine in 
+Sweden ( Fraxinus excelsior L.,  Populus tremula L., 
+ Alnus glutinosa (L.) Gaertn.,  Pinus contorta Dougl. 
+var.  latifolia Engelm.].  Royal College of Forestry, De-
+partment of Forest Yield Research. Research Notes 
+No. 26. 
+ Evans, J.  1984 Silviculture of broad-leaved woodland. 
+ Forestry Commission Bulletin No. 62, 183 – 194. 
+ Hakkila, P.  1970 Basic density, bark percentage and 
+dry matter content of grey alder ( Alnus incana ). 
+ Communicationes Instituti Forestalis Fenniæ  71 (5). 
+ Hedenberg, Ö.  1997 Fiberegenskaper hos asp och al 
+[Fibre property of aspen and alder].  STFI. Report P9 
+[In Swedish]. 
+ Johansson, T.  1999 Site index curves for common alder 
+and grey alder growing on different types of forest 
+soil in Sweden.  Scand. J. For. Res.  14 ,  441 – 453. 
+ Kärki, T., Eerikäinen, K., Heinonen, J. and Korhonen, 
+K.T.  1999 Harmaalepän ( Alnus incana ) tilavuustau-
+lukot [Volume functions for  Alnus incana ].  Metsäti-
+eteen aikakauskirja  1 ,  39 – 49. Finnish. 
+ Larson, P.R.  1963 Stem form development of forest 
+trees.  For. Sci. Monograph 5. 
+ Lehtonen, I., Pekkala, J. and Uusvaara, O.  1975 Ter-
+valepän ( Alnus glutinosa (L.) Gaertn.) ja raidan ( Sa-
+lix caprea L.) puu- ja massateknisiä ominaisuuksia 
+[Technical properties of black alder ( Alnus glutinosa 
+(L.) Gaertner) and great sallow ( Salix caprea L.) 
+wood and pulp].  Folia Forestalia  344 . 
+ Lockow, K.-W.  1995 Neue Volumen und Formzahltafeln 
+für Roterle ( Alnus glutinosa (L.) Gaertn.).  Beitr. Forst-
+wirts. Landschaftök.  29 (4),  145 – 150 [In German]. 
+ Lysberg, J.S.  1956 Gråor ( Alnus incana ) [Grey alder 
+( Alnus incana (L.) Moench)]. Hoveduppgave. NLH. 
+Stencil [In Norwegian]. 
+ Matthews, J.D.  1986  The silviculture of alders in Great 
+Britain . Oxford Forestry Institute, Occasional Papers 
+No. 34, pp. 29 – 38. 
+ Melzer, E.W.  1990 Verwendung von Weiserle ( Alnus 
+incana (L.) Moench.) zur Melioration von Kiefern-
+Altbeständen geringer Bonität.  Forstarchiv  61 ,  234 –
+ 237 [ In German]. 
+ Miettinen, L.  1932 Tutkinruksia harmaalepiköiden 
+kasvusta. Referat: Untersuchungen über den Zu-
+wachs der Weissererlenbestände.  Communicationes 
+Instituti Forestalis Fenniæ  18 [In Finnish]. 
+ Miller, R.G.  1981  Simultaneous Statistical Interfer-
+ence , 2nd edn. Springer-Verlag, New York. 
+ Mitchell, C.P., Matthews, J.D., Proe, M.F. and 
+ Macbrayne, C.G.  1981  An experimental study of 
+single stemmed trees as energy crops . Technical 
+ Report ETSU-B101a of the Biofuels Programme. 
+ Department of Forestry, Aberdeen University. 
+ Møller, C.M.  1965 Vore skovtr␣œ␣arter og deres dyr-
+kning [Tree species and their management].  Dansk 
+Skovforening 60 – 67 [In Danish]. 
+ Murnieks, P.  1950 Baktalksna ( Alnus incana Moench) 
+augsanas gaita Latvijas PSR. Latvijas PSR zinatnu 
+akademijas izdevums. Riga [In Latvian]. 
+ Nagoda, L.  1966 Volymvekt og vanninhold hos bjørk 
+( Betula sp.) og gråor ( Alnus incana ) [Volume weight 
+and water content in birch ( Betula sp.) and grey  alder 
+( Alnus incana )].  Tidskrift for Skogbruk  74 ,  1 – 32 [In 
+Norwegian]. 
+ Nagoda, L.  1968  Volymvekt og vanninhold hos gråor 
+( Alnus incana ) [ Density and water content of grey 
+alder ( Alnus incana ) ]. The Agricultural College of 
+Norway, Institute of Wood Technology  47 (13). 
+ Ozols, J. and Hiebners, E.  1927 Baltalksna audzu  izplatiba 
+Lativilja, augsanas gaita un nozime  mezsaimnieciba. 
+Mezsaimniecibas rakstu krajums V. Riga [In Latvian]. 
+ Rytter, L.  1996 Grey alder in forestry: a review. In  Silvi-
+culture for fuelwood . J. Richardson and J.  Dietrichson 
+(eds).  Nor. J. Agric. Sci . Supple.  24 , pp. 61 – 78. 
+ Schober, R.  1975  Ertragstafeln wichtiger Baumarten . 
+J.D. Sauerländers’s Verlag, Frankfurt a. M., pp. 48 –
+ 51 [In German]. 
+ Schrötter, H.  1983 Waldbaulich-ertragskundliche 
+Untersuchungen and Weisserle ( Alnus incana (L.) 
+Moench.) im Jungpleistozän der DDR.  Beitr. Forst-
+wirts.  17 (2),  89 – 102 [In German]. 
+ Schrötter, H.  1996 Die Weisserle ( Alnus incana (L.) 
+Moench.) in Mecklenburg-Vorpommern.  Beiträge 
+Downloaded from academic.oup.com/forestry/article/78/3/249/520689 by Umeå universitetsbibliotek / Umeå University library user on 12 October 2026
+
+
+262 
+FORESTRY
+für Forstwirtschaft und Landschaftsökologie  30 (4), 
+ 180 – 182 [In German]. 
+ Stemsrud, F.  1964  Volum- og vektmåling ved 
+ omsetning av trevirke [ Volume and weight 
+ estimation for log acquisition ]. Department of 
+Wood Technology, Norwegian Agricultural Col-
+lege [In Norwegian]. 
+ Vadla, K.  1999  Virkesegenskaper hos bjørk, osp og 
+gråor i Troms [ Wood properties of birch, European 
+aspen and grey alder in Troms ].  Norwegian Institut 
+for Forest Research  5 [In Norwegian]. 
+ Wisth, O.M.  1945 Noen forstlige betraktninger om-
+kring Verdalsskredet [Some silvicultural aspects 
+about Verdalsskredet].  Tidsk. Skogbruk  3 – 4 ,  58 – 62 
+[In Norwegian]. 
+ Zar, J.H.  1999  Biostatistical Analysis . Prentice-Hall. 
+ Received 15 February 2004 
+ Appendix A 
+ Mean values (mean ± SE) for 20 sample trees per stand of grey and common alders growing on forest land 
+ 
+ 
+ 
+ Crown  
+ 
+ 
+ Crown  
+ Plot no. 
+ Diameter (mm) 
+ Height (m) 
+height (m) 
+ Diameter (mm) 
+ Height (m) 
+height (m)
+ 1 
+ 135 ± 8 
+ 15.4 ± 0.4 
+ 8.9 ± 0.4 
+ 317 ± 13 
+ 20.7 ± 0.2 
+ 10.7 ± 0.3 
+ 2 
+ 120 ± 8 
+ 14.1 ± 0.5 
+ 8.4 ± 0.3 
+ 234 ± 8 
+ 21.5 ± 0.5 
+ 13.6 ± 0.4 
+ 3 
+ 171 ± 8 
+ 19.1 ± 0.3 
+ 11.6 ± 0.4 
+ 238 ± 9 
+ 19.3 ± 0.3 
+ 11.4 ± 0.6 
+ 4 
+ 199 ± 8 
+ 18.3 ± 1.3 
+ 13.5 ± 0.4 
+ 257 ± 10 
+ 21.3 ± 0.2 
+ 12.2 ± 0.5 
+ 5 
+ 155 ± 9 
+ 18.0 ± 0.5 
+ 13.0 ± 0.3 
+ 258 ± 9 
+ 23.5 ± 0.5 
+ 15.6 ± 0.5 
+ 6 
+ 153 ± 9 
+ 16.9 ± 0.4 
+ 11.5 ± 0.2 
+ 184 ± 7 
+ 20.9 ± 0.3 
+ 12.9 ± 0.4 
+ 7 
+ 236 ± 7 
+ 20.8 ± 0.2 
+ 12.2 ± 0.4 
+ 277 ± 12 
+ 22.5 ± 0.2 
+ 15.3 ± 0.3 
+ 8 
+ 202 ± 1 
+ 17.6 ± 0.4 
+ 12.1 ± 0.4 
+ 223 ± 9 
+ 20.4 ± 0.2 
+ 12.0 ± 0.5 
+ 9 
+ 167 ± 9 
+ 16.9 ± 0.4 
+ 10.3 ± 0.3 
+ 179 ± 8 
+ 19.9 ± 0.3 
+ 13.1 ± 0.3 
+ 10 
+ 120 ± 9 
+ 14.2 ± 0.5 
+ 8.4 ± 0.4 
+ 222 ± 7 
+ 18.8 ± 0.2 
+ 11.0 ± 0.3 
+ 11 
+ 177 ± 2 
+ 17.7 ± 1.3 
+ 10.6 ± 0.8 
+ 241 ± 9 
+ 24.5 ± 0.2 
+ 16.3 ± 0.6 
+ 12 
+ 156 ± 1 
+ 16.5 ± 1.2 
+ 9.0 ± 1.1 
+ 188 ± 8 
+ 19.8 ± 0.4 
+ 13.1 ± 0.4 
+ 13 
+ 187 ± 3 
+ 17.7 ± 1.2 
+ 9.3 ± 0.5 
+ 207 ± 14 
+ 17.7 ± 0.4 
+ 9.8 ± 0.6 
+ 14 
+ 136 ± 1 
+ 12.4 ± 1.3 
+ 5.5 ± 0.5 
+ 144 ± 9 
+ 16.6 ± 0.5 
+ 11.5 ± 0.4 
+ 15 
+ 184 ± 2 
+ 18.5 ± 1.3 
+ 11.6 ± 0.8 
+ 177 ± 8 
+ 14.3 ± 0.2 
+ 7.4 ± 0.4 
+ 16 
+ 191 ± 2 
+ 19.2 ± 1.4 
+ 13.1 ± 0.7 
+ 211 ± 10 
+ 18.5 ± 0.3 
+ 11.0 ± 0.3 
+ 17 
+ 173 ± 2 
+ 19.9 ± 1.7 
+ 14.3 ± 0.5 
+ 195 ± 9 
+ 17.4 ± 0.4 
+ 10.7 ± 0.4 
+ 18 
+ 180 ± 2 
+ 19.4 ± 1.3 
+ 10.7 ± 1.2 
+ 197 ± 10 
+ 18.7 ± 0.4 
+ 12.4 ± 0.4 
+ 19 
+ 194 ± 3 
+ 21.1 ± 1.5 
+ 12.7 ± 0.7 
+ 241 ± 6 
+ 19.7 ± 0.2 
+ 13.1 ± 0.4 
+ 20 
+ 181 ± 3 
+ 20.7 ± 1.8 
+ 12.9 ± 1.0 
+ 199 ± 4 
+ 16.9 ± 0.2 
+ 11.7±0.2 
+ 21 
+ 142 ± 3 
+ 17.7 ± 1.8 
+ 11.9 ± 0.8 
+ 233 ± 8 
+ 18.8 ± 0.1 
+ 10.2 ± 0.4 
+ 22 
+ 148 ± 2 
+ 20.7 ± 1.0 
+ 12.8 ± 0.8 
+ 227 ± 11 
+ 22.0 ± 0.2 
+ 13.9 ± 0.3 
+ 23 
+ 167 ± 2 
+ 19.6 ± 2.0 
+ 13.9 ± 1.2 
+ 151 ± 7 
+ 16.2 ± 0.3 
+ 9.6 ± 0.5 
+ 24 
+ 141 ± 2 
+ 14.5 ± 1.3 
+ 8.3 ± 0.6 
+ 243 ± 7 
+ 21.1 ± 0.2 
+ 11.9 ± 0.6 
+ 25 
+ 
+ 
+ 
+ 234 ± 8 
+ 20.9 ± 0.1 
+ 12.3 ± 0.3 
+ 26 
+ 
+ 
+ 
+ 229 ± 7 
+ 18.4 ± 0.2 
+ 10.8 ± 0.4 
+ 27 
+ 
+ 
+ 
+ 193 ± 11 
+ 19.4 ± 0.3 
+ 12.8 ± 0.5 
+ 28 
+ 
+ 
+ 
+ 201 ± 7 
+ 14.7 ± 0.5 
+ 7.3 ± 0.3 
+ 29 
+ 
+ 
+ 
+ 171 ± 8 
+ 12.9 ± 0.2 
+ 6.1 ± 0.3 
+ 30 
+ 
+ 
+ 
+ 295 ± 13 
+ 20.7 ± 0.3 
+ 10.1 ± 0.5 
+ 31 
+ 
+ 
+ 
+ 301 ± 16 
+ 22.5 ± 0.6 
+ 14.9 ± 0.5 
+Downloaded from academic.oup.com/forestry/article/78/3/249/520689 by Umeå universitetsbibliotek / Umeå University library user on 12 October 2026

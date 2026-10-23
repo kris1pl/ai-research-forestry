@@ -1,0 +1,1867 @@
+Forest Ecology and Management 512 (2022) 120162
+Available online 16 March 2022
+0378-1127/© 2022 The Author(s). Published by Elsevier B.V. This is an open access article under the CC BY license (http://creativecommons.org/licenses/by/4.0/).
+Modelling potential yield capacity in conifers using Swedish 
+long-term experiments 
+Alex Appiah Mensah a,*, Emma Holmstr¨om b, Kenneth Nystr¨om a, Urban Nilsson b 
+a Department of Forest Resource Management, Swedish University of Agricultural Sciences, SE-901 83 Umeå, Sweden 
+b Southern Swedish Forest Research Centre, Swedish University of Agricultural Sciences, SE-230 53 Alnarp, Sweden   
+A R T I C L E  I N F O   
+Keywords: 
+Forest site productivity 
+Site index 
+Yield capacity 
+Regression 
+Boreal forest 
+Climate change 
+A B S T R A C T   
+Information on forest site productivity is a key component to assess the carbon sequestration potential of boreal 
+forests. While site index (SI) is commonly used to indicate forest site productivity, expressions of SI in the form of 
+yield capacity (potential maximum mean annual volume increment) is desirable since volume yield is central to 
+the economic and ecological analyses of a given species and site. This paper assessed the functional relationship 
+between SI and yield capacity on the basis of yield plot data from long-term experiments measured over several 
+decades for Norway spruce (Picea abies), Scots pine (Pinus sylvestris), Lodgepole pine (Pinus contorta) and Larch 
+(Larix decidua and Larix sibirica) in Sweden. Component models of total basal area and volume yield were also 
+developed. SI was determined by existing height development functions using top height and age, whereas 
+functions for stand-level (m2 ha−1) basal area development were constructed based on age, SI and initial stand 
+density using difference equations and nonlinear mixed-effects models. The relation between volume yield (m3 
+ha−1) and top height was adjusted with total basal area production through nonlinear mixed-effects models. 
+Species-specific parametric regression models were used to construct functional relationships between SI and 
+yield capacity. The root mean square errors of the species-specific models ranged from 2 to 6% and 10–18% of 
+the average values for the basal area and volume equations, respectively. For the yield capacity functions, the 
+explained variations (R2) were within 80–96%. We compared our yield capacity functions to earlier functions of 
+the species and significant differences were observed in both lower and higher SI classes, especially, for Scots 
+pine and Norway spruce. The new functions give better prediction of yield capacity in current growing condi­
+tions; hence, they could later be used for comparing tree species’ production under similar site and management 
+regimes in Sweden.   
+1. Introduction 
+The rate of forest growth is an important component of the boreal 
+forest carbon stocks’ balance. Recent reports have shown forest man­
+agement- and environment- induced growth increase, for example, in 
+the boreal forests of northern Europe (e.g. Sharma et al., 2012; Kauppi 
+et al., 2014; Henttonen et al., 2017; Appiah Mensah et al., 2021; 
+M¨akinen et al., 2021). Thus, the boreal forest is a critical component of 
+the global carbon cycle and its health (growth and productivity) is of 
+primary concern (Gauthier et al., 2015). Valid data and new expressions 
+for forest site productivity in growth models are needed for unbiased 
+assessments of management and environmental impacts on the growth 
+and carbon fluxes of boreal forests in the short- and long-term horizons 
+(Boisvenue and Running, 2006; Skovsgaard and Vanclay, 2008; Fontes 
+et al., 2010; Bontemps and Bouriaud, 2014). 
+Information on site productivity is also needed by foresters in many 
+ways, for example, to plan silvicultural treatments across the rotation 
+period, to forecast forest growth and to quantify wood biomass pro­
+duction potential from local-to-regional and- national scales (Pretzsch 
+et al., 2008). Site productivity may also be important when to assess 
+biodiversity and other ecosystem services in relation to forest manage­
+ment (e.g. Felton et al., 2017, 2019). In Sweden, the site productivity is 
+also the legislative boundary of the Forestry Act, and only forestlands 
+where the average annual potential wood production exceeds 1 m3 ha−1 
+yr−1 are considered as productive forest land. On poorer sites, no harvest 
+is allowed and Swedish national statistics are reported differently based 
+* Corresponding author. 
+E-mail addresses: alex.appiah.mensah@slu.se (A.A. Mensah), emma.holmstrom@slu.se (E. Holmstr¨om), Kenneth.Nystrom@slu.se (K. Nystr¨om), Urban.Nilsson@ 
+slu.se (U. Nilsson).  
+Contents lists available at ScienceDirect 
+Forest Ecology and Management 
+journal homepage: www.elsevier.com/locate/foreco 
+https://doi.org/10.1016/j.foreco.2022.120162 
+Received 14 January 2022; Received in revised form 7 March 2022; Accepted 9 March 2022   
+
+
+Forest Ecology and Management 512 (2022) 120162
+2
+on this boundary (Nilsson, 2020). 
+Forest site productivity is generally defined as the potential of a site 
+to produce wood biomass or tree volume (Skovsgaard and Vanclay, 
+2008). It is assessed by several methods that can be broadly grouped into 
+two: geocentric and phytocentric. The geocentric methods are mostly 
+based on site indicators of climate, topography and soil, whereas the 
+phytocentric methods are vegetation related, made up of tree- or plant- 
+based indicators (H¨agglund, 1981; Skovsgaard and Vanclay, 2008). The 
+two methods have been widely applied in studies on forest site pro­
+ductivity assessment for several tree species across biomes (e.g. 
+H¨agglund and Lundmark, 1977; Szwaluk and Strong, 2003; Mason et al., 
+2017; Bueis et al., 2019; Eckhart et al., 2019; Liu et al., 2021). 
+Site index (SI), defined as the height attained at a reference age is the 
+most commonly used indicator of forest site productivity. In Sweden, SI 
+is generally estimated in three ways: (1) by height development curves, 
+(2) by site factors (combination of climate, soil, field and bottom 
+vegetation) and (3) by intercept method. Method 1 is used for matured 
+stands (above 20 years), while method 3 is applied mainly in young 
+stands (below 20 years). Method 2 can be applied on all forestlands and 
+is used by the National Forest Inventory to estimate SI (H¨agglund and 
+Lundmark, 1977; Elfving and Kiviste, 1997; Nilsson, 2020). For even- 
+aged monoculture stands, SI based on height development curves 
+(height-age relations) of the dominant trees is often desirable when 
+estimating the potential of the growing site. This is because height 
+growth is strongly related to volume production, and the height growth 
+of the largest trees is relatively independent of stand density and thin­
+ning from below treatments (Eichhorn, 1902; Skovsgaard and Vanclay, 
+2008; Burkhart and Tom´e, 2012). However, expressing SI in terms of the 
+potential average volume yield produced over the stand rotation is 
+desired since timber volume is a key parameter in economic and 
+ecological analyses of forest resources. Hence, for even-aged forest 
+stands, the relation between SI and maximum mean annual volume 
+increment (hereafter, referred to as yield capacity) can directly be used 
+to describe the potential amount of wood volume that can be obtained 
+per year on a site for a given species (H¨agglund, 1981; H¨agglund and 
+Lundmark, 1982; Elfving and Nystr¨om, 1996) and for further classifi­
+cation of forest lands as productive and unproductive units. 
+Nevertheless, the relation between SI and yield capacity is not always 
+straightforward, especially when the methods used rely on the general 
+Eichhorn’s law (Eichhorn, 1902). The law stipulates that stands have the 
+same total volume yield when they reach the same dominant height, 
+independent of age and SI (Eichhorn, 1902). However, under compa­
+rable management regimes, the total volume yield over the rotation has 
+been shown to vary within the same SI for several species including 
+Norway spruce (Picea abies) by Assmann (1955), Scots pine (Pinus syl­
+vestris) by Schmidt (1973) and loblolly pine (Pinus taeda) by Hasenauer 
+et al. (1994). Therefore, for a given species and management regime, 
+significant site-dependent variations may occur in the yield levels (total 
+volume production at a given height), suggesting that stands of different 
+yield levels may have different trajectories for height-volume relations 
+across the rotation period (Assmann, 1970; Hasenauer et al., 1994; 
+Skovsgaard, 1997). Including variables that capture the variations in 
+yield levels can therefore improve estimates of yield capacity and 
+enhance meaningful comparisons across species, sites and regions 
+(Skovsgaard and Vanclay, 2008; Ek¨o et al., 2008). Differences in yield 
+levels are attributable to many factors such as climate, soil, seed prov­
+enance, silviculture, stand density, basal area production and form 
+factors (Skovsgaard and Vanclay, 2008). Basal area production as a 
+measure of potential density has been found to explain larger variations 
+in the volume yield levels and thus, provide satisfactory outcomes of site 
+productivity assessment (Assmann, 1966; Sterba, 1987; Ung and Ouel­
+let, 1991; Hasenauer et al., 1994; Sterba and Monserud, 1995; Hall et al., 
+2019; Allen et al., 2020). 
+The maturation of long-term yield experiments (LTEs) of tree species 
+Fig. 1. Stepwise estimation of yield capacity in this study. The elongated circles denote the models applied at each step.  
+A.A. Mensah et al.                                                                                                                                                                                                                              
+
+
+Forest Ecology and Management 512 (2022) 120162
+3
+where height development, carrying capacity (described by total basal 
+area production) and total stem volume produced over time could be 
+easily and reliably estimated provides a unique insight into the evalu­
+ation of yield capacity by using SI (Pretzsch et al., 2019). In Sweden, 
+LTEs were established throughout the country in the 20th century to 
+provide quantitative results for forest management planning (e.g. Elfv­
+ing, 2010a; Nilsson et al., 2010). Now, tree growth data in the LTEs have 
+accumulated and this paper presents an investigation of site productivity 
+for the major tree species under Swedish conditions. 
+The general objective of the study was to improve the estimates of 
+yield capacities for major forest tree species in Sweden. The specific 
+objectives were two fold; (i) to develop functional relationships between 
+yield capacity and SI predicted by height curves using data from LTEs, 
+and (ii) to compare the estimated yield capacities with those predicted 
+by earlier functions from H¨agglund and Lundmark (1982) for forest tree 
+species in Sweden. 
+The study was limited to the tree species where we had measured 
+data series from unthinned and thinned (from below) stands and with 
+measurements of total volume production including mortality, harvest 
+removals and standing volume, which resulted in four species being 
+selected: Norway spruce (Picea abies), Scots pine (Pinus sylvestris), 
+Lodgepole pine (Pinus contorta) and Larch (Larix decidua – European 
+Larch and Larix sibirica – Siberian Larch). Together, these species 
+contribute more than 80% to the total growing stock volume on forest 
+lands in Sweden (Nilsson, 2020). 
+2. Material and methods 
+The study approach was generally centred on the principles of forest 
+yield production (Fig. 1). The stepwise approach was carried out in five 
+main steps: based on height development (1) and corresponding basal 
+area development (2), total volume production was estimated (3). Yield 
+capacity was then derived from volume yield and age (4), and functional 
+relationships between yield capacity and site index were established (5). 
+The constructed yield capacity functions in the present study were 
+compared to earlier functions and the observed differences were dis­
+cussed in relation to methodological approaches and changes in envi­
+ronmental conditions. The five modelling steps are expanded in the 
+following sub-sections. 
+2.1. Data 
+The data material comprised LTEs from 330 locations in Sweden 
+(Scots pine = 169, Norway spruce = 86, Lodgepole pine = 34, Larch =
+41). All selected LTEs were originally experiments in block designs 
+where the total production (yield) was recorded, including mortality, 
+harvest removals and standing volume. The sites covered a wide range of 
+fertility, latitudinal and altitudinal gradients in Sweden (Fig. 2; Table 1). 
+For each site, only the control and thinned-from-below plots with 
+Fig. 2. Locations of LTE sites for the different tree species in Sweden.  
+Table 1 
+Summary of stand and site data for included plots.  
+Tree 
+species  
+Age 
+(years) 
+Top 
+height 
+(m) 
+Basal 
+area 
+(m2 
+ha−1) 
+Volume 
+(m3 ha−1) 
+Stand 
+density 
+(trees 
+ha−1) 
+Site 
+index 
+(m) 
+Thinning 
+ratio 
+Measurement 
+year 
+Latitude 
+(◦N) 
+Altitude 
+(m a.s.l) 
+No. 
+LTEs 
+(plots) 
+N 
+Scots pine 
+min 
+10 
+2 
+0.7 
+0.7 
+300 
+13 
+0 
+First: 1927 
+56 
+0    
+mean 
+46 
+14 
+29 
+207 
+2116 
+24 
+0.09 
+– 
+– 
+207 
+169 
+4498  
+max 
+119 
+31 
+105 
+1169 
+15,867 
+32 
+0.95 
+Latest: 2018 
+67 
+560 
+(981)   
+Norway 
+spruce 
+min 
+12 
+2 
+0.8 
+0.2 
+433 
+16 
+0 
+First: 1928 
+55 
+3    
+mean 
+42 
+16 
+35 
+327 
+2615 
+29 
+0.04 
+– 
+– 
+136 
+86 
+2022  
+max 
+133 
+37 
+140 
+1608 
+13,106 
+36 
+0.95 
+Latest: 2018 
+66 
+610 
+(427)   
+Lodgepole 
+pine 
+min 
+15 
+4 
+4 
+2 
+333 
+16 
+0 
+First: 1953 
+56 
+0    
+mean 
+33 
+14 
+29 
+211 
+2028 
+22 
+0.03 
+– 
+– 
+291 
+34 
+742  
+max 
+83 
+26 
+72 
+700 
+9062 
+30 
+0.95 
+Latest: 2019 
+69 
+480 
+(273)   
+Larch spp. 
+min 
+6 
+3 
+0.1 
+0.9 
+355 
+24 
+0 
+First: 1949 
+55 
+20    
+mean 
+32 
+19 
+36 
+311 
+1923 
+36 
+0.23 
+– 
+– 
+160 
+41 
+462  
+max 
+104 
+35 
+94 
+1043 
+11,687 
+42 
+0.95 
+Latest: 2019 
+64 
+435 
+(108)  
+min: minimum; max: maximum; thinning form describes unthinned plots (0) and thinned from below plots (1)≤; N is the total number of measurements. 
+A.A. Mensah et al.                                                                                                                                                                                                                              
+
+
+Forest Ecology and Management 512 (2022) 120162
+4
+thinning grade (percent removed basal area) < 35% and thinning ratio 
+< 0.95 were used for the yield analyses. Thinning ratio is expressed by 
+the quotient between the basal area mean diameters of removed and 
+remaining trees. Fertilised plots were excluded from the dataset. The 
+studied plots were fully stocked even-aged stands where more than 70% 
+of the total basal area consisted of the main tree species. For most sites, 
+plot measurements had been conducted between 1920 and 2019, with 
+irregular measurement intervals. The remeasurement interval was on 
+average 8 years and the frequency of remeasurements on a plot ranged 
+from 2 to 14 times. Permanent square or rectangular sample plots with 
+net sizes of approximately 0.1 ha were used to collect the tree infor­
+mation. Total age, tree species and damages were recorded in addition to 
+perpendicularly calipered tree diameters at breast height (1.3 m from 
+the ground). Trees were numbered at first measurement to ensure that 
+remeasurements in subsequent years could be linked to the same indi­
+vidual trees. 
+Among the trees recorded on the plot, a sub-sample was taken for 
+total height measurement using the Tir´ens device before 1970, Suunto 
+hypsometer 1970–1995 and the Hagl¨of Vertex hypsometer afterwards. 
+Sample trees were followed over time for total height, except for cases of 
+damages by storm, snow, diseases, etc., in which they were replaced by 
+equally good candidates. The observations of height-diameter pairs were 
+used to estimate coefficients of the height-diameter equation (Eq. (1)) 
+presented by N¨aslund (1947), where coefficients were estimated for 
+each plot and measurement occasion, and all calipered trees without 
+heights were assigned predicted heights. Based on the predicted heights, 
+the thickest trees on every plot were selected as the top (dominant) 
+height trees. Top height was defined as the arithmetic mean height of the 
+100 thickest (by diameter) trees ha−1. The initial stand densities (trees 
+ha−1) during installation of the plots as well as site information were 
+recorded. Other variables such as basal area and stem volume were 
+computed for every calipered tree and aggregated to the plot level in per 
+hectare units. The tree volume was estimated for living, thinned and 
+dead trees using the species-specific volume functions by Brandel 
+(1990). Summary of the plot and site variables are given in Table 1. 
+H =
+DBHγ
+(α + β × DBH)γ + 1.3
+(1) 
+Fig. 3. Observed height development (black lines) in relation to site index curves (blue lines). (For interpretation of the references to colour in this figure legend, the 
+reader is referred to the web version of this article.) 
+A.A. Mensah et al.                                                                                                                                                                                                                              
+
+
+Forest Ecology and Management 512 (2022) 120162
+5
+where, H is the tree height (m), DBH is the calipered tree diameter at 
+breast height (cm), α, β are parameters to be estimated and γ was 3 for 
+Norway spruce and 2 for other tree species (to minimize the sum of 
+squared residuals). 
+2.2. Site index estimation from height development curves 
+The SI functions operationally used today in Sweden were used to 
+estimate SI from the observed top heights on each plot and thereafter, 
+averaged to provide the SI for each site (experiment location). More 
+information concerning the form and parameter estimates of the SI 
+functions can be found in Elfving and Kiviste (1997), Elfving (2009) and 
+Liziniewicz et al. (2016). SI was defined as the mean top height at the 
+tree species-specific reference age (100 years: H100, for Norway spruce, 
+Scots pine and Larch; and 50 years: H50, for Lodgepole pine). Pre­
+liminary assessment showed that the SI curves adequately described the 
+patterns in the observed top height development for all species (Fig. 3). 
+With a given plot SI, we derived the expected mean top heights at ages 
+corresponding to the observed measurement years, assuming the growth 
+function passes through current height and age. The expected top 
+heights were used to simulate the expected plot-level total volume 
+productions (see Fig. 1 and Section 2.4). 
+2.3. Functions for total basal area development 
+Basal area is often used to describe stands’ potential density (car­
+rying capacity) and due to its strong relationship with stem volume and 
+woody biomass production, it is of central significance to modelling 
+forest stand development (Burkhart and Tom´e, 2012). To determine the 
+carrying capacity of forest stands, projections of basal area growth 
+require repeated observations from plots covering gradients in stand and 
+environmental conditions (Gadow and Hui, 1999). 
+Studies from long-term spacing trials shown the significant influence 
+of initial spacing on stand productivity (Pettersson, 1992; Samuelson 
+et al., 2010), and as such the basal area growth increases asymptotically 
+with age and the asymptote is largely dependent on site quality and 
+initial stand density (Pienaar and Shiver, 1986; Elfving, 2010a; Hall 
+et al., 2019). Hence, the following growth functions (Table 2) were used 
+to examine the development of total basal area production (including 
+surviving, removed and dead trees) for the different tree species. Model 
+one (F01) is identical to Pienaar et al. (1990), F02 is based on Hossfeld 
+(Peschel, 1938), F03 is based on Levakovic (Levakovic, 1935), F04 is 
+based on Bertalanffy-Richards (von Bertalanffy, 1938; Richards, 1959) 
+and F05 is derived from Schumacher’s growth function (Schumacher, 
+1939). 
+Under a model-based framework, the yield function relates the 
+response variable (total basal area, m2 ha−1) to a set of independent 
+variables and was expressed generally as 
+yi = f(Xi; B) + εi
+(2.1)  
+where i indexes the population units; yi is the observation of the 
+response variable on the ith unit; Xi is a vector of predictor variables 
+comprising total age (years), site index (m) and initial stand density 
+(trees ha−1); B is a vector of parameters to be estimated from the sample 
+data; f(Xi; B) expresses the nonlinear relationship between predictor 
+variables and the parameters; and εi is a normally distributed random 
+residual term 
+[εi ∼N
+(
+0, σ2) ]
+to account for the unexplained variation 
+in the observed values of yi. Given repeated plot measurements, differ­
+ence equations are more suitable for modelling the dynamics of yield 
+within an observed growth period and as such, produce robust base-age 
+invariant results compared to static base-age equations (Cieszewski and 
+Bailey, 2000). Therefore, Eq. (2.1) was expressed in an algebraic dif­
+ference form (Eq. (2.2)) where the basal area at time two (G2) was 
+modelled from the basal area at time one (G1), total age at times one (A1)
+and two (A2), site index (SI) and initial stand density (N1). 
+G2 = f(G1, A1, A2, N1, SI, αs) + εi
+(2.2)  
+where N1 was transformed as: N1 =
+̅̅̅̅̅̅̅̅̅
+10000
+N
+√
+and the αs are model 
+parameters. 
+The tested functions (F01-F05) have polymorphic asymptotes and 
+their difference forms are presented in Table 2. We used all measure­
+ments within the observed growth period to model the basal area 
+growth. The growth period was defined as the time interval between 
+consecutive measurements. The sample data for model fitting were hi­
+erarchical in structure, i.e., several plots nested within a site. The plots 
+had many revisions, which suggest observations within a plot might 
+exhibit temporal dependencies. Similarly, the distance between sample 
+plots within each site is small (about 20–500 m apart) and this may 
+induce a spatial autocorrelation among observations from a site. The 
+lack of independency among observations may violate standard 
+regression analysis through biased model parameter estimates and 
+subsequently, lead to erroneous inferences. Hence, the tested basal area 
+growth equations were expressed as nonlinear mixed-effects time series 
+models to account for both plot and site random variances (Gregoire and 
+Table 2 
+Tested total basal area development functions.  
+No. Equation 
+F01 
+Gijk = exp
+[
+ln(Gijl)+μ+α0
+( 1
+Aijk
+−
+1
+Aijl
+)
++μ+α1(N1)+μ+α2(SI)
+]
++ εijk  
+F02 Gijk =
+1
+[( 1
+Gijl
+)(Aijl
+Aijk
+)α0+μ
++μ+c0
+(
+1−
+(Aijl
+Aijk
+)a0+μ)
++μ+α1(N1)+μ+α2(SI)
+]+ εijk  
+F03 Gijk =
+⎡
+⎢⎣
+⎛
+⎝(
+Gijl
+)μ+c0
+(Aijl
+Aijk
+)2
++μ+α0
+(
+1−
+(Aijl
+Aijk
+)2)⎞
+⎠
+1
+c0+μ
++μ+α1(N1)+μ+α2(SI)
+⎤
+⎥⎦+ εijk  
+F04 
+Gijk =
+⎡
+⎣Gijl
+(
+1−expμ−α0(Aijk)
+1−expμ−α0(Aijl)
+)μ+c0+μ+α1(N1)+μ+α2(SI)⎤
+⎦+ εijk  
+F05 Gijk =
+⎡
+⎢⎣exp
+(
+ln(Gijl)
+(Aijl
+Aijk
+)μ+α0++μ+α1(N1)
++μ+α2(SI)+μ+c0
+(
+1−
+(Aijl
+Aijk
+)μ+α0+μ+α1(N1)))⎤
+⎥⎦+ εijk  
+Table 3 
+Summary of fit-statistics for the tested basal area functions. Relative RMSEs and 
+MDs are given in parenthesis. The selected model for each species is highlighted 
+in bold.    
+Scots pine 
+Norway spruce Lodgepole pine Larch 
+F01 RMSE (%) 1.09 (3.39) 
+0.97 (2.14) 
+1.31 (3.35) 
+3.40 (7.04)  
+MD (%) 
+−0.15 (−0.47) −0.10 (−0.22) −0.12 (−0.33) −0.65 (1.36)  
+F02 RMSE (%) 2.68 (8.32) 
+2.73 (6.04) 
+1.57 (4.23) 
+6.37 (13.2)  
+MD (%) 
+−0.06 (−0.19) −1.33 (−2.95) −0.60 (1.61) 
+−5.25 (10.87)  
+F03 RMSE (%) 3.42 (10.63) 
+1.90 (4.21) 
+3.10 (8.34) 
+10.56 (18.31)  
+MD (%) 
+1.66 (5.15) 
+0.14 (0.31) 
+2.37 (6.38) 
+−8.33 (−24.75)  
+F04 RMSE (%) 2.53 (7.86) 
+1.82 (4.03) 
+1.22 (3.29) 
+2.79 (5.78)  
+MD (%) 
+0.26 (0.82) 
+−0.09 (−0.20) −0.01 (−0.03) −0.29 (−0.59)  
+F05 RMSE (%) 3.29 (10.22) 
+1.96 (4.32) 
+1.94 (5.21) 
+3.68 (7.58)  
+MD (%) 
+0.04 (0.12) 
+−0.11 (−0.55) 1.00 (2.69) 
+0.05 (0.11)  
+A.A. Mensah et al.                                                                                                                                                                                                                              
+
+
+Forest Ecology and Management 512 (2022) 120162
+6
+Schabenberger, 1996; Meht¨atalo and Lappi, 2020). 
+In Table 2, Gijk is the plot basal area (at the end of the growth period) 
+at age Aijk (k th observations at plot/series j and site i), Gijl is the plot 
+basal area (at the beginning of the growth period) at age Aijl at the same 
+plot/series and site (l th observations at plot/series j and site i and l ∕= k), 
+the μ denotes between group variances of the two level groups denoted 
+as plot-level (μp) and site-level (μs) random effects, which are indepen­
+dent and normally distributed 
+[
+μp N(0, D*)andμs N(0, D*)
+]
+with between 
+group variance–covariance matrix (D*) identical for all plots and sites. 
+Gijl was considered as a fixed-effect parameter and was locally estimated 
+for each plot and site. The within group variance specified by the indi­
+vidual random model errors (εijk) is normally distributed [εijk N
+(
+0, σ2)
+]
+and independent among observations and μp and μs. The random-effects 
+parameters were added sequentially to the fixed-effects parameters until 
+convergence was achieved. The model parameters were estimated by 
+approximations of the likelihood function of the Lindstrom-Bates algo­
+rithm implemented in the “nlme” package of R statistical environment 
+(Pinheiro et al., 2020; R Core Team, 2020). 
+Due to unequal variances (heteroscedasticity) arising from mea­
+surements at differing stand ages and sites, the within-group random 
+error variance [V
+( εijk
+)
+] associated with every predicted plot-level basal 
+area (̂Gijk) were modelled by nonlinear power models (Eqs. (3.1) and 
+(3.2)) with either two parameters (scale and shape, denoted as ω2 and δ1 
+respectively) or three parameters (ω2 and δ1 plus a constant,δ0). Nega­
+tive (δ1 < 0), or positive (δ1 > 0) values of δ1, suggests the error vari­
+ance may be decreasing or increasing linearly with ̂Gijk (Meht¨atalo and 
+Lappi, 2020). Given that our basal area measurements were unevenly 
+spaced over time and only one single pair of basal area-age measurement 
+were used for basal area projection, the first order autoregressive [AR 
+(1)] error structure (Eq. (3.3)) was chosen to account for the within-plot 
+serial correlation. 
+V
+( εijk
+)
+= ω2⃒⃒̂Gijk
+⃒⃒2δ1
+(3.1)  
+V
+( εijk
+)
+= ω2(
+δ0 +
+⃒⃒̂Gijk
+⃒⃒δ1 )2
+(3.2)  
+ρz = cor
+( εijk + εijk+z
+)
+(3.3)  
+where ρ the correlation between successive observations is a parameter 
+to be estimated and z is a time lag in terms of measurement intervals 
+between successive observations in the same plot. The accuracy of the 
+tested basal area models were compared using the following estimators 
+(Eqs. (4.1)–(4.4)): root mean square error 
+(
+RMSE, m2 ha−1)
+, relative 
+root mean square error (RMSErel, %); mean deviation 
+(
+MD, m2 ha−1)
+; 
+and relative mean deviation (MDrel, %). 
+RMSE =
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+∑
+n
+i=1
+(̂yi −yi)2
+n
+√
+√
+√
+√
+√
+(4.1)  
+RMSErel = 100x RMSE
+y
+(4.2)  
+MD = 1
+n
+∑
+n
+i=1
+(̂yi −yi)
+(4.3)  
+MDrel = 100x MD
+y
+(4.4)  
+where ̂yi, yi and yi are the predicted, measured and mean values of total 
+basal area, respectively and n is the number of observations used for 
+model calibration. Models with good statistical precision and low pre­
+diction error were considered for further analysis of volume yield. The 
+quality of the final basal area projection model was studied graphically 
+Table 4 
+Parameter estimates of species-specific basal area (m2 ha−1) functions. Values in parenthesis are estimated standard errors.    
+Scots pine 
+Norway spruce 
+Lodgepole pine 
+Larch 
+Class 
+Parameter 
+Estimates 
+Fixed effects 
+̂α0 
+−52.8873 (1.5744) 
+−55.1743 (4.2183) 
+0.0507 (0.0027) 
+0.0287 (0.0151)  
+̂α1 
+0.0064 (0.0023) 
+0.0273 (0.0066) 
+1.0931 (0.2019) 
+0.7837 (0.2485)  
+̂α2 
+−0.0007 (0.0003) 
+−0.0012 (0.0006) 
+−0.1089 (0.0281) 
+0.5909 (0.4267)  
+̂c0   
+2.6904 (0.1896) 
+0.0887 (0.0302)  
+Plot-level random effects 
+(μp)
+̂
+var(̂α0)
+61.856 
+22.242  
+1.37 × 10−18  
+̂
+var(̂α1)
+5.89 × 10−6 
+4.39 × 10−5    
+̂
+var(̂α2)
+1.84 × 10−19 
+4.11 × 10−7 
+0.0028   
+̂
+cov(̂α0, ̂α1)
+0.0164 
+−0.0291    
+̂
+cov(̂α0, ̂α2)
+0 
+0.0029    
+̂
+cov(̂α1, ̂α2)
+0 
+−4.23 × 10−6    
+Site-level random effects 
+(μs)
+̂
+var(̂α0)
+285.958 
+1068.321  
+3.77 × 10−5  
+̂
+var(̂α1)
+9.817 × 10−6 
+0.0013    
+̂
+var(̂α2)
+6.371 × 10−6 
+1.31 × 10−5 
+0.1254   
+̂
+cov(̂α0, ̂α1)
+0.0269 
+0.2797    
+̂
+cov(̂α0, ̂α2)
+0.0281 
+0.0936    
+̂
+cov(̂α1, ̂α2)
+7.77 × 10−6 
+5.33 × 10−6    
+Residual Variance 
+V
+( εijk
+)
+̂ω2 
+4.6439 
+2.7276 
+837.5821 
+5.75x105  
+̂δ1 
+−0.1747 
+−0.0979 
+−1.4996 
+−1.5454  
+̂δ0   
+0.0382 
+1.14 × 10−10 
+Autocorrelation 
+̂ρ 
+0.042 
+0.215 
+0.146 
+0.294 
+n  
+3447 
+984 
+237 
+78  
+A.A. Mensah et al.                                                                                                                                                                                                                              
+
+
+Forest Ecology and Management 512 (2022) 120162
+7
+by (1) the distribution of model residuals over plot-level basal area 
+predictions (̂Gijk), stand age and SI; and (2) the trajectories of the ̂Gijk 
+curves on the profiles of observed Gijk for different SI, assuming the 
+growth function passes through current basal area (Gijl) at initial mea­
+surement age (Aijl). Using the fixed-part of the selected model, the ex­
+pected total basal area productions at ages corresponding to the 
+observed measurement years for each plot were derived. These pre­
+dictions of basal area were used as predictors to simulate the expected 
+plot-level total volume yield. 
+Fig. 4. Standardized (Pearson) residuals versus predicted basal area (̂Gijk, m2 ha−1), age and site index (m). Site index is expressed as height at 100 years (H100) for 
+Scots pine, Norway spruce and Larch, and at 50 years (H50) for Lodgepole pine. The red dots are calculated residual means, and horizontal dashed lines denote the 
+expected mean residual ([E(ε) = 0]). (For interpretation of the references to colour in this figure legend, the reader is referred to the web version of this article.) 
+A.A. Mensah et al.                                                                                                                                                                                                                              
+
+
+Forest Ecology and Management 512 (2022) 120162
+8
+2.4. Modelling the variations in total volume-top height relationship 
+To show potential differences in total volume yield (including vol­
+umes of removed and dead trees) between sites, the observed volume 
+yield (V) was expressed as an allometric function of mean top height (H). 
+However, the volume-height relationship (Eq. (5)) was adjusted with 
+information from total basal area production (G), assuming a constant 
+form factor as 
+Fig. 5. Left panel: mean predicted basal area over age according to site index; Right panel: Basal area-mean top height relationships. Observed data are shown as 
+solid grey lines. 
+A.A. Mensah et al.                                                                                                                                                                                                                              
+
+
+Forest Ecology and Management 512 (2022) 120162
+9
+V = α0 × Hα1 × Gα2 + ε
+(5)  
+where ε is randomly distributed errors with a zero mean [E (ε) = 0] and 
+with an unknown constant variance [Var(ε) = σ2], and α s are param­
+eters to be estimated. 
+Variables (H) and (G) were derived from the height and basal area 
+development functions (see Sections 2.2 and 2.3). Due to the hierar­
+chical structure of the data, Eq. (5) was expressed as a nonlinear mixed- 
+effects time series model to account for both plot and site random var­
+iances as: 
+Vijk = γi + cij + α0 × Hijk
+α1+γi+cij × Gijk
+α2+γi+cij + εijk
+(5.1)  
+where Vijk is the total volume for plot j of site i in year k, γi and cij are the 
+random effects of for site i and for plot j of site i, respectively. Both γi and 
+cij are independent of εijk and are normally distributed with mean zero 
+and variances σ2s and σ2p, respectively [i.e.,γi N(0, σ2s) and cij N(0,σ2p)]. 
+The random-effects parameters were added sequentially to the fixed- 
+effects parameters until convergence was achieved. The volume-height 
+relationship typically exhibits a curvilinear form with heteroscedastic 
+variance of the individual model errors (εijk) (Haworth and Vincent, 
+1982; McRoberts and Westfall, 2016). Therefore, the mean of the 
+response variable was modelled with a nonlinear power variance func­
+tion with three parameters as: 
+V
+( εijk
+)
+= ω2(
+δ0 +
+⃒⃒̂Vijk
+⃒⃒δ1 )2
+(5.2) 
+The temporal and spatial dependencies among the observations were 
+also modelled using a first order autoregressive covariance structure 
+(see estimator 3.3). The use of predicted values of top height and basal 
+area as explanatory variables in the volume models (Eqs. (5) and (5.1)) 
+has the tendency of propagation of error which could inflate the vari­
+ances of the estimated model parameters (McRoberts and Westfall, 
+2016). To check this, non-parametric bootstrap resampling (with 
+replacement) was used to examine the uncertainty associated with the 
+estimated model parameters (Eq. (5.1)). We drew 1000 bootstrapped 
+samples from a population made up of the original sample data. For each 
+bootstrapped replicate, the model parameters were determined and the 
+means of each parameter for the 1000 samples were estimated. The 
+sampling distribution of the estimated model parameters were 
+Fig. 6. Accuracy (relative RMSE, %) of species-specific volume yield equations with or without basal area as a covariate to top height (Eq. (5)). Note the different 
+scales on the y-axis. 
+A.A. Mensah et al.                                                                                                                                                                                                                              
+
+
+Forest Ecology and Management 512 (2022) 120162
+10
+visualized graphically using histograms, and the confidence interval (the 
+lower and upper limits of the bootstrapped statistic using the percentile 
+method and 95% confidence level) was considered as an approximate 
+variance in the estimated model parameters. The quality of the volume 
+yield model was assessed graphically by the distribution of residuals 
+over plot-level total volume predictions (̂Vijk), total age and SI, and 
+numerically by using the accuracy estimators in Eqs. (4.1)–(4.4) (by 
+changing the response variable from basal area to volume). The accu­
+racy of Eq. (5.1) was also compared with alternative models where basal 
+area was excluded as a covariate of top height. 
+2.5. Relationship between yield capacity and site index 
+To compute the plot-level mean annual total volume increments 
+(MAI) at each measurement occasion, the predicted volume yields were 
+divided by their corresponding total ages. On each plot and site, the MAI 
+at the time of culmination (or late culmination) was considered as the 
+maximum MAI (MAImax), and the plot-level MAImax values were aver­
+aged to estimate the site-level MAImax. The MAImax was then used as a 
+proxy for yield capacity because it is related to the potential volume 
+yield attainable on a specific site (Elfving and Nystr¨om, 1996). To 
+determine the functional relationship between SI (H100 or H50) and 
+MAImax, two models with MAImax as the response variable and SI as a 
+predictor were fitted and compared. Model one (Eq. (6.1)) is an expo­
+nential function fitted in R statistical environment through the gener­
+alised nonlinear least squares (“gnls”) function. 
+MAImax = α0 × exp(α1×SI) + ε
+(6.1) 
+For model two (Eq. (6.2)), the relation between MAImax and SI was 
+fitted by a second-degree polynomial function. This model was identical 
+to the earlier yield capacity functions developed by H¨agglund and 
+Lundmark (1982): 
+MAImax = α0 + α1 × SI + α2 × SI2 + ε
+(6.2) 
+The accuracy and precision of the fitted yield capacity functions were 
+evaluated using the estimators (Eqs. (4.1) and (4.2)), by changing the 
+response variable from basal area to MAImax. For each species, the yield 
+capacity estimates from the best model in this study was compared to the 
+earlier estimates from H¨agglund and Lundmark (1982). For spruce, 
+additional comparisons were made with Elfving and Nystr¨om (1996) in 
+central-northern Sweden. 
+3. Results 
+3.1. Regression functions for basal area growth prediction 
+Predicting basal area yield at the end of the growth period as a 
+function of current basal area, initial stand density, site index and total 
+age through nonlinear mixed-effects time series models produced 
+acceptable estimates for the studied tree species. All tested functions 
+converged and model accuracies are presented in Table 3. The largest 
+deviations in relative terms were found for F03 (Levakovic) models, 
+especially for Larch where the error was about 18% of the observed 
+mean. The function F01 (Pienaar et al., 1990) was most suitable for Scots 
+pine and Norway spruce, whereas those of Lodgepole pine and Larch 
+were adequately modelled by the Bertalanffy-Richards function (F04). 
+For these functions (F01 and F04), the relative errors around basal 
+growth predictions were within 2–6%, though they all underestimated 
+the average basal area growth. Nevertheless, in absolute terms, the 
+underestimation of the models was <1% for all species. 
+For Scots pine, Norway spruce and Lodgepole pine, the estimated 
+fixed-effects parameters were statistically significant at 1% error 
+margin. However, the parameters of age (̂α0) and site index (̂α2) for 
+Larch were not significant (p > 0.05) as the estimated standard errors 
+had similar values as the coefficients (Table 4). 
+As expected, the mixed modelling approach produced variance es­
+timates that were larger between sites than between plots within sites. 
+For Norway and Scots pine, the random slopes of age, site index and 
+initial density enhanced efficient model calibration. For Larch, random 
+age was relevant, whereas site index improved the calibration of random 
+variances of Lodgepole pine. The within-group residual error variances 
+were adequately modelled by the two-parameter power function for 
+Norway spruce and Scots pine, while the three-parameter was suitable 
+for Lodgepole pine and Larch. The estimated first order temporal auto­
+correlations were also small (0–0.294) for all species (Table 4). The 
+model residuals exhibited constant variance that suggests unbiased 
+predictions of basal area over total age and site index (Fig. 4). 
+The development of total basal area production according to SI was 
+visualized in Fig. 5. The forms of the curves were statistically and 
+practically acceptable on the observed data for all species. As expected, 
+higher site indices reached larger basal area values quicker than lower 
+site indices for all tree species. To explore the between-site variations in 
+basal area yield levels, an increasing relation was observed between 
+total basal area production and mean top height (Fig. 5). 
+̂ρ is the estimated first order temporal autocorrelation; n is the 
+number of observations used for model fitting; ̂
+var is the estimated 
+variance; ̂
+cov is the estimated covariance of parameters. 
+3.2. Regression functions for total volume-top height relationships 
+To characterize total volume yield and the variations across sites, 
+allometric expressions of volume yield and mean top height were 
+adjusted with information on total basal area production. Addition of 
+basal area improved the volume-height relationships where the relative 
+Table 5 
+Parameter estimates of species-specific volume (m3 ha−1) yield functions (Eq. 
+(5.1)). Values in parenthesis are estimated standard errors.    
+Scots 
+pine 
+Norway 
+spruce 
+Lodgepole 
+pine 
+Larch 
+Class 
+Parameter 
+Estimates 
+Fixed effects 
+̂α0 
+0.8013 
+(0.0117) 
+0.7498 
+(0.0196) 
+0.8783 
+(0.0379) 
+1.4005 
+(0.0749)  
+̂α1 
+1.0208 
+(0.0116) 
+1.1781 
+(0.0215) 
+0.9251 
+(0.0243) 
+1.6359 
+(0.0309)  
+̂α2 
+0.8062 
+(0.0083) 
+0.7169 
+(0.0149) 
+0.8839 
+(0.018) 
+0.1558 
+(0.0127)  
+Plot-level random effects 
+(cij)
+̂
+var(̂α0)
+0.0012  
+1.02 ×
+10−07 
+8.28 ×
+10−10  
+̂
+var(̂α1)
+̂
+var(̂α2)
+8.17 ×
+10−05    
+Site-level random effects 
+(γi)
+̂
+var(̂α0)
+0.0023  
+0.002 
+0.0172  
+̂
+var(̂α1)
+̂
+var(̂α2)
+5.52 ×
+10−04    
+Residual Variance 
+V
+( εijk
+)
+̂ω2 
+1.1546 
+17.795 
+2.232 
+1.883  
+̂δ1 
+0.4784 
+0.2951 
+0.4749 
+4.0237  
+̂δ0  
+1.59 ×
+10−07 
+1.34 ×
+10−04 
+1.86 ×
+10−11 
+Autocorrelation 
+̂ρ 
+0.104 
+0.009 
+0.002 
+0.2807  
+RMSE 
+24.27 
+36.98 
+22.44 
+54.18 
+Fit statistics 
+RMSErel,
+% 
+11.74 
+11.75 
+10.96 
+17.72  
+MD 
+−0.1584 
+−0.1629 
+−0.1283 
+1.1717  
+MDrel,% 
+−0.0765 
+−0.0517 
+−0.0626 
+0.3834 
+n  
+4405 
+1789 
+725 
+453  
+A.A. Mensah et al.                                                                                                                                                                                                                              
+
+
+Forest Ecology and Management 512 (2022) 120162
+11
+model errors were reduced on the average by a factor of 1.5 for all 
+species (Fig. 6). 
+Table 5 presents the regression summary of the species-specific 
+volume yield equations. The relative errors (RMSErel, %) of the 
+species-specific volume yield models were within 10–18% of the mean 
+values for all species (Table 5). For Larch, the model overestimated the 
+volume yield by 0.4%, whereas those Scots pine, Norway spruce and 
+Lodgepole pine were underestimated on the average by 0.2%. The 
+calibration of plot- and site-level random components adequately 
+captured the variances in volume yields, and the within-group error 
+Fig. 7. Standardized (Pearson) residuals versus predicted total volume (̂Vijk, m3 ha−1), age and site index (m). Site index is expressed as height at 100 years (H100) for 
+Scots pine, Norway spruce and Larch, and at 50 years (H50) for Lodgepole pine. The red dots are calculated residual means, and horizontal dashed lines denote the 
+expected mean residual ([E(ε) = 0]). (For interpretation of the references to colour in this figure legend, the reader is referred to the web version of this article.) 
+A.A. Mensah et al.                                                                                                                                                                                                                              
+
+
+Forest Ecology and Management 512 (2022) 120162
+12
+variances were efficiently modelled by the power functions. Evaluation 
+of the models’ residuals showed variance homogeneity over predicted 
+volume yields, total age and site index (Fig. 7). 
+̂ρ is the estimated first order temporal autocorrelation; n is the 
+number of observations used for model fitting; ̂
+var is the estimated 
+variance. 
+In the volume models, predicted mean top height and basal area were 
+used as predictors, and there is a tendency of error propagation. Un­
+Fig. 8. Left panel: total volume yield levels (volume-height relationship); Right panel: examples of the development of total volume production over age with a given 
+site index. 
+A.A. Mensah et al.                                                                                                                                                                                                                              
+
+
+Forest Ecology and Management 512 (2022) 120162
+13
+certainty analyses of the parameter estimates were conducted by boot­
+strap resampling. The estimated model parameters occurred within the 
+interval from the 2.5th to the 97.5th confidence limits, indicating no 
+apparent systematic effects of error propagation in all species, except for 
+Larch, which showed large uncertainty in the estimated model param­
+eters (̂α1 and ̂α2) (Fig. A.1, appendix). This might be due to the com­
+bined dataset for the two Larch species for modelling since we had very 
+few observations for either species. However, the two species have 
+different growth rates (Siberian Larch has slower growth rate than Eu­
+ropean Larch) which could introduce additional uncertainty. Despite 
+this limitation, a larger part of the sampling distribution of estimated 
+parameters were within the acceptable error bounds (Fig. A.1, 
+appendix). 
+The volume production at a given top height is shown in Fig. 8. As 
+expected, the volume yield levels showed increasing relationships, 
+suggesting site-dependent variations in volume-height trajectories 
+(Fig. 8, left panel). Thus, larger volume yields are attained at higher SIs 
+(Fig. 8) and the culmination in mean and current annual volume in­
+crements is earlier than for lower SIs (Fig. A.2, appendix). The observed 
+volume-height trajectories follow the same order as the basal area yield 
+levels (Fig. 5) for all species. This offers support to the assertion that 
+given the same mean top height, the volume yield levels would be 
+different between sites if the basal area production levels are also 
+different. 
+3.3. Functional relationship between site index and yield capacity 
+The relationship between yield capacity and SI was best fitted by the 
+exponential regression function (Eq. (6.1)) for the studied tree species. 
+Information on model parameter estimates and goodness-of-fit statistics 
+are given in Table 6. Generally, SI was significant in predicting yield 
+capacity and the form of the curves described by the models was sta­
+tistically and practically acceptable (Fig. 9). The explained variation 
+(adjusted R2) ranged from 80 to 96% and the relative model errors 
+ranged from 6 to 17%, with Scots pine and Norway spruce showing the 
+largest variations around the observed mean. 
+In Fig. 10, the yield capacities predicted from the present study were 
+compared to earlier estimates from H¨agglund and Lundmark (1982). For 
+Scots and Norway spruce, significant differences were observed at both 
+lower and higher SIs. At lower SIs, the estimated yield capacities from 
+the current study were smaller than the predictions by H¨agglund and 
+Lundmark (1982) and vice versa at higher SIs. For Norway spruce, 
+predicted yield capacity was similar to Elfving and Nystr¨om (1996) in 
+central-northern Sweden. For Lodgepole pine, the estimates were similar 
+at lower SI, but differed markedly at higher SI classes between the 
+functions. 
+4. Discussion 
+The purpose of this study was to develop functional relationships 
+between yield capacity and site index (SI) for the major tree species in 
+Swedish boreal forests. The newly developed yield capacity functions 
+were also compared with earlier functions made for the studied species. 
+This was approached by utilizing measured tree growth data from long- 
+term experiments (LTEs). The observations covered almost the entire 
+rotation periods and a wide range of site fertility gradients that represent 
+managed forests in Sweden. Thus, in this study, the LTE data were 
+assumed as valid growth references for yield capacity estimation. 
+Height and basal area are key variables in the empirical growth 
+models used in Sweden, for example in the Heureka planning system. 
+While height is the dependent variable during the establishment stage 
+(mean height<7 m), basal area drives the growth models for established 
+stands (Elfving, 2010b; Wikstr¨om et al., 2011). As such, their estima­
+tions are crucial for evaluation of forest yield capacity (Elfving and 
+Nystr¨om, 1996; Burkhart and Tom´e, 2012). Height growth models were 
+not developed in the current study, but instead, the observed top heights 
+were used for SI estimation with existing height development functions, 
+which when combined with initial stand density, produced accurate and 
+reliable estimates of basal area production over time (Table 4, Fig. 4). 
+This follows earlier reports on the influence of initial spacing and site 
+quality on the asymptotic basal area growth of even-aged stands (Pie­
+naar and Shiver, 1986; Pettersson, 1992; Elfving, 2010a; Hall et al., 
+2019). Expressions for basal area often include mean top height and or 
+mean height (Elfving and Nystr¨om, 1996; Hall et al., 2019) but such 
+expressions were avoided in our basal area development functions 
+because top height was later used as a predictor in the total volume 
+estimations. The basal area functions developed in this study show lower 
+residual variations than the current stand-level basal area growth 
+models for Scots pine and Norway spruce in the Heureka system (RMSE 
+m2 ha−1: 1.03 vs. 2.32) but, the conditions for the estimations differ. In 
+the Heureka case, basal area growth is estimated at 5-year periods 
+(Elfving, 2010b; Fahlvik et al., 2014), whereas in our study, the devel­
+opment of total basal area production (yield) is modelled. 
+The observed increasing relation between total basal area production 
+and mean top height describe the concept of carrying capacity in forest 
+stands (Fig. 5). Usually, “natural basal area” is used to describe the 
+maximum basal area production for un-thinned stands (e.g. Assmann, 
+1961; Hasenauer et al., 1994), however, we modelled the total basal 
+area production (including dead, ingrowth trees etc.) for each site and 
+the observations spanned across plots with many measurements before 
+and after first thinnings. In addition, the thinning interventions were 
+mainly of thinning-from-below. Thus, our basal area estimates can 
+potentially describe the productivity differences in relation to site index. 
+This was supported by Eq. (5) and Figs. 6 and 8. Errors in the volume- 
+height relations were significantly reduced by a factor of 1.5 units 
+when including basal area (Fig. 6) and the yield level trajectory was 
+higher for high site index (Fig. 8). A similar study by Ung and Ouellet 
+(1991) found an improved estimation of total volume (11–12% error) 
+from both top height and basal area per hectare for black spruce (Picea 
+mariana (Mill.)) stands in the Boreal Forest Region of Lebel-sur- 
+Table 6 
+Parameter estimates and fit-statistics of functions relating yield capacity to site index for different tree species. “SE” is estimated standard error.  
+Species 
+Parameter 
+Estimate 
+SE 
+p-value 
+RMSE (rel, %) 
+R2 
+Scots pine 
+̂α0  
+0.4613  
+0.0511 
+<0.0001  
+0.9757  
+0.809  
+̂α1  
+0.1006  
+0.0041 
+<0.0001  
+(16.73)   
+Norway spruce 
+̂α0  
+0.5558  
+0.0889 
+0.0037  
+1.047  
+0.904  
+̂α1  
+0.0929  
+0.0049 
+<0.0001  
+(11.14)   
+Lodgepole pine 
+̂α0  
+0.8291  
+0.0729 
+<0.0001  
+0.436  
+0.956  
+̂α1  
+0.1038  
+0.0039 
+<0.0001  
+(5.52)   
+Larch 
+̂α0  
+0.9583  
+0.1547 
+<0.0001  
+1.164  
+0.876  
+̂α1  
+0.0695  
+0.0044 
+<0.0001  
+(10.82)   
+A.A. Mensah et al.                                                                                                                                                                                                                              
+
+
+Forest Ecology and Management 512 (2022) 120162
+14
+Qu´evillon, Canada. In other studies of growth-density relationships, 
+Allen et al. (2020) also found that gross volume increment increased 
+with increasing basal area for Norway spruce plantations in Norway. 
+Our results follow closely Assmann’s yield level investigation of Norway 
+spruce, where differences in stands’ common yield levels (total yield at a 
+certain top height) and special yield levels (reaching this certain top 
+height in a particular age) were attributed to differences in basal area 
+levels given the same initial spacing and treatment (Assmann 1955). 
+Schmidt (1973) also found that yield level variations in Scots pine is not 
+only site index dependent, but it is also dependent on the basal area 
+development for a given age and top height. Generally, basal area dif­
+ferences at a given top height and age result from the variations of 
+number of stems per hectare and the quadratic mean diameter at breast 
+height (QMD). At the same QMD but differing stand density, different 
+Fig. 9. Relationship between yield capacity (MAImax, m3 ha−1 yr−1) and site index (expressed as height (m) at 100 years (H100) for Scots pine, Norway spruce and 
+Larch, and at 50 years (H50) for Lodgepole pine). Right panels show 1:1 relationship between the observed (obtained from measured total volume yield and age) and 
+predicted yield capacity. 
+A.A. Mensah et al.                                                                                                                                                                                                                              
+
+
+Forest Ecology and Management 512 (2022) 120162
+15
+yield levels are observed using the relative space system. Different QMDs 
+at the same stem number also allude to differences in taper and yield 
+levels. For example, Hasenauer et al, (1994) found that differences in 
+volume yield levels of Loblolly pine across the physiographic regions in 
+southern United States were largely explained by differences in 
+maximum basal area development, which was in turn supported by the 
+sites’ potential number of stems per unit area at a given top height. This 
+suggests that, the Eichhorn’s law is exclusively rapid for total volume 
+estimation, but augmenting the volume-top height relationship with 
+basal area guarantees high accuracy in yield level estimation (Bontemps 
+and Bouriaud, 2014). Other reasons such as changes in stem form may 
+have effects on the volume growth, but this was assumed to have very 
+little influence in the present study. 
+Yield capacity was positively correlated with SI for all studied tree 
+species and the exponential model adequately described the functional 
+forms of the relationship (Fig. 9 and Table 6). The developed yield ca­
+pacity functions from the current study were compared to earlier 
+functions by H¨agglund and Lundmark (1982) and significant differences 
+were observed (Fig. 10). Two possible explanations pertaining to (1) the 
+data origin and method of estimation and (2) environmental changes 
+could be given for the observed differences. 
+The material (data) used for constructing SI functions differed in this 
+study and that of H¨agglund and Lundmark (1982). In the latter, the 
+calibration data were from felled-sectioned trees (in temporary plots) 
+growing in the 1940′s with an average age at breast height of about 70 
+years. Thus, the data mostly represented tree development conditions at 
+the first half of the 20th century. The site indices were estimated by 
+functions constructed from static- and fixed-base age equation of 
+Chapman-Richard (H¨agglund, 1972, 1973, 1974). However, in the 
+current study, the SI functions (Elfving and Kiviste, 1997; Elfving, 2009; 
+Liziniewicz et al., 2016) used were derived from difference equations 
+that were parameterised with repeated sample plot data from homoge­
+neous stands (even-aged monocultures) in the LTEs, and the data mainly 
+reflected growth in the second half of the 20th century up to 1990. The 
+Fig. 10. Predicted mean yield capacity from current (denoted as “This study”) and previous studies (H¨agglund and Lundmark (1982) denoted as [H&L (1982); 
+Elfving and Nystr¨om (1996) denoted as E&N (1996)]. H&L (1982)-best site refers to lingonberry-sites for pine stands (below 200 m above sea level) and blueberry- 
+sites for spruce over the whole country. H&L (1982)-north refers to pines (above 200 m above sea level) and spruces (poor sites) in northern Sweden. E&N (1996) 
+refers to spruce sites in central-northern Sweden. Note that for Larch no previous model is available for comparison. Extrapolations are made beyond the observed SI 
+ranges (see Table 1). 
+A.A. Mensah et al.                                                                                                                                                                                                                              
+
+
+Forest Ecology and Management 512 (2022) 120162
+16
+difference equations have shown better performance in SI estimation for 
+several studies than their static counterparts (e.g. Cieszewski and Bailey, 
+2000; Nord-Larsen et al., 2009). Currently, the new SI functions 
+demonstrate a change in the growth form and they adequately describe 
+the growing conditions of Swedish forests. For example, in Scots pine 
+stands; the new SI functions are indicating about 2 m increase in the 
+height growth compared to older SI functions (Elfving and Kiviste, 
+1997). Thus, there is a potential bias if yield capacity is based on older SI 
+functions. In a similar study, Elfving and Nystr¨om (1996) observed that 
+the yield capacity for new generation of Norway spruce plantations in 
+northern Sweden is underestimated (by ~35%) if the site quality esti­
+mation is based on height and age in old-growth stands. 
+On the methods of yield capacity estimation, existing growth func­
+tions were used to simulate the yield capacities from NFI data collected 
+using temporary sample plots in the early 1980s (H¨agglund, 1981; 
+H¨agglund and Lundmark, 1982; Ek¨o, 1985). The Swedish NFI is a sta­
+tistically distributed sample and so therefore covers a wider amplitude 
+of stand variation (Fridman et al., 2014). Thus, there is the tendency of 
+including stands that are more heterogeneous as well as sites that 
+naturally do not represent the species’ distribution. This could poten­
+tially affect the growth trajectories during simulation. In addition, with 
+data from the NFI, information on stand history such as provenances is 
+generally unknown and silvicultural treatments (e.g. fertilisation) are 
+mostly uncertain. For instance, in older stands that are naturally re­
+generated, the site-specific maximum height is mostly affected by early 
+suppression and it would be a misrepresentation when top height is used 
+as an indicator for site quality assessment in such stands (Elfving and 
+Nystr¨om, 1996; Elfving and Kiviste, 1997). Thus, it is not clear whether 
+the NFI data adequately described the growth trajectories in H¨agglund 
+and Lundmark (1982). In contrast, this study made use of data from the 
+LTEs where the total volume yield has accumulated and tree growth 
+trajectories can be reliably estimated. It is important to note that 
+H¨agglund and Lundmark (1982) stratified their yield capacity functions 
+based on latitude, altitude and forest type described by vegetation 
+classes. However, comparisons were made with the functions that 
+represent the whole country as well as those that describe higher site 
+quality. For Norway spruce and Scots pine, the larger difference (Fig. 10) 
+in the estimated yield capacities is difficult to explain. For Norway 
+spruce, the difference might be due to overestimation of basal area at a 
+given top height (Table S1, appendix). For spruce plantations in central- 
+northern Sweden (62–65◦N), for example, at 10 m top height, our 
+function gives on the average the same basal area levels as that of Elfving 
+and Nystr¨om (1996), but the estimates according to (H¨agglund, 1981) 
+was about 60% higher than observed. Such higher initial levels of basal 
+area could largely influence the relation between yield capacity and SI as 
+shown by Elfving and Nystr¨om (1996). Other reasons may be attribut­
+able to selection effects and low stocking. For instance, there were fewer 
+observations (LTEs) in the lower SIs of Norway spruce at northern 
+Sweden. In addition, these plot had lower levels of stocking, suggesting 
+many small trees in the diameter distribution, which eventually leads to 
+a lower stem-wood volume production (e.g. Nilsson et al., 2012). 
+Nevertheless, our yield capacity estimates for spruce in northern Sweden 
+was on the average similar to H¨agglund and Lundmark (1982), when 
+comparisons are made with the northern-specific function. For Lodge­
+pole pine, the estimated yield capacities were similar on lower SIs, but 
+differed markedly on higher SIs (Fig. 10). 
+Other reasons such as altered site properties by changes in envi­
+ronmental conditions may have also contributed to the observed de­
+viations in the two yield capacity functions. For boreal forests of 
+northern Europe, recent years’ growing season temperature and pre­
+cipitation, atmospheric CO2 fertilization and nitrogen deposition have 
+improved tree growth and current stands seem to sustain higher stand 
+densities (e.g. Sharma et al., 2012; Kauppi et al., 2014; Henttonen et al., 
+2017; Appiah Mensah et al., 2021; M¨akinen et al., 2021). Similarly, 
+effects from improved silviculture and changes in forest management 
+have also contributed to the increased tree growth (Elfving and Tegn­
+hammar, 1996). 
+Another important comment to highlight is the validity of the total 
+basal area development, stem volume production and yield capacity 
+functions developed in the current study. We used all tree growth ob­
+servations during the model fitting to provide robust and confident 
+parameter estimation. To validate the models, independent dataset from 
+LTEs in northern and southern Sweden were used. Higher accuracies 
+similar to levels obtained during model calibration (Tables 3 and 5) were 
+observed for the test data (Fig. A.3, appendix). 
+5. Conclusion 
+This study highlights the unique contribution of LTEs for evaluating 
+forest site productivity of major forest tree species in boreal Sweden. 
+These observational plots have the capacity to support studies on the 
+health and climate change mitigation potential of boreal forests in 
+northern Europe. The developed functions for total basal area devel­
+opment and total volume production indicated statistical and practical 
+acceptability on both calibration and validation datasets. The total basal 
+area production as a proxy for stands’ carrying capacity explained 
+largely the site variations in total volume yield levels. The developed 
+yield capacity functions adequately described stand productivities. 
+Compared with H¨agglund and Lundmark (1982), we found differences 
+in the estimated yield capacities on both lower and higher site indices, 
+particularly for the two dominant coniferous species, Scots pine and 
+Norway spruce. For Lodgepole pine, the old functions generally under­
+estimated the yield capacities on higher site indices, but fairly agreed 
+with our estimates on lower site indices. The yield capacity functions 
+from this study describe well the site productivity in the current climate, 
+and are suitable for growth and yield assessment of even-aged (mono­
+cultures) Swedish forests. It was not possible to compare the tree species’ 
+productions in this study given that the data material for each species 
+was from different locations. However, the functions can later be used 
+for selection and comparison of tree species’ production in similar site 
+and management regimes in Sweden. 
+CRediT authorship contribution statement 
+Alex Appiah Mensah: Conceptualization, Methodology, Data cura­
+tion, Formal analysis, Writing – original draft, Writing – review & 
+editing. Emma Holmstr¨om: Conceptualization, Methodology, Writing – 
+review & editing, Supervision. Kenneth Nystr¨om: Methodology, 
+Writing – review & editing. Urban Nilsson: Conceptualization, Meth­
+odology, Data curation, Writing – review & editing, Supervision. 
+Declaration of Competing Interest 
+The authors declare that they have no known competing financial 
+interests or personal relationships that could have appeared to influence 
+the work reported in this paper. 
+Acknowledgement 
+Special thanks go to Professor (emeritus) Bj¨orn Elfving and Dr. Hans 
+Petersson for comments on the earlier manuscript. The Unit of Field 
+Based Research is duly acknowledged for the continuous inventory of 
+observational plots in the LTEs. We thank the two anonymous reviewers 
+for the constructive comments on the initial manuscript. The financial 
+support from the Department of Forest Resource Management to the first 
+author’s doctoral studies is greatly acknowledged.  
+A.A. Mensah et al.                                                                                                                                                                                                                              
+
+
+Forest Ecology and Management 512 (2022) 120162
+17
+Appendix 
+Uncertainty in estimated volume model parameters 
+The uncertainty around the volume parameter estimates using predicted mean top height and basal area as explanatory variables was investigated 
+by bootstrap resampling. We drew 1000 bootstrapped samples from a population made up of the original sample data. For each bootstrapped replicate, 
+the model parameters were determined and the means of each parameter for the 1000 samples were estimated. Sampling distribution of the estimated 
+model parameters were visualized graphically using histograms, and the confidence interval (2.5th and 97.5th limits of the bootstrapped statistic 
+using the percentile method) was considered as approximate variance in the estimated model parameters. No systematic propagation of errors was 
+observed (Fig. A.1). 
+Fig. A.1. Sampling distribution of estimated volume parameters from 1000 bootstrap resamples. The vertical lines show the 2.5th and 97.5th intervals around the 
+bootstrap estimate at 95% confidence level. See Eq. (5) for the definition of model parameters. 
+A.A. Mensah et al.                                                                                                                                                                                                                              
+
+
+Forest Ecology and Management 512 (2022) 120162
+18
+Fig. A.2. Predicted mean (MAI) and current (CAI) annual volume increments for different site indices and species according to the basal area and volume functions 
+developed in this study. 
+A.A. Mensah et al.                                                                                                                                                                                                                              
+
+
+Forest Ecology and Management 512 (2022) 120162
+19
+Table S1 
+Observed and predicted mean basal area (m2 ha−1) in different classes of top height. Comparison with earlier studies for Norway spruce at central-northern Sweden 
+(62–65◦N).   
+Top height (m)  
+≤8.4 
+8.5–9.4 
+9.5–10.4 
+10.5–11.4 
+≥11.5 
+Total 
+Data/function 
+Mean (SD) 
+Mean (SD) 
+Mean (SD) 
+Mean (SD) 
+Mean (SD) 
+Mean (SD) 
+Gijk 
+4.5 (2.9) 
+10.9 (3.2) 
+15.8 (6.8) 
+18.9 (3.5) 
+39.2 (23.9) 
+22.6 (10.1) 
+̂Gijk 
+3.6 (3.0) 
+10.5 (3.4) 
+14.4 (7.3) 
+18.6 (7.3) 
+39.1 (26.4) 
+22.1 (11.3) 
+EN96 
+10.9 (3.5) 
+12.9 (4.8) 
+12.6 (3.5) 
+15.3 (6.9) 
+17.9 (10.7) 
+14.2 (6.7) 
+H81 
+14.5 (0.8) 
+16.5 (1.0) 
+19.4 (0.9) 
+22.6 (1.0) 
+26.8 (2.7) 
+20.5 (3.9) 
+n 
+25 
+3 
+6 
+6 
+35 
+75  
+A.A. Mensah et al.                                                                                                                                                                                                                              
+
+
+Forest Ecology and Management 512 (2022) 120162
+20
+Gijk is observed basal area; ̂Gijk is basal area according to functions (F01 and F04) in the present study (Tables 2 and 4); H81 is basal area according 
+to H¨agglund (1981); EN96 is basal area according to Elfving and Nystr¨om (1996); n is number of observations; SD is standard deviation. Note that the 
+conditions for basal area estimations differed among the functions. 
+Model validation on independent data 
+The basal area and volume functions developed in the present study (Tables 2, 4 and 5) were validated using independent dataset from LTE sites in 
+northern and southern Sweden. The northern sites were located at latitude 64◦N and an altitudinal range of 250–300 m above sea level (a.s.l). Site 
+2291 is a tree species trial established in 1992 involving spruce, pine, Lodgepole pine, larch and other exotic species. So far, three inventories have 
+been conducted at 5-year intervals: 2009 (at total age of 19 years), 2014 (at total age of 23 years) and 2019 (at total age of 29 years). The SIs for the 
+tree species were: spruce, 30 m at 100 years; scots pine, 29 m at 100 years; Lodgepole pine, 26 m at 50 years and larch, 33 m at 100 years. Site 2301 is a 
+spacing trial of Lodgepole pine established in the year 1982. First measurement was done in 2011 at 31 years old and the last measurement was in the 
+year 2020 at a total age of 40 years. The SI at latest remeasurement is 20 m at 50 years. The southern site (196) is a Scots pine thinning and yield 
+experiment located at latitude 58◦N and an altitude of 120 m (a.s.l). The experiments were established at 1931 and first measurements conducted 
+within the same year when the stands were 26 years old. The measurement period is on average 5 years interval and the last measurement was done in 
+2008 at 102 years. The SI is 28 m at 100 years. 
+References 
+Allen, M., Brunner, A., Ant´on-Fern´andez, C., Astrup, R., 2020. The relationship between 
+volume increment and stand density in Norway spruce plantations. Forest.: Int. J. 
+Forest Res. cpaa020. https://doi.org/10.1093/forestry/cpaa020. 
+Appiah Mensah, A., Holmstr¨om, E., Petersson, H., Nystr¨om, K., Mason, E.G., Nilsson, U., 
+2021. The millennium shift: Investigating the relationship between environment and 
+growth trends of Norway spruce and Scots pine in northern Europe. For. Ecol. 
+Manage. 481, 118727. https://doi.org/10.1016/j.foreco.2020.118727. 
+Assmann, E., 1970. The principles of forest yield study. Pergamon Press, Oxford, New 
+York, pp. 506. 
+Assmann, E., 1966. Die Sch¨atzung jetziger und künftiger Ertragsleistungen. Forstw. 
+Centralblatt 85 (11-12), 355–371. 
+Assmann, E., 1961. Waldertragskunde [Forest yield science]. BLV Verlagsges München. 
+490 p. (In German). 
+Assmann, E., 1955. Die Bedeutung des “erweiterten Eichhorn’schen Gesetzes” für die 
+Konstruktion von Ertragstafeln [The importance of “extended Eichhorn’s law” for 
+the construction of yield tables]. Forstw. Centralblatt 74, 321–330 in German.  
+Boisvenue, C., Running, S.W., 2006. Impacts of climate change on natural forest 
+productivity – evidence since the middle of the 20th century. Glob. Change Biol. 12, 
+862–882. https://doi.org/10.1111/j.1365-2486.2006.01134.x. 
+Bontemps, J.-D., Bouriaud, O., 2014. Predictive approaches to forest site productivity: 
+recent trends, challenges and future perspectives. Forest.: Int. J. Forest Res. 87 (1), 
+109–128. https://doi.org/10.1093/forestry/cpt034. 
+Brandel, G., 1990. Volume functions for individual trees; Scots pine (Pinus sylvestris), 
+Norway spruce (Picea abies) and birch (Betula pendula and Betula pubescens). In: 
+Department of Forest Yield Research, Swedish University of Agricultural Sciences, 
+Garpenberg, pp. 183. 
+Bueis, T., Bravo, F., Pando, V., Kissi, Y.-A., Turri´on, M.-B., 2019. Phosphorus availability 
+in relation to soil properties and forest productivity in Pinus sylvestris L. plantations. 
+Annals of Forest Science 76, 97. https://doi.org/10.1007/s13595-019-0882-3. 
+Burkhart, H.E., Tom´e, M., 2012. Modelling forest trees and stands. Springer Science and 
+Business Media. Dordrecht. 
+Cieszewski, C., Bailey, R.L., 2000. Generalized algebraic difference approach: Theory 
+based derivation of dynamic site equations with polymorphism and variable 
+asymptotes. For. Sci. 46, 116–126. 
+Eckhart, T., P¨otzelsberger, E., Koeck, R., Thom, D., Lair, G.J., van Loo, M., Hasenauer, H., 
+2019. Forest stand productivity derived from site conditions: an assessment of old 
+Douglas fir stands (Pseudotsuga menziesii (Mirb.) Franco var. menziesii) in Central 
+Europe. Ann. For. Sci. 76, 19. https://doi.org/10.1007/s13595-019-0805-3. 
+Eichhorn, F., 1902. Ertragstafeln für die Weißtanne [Yield tables for the silver fir]. Verlag 
+von Julius Springer, Berlin (in German). 
+Ek¨o, P.-M., Johansson, U., Petersson, N., Bergqvist, J., Elfving, B., Frisk, J., 2008. Current 
+growth differences of Norway spruce (Picea abies), Scots pine (Pinus sylvestris) and 
+birch (Betula pendula and Betula pubescens) in different regions in Sweden. Scand. J. 
+Forest Res. 23 (4), 307–318. https://doi.org/10.1080/02827580802249126. 
+Ek¨o, P., 1985. A growth simulator for Swedish forests, based on data from the national 
+forest survey. Department of Silviculture, Report 16, Swedish University of 
+Agricultural Sciences. (in Swedish with English summary). 
+Elfving, B., 2010a. Natural mortality in thinning and fertilisation experiments with pine 
+and spruce in Sweden. Forest Ecology and Management 260, 353–360. 10.1016/j. 
+foreco.2010.04.025. 
+Elfving, B., 2010b. Growth modelling in the Heureka system. Swedish University of 
+Agricultural Sciences, Faculty of Forestry. [Online] (2011-03-29) Available from 
+http://heurekaslu.org/wiki/Heureka_prognossystem_ (Elfving_rapportutkast).pdf 
+[2021-03-10]. 
+Elfving, B., 2009. Height development functions. SLU, PM for Heureka, appendix 9, 2 pp. 
+Elfving, B., Kiviste, A., 1997. Construction of site index equations for Pinus sylvestris L. 
+using permanent plot data in Sweden. For. Ecol. Manage. 98 (2), 125–134. 
+Elfving, B., Nystr¨om, K., 1996. Yield capacity of planted Picea abies in northern Sweden. 
+Scand. J. Forest Res. 11 (1-4), 38–49. https://doi.org/10.1080/ 
+02827589609382910. 
+Elfving, B., Tegnhammar, L., 1996. Trends of tree growth in Swedish forests 1953–1992: 
+An analysis based on sample trees from the National Forest Inventory. Scand. J. 
+Forest Res. 11 (1-4), 26–37. https://doi.org/10.1080/02827589609382909. 
+Fahlvik, N., Elfving, B., Wikstr¨om, P., 2014. Evaluation of growth functions used in the 
+Swedish Forest Planning System Heureka. Silva Fenn. 48. 10.14214/sf.1013. 
+Felton, A., Petersson, L., Nilsson, O., Witzell, J., Cleary, M., Felton, A.M., Bj¨orkman, C., 
+Sang, Å.O., Jonsell, M., Holmstr¨om, E., Nilsson, U., R¨onnberg, J., Kal´en, C., 
+Lindbladh, M., 2019. The tree species matters: Biodiversity and ecosystem service 
+implications of replacing Scots pine production stands with Norway spruce. Ambio 
+49 (5), 1035–1049. https://doi.org/10.1007/s13280-019-01259-x. 
+Felton, A., Ranius, T., Roberge, J.-M., ¨Ohman, K., L¨amås, T., Hynynen, J., Juutinen, A., 
+M¨onkk¨onen, M., Nilsson, U., Lundmark, T., Nordin, A., 2017. Projecting biodiversity 
+and wood production in future forest landscapes: 15 key modeling considerations. 
+J. Environ. Manage. 197, 404–414. https://doi.org/10.1016/j. 
+jenvman.2017.04.001. 
+Fontes, L., Bontemps, J.-D., Bugmann, H., Van Oijen, M., Gracia, C., Kramer, K., 
+Lindner, M., R¨otzer, T., Skovsgaard, J.P., 2010. Models for supporting forest 
+management in a changing environment. For. Syst. 3 (4), 8. https://doi.org/ 
+10.5424/fs/201019S-9315. 
+Fridman, J., Holm, S., Nilsson, M., Nilsson, P., Ringvall, A.H., Stahl, G., 2014. Adapting 
+National Forest Inventories to changing requirements - the case of the Swedish 
+National Forest Inventory at the turn of the 20th century. Silva. Fenn. 48, 1095. 10.1 
+4214/sf.1095. 
+Gadow, K.V., Hui, G., 1999. Modelling Forest Development, Forest Sciences. Springer 
+Netherlands, Dordrecht. 10.1093/forestry/72.3.17. 
+Gauthier, S., Bernier, P., Kuuluvainen, T., Shvidenko, A.Z., Schepaschenko, D.G., 2015. 
+Boreal forest health and global change. Science 349 (6250), 819–822. 
+Gregoire, T.G., Schabenberger, O., 1996. A non-linear mixed-effects model to predict 
+cumulative bole volume of standing trees. J. Appl. Stat. 23 (2-3), 257–272. https:// 
+doi.org/10.1080/02664769624233. 
+Hall, K.B., Stape, J., Bullock, B.P., Frederick, D., Wright, J., Scolforo, H.F., Cook, R., 
+2019. A Growth and Yield Model for Eucalyptus benthamii in the Southeastern 
+United States. For. Sci. 66, 25–37. https://doi.org/10.1093/forsci/fxz061. 
+Hasenauer, H., Burkhart, H.E., Sterba, H., 1994. Variation in Potential Volume Yield of 
+Loblolly Pine Plantations. For. Sci. 40, 162–176. https://doi.org/10.1093/ 
+forestscience/40.1.162. 
+H¨agglund, B., 1972. Site index curves for Norway spruce in northern Sweden. Swedish 
+University of Agricultural Sciences, Department of Forest Yield Research, Report 21, 
+pp. 1–298. (in Swedish with English summary). 
+H¨agglund, B., 1973. Site index curves for Norway spruce in southern Sweden. Swedish 
+University of Agricultural Sciences, Department of Forest Yield Research, Report 24, 
+pp. 1–49. (in Swedish with English summary). 
+H¨agglund, B., 1974. Site index curves for Scots pine in Sweden. Swedish University of 
+Agricultural Sciences, Department of Forest Yield Research, Report 31, pp. 1–54. (in 
+Swedish with English summary). 
+H¨agglund, B., Lundmark, J.E., 1977. Site index estimation by means of site properties. 
+Scots pine and Norway spruce in Sweden. Studia Forestalia Suecica. pp. 38. 
+Fig. A.3. Validation of the species-specific basal area and volume (m3 ha−1) functions (Tables 4 and 5) on independent data from three sites in Sweden (northern 
+Sweden- latitude 64◦N, southern Sweden- latitude 58◦N). Gijk.obs is observed total basal area (m2 ha−1); ̂Gijk.est is predicted total basal area (m2 ha−1); Vijk.obs is 
+observed total volume (m3 ha−1); ̂Vijk.est is predicted total volume (m3 ha−1). 
+A.A. Mensah et al.                                                                                                                                                                                                                              
+
+
+Forest Ecology and Management 512 (2022) 120162
+21
+H¨agglund, B., 1981. Evaluation of forest site productivity. For. Abst. 42, 516–527. 
+H¨agglund, B., Lundmark, J.E., 1982. Handledning i bonitering med Skogsh¨ogskolans 
+boniteringssystem. Swedish Forest Agency, J¨onk¨oping, Sweden, pp. 124. ISBN 91- 
+857448-14-5. (in Swedish). 
+Haworth, J., Vincent, P., 1982. Power-Transformations and Linear-Regression Models in 
+Geography. Area 14, 137–143. 
+Henttonen, H.M., Nojd, P., Makinen, H., 2017. Environment-induced growth changes in 
+the Finnish forests during 1971–2010-An analysis based on National Forest 
+Inventory. For. Ecol. Manage. 386, 22–36. https://doi.org/10.1016/j. 
+foreco.2016.11.044. 
+Kauppi, P.E., Posch, M., Pirinen, P., 2014. Large Impacts of Climatic Warming on Growth 
+of Boreal Forests since 1960. PLoS One 9. https://doi.org/10.1371/journal. 
+pone.0111340. 
+Levakovic, A., 1935. Analytical form of growth laws. Glasnik za Sumske Pokuse (Zagreb) 
+4, 189–282. 
+Liziniewicz, M., Nilsson, U., Agestam, E., Eko, P.M., Elfving, B., 2016. A site index model 
+for lodgepole pine (Pinus contorta Dougl. var. Iatifolia) in northern Sweden. Scand. J. 
+Forest Res. 31, 583–591. https://doi.org/10.1080/02827581.2016.1167238. 
+Liu, X., Duan, G., Chhin, S., Lei, X., Wang, D., Zhang, X., 2021. Evaluation of potential 
+versus realized site productivity of Larix principis-rupprechtii plantations across 
+northern China. For. Ecol. Manage. 479, 118608. https://doi.org/10.1016/j. 
+foreco.2020.118608. 
+M¨akinen, H., Henttonen, H.M., Kohnle, U., Kuehne, C., N¨ojd, P., Yue, C., Kl¨adtke, J., 
+Siipilehto, J., 2021. Site carrying capacity of Norway spruce and Scots pine stands 
+has increased in Germany and northern Europe. For. Ecol. Manage. 492, 119214. 
+https://doi.org/10.1016/j.foreco.2021.119214. 
+Mason, E.G., Holmstrom, E., Nilsson, U., 2017. Using hybrid physiological/ 
+mensurational modelling to predict site index of Pinus sylvestris L. in Sweden: a pilot 
+study. Scand. J. Forest Res. 33, 147–154. https://doi.org/10.1080/ 
+02827581.2017.1348539. 
+McRoberts, R.E., Westfall, J.A., 2016. Propagating uncertainty through individual tree 
+volume model predictions to large-area volume estimates. Ann. For. Sci. 73 (3), 
+625–633. https://doi.org/10.1007/s13595-015-0473-x. 
+Meht¨atalo, L., Lappi, J., 2020. Biometry for Forestry and Environmental Data: With 
+Examples in R. CRC Press. 
+N¨aslund, M., 1947. Funktioner och tabeller f¨or kubering av stående tr¨ad: Tall, gran och 
+bj¨ork i s¨odra Sverige samt i hela landet[Empirical formulae and tables for 
+determining the volume of standing trees: Scots pine, Norway spruce and Birch in 
+southern Sweden and in the whole country]. Medd. Statens Skogsforskningsinst. 36 
+(3), pp. 81. (in Swedish with English summary). 
+Nilsson, P., 2020. Skogsdata (Official Forest Statistics of Sweden): aktuella uppgifter om 
+de svenska skogarna från Riksskogstaxeringen. Tema: Den d¨oda veden. Institutionen 
+f¨or skoglig resurshushållning, Umeå. Swedish University of Agricultural Sciences. (in 
+Swedish with English summary). 
+Nilsson, U., Elfving, B., Karlsson, K., 2012. Productivity of Norway spruce Compared to 
+Scots Pine in the Interior of Northern Sweden. Silva. Fenn. 46, 197–209. https://doi. 
+org/10.14214/sf.54. 
+Nilsson, U., Agestam, E., Ek¨o, P.-M., Elfving, B., Fahlvik, N., Johansson, U., Karlsson, K., 
+Lundmark, T., Wallentin, C., 2010. Thinning of Scots pine and Norway spruce 
+monocultures in Sweden (Report No. 219). Umeå. 
+Nord-Larsen, T., Meilby, H., Skovsgaard, J.P., 2009. Site-specific height growth models 
+for six common tree species in Denmark. Scand. J. Forest Res. 24 (3), 194–204. 
+https://doi.org/10.1080/02827580902795036. 
+Peschel, W., 1938. Die mathematischen Methoden zur Herleitung der Wachstumsgesetze 
+von Baum und Bestand und die Ergebnisse ihrer Anwendung [The mathematical 
+methods for deriving the growth laws of trees and stands and the results of their 
+application]. Tharandter Forstl. Jahrb. 89, 169–247 [In German].  
+Pettersson, N. 1992. The effect of spacing on volume and structure in planted Scots pine 
+and Norway spruce stands. SLU, Dept. of Forest Growth and Yield. Report 30 (58 
+pp). 
+Pienaar, L.V., Page, H., Rheney, J.W., 1990. Yield prediction for mechanically site- 
+prepared slash pine plantations. Southern J. Appl. Forest. 14 (3), 104–109. 
+Pienaar, L.V., Shiver, B.D., 1986. Basal Area Prediction and Projection Equations for Pine 
+Plantations. For. Sci. 32, 626–633. https://doi.org/10.1093/forestscience/32.3.626. 
+Pinheiro, J., Bates, D., DebRoy, S., Sarkar, D., Core Team, R., 2020. Nlme: Linear and 
+Nonlinear Mixed Effects Models. R package version 3, 1-148. https://CRAN.R-pr 
+oject.org/package=nlme. 
+Pretzsch, H., del Río, M., Biber, P., Arcangeli, C., Bielak, K., Brang, P., Dudzinska, M., 
+Forrester, D.I., Kl¨adtke, J., Kohnle, U., Ledermann, T., Matthews, R., Nagel, J., 
+Nagel, R., Nilsson, U., Ningre, F., Nord-Larsen, T., Wernsd¨orfer, H., Sycheva, E., 
+2019. Maintenance of long-term experiments for unique insights into forest growth 
+dynamics and trends: review and perspectives. Eur. J. For. Res. 138 (1), 165–185. 
+https://doi.org/10.1007/s10342-018-1151-y. 
+Pretzsch, H., Grote, R., Reineking, B., R¨otzer, T.H., Seifert, S.T., 2008. Models for Forest 
+Ecosystem Management: A European Perspective. Ann. Bot. 101, 1065–1087. 
+https://doi.org/10.1093/aob/mcm246. 
+R Core Team, 2020. R: A language and environment for statistical computing. R 
+Foundation for Statistical Computing, Vienna, Austria. Retrieved from https://www. 
+R-project.org/. 
+Richards, F.J., 1959. A Flexible Growth Function for Empirical Use. J. Exp. Bot. 10 (2), 
+290–301. https://doi.org/10.1093/jxb/10.2.290. 
+Samuelson, L.J., Eberhardt, T.L., Butnor, J.R., Stokes, T.A., Johnsen, K.H., 2010. 
+Maximum growth potential in loblolly pine: results from a 47-year-old spacing study 
+in Hawaii. Can. J. For. Res. 40 (10), 1914–1929. https://doi.org/10.1139/X10-133. 
+Schmidt, A., 1973. Ertragsniveau und Standort dargestellt am Beispiel der Kiefer [Yield 
+level and allocation shown using the example of pine]. Forstwiss. Centrallbl. 92 (1), 
+268–274. 
+Schumacher, F.X., 1939. A new growth curve and its application to timber-yield studies. 
+J. Forest. 37, 819–820. 
+Sharma, R.P., Brunner, A., Eid, T., 2012. Site index prediction from site and climate 
+variables for Norway spruce and Scots pine in Norway. Scand. J. Forest Res. 27 (7), 
+619–636. https://doi.org/10.1080/02827581.2012.685749. 
+Skovsgaard, J.P., Vanclay, J.K., 2008. Forest site productivity: a review of the evolution 
+of dendrometric concepts for even-aged stands. Forestry 81, 13–31. https://doi.org/ 
+10.1093/forestry/cpm041. 
+Skovsgaard, J.P., 1997. Management of Sitka Spruce without Thinnings. An Analysis of 
+Stand Structure and Volume Production of Unthinned Stands of Sitka Spruce (Picea 
+sitchensis (Bong.) Carr.) in Denmark. Forskningscentret for Skov & Landskab, 
+Forskningsserien , Hørsholm, Vol. 19. 
+Sterba, H., Monserud, R.A., 1995. Potential Volume Yield for Mixed-Species Douglas-Fir 
+Stands in the Northern Rocky Mountains. For. Sci. 41, 531–545. https://doi.org/ 
+10.1093/forestscience/41.3.531. 
+Sterba, H., 1987. Estimating Potential Density from Thinning Experiments and Inventory 
+Data. For. Sci. 33, 1022–1034. https://doi.org/10.1093/forestscience/33.4.1022. 
+Szwaluk, K.S., Strong, W.L., 2003. Near-surface soil characteristics and understory plants 
+as predictors of Pinus contorta site index in southwestern Alberta, Canada. For. Ecol. 
+Manage. 176 (1-3), 13–24. https://doi.org/10.1016/S0378-1127(02)00228-1. 
+Ung, C.-H., Ouellet, D., 1991. Stand volume tables: Application to black spruce stands of 
+Lebel-sur-Qu´evillon. Forest. Chron. 67 (6), 712–715. https://doi.org/10.5558/ 
+tfc67712-6. 
+von Bertalanffy, L., 1938. A quantitative theory of organic growth (Inquiries on growth 
+laws. II). Hum. Biol. 10, 181–213. 
+Wikstr¨om, P., Edenius, L., Elfving, B., Eriksson, L.O., L¨amås, T., Sonesson, J., ¨Ohman, K., 
+Wallerman, J., Waller, C., Klinteb¨ack, F., 2011. The Heureka forestry decision 
+support system: an overview. Math. Comput. Forest. Natural-Resour. Sci. 3 (2), 
+87–94. 
+A.A. Mensah et al.

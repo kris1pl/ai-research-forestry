@@ -4,7 +4,7 @@ type: Project
 description: "North star and phased plan for a multi-layer (bbox+mask) ensemble, including dense-stand detection and data strategy."
 tags: [research, ensemble, tree-detection, segmentation, edgecrafter, semi-supervised, evaluation]
 status: stable
-updated: 2026-08-24
+updated: 2026-10-21
 generated:
   by: agent:conifervision-wiki
   at: 2026-08-24T12:00:00Z
@@ -17,6 +17,8 @@ related_methods:
 ---
 
 # Tree detection ensemble — research program
+
+> **2026-10-21.** As of this date this page is not the current priority. Current proposal: [[project/research-normal-forest]]. ADR-003 is proposed. Dense-before-thinning and the R-class ensemble remain background.
 
 This document describes a *research program* to develop an ensemble for robust tree detection across varying tree sizes and dense stands (before clearing). It is intentionally separated from the production pipeline description in `project/pipeline-overview.md`.
 
@@ -220,5 +222,5 @@ When you switch to execution/agent mode, the first actionable tasks are:
    - `methods/edgecrafter-ecseg.md` (draft)
    - `concepts/dense-stand-detection.md` (draft)
 4. Add `ADR-001` to `project/decisions.md`: ensemble v1 success definition — **proposed** (see [[project/decisions]]).
-5. Experiment skeletons + hypothesis loop: [[project/hypothesis-validation-loop]], [[experiments/exp-001-per-layer-baselines]], [[experiments/exp-003-merge-fusion-v1]].
+5. Experiment skeletons + hypothesis loop: [[project/hypothesis-validation-loop]], [[experiments/r-class-itd/exp-001-per-layer-baselines]], [[experiments/r-class-itd/exp-003-merge-fusion-v1]].
 

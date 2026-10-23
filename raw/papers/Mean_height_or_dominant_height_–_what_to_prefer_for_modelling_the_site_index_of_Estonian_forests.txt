@@ -1,0 +1,1393 @@
+121
+Forestry Studies | Metsanduslikud Uurimused, Vol. 72, Pages 121–138
+Introduction
+Quantitative information on stands and 
+trees is needed for assessment of available 
+forest resources and forest management 
+planning (Burkhart & Tomé, 2012). A con­
+sistent and reliable flow of forest growth 
+information is necessary for the develop­
+ment of an accurate mathematical model 
+(Kiviste & Hordo, 2002). Mathematical 
+models will provide valuable insight for 
+resource estimations, management option 
+exploration and silvicultural alternatives 
+(Vanclay, 1997). Information in the form 
+of raw data can be collected from forest 
+sample plots, which can be either perma­
+nent or temporary (Räty & Kangas, 2019). 
+Permanent plots are repeatedly measured 
+with intervals while temporary plots are 
+measured once. Modelling forest growth 
+using temporal sample plots can give dis­
+torted results, as it does not provide infor­
+mation on each individual tree over time 
+(Gadow & Hui, 1999). Permanent sample 
+DOI: 10.2478/fsmu-2020-0010
+© 2020 by the authors. Licensee Estonian University of Life Sciences, Tartu, Estonia. 
+This article is an open access article distributed under the terms and conditions of the 
+Creative Commons Attribution (CC BY) license (http://creativecommons.org/licenses/
+by/4.0/).
+Research paper
+Mean height or dominant height – what to prefer for 
+modelling the site index of Estonian forests?
+Toomas Tarmu*, Diana Laarmann and Andres Kiviste
+Tarmu, T., Laarmann, D., Kiviste, A. 2020. Mean height or dominant height – what to prefer 
+for modelling the site index of Estonian forests? – Forestry Studies | Metsanduslikud Uuri­
+mused 72, 121–138, ISSN 1406-9954. Journal homepage: http://mi.emu.ee/forestry.studies
+Abstract. The availability of a large amount of data from reliable sources is important for 
+forest growth modelling. A permanent plot where trees are repeatedly measured provides a 
+clearer picture of stand alterations. Various factors, including forest management, affect forest 
+growth and accuracy of its assessment. In Estonia, mean height as a regression height predic­
+tion at mean square diameter is commonly used in forest management practice. Alternatively, 
+dominant height can be used. The main advantage of using dominant height instead of mean 
+height is that the growth of dominant trees is not so strongly affected by stand density (thin­
+ning). The aim of our research was to investigate the difference between mean height and 
+dominant height when used as stand height. The research was based on the Estonian Net­
+work of Forest Research Plots (ENFRP). As a result, we found that the average mean height 
+change was significantly greater in the case of thinning when compared to undisturbed stand 
+development, whereas, the average dominant height change in the case of thinning compared 
+to undisturbed development was less significant. As a side result, we developed a regression 
+model that can be used for calculating the dominant height of the main tree species using 
+stand attributes (mean height, quadratic mean diameter and density) with a residual standard 
+deviation of 0.466 m.
+Key words: top height, stand height growth, permanent plot, thinning, growth model.
+Authors’ addresses: Chair of Forest Management Planning and Wood Processing Technolo­
+gies, Institute of Forestry and Rural Engineering, Estonian University of Life Sciences, Kreutz­
+waldi 5, 51006 Tartu, Estonia, *e-mail: toomas.tarmu@emu.ee
+
+
+122
+T. Tarmu et al.
+plots where trees are individually and per­
+manently marked for repeated measure­
+ments are a better choice for forest growth 
+modelling (Picard et al., 2010). However, 
+establishing and maintaining permanent 
+plots with continuous measurements is ex­
+pensive (Allen, 1993). 
+Stand development is a continuously 
+evolving process that requires more real­
+istic and functional prediction methods in 
+order to estimate sufficiently close to real 
+values. Various factors, including forest 
+management, can change forest growth and 
+accuracy of its assessment. Roughly 40% 
+of Estonian forests belong to the Estonian 
+state and are largely maintained, grown 
+and managed (thinned) by the State Forest 
+Management Centre. Thinning is used in 
+forest management as a tool for regulating 
+tree competition and give an advantage to 
+the select remaining trees (Pretzsch, 2009). 
+Thinning studies have consistently shown 
+an increase in individual tree diameter and 
+volume growth with decreasing stand den­
+sity (Mäkinen & Isomäki, 2004; Kim et al., 
+2016). The main reason for the widespread 
+use of thinning in forestry management is 
+its economic benefit.
+Forest stand height, which is an import­
+ant variable in forest growth modelling, 
+can be defined either as mean or dominant 
+stand height. Mean height can be estimat­
+ed as an arithmetic average of all trees in a 
+stand or as mean height weighted in pro­
+portion to their basal area (also known as 
+Lorey’s mean height) (Lorey, 1878). How­
+ever, in this study we calculated mean 
+height as a regression height prediction 
+at mean square diameter, as it is the most 
+commonly used method in Estonia (Forest 
+Management Act, 2009; Padari et al., 2009). 
+Dominant stand height, which is suggest­
+ed to be a better measure of site produc­
+tivity, is widely used in other countries 
+(van Laar & Akça, 1997; Burkhart & Tomé, 
+2012) and could also be an alternative for 
+Estonia. A primary prerequisite in using 
+dominant height as a site index productivi­
+ty measurement, instead of mean height, is 
+that the height growth of dominant trees is 
+not so greatly influenced by stand density 
+(Weiskittel et al., 2009). Therefore, the use 
+of dominant height should be a more pre­
+cise way of evaluating stand growth (Bur­
+khart & Tomé, 2012). 
+In literature, different names and defi­
+nitions of dominant height have been pro­
+posed (West, 2009). One of the most com­
+mon definition is top height (sometimes 
+used as a synonym for dominant height), 
+which is defined as the average height of a 
+fixed number of trees per unit area (stand) 
+with the largest diameters at breast height 
+(commonly over bark) (Elfving & Kiviste, 
+1997; van Laar & Akca, 1997; Sharma et al., 
+2002; West, 2009; Burkhart & Tomé, 2012). 
+A second definition, predominant height 
+is defined as the average height of a fixed 
+number of the tallest trees per unit area 
+(stand) (West, 2009). Trees with a large 
+dia­meter are often easier to measure, hence 
+the use of the thickest trees is more prac­
+tical than the use of the tallest trees (Bur­
+khart & Tomé, 2012). 
+The current study uses dominant 
+height, which is defined by the IUFRO (In­
+ternational Union of Forest Research Orga­
+nizations) as the average height of the 100 
+largest trees per hectare (dominant trees) 
+(Tomé et al., 2019). The IUFRO’s forest 
+terminology prescription does not specify 
+whether height or diameter should be used 
+as the largest tree identifier. Since both 
+identifiers are allowed, the following re­
+search defines dominant height as the ave­
+rage height of the 100 trees with the largest 
+diameters at breast height per hectare, as 
+it is more appropriate for the research. In 
+the current study, we limited the compar­
+ison of mean and dominant height only 
+to the main tree species on each plot. The 
+term cohort will be used in our study as 
+a grouping method, which combines tree 
+species and storeys into subgroups. 
+The aim of the research is to evaluate 
+whether there is a difference in the accu­
+racy of stand height estimation, when 
+comparing the mean height model and 
+
+
+123
+Mean height or dominant height – what to prefer for modelling the site index of Estonian forests?
+dominant height model. We hypothesize 
+that thinning has no statistically significant 
+effect on dominant height and therefore 
+dominant height should be more accurate 
+for site index productivity measurement. 
+Material and Methods
+This study is based on a dataset of repeat­
+ed measurements from the Estonian Net­
+work of Forest Research Plots (ENFRP). 
+The ENFRP was established in 1995 and is 
+active and maintained to this day. When 
+the ENFRP was founded, its main purpose 
+was to collect data for the construction of 
+individual tree growth models in Estonia 
+(Kiviste & Hordo, 2002). Nowadays, the 
+ENFRP has become even more relevant as 
+it is an important database for the national 
+research infrastructure (Kiviste et al., 2015).
+ENFRP measurements
+The ENFRP consist of circular sample plots 
+with radiuses of 15, 20, 25 or 30 meters. 
+The size of the radius depends mainly on 
+the density of the stand and as a rule, EN­
+FRP plots include at least 100 first storey 
+trees. If a sample plot is thinned between 
+two consecutive measurements, the plot is 
+enlarged to follow the 100-tree rule, by in­
+creasing the radius. The re-measurements 
+are carried out at 5-year intervals. The 
+sample plots are systematically distribut­
+ed over Estonia and are mostly established 
+in a group of three plots. According to the 
+field measurement protocol, the stem dia­
+meter at breast height (measured at 1.3 m 
+above the root collar) is recorded in two 
+perpendicular directions for each individ­
+ual tree. Damage and the cause of dead 
+tree mortality are examined and recorded 
+in addition (Kiviste et al., 2015).
+Research data
+This study is based on a dataset which was 
+extracted from the ENFRP database on 
+11.03.2020. In our study, 753 sample plots 
+were used, which were measured a total of 
+3,132 times (33 plots were measured once, 
+41 plots twice, 39 plots three times, 305 plots 
+four times, 335 plots five times, and 5 plots 
+six times). These sample plots included 
+139,125 measurements of different individ­
+ual trees, which were measured a total of 
+412,604 times. The main tree species of the 
+ENFRP plots in this study were Scots pine 
+(Pinus sylvestris L.) – 347 plots, Norway 
+spruce (Picea abies (L.) H. Karst.) – 210 plots, 
+silver birch (Betula pendula Roth) on mineral 
+soil or silver birch in mix with downy birch 
+(Betula pubescens Ehrh.) on wet sites – 143 
+plots, European aspen (Populus tremula L.) – 
+34 plots, common alder (Alnus glutinosa (L.) 
+Gaertn.) – 6 plots, grey alder (Alnus incana 
+(L.) Moench) – 6 plots, goat willow (Salix 
+caprea L.) – 6 plots and small-leaved lime 
+(Tilia cordata Mill.) – 1 plot. According to 
+the forest site typology (Lõhmus, 1984), the 
+ENFRP plots were classified into 11 forest 
+type groups, the most frequent of which 
+were mesotrophic, meso-eutrophic and 
+nemoral forests (Figure 1).
+Relation between dominant and main 
+tree species
+A considerable share of Estonian forests 
+has a semi-natural status, which means that 
+even commercially planted forests contain 
+some trees of natural regeneration in the 
+first storey (Lõhmus et al., 2013). Figure 2 
+shows that sample plots where Scots pine 
+is the main species are mostly dominated 
+by Scots pine trees. However, sample plots 
+with Norway spruce and other deciduous 
+species (European aspen, common alder, 
+grey alder, goat willow, small-leaved lime) 
+have a more mixed composition in the co­
+hort of dominant trees. Thus, according to 
+our calculation, trees of the main tree spe­
+cies are not always dominant trees.
+Mean square diameter and dominant 
+diameter calculation
+The diameter of each individual tree is re­
+corded at each sample plot measurement 
+according to the ENFRP field measure­
+ment protocol. However, only 30.5% of 
+
+
+124
+T. Tarmu et al.
+Figure 1. 	Distribution of the ENFRP plot measurements by forest type and main tree species.
+Figure 2. 	Distributions of the main species share in the dominant tree cohort for main species 
+groups.
+
+
+125
+Mean height or dominant height – what to prefer for modelling the site index of Estonian forests?
+the tree heights were recorded during the 
+measurements, as the methodology stipu­
+lates that only a part of the tree heights is 
+recorded during the sample plot measure­
+ments. Since a height measurement was 
+required for each individual tree, we esti­
+mated the parameters of the height curve 
+from height-diameter data obtained at 
+sample plot measurement. 
+First, we calculated the mean square 
+dia­meter (root mean square) dg for the 
+main tree species of the first storey for each 
+plot measurement. Second, we calculated 
+the dominant diameter dgdom. However, 
+in order to calculate the dominant diameter 
+dgdom, we had to find a way to distinguish 
+dominant trees from individual trees in a 
+sample plot. We decided to calculate the 
+number of dominant trees to be included 
+per sample plot from the radius of the plot. 
+For example, sample plots with a radius 
+of 15, 20, or 25 had an area of 0.071, 0.126, 
+or 0.196 hectares and therefore, 7, 13, or 20 
+trees with the largest diameter at sample 
+plot measurement were used as dominant 
+trees. In total, 38,960 tree measurements 
+were treated as dominant tree measure­
+ments. The dominant diameter dgdom was 
+calculated with the same formula (1) as the 
+mean square diameter, but only dominant 
+trees were used instead of all trees.
+n
+d
+d
+i
+g
+
+
+2
+ 
+(1)
+where dg – mean square diameter (calcu­
+lated separately for each sample plot); di 
+– breast height diameter of an individual 
+tree (cm); n – number of trees in a cohort.
+Height curve selection
+There is a substantial number of mathe­
+matical functions (height curves), which 
+can be used to approximate the height-
+dia­meter relationship of trees in forest 
+stands (eg. Padari, 1994; van Laar & Akça, 
+1997; Sharma, 2009; Mehtätalo et al., 2015). 
+In order to find the best solution for the 
+dominant height estimation, we tested 
+five different models which have been 
+used for modelling the height-diameter 
+relationship for Estonian forests in recent 
+years. Three models (2, 3, 5) were based on 
+Näslund’s (1937) curve and two models 
+(4, 6) were based on Nilson’s (2002) trans­
+formation of the Hossfeld forest growth 
+function (Hossfeld, 1822; Peschel, 1938). 
+In the growth model calculation, we only 
+used one cohort at each sample plot, which 
+is the main trees species of the first storey. 
+Tree-­specific coeffi­cients of the growth 
+curves are presented in Table 1.
+ℎ= 1.3 + ൤
+𝑑𝑑
+(𝑎𝑎+ 𝑏𝑏∗𝑑𝑑)൨
+ଶ
+ 
+(2)
+where h – tree height (m); d – tree diameter 
+(cm); a and b – model parameters estimat­
+ed for each cohort using nonlinear regres­
+sion (Näslund, 1937).
+ℎ= 1.3 + ൤
+𝑑𝑑
+(𝑎𝑎+ 𝑏𝑏∗𝑑𝑑)൨
+ଷ
+ 
+(3)
+where h – tree height (m); d – tree diameter 
+(cm); a and b – model parameters estimat­
+ed for each cohort using nonlinear regres­
+sion (Näslund, 1937).
+ℎ= 
+𝐻𝐻
+ቊ1 −𝑏𝑏∗ቈ1 −൬𝑑𝑑௚
+𝑑𝑑൰
+௖ೞ೛
+቉ቋ
+ 
+(4)
+where h – tree height (m); d – tree diameter 
+(cm); dg – quadratic mean diameter; H and 
+b – model parameters (Nilson, 2002; Kiviste 
+et al., 2003) estimated for each height-­dia­
+meter cohort; csp – tree-specific coefficient 
+(Nilson, 2002; Kiviste et al., 2003).
+ℎ= 1.3 + ቈ
+𝑑𝑑
+(𝑎𝑎௦௣∗𝑙𝑙𝑙𝑙𝑙𝑙(𝑑𝑑௚+ 1) + 𝑏𝑏∗𝑑𝑑)቉
+ଷ
+ 
+(5)
+where h – tree height (m); d – tree dia­
+meter (cm); dg – quadratic mean diame­
+ter; b – model parameter (Näslund, 1937) 
+esti­mated for each height-diameter cohort; 
+asp – tree-specific coefficient (estimated 
+from ENFRP data).
+
+
+126
+T. Tarmu et al.
+ℎ=
+⎩⎪⎨
+⎪⎧
+H
+ቊ1 −(𝑎𝑎௦௣+ 𝑏𝑏௦௣∗𝑑𝑑௚) ∗ቈ1 −൬𝑑𝑑௚
+d ൰
+௖ೞ೛
+቉ቋ
+⎭⎪⎬
+⎪⎫
+ (6)
+where h – tree height (m); d – tree diame­
+ter (cm); dg – quadratic mean diameter; H 
+– model parameter (Nilson, 2002; Kiviste 
+et al., 2003) estimated for each height-dia­
+meter cohort; csp – tree-specific coefficient 
+(Nilson, 2002; Kiviste et al., 2003); asp and 
+bsp – tree-specific coefficients (ForMIS 2020, 
+model 206, estimated by A. Sims from EN­
+FRP data).
+The calculations with the set of height 
+curve test data were performed as follows:
+1.	 We joined consecutive tree measure­
+ments pairwise, which were made at 
+five-year intervals. We calculated the 
+annual increase in diameter and height 
+(id and ih) for each period. The annual 
+increment was calculated only when 
+the diameter and height of the tree were 
+recorded in the database at both the be­
+ginning and the end of the period. Only 
+the main tree species of the first storey 
+was included in the calculations. 
+2.	 A mixed effect model with a random 
+intercept (Pinheiro & Bates, 2000)
+idkj= β1 + β2 · dkj + β3 · rdkj + bk + εkj 
+was created where idkj denotes diameter 
+annual increment of tree j on plot k. Part 
+β1 + β2 · dkj + β3 · rdkj is the fixed part and 
+part bk + εkj is the random part of the 
+model. The fixed variables dkj and rdkj 
+denote diameter and relative diameter 
+(ratio of tree diameter and sample plot 
+dominant diameter) of tree j on plot k. 
+The random effect of plot bk and tree εkj 
+is assumed to be independent and have 
+normal distribution bk ~ N(0, σb
+2) and εjk 
+~ N(0, σ2). Values β1, β2, β3, σb
+2 and σ2 
+are model parameters estimated with R 
+package lme4 function lmer. For exclu­
+ding diameter increment outliers, thres­
+hold values were determined as 0.025 
+and 0.975 quantiles of the id model re­
+siduals (Figure 3). A similar approach 
+was applied for excluding height incre­
+ment outliers. It was done in order to 
+avoid human mistakes during forest 
+measurements and data inputs.
+3.	 After excluding id and ih outliers, plot 
+measurements with at least 16 main 
+species height-diameter measurements 
+were included in the height curve test 
+dataset. The test dataset consisted of 
+64,281 height-diameter records for 
+6,581 dominant trees at 1,798 plot mea­
+surements.
+In order to characterize the suitability 
+of the height growth models (2–6), we cal­
+culated estimates of their parameters for 
+each height-diameter cohort using the test 
+dataset and predicted height for each main 
+species dominant tree with all five models. 
+Table 2 presents the calculated statistics 
+for hmeasured and hpredicted, which character­
+ize the systematic and random error of the 
+models. It also shows t-test results and the 
+decrease in the height curve. The specifica­
+tions of Table 2 are given in Table 3.
+We 
+calculated 
+dominant 
+heights 
+hgdom with five different height curve 
+models (2–6) at dominant diameter dgdom 
+for each cohort. In addition, we calculat­
+ed the arithmetic mean height of the main 
+Table 1. 	 Values of species-specific coefficients for height curve models 4, 5 and 6.
+Model
+Coeffi­cient
+Scots pine
+Norway spruce
+Silver birch
+Other deciduous
+5
+asp
+0.30201
+0.44325
+0.27936
+0.27936
+6
+asp
+0.32044
+0.44103
+0.39554
+0.25803
+6
+bsp
+0.00434
+0.00643
+0.00629
+0.00582
+4, 6
+csp
+1.48076
+1.37255
+1.32998
+2.04430
+
+
+127
+Mean height or dominant height – what to prefer for modelling the site index of Estonian forests?
+Figure 3. 	Distribution of residuals and threshold values for excluding diameter annual increment 
+(id) outliers on a scatterplot of id mixed model residuals and relative diameter (d/dgdom).
+species dominant trees (if possible) for each 
+cohort for comparison. Figure 4 shows the 
+difference between the estimated domi­
+nant height hgdom and the empirical arith­
+metic mean height of the 100 thickest trees 
+per hectare. The difference boxplots of all 
+five candidate height curve models are 
+presented in the same figure.
+Model 4 (Nilson, 2002) fits our domi­
+nant height test data most accurately, but 
+because it contains two parameters and 
+the elevation curve may be descending for 
+certain plots, it was not the best choice. We 
+chose the single-parameter height curve 
+model (6) instead. According to Table 2, 
+model (6) had a slightly larger height pre­
+diction error (sde = 1.45 m) compared to 
+model (4), which had an estimation error of 
+1.34 m. However, model (6) maintained the 
+basic height curve requirement (non-de­
+creasing) for all height-diameter cohorts of 
+the main species in the test dataset.
+Mean height and dominant height 
+relationship
+We applied the one-parameter height 
+curve function (6) on height-diameter co­
+horts of the main tree species for all the 
+ENFRP plot measurements. Due to pos­
+sible outliers in height-diameter mea­
+surement data, we estimated function (6) 
+parameter H with a robust approach as 
+the median estimate. Using the model (6) 
+with the median-­estimated parameter H, 
+we calculated the mean height hg as the 
+model prediction at the mean square di­
+ameter dg and the dominant height hgdom 
+as the model prediction for the dominant 
+
+
+128
+T. Tarmu et al.
+Table 2. 	 Fit statistics of the height curve models (2–6) for dominant trees based on experimental 
+data. (n – number of trees; me – mean residual; sde – mean square residual; p-value – 
+p-value of t-test; desc – number cohorts with a descending height curve).
+Statistic
+Scots pine
+Norway spruce
+Silver Birch
+Other 
+deciduous
+All species
+n
+5165
+914
+426
+76
+6581
+Model (2) me
+-0.08
+-0.17
+-0.18
+-0.23
+-0.10
+Model (2) sde
+1.37
+1.18
+1.38
+1.41
+1.35
+Model (2) p-value
+<0.001
+<0.001
+0.008
+0.165
+<0.001
+Model (2) desc
+5
+0
+1
+0
+6
+Model (3) me
+-0.07
+-0.13
+-0.15
+-0.21
+-0.09
+Model (3) sde
+1.37
+1.18
+1.38
+1.40
+1.35
+Model (3) p-value
+<0.001
+0.001
+0.025
+0.188
+<0.001
+Model (3) desc
+5
+0
+1
+0
+6
+Model (4) me
+-0.01
+-0.08
+-0.11
+0.01
+-0.03
+Model (4) sde
+1.37
+1.17
+1.37
+1.35
+1.34
+Model (4) p-value
+0.602
+0.044
+0.113
+0.937
+0.127
+Model (4) desc
+5
+0
+1
+0
+6
+Model (5) me
+-0.09
+-0.61
+-0.14
+-0.44
+-0.17
+Model (5) sde
+1.47
+1.45
+1.51
+1.49
+1.47
+Model (5) p-value
+<0.001
+<0.001
+0,060
+0,009
+<0.001
+Model (6) me
+-0.03
+-0.05
+-0.23
+0.02
+-0.04
+Model (6) sde
+1.47
+1.32
+1.52
+1.37
+1.45
+Model (6) p-value
+0.142
+0.301
+0.002
+0.896
+0.013
+Table 3. 	 Height curve statistics specifications for Table 2.
+Height curve statistics
+n – number on dominant trees;
+me – arithmetic mean residual hmeasured – hpredicted (systematic error);
+sde – quadratic mean residual hmeasured – hpredicted (random error);
+p-value – t-test for hypothesis that mean residual is different from zero;
+desc – despite excluding outliers and a moderate number of observations (n ≥ 16) in each cohort, the 
+height curve was descending (parameter a < 0 for models 2 and 3, parameter b < 0 for model 4) in the case 
+of some cohorts. 
+
+
+129
+Mean height or dominant height – what to prefer for modelling the site index of Estonian forests?
+Figure 4. 	The difference between the estimated dominant height hgdom and the empirical arithme­
+tic mean height of the 100 thickest trees per hectare. 
+diameter dgdom of the main tree species 
+of each plot measurement. We studied the 
+relation­ship between the dominant height 
+and other stand variab­les with the multiple 
+regression method.
+Thinning and mortality effects on mean 
+and dominant stand height
+A dataset of pairwise consecutive tree 
+measurements 
+(317,588 
+measurement 
+pairs) were compiled in order to calculate 
+the basal area change due to thinning and 
+mortality. The aggregated thinning and 
+mortality data were merged with other 
+stand (plot) variables (age, mean square 
+diameter, mean and dominant height etc.) 
+into pairwise consecutive plot data. The 
+purpose of the new dataset was to investi­
+gate whether thinning and mortality have 
+an effect on the mean and dominant height. 
+Figure 5 shows the share of the thinned 
+basal area in relation to the basal area of 
+the main species between two consecu­
+tive plot measurements depending on 
+stand age. We introduced a binary vari­
+able “TH”, referring to “thinned”, when 
+at least 5% of the basal area of the main 
+tree species was cut at 5-year intervals and 
+“NTH” (not thinned) otherwise. There 
+were 364 measurement intervals with thin­
+ning above the 5% threshold percentage 
+(thinned) and 1,959 measurement intervals 
+without thinning or below the 5% thresh­
+old (not thinned). The effect of thinning on 
+
+
+130
+T. Tarmu et al.
+Figure 5. 	Share of the thinned basal area in the basal area of the main species between two consec­
+utive plot measurements depending on stand age. The solid horizontal line shows a 5% 
+threshold value for thinning.
+changes in the mean height and dominant 
+height during the measurement interval 
+was studied by comparing means with 
+confidence intervals.
+In order to study the effect of mortal­
+ity on mean and dominant height, we in­
+troduced a continuous variable, which ex­
+presses the share of the dead tree basal area 
+in relation to the basal area of the main spe­
+cies in two consecutive plot measurements 
+depending on stand age (Figure 6).
+Evaluation of height growth models 
+on mean height and dominant height 
+growth predictions
+In order to study the accuracy of mean 
+and dominant height as stand height in for­
+est growth predictions, two models were 
+tested and compared. The Estonian differ­
+ence model (Kiviste, 1997) was used to cal­
+culate the predicted mean height growth. 
+The model is based on the 1984–1993 Esto­
+nian State Forests Inventory data (Kiviste, 
+1997). Mean height growth was predicted 
+using the following equations:
+𝐻𝐻ଶ=
+(𝐻𝐻ଵ+ 𝑌𝑌+ 𝑍𝑍)
+ቆ2 + 4 ∗൫𝑋𝑋∗𝐴𝐴ଶ
+ିଵ.ହ଼൯
+𝐻𝐻ଵ−𝑋𝑋+ 𝑍𝑍
+ቇ
+ 
+𝑋𝑋= (8319) −493 ∗log(𝑂𝑂𝑂𝑂+ 1) + 1355 ∗ 𝐾𝐾
+𝑌𝑌=
+𝑋𝑋
+50ଵ.ହ଼ 
+𝑍𝑍 = ඨ(𝐻𝐻ଵ−𝑌𝑌)ଶ+ 4 ∗𝑋𝑋∗
+𝐻𝐻ଵ
+𝐴𝐴ଵ
+ଵ.ହ଼ 
+ (7)
+
+
+131
+Mean height or dominant height – what to prefer for modelling the site index of Estonian forests?
+Figure 6. 	The share of the dead tree basal area in the basal area of the main species between two 
+consecutive plot measurements depending on stand age.
+where H2 – estimated mean height growth 
+(m); H1 – mean height at the beginning of 
+the period (m); A1 – stand age at the begin­
+ning of the period (year); A2 – age of stand 
+at the end of the period (year); OH – thick­
+ness of the organic layer of the soil (cm); K – 
+stand formation (uncultivated, K = 0, or cul­
+tivated, K = 1); X, Y, Z – auxiliary variables.
+As a second model, the Swedish Scots 
+pine growth model (Elfving & Kiviste, 1997) 
+was used to predict the dominant height. 
+The model is based on repeated measure­
+ments of the permanent plots measured 
+by the Swedish University of Agriculture 
+and uses dominant height in its calculation. 
+Dominant height growth was predicted us­
+ing the following equations:
+𝐻𝐻ଶ=
+(𝐻𝐻ଵ+ 𝑟𝑟+ 23.8)
+൦2 +
+29582
+𝐴𝐴ଶ
+ଵ.଻଼ଶଽ
+𝐻𝐻ଵ+ 𝑟𝑟−23.80൪
+ 
+𝑟𝑟= ඨ(𝐻𝐻ଵ−23.80)ଶ+ 29582 ∗
+𝐻𝐻ଵ
+𝐴𝐴ଵ
+ଵ.଻଼ଶଽ 
+ 
+(8)
+where H2 – dominant height at the end of 
+the period (m); H1 – dominant height at the 
+beginning of the period (m); A1 – stand age 
+at the beginning of the period (year); A2 – 
+age of stand at end of the period (year); r 
+– auxiliary variable.
+The results of the mean and dominant 
+height models were compared with the 
+
+
+132
+T. Tarmu et al.
+values of the evaluated mean and domi­
+nant height in order to validate the accura­
+cy of model estimates. All the calculations 
+were made in R version 3.6.3.
+Results 
+Relationship between dominant height 
+and mean height
+The difference between the mean height 
+hg and the dominant height hgdom is pre­
+sented in Figure 7. Scatterplots only in­
+clude the main tree species of each ENFRP 
+sample plot. The results show a nonlinear 
+pattern of the relationship between mean 
+and dominant height, which indicates the 
+possible influence of several stand vari­
+ables (age, mean square diameter, mean 
+and dominant height etc.). 
+After trying several variable combina­
+tions, we developed a regression model 
+(9). The model can be used to calculate the 
+dominant height of the main tree species 
+with stand attributes (mean height, qua­
+dratic mean diameter and density). Spe­
+cies-specific coefficients of the model are 
+presented in Table 4.
+ℎ௚dom = 𝑎𝑎଴ + 1.1165 ∗ ℎ௚  
++ 𝑎𝑎ଵ∗𝑑𝑑௚ +
+𝑎𝑎ଶ
+ඥ(𝑁𝑁)
++
+(9)
+where hgdom – dominant height (m) with 
+Figure 7. 	Scatterplots of the mean height hg and the dominant height hgdom of cohorts by tree 
+species.
+
+
+133
+Mean height or dominant height – what to prefer for modelling the site index of Estonian forests?
+height curve at dominant diameter dgdom 
+(cm); hg – mean height (m) of the main 
+tree species with height curve dg (cm); 
+dg – mean square diameter (cm) of the main 
+tree species, N – number of upper-layer 
+trees per ha, a0, a1, a2 – species-specific co­
+efficients (Table 4).
+The residual standard deviation of the 
+regression equation (9) was 0.466 m and 
+the coefficient of determination R2 = 0.995. 
+All coefficients were highly significant 
+(p-value < 0 .0001). 
+Table 4. Species-specific coefficients for regres­
+sion model (9).
+Coeffi­
+cient
+Scots 
+pine
+Norway 
+spruce
+Silver 
+birch
+Other 
+deciduous
+a0
+2.0494
+3.3661
+3.0474
+1.7910
+a1
+-0.0964
+-0.1231
+-0.0824
+-0.1108
+a2
+-15.686
+-14.070
+-34.854
+-15.215
+Effect of thinning on mean height and 
+dominant height
+The difference in the thinning effect on the 
+5-year increment of mean height and domi­
+nant height is shown in Figure 8, where the 
+average change in mean height and domi­
+nant height with 95% confidence intervals 
+is presented. The dataset containing 5-year 
+measurements was split by thinning (“TH” 
+or “NTH”) and by tree species. Confidence 
+intervals for mean height and dominant 
+height were calculated on the same data­
+set. Figure 8 shows that for commercially 
+important tree species (Scots pine, Norway 
+spruce, silver birch), the change in the ave­
+rage mean height is significantly greater 
+in the case of thinning when compared to 
+undisturbed stand development. Where­
+as the change in the average dominant 
+height in the case of thinning compared to 
+undisturbed development was not signifi­
+cant. This is evidence of the Estonian forest 
+management practice of applying thinning 
+from below. The other deciduous tree spe­
+cies include species that are cut out at a 
+thinning event, as economically beneficial 
+species (Scots pine, Norway spruce, and 
+Silver birch) are preferred. Figure 9 shows 
+the increase in dominant height between 
+the beginning and the end of a five-year 
+period, however, effect of thinning is not 
+apparent. Figure 10 shows height growth 
+model errors for the mean height model 
+(7) and the dominant height model (8). The 
+figure shows that both models underesti­
+mate the height growth on forest perma­
+nent plots. If thinning occurs between two 
+measurements then mean height growth 
+model error is higher than dominant height 
+growth model error. However, when thin­
+ning do not occur between the measure­
+ments then obvious difference between the 
+forest growth model errors is not evident.
+Discussion
+The dominant height can be calculated in 
+different ways (West, 2009). We calculated 
+dominant height as the model prediction at 
+the dominant diameter of each plot mea­
+surement. The advantage of our approach 
+is that the dominant height can be calculat­
+ed even if there are no dominant trees of 
+the main tree species. The disadvantage of 
+this approach is that we are extending the 
+height curve of the main tree species to all 
+tree species. This might cause systematic 
+errors as the height curve is calculated for 
+main tree species trees and not for all trees. 
+As an interesting additional result, we 
+developed a regression model that can be 
+used to estimate the dominant height of the 
+main tree species by stand attributes (mean 
+height, quadratic mean diameter and den­
+sity) with a residual standard deviation 
+of 0.466. The outcome is significant as the 
+prediction precision was more than twice 
+as accurate when compared to the empiri­
+cal dominant height prediction of model 
+(6), which had a residual standard devia­
+tion of 1.45 m. This means that the domi­
+nant height could be calculated easily from 
+stand attributes as a new stand variable 
+without additional measurement work.
+
+
+134
+T. Tarmu et al.
+Figure 8. 	
+The 
+average 
+change 
+in the mean height 
+and dominant height 
+with a 95% confidence 
+interval. The sample 
+plots were measured at 
+a 5-year interval. Red 
+dots represent thinned 
+sample plots and blue 
+dots 
+represent 
+un­
+thinned sample plots.
+Figure 9. 
+The difference in the 
+dominant height be­
+tween the beginning 
+and the end of the five-
+year period. Red dots 
+represent thinned sam­
+ple plots and blue dots 
+represent 
+unthinned 
+sample plots.
+
+
+135
+Mean height or dominant height – what to prefer for modelling the site index of Estonian forests?
+Both height growth models (7, 8) estimated 
+the height growth to be greater when com­
+pared to the subsequent stand plot mea­
+surement data (Figure 10). The dominant 
+height model estimated the height growth 
+more accurately when thinning took place 
+between the measurements. The results 
+suggest that the dominant height could be 
+used in Estonia to get more accurate for­
+est growth estimation results as a large 
+portion of Estonian forests are managed. 
+Our study corresponds with other studies 
+(Amaro et al., 2003, Medeiros et al., 2017, 
+del Río et al., 2017), which have also found 
+that thinning has no statistically significant 
+effect on accuracy of forest growth pre­
+dicting, when dominant height is used as 
+stand height. However, as our results are 
+based on sample plots and not on managed 
+forest stands, further research is advised. 
+Information on the thinning effect is 
+essential for a more accurate forest growth 
+model and provides insight into forest 
+management (West, 2009). From an eco­
+nomic point of view, the main purpose of 
+quantifying the thinning response is to de­
+termine the range of stocking density that 
+maximizes the growth potential of timber. 
+It is also essential to find the minimum 
+stock necessary to obtain the largest indi­
+vidual tree size without reducing the vol­
+ume of the stand (Skovsgaard, 2008).
+In addition to artificial thinning, natural 
+thinning occurs and should be considered 
+while interpreting the results. Stand den­
+sity and site conditions have a significant 
+effect on the number of dead and dying 
+trees (Zhang et al., 2008). Tree mortality is 
+one of the most important factors in under­
+standing forest dynamics (Sims et al., 2014). 
+Research on Estonian forests has found 
+that individual tree death occurs mainly 
+due to growth-dependent reasons (45%), 
+while fungi (23%) and wind damage (16%) 
+play also an essential part in tree mortali­
+ty (Laarmann et al., 2009). The accuracy of 
+Figure 10. Growth error of the mean height model (7) and the dominant height model (8). Red dots 
+represent thinned sample plots and blue dots represent unthinned sample plots.
+
+
+136
+T. Tarmu et al.
+the forest growth model largely depends 
+on the precision of the tree survival pre­
+diction (Sims et al., 2009). For an accurate 
+forest growth model, it is important to 
+understand all the processes that may af­
+fect forest growth, such as regeneration, 
+growth, mortality, forest dynamics, and 
+natural and artificial thinning.
+Conclusion 
+Based on the results of this study, we can 
+conclude that using the mean height in­
+stead of the dominant height would help 
+with accuracy of forest growth predicting 
+when thinning takes place between mea­
+surements.
+If there was no thinning between sub­
+sequent measurements, the accuracy of 
+the predictions of the dominant height for­
+est growth model was approximately the 
+same as that of the mean height growth 
+model. Dominant height can be calculated 
+using regression equation from other stand 
+attributes (mean height, quadratic mean 
+diameter and density).
+Acknowledgements. Data collection was 
+supported by the Estonian Environmental 
+Investment Centre. We thank numerous 
+colleagues, students, fieldwork staff and 
+researchers for their work on the Estonian 
+Network of Forest Research Plots. We also 
+thank the anonymous reviewers who con­
+tributed significantly to the manuscript.
+References
+Allen, R.B. 1993. A Permanent Plot Method for 
+Monitoring Changes in Indigenous Forests: A 
+Field Manual. Christchurch, Manaaki Whenua 
+– Landcare Research. 26 pp.
+Amaro, A., Reed, D., Soares, P. 2003. Modelling 
+Forest Systems. Cambridge, CABI Publishing 
+Series. 401 pp.
+Burkhart, H., Tomé, M. 2012. Modeling Forest 
+Trees and Stands. Dordrecht, Springer. 457 pp.
+del Río, M., Bravo-Oviedo, A., Pretzsch, H., 
+Löf, M., Ruiz-Peinado, R. 2017. A review of 
+thinning effects on Scots pine stands: From 
+growth and yield to new challenges under 
+global change. – Forest Systems, 26(2), eR03S. 
+https://doi.org/10.5424/fs/2017262-11325.
+Elfving, B., Kiviste, A. 1997. Construction of site 
+index equations for Pinus sylvestris L. using 
+permanent plot data in Sweden. – Forest 
+Ecology and Management, 98, 125–134.
+Forest Management Act. 2009. Forest Management 
+Act. (Metsa korraldamise juhend). – Riigi 
+Teataja, RTL 2009, 9, 104. (In Estonian).
+ForMIS. 2020. Forest modeling information system. 
+Estonian University of Life Sciences. [WWW 
+document] – URL https://formis.emu.ee/
+formod/index.php?do=singmodel&id=206. 
+[Accessed March 11 2020].
+Gadow, K., Hui, G. 1999. Modeling Forest 
+Development. Dordrecht, Springer. 213 pp.
+Hossfeld, 
+J.W. 
+1822. 
+Math 
+for 
+foresters. 
+(Mathematik für Forstmänner, Ökonomen 
+und Kameralisten). Gotha, Thüringen. 472 pp. 
+(In German).
+Kim, M., Lee, W.-K., Kim, Y.-S., Lim, C.-H., Song, 
+C., Park, T., Son, Y., Son, Y.-M. 2016. Impact of 
+thinning intensity on the diameter and height 
+growth of Larix kaempferi stands in central 
+Korea. – Forest Science and Technology, 12, 
+77–87. https://doi.org/10.1080/21580103.201
+5.1075435.
+Kiviste, A. 1997. An algebraic difference model 
+for the forest growth simulation in Estonia. 
+(Eesti riigimetsa puistute kõrguse, diameetri ja 
+tagavara vanuseridade diferentsmudel 1984.–
+1993. a. metsakorralduse takseerkirjelduste 
+andmeil). – EPMÜ teadustööde kogumik, 189, 
+63−75. (In Estonian).
+Kiviste, A., Hordo M. 2002. Network of permanent 
+forest growth plots in Estonia. – Forestry 
+Studies / Metsanduslikud Uurimused, 37, 
+43–58. 
+Kiviste, A., Hordo, M., Kangur, A., Kardakov, A., 
+Laarmann, D., Lilleleht, A., Metslaid, S., Sims, 
+A., Korjus, H. 2015. Monitoring and modeling 
+of forest ecosystems: the Estonian Network 
+of Forest Research Plots. – Forestry Studies / 
+Metsanduslikud Uurimused, 62, 26–38.
+Kiviste, A., Nilson, A., Hordo, M., Merenäkk, 
+M. 2003. Diameter distribution models and 
+height-diameter 
+equations 
+for 
+Estonian 
+forests. – Amaro, A., Reed, D., Soares, P. (eds.). 
+Modelling Forest Systems. Cambridge, CABI 
+Publishing Series, 169–179. 
+Laarmann, D., Korjus, H., Sims, A., Stanturf, J.A., 
+Kiviste, A., Köster, K. 2009. Analysis of forest 
+naturalness and tree mortality patterns in 
+Estonia. – Forest Ecology and Management, 
+258, S187–S195.
+
+
+137
+Mean height or dominant height – what to prefer for modelling the site index of Estonian forests?
+Lorey, T. 1878. The average stock height. (Die 
+mittlere Bestandeshöhe.) Allgemeine Forst - 
+und Jagdzeitung, 54, 149–155.
+Lõhmus, E. 1984. Estonian Forest Site Types. (Eesti 
+metsakasvukohatüübid). Tallinn, Eesti NSV 
+Agrotööstuskoondise Info-ja juurutusvalitsus. 
+88 pp. (In Estonian).
+Lõhmus, A., Kraut, A., Rosenvald, R. 2013. Dead 
+wood in clearcuts of semi-natural forests in 
+Estonia: 
+site-type 
+variation, 
+degradation, 
+and the influences of tree retention and slash 
+harvest. – European Journal of Forest Research, 
+132, 335–349.
+Medeiros, R.A., de Paiva, H.N., Soares, A.A.V., 
+da Cruz, J.P., Leite, H.G. 2017. Thinning from 
+below: effects on height of dominant trees and 
+diameter distribution in Eucalyptus stands. – 
+Journal of Tropical Forest Science, 29, 238–247.
+Mehtätalo, L., de-Miguel, S., Gregoire, T.G. 
+2015. Modeling height-diameter curves for 
+prediction. – Canadian Journal of Forest 
+Research, 45, 826–837.
+Mäkinen, H., Isomäki, A. 2004. Thinning intensity 
+and long-term changes in increment and stem 
+form of Scots pine trees. – Forest Ecology and 
+Management, 203, 21–34.
+Nilson, A. 2002. Some fragments of stand growth 
+and structure models. – Forestry Studies / 
+Metsanduslikud Uurimused, 37, 9–20.
+Näslund, M. 1937. Forest research intitute’s 
+thinning experiments in Scots pine forests. 
+(Skogsförsöksanstaltens 
+gallringsförsök 
+i 
+tallskog). – Reports of the Swedish Institute of 
+Experimental Forestry, 29, 1–169. (In Swedish).
+Padari, A. 1994. Principles of selecting height/
+diameter curves. (Kõrguse kõverate valiku 
+põhimõtted). – Teadustööde kogumik, 173, 
+134−143. (In Estonian).
+Padari, A., Metslaid, S., Kangur, A., Sims, A., 
+Kiviste, A. 2009. Modelling stand mean height 
+in young naturally regenerated stands – a Case 
+Study in Järvselja, Estonia. – Baltic Forestry, 
+15, 226–236.
+Peschel W. 1938. The mathematical methods for 
+deriving the growth laws of trees and stands 
+and the results of their application. (Die 
+mathematischen Methoden zur Herleitung der 
+Wachstumsgesetze von Baum und Bestand 
+und die Ergebnisse ihrer Anwendung). – 
+Tharandter Forstliches Jarbuch, 89, 169–274. 
+Picard, 
+N., 
+Magnussen, 
+S., 
+Banak, 
+L.N., 
+Namkosserena, 
+S., 
+Yalibanda, 
+Y. 
+2010. 
+Permanent sample plots for natural tropical 
+forests: A rationale with special emphasis on 
+Central Africa. – Environmental Monitoring 
+and Assessment, 164, 279–295. 
+Pinheiro, J.C., Bates, D.M. 2000. Mixed-Effects 
+Models in S and SPLUS. New York, Springer. 
+528 pp.
+Pretzsch, H. 2009. Forest Dynamics, Growth and 
+Yield: From Measurement to Model. Berlin, 
+Springer. 664 pp.
+Räty, M., Kangas, A.S. 2019. Effect of permanent 
+plots on the relative efficiency of spatially 
+balanced sampling in a national forest 
+inventory. – Annals of Forest Science, 76, 20. 
+Sims, A., Kiviste, A., Hordo, M., Laarmann, D., 
+Gadow, K. 2009. Estimating tree survival: a 
+study based on the Estonian Forest Research 
+Plots Network. – Annales Botanici Fennici, 46, 
+336–352. 
+Sims, A., Mändma, R., Laarmann, D., Korjus, 
+H. 2014. Assessment of tree mortality on 
+the Estonian Network of Forest Research 
+Plots. – Forestry Studies / Metsanduslikud 
+Uurimused, 60, 57–68. 
+Sharma, M., Amateis, R., Burkhart, H. 2002. Top 
+height definition and its effect on site index 
+determination in thinned and unthinned 
+loblolly pine plantations. – Forest Ecology and 
+Management, 168, 163–175.
+Sharma, R.P. 2009. Modelling height-diameter 
+relationship for Chir pine (Pinus roxberghi) 
+trees. – Banko Janakari, 19(2), 3–9.
+Skovsgaard, J.P. 2008. Analysing effects of 
+thinning on stand volume growth in relation 
+to site conditions: A case study for even-aged 
+Sitka spruce (Picea sitchensis (Bong.) Carr.). – 
+Forestry: An International Journal of Forest 
+Research, 82, 87–104.
+Tomé, M., Soares, P., Barreiro, S., Iciar, A., 
+Bollandsås O. M., Cañellas. I., Eid, T., Kiviste, 
+A., Marušák, R., Moreno-Fernandez, D., 
+Orazio, C., Spiecker, H., Socha, J., Skovsgaard J. 
+P., Zasada M., Corona, P. 2019. Standardization 
+of symbols for forest variables used in forest 
+assessment and modelling. – Brazilian Journal 
+of Forestry Research, 39, 768.
+van Laar, A., Akça, A. 1997. Forest Mensuration. 
+Dordrecht, Springer. 385 pp.
+Vanclay, J.K., 1994. Modelling Forest Growth and 
+Yield: Applications to Mixed Tropical Forests. 
+New York, CABI. 312 pp.
+Weiskittel, A.R., Hann, D.W., Hibbs, D.E., Lam, 
+T.Y., Bluhm, A.A. 2009. Modeling top height 
+growth of red alder plantations. – Forest 
+Ecology and Management, 258, 323–331.
+West, P.W. 2009. Tree and Forest Measurement. 
+Cham, Springer. 214 pp.
+Zhang, S., Chen, C., He, S., Wu, K., Zhan, 
+Y. 2008. Natural thinning and structural 
+patterns of intermediate cutting intensity in a 
+Cunninghamia lanceolata stand. – Frontiers of 
+Forestry in China, 3, 254–263.
+
+
+138
+T. Tarmu et al.
+Keskmine kõrgus või domineeriv kõrgus – mida eelistada 
+Eesti puistute kõrguskasvu modelleerimisel?
+Toomas Tarmu, Diana Laarmann ja Andres Kiviste
+Kokkuvõte
+Ulatuslik andmete hulk, nende kogumi­
+se metoodika, järjepidevus ja korrektsus 
+loovad eeldused senisest usaldusväär­
+semate 
+metsa 
+mudelite 
+koostamiseks 
+Eesti kohta. Metsa kasvu uurimisel pee­
+takse kõige väärtus­likumaks andmete 
+kogumise 
+allikaks 
+kordus­mõõdetavaid 
+metsa püsiproovi­tükke. Selles uurimuses 
+kasutatakse Eestit katvat metsa kasvukäi­
+gu püsiproovi­tükkide võrgustiku (KK­
+PRT) andmeid, mille mahukus võimaldab 
+teha üldistusi Eesti metsa kasvumudelite 
+kohta. Uurimuse eesmärgiks oli analüü­
+sida domi­neeriva kõrguse (ülakõrguse) 
+kasutamise võimalust alternatiivina kesk­
+misele kõrgusele puistu kasvu mudelites 
+ning hinnata mudelprognooside täpsust 
+harvendus­raie mõjul Eesti metsades. Uu­
+rimuse hüpotees oli, et puistu keskmine 
+kõrgus on harvendusraiega mõjutatud 
+rohkem kui domineeriv kõrgus.
+Eesti 
+metsanduslikus 
+praktikas 
+kasuta­takse puistu kõrgusena keskmist 
+kõrgust, mis on oluliseks muutujaks 
+metsa­majanduslikes normatiivides ja mu­
+delites. Paljudes maades kasutatakse puis­
+tu kõrgu­sena keskmise kõrguse asemel 
+domi­neerivat kõrgust. Erinevates maades 
+defineeritakse domi­neerivat kõrgust eri­
+nevalt. Käes­olevas artiklis on defineeri­
+tud domineeriv kõrgus vastavalt IUFRO 
+termino­loogiale kui 100 suurima puu 
+keskmine kõrgus hektari kohta. Kuigi IU­
+FRO termino­loogia ei täpsus­tata, kas suu­
+rima puu identifi­kaatorina tuleks kasutada 
+puu kõrgust või läbimõõtu, kasutasime 
+käesolevas uurimises põhjamaade eesku­
+jul domineerivat kõrgust kui 100 suurima 
+läbi­mõõduga puu keskmist kõrgust hekta­
+ri kohta. 
+Kasvava metsa mõõtmise üldise me­
+toodika järgi mõõdetakse proovitükil kõigi 
+puude rinnasläbimõõt, kuid  kõrgus vaid 
+mudelpuudel. Optimaalse kõrgus­kõvera 
+leidmiseks testiti viit erinevat mudelit, 
+millest sobivaimaks osutus Artur Nilsoni 
+loodud mudel (6). 
+Puistu kõrguskasvu uurimiseks koos­
+tati proovitükkide paarikaupa järjestikuste 
+mõõtmiste andmestik. Iga paarismõõtmise 
+korral arvutati proovitüki takseertunnused 
+mõõtmisperioodi alguses ja lõpus ning pe­
+rioodi jooksul tehtud raie ja loodusliku su­
+remuse mahud. Puistu keskmise kõrguse 
+kasvumudeliks kasutati Eesti riigimetsa­
+korralduse 
+takseerkirjelduste 
+andmeil 
+loodud diferentsmudelit (7) ja domineeri­
+va kõrguse kasvu­mudeliks Rootsi Põllu­
+majandusülikooli männikute püsiproovi­
+tükkide andmeil loodud diferents­mudelit 
+(8). Iga mõõtmisperioodi jaoks arvutati 
+perioodi algusandmete põhjal mudelite 
+(7) ja (8) prognoosid perioodi lõpuks ning 
+prognoosivead proovitüki andmete ja mu­
+delprognooside vahena.  
+Uuringu tulemusel selgus, et keskmise 
+kõrguse prognoosiviga oli suurem kui do­
+mineeriva kõrguse prognoosiviga sel juhul, 
+kui perioodi jooksul toimus harvendus­
+raie. Kui kahe järjestikuse mõõtmise vahel 
+harvendusraiet ei toimunud, siis dominee­
+riva kõrguse metsakasvu mudeli (8) prog­
+noosiviga oli ligikaudu sama mis keskmise 
+kõrguse kasvumudeli (7) korral. 
+Uurimuse käigus loodi regressiooni­
+mudel (9), mida saab kasutada peapuuliigi 
+domineeriva kõrguse arvutamiseks teiste 
+takseertunnuste kaudu (keskmine kõrgus, 
+ruutkeskmine läbimõõt ja puude arv hek­
+taril) jääkstandardhälbega 0,47 m. 
+Received May 29, 2020, revised June 30, 2020, accepted June 30, 2020

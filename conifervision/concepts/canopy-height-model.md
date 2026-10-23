@@ -4,10 +4,10 @@ type: Concept
 description: "Normalized height of vegetation above ground: CHM = surface model of canopy top − digital terrain model (DTM)."
 tags: [chm, dtm, dsm, lidar, height]
 status: stable
-updated: 2026-08-21
+updated: 2026-10-23
 generated:
   by: agent:conifervision-wiki
-  at: 2026-08-21T12:00:00Z
+  at: 2026-10-23T12:00:00Z
 related_methods:
   - methods/chm-detection
   - methods/local-maxima
@@ -22,6 +22,12 @@ sources:
   - sources/paper-the_accuracy_of_image-based_individual_tree_crown_detection_and_delineation_across_vegetation_types-isprs-archives-xlviii-g-2025-1223-2025
   - sources/paper-tree_crown_segmentation_in_three_dimensions_using_density_models_derived_from_airborne_laser_scanning-holmgren_j_et_al_220114
   - sources/paper-uav-based_lidar_scanning_for_individual_tree_detection_and_height_measurement_in_young_forest-5_2021
+  - sources/paper-appiahmensah_et _al-2022_yield capacity
+  - sources/paper-appiahmensah_et_al_2023_site_index_sis_rs
+  - sources/paper-evaluation of growth functions used in the swedish forest planning system heureka_article1013
+  - sources/paper-extraction_of_individual_tree_attributes_using_ultra-high-density_point_clouds_acquired_by_low-cost uav-lidar_in_eucalyptus_plantations
+  - sources/paper-mean_height_or_dominant_height_–_what_to_prefer_for_modelling_the_site_index_of_estonian_forests
+  - sources/paper-site index models for main forest-forming tree species in poland_forests-11-00301
   - sources/popescu-wynne-2004-seeing-the-trees
 ---
 # Canopy height model (CHM)
@@ -58,6 +64,7 @@ Details and gaps (ground classifier, kriging): on the **source** page — not du
 
 - [[methods/chm-detection]]
 - [[methods/local-maxima]]
+- [[concepts/site-index-and-yield]] — dominant height, site index, and stand volume read from this surface
 
 ## Open questions from literature
 

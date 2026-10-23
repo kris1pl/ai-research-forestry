@@ -28,21 +28,34 @@ Return ONLY valid JSON (no markdown fences) with this schema:
       "replication_rows": [["Paper step label", "Our status (TBD / aligned / not used / ...)"]],
       "open_question": "optional bullet for ## Open questions from literature or null"
     }
+  ],
+  "concept_proposals": [
+    {
+      "name": "Short concept name",
+      "slug": "kebab-case",
+      "why": "One sentence: which existing concept fails to hold this, and which pipeline term it is",
+      "sources": ["sources/this-paper-slug"]
+    }
   ]
 }
 
 Rules:
 - English only
 - Include only pages that are clearly relevant (typically 1–5)
-- path must be relative to conifervision/ (e.g. methods/dinov3-classification.md)
+- path must be relative to conifervision/ and must be one of the catalogued pages
 - Do not duplicate wikilinks already present in provided page excerpts
 - replication_rows: short table rows only when the paper has a procedural step for that method
+- concept_proposals: ideas that none of the catalogued concept pages already cover
+- Leave concept_proposals empty when an existing concept can take a paragraph
+- Do not propose a page for a model family, a software system, or a term that appears in only this paper
+- Never create concept pages yourself; proposals are reviewed by a person
 """
 
 
 @dataclass
 class WikiUpdateResult:
     touched: list[str] = field(default_factory=list)
+    concept_proposals: list[dict] = field(default_factory=list)
 
 
 def _today() -> str:
@@ -231,6 +244,34 @@ def append_index_source(slug: str, blurb: str, *, today: str | None = None) -> b
     return True
 
 
+def _frontmatter_scalar(markdown: str, key: str) -> str:
+    fm, _ = _split_frontmatter(markdown)
+    if fm is None:
+        return ""
+    match = re.search(rf"^{re.escape(key)}:\s*(.*)$", fm, re.M)
+    if not match:
+        return ""
+    return match.group(1).strip().strip('"').strip("'")
+
+
+def append_sources_index(slug: str, title: str, blurb: str) -> bool:
+    """Add one bullet under sources/index.md ## Ingested papers. Idempotent."""
+    path = VAULT / "sources" / "index.md"
+    if not path.is_file():
+        return False
+    text = _read(path)
+    encoded = slug.replace(" ", "%20")
+    if f"sources/{slug}" in text or f"sources/{encoded}" in text:
+        return False
+    marker = "## Ingested papers\n\n"
+    if marker not in text:
+        raise ValueError("sources/index.md missing ## Ingested papers section")
+    label = (title or slug).replace("[", "\\[").replace("]", "\\]")
+    line = f"* [{label}](/sources/{encoded}.md) — {blurb}\n"
+    _write(path, text.replace(marker, marker + line, 1))
+    return True
+
+
 def _list_candidate_pages() -> list[Path]:
     paths: list[Path] = []
     for sub in ("methods", "concepts", "project"):
@@ -238,7 +279,7 @@ def _list_candidate_pages() -> list[Path]:
         if not d.is_dir():
             continue
         for p in sorted(d.glob("*.md")):
-            if p.name.startswith("_"):
+            if p.name.startswith("_") or p.name == "index.md":
                 continue
             paths.append(p)
     return paths
@@ -248,22 +289,39 @@ def _page_excerpt(path: Path, limit: int = 2500) -> str:
     return f"--- {path.relative_to(VAULT)} ---\n{_read(path)[:limit]}"
 
 
+def _concept_catalog(paths: list[Path]) -> str:
+    lines: list[str] = []
+    for path in paths:
+        rel = path.relative_to(VAULT).as_posix()
+        if not rel.startswith("concepts/"):
+            continue
+        text = _read(path)
+        title = _frontmatter_scalar(text, "title") or path.stem
+        description = _frontmatter_scalar(text, "description")
+        lines.append(f"- {rel}: {title} — {description}")
+    return "\n".join(lines)
+
+
 def plan_wiki_updates(
     source_slug: str,
     source_markdown: str,
     *,
-    max_pages: int = 12,
+    max_pages: int = 40,
 ) -> dict:
     """Ask LLM which wiki pages to update and what to append."""
-    candidates = _list_candidate_pages()[:max_pages]
-    catalog = "\n\n".join(_page_excerpt(p) for p in candidates)
+    pages = _list_candidate_pages()
+    candidates = pages[:max_pages]
+    excerpts = "\n\n".join(_page_excerpt(p) for p in candidates)
     user = f"""\
 New source page (slug: {source_slug}):
 
 {source_markdown[:12000]}
 
+Existing concepts (match one of these before proposing a new concept):
+{_concept_catalog(pages)}
+
 Existing wiki pages (excerpts):
-{catalog}
+{excerpts}
 
 Produce JSON updates for relevant pages only.
 """
@@ -317,6 +375,11 @@ def apply_wiki_updates(
     result = WikiUpdateResult()
     plan = plan or plan_wiki_updates(source_slug, source_markdown)
     model = plan.get("_model", "unknown")
+    result.concept_proposals = [
+        item
+        for item in (plan.get("concept_proposals") or [])
+        if isinstance(item, dict) and item.get("name")
+    ]
 
     log_title = plan.get("log_title") or source_slug
     index_blurb = plan.get("index_blurb") or log_title
@@ -330,6 +393,10 @@ def apply_wiki_updates(
 
     if append_index_source(source_slug, index_blurb):
         result.touched.append("index.md")
+
+    title = _frontmatter_scalar(source_markdown, "title")
+    if append_sources_index(source_slug, title, index_blurb):
+        result.touched.append("sources/index.md")
 
     touched_for_log = list(dict.fromkeys(["index.md"] + result.touched))
     if prepend_log_entry(source_slug, log_title, pdf_rel, model, touched_for_log):

@@ -4,15 +4,18 @@ type: Method
 description: "Tree detection with DEIMv2 on multiple CHM height layers (small vs large trees)."
 tags: [deimv2, detection, ai]
 status: stable
-updated: 2026-10-12
+updated: 2026-10-23
 generated:
   by: agent:conifervision-wiki
-  at: 2026-10-12T12:00:00Z
+  at: 2026-10-23T12:00:00Z
 sources:
   - sources/paper-edgecrafter
   - sources/paper-deimv2
   - sources/paper-fine-tuning_matters_and_parallel_decoder_helps
   - sources/paper-refdrone_llms
+  - sources/paper-a crown width-diameter model for natural even-aged black pine forest management-forests-09-00610-v2
+  - sources/paper-a_linkage_among_tree_diameter_height_crown_base_he
+  - sources/paper-allometric relationships of selected european tree-gp_eudor_pdfa1b_euna20855enc_001
   - sources/paper-fsod-vfm
 ---
 # DEIMv2
@@ -42,3 +45,6 @@ _(after ingest)_
 - How does the optimal ratio of stacked-to-parallel decoder layers (K vs L-K) scale when adapting DEIMv2-canopy for multi-height tree crown detection?
 - Can the graph diffusion-based confidence reweighting mechanism from FSOD-VFM be adapted to resolve overfragmentation (e.g., multiple sub-crown detections) in DEIMv2 canopy predictions?
 - Can the auxiliary number prediction head and learnable number-queries from NGDINO be integrated into DEIMv2-canopy to reduce false positives in empty canopy gaps and improve multi-tree counting?
+- Can stand density proxies (e.g. basal area or relative spacing from preliminary CHM local maxima density) be used to dynamically parameterize expected crown bounding box sizes in DEIMv2 inference?
+- Can the age-dependent joint confidence ellipsoids of height and crown width from Rupšys & Petrauskas (2017) guide height-stratified anchor or box-size priors in DEIMv2 canopy detection?
+- Can the empirical height-to-crown-radius ($H \leftrightarrow C_r$) curves from Widlowski et al. (2003) serve as dynamic bounding box aspect/size priors during height-stratified DEIMv2 inference to suppress over-split crowns in spruce and pine stands?

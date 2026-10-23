@@ -1,10 +1,10 @@
 ---
 title: Hypothesis validation loop
 type: Project
-description: "How humans and LLM agents propose, refine, and validate/reject experiments toward dense-stand tree detection — wiki scientist vs GPU engineer handoff."
+description: "How humans and LLM agents propose, refine, and validate/reject experiments. Current proposal is normal-forest crowns (ADR-003 proposed)."
 tags: [research, hypothesis, experiment, workflow, ensemble]
 status: stable
-updated: 2026-08-24
+updated: 2026-10-21
 generated:
   by: agent:conifervision-wiki
   at: 2026-08-24T12:00:00Z
@@ -16,15 +16,15 @@ related_methods:
 
 # Hypothesis validation loop
 
-This page defines how the Conifervision wiki supports **testable research hypotheses** toward the production objective: individual tree detection/segmentation in forest complexes, especially **dense stands before thinning**, using drone orthophotos and 3D/CHM data.
+This page defines how the Conifervision wiki supports **testable research hypotheses** for individual tree detection and segmentation from drone orthophotos and 3D/CHM.
 
-North star program: [[project/research-tree-detection-ensemble]]. Agent operation: `AGENTS.md` → **Operation: Hypothesis**. Cursor rule: `.cursor/rules/hypothesis-from-wiki.mdc`.
+Current proposal (ADR-003 proposed, 2026-10-21): [[project/research-normal-forest]]. Previous north star: [[project/research-tree-detection-ensemble]] (dense stands before thinning; not the current priority). Agent operation: `AGENTS.md` → **Operation: Hypothesis**. Cursor rule: `.cursor/rules/hypothesis-from-wiki.mdc`.
 
 ## Roles
 
 | Role | Where | Responsibility |
 |------|--------|----------------|
-| **Scientist agent** | This wiki repo | Read compiled knowledge; propose 2–3 hypotheses with citations; after human pick, write full `experiments/exp-NNN-*.md` (pseudocode, metrics, success/kill) |
+| **Scientist agent** | This wiki repo | Read compiled knowledge; propose 2–3 hypotheses with citations; after human pick, write full `experiments/<domain>/exp-NNN-*.md` (pseudocode, metrics, success/kill). Ids stay global |
 | **Human gate** | Review | Choose hypothesis; approve/reject run (ADR); interpret results; do not start GPU runs on non-falsifiable ideas |
 | **Engineer agent** | External code repo + cloud GPU | Implement from Experiment handoff; run jobs; return metrics/run IDs — **not** maintained in this vault |
 
@@ -39,7 +39,7 @@ Wiki (index + research program + methods/concepts/sources)
 Scientist agent → 2–3 candidates (chat) → human picks one
         │
         ▼
-experiments/exp-NNN-*.md
+experiments/<domain>/exp-NNN-*.md
   • falsifiable hypothesis
   • high-level pseudocode (inputs/outputs/parameters; Gaps; Prerequisites)
   • evaluation protocol + success/kill criteria
@@ -92,5 +92,5 @@ Define per experiment; align with [[project/decisions]] ADR-001 when accepted.
 - [[project/decisions]]
 - [[project/pipeline-overview]]
 - [[concepts/dense-stand-detection]]
-- [[experiments/exp-001-per-layer-baselines]]
-- [[experiments/exp-003-merge-fusion-v1]]
+- [[experiments/r-class-itd/exp-001-per-layer-baselines]]
+- [[experiments/r-class-itd/exp-003-merge-fusion-v1]]

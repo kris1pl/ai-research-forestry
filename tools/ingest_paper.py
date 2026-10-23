@@ -184,6 +184,10 @@ def main() -> None:
         wiki_result = apply_wiki_updates(slug, markdown, pdf_rel)
         for rel in sorted(set(wiki_result.touched)):
             print(f"Updated conifervision/{rel}")
+        for proposal in wiki_result.concept_proposals:
+            name = proposal.get("name", "")
+            why = proposal.get("why", "")
+            print(f"Concept proposal (not created): {name} — {why}")
 
     print(f"model: {model}")
 

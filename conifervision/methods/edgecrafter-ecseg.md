@@ -4,15 +4,16 @@ type: Method
 description: "Instance segmentation layer based on EdgeCrafter (ECSeg) for tree crown instances, designed to improve dense-stand separation and fusion."
 tags: [edgecrafter, ecseg, instance-segmentation, detection, rgb]
 status: stable
-updated: 2026-08-24
+updated: 2026-10-23
 generated:
   by: agent:conifervision-wiki
-  at: 2026-08-24T12:00:00Z
+  at: 2026-10-23T12:00:00Z
 related_methods:
   - methods/merge-detections
   - methods/deimv2-canopy
 sources:
   - sources/paper-individual_tree_crown_delineation_in_high_resolution_aerial_rgb_imagery_using_stardist-based_model-1-s2-0-s0034425725000227-main
+  - sources/paper-blanchard_tsaf_2016
   - sources/paper-edgecrafter
 ---
 # EdgeCrafter ECSeg
@@ -68,3 +69,4 @@ TBD:
 
 - Does the detection-distilled representation from ECDet transfer to tree crown instance segmentation (ECSeg) in dense stands without requiring separate backbone pretraining?
 - - Can the sparse-annotation loss constraint ($p > 0$) from StarDist be integrated into EdgeCrafter ECSeg to allow training on partially annotated drone imagery?
+- Given the high residual plasticity of crown area relative to height, can joint instance mask area and peak CHM height constrain per-tree diameter variance better than mask area alone?

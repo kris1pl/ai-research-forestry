@@ -1,0 +1,1333 @@
+Article
+Site Index Models for Main Forest-Forming Tree
+Species in Poland
+Jarosław Socha 1,*
+, Luiza Tymi´nska-Czaba´nska 1, Ewa Grabska 1,2
+and Stanisław Orzeł 1
+1
+Department of Forest Resources Management, Faculty of Forestry, University of Agriculture in Krakow, Al.
+29 Listopada 46, 31-425 Krakow, Poland; luiza.tyminska@urk.edu.pl (L.T.-C.);
+ewa.grabska@urk.edu.pl (E.G.); rlorzel@cyf-kr.edu.pl (S.O.)
+2
+Institute of Geography & Spatial Management, Faculty of Geography & Geology,
+Jagiellonian University in Kraków, Gronostajowa 7, 30-387 Kraków, Poland
+*
+Correspondence: jaroslaw.socha@ur.krakow.pl; Tel.: +48-12-662-5011
+Received: 4 February 2020; Accepted: 5 March 2020; Published: 8 March 2020
+
+
+Abstract: Site index is the most commonly used measure of potential site productivity, providing key
+information for forest management practices. It is determined using species-speciﬁc site index models
+that take into account climatic and edaphic factors. To reliably estimate the site index, appropriate
+models are necessary. In Poland, however, outdated guidelines, i.e., yield tables, are used to determine
+site classes, which result in the inappropriate estimation of height growth and increments of stands.
+Therefore, the aim of this study is to develop new site index models for the main forest forming tree
+species in Poland, in a total of eight species. For the development of site index models, we used
+growth trajectories of 3052 sample trees, representing the whole range of geographic locations and
+site conditions. Five dynamic models were selected and parametrized to develop the site index
+models. The models were evaluated using quantitative measures of goodness of ﬁt (MAE, R2,
+and AIC), the analysis of residuals, and the assessment of how the model reﬂects the biological
+phenomena of height growth. Results showed that depending on the species, diﬀerent models have
+the highest predictive ability. There are signiﬁcant diﬀerences in results using traditional yield tables
+and developed site index models. For most of the species, the largest diﬀerences characterized either
+the youngest or the oldest age classes. These diﬀerences can be attributed to the changes in growth
+conditions from the time when yield tables were developed. Growth dynamics of forest stands may
+also show spatial variability, thus, in future research additional site variables and, regional variability
+should be taken into account.
+Keywords: height growth; GADA; site productivity; site index model
+1. Introduction
+Information concerning site productivity remains a fundamental variable in forestry [1–4].
+The unbiased estimation of site potential is essential for forest management because it is the main
+determinant of species-speciﬁc decisions, connected with the selection of silvicultural treatments, species
+composition, and the determination of the allowable cut and rotation periods [3,5,6]. Site productivity
+is one area of strategic information in forest management, which determines the economic and
+environmental eﬀects of forest management [6,7] and allows the forecasting of stand growth [2].
+The most frequently used and commonly accepted measure of potential site productivity is the site
+index, determined using species-speciﬁc site index models based on the height of the stand at a certain
+age [1,8–10]. Site index models are the main functions used in the empirical models of tree stand
+growth [11–13].
+Forests 2020, 11, 301; doi:10.3390/f11030301
+www.mdpi.com/journal/forests
+
+
+Forests 2020, 11, 301
+2 of 19
+In recent years, forest ecosystems in Europe have experienced changes due to both the mean
+climate variables and the higher risk of extreme weather events [14]. Therefore, for eﬀective long-term
+planning, forest management has to take into account the impact of climate change on stand growth
+and site productivity. In general, recent climate changes seem to have had a positive impact on
+forest productivity, although, this may vary at regional scales [15]. In northern and western Europe,
+a positive eﬀect on forest growth and wood production is expected [14]. The site index considers
+the impact of climate conditions, expressing how the climatic and edaphic factors inﬂuence site
+productivity. Therefore, it is frequently used to analyze how environmental changes aﬀect forest
+ecosystems [16–20]. Climate-sensitive site productivity models provide key information to develop
+forest management guidelines for adaptation steps and apply mitigation strategies against changing
+climatic conditions [21]. Site index models also play a crucial role in estimating the dynamics of forest
+carbon pools. According to the good practice guidance (GPG) of the Intergovernmental Panel on
+Climate Change (IPCC), the past and future dynamics of forest carbon pools should be calculated
+using stand volume. Stand volume is most commonly estimated using empirical models, such as
+EFISCEN [22,23] and CBM-CFS3 [24], which both employ National Forest Inventory data. In calculating
+both of them, site index models play a crucial role [25].
+Appropriate site index models adjusted to local site conditions are necessary for the reliable
+estimation of the site index. In forestry practice in Poland, a site class is still determined using
+height growth curves, developed by Schwappach [26] for Scots pine, Norway spruce, European beech,
+silver ﬁr, and sessile oak, and by Schober [27] for European larch and by Turin [28] for silver birch and
+black alder. Due to the frequent occurrence of pine stands exceeding the height of Schwappach’s ﬁrst
+class, Szymkiewicz [28] extrapolated tables for class Ia, however, simple graphical extrapolation raises
+large doubts in this case [29]. Moreover, Schwappach’s tables use the mean Lorey’s height to measure
+the site index. Inﬂuenced by the intensity of silvicultural treatment, Lorey’s height does not represent
+site productivity well [30]. Another reason for the inadequacy of Schwappach’s tables is because of the
+signiﬁcant changes in growth conditions, which have greatly changed during the 100-year period since
+the development of the tables. Research carried out in Central Europe indicates that these changes
+have strongly inﬂuenced the dynamics of stand growth [19,31–33]. Pretzsch [31] estimated that site
+productivity increased by about 30%–70%. Most visible changes occur in stands of older age classes.
+Therefore, height growth and the increments of stands observed currently signiﬁcantly diﬀer from
+those included in the original tables, which were observed 100 years ago [34]. Therefore, the use of
+yield tables can result in the inappropriate estimation of site productivity and stand volume increment
+estimation. This was an inspiration for Bruchwald et al. to develop new Polish site index models for
+Scots pine [35,36], Norway spruce [37], black alder [38], and European larch [39]. When developing
+these models, however, the authors used a function describing a single growth trajectory, which is
+next extrapolated for diﬀerent sites [29]. Thus, these models do not appropriately diﬀerentiate the
+height growth rate between diﬀerent sites in terms of the dependence on stand age. Consequently,
+for example, for stands of younger age classes, the models can produce unrealistically high site index
+values [40,41].
+For the development of site index models, either dynamic (invariant of a base age) or static
+(dependent on the base age) equations have been used [42]. The former approach assumes a certain
+base age, violating the assumptions of regression models, e.g., those of [43,44]. In addition, the choice
+of a base age strongly aﬀects the ﬁnal model [45]. This problem was already noticed by Bailey and
+Clutter [46], who proposed a base-age invariant method of deriving site index models, called the
+algebraic diﬀerence approach (ADA). However, a selection of a parameter of the equation used as
+the site parameter resulted in site index curves that were anamorphic or polymorphic with single
+asymptotes. Cieszewski and Bailey [47] solved this problem by developing the generalized algebraic
+diﬀerence approach (GADA), which allows one to use more than one site parameter. Therefore,
+such models are characterized by both polymorphism and variable asymptotes for diﬀerent sites [42,48].
+The GADA has proven to be an adequate method for side index modeling worldwide [29,42,48–56].
+
+
+Forests 2020, 11, 301
+3 of 19
+GADA allow for the development of local site-speciﬁc site index models, which properly describe local
+height growth trajectories and enable the reliable assessment of site productivity.
+Site index models constitute an important decision-making tool in forest management. As a
+result of the inadequacy of existing yield tables, there is a high demand from the State Forests and
+Forest Management Bureau in Poland to develop new site index and growth models for the main
+forest-forming tree species. In response to this demand, in the years of 2015–2018, the research project
+titled “actual and potential productivity of the main forest-forming tree species in Poland,” was
+implemented, ﬁnanced by State Forests in Poland. As part of the project, a grid of over 600 permanent
+research plots was established, a representative for the main forest-forming tree species growing in
+Polish forests. Trees for stem analysis were located close to the research plots, allowing for retrospective
+growth reconstruction when felled. In addition, in the frame of the project, over 2400 growth trajectories
+were gathered from diﬀerent research projects implemented in Poland in recent years. The collected
+database constitutes the empirical material used in the presented research. The aim of this research is
+to develop new dynamic site index models for the main forest-forming tree species in Poland.
+2. Materials and Methods
+The methodology used in this study involved the following steps: (i) the collection of the research
+material on trees from the projects, (ii) stem analysis, (iii) the selection of models of height growth,
+(iv) the estimation of models parameters, and (v) evaluation of the models.
+2.1. Collection of the Research Material
+The research material consists of the height growth trajectories of 3052 dominant and codominant
+trees of the eight main forest-forming tree species in Poland (Table 1), which were collected from
+the whole territory of Poland (Figure 1). Sampled stands are mainly pure and even-aged. In part
+sampled stands were artiﬁcially planted, however, those are not typical forest plantations and the
+methods of forest management used in these forests, with the exception of Scots pine, are mainly close
+to continuous cover forestry. The research uses data from two sources. About 20% of the data were
+collected from the project titled “actual and potential site productivity in Poland for main forest-forming
+tree species,” realized in 2015–2017 and ﬁnanced by the State Forests of Poland. The project established
+612 sample plots for eight of the main forest-forming tree species, where stands were selected for each
+species, representing the whole range of geographic distributions and site conditions. The material
+collected thus represented the whole variability of Poland’s growth conditions for the forest-forming
+tree species analyzed. The second data source was the database of individual tree growth trajectories
+collected in Poland over the last few decades as part of research projects conducted by the main forest
+research institutions in Poland, namely, the Forest Research Institute in S˛ekocin Stary, the Faculty
+of Forestry, Warsaw University of Life Sciences (SGGW), and the Faculty of Forestry, University of
+Agriculture, Krakow. Both data sets used in the study meet the standards required for site index
+models development; the sample trees for the height growth reconstruction have been dominant
+without visible damage and were collected in pure stands of target species.
+2.2. Stem Analysis
+Stem analysis used the material of the 3052 trees to reconstruct the past height growth of the
+trees. The trees for stem analysis were selected in the direct neighborhood of the permanent sample
+plots established within the research projects. For each plot, one to three trees with a diameter and
+height close to the top height (TH) deﬁned as the average height of the 100 thickest trees per 1 ha
+were selected and cut for stem analysis (SA). To reconstruct height growth, only trees with typically
+developed crowns with no visible damage or growth anomalies were chosen. After cutting, the total
+lengths of the trees were measured and rings were collected for stem analysis. Rings were taken from
+the base of the felled tree at a height of 0.5 m, at the diameter at breast height (DBH), and then, for trees
+over 15 m high, subsequent discs were collected at heights of 2 m, 4 m, and then every 2 m up to the top
+
+
+Forests 2020, 11, 301
+4 of 19
+of the tree. For trees less than 15 m high, subsequent discs were collected at heights of 1.5, 2.5, 3.5, and
+every 1 m further up the tree. The course of growth of the individual tree was reconstructed using the
+height of the discs and the number of annual rings. The growth of the trees was also visually examined
+for patterns of suppression and release as well as growth anomalies. As cross-section lengths do not
+coincide with periodic height growth, the height-age data from the stem analysis were corrected using
+Carmean’s method [57].
+Table 1. The number and basic characteristics of growth series for the analyzed species, obtained from
+stem analysis and used for the development of the site index models.
+Species
+Number of Growth Series
+Age (Years)
+Height (m)
+Min
+Max
+Min
+Max
+Scots pine (Pinus sylvestris)
+988
+12
+175
+7.07
+36.75
+European beech (Fagus sylvatica)
+327
+60
+180
+15.79
+33.56
+Black alder (Alnus glutinosa)
+448
+7
+120
+5.15
+31.4
+European larch (Larix decidua)
+227
+20
+170
+16.38
+38.55
+Silver birch (Betula pendula)
+99
+20
+105
+10.46
+33.46
+Oak (Quercus sp.)
+317
+18
+145
+9.5
+32.91
+Norway spruce (Picea abies)
+419
+10
+154
+1.27
+41.57
+Silver ﬁr (Abies alba)
+227
+20
+215
+1.7
+36.16
+3052
+ 
+Figure 1. The location of sample plots for the analyses of the forest-forming tree species in Poland.
+From these plots, stem analysis data used for model development were collected.
+
+
+Forests 2020, 11, 301
+5 of 19
+2.3. Models
+Over the years, researchers have used various mathematical functions to describe the growth
+of stands.
+Kiviste et al. [58] documented 74 diﬀerent mathematical models for this purpose.
+Recently, several new solutions have been proposed to model the growth of various forest-forming
+species [29,42,48,50,56,59–62]. New growth functions have been used to develop site index models for
+diﬀerent countries, such as Sweden [63], Finland [64], Spain [59,65,66], the USA [67,68], Turkey [61],
+and Poland [35,36,41,42,69].
+To reliably estimate the site index, a model should have the following desirable attributes [47,50,70]:
+1.
+Polymorphism, allowing the model to take into account diﬀerent site-speciﬁc growth patterns,
+depending on site conditions;
+2.
+Variable asymptotes for diﬀerent sites;
+3.
+Equality of the site index and the height at base age;
+4.
+The possibility of using the same function as both a height growth model and a site index model.
+The GADA method, which enables one to use one or two site-speciﬁc parameters representing
+the site’s quality, provides dynamic site index models that meet these criteria [47,59].
+In the present study, we selected ﬁve dynamic models with symbols from M1 to M5 for further
+analysis (Table 2). All of these models meet the most criteria above and have been successfully applied
+to site index modeling, which makes them potential candidates for reliable site index models. Model M1,
+derived by Cieszewski [48], was applied in site index modeling in Denmark [71] and Poland [69,72].
+Model M2 from the base function of Chapman–Richards, was developed by Krumland and Eng [73]
+and was used as one of the candidate functions for development site index models for Norway spruce
+and Scots pine by Sharma [60]. GADA formulation of the model M3 was developed by Cieszewski [74]
+based on the Bertalanﬀy–Richards function. Models M4 [60] and model M5 are the growth models that
+have frequently been tested in many studies concerning site index modeling [60,61,75]. In the case of
+the model, M5 GADA is equivalent to ADA [76].
+Table 2. The dynamic generalized algebraic diﬀerence approach (GADA) formulations with base
+equations used to model dominant height growth.
+Model No.
+Base Model Forms
+Parameter Related to Site and Solution for
+theoretical Variable X
+Dynamic GADA Formulation
+and Reference
+M1
+H =
+a1Sa2
+(1+ea3−a4lnt−a5lnS)
+S = X0
+R = Z0 +
+ 
+Z2
+0 + 2b2H1
+T
+b1
+1
+!
+Z0 = H1 −b3
+H1 = H0t1b1
+
+t0b1R+b2
+t1b1R+b2
+
+Cieszewski [48]
+M2
+H = a1[1 −exp(−a2t)]a3
+a1 = X
+X0 = H0/(1 −exp(−b2t0))b3
+H1 = H0
+
+1−exp−b2t0
+1−exp−b2t1
+b3
+Krumland and Eng [73]
+M3
+H = a1[1 −exp(−a2t)]a3
+a1 = exp(X)
+a3 = b2+b3/X
+X0 = 1
+2lnY0 −b2L0 +
+q
+(lnY0 −b2L0)2 −4b3L0
+with
+L0 = ln1 −exp(−b1t0)
+H1 = H0
+
+1−exp(−b1t1)
+1−exp(−b1t0
+(b2+
+b3
+X0 )
+Cieszewski [74]
+M4
+H =
+t2
+a1+a2t+a3t2
+a2 = X
+X0 = t0
+H0 −b1
+t0 −b2t0
+H1 =
+t12
+b1+X0t1+b2t2
+1
+Sharma et al. [60]
+M5
+H = a1exp(−a2t−a3)
+a2 = X
+X0 = −ln
+ Y0
+a1
+
+t0a3
+H1 = b0
+ H0
+b0
+(
+t1
+t0 )b2
+Anta et al. [76]
+a1, a2, a3, a4, a5 are parameters in base models; b1, b2, b3 are parameters in dynamic models; S is the parameter
+related to site; H0 and H1 are heights (in m) at age t0 and t1 (in years), respectively; X0 is the solution of X for initial
+height and age.
+
+
+Forests 2020, 11, 301
+6 of 19
+2.4. Parameter Estimation
+What distinguishes the selected equations is that the choice of the base age does not aﬀect the
+estimates of the model parameters [47,48,50]. Local (site-speciﬁc) and global parameters (GPs) of site
+index models were simultaneously ﬁtted using the iterative nested procedure (INP) that has been
+described by Cieszewski [77], Sharma [60], and Socha [69].
+The INP starts by calculating the GPs of Function (1), using the height measured in base age for
+each of the growth trajectories of the individual trees. Next, for each growth trajectory, the GPs are
+assumed as constants, and the site-speciﬁc parameter (SI) is estimated. The SI values ﬁtted for a given
+tree then become the “observed” values and the GPs are re-estimated. This procedure was repeated
+here until the GPs were stabilized.
+To fit the models, we wrote a devoted R script [77]. As the data represent a time series, the models
+used a first-order autocorrelation error structure. We did so to deal with possibly autocorrelated residuals
+from the models, a problem often encountered in models fitted to data representing successive (and thus
+often correlated) observations in time, especially when all the possible time intervals are used. Such
+autocorrelation can adversely affect the estimates of model parameters and their standard errors [78].
+To compare the ﬁtted models with the corresponding growth trajectories from yield tables [26,28],
+we plotted height growth curves for a range of site indices.
+2.5. Model Evaluation
+To select the best models, we used three tools, namely, (i) graphical methods to compare residuals
+with the corresponding ﬁtted values, (ii) statistics of the goodness-of-ﬁt, and (iii) the evaluation of a
+model’s suitability to represent biological realism [70]. Such a procedure has been frequently used to
+compare and evaluate models [45,55,60,61,66]. To assess biological realism, we analyzed the trajectories
+and age of culmination of height increment. According to the general rules of growth [30], we assumed
+that the height increment of stands growing on the weakest site conditions should not exceed the
+increment in more fertile sites. Besides, we assumed that as the site productivity decreases, the age of
+culmination of height increment should increase.
+In the ﬁrst step, to evaluate the quality of the ﬁt, the procedure analyzes three statistics, namely,
+the mean absolute error (MAE, Equation (1)), coeﬃcient of determination (R2adj, Equation (2)), and the
+Akaike information criterion (AIC, Equation (3)):
+MAE =
+n
+X
+i=1
+hi −ˆhi
+
+n
+(1)
+R2adj = 1 −
+Pn
+i=1
+
+hi −ˆhi
+2
+Pn
+i=1
+
+hi −hi
+2
+ 
+n −1
+n −p
+!
+(2)
+AIC = 2 log L + 2p
+(3)
+where hi hi, ˆhi are the measured, mean, and predicted values of the heights, respectively, n is the total
+number of observations used to ﬁt the model, p is the number of parameters in the model, and L is the
+residual sum of squares.
+In the second step, we analyzed plots of model residuals, which allow for assessing the model’s
+ﬁt across the range of the data. In the last step of the procedure, we analyzed whether each model had
+the desired biological properties.
+3. Results
+The ﬁve individual growth functions for the eight forest-forming species yielded 40 site index
+models (Table 3). Due to the properties of the diﬀerential equations, they were also height growth
+models. Table 3 summarizes parameter estimates and goodness-of-ﬁt statistics of these candidate
+
+
+Forests 2020, 11, 301
+7 of 19
+models. Figure 2 shows the model ﬁt to growth series and Figure 3 shows the residuals against the
+predicted values. As emphasized earlier, to select the best model, we cannot use just one particular
+statistical measure, but instead, have to make a compromise between the statistical aspects and
+biological realism of the model. In the case of models with similar statistics of the goodness-of-ﬁt, the
+model, which meets the criteria of biological realism was recommended.
+Table 3. Parameter estimates and goodness-of-ﬁt statistics for the individual site functions and species.
+R2: Coeﬃcient of determination. AIC: Akaike information criterion. MAE: Mean absolute error.
+Species
+Function
+Parameters
+Estimate
+R2adj
+AIC
+MAE
+Scots pine
+M1
+b1
+1.366
+0.989
+35324
+0.6
+b2
+5802.862
+b3
+30.581
+M2
+b2
+0.017
+0.986
+39205
+0.65
+b3
+1.236
+M3
+b1
+0.020
+0.988
+36937
+0.61
+b2
+0.860
+b3
+8.425
+M4
+b1
+10.848
+0.989
+35608
+0.61
+b2
+0.019
+M5
+b0
+101.255
+0.988
+36518
+0.64
+b2
+0.436
+European beech
+M1
+b1
+1.366
+0.987
+8604
+0.677
+b2
+5802.952
+b3
+30.581
+M2
+b2
+0.015
+0.987
+8730
+0.684
+b3
+1.675
+M3
+b1
+0.017
+0.988
+8561
+0.672
+b2
+1.243
+b3
+7.797
+M4
+b1
+47.661
+0.986
+8895
+0.707
+b2
+0.013
+M5
+b0
+206.947
+0.987
+8797
+0.697
+b2
+0.415
+Black alder
+M1
+b1
+1.565
+0.985
+28359
+0.728
+b2
+1644.059
+b3
+29.161
+M2
+b2
+0.035
+0.981
+30673
+0.83
+b3
+1.472
+M3
+b1
+0.039
+0.983
+29327
+0.77
+b2
+0.159
+b3
+31.764
+M4
+b1
+9.244
+0.984
+28803
+0.74
+b2
+0.025
+M5
+b0
+101.255
+0.983
+36518
+0.645
+b2
+0.436
+European larch
+M1
+b1
+1.328
+0.984
+8783
+0.843
+b2
+625.507
+b3
+43.486
+M2
+b2
+0.017
+0.978
+9661
+1.044
+b3
+1.084
+M3
+b1
+0.023
+0.982
+9075
+0.897
+b2
+0.346
+b3
+21.046
+
+
+Forests 2020, 11, 301
+8 of 19
+Table 3. Cont.
+Species
+Function
+Parameters
+Estimate
+R2adj
+AIC
+MAE
+M4
+b1
+4.639
+0.983
+8948
+0.878
+b2
+0.018
+M5
+b0
+78.357
+0.983
+8879
+0.848
+b2
+0.514
+Silver birch
+M1
+b1
+1.366
+0.984
+3007
+0.744
+b2
+5802.952
+b3
+30.581
+M2
+b2
+0.036
+0.983
+3079
+0.777
+b3
+1.580
+M3
+b1
+0.038
+0.983
+3042
+0.768
+b2
+1.120
+b3
+12.810
+M4
+b1
+11.337
+0.984
+2999
+0.731
+b2
+0.023
+M5
+b0
+101,255
+0.984
+3172
+0.845
+b2
+0,436
+Oak
+M1
+b1
+1.664
+0.987
+12376
+0.691
+b2
+7635.281
+b3
+30.359
+M2
+b2
+0.022
+0.984
+13253
+0.776
+b3
+1.591
+M3
+b1
+0.025
+0.986
+12632
+0.708
+b2
+0.699
+b3
+18.602
+M4
+b1
+27.831
+0.986
+12632
+0.708
+b2
+0.022
+M5
+b0
+60.331
+0.986
+12511
+0.697
+b2
+0.654
+Norway spruce
+M1
+b1
+1.833
+0.986
+19814
+0.775
+b2
+6121.850
+b3
+40.956
+M2
+b2
+0.016
+0.977
+23053
+1.009
+b3
+1.606
+M3
+b1
+0.025
+0.985
+20405
+0.828
+b2
+0.770
+b3
+24.012
+M4
+b1
+31.549
+0.979
+22498
+0.96
+b2
+0.014
+M5
+b0
+86.625
+0.986
+20024
+0.8
+b2
+0.642
+Silver ﬁr
+M1
+b1
+1.833
+0,976
+12075
+0.992
+b2
+6121.850
+b3
+40.956
+M2
+b2
+0.007
+0.959
+13629
+1.285
+b3
+1.478
+M3
+b1
+0.017
+0.975
+12018
+0.993
+b2
+1.439
+b3
+6.830
+M4
+b1
+66.678
+0.959
+13614
+1.285
+b2
+0.011
+M5
+b0
+63.533
+0.978
+11596
+0.916
+b2
+0.867
+
+
+Forests 2020, 11, 301
+9 of 19
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Figure 2. Site-speciﬁc height growth curves representing the developed site index models, along with
+the observed height growth trajectories obtained from stem analysis. The numbers in circles show the
+corresponding values of the site index.
+
+
+Forests 2020, 11, 301
+10 of 19
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Figure 3. Residual versus predicted values from the selected site index models for the analyzed tree
+species studied.
+Hence, the below analyses used quantitative measures of the goodness-of-ﬁt (MAE, R2, and AIC),
+the analysis of residuals, and the evaluation of how the model reﬂects the biological phenomena of
+height growth as criteria.
+The evaluation of ﬁt statistics and the graphical analysis for model M1 indicates that this function
+had the best predictive ability as compared to the other models studied for Scots pine (Figure 2) and
+most of the analyzed species (Table 3). The European beech models, built based on functions M1,
+M3, and M5, had comparable ﬁtting statistics, but after analysis of the residuals of models, we found
+systematic errors of model M3 in the dependence on stand age. Therefore models M1 and M5 (Figure 2)
+
+
+Forests 2020, 11, 301
+11 of 19
+proved to be best suited to the empirical data among all of the other analyzed models. For black alder,
+model M1 had the best predictive ability in terms of the results of residual distribution and biological
+realism compared to the other models. Models M1 and M4, tested for European larch, showed a good
+ﬁt for statistics with small diﬀerences between models, however, considering the plot of residuals,
+we propose the application of model M4 for site index determination for this species. Among all the
+equations tested for silver birch, models M1 M4 and M5 were characterized by good ﬁtting statistics but
+after a detailed analysis of growth trajectories and plots of residuals, we recommend model M1 here.
+For oak, we recommend model M5, which provided the best results for the distribution of residuals.
+Goodness-of-ﬁt statistics showed that model M1 for Norway spruce had the best predictive ability as
+compared to model M3, however, based on analysis of residuals we recommend model M3. For silver
+ﬁr, the model built based on model M5 had the best ﬁtting statistics as compared to the other models
+tested for silver ﬁr, and was also well-ﬁtted across the range of data.
+Residual plots were used as one of the criteria of the model evaluation. For the models chosen,
+the most appropriate plots of residuals are presented in Figure 3. None of the models showed any
+apparent trends and structures across the range of predicted values, which indicates that the site index
+curves for the recommended models well represent the observed height age patterns across the range
+of site conditions.
+High values of the adjusted (by the number of parameters in the model) coeﬃcients of
+determination (R2adj) indicate that selected models accounted for at least 97.5% of the total variation in
+the data (Table 3), which represents a very good ﬁt in every single case. Here, mean absolute errors
+ranged between 0.60 m (Scots pine) and 0.91 m (silver ﬁr).
+Growth curves obtained from the developed site index models were compared directly with the
+growth curves from the yield tables (Figure 4). For Scots pine, the curves were similar, with the largest
+diﬀerences observed in the old and young age classes, especially for less productive sites. The models
+diﬀered more signiﬁcantly for European beech and black alder in the youngest age classes. The yield
+tables showed that black alder’s stands reach nearly half of the total height in the ﬁrst 15 years of life,
+after which their growth slows down, while the site index model developed in this study shows a
+fast growth rate up to 40 years. Large diﬀerences in growth trajectories were observed for Norway
+spruce and silver ﬁr. For the former, the results show that the height growth of younger stands is
+considerably faster than what is found according to yield tables. For the latter, there were diﬀerences
+particularly in the oldest age classes, where the obtained model, in contrast, to yield tables, did not
+show the strong inhibition of height increase. Diﬀerences in height growth trajectories for European
+larch were rather small, with the larger height increment from developed models than in yield tables
+for the oldest stands. Growth curves from yield tables and the developed models provided similar
+trajectories for oak and silver birch.
+
+
+Forests 2020, 11, 301
+12 of 19
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Figure 4. Height growth curves from the selected site index models (solid lines) against those obtained
+from yield tables (dotted lines). The numbers in circles show the corresponding values of the site index.
+4. Discussion
+We developed site index models using dynamic functions derived from the GADA method,
+which meet the crucial requirement of polymorphism and variable asymptotes. This enables the good
+representation of empirical data, from both statistical and biological perspectives. To assess biological
+behavior, we analyzed height increment curves. We found the higher height increment in weaker
+site conditions, which was observed in the case of some models in the stands of older age classes,
+
+
+Forests 2020, 11, 301
+13 of 19
+as incompatible with generally known growth rules [30]. We also assumed that as the site productivity
+decreases, the age of culmination of height increment should increase.
+All the selected models had the desired properties of a good site index model. Compared to the
+methods still used in Polish forestry practice, such as yield tables, our models provide better predictive
+ability, which was also reported by many other studies that applied the GADA methodology, for
+instance [47].
+It is important to note that yield tables were developed at the end of the nineteenth century and
+the beginning of the twentieth century. Each yield table value represents information obtained on the
+basis of only one age and site class, while each point of the curve of the developed models is the result
+of information from the entire range of empirical data. The purpose of modeling is to generalize the
+information contained in the measurement data and to compensate for random errors. The use of
+mathematical models developed by the simultaneous estimation of their parameters on the basis of all
+observations from all height growth trajectories collected for individual species is, statistically speaking,
+much more eﬀective than tables containing the results of the individual adjustment of growth curves
+for individual site classes [79]. These attributes are one of the probable reasons for the diﬀerences
+between site index curves from yield tables and the newly developed dynamic site index curves.
+The height growth trajectories obtained by the dynamic site index models have diﬀerent courses
+from those of the yield tables. For most species, the two types of models showed the largest diﬀerences
+for either the youngest or the oldest age classes. For Scots pine, we observed some diﬀerences in both
+old and young age classes, especially for less productive sites (Figure 4), most likely due to the fact that
+yield tables poorly represent data within this range [80].
+For European beech, the largest diﬀerences were observed in the youngest age classes, which is
+likely a consequence of the use of the longer regeneration periods for natural stands, which have been
+used in the past. A common current approach in the practice of beech forest management uses shorter
+regeneration periods, which could explain the observed changes.
+The two types of models provided diﬀerent results for black alder as well. The site index curves
+suggested a slower height growth speed in the youngest age classes than that resulting from the yield
+tables. This overestimation by yield tables may result from their use of data for coppice alder stands,
+which most probably present very intensive growth in the initial period of growth.
+The diﬀerences we observed for European larch were similar to those observed for Scots pine,
+with less productive sites being poorly represented in the data and the oldest age classes being either
+underestimated or overestimated by yield tables.
+Site index curves from yield tables and the developed model’s curves for oak and silver birch
+have almost the same course, demonstrating the possibility of the use of yield tables for site index
+estimation for this species. The large diﬀerences observed for Norway spruce probably have resulted
+from using diﬀerent regeneration methods in the past (such as the shelterwood system) and a long
+regeneration period. The guidelines for the forest silviculture of this species have changed quite
+signiﬁcantly during the twentieth century. In particular, its regeneration period was shortened, which
+is a key factor aﬀecting the growth dynamics of this species, particularly for trees up to 60–80 years in
+age. In comparison to the height growth trajectories obtained from the developed model for Norway
+spruce, the site index curves from yield tables showed large errors in determining site productivity.
+Analyzing growth trends for ﬁr in the oldest age classes showed signiﬁcant diﬀerences.
+The comparison of the curves suggests that, currently, stands of the oldest age classes do not
+show as signiﬁcant slowdown as yield tables may suggest, which is consistent with the biology of
+this species. The current knowledge indicates that, in favorable conditions, silver ﬁrs can grow for
+200 years [81].
+In general, the results indicate that for most forest-forming tree species, the currently used yield
+tables provide diﬀerent height growth curves than those actually observed. On the one hand, this
+observation might be due to the small amount of data used to construct yield tables for the youngest
+and oldest age classes, as well as the less productive sites, which are relatively rare. On the other hand,
+
+
+Forests 2020, 11, 301
+14 of 19
+site indices for young stands are commonly considered to be very variable, because early growth is
+irregular and determined not only by site conditions but also by other factors [82]. Two of the key roles
+in this variation are the regeneration period and the regeneration method, the former likely being a
+reason for the diﬀerences between the growth curves ﬁtted for Norway spruce and European beech,
+while the latter for black alder.
+Another important factor aﬀecting growth curves is the selection of trees. It is known that not all
+trees in the top layer of the stand belong to this layer throughout their entire life. As such a change in
+the canopy position of a tree is quite probable [83], models based on the data from stem analysis can
+sometimes overestimate growth rates [10]. We used the veriﬁcation procedure to assess the growth
+curve of the individual growth series against the background of more trees living in the given area.
+This allowed us to limit the probability of choosing trees whose growth curves signiﬁcantly diﬀer from
+the growth curves of other trees growing in similar site conditions.
+Most likely, the diﬀerences in growth curves obtained using dynamic site index modeling and yield
+tables, the latter obtained using data older than 100 years, were due to the changes in growth conditions
+over this time. As shown by the latest research, these were changes mainly in nitrogen deposition and
+the climatic parameters [31,84], as well as an increase in carbon dioxide concentration [85]. Changing
+site conditions over time [31] undoubtedly constitutes a disadvantage of the site index concept [3],
+as they lead to a negative correlation between stand age and the site index [21,60,69]. This problem
+is sometimes solved by the inclusion of a stand age as one of the variables when modeling site
+productivity [33,86].
+Site index, which is traditionally used to determine current growth conditions, has increasingly
+used in new research areas, such as mapping the site index from remote sensing data, simulating
+productivity changes, and analyzing the CO2 sequestration of forest ecosystems [25,87]. Such analyses
+and tools provide valuable data to develop improved management practices in terms of mitigation
+and adaptation strategies for climate change. The appropriate prediction of site productivity is also
+key to developing eﬀective strategies of CO2 sequestration [25]. Such activities should form the basis
+of modern forest management, which would take into account the need to adapt forest ecosystems to
+the eﬀects of climate change. In this research, we have observed diﬀerences in the growth dynamics
+and site requirements of the main forest-forming species. This knowledge may be key in many areas of
+forest management, especially in the context of maintaining the sustainability of forests in the face of
+climate and environmental changes.
+What is important from the perspective of forest management is that Poland is geologically and
+climatically diverse, particularly along the northeastern and southwestern gradients. Thus, the growth
+dynamics of forest stands may show spatial variability. If this variability is signiﬁcant, future research
+should focus on dynamic site index models that take into account additional site variables. This thought
+is not new, however, as various authors have pointed out that when analyzing the site index, regional
+variability should be taken into account [3,56,71]. Therefore, future research should focus on the
+development of regional site index models, which would help foresters to estimate the potential
+productivity of forest sites. Although the development of such regional models requires extensive
+research material, the recent research suggests that for building them, not only the results of stem
+analysis may be used, but also other data sources. Data from permanent plots that are part of the
+large-scale National Forest Inventory and data from aerial laser scanning have also successfully been
+used for site index modeling [60,69].
+5. Conclusions
+We have developed new site index models for eight of the main forest-forming tree species in
+Poland, namely Scots pine, European beech, black alder, European larch, silver birch, oak, Norway
+spruce, and silver ﬁr, using over 3000 data series describing the trajectories of tree height growth.
+Selected for each species, the best dynamic forms of the growth function allow for a good ﬁtting of
+the models to the empirical data, as evidenced by the explanation of about 98% variation in height
+
+
+Forests 2020, 11, 301
+15 of 19
+growth, which was crucial for the elimination of systematic errors. The main purpose of the developed
+models is the determination of site productivity. Thanks to the properties of the functions used for
+the development of the models, however, they can also be used as models describing the height
+growth of the stands. This research is the response to demands from the State Forests in Poland,
+Forest Management Bureau and other stakeholders to develop new yield tables (growth models) for the
+main forest-forming tree species in Poland. The presented research is the ﬁrst stage in the construction
+of new empirical growth models/yield tables. The site index models presented in this research will be
+one of the functions of the developed growth models.
+Author Contributions: Conceptualization, J.S.; Methodology, J.S.; Validation, J.S., L.T.-C.; Formal Analysis, J.S.;
+Investigation, J.S. and L.T.-C.; Resources, J.S.; Data Curation, J.S., S.O.; Writing—Original Draft Preparation, J.S.,
+L.T.-C., E.G., S.O.; Writing—Review & Editing, J.S. and L.T.-C.; Visualization, J.S. and L.T.-C.; Funding Acquisition,
+J.S. All authors have read and agreed to the published version of the manuscript.
+Funding: This work was supported by the project I-MAESTRO. Project Innovative forest MAnagEment STrategies
+for a Resilient biOeconomy under climate change and disturbances (I-MAESTRO) is supported under the umbrella
+of ForestValue ERA-NET Cofund by the National Science Centre, Poland and French Ministry of Agriculture,
+Agrifood, and Forestry; French Ministry of Higher Education, Research and Innovation, German Federal Ministry
+of Food and Agriculture (BMEL) via Agency for Renewable Resources (FNR), Slovenian Ministry of Education,
+Science and Sport (MIZS). ForestValue has received funding from the European Union’s Horizon 2020 research
+and innovation programme under grant agreement N◦773324. Data collection was supported by the project
+“Actual and potential site productivity in Poland for the main forest forming tree species”, ﬁnanced by the General
+Direction of State Forests [agreement no. ER-2717-11/14, 15th April 2014].
+Acknowledgments: We would like to thank the Forest Management and Geodesy Bureau from Sekocin Stary for
+cooperation in implementing the project "Actual and potential site productivity in Poland for the main forest
+forming tree species", particular for help in collecting the height growth data. We thank Professor Arkadiusz
+Bruchwald for sharing stem analysis data for diﬀerent tree species collected within his research projects. We also
+thank three anonymous reviewers and the scientiﬁc editor who provided valuable comments on earlier versions
+of the manuscript.
+Conﬂicts of Interest: The authors declare no conﬂicts of interest.
+References
+1.
+Skovsgaard, J.P.; Vanclay, J.K. Forest site productivity: A review of the evolution of dendrometric concepts
+for even-aged stands. Forestry 2008, 81, 13–31. [CrossRef]
+2.
+Pretzsch, H.; Grote, R.; Reineking, B.; Rötzer, T.; Seifert, S. Models for forest ecosystem management:
+A European perspective. Ann. Bot. 2008, 101, 1065–1087. [CrossRef]
+3.
+Bontemps, J.J.D.; Bouriaud, O. Predictive approaches to forest site productivity: Recent trends, challenges
+and future perspectives. Forestry 2013, 87, 109–128. [CrossRef]
+4.
+Brandl, S.; Mette, T.; Falk, W.; Vallet, P.; Rötzer, T.; Pretzsch, H. Static site indices from diﬀerent national forest
+inventories: Harmonization and prediction from site conditions. Ann. For. Sci. 2018, 75. [CrossRef]
+5.
+Splechtna, B.E. Height growth and site index models for Paciﬁc silver ﬁr in southwestern British Columbia.
+J. Ecosyst. Manag. 2001, 1, 1–14.
+6.
+Skovsgaard, J.P.; Vanclay, J.K. Forest site productivity: A review of spatial and temporal variability in natural
+site conditions. Forestry 2013, 86, 305–315. [CrossRef]
+7.
+Sharma, M.; Amateis, R.L.; Burkhart, H.E. Top height deﬁnition and its eﬀect on site index determination in
+thinned and unthinned loblolly pine plantations. For. Ecol. Manage. 2002, 168, 163–175. [CrossRef]
+8.
+Hägglund, B.; Lundmark, J.E. Site index estimation by means of site properties of Scots pine and Norway
+spruce in Sweden. Stud. For. Suec. 1977, 138, 5–38.
+9.
+Johansson, T. Site Index Curves for Common Alder and Grey Alder Growing on Diﬀerent Types of Forest
+Soil in Sweden. Scand. J. For. Res. 1999, 14, 441–453. [CrossRef]
+10.
+Raulier, F.; Lambert, M.C.; Pothier, D.; Ung, C.H. Impact of dominant tree dynamics on site index curves.
+For. Ecol. Manage. 2003, 184, 65–78. [CrossRef]
+11.
+Pretzsch, H. A Uniﬁed Law of Spatial Allometry for Woody and Herbaceous Plants. Plant Biol. 2002,
+4, 159–166. [CrossRef]
+12.
+Pretzsch, H. Forest Dynamics, Growth, and Yield; Springer: Berlin/Heidelberg, Germany, 2010.
+
+
+Forests 2020, 11, 301
+16 of 19
+13.
+Bruchwald, A.; Zasada, M. Model wzrostu modrzewia europejskiego ( Larix decidua Mill) Growth model
+for European larch (Larix decidua Mill). Sylwan 2010, 158, 615–624.
+14.
+Lindner, M.; Maroschek, M.; Netherer, S.; Kremer, A.; Barbati, A.; Lexer, M.J.; Marchetti, M. Climate change
+impacts, adaptive capacity, and vulnerability of European forest ecosystems. For. Ecol. Manag. 2010,
+259, 698–709. [CrossRef]
+15.
+Boisvenue, C.; Running, S.W. Impacts of climate change on natural forest productivity—Evidence since the
+middle of the 20th century. Glob. Chang. Biol. 2006, 12, 862–882. [CrossRef]
+16.
+Swenson, J.J.; Waring, R.H.; Fan, W.; Coops, N. Predicting site index with a physiologically based growth
+model across Oregon, USA. Can. J. For. Res. 2005, 35, 1697–1707. [CrossRef]
+17.
+Coops, N.C.; Hember, R.A.; Waring, R.H. Assessing the impact of current and projected climates on
+Douglas-Fir productivity in British Columbia, Canada, using a process-based model (3-PG). Can. J. For. Res.
+2010, 40, 511–524. [CrossRef]
+18.
+Mäkinen, H.; Yue, C.; Kohnle, U. Site index changes of Scots pine, Norway spruce and larch stands in
+southern and central Finland. Agric. For. Meteorol. 2017, 237–238, 95–104. [CrossRef]
+19.
+Yue, C.; Mäkinen, H.; Klädtke, J.; Kohnle, U. An approach to assessing site index changes of Norway
+spruce based on spatially and temporally disjunct measurement series. For. Ecol. Manage. 2014, 323, 10–19.
+[CrossRef]
+20.
+Yue, C.; Kahle, H.P.; von Wilpert, K.; Kohnle, U. A dynamic environment-sensitive site index model for the
+prediction of site productivity potential under climate change. Ecol. Modell. 2016, 337, 48–62. [CrossRef]
+21.
+Albert, M.; Schmidt, M. Climate-sensitive modelling of site-productivity relationships for Norway spruce
+(Picea abies (L.) Karst.) and common beech (Fagus sylvatica L.). For. Ecol. Manage. 2010, 259, 739–749.
+[CrossRef]
+22.
+Nabuurs, G.J.; Schelhaas, M.J.; Pussinen, A. Validation of the European Forest Information Scenario Model
+(EFISCEN) and a projection of Finnish forests. Silva Fenn. 2000, 34, 167–179. [CrossRef]
+23.
+Verkerk, P.J.; Fitzgerald, J.B.; Datta, P.; Dees, M.; Hengeveld, G.M.; Lindner, M.; Zudin, S. Spatial distribution
+of the potential forest biomass availability in Europe. For. Ecosyst. 2019, 6, 1–11. [CrossRef]
+24.
+Kurz, W.A.; Dymond, C.C.; White, T.M.; Stinson, G.; Shaw, C.H.; Rampley, G.J.; Smyth, C.; Simpson, B.N.;
+Neilson, E.T.; Trofymow, J.A.; et al. CBM-CFS3: A model of carbon-dynamics in forestry and land-use change
+implementing IPCC standards. Ecol. Modell. 2009, 220, 480–504. [CrossRef]
+25.
+Kim, M.; Lee, W.K.W.; Kurz, W.W.A.; Kwak, D.D.A.; Morken, S.; Smyth, C.E.C.; Ryu, D. Estimating carbon
+dynamics in forest carbon pools under IPCC standards in South Korea using CBM-CFS3. iForest Biogeosci.
+For. 2016, 9, 1–10. [CrossRef]
+26.
+Schwappach, A. Ertragstafeln der Wichtigeren Holzarten; Druckerei Merkur: Prag, Czech, 1943.
+27.
+Schober, R. Die Lärche – Eine ertragskundlich-biologische Untersuchung; Verlag M. u. H. Schaper: Hannover,
+Germany, 1949.
+28.
+Szymkiewicz, B. Niektóre zagadnienia dotycz ˛ace tablic zasobno´sci drzewostanów sosnowych. Pr. IBL 1948,
+Seria A, 67.
+29.
+Cieszewski, C.J.; Strub, M.; Zasada, M. New dynamic site equation that ﬁts best the Schwappach data for
+Scots pine (Pinus sylvestris L.) in Central Europe. For. Ecol. Manage. 2007, 243, 83–93. [CrossRef]
+30.
+Assman, E. Nauka o Produkcyjno´sci Lasu; Pa´nstwowe Wydawnictwo Rolne i Lesne: Warszawa, Poland, 1968.
+31.
+Pretzsch, H.; Biber, P.; Schütze, G.; Uhl, E.; Rötzer, T. Forest stand growth dynamics in Central Europe have
+accelerated since 1870. Nat. Commun. 2014, 5, 4967. [CrossRef]
+32.
+Pretzsch, H.; Schütze, G.; Biber, P. Drought can favour the growth of small in relation to tall trees in mature
+stands of Norway spruce and European beech. For. Ecosyst. 2018, 5, 20. [CrossRef]
+33.
+Sharma, R.P.; Brunner, A.; Eid, T. Site index prediction from site and climate variables for Norway spruce
+and Scots pine in Norway. Scand. J. For. Res. 2012, 27, 619–636. [CrossRef]
+34.
+Socha, J.; Ochał, W.; Grabczy´nski, S.; Maj, M. Modele Bonitacyjne dla Gatunków Lasotwórczych Polski
+Opracowane na Podstawie Tablic Zasobno´sci*. Site Index Models for Forest−Forming Tree Species in Poland
+Developed Basing on the Yield Tables. Sylwan 2015, 159, 639–649.
+35.
+Bruchwald, A.; Michalak, K.; Wróblewski, L.; Zasada, M. Przestrzenne Zró˙znicowanie Wzrostu Sosny. Wzrost
+Wysoko´sci Sosny w Ró˙znych Regionach Polski; Fundacja Rozwój SGGW: Warszawa, Poland, 2000.
+36.
+Bruchwald, A. Change in Top Height of Pine Forest Stands with Age; Pascal and Francis Bibliographic Databases:
+Warszawa, Poland, 1977.
+
+
+Forests 2020, 11, 301
+17 of 19
+37.
+Bruchwald, A.; Dudek, A.; Michalak, K.; Zasada, M.; Rymer-Dudzinska, T.; Wroblewski, L. Model wzrostu
+dla drzewostanów ´swierkowych. Sylwan 1999, 143, 19–31.
+38.
+Bruchwald, A.; Dudzi´nska, M.; Wirowski, M. Model wzrostu dla olszy czarnej (Alnus glutinosa (L.) Gaertn.).
+Sylwan 2003, 147, 3–10.
+39.
+Bruchwald, A.; Dmyterko, E.; Wojtan, R. A growth model for European larch (Larix decidua Mill.) based on
+stand characteristics. For. Res. Pap. 2011, 72, 77–81. [CrossRef]
+40.
+Orzeł, S.; Forgiel, M.; Ochał, W.; Socha, J. Nadziemna biomasa i roczna produkcja drzewostanów sosnowych
+Puszczy Niepołomickiej * Aboveground biomass and annual production in stands. Sylwan 2006, 150, 1–17.
+41.
+Socha, J.; Orzeł, S. Dynamic site index curves for Scots pine stands in Niepołomice Primeval ForestDynamiczne
+krzywe bonitacyjne dla drzewostanów sosnowych Puszczy Niepołomickiej. Sylwan 2011, 155, 301–312.
+42.
+Cieszewski, C.J.; Zasada, M. Dynamiczna forma anamorﬁcznego modelu bonitacyjnego dla sosny pospolitej
+w Polsce. Sylwan 2002, 146, 17–24.
+43.
+Goelz, J.C.G.; Burk, T.E. Measurement error causes bias in site index equations. Can. J. For. Res. 1996,
+26, 1585–1593. [CrossRef]
+44.
+Strub, M.; Cieszewski, C.J. Base-age invariance properties of two techniques for estimating the parameters of
+site index models. For. Sci. 2006, 52, 182–186.
+45.
+Martín-Benito, D.; Gea-Izquierdo, G.; del Río, M.; Cañellas, I. Long-term trends in dominant-height growth
+of black pine using dynamic models. For. Ecol. Manage. 2008, 256, 1230–1238. [CrossRef]
+46.
+Bailey, R.L.; Clutter, J.L. Base-Age Invariant Polymorphic Site Curves. For. Sci. 1974, 20, 155–159.
+47.
+Cieszewski, J.; Bailey, L. Generalized Algebraic Diﬀerence Approach: Theory Based Derivation of Dynamic
+Site Equations with Polymorphism and Variable Asymptotes. For. Sci. 2000, 46, 116–126.
+48.
+Cieszewski, C.J. Three methods of deriving advanced dynamic site equations demonstrated on inland
+Douglas-ﬁr site curves. Can. J. For. Res. For. 2001, 31, 165–173. [CrossRef]
+49.
+Kitikidou, K.; Kaymakis, M.; Milios, E. Site index curves for young Populus tremula stands on Athos
+Peninsula (northern Greece). Turk. J. Agric. For. 2012, 36, 55–63.
+50.
+Cieszewski, C.J. Developing a Well-Behaved Dynamic Site Equation Using a Modiﬁed Hossfeld IV Function
+Y 3 = (axm)/(c + x m–1), a Simpliﬁed Mixed-Model and Scant Subalpine Fir Data. For. Sci. 2003, 49, 539–554.
+51.
+Cieszewski, C.J.; Nigh, G.D. A dynamic equation for a published Sitka spruce site-dependent height-age
+model. For. Chron. 2002, 78, 690–694. [CrossRef]
+52.
+Diéguez-Aranda, U.; Grandas-Arias, J.A.; Álvarez-González, J.G.; Von Gadow, K. Site quality curves for
+birch stands in North-Western Spain. Silva Fenn. 2006, 40, 631–644. [CrossRef]
+53.
+Diéguez-Aranda, U.; Burkhart, H.E.; Amateis, R.L. Dynamic site model for loblolly pine (Pinus taeda L.)
+plantations in the United States. For. Sci. 2006, 52, 262–272.
+54.
+Nord-Larsen, T. Developing Dynamic Site Index Curves for European Beech. For. Sci. 2006, 52, 173–181.
+55.
+Adame, P.; Hynynen, J.; Cañellas, I.; del Río, M. Individual-tree diameter growth model for rebollo oak
+(Quercus pyrenaica Willd.) coppices. For. Ecol. Manage. 2008, 255, 1011–1022. [CrossRef]
+56.
+Bravo-Oviedo, A.; del Río, M.; Montero, G. Geographic variation and parameter assessment in generalized
+algebraic diﬀerence site index modelling. For. Ecol. Manage. 2007, 247, 107–119. [CrossRef]
+57.
+Carmean, W.H. Site index curves for upland oaks in the central states. For. Sci. 1972, 18, 109–120.
+58.
+Kiviste, A.; Álvarez González, J.G.; Rojo-Alboreca, A.; Ruiz González, A.D. Funciones de Crecimiento de
+Aplicación en el Ámbito Forestal Faculty of Forestry; Ministerio de Ciencia y Tecnología: Madrid, Spain, 2002.
+59.
+Diéguez-Aranda, U.; Castedo Dorado, F.; Álvarez González, J.G.; Rojo Alboreca, A. Dynamic growth
+model for Scots pine (Pinus sylvestris L.) plantations in Galicia (north-western Spain). Ecol. Modell. 2006,
+191, 225–242. [CrossRef]
+60.
+Sharma, R.P.; Brunner, A.; Eid, T.; Øyen, B.H. Modelling dominant height growth from national forest
+inventory individual tree data with short time series and large age errors. For. Ecol. Manage. 2011,
+262, 2162–2175. [CrossRef]
+61.
+Ercanli, I.; Kahriman, A.; Yavuz, H. Dynamic base-age invariant site index models based on generalized
+algebraic diﬀerence approach for mixed Scots pine (Pinus sylvestris L.) and Oriental beech (Fagus orientalis
+Lipsky) stands. Turk. J. Agric. For. 2014, 38, 134–147. [CrossRef]
+62.
+Barrio Anta, M.; Dieguez-Aranda, U. Site quality of pedunculate oak (Quercus robur L.) stands in Galicia
+(northwest Spain). Eur. J. For. Res. 2005, 124, 19–28. [CrossRef]
+
+
+Forests 2020, 11, 301
+18 of 19
+63.
+Elfving, B.; Kiviste, A. Construction of site index equations for Pinus sylvestris L. using permanent plot data
+in Sweden. For. Ecol. Manage. 1997, 98, 125–134. [CrossRef]
+64.
+Karlsson, K. Height growth patterns of Scots pine and Norway spruce in the coastal areas of western Finland.
+For. Ecol. Manag. 2000, 135, 205–216. [CrossRef]
+65.
+Bravo, F.; Montero, G. Site index estimation in Scots pine ( Pinus sylvestris L.) stands in the High Ebro Basin
+( northern Spain) using soil attributes. Forestry 2001, 74, 395–406. [CrossRef]
+66.
+Palahí, M.; Tomé, M.; Pukkala, T.; Trasobares, A.; Montero, G.; Palahí, M. Site index model for Pinus sylvestris
+in north-east Spain. For. Ecol. Manage. 2004, 187, 35–47. [CrossRef]
+67.
+Weiskittel, A.R.; Hann, D.W.; Kershaw, J.A., Jr.; Vanclay, J.K.; Kershaw, J.A.; Vanclay, J.K. Forest Growth and
+Yield Modeling; Wiley: Chichester, UK, 2011.
+68.
+Weiskittel, A.; Kuehne, C.; McTague, J.P.; Oppenheimer, M. Development and evaluation of an individual
+tree growth and yield model for the mixed species forest of the Adirondacks Region of New York, USA.
+For. Ecosyst. 2016, 3. [CrossRef]
+69.
+Socha, J.; Pierzchalski, M.; Bałazy, R.; Ciesielski, M. Modelling top height growth and site index using
+repeated laser scanning data. For. Ecol. Manage. 2017, 406, 307–3017. [CrossRef]
+70.
+Goelz, J.C.G.; Burk, T.E. Development of a well-behaved site index equation: Jack pine in north central
+Ontario. Can. J. Res. 1992, 22, 776–784. [CrossRef]
+71.
+Nord-Larsen, T.; Meilby, H.; Skovsgaard, J.P. Site-speciﬁc height growth models for six common tree species
+in Denmark. Scand. J. For. Res. 2009, 24, 194–204. [CrossRef]
+72.
+Socha, J. Site index curves for Norway spruce on mountain habitatsKrzywe bonitacyjne ´swierka pospolitego
+na siedliskach górskich. Sylwan 2011, 155, 816–826.
+73.
+Krumland, B.; Eng, H. Site Index Systems For Major Young-Growth Forest and Woodland Species in North
+California. Calif. For. 2005, 4, 1–220.
+74.
+Cieszewski, C.J. GADA derivation of dynamic site equations with polymorphism and variable asymptotes
+from Richards to Weibull and other exponential functions. For. Sci. 2004, 54, 303–315.
+75.
+Seki, M.; Sakici, O.E. Dominant height growth and dynamic site index models for Crimean pine in the
+Kastamonu-Ta¸sköprü region of Turkey. Can. J. For. Res. 2017, 47, 1441–1449. [CrossRef]
+76.
+Anta, M.B.; Dorado, F.C.; Diéguez-Aranda, U.; Álvarez González, J.G.; Parresol, B.R.; Soalleiro, R.R.
+Development of a basal area growth system for maritime pine in northwestern Spain using the generalized
+algebraic diﬀerence approach. Can. J. For. Res. 2006, 36, 1461–1474. [CrossRef]
+77.
+Cieszewski, C.J.; Harrison, M.; Martin, S.W. Examples of Practical Methods for Unbiased Parameter Estimation in
+Self-Referencing Functions; University of Georgia: Athens, GA, USA, 2000.
+78.
+Parresol, B.R.; Vissage, J.S. White Pine Site Index for the Southern Forest Survey White Pine Site Index for the
+Southern Forest Survey; U.S. Department of Agriculture, Forest Service, Southern Research: Asheville, NC,
+USA, 1998.
+79.
+Cieszewski, C.J.; Zasada, M. Model bonitacyjny dla sosny na podstawie tablic zasobno´sci Szymkiewicza.
+Sylwan 2003, 147, 51–62.
+80.
+Szymkiewicz, B. Tablice Zasobno´sci i Przyrostu Drzewostanów; Pa´nstwowe Wydawnictwo Rolnicze i Le´sne:
+Warszawa, Poland, 2001.
+81.
+Magin, V.R. Ertragskundliche Unteruchungen in Montanen Mischwaldern. Forstwiss. Cbl. 1954, 73, 103–113.
+[CrossRef]
+82.
+Huang, S. Development of compatible height and site in- dex models for young and mature stands within an
+ecosys- tem based management framework. In Empirical and Process-Based Models for Forest Tree and Stand
+Growth Simulation; Technical University of Lisboa: Oeiras, Portugal, 1999; pp. 61–98.
+83.
+Perin, J.; Hébert, J.; Brostaux, Y.; Lejeune, P.; Claessens, H. Modelling the top-height growth and site index of
+Norway spruce in Southern Belgium. For. Ecol. Manage. 2013, 298, 62–70. [CrossRef]
+84.
+Nieróbca, A.; Wróblewska, E.; Mizak, K.; Kozyra, J. Zmiana długo´sci okresu wegetacyjnego w Polsce. Woda
+´Srodowisko Obsz. Wiej. 2013, 13, 81–94.
+85.
+Jabło´nski, M.; Budniak, P. Estimating aboveground woody biomass of forests in Poland for FAO/ECE and
+UNFCCC reporting. For. Res. Pap. 2014, 75, 277–289. [CrossRef]
+86.
+Bøhler, F.; Bernt-Håvar, Ø. Estimation of site-index in old, semi-natural stands of Norway spruce at high
+altitude. Book of abstracts for the conference. Rapport fra Skog og landskap. In Proceedings of the Forest
+
+
+Forests 2020, 11, 301
+19 of 19
+Management and Silviculture in the North—Balancing Future Needs, Stjørdal, Norway, 6–8 September 2011;
+p. 53.
+87.
+Coops, N.C.; Hember, R.A. Physiologically derived predictions of Douglas-ﬁr site index in British Columbia.
+For. Chron. 2009, 85, 733–744. [CrossRef]
+© 2020 by the authors. Licensee MDPI, Basel, Switzerland. This article is an open access
+article distributed under the terms and conditions of the Creative Commons Attribution
+(CC BY) license (http://creativecommons.org/licenses/by/4.0/).

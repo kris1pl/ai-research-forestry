@@ -1,0 +1,1727 @@
+Jinsong Wang, Juan Fan, Xiuhua Fan*, Chunyu Zhang, L. Wu,
+Klaus v. Gadow
+Crown and root biomass equations for
+the small trees of Pinus koraiensis under canopy
+Received: 08 June 2012; Accepted 16 January 2013
+Abstract: Estimation of tree biomass is an essential part of studies on carbon sequestration and cycling in for-
+est ecosystem. Small trees grow in the understory and allometric development is different from that of mature
+trees. However, less attention has been paid to biomass estimates of small trees, especially in mixed forest
+where tree competition is intensive. Tree allometric equations at both branch level and at whole tree level
+were, thus, developed and compared for the small trees of Korean pine (Pinus koraiensis) in a mixed stand in
+northeastern China. At branch level, the best model for live branch biomass was one which used a combina-
+tion of branch diameter, branch length, whorl position and relative branch depth. For needle biomass, the
+best model did not significantly improve the estimate with more variables. At whole tree level, stem diameter
+at breast height (DBH) was a significant determinant of biomass for different components. Tree height did
+not significantly improve biomass estimation at all. Tree crown variables proved to be useful for estimating all
+biomass components except the fine roots. The variable measuring aboveground competition intensity was a
+significant negative determinant of biomass components except canopy biomass. Comparisons to published
+equations for the same species growing in Heilongjiang province in northeastern China and in central South
+Korea, were also presented. Both total aboveground biomass and belowground biomass in our study showed
+somewhat smaller values for a given diameter than the trees growing in other two places.
+Additional key words: Branch level; Tree level; Allometric equation; Aboveground competition; Korean
+pine
+Addresses: J.S. Wang, J. Fan, C.Y. Zhang, Key Laboratory for Forest Resource & Ecosystem Processes of
+Beijing, Beijing Forestry University, Beijing 100083, P. R. China
+L.Wu, Rothamsted Research, North Wyke, Okehampton, Devon EX20 2SB, UK
+K. v. Gadow, Faculty of Forestry and Forest Ecology, Georg-August-University Göttingen, Büsgenweg 5,
+D-37077 Göttingen, Germany
+X.H. Fan*, College of Science, Beijing Forestry University, Beijing 100083, P. R. China, Email:
+blfanxh@bjfu.edu.cn
+*corresponding author: Juan Fan and Jinsong Wang contributed equally to this work
+Introduction
+Carbon storage in the forest plays a crucial role in
+the adjustment of atmospheric carbon dioxide and
+global carbon dynamics. Estimation of tree biomass is
+an essential part of studies on carbon sequestration
+and cycling in the forest ecosystem (Verónica et al.
+2010). Moreover, information on the tree biomass is
+also important for evaluating plant adaptations to en-
+vironment, for assessing ecological processes such as
+nutrient cycles, forest productivity, fuel potential and
+competition in communities and for studying sus-
+2013, vol. 70, 13–25
+http://dx.doi.org/10.12657/denbio.070.002
+
+
+14
+Jinsong Wang, Xiuhua Fan, Juan Fan, Chunyu Zhang, L. Wu, Klaus v. Gadow
+tainable management of forest resources (Salis et al.
+2006; Zianis et al. 2010).
+Quantifying tree biomass by direct harvesting and
+weighing is very costly and impractical for large-scale
+use (Quint and Dech 2010). Therefore allometric
+equations are commonly used as a non-destructive
+method alterative in which biomass of different com-
+ponents is estimated based on easily quantifiable tree
+attributes (Jagodziński and Kałucka 2008; Sampaio et
+al. 2010).
+Numerous easily measurable variables have been
+used to develop and compare allometric equations.
+Independent branch-level variables are generally sim-
+ple morphological branch characteristics such as
+branch diameter, branch length and relative branch
+depth. Tree-level variables are commonly tree diame-
+ter at breast height, tree height, tree age, and/or
+crown attributes such as crown length, crown ratio
+and crown area (e.g., Ter-Mikaelian and Korzukhin
+1997; Xiao and Ceulemans 2004). Thus, it is neces-
+sary to apply and assess these different variables for
+developing a reliable allometric equation, which is ca-
+pable of estimating above- and below-ground bio-
+mass components for a given target species.
+Similarly, less attention has been paid to biomass
+estimation for saplings or small trees. Small trees
+grow in the understory in the forest, intraspecific and
+interspecific competitions are always intensive due to
+lack of available radiation. Thus, allometric develop-
+ment in the small trees is different from that of ma-
+ture trees. This could eventually be important for
+modeling stand development and has indeed often
+been neglected. Numerous published studies have re-
+ported the effect of aboveground competition on
+small trees growth (Mäkelä and Vanninen 1998; Watt
+et al. 2003). We are not aware of any investigation
+that deals with aboveground competition influences
+biomass estimates for the small trees. Additionally, in
+terms of stand-level total biomass, proportions of
+smaller trees are generally not as large as those of
+larger individuals, except for specific forest types or
+conditions. Nevertheless, small trees are an impor-
+tant composition of many forests and even biomass
+return rate is higher than overstorey. Thus, excluding
+them may cause serious underestimation of the
+whole stand biomass and it is logical to pay attention
+to their contribution to total forest biomass.
+Korean pine (Pinus koraiensis) grows in the Amur
+and Eastern maritime provinces of Russia, Korea, the
+northeast of China, and sporadic areas on the Japa-
+nese islands of Honshu and Shikoku. Korean pine is
+also a major plantation tree species in northeastern
+China as well as in Korea because of highly valued
+wood products and nuts. It prefers a humid and warm
+climate and also likes acid soils with good drainage
+and aeration. Young trees favor light, and light re-
+quirement increase with age. To the best of our
+knowledge, a limited number of studies have been
+undertaken concerning allometry of Korean pine, ex-
+cept the work by Wang (2006; involving 10 trees) and
+the analysis by Son et al. (2001; involving 20 trees) in
+the mixed forests. Neither of these studies presents
+allometric relationships at branch level and compari-
+sons of allometric equations derived using different
+independent variables.
+The objectives of this paper were 1) to develop
+allometric relationships at branch and at whole tree
+levels, which are capable of estimating different
+above- and below-ground biomass components for
+the small trees of Korean pine under canopy; 2) to test
+if branch diameter at branch level or breast height di-
+ameter at whole tree level is sufficiently reliable for
+biomass component estimates; 3) to compare the re-
+sults of this study with other published equations and
+then estimate total stand biomass as well as the con-
+tribution of the small trees.
+Materials and methods
+Study site
+The study site is situated in the vicinity of Guang-
+ming Forestry Center in Changbaishan Nature Reserve
+in northeastern China (42°21' N, 128°08' E, 748 m
+a.s.l.). The study area is a natural secondary forest
+dominated by P. koraiensis, Abies nephrolepis, Quercus
+mongolica, Tilia amurensis, Fraxinus mandshurica and Acer
+mono in association with other subcanopy tree spe-
+cies. It represents the typical forest type and land-
+scape of deciduous broad-leaved and coniferous
+mixed forests. The climate in this region has been de-
+scribed as continental mountainous and monsoon-af-
+fected with an annual average temperature of 3.6°C
+(January –15.4°C and August 19.6°C). The annual
+mean precipitation is 707 mm. The distribution of the
+precipitation over the year is relatively uneven. Rela-
+tively wet and dry seasons occur from June to August,
+and from September to May of the following year, re-
+spectively. The parent material is granite bedrock and
+the soil is classified as a brown forest soil, with a
+depth ranging from 20 to 100 cm. The topography is
+flat and slope is generally less than five degrees.
+Field sampling and data collection
+A permanent research plot covering an area of 200
+m×260 m was established at the site in July 2007 to
+represent P. koraiensis, Abies nephrolepis and deciduous
+broad-leaved species dominated forest. The plot was
+further subdivided into 130 contiguous square sub-
+plots with 20 m×20 m each. In each subplot, the spe-
+cies of all live and dead trees with their diameters at
+the breast height (DBH) exceeding 1 cm were identi-
+fied. The DBH, tree height and crown dimensions of
+each tree were measured and recorded. With a stem
+
+
+Crown and root biomass equations for the small trees of Pinus koraiensis under canopy
+15
+density of 2831 stems/ha and a total basal area of
+32.07 m2/ha in the plot, the density of Korean pine is
+149 stems/ha and total basal area is 2.32 m2/ha. The
+upper height of the competing trees ranges from 30 to
+35 m. A histogram of total recorded Korean pine in
+the plot is presented in Fig. 1. The DBH of most Ko-
+rean pine is less than 10 cm. We define a “small tree”
+as one with a DBH less than 10 cm and a height less
+than 10 m. A moderate selective felling was carried
+out in 1953.
+Ten small trees with DBH between 1.9 and 9.7 cm
+were selected in the research plot for a destructive
+measurement of above- and below-ground biomass.
+Trees with severe defects were not included. Each Ko-
+rean pine subject tree was located at the centre of a
+circular plot. Each plot had a 10 m radius and consti-
+tuted the ‘competition zone’ for the subject tree. All
+trees with DBHs exceeding 5 cm in this ‘competition
+zone’ were selected as competitors, and their DBHs
+and distances to the subject tree were assessed. The
+study was carried out during two months, between
+June and August 2009.
+Stems were cut at ground level. Dead branches were
+collected first, followed by the measurement and re-
+cording of total tree height (H), height to the lowest
+live branch (LCH), live crown length (CL). Crown
+width from south to north (CSN) and crown width
+from east to west (CEW) measurement and recording
+followed immediately. The number (n) of live whorls
+was recorded as well. Following Xiao and Ceulemans
+(2004), whorl position (WP) = 1 is defined as the first
+live whorl from the top of the crown, ranging down un-
+til WP = n which is the lowest live whorl. Each branch
+height (HB) was measured to the nearest 0.05 m using
+a tape measure that was stretched vertically along the
+main stem of each sample tree.
+The live crown was then divided into three sec-
+tions of equal length (top, middle, and bottom). The
+fresh biomass of stems, live branches, and needles
+from each section was weighed using an electronic
+scale to the nearest 1 g for each sample tree. From
+each component, approximately 50–100 g of fresh
+mass was randomly sampled and the dry mass of each
+component was calculated using the dry/fresh ratio of
+each component sample after oven-drying to a con-
+stant mass at 80°C.
+Two or three branches were selected as sub-sam-
+ples from each section in each sample tree. Each
+branch sub-sample was separately labeled and trans-
+ferred to the laboratory. Branch diameters (BD) at
+about 2 cm from the bole were measured with an elec-
+tronic caliper to the nearest 0.01 cm and branch
+lengths (BL) were measured to the nearest 0.1 m with
+a tape from the main stem to the farthest foliated sec-
+tion of the branch sub-sample. The relative depth
+(RBD) of each branch sub-sample in the live crown
+was defined as (H–HB)/(H–LCH) for the following
+analysis. All needles were removed from each branch
+sub-sample, and the fresh mass of live branch and
+needles was measured to the nearest 0.001 g with an
+electronic scale. The dry mass of live branches was de-
+termined after oven-drying at 80°C for 5 days, and for
+all needles (3 days) of each branch sub-sample. A to-
+tal of 79 branch sub-samples were selected to develop
+allometric relationships for estimating live branch
+and needle biomass at branch level.
+The entire root system of each sample tree was
+carefully excavated by hand to avoid disrupting the
+finest roots. We collected as much fine root biomass
+for each tree as possible by cautiously digging out
+each root by hand. The task was facilitated by shal-
+low-rooting habit of Korean pine and by favourable
+soil properties. The entire root was delivered as a
+whole to the laboratory, washed free of soil and then
+sorted into fine roots (5 mm) and coarse roots (>5
+mm) using a electronic caliper, following the method
+applied by Cheng et al. (2005). Dry mass was deter-
+mined after oven-drying at 80°C for 3 days (fine
+roots) and 10 days (coarse roots). To estimate the age
+(A) of each sample tree, the annual rings on the basal
+disk were counted using Lintab 5 system (Rintech,
+Heidelberg, Germany).
+Data analysis
+For each sample tree, competition intensity (CI)
+from neighbouring trees was computed using the Iter-
+ative Hegyi Index. This Index has been found superior
+to other competition indices requiring tree coordi-
+nates. Indices which use simulated crown shading,
+available radiation and other techniques were found
+less effective in explaining tree growth. A possible
+reason for the explanatory power of the Iterative Hegyi
+Index is the fact that it a) uses a dynamic competition
+zone and b) differentiates between ‘active’ and ‘pas-
+sive’ competitors (Lee and Gadow 1997). Detailed
+descriptions of the calculation method can be found
+in Wang et al. (2011). For these reasons, the Iterative
+Hegyi Index was chosen to analyze the competition in-
+tensity in this study.
+A general non-linear allometric equation was used
+to calculate live branch and needle biomass (Xiao and
+Ceulemans 2004):
+Y
+a X
+X
+X
+X
+p
+p
+p
+n
+p n
+=
+0
+1
+2
+3
+1
+2
+3 ...
+θ
+(1)
+where Y is needle or live branch biomass, Xi are inde-
+pendent variables, a0–pn are model coefficients and θ
+represents the multiplicative error term. Eq. 1 can be
+converted into logarithmic form so that, a linear re-
+gression can be used to estimate the coefficients:
+ln
+ln
+ln
+ln
+...
+ln
+Y
+p
+p
+X
+p
+X
+p
+X
+p
+X
+n
+n
+=
++
++
++
++
++
+0
+1
+1
+2
+2
+3
+3
+ε
+(2)
+
+
+16
+Jinsong Wang, Xiuhua Fan, Juan Fan, Chunyu Zhang, L. Wu, Klaus v. Gadow
+where p0 ln a0, and ε = ln θ. The logarithmic transfor-
+mation of a dependent variable can cause a bias when
+reverse transformation is operated (Zar 1996). Thus,
+a correction factor k was introduced:
+k
+Y
+e
+i
+i
+n
+i
+i
+n
+=
+=
+=
+∑
+∑
+1
+1
+ln 
+(3)
+where n is the sample size, Yi and  represent the ob-
+served and predicted values. This method ensures
+that the mean predicted value is equal to the mean ob-
+served value. Hence, an unbiased estimate of Y is
+given as:
+ = k×exp(p0+p1 ln X1+p2 lnX2+p3 lnX3 ...+pn lnXn (4)
+We developed these equations using BD, BL, WP
+and RBD as independent variables, to identify an
+equation suitable for estimating biomass of live
+branches and needles at branch level. Significance
+was evaluated at the P=0.05 and 0.01 probability lev-
+els. All parameters were tested for significance.
+Eq. 2 was also used for estimating total tree bio-
+mass and biomass of stems, live branches, needles,
+and roots at whole tree level. For each biomass com-
+ponent three equations were developed with different
+combination of independent variables: (i) DBH, (ii)
+DBH and H, (iii) the combination of DBH, H, A, CL,
+CSN, CEW and CI, using stepwise regression and a
+significance level of P=0.15.
+The criterion used for the selection of the best
+equation was adjusted coefficient of determination
+(R2
+adj), root mean square error (RMSE), mean bias
+(Bias), fit index (FI), Akaike’s information criterion
+(AIC). RMSE, Bias, FI are expressed in Eqs. 5–7. In ad-
+dition, percentage RMSE and MPE expressed in Eq. 8
+and 9 are used to indicate expected estimation error
+and
+mean
+relative
+prediction
+error
+respectively
+(Hosoda and Iehara 2010).
+RMSE
+Y
+n
+i
+i
+i
+n
+=
+−
+=∑(
+)
+/
+
+2
+1
+(5)
+B
+Y
+n
+ias
+i
+i
+n
+=
+−
+=∑(
+) /
+1
+
+1
+(6)
+FI
+Y
+Y
+Y
+i
+i
+i
+n
+i
+i
+i
+n
+= −
+−
+−
+=
+=
+∑
+∑
+1
+2
+1
+2
+1
+(
+)
+/
+(
+)
+
+(7)
+RMSE
+Y
+Y
+n
+i
+i
+i
+i
+n
+(%)
+((
+) /
+)
+/
+=
+−
+⋅
+=∑
+
+2
+1
+100
+(8)
+MPE
+n
+Y
+Y
+i
+i
+n
+i
+=
+−
+=∑
+100
+1
+Yi
+(9)
+In Eq. 7, Y is average observed values for each bio-
+mass component. Percentage RMSE and MPE are indi-
+ces of precision mainly expressed by estimating error.
+Bias is an index of unbiasedness of estimation. FI is
+analogous to the coefficient of determination in ordi-
+nary linear regression. All statistical analyses were
+performed using the R version 2.12.1 statistical soft-
+ware (R Development Core Team 2010).
+Results
+Estimation of live branch and needle
+biomass at branch level
+Total dry matter of branch sub-samples (N = 79)
+ranged from 0.12 to 198.29 g with a mean equal to
+33.90 g and associated standard error of 4.41 g. For
+needles, the total dry mass spanned from 1.30 to
+73.52 g with an average value of 21.50 g and standard
+error equal to 2.07 g. The allometry of observed live
+branch and needle biomass versus BD, as well as a re-
+sidual plot is shown in Fig. 2. All relationships were
+highly significant (P<0.001). Most of the variability
+was explained for live branch biomass (R2
+adj=0.946).
+Some slightly weaker match was found for needle bio-
+mass (R2
+adj=0.721).
+Different allometric equations were established to
+predict live branch and needle biomass, using BD, BL,
+WP and RBD (Table 1). All relationships involving
+biomass estimates with different variables were
+highly significant for live branches and needles
+(P<0.001). Compared with the equation using single
+variable BD, a considerable reduction in RMSE, MPE
+as well as AIC and an increase in R2
+adj and FI was found
+when using additional variables to predict live branch
+Fig. 1. Frequency histogram of recorded Korean pine trees
+in the research plot in Changbaishan Nature Reserve in
+northeastern China
+
+
+Crown and root biomass equations for the small trees of Pinus koraiensis under canopy
+17
+biomass. The RMSE, MPE, AIC values and absolute
+Bias were the smallest, and FI was the highest in the
+equation using four variables for live branch biomass.
+Even if the number of parameters was increased, it
+was judged that the equation using four variables
+would be the best model. In addition, the variables
+BD, BL and RBD showed a significantly positive
+(P<0.001) while WP showed a significantly negative
+correlation with live branch biomass (P<0.05).
+Estimates of the needle biomass were not as good
+when compared with those of live branch biomass,
+with the R2
+adj values of different equations ranging be-
+tween 0.82 and 0.84. The relationship of biomass
+with three variables (BD, BL, WP or BD, BL, RBD) pro-
+duced the best fit for needle biomass estimates. Inter-
+estingly, the variables BD and BL showed a positive
+correlation with needle biomass, while WP or RBD
+showed a significantly negative correlation with nee-
+dle biomass (P<0.001).
+The relationship between observed and predicted
+biomass components, estimated either by the BD
+model or the best model for live branch and needle bio-
+mass is shown in Fig. 3. The slope of the regression
+(1.121) for the BD model with correction factor indi-
+cates a slight overestimation for live branch biomass,
+whereas, the slope of 1.002 for the best model showed
+that the predicted values were almost identical to the
+observed values and matched very well. A considerable
+underestimation for the BD model or the best model is
+presented in Fig. 3 in the case of needle biomass. Addi-
+tionally, the slope of the regression for the best model
+was basically identical to that of the BD model.
+Estimation of biomass components
+at whole tree level
+The observed values of different biomass compo-
+nents plotted against DBH and H are shown in Fig. 4.
+Individual biomass components showed a significant
+exponential relationship for both the DBH and H. The
+best fit was obtained for the biomass components of
+stems and roots, which could explain most of the to-
+tal variation in the observed data.
+Different allometric equations for biomass compo-
+nents, except dead branches, were developed and
+compared using the independent variables (Table 2).
+Separately, all biomass equations were highly signifi-
+cant for individual components (P<0.001). The fit
+using the single variable DBH, explained most of the
+Fig. 2. The allometry of observed live branch and needle biomass versus branch diameter as well as a residual plots at branch
+level
+
+
+18
+Jinsong Wang, Xiuhua Fan, Juan Fan, Chunyu Zhang, L. Wu, Klaus v. Gadow
+Table 1. Regression coefficients (p0-p4) for different equations (Y = k×exp(p0 + p1 ln BD + p2 ln BL + p3 ln WP + p4 ln RBD)) used to estimate biomass components of live
+branches and needles (Y, g) with different variables (BD, BL, WP and RBD)
+Components
+Coefficients
+R2
+adj
+k
+RMSE (%)
+MPE (%)
+Bias
+RMSE
+FI
+AIC
+p0
+p1
+p2
+p3
+p4
+Live branch biomass
+2.985
+***
+3.305***
+–
+–
+–
+0.954***
+0.961
+47.2
+28.2
+–1.36
+14.79
+0.860
+58.3
+3.157
+***
+1.457***
+1.295***
+—–
+–
+0.987***
+1.019
+17.7
+14.7
+0.64
+6.21
+0.976
+–39.7
+3.013
+***
+1.503***
+1.217***
+0.065NSa
+–
+0.987***
+1.018
+17.6
+14.4
+0.63
+6.22
+0.976
+–39.2
+3.252
+***
+1.592***
+1.072***
+–
+0.166***
+0.988***
+1.019
+16.8
+13.7
+0.64
+6.06
+0.977
+–48.9
+Ł3.846
+***
+1.577***
+1.102***
+–0.222*
+0.341***
+0.989***
+1.021
+16.2
+13.2
+0.69
+5.81
+0.979
+–53.9
+Needle biomass
+2.861
+***
+1.827***
+–
+–
+–
+0.820***
+1.080
+60.6
+34.0
+1.58
+9.89
+0.714
+84.1
+2.859
+***
+1.845***
+–0.012NS
+–
+–
+0.818***
+1.079
+60.5
+34.0
+1.58
+9.96
+0.714
+86.1
+Ł3.782
+***
+1.550***
+0.483*
+–0.416***
+–
+0.844***
+1.067
+53.1
+30.8
+1.36
+9.07
+0.766
+74.6
+Ł2.631
+***
+1.521***
+0.520*
+–
+–0.397***
+0.844***
+1.068
+53.3
+30.9
+1.36
+9.01
+0.769
+75.0
+3.278
+***
+1.505***
+0.552*
+–0.242NS
+–0.206NS
+0.845***
+1.066
+52.3
+30.5
+1.33
+9.02
+0.771
+75.3
+R
+2
+adj: The adjusted coefficient of determination; k: correction factor; Bias: mean bias; RMSE: root mean square error; MPE: mean prediction error; FI: fit index; AIC: Akaike’s information criterion. The
+best model for each biomass component is marked by prefixing the symbol Ł. Sample size is n = 79. *P<0.05; **P<0.01;
+***P<0.001;
+aNon-significant, P>0.05.
+
+
+Crown and root biomass equations for the small trees of Pinus koraiensis under canopy
+19
+total variation in the observed data involving biomass
+components of stems and total aboveground. A mar-
+ginally weaker fit was found for the components of
+coarse roots and total belowground (R2
+adj about 97%).
+Somewhat weaker fits were found for the components
+of live branches, needles, and fine roots, with R2
+adj val-
+ues ranging from 84% to 94%.
+Table 2 shows that the inclusion of H and other in-
+dependent variables generally improved the fit for
+biomass components, when compared with the re-
+sults of using only DBH. Tree height helped explain
+the variation by an additional 8% for the needle bio-
+mass, and this result was striking. In terms of MPE,
+RMSE as well as AIC, the values were all largely re-
+duced when H was included in the needle biomass es-
+timates. However, it did not improve biomass esti-
+mates for other components.
+The best models for each biomass component are
+also listed in Table 2. The information on crown char-
+acteristics helped to improve the estimates for almost
+all biomass components except the fine roots. CSN
+and CEW significantly affected biomass estimates of
+live branches and needles. RMSE and MPE in the best
+models for live branches and needles were the small-
+est, mean bias was closer to zero, and FI was the high-
+est. AIC was also much smaller in the best models
+than in the DBH model. Interestingly, CSN exhibited a
+significantly positive and CEW showed a significantly
+negative correlation with biomass components in the
+best models. It also can be noted that CL significantly
+Fig. 3. The relationship between observed and predicted values estimated either by the BD model or the best model for live
+branch and needle biomass at branch level. Best model 1 referred to the regression using variables of BD, BL, WP and best
+model 2 the regression using variables of BD, BL, and RBD for needle biomass from Table 1
+Fig. 4. The observed values of different biomass components plotted against DBH and H. Root biomass included fine root
+biomass and coarse root biomass
+
+
+20
+Jinsong Wang, Xiuhua Fan, Juan Fan, Chunyu Zhang, L. Wu, Klaus v. Gadow
+Table 2. Regression coefficients (p0-p7) for different equations (Y = k × exp(p0+ p1 ln DBH + p2 ln H + p3 ln CL + p4 ln CSN+ p5 ln CEW+ p6 ln A+ p7 ln CI)) used to estimate bio-
+mass components (Y, kg) with one variable (DBH), two variables (DBH, H) and the best optimal equation using the available set of independent variables, namely DBH, H, CL,
+CSN, CEW, A and CI in a stepwise regression
+Components
+Coefficients
+R2
+adj
+k
+RMSE
+(%)
+MPE (%)
+Bias
+RMSE
+FI
+AIC
+p0
+p1
+p2
+p3
+p4
+p5
+p6
+p7
+Stem biomass
+–2.353
+***
+2.088
+***
+–
+–
+–
+–
+–
+–
+0.989***
+1.029
+10.8
+9.3
+0.12
+0.59
+0.979
+–10.7
+–2.487
+***
+1.726
+***
+0.461
+–
+–
+–
+–
+–
+0.990***
+1.023
+9.3
+8.6
+0.09
+0.50
+0.988
+–11.3
+–3.812
+*
+1.648
+*
+–1.015*
+–
+0.633*
+–
+1.163*
+–0.518*
+0.997***
+0.999
+3.5
+2.7
+–0.01
+0.25
+0.998
+–24.4
+Live branch biomass
+–3.001
+***
+1.874
+***
+–
+–
+–
+–
+–
+–
+0.910***
+1.025
+27.3
+22.5
+0.03
+0.39
+0.909
+8.8
+–2.610
+***
+2.924
+**
+–1.338
+–
+–
+–
+–
+–
+0.925***
+1.024
+21.3
+17.9
+0.03
+0.49
+0.874
+7.6
+–2.473
+***
+1.812
+**
+–1.807**
+–
+4.179**
+–1.993*
+–
+–
+0.991***
+1.004
+6.9
+6.1
+0.01
+0.14
+0.990
+–13.3
+Needle biomass
+–2.590
+***
+1.462
+***
+–
+–
+–
+–
+–
+–
+0.842***
+1.049
+39.3
+21.4
+0.05
+0.30
+0.858
+10.1
+–1.997
+***
+3.057
+***
+–2.032*
+–
+–
+–
+–
+–
+0.920***
+1.031
+20.5
+16.1
+0.03
+0.32
+0.855
+4.0
+–1.771
+***
+2.965
+**
+–2.837**
+–
+3.473*
+–2.575*
+–
+–
+0.972***
+1.012
+10.2
+8.2
+0.01
+0.14
+0.975
+–5.9
+Aboveground biomass
+–1.422
+***
+1.867
+***
+–
+–
+–
+–
+–
+–
+0.986***
+1.020
+10.8
+8.1
+0.13
+0.92
+0.978
+–10.4
+–1.344
+***
+2.077
+***
+–0.267
+–
+–
+–
+–
+–
+0.985***
+1.022
+10.1
+7.7
+0.15
+1.11
+0.972
+–9.1
+–1.688
+*
+1.400
+*
+–1.359*
+–
+2.000*
+–0.736*
+0.770*
+–0.468*
+0.998***
+0.999
+2.3
+1.7
+–0.01
+0.26
+0.999
+–31.6
+Fine root biomass
+–4.204
+***
+1.270
+***
+–
+–
+–
+–
+–
+–
+0.941***
+1.020
+14.6
+12.6
+0.00
+0.02
+0.964
+–3.5
+–4.128
+***
+1.476
+**
+–0.263
+–
+–
+–
+–
+–
+0.935***
+1.021
+14.2
+12.4
+0.00
+0.02
+0.964
+–1.9
+–2.505
+*
+0.774
+*
+–
+–
+–
+–
+–
+–0.424*
+0.954***
+1.008
+12.5
+10.9
+0.00
+0.02
+0.961
+–5.3
+Coarse root biomass
+–3.585
+***
+1.934
+***
+–
+–
+–
+–
+–
+–
+0.972***
+1.049
+15.6
+12.1
+0.04
+0.32
+0.890
+–2.8
+–3.566
+***
+1.985
+**
+–0.065
+–
+–
+–
+–
+–
+0.968***
+1.050
+15.5
+11.9
+0.04
+0.34
+0.887
+–0.8
+–0.450
+NS
+–
+–
+0.574*
+0.942**
+–
+–
+–0.785***
+0.990***
+1.004
+8.1
+6.6
+0.00
+0.09
+0.992
+–12.5
+Belowground biomass
+–3.218
+***
+1.817
+***
+–
+–
+–
+–
+–
+–
+0.969***
+1.047
+15.0
+12.4
+0.05
+0.34
+0.896
+–3.2
+–3.200
+***
+1.864
+**
+–0.060
+–
+–
+–
+–
+–
+0.965***
+1.047
+14.9
+12.2
+0.05
+0.36
+0.894
+–1.2
+–0.062
+NS
+–
+–
+0.514*
+0.816*
+–
+–
+–0.791***
+0.990***
+1.005
+7.6
+6.6
+0.01
+0.09
+0.993
+–13.7
+
+
+Crown and root biomass equations for the small trees of Pinus koraiensis under canopy
+21
+affects biomass estimates of coarse roots and total
+belowground.
+A and CI usually improved equation fit but in dif-
+ferent ways. A was a significant determinant of stem
+biomass and total aboveground biomass. Disre-
+garding tree age may give slightly biased estimates. CI
+seemed to be very important for biomass estimates
+except canopy biomass. And CI exhibited a significant
+negative correlation with biomass components.
+Due to the fact that the improvement of evaluation
+indices for live branches and needles in the best
+model is the greatest, these two components were se-
+lected to quantify the difference between biomass es-
+timates from the DBH model and from the best
+model. A small underestimation either for live branch
+or needle biomass was presented for both the DBH
+model and the best model. The slope of the regression
+for the DBH model was 0.895 for live branch biomass
+and 0.827 for needle biomass, whereas, the slope of
+0.970 for live branch biomass and that of 0.952 for
+needle biomass showed that the predicted values esti-
+mated by the best model were almost identical to the
+observed values and fitted very well.
+Stand biomass and contribution of small
+trees
+Due to similar study site as well as sample trees
+were mainly composed of larger trees (DBH>10 cm),
+biomass equations cited from Wang (2006) in
+Heilongjiang province in northeastern China and bio-
+mass allometry in this study were used to estimate
+larger trees and smaller trees biomass, respectively in
+the stand (Table 3). Our estimated total stand bio-
+mass is 63.79 Mg ha–1. The relative contribution of
+smaller trees to total stand biomass is about 5%. The
+belowground to aboveground biomass ratio is esti-
+mated at 0.16 for smaller trees and 0.30 for larger
+trees.
+Discussion
+Biomass allometric equations at branch
+level
+Branch and foliage quantity within the canopy play
+an important role in the ability of a forest to assimi-
+late carbon, since crown is the location of the physio-
+logical processes (Crecente-Campo et al. 2009). We
+have shown in the present study that branch attrib-
+utes such as branch diameter, branch length, whorl
+position and branch depth were found very appropri-
+ate for estimating live branch and needle biomass.
+Our findings agree in principle with earlier studies of
+Scots pine (Xiao and Ceulemans 2004), Loblolly pine
+(Blazier et al. 2002) and Douglas-fir (Ishii and Wilson
+2001).
+At branch level, needle biomass was more difficult
+to estimate relative to live branches, probably due to
+the fact that needles are highly sensitive to light, wa-
+ter and nutrients. In addition, needle vitality is influ-
+enced by their location on the branch and within the
+crown (Wang 2006). If this is true, tree size distribu-
+tion, species mixture and stand density should affect
+the amount of branch and foliage biomass (Grote and
+Reiter 2004). The best equations showed that live
+branch and needle biomass increased with branch di-
+ameter and branch length, but that live branch bio-
+mass increased and needle biomass decreased with
+relative branch depth for a given branch diameter and
+branch length. The most likely reason for this finding
+is the fact that light availability decreases with crown
+depth (Brix 1981), and that needle growth is strongly
+affected by the reduction of the available radiation
+(McCrady and Jokela 1996). Live branch growth is
+less affected by reduced light availability, as the cu-
+mulative time for branch biomass accumulation in-
+creases with crown depth (Xiao and Ceulemans
+2004). Obviously, less foliage is sustained on live
+branches at the crown base, because of restricted light
+Table 3. Biomass estimates of different components in the research plot by applying allometric equations for the small trees
+with DBH10 cm in this study and equations for trees with DBH>10 cm cited from Wang (2006). Value in parenthesis is
+a relative proportion (%) of each component biomass to total stand biomass
+Components
+Biomass (Mg ha–1)
+DBH 10 cm
+DBH 10 cm
+Total
+Stems
+1.72 (2.70)
+31.27 (49.02)
+32.99 (51.72)
+Live branches
+0.60 (0.94)
+13.02 (20.41)
+13.62 (21.35)
+Needles
+0.44 (0.69)
+2.42 (3.79)
+2.86 (4.48)
+Total aboveground
+2.76 (4.33)
+46.71 (73.22)
+49.47 (77.55)
+Fine roots
+0.06 (0.09)
+– (not measured)
+0.06 (0.09)
+Coarse roots
+0.38 (0.60)
+13.88 (21.76)
+14.26 (22.36)
+Total belowground
+0.44 (0.69)
+13.88 (21.76)
+14.32 (22.45)
+Belowground/aboveground
+0.16
+0.30
+0.29
+Total tree
+3.20 (5.02)
+60.59 (94.98)
+63.79 (100)
+
+
+22
+Jinsong Wang, Xiuhua Fan, Juan Fan, Chunyu Zhang, L. Wu, Klaus v. Gadow
+availability, although branch diameter is greater. Our
+findings are similar to those of Hepp and Brister
+(1982) who found that the maximum dry weight of
+an individual branch for Loblolly pine occurs at 20%
+of the crown length up from the base of the live
+crown.
+As for live branch biomass, the best model was the
+one that used a combination of branch diameter,
+branch length, whorl position and relative branch
+depth. Though the simpler BD model slightly overes-
+timates live branch biomass, it may be enough to be
+used at branch level when considering the difficulties
+of acquiring basic data. However, a considerable un-
+derestimation in needle biomass is presented in both
+BD model and the best model. Additionally, the slope
+of the regression for the best model was basically
+identical to that of the BD model. This indicated that
+the best model including more variables did not sig-
+nificantly improve needle biomass estimates. This
+implies that the simple BD model may be a practical
+compromise for predicting needle biomass. It will
+slightly underestimate this component, but requires
+less field measurements.
+Biomass allometric equations at whole
+tree level
+The majority of previous biomass studies for dif-
+ferent species focused on tree level allometric equa-
+tions which are commonly used to estimate biomass
+of aboveground components in combination with
+specific tree characteristics (e.g., Son et al. 2001;
+Basuki et al. 2009). Only a few studies presented
+allometric equations involving belowground compo-
+nents (Van Lear and Kapeluck 1995; Wang 2006). In
+addition, allometric equations have rarely been used
+for fine root (5 mm) biomass due to the technical
+difficulties (Vanninen and Mäkelä 1999; Xiao and
+Ceulemans 2004). Our allometric equations, using
+easily measurable tree characteristics, estimate the
+biomass of above- and below-ground components for
+the small trees of Korean pine with high accuracy. We
+found that DBH was an important independent vari-
+able when estimating the different biomass compo-
+nents. This confirms previously published findings
+(e.g., Johansson 1999; Xiao and Ceulemas 2004).
+Several other studies discussed the inclusion of
+tree height as a second variable in allometric equa-
+tions, e.g. for boreal (Cienciala et al. 2006; Wagner
+and Ter-Mikaelian 1999) and tropical tree species
+(Cole and Ewel 2006). Wagner and Ter-Mikaelian
+(1999) found that the inclusion of tree height as a
+second variable improved the prediction of stem bio-
+mass but not the estimation of root biomass for white
+pine (Pinus strobes L.) seedlings. Cienciala et al. (2006)
+reported that the inclusion of height gave improved
+estimates of aboveground biomass of Scots pine
+across central Europe. In our study, using tree height
+as a second independent variable did not significantly
+improve the estimation, except in the case of needle
+biomass. This is probably caused by a high collin-
+earity between breast height diameter and tree
+height, due to the high correlation between these two
+variables (0.96). Probably for this reason, tree height
+was rarely used in similar studies (Pastor et al. 1984).
+Height measurements are time-consuming and less
+accurate than DBH mesurements. In addition, adding
+tree height may introduce propagated variance due to
+a cumulative variance caused by height measurement
+errors (Mowrer and Frayer 1986; Wang 2006).
+The contribution of additional independent vari-
+ables was evaluated by analysing the changes of eval-
+uation indices. Additional tree crown attributes
+proved to be useful for estimating all biomass compo-
+nents except fine roots. Crown width is an important
+determinant of canopy biomass and our best esti-
+mates of live branch and needle biomass were both
+based on crown width. The amount of available light
+absorbed by canopy may depend on its orientation,
+especially in northern regions. The amount of solar
+radiation is greater coming from a southerly direction
+and canopy biomass may be greatly affected by the
+orientation of the crown. Thus, the south-northerly
+crown width showed a positive correlation with live
+branch
+and
+needle
+biomass.
+Conversely,
+the
+east-westerly crown width was negatively correlated
+with canopy biomass.
+Factors such as stand age, soil condition, topogra-
+phy, and disturbance may affect tree allometry and
+biomass partitioning patterns (Jenkins et al. 2003;
+Petersen et al. 2008). Aboveground tree size has a dis-
+proportionate advantage in competing for light,
+which is due to the fact that aboveground competi-
+tion is asymmetric (Weiner 1990), while below-
+ground competition appears size-symmetric (Casper
+and Jackson 1997). To our knowledge, this study is
+the first trial which evaluates the effect of above-
+ground competition on the tree allometry. Our find-
+ings suggest that competition intensity is a signifi-
+cantly negative determinant of biomass components
+except canopy biomass. The most likely reason for
+this result maybe the effects of competition on bio-
+mass partitioning of above- and below-ground com-
+ponents and thus on the tree biomass allometry. Simi-
+lar to this finding, Petersen et al. (2008) reported
+young Douglas-fir growing in areas with and without
+competition. They found that allometric equations
+were very different for estimating biomass of this spe-
+cies due to the fact that trees growth without compe-
+tition had higher leaf area-DBH correlations than that
+with competition.
+Allometric equations using many independent
+variables may reduce the prediction bias to a certain
+extent, but it is always desirable to keep the set of
+
+
+Crown and root biomass equations for the small trees of Pinus koraiensis under canopy
+23
+variables as small as possible to reduce the variability
+of estimation (Wirth et al. 2004). The selection of a
+“best” biomass equation depends on the practical
+considerations, especially the availability of specific
+independent variables (Cienciala et al. 2006). Statis-
+tically, the more independent variables are included,
+the more precise estimates are obtained. However,
+the difficulties of acquiring basic data during field in-
+ventories should not disregarded. As mentioned be-
+fore, it is necessary to find a balance between statisti-
+cal significance and intended use in order to predict
+tree biomass better.
+Based on the comparisons of different biomass
+models using a range of evaluation indices, we recom-
+mend that branch diameter at branch level and breast
+height diameter at whole tree level be selected as sim-
+ple and reliable independent variables. More precise
+estimation of biomass components such as live
+branches and needles require crown variables.
+Comparisons to other available
+equations
+Our biomass estimates were also compared with
+those other studies of Korean pine. For this purpose,
+we selected published equations from the biomass
+dataset presented by Son et al (2001) on individual
+trees with DBH’s ranging from about 8 to 36 cm in cen-
+tral South Korea and by Wang (2006) with DBH’s rang-
+ing from 2.4 to 30 cm in Heilongjiang province in
+northeastern China (Fig. 5). Both equations in central
+South Korea and in Heilongjiang province used the
+base 10 logarithm, which were both transformed to
+the natural logarithm in accordance with this study
+and could easily be compared. Total aboveground bio-
+mass in our study was smaller for a given diameter
+than the estimates for the trees sampled either in
+Heilongjiang or in central South Korea. The slope of
+the regression for the total aboveground biomass was
+1.867 in our study, whereas it was 2.144 in Heilong-
+jiang province and 2.386 in central South Korea. Simi-
+larly, total belowground biomass in our study was also
+somewhat smaller for a given diameter than the esti-
+mates for the trees grown in Heilongjiang province.
+Belowground biomass components were not available
+from the Korean pine study in central South Korea.
+Korean pine in this study has much lower above-
+ground and belowground biomass values for a given
+DBH than the trees grown in other two places. These
+differences may be the results of different soil and cli-
+matic conditions, such as temperature, water and soil
+nutrients. However, it is more likely that the differ-
+ences in the allometric relationships are due to the
+differences in tree sizes. As trees in our study were re-
+stricted to the small trees with DBH10 cm, and were
+much smaller than those in either Heilongjiang prov-
+ince or South Korea. Some studies have found that
+tree biomass allometry changed with tree sizes
+(Niklas 1995; Litton et al. 2003; Cole and Ewel 2006).
+For example, Bond-Lamberty et al. (2002) reported
+that relationships between biomass and breast height
+diameter changed significantly at the breakpoint of ca.
+3 cm, where both slope and intercept changed dra-
+matically, and biomass estimates using DBH-based
+allometry with such a breakpoint would potentially
+underestimate smaller trees biomass for six boreal
+tree species in Manitoba, Canada. Other studies also
+suggested that size- or age-specific allometry may be
+suitable
+to
+accurately
+predict
+above-
+and
+be-
+low-ground biomass in different growth stages or in
+an age-sequence forests.
+Acknowledgements
+We thank two anonymous reviewers for their in-
+sightful and helpful comments. This research is sup-
+ported by the National Special Research Program for
+Forestry Welfare of China (Grant No. 200904022),
+the 12th five-year National Science and Technology
+Plan of China (2012BAC01B03) and the National
+Natural Science Foundation of China (31200315).
+Rothamsted Research receives grant aided support
+Fig. 5. Comparisons of total aboveground and belowground
+biomass predicted by equations in this study and previ-
+ous published equations in Heilongjiang province in
+northeastern China and in central South Korea were
+made
+
+
+24
+Jinsong Wang, Xiuhua Fan, Juan Fan, Chunyu Zhang, L. Wu, Klaus v. Gadow
+from the Biotechnology and Biological Science Re-
+search Council (BBSRC), UK.
+References
+Basuki T.M., van Laake P.E., Skidmore A.K., Hussin
+Y.A. 2009. Allometric equations for estimating
+the above-ground biomass in tropical lowland
+Dipterocarp forests. Forest Ecology and Manage-
+ment 257: 1684–1694.
+Blazier M.A., Hennessey T.C., Lynch T.B., Wittwer
+R.F. 2002. Comparison of branch biomass rela-
+tionships for North Carolina and Oklahoma/Ar-
+kansas loblolly pine seed sources growing in
+southeastern Oklahoma. Forest Ecology and
+Management 159: 241–248.
+Bond-Lamberty B., Wang C., Gower S.T. 2002.
+Aboveground and below-ground biomass and
+sapwood area allometric equations for six boreal
+tree species of northern Manitoba. Canadian
+Journal of Forest Research 32: 1441–1450.
+Brix H. 1981. Effects of thinning and nitrogen fertil-
+ization on branch and foliage production in
+Douglas-fir. Canadian Journal of Forest Research
+11: 502–511.
+Casper B.B., Jackson R.B. 1997. Plant competition
+underground. Annual Review of Ecology and Sys-
+tematics 28: 545–570.
+Cheng S., Widden P., Messier C. 2005. Light and tree
+size influence belowground development in yel-
+low birch and sugar maple. Plant and Soil 270:
+321–330.
+Cienciala E., Cerný M., Tatarinov F., Apltauer J.,
+Exnerová Z. 2006. Biomass functions applicable
+to Scots pine. Trees 20: 483–495.
+Cole T.G., Ewel J.J. 2006. Allometric equations for
+four valuable tropical tree species. Forest Ecology
+and Management 229: 351–360.
+Crecente-Campo F., Marshall P., LeMay V., Dié-
+guez-Aranda U. 2009. A crown profile model for
+Pinus radiate D. Don in northwestern Spain. For-
+est Ecology and Management 257: 2370–2379.
+Grote R., Reiter I.M. 2004. Competition-dependent
+modeling of foliage biomass in forest stands.
+Trees 18: 596–607.
+Hepp T.E., Brister G.H. 1982. Estimating crown bio-
+mass in loblolly pine plantations in the Carolina
+flatwoods. Forest Science 28: 115–127.
+Hosoda K., Iehara T. 2010. Aboveground biomass
+equations for individual trees of Cryptomeria ja-
+ponica, Chamaecyparis obtusa and Larix kaempferi in
+Japan. Journal of Forest Research 15: 299–306.
+Ishii H., Wilson M.E. 2001. Crown structure of
+old-growth Douglas-fir in the western Cascade
+Range, Washington. Canadian Journal of Forest
+Research 31: 1250–1261.
+Jagodziński
+A.M.,
+Kałucka
+I.
+2008.
+Age-related
+changes in leaf area index of young Scots pine
+stands. Dendrobiology 59: 57–65.
+Jenkins J.C., Chojnacky D.C., Heath L.S., Birdsey R.A.
+2003.
+National–scale
+biomass
+estimators
+for
+United States tree species. Forest Science 49:
+12–35.
+Johansson T. 1999. Biomass production of Norway
+spruce (Picea abies (L.) Karst.) growing on aban-
+doned farmland. Silva Fennica 33: 261–280.
+Lee W.K., Gadow K.v., Chung D.J., Lee J.L., Shin M.Y.
+2004. DBH growth model for Pinus densiflora and
+Quercus variabilis mixed forests in central Korea.
+Ecological Modelling 176: 187–200.
+Litton C.M., Ryan M.G., Tinker D.B., Knight D.H.
+2003. Belowground and aboveground biomass in
+young postfire lodgepole pine forests of contrast-
+ing tree density. Canadian Journal of Forest Re-
+search 33: 351–363.
+Mäkelä A., Vanninen P. 1998. Impacts of size and
+competition on tree form and distribution of
+aboveground biomass in Scots pine. Canadian
+Journal of Forest Research 28: 216–227.
+McCrady R.L., Jokela E.J. 1996. Growth phenology
+and crown structure of selected loblolly pine fam-
+ilies planted at two spacings. Forest Science 42:
+46–57.
+Mowrer H.T., Frayer W.E. 1986. Variance propaga-
+tion in growth and yield projections. Canadian
+Journal of Forest Research 16: 1196–1200.
+Niklas K.J. 1995. Size-dependent allometry of tree
+height, diameter and trunk-taper. Annals of Bot-
+any 75: 217–227.
+Pastor J., Aber J.D., Melillo J.M. 1984. Biomass pre-
+diction using generalized allometric regressions
+for some northeast tree species. Forest Ecology
+and Management 7: 265–274.
+Petersen K.S., Ares A., Terry T.A., Harrison R.B.
+2008. Vegetation competition effects on above-
+ground biomass and macronutrients, leaf area,
+and crown structure in 5-year old Douglas-fir.
+New Forests 35: 299–311.
+Quint T.C., Dech J.P. 2010. Allometric models for
+predicting the aboveground biomass of Canada
+yew (Taxus canadensis Marsh.) from visual and
+digital cover estimates. Canadian Journal of For-
+est Research 40: 2003–2014.
+R Development Core Team. 2010. R: A language and
+environment for statistical computing. R Founda-
+tion for Statistical Computing, Vienna, Austria.
+ISBN 3-900051-07-0, URL http://www.R-pro-
+ject.org/
+Salis S.M., Assis M.A., Mattos P.P., Pião A.C.S. 2006
+Estimating the aboveground biomass and wood
+volume of savanna woodlands in Brazil’s Pan-
+tanal wetlands based on allometric correlations.
+Forest Ecology and Management 228: 61–68.
+
+
+Crown and root biomass equations for the small trees of Pinus koraiensis under canopy
+25
+Sampaio E., Gasson P., Baracat A., Cutler D., Pareyn
+F., Costa L.K. 2010. Tree biomass estimation in
+regenerating areas of tropical dry vegetation in
+northeast Brazil. Forest Ecology and Manage-
+ment 259: 1135–1140.
+Son Y., Hwang J.W., Kim Z.S., Lee W.K., Kim J.S.
+2001. Allometry and biomass of Korean pine
+(Pinus koraiensis) in central Korea. Bioresource
+Technology 78: 251–255.
+Ter-Mikaelian M.T., Korzukhin M.D. 1997. Biomass
+equations for sixty-five North American tree spe-
+cies. Forest Ecology and Management 97: 1–24.
+Van Lear D.H., Kapeluck P.R. 1995. Above and be-
+low-stump biomass and nutrient content of a ma-
+ture loblolly pine plantation. Canadian Journal of
+Forest Research 25: 361–367.
+Vanninen P., Mäkelä A. 1999. Fine root biomass of
+Scots pine stands differing in age and soil fertility
+in
+southern
+Finland.
+Tree
+Physiology
+19:
+823–830.
+Verónica G., Luis P.P., Gerardo R. 2010. Allometric
+relations for biomass partitioning of Nothofagus
+antarctica trees of different crown classes over a
+site quality gradient. Forest Ecology and Manage-
+ment 259: 1118–1126.
+Wagner R.G., Ter-Mikaelian M.T. 1999. Comparion
+of biomass component equations for four species
+of northern coniferous tree seedlings. Annals of
+Forest Science 56: 193–199.
+Wang C.K. 2006. Biomass allometric equations for 10
+co-occurring tree species in Chinese temperate
+forests. Forest Ecology and Management 222:
+9–16.
+Wang J.S., Zhang C.Y., Xia F.C., Zhao X.H., Wu L.H.,
+Gadow K.v. 2011. Biomass structure and allo-
+metry of Abies nephrolepis (Maxim) in Northeast
+China. Silva Fennica 45: 211–226.
+Watt M.S., Whitehead D., Mason E.G., Richardson
+B., Kimberley M.O. 2003. The influence of weed
+competition for light and water on growth and
+dry matter partitioning of young Pinus radiata, at a
+dryland site. Forest Ecology and Management
+183: 363–376.
+Weiner J. 1990. Asymmetric competition in plant
+populations. Trends in Ecology & Evolution 5:
+360–364.
+Wirth C., Schumacher J., Schulze E.D. 2004. Generic
+biomass functions for Norway spruce in Central
+Europea – meta-analysis approach toward predic-
+tion and uncertainty estimation. Tree Physiology
+24: 121–139.
+Xiao C.W., Ceulemans R. 2004. Allometric relation-
+ships for below- and aboveground biomass of
+young Scots pines. Forest Ecology and Manage-
+ment 203: 177–186.
+Zar J.H. 1996. Biostatistical Analysis. Prentice-Hall,
+Englewood Cliffs, New Jersey.
+Zianis D., Xanthopoulos G., Kalabokidis K., Kazakis
+G., Ghosn D., Roussou O. 2011. Allometric equa-
+tions for aboveground biomass estimation by size
+class for Pinus brutia Ten. trees growing in North
+and South Aegean Islands, Greece. European
+Journal of Forest Research 130: 145–160.

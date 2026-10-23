@@ -1,0 +1,4331 @@
+Allometric Relationships 
+of Selected European Tree Species 
+Parametrizations of tree architecture for the purpose of 3-D canopy reflectance models 
+used in the interpretation of remote sensing data. 
+Betula pubescens, Fagus sylvatica, Larix decidua, 
+Picea abies, Pinus sylvestris 
+EUROPEAN COMMISSION 
+JOINT RESEARCH CENTRE 
+Institute for 
+Environment and 
+2003 
+Suitainability 
+EUR 20855 EN 
+
+
+
+
+Allometric Relationships 
+of Selected European Tree Species 
+Parametrizations of tree architecture for the purpose of 3-D canopy reflectance models 
+used in the interpretation of remote sensing data. 
+Betula pubescens, Fagus sylvatica, Larix decidua, 
+Picea abies, Pinus sylvestris 
+Jean-Luc Widlowski 
+Michel Verstraete 
+Bernard Pinty 
+Nadine Gobron 
+Science & Technology 
+f _ 
+EC Joint Research Centre, TP 440 
+1-21020 Ispra (VA), Italy 
+EUROPEAN COMMISSION 
+y\ 
+Q/C 
+JOINT RESEARCH CENTRE 
+VT 
+«^ 
+Institute for 
+Environment and 
+Sustain ability 
+2003 
+EUR 20855 EN 
+
+
+LEGAL NOTICE 
+Neither the European Commission nor any person 
+acting on behalf of the Commission is responsible for 
+the use which might be made of the following information. 
+A great deal of additional information on the 
+European Union is available on the Internet. 
+It can be accessed through the Europa server 
+(http://europa.eu.int) 
+EUR 20855 EN 
+© European Communities, 2003 
+Reproduction is authorised provided the source is acknowledged 
+Printed in Italy 
+
+
+Contents 
+1 Introduction 
+1 
+1.1 
+Background 
+1 
+1.2 
+Purpose and scope 
+3 
+1.3 
+Variables and definitions 
+3 
+1.4 
+Document structure 
+5 
+1.5 
+Feedback 
+6 
+2 Birch (Betula pubescens and Betula pendula) 
+8 
+2.1 
+Crown shape 
+8 
+2.2 
+Tree height, H [m] 
+8 
+2.3 
+Height to crown, Ht [m] 
+10 
+2.4 
+Height to the maximum crown width, Her [πα] 
+11 
+2.5 
+Height to first dead branch, iín¿, [m] 
+11 
+2.6 
+Maximum crown radius, CT [m] 
+12 
+2.7 
+Leaf Area Index, LAI 
+[tree­1] 
+13 
+2.8 
+Foliage and Biomass 
+13 
+3 European Beech (Fagus Silvática) 
+15 
+3.1 
+Crown shape 
+15 
+3.2 
+Tree height, H [m] 
+15 
+3.3 
+Height to crown, Ht [m] 
+17 
+3.4 
+Height to the maximum crown width, Her [m] 
+18 
+3.5 
+Height to first dead branch, Hnt¡ [m] 
+18 
+3.6 
+Maximum crown radius, CT [m] 
+19 
+3.7 
+Bottom crown radius, Rc [m] 
+19 
+3.8 
+Leaf Area Index, LAI 
+[tree­1] 
+20 
+3.9 
+Foliage and Biomass 
+21 
+4 European Larch (Larix decidua) 
+23 
+4.1 
+Crown shape 
+23 
+4.2 
+Tree height, H [m] 
+24 
+4.3 
+Height to crown, Ht [m] 
+24 
+4.4 
+Height to the maximum crown width, Her [m] 
+24 
+4.5 
+Height to first dead branch, Hnb [m] 
+25 
+4.6 
+Maximum crown radius, CT [m] 
+25 
+4.7 
+Bottom crown radius, Rc [m] 
+26 
+4.8 
+Leaf Area Index, LAI 
+[tree­1] 
+27 
+4.9 
+Foliage and Biomass 
+28 
+5 Norway Spruce (Picea Abies) 
+30 
+5.1 
+Crown shape 
+30 
+5.2 
+Tree height, H [m] 
+31 
+5.3 
+Height to crown, Ht [m] 
+31 
+5.4 
+Height to the maximum crown width, Hcr [m] 
+31 
+5.5 
+Height to first dead branch, Hnb [m] 
+32 
+5.6 
+Maximum crown radius, CT [m] 
+32 
+5.7 
+Bottom crown radius, Rc [m] 
+33 
+5.8 
+Leaf Area Index, LAI 
+[tree­1] 
+33 
+5.9 
+Foliage and Biomass 
+36 
+
+
+6 
+Scots Pine (Pinus sylvestris) 
+38 
+6.1 
+Crown shape 
+38 
+6.2 
+Tree height, H [m] 
+38 
+6.3 
+Height to crown, Ht [m] 
+39 
+6.4 
+Height to the maximum crown width, Her [m] 
+40 
+6.5 
+Height to first dead branch, Hnb [m] 
+40 
+6.6 
+Maximum crown radius, Cr [m] 
+41 
+6.7 
+Bottom crown radius, Rc [m] 
+42 
+6.8 
+Leaf Area Index, LAI 
+[tree-1] 
+42 
+6.9 
+Foliage and Biomass 
+43 
+7 
+General Properties of Forest Canopies 
+46 
+7.1 
+The shape of leaves and needles 
+46 
+7.2 
+The orientation of foliage in crowns 
+47 
+7.3 
+The distribution of foliage in crowns 
+48 
+7.4 
+The foliage-free interior of crowns 
+50 
+7.5 
+The spatial distribution of tree locations 
+50 
+7.6 
+The height distribution of trees 
+51 
+7.7 
+The maximum tree density in forests 
+51 
+7.8 
+The fraction of dead wood in forests 
+52 
+7.9 
+Mixed forests, tree competition and mortality 
+53 
+11 
+
+
+Executive Summary 
+This document presents a selection of allometric equations describing tree architectural proper-
+ties — like the tree height, crown dimensions, leaf area index and biomass — for the following 
+tree species: European beech (Fagus Sylvatica), birch (Betula pendula and Betula pubescens), 
+European larch (Larix decidua), Norway spruce (Picea Abies) and Scots pine (Pinus 
+sylvestris). 
+The purpose of this collection of allometric relationships is to facilitate the generation of statisti-
+cally correct, three-dimensional forest architecture representations for inclusion in 3-D radiation 
+transfer simulations. At the time of writing, no single document was available that facilitated 
+such a task for these tree species. 
+Ill 
+
+
+
+
+1 
+Introduction 
+The purpose of this document is to compile information from the published literature to permit 
+a statistically faithful reconstruction of the structural characteristics of selected European tree 
+species over areas that are comparable to the instantaneous field of view (IFOV) of most current 
+medium spatial resolution instruments (50 - 500 m). Such spatially and structurally explicit 
+information is required by the latest generation of 3-D radiation transfer models in order to 
+simulate the bi-directional reflectance fields of credible forest scenarios for their later perusal in 
+the interpretation process of satellite based observation of the Earth's surface. 
+1.1 
+Background 
+About 3.9 billion hectares or 30% of the Earth's surface are covered by forests, of which 33% 
+are located in the boreal and 11% in the temperate ecological zones. The European Union is 
+currently home to about 87 million hectares of forest, ranking it the 8th largest forest area in the 
+world after Russia, Brazil, Canada, the United-States, China, the democratic republic of Congo, 
+and Indonesia. However, with the accession of the Central and Eastern European countries this 
+number may even rise to 140 million hectares. Impartial, accurate and up-to-date information 
+as regards the state, health and development of the European forests is thus needed—not only 
+because of their recreational value for the citizen—but because their presence, age and structural 
+properties affect 1) the exchanges of water, carbon and trace gases between the the vegetation 
+canopy and the atmosphere, 2) the degree of soil erosion and desertification, 3) the local input to 
+the global carbon cycle whose processes, although not entirely understood, require the presence 
+of a terrestrial carbon sink component in order to balance the overal budget, 4) the amount 
+of available woody biomass which is the raw material for a global multi-billion dollar timber 
+industry, and 5) the population dynamics and biodiversity of animals, insects and birds they 
+host. Furthermore, with the ratification of the Kyoto Protocol, the accurate biomass estimation 
+of existing forest resources is an integral component of the carbon trading process, that allows 
+industrialized nations to actively promote certain kinds of carbon sinks through forest planta-
+tions in order to meet their greenhouse gas emissions reduction commitments. 
+Assessing the structural properties of individual trees, even for a moderate forest area is a 
+major endeavour. For example, there are about 65 billion trees higher than 1.3 m in Finland 
+(Tomppo 2000). Rather than measuring every single tree, forest inventories are designed to 
+provide reliable estimates of timber volume, growth, removals, and mortality on the basis of 
+sampling schemes that have been perfected by the commercial sector in order to derive suffi-
+ciently accurate properties of tree populations at minimal cost. The chief drawbacks of forest 
+inventories are that the inventory practices vary widely among countries, and so do the un-
+certainties. Since inventories are expensive and time consuming, they are typically conducted 
+only once every five to ten years, depending on the type (and scale) of the inventory. In large 
+countries such as Canada and Russia, some remote regions are not sampled at all. Most in-
+ventories are rolling in nature, that is, not all regions in a country are sampled at the same 
+time; and successive inventories in some cases tend to be updates and/or revisions, and thus are 
+not necessarily time series data. To alleviate these issues, satellite image-based inventories have 
+been applied as early as the 1990s by some European countries. This is because space-borne 
+remote sensing techniques have the conceptual advantages of acquiring quantitative data over 
+large areas in a relatively short period of time, and this at a fixed spatial resolution and on a 
+regular basis. The widespread use of these technologies has, however, been hampered in the 
+past, due to the lack of 1) validated 3-D radiation transfer models (and procedures) suitable 
+for inversion purposes, 2) sufficiently fast computer hardware for (quasi-)operational processing, 
+
+
+and 3) well-calibrated, high spatial resolution, multi-spectral data befitting the quantitative ex-
+traction of surface parameters needed in forest inventories. 
+This situation is however likely to improve through advances in space technology and in 
+a better understanding of the radiation transfer processes within vegetation canopies, which 
+allows us to develop and advance the capabilities of models to simulate these processes. For 
+example, nowadays it is known that when the spatial resolution of the sensor becomes of the 
+same order of magnitude as the size of the trees, the extraction of quantitative surface structure 
+information from remote sensing measurements requires taking into account the details of the 
+structure and heterogeneity of the canopy. This is best achieved using three dimensional (3-D) 
+radiation transfer (RT) models, that are nowadays capable of representing the relevant radiation 
+transfer processes within heterogeneous environments of almost any degree of complexity (sub-
+ject to computer memory), e.g., Govaerts (1996), Thompson and Goel (1998), North (1996). 
+Since the goal of remote sensing is the retrieval of one or more state variables describing the 
+system under observation, radiation transfer models have to be inverted against the gathered 
+data to achieve this. However, given the large number of variables in the above 3-D models, 
+it is desirable to narrow the solution space of such inversions by excluding all unlikely surface 
+type candidates from the start. By the same token, one can predefine all surface structure so-
+lutions that are likely to be encountered, compute their bi-directional reflectance patterns and 
+store these values in a so called look-up-table (LUT) for later perusal in the actual inversion 
+process against the satellite-measured data strings. The goal in these approaches is to identify 
+the "most likely" candidate from amongst the set of pre-defined 3-D surface type solutions (in 
+the LUT) that satisfies the space-borne reflectance observations within some documented range 
+of accuracy. Previous applications of such LUT-based inversion schemes were restricted by their 
+region/biome of interest, the number/simplicity of potential surface type candidates in the LUT, 
+and the available (coarse spatial resolution, multi-spectral but mono-directional) optical remote 
+sensing measurements, e.g., Govaerts et al. 1997, Myneni et al. 1997, Knyazikhin et al. 1998, 
+Widlowski et al. 2001. Given the impact of 3-D surface structures on the bi-directional re-
+flectance signature of terrestrial targets (Pinty et al. 2002) and the recent availability of well 
+calibrated, narrow spectral band sensors with a high signal-to-noise ratio—such as the Multi-
+Angle Imaging SpectroRadiometer (MISR) on board Terra (Diner et al. 1998)—a more detailed 
+surface structure characterisation is required if 3-D LUT based inversion techniques are to sat-
+isfy the needs of the scientific community for enhanced surface structure information. 
+One of the main drawbacks of LUT-based inversion approaches is the multiplicity of retrieved 
+solutions, especially for mono-directional, low spatial resolution spaceborne instruments. This 
+can however, be alleviated by quasi-instantaneous multi-directional and multi-spectral sensors 
+at sufficiently high spatial resolutions, like MISR, to constrain the solution space for the re-
+trievals. At the finer spatial resolutions, the surface structure contained within and around the 
+instantaneous field of view (IFOV) of the observing sensor is of increasing relevance with respect 
+to the angular shape of the reflectance anisotropy. Thus, in the context of LUT based inversion 
+schemes it is crucial to know the relevant structural (and to a similar degree also spectral) prop-
+erties of the canopy with sufficient detail and accuracy to allow for the simulation of bidirectional 
+reflectance fields. Such information would not only reduce the number of surface type candidates 
+that will have to be included in a 3-D LUT based inversion scheme, but also guarantee that the 
+structural and spectral characteristics of any "most likely" surface type candidate have actually 
+been measured (at least once) on real specimens, either in the field or laboratory. Once such 
+a "most likely" surface type candidate has been determined in a temporally stable manner, all 
+sorts of statistics can be performed at the within-pixel level since all structural and spectral 
+details related to its construction are known. 
+
+
+1.2 
+Purpose and scope 
+The purpose of this document is thus to compile allometric relationships, that are based on 
+field observations and that describe the structural properties of an individual tree, for the sub-
+sequent generation of credible surface structure solutions (forest canopies) over spatial scales 
+that are comparable to the IFOV of most current medium spatial resolution instruments. From 
+a radiative point of view (as well as computer memory considerations) it is thus not necessary 
+(or feasible) to represent every single leaf/needle within the nominal IFOV area, but rather to 
+ascertain that the faithful reconstruction of these architectural characteristics is guaranteed in a 
+statistical manner within the area of interest, say 100 x 100 m2 or larger. The primary focus of 
+this document thus pertains to the structural characteristics of an individual tree. Estimates of 
+tree height, crown length, -width, -shape and amount of foliage that are contained there within 
+will be provided. Obviously some degree of abstraction is inevitable, especially when dealing 
+with the shape of tree crowns. We provide examples of crown shape approximation through 
+the usage of two or more geometrical primitives (cones, cylinders, etc). However, other more 
+complex crown representations might be appropriate, e.g., Kranigk et al. (1994). As regards 
+the orientation and distribution patterns of foliage elements within the tree crowns, only lim-
+ited species-specific information is available. The same applied to species mixtures, dead wood 
+percentages, phenological variations of leaf area and the recession of crown dimensions with 
+increasing tree density. Some of these topics, together with the spatial distribution patterns of 
+trees, will thus be dealt with in a special section at the end of this document. 
+While every effort has been made to retain the allometric relationships and measurements as 
+they were published in the literature, in some instances these studies aimed primarily at fitting 
+their available data rather than providing an equation that covered the entire known range of 
+the controlling variable (usually the diameter at breast height, DBH). 
+Thus, in order to obtain 
+meaningful results over as broad as possible range of tree sizes, an empirical curve-fitting occa-
+sionally had to be applied to an existing allometric relationship such as to allow for a reasonable 
+behaviour at very low and high values of the controlling variable i.e., as the DBH approaches 
+zero or very large values. 
+All the information used to generate this document is freely accessible from the Internet or 
+through the published literature. However, many of these documents were not useful for the 
+purpose of this compilation because the information contained there was 1) too complex, in the 
+sense that it required the knowledge of a large number of parameters not generally available to 
+the modeller, 2) too general, in the sense that it related to spatial scales (stand or forest) much 
+greater than that of the individual tree, or 3) incomplete, in the sense that (from a modelling 
+point of view) some of the crucial variables were missing. Consequently, this document does 
+not claim to be complete or exhaustive. In fact, given the large latitudinal range of some of 
+the species described below, and the many possible combinations of soil types, species mixtures, 
+stem densities, and other stress factors that affect the growth and productivity of trees (not to 
+mention the meteorological variability occurring from year to year), the reader will still need to 
+decide which of the provided allometric equations best fits his needs and requirements. 
+1.3 
+Variables and definitions 
+A variety of structural variables have to be known to generate three-dimensional forest canopy 
+representations in the context of radiation transfer simulations. For example, the 'crown shape' 
+and 'foliage content' affect the amount and angular distribution of the reflected radiation; 'tree 
+height' together with the density and spatial distribution of the trees determine both the crown 
+dimensions and foliage content, as well as the angular width of reflectance peak close to the 
+
+
+retro-reflection direction. In traditional forestry most structural properties, like tree height, 
+crown width, crown length, etc, have been related by allometric relationships to an easily mea-
+surable primary variable. In most cases this variable is the Diameter-at-Breast-Height, 
+DBH, 
+i.e., the diameter of the tree trunk at a height of 1.37 m above the ground. The DBH pa-
+rameter is commonly expressed in units of centimetres [cm], whereas most of the allometrically 
+derived quantities (in Europe) retain their SI units, i.e., they are expressed in units of metres [m]. 
+Figure 1: Schematic tree with 'tree height' (H) being the sum of the total 'crown length' (Hc) and the 
+'ground to crown' distance (Ht), where the crown length is composed of an (illuminated) 'crown top' 
+(Hct) and a (shadowed) 'crown bottom' (Hcb) distance. The crown partitioning lies at a height where the 
+maximum crown diameter (CD) occurs. Similarly the 'ground to crown' length (Ht) can be subdivided 
+into a 'height to first dead branch' (Hnb) and a length describing the height regime where 'dead branches' 
+(but no foliage) occur along the tree trunk (Hdt)- The crown radius at the 'bottom of the crown' (Rc) 
+as well as the vertically downward projected crown area (A¡) are also indicated. 
+Underlying the generation of any forest canopy scene is either a distribution of DBH values 
+from which the corresponding tree height distribution can be derived, or, vice versa, a tree-height 
+distribution from which the DBH values can be retrieved by inverting the appropriate allometric 
+relationship for that tree species. Within this document, the overall tree height, H is always 
+the sum of the total crown length (Hc) and the ground to crown length (Ht), where the crown 
+length is composed of a (sunny) top part (Hct) and a (shady) bottom part (Hcb). Similarly, the 
+ground-to-crown length can be subdivided into a height to the first dead branch (Hn\,) and 
+a length describing the height regime where dead branches (but no foliage) occur along the tree 
+trunk [Hdb)· Alternatively the height to the maximum crown width, HcT indicates the 
+vertical distance to the interface between the illuminated and shadowed crown halves. Hence: 
+H = Hc + Ht — (Hct + Hcb) + (H¿b + Hnb) = Hct + Hcr 
+[m] 
+
+
+For the purpose of modelling large ensembles of tree crowns, the latter volumetric entities 
+have to be abstracted to allow for a computer efficient representation of their outer envelope, as 
+well as, their wood and foliage content. Where available, crown shape approximations similar 
+to those of Pretzsch (1992) will be given. Such representations use two (or more) geometrical 
+primitives (cone, hemisphere, cylinder) whose bases meet at the interface between the sunny 
+(top) and shady (bottom) portions of the crown. As such their largest lateral expansion can 
+be used as a measure of the maximum crown radius, Cr [τα]. Depending on the shape of 
+the crown, an estimate of the bottom crown radius, Rc [m] is also required to model the 
+geometric representations of the crown. Where available, the change of the crown radius in both 
+the top part (r¿) of the crown (for distances 0 < d < Hct) and the bottom part (r^) of the 
+crown (for distances Hct < d < Hc) may be expressed in terms of the distance from the the 
+top of the tree (d) as described by Pretzsch (1992). However, trees are very complex entities 
+and the geometric crown shape models are rather abstract representations of reality, which has 
+prompted many scientists to look for more appropriate descriptions of tree architecture, ranging 
+from asymmetric ellipsoids to explicit L­system representations, e.g., Cescatti (1997), De Reffye 
+and Houllier (1997) and Goel et al. (1991). 
+The needle/Leaf Area Index, LAI [m2/m2] is a particularly critical value in the context 
+of radiation transfer simulations since it is through their foliage elements that plants absorb 
+(predominantly at the shorter end of the solar spectrum, i.e., 350 ­ 700 nm) and reflect (mostly 
+in the near­infrared part of the optical domain, i.e., 700 ­ 2500 nm) the incoming radiation. 
+The meaning of LAI that is used within this document relates to the ratio of the 'one sided 
+area of foliage elements of a single tree' and the 'vertically projected crown area of that tree'. 
+Accurate LAI estimates are however rare, with large differences between estimates for specific 
+biomes (Scherzer et al. (2003) for example, report that LAI values for coniferous forests have 
+been estimated in the scientific literature to lie between 6 and 10). Temporal variations of LAI 
+(due to the phenology) are even less often available. In this document LAI estimates are given as 
+provided by their authors, citing as much additional information as was available on the stand 
+characteristics of their study. In some cases, however, the LAI value has to be derived from 
+independent studies of leaf area A\ and downward projected crown area (Ar), which in the case 
+of the radially symmetric crown model of Pretzsch (1992) reduces to the cross­sectional area 
+of the tree crown at its maximum lateral extent, i.e., Ar = 7rC2. It should be kept in mind, 
+however, that an LAI definition per individual tree is different from the stand projected LAI 
+often found in the literature, since the latter depends both on the stem density and height of 
+the trees in the plot (as well as the understory cover). Last but not least, information on the 
+foliage and biomass characteristics are also provided for every tree species. 
+1.4 
+Document structure 
+The document is subdivided into two sections. The first section lists species­specific allometric 
+relationships for the deciduous tree species: Beech (Fagus sylvatica) and birch (Betula pubescens 
+and Betula pendula), as well as for the coniferous tree species: larch (Larix decidua), Norway 
+spruce (Picea abies), and Scots pine (Pinus sylvestris). 
+These tree species were identified be­
+cause they represent a large fraction of the available forest resources in Europe, especially in 
+northern latitudes where Scots Pine and Norway Spruce dominate the landscapes, but also 
+within central and eastern Europe. In addition, a variety of birch species exist throughout the 
+Northern hemisphere, and larch is a widely occurring tree species within Russia (Larix siber­
+ica). For each of these tree types—and the previously identified structural parameters—a series 
+of allometric relationships will be provided, together with a graphical representations of these 
+
+
+functions. Equations that are contained in a framed box are those that have been implemented 
+by the Science and Technology for Applied Remote Sensing (STAUS) 
+group to generate three-
+dimensional forest scenes for later processing using the 3-D radiation transfer model of Govaerts 
+and Verstraete (1998). The second section of this document describes canopy characteristics 
+for which either not enough species-specific information was available, or, cases where these 
+properties were not species-dependent. The document closes with a list of symbols and a list of 
+reference materials that were used in its generation. 
+1.5 
+Feedback 
+This document aims at providing credible allometric relationships for the three-dimensional re-
+constructions of tree-like entities in the context of 3-D radiation transfer simulations. To this 
+effect, a series of (somewhat abstracted) structural properties of a series of selected tree species 
+are presented. A higher degree of realism has not been adopted because of the difficulties in 
+finding further structurally relevant information, e.g., branching patterns and angles, foliage 
+orientation changes along the vertical gradient of the crown, seasonal LAI variations, crown 
+adaptations to competition, etc. Nevertheless, the structural variables that are described within 
+this document can be considered sufficient for the simulation of radiation transfer processes 
+within vegetation canopies covering areas equivalent to the IFOV of at medium to high spa-
+tial resolution sensors. To carry out such radiation transfer simulations requires, however, not 
+only information regarding the structural properties of the vegetation, but also spectral infor-
+mation describing their reflective and absorptive characteristics. Some possible sources for soil 
+and foliage spectra may be found at the JRC Leaf Optical Properties Experiment (LOPEX'93) 
+web site: http://www.sigu7.jussieu.fr/Led/LED_lopex.htm or at the Jet Propulsion Lab-
+oratory spectral library web site: http://speclib.jpl.nasa.gov. The authors' experience is 
+that foliage reflectance spectra are relatively abundant, whereas bark reflectance and also leaf 
+transmission spectra are rather difficult to obtain, especially when aiming at discriminating be-
+tween these properties for the upper and lower leaf sides separately. Even more difficult to locate 
+are descriptions of the angular reflectance probabilities of such surfaces, i.e., the bi-directional 
+reflectance distribution function (BRDF). In most radiation transfer simulations, scatterers are 
+thus modelled as isotropic surfaces. 
+Any constructive comments with respect to the information contained in this document, as 
+well as additional input regarding new or already described structural and spectral properties 
+is welcome and should be addressed to Jean-Luc. Widlowski@jrc.it. They may be incorporated 
+in updated or future reports of this kind. 
+
+
+Allometric Relationships of Selected Tree Species 
+The first part of this document provides allometric relationships to describe the structural at-
+tributes of the following tree species: Birch (Betula pendula and Betula pubescens), European 
+beech (Fagus sylvatica), European larch (Larix decidua), Norway spruce (Picea abies), and Scots 
+pine (Pinus sylvestris). 
+
+
+2 
+Birch (Betula pubescens and Betula pendula) 
+The two major European birch species (Betula pubescens and Betula pendula) are naturally oc-
+curring throughout Europe. Betula pendula tends to be larger and wider than Betula pubescens, 
+and does not occur far into the northern latitudes as the latter. Conversely, Betula pubescens 
+does hardly occur in southern Europe, but can be found in central Europe and in the northern 
+boreal zone, and this throughout Europe and Russia. Even in Greenland Betula pubescens can 
+reach heights of up to 2.5 m (Röhrig 1980). Birch trees tend to occupy flat or slightly undulating 
+lowlands. Nevertheless, they can also be found up to elevations of about 1000 m (or up to 1800 
+m in the Alps). 
+2.1 
+Crown shape 
+Birch trees are relatively exigent as regards the availability of light. They are resistant against 
+cold/frost and thus often act as pioneer trees that occupy empty tracts of land. However, due to 
+their need for large amounts of light, as well as, their short-livedness they tend to get replaced by 
+other tree species. Betula pubescens is often encountered on wet soils. The bark is whitish, grey 
+or silvery with black fissures appearing at the base of the trunk. The crown shape of the birch 
+can be represented using an obloid (whose major axis is of length Hct and whose radial axis is 
+of size Cr) and a hemisphere that are connected by a cylinder, which represents the widest part 
+of the vertically elongated crown, as indicated in the middle graph of Figure 2. The right hand 
+panel in the same Figure shows a 3-D visualization of a mature birch stand with a somewhat 
+more differentiated crown shape representation. 
+Figure 2: 
+Left panel: Betula pubescens tree photographed by Anna-Lena Anderberg, (Source: 
+http://linnaeus.nrm.se/flora/). Middle panel:Crown model of Betula pubescens. Right Panel: 3-
+D visualization of a 20 m high birch stand for which the reflectance fields can be modelled using the 
+radiation transfer model of Govaerts and Vertstraete, 1998. 
+2.2 
+Tree height, H [m] 
+The JABOWA model of Botkin (1993) provides tree height equations for a series of Betula 
+species, i.e., yellow birch Betula alleghaniensis, white or paper birch Betula papyrifera and gray 
+birch Betula populifolia. 
+8 
+
+
+H 
+= 
+1.37 + 0.583 DBH­ 
+0.00291 DBH2 
+[m] 
+H 
+= 
+1.37 + 0.766DBH­ 
+0.00504DBH2 
+[m] 
+H 
+= 
+1.37+ 0Λ07 DBH­0.56 
+DBH2 
+[m] 
+Betula alleghaniensis 
+Betula papyrifera 
+Betula populifolia 
+In it's general form this equation uses two parameters (62 and 63) that can be derived if the 
+maximum tree height (Hmax [m]) and diameter at breast height (DBHmax 
+[cm]) values for a 
+given species are known ­ assuming that these two occur at the same moment in time: 
+H 
+= 
+1.37 + b2 DBH + b3 DBH2 
+200 (Hmax ­ 1.37) 
+b2 
+= 
+h = 
+b2 
+2DBH„ 
+[m] 
+[H 
+[cm"1] 
+In tables A5 and A6 of appendix 2 of Bugmann (1994) an overview of the Hmax and 
+DBHmax 
+that are to be found in the literature for Betula pendula are given. The mean (maximum) 
+of these Hmax and DBHmax 
+values are 27.0 (31.0) m and 82.0 (150.0) cm, respectively. In 
+their own model Bugmann (1994) use the average of mean and max, i.e., Hmax = 29.0 m and 
+DBHmax 
+= 116.0 cm. Figure 3 shows the resulting curves using the latter values of Hmax and 
+■Ls­θUmax· 
+H 
+= 
+1.37 + 0.625 DBH­ 
+0.00382 DBH2 
+Η 
+= 
+1.37 + 0.395 DB Η ­0.00132 DB Η2 
+Η 
+= 
+1.37 + 0.476 DBH ­0.00205 DBH2 
+[m] 
+Betula pendula (mean) 
+[m] 
+Betula pendula (max) 
+[m] 
+Betula pendula(mean 
++ max) ¡2 
+Also shown in are Figure 3 data from a study in eastern Germany by Knape (1996), together 
+with an ensemble of allometric relationships for Betula pendula that were compiled by Scharf 
+(2001) for Germany (dotted lines): 
+Η 
+= 
+1.5607 + 6.5286 
+log(DBH) 
+Η 
+= 
+0.6642 + 6.7311 
+log(DBH) 
+Η 
+= 
+3.4022 + 6.2140 
+log(DBH) 
+Η 
+= 
+3.2453 + 6.0089 
+log{DBH) 
+Η 
+= 
+0.0424 + 7.1387 
+log(DBH) 
+Η 
+= 
+5.1173 + 4.6099 
+log(DBH) 
+Η 
+= 
+0.3029 + 6.5326 
+log(DBH) 
+[m 
+[m 
+[m 
+[m 
+[m 
+[m 
+[m 
+(r2 = 0.742) 
+(r2 = 0.816) 
+(r2 = 0.549) 
+(r2 = 0.632) 
+(r2 = 0.598) 
+(r2 = 0.5253) 
+(r2 = 0.6241) 
+(9.5 < DBH < 33.5cm) 
+(7.5 < DBH < 37.5cm) 
+(8.5 < DBH < 37.5cm) 
+(7.5 < DBH < 28.5cm) 
+(11.5 < DBH < 36.5cm) 
+(7.5 < DBH < 38.5cm) 
+(7.5 < DBH < 33.5cm) 
+Oinas and Sikanen (2000) provide the following H to DBH relationship for birch: 
+16.36 
+10.76 
+H = 1.3 + exp 
+3.47 
+DBH + 5 
+(DBH + bf 
+[m] 
+Alternatively, Pacala et al. (1993) and Pacala et al. (1996) describes the growth of Betula 
+alleghaniensis as: 
+H = 23.2 1 
+exp 
+[m] 
+
+
+where the 23.2 refers to the maximum attainable height for that species. By using the same 
+estimator of Hmax (29 m) for Betula pendula that was used by Bugmann (1994), a height curve 
+can be derived that is in reasonable agreement with actual height data for Betula papyrifera, 
+Betula pendula and Betula alleghaniensis collected at various locations by Comeau et al. (1999), 
+Viherä­Aarnio and Velling (1999), Herajärvi (2001), Halliwell, D. H. and Apps, M. J. (1997), 
+and Wang and Kimmins (2002). Furthermore this height curve does not decrease at larger DBH 
+values: 
+/ 
+-1.87 
+UHM 
+\ 
+r 
+η 
+,-, 
+Η 
+= 
+29.0 11. — exp 
+29° 
+" 
+[m] 
+Betula 
+pendula 
+Most of the above relationships are displayed in the graph of Figure 3. Caution should be 
+used when applying these relationships since they are based on only a few Η versus DBH 
+measurements of Betula pendula trees (Viherä­Aarnio and Veiling 1999). 
+Betula 
+35 
+30 
+25 
+20 -
+15 
+1 
+' 
+' 
+1 
+' 
+' 
+Oinas & 
+Scharf, 
++ 
+'■ m 
+' 
+/ 
+j 
+■ ØM / / 
+/ 
+■m' 
+/ / 
+-ãÊ
+K</ 
+jzb i // 
+Ψ 
+f 
+I 
+' 
+' 
+' 
+I 
+' 
+Sikanen, 2000 
+2001 
+¿ Í > V ■■'■"> ' 
+/ 
+Λ/Keräjävi 
+' 
+Âé. Comeau 
+/ 
+χ Halliwell 
+' 
+Ü Viherae-
++ Wang & 
+O Knape, 
+Pacala et 
+■ -Betula 
+Betula 
+Botkin et 
+Betula 
+Betula 
+Betula 
+■ 
+■
+■
+■
+·
+■ 
+, 
+I 
+| 
+1 
+1 
+1 
+■ 
+'.' 't -r',''.T--'C 
+'""-
+■ ■■y'" 
+. . · — ' " ^ ^ - — " ~ ^ - -
+2001 
+-
+et al., 1999 
+Sc Apps, 1997 -
+Aarnio, 1999 
+" 
+Kimmins, 2002-
+996 
+al., 1996 
+alleghaniensis " 
+pendula' 
+3l., 1970 
+alleghaniensis -
+papyrifera 
+pendula' 
+, 
+, 
+I 
+, 
+, 
+, 
+20 
+40 
+60 
+DBH [cm] 
+80 
+100 
+Figure 3: Tree height curve for various birch species according to the JABOWA (Botkin, 1993) and 
+SORTIE (Pacala et al., 1993) model formulations. A '*' indicates that the relationship for Betula pendula 
+was derived by using an Hmax value of 29.0 m, and an DBHmax value of 116 cm for that species ­ both 
+of which were taken from the appendix of Burgmann, 1994. 
+2.3 
+Height to crown, Ht [m] 
+The allometric formulation of Nagel et al. (2002) for the prediction of the height to the tree 
+crown (Ht) can be used if the maximum height of the trees in the plot at the age of 100 years 
+{Hwo) is known: 
+Ht = H 
+1. 
+e 
+­11.3298 + 0.2577 ­ ^ ­ 0.003778 DBH + 0.6697 log(#ioo)| ^ 
+rmj 
+10 
+
+
+Figure 4 shows this relationship by setting iïioo equal to the maximum tree height for Betula 
+pendula (Hmax = 29.0 m) as provided by Bugmann (1994). When comparing the bottom height 
+of the crown with that of the tree itself, one notices that for small tree heights the crown length 
+is unrealistically small. A somewhat larger crown is feasible with the relationship of Pacala et al. 
+(1993) for Betula alleghaniensis: 
+Figure 4 shows this relationship when applied to the tree height estimates of the same author 
+as defined in equation 1. Again, it should be kept in mind, that the height to the bottom of 
+the tree crown depends on the density of trees in a stand, as well as, the resulting availability 
+of light and the tolerance to shade of the species under consideration. 
+35 
+30 
+25 -
+E 20 
+15 
+10 
+20 
+Betula pendula 
+1 
+, 
+I 
+| 
+I 
+I 
+- 
+/ 
+/ / 
+/ / 
+/
+/ 
+/ · ' ■ 
+^
+-
+^ 
+- ι'/,// 
+-ψ 
+Ψ 
+, 
+, 
+, 
+ι 
+, , 
+ι 
+Ι 
+ι 
+ι 
+ι 
+Ι 
+ι 
+ι 
+ι 
+Ι 
+ι 
+ι 
+ι 
+Pacala et al., 1996 (HU = 29m)-
+_^--"""~neiqht 
+- - - " ' ' 
+^ 
+tree 
+„ - - -
+total 
+, - ' 
+, ' " 
+Oinas & Sikanen, 2000 
+. 
+-
+height to crown base . 
+Pacala et al., 1996 using 
+Pacala et al., 1996 (29m) 
+-
+Oinas Sc Sikanen, 2000 
+Nagel et al., 2002 using 
+Pacala et al., 1996 (29m) 
+-
+Oinas Sc Sikanen, 2000 
+40 
+60 
+DBH [cm] 
+80 
+100 
+Figure 4: Allometric relationships for the height to the bottom of the crown for betula pendula according 
+ot the relationships of Nagel et al., (2002) and Pacala et al., (1993). For reference, the total tree heights 
+according to Pacala et al., (1996) and Oinas and Sikanen (2000) are also shown. 
+2.4 
+Height to the m a x i m u m crown width, Hcr 
+[ m] 
+According to the crown model shown in the left hand graph of Figure 3 the maximum height of 
+the crown occurs at: Hcr = Ht + 0.5 Hcb where Hcb covers 36% of the total crown length Hc. 
+However, other slightly different crown shapes may be feasible, thus shifting the height to the 
+maximum crown radius. 
+2.5 
+Height to first dead branch, Hnb [m] 
+No information regarding the height to the first dead branch was found in the literature. 
+11 
+
+
+2.6 
+M a x i m u m crown radius, Cr [m] 
+Webster and Lorimer (2003) provide the following crown radius to DBH relationship for betula 
+alleghaniensis: 
+0.204334 DBH1A89 
+. . 
+Cr = \l 
+ζ 
+[m] 
+π 
+(1) 
+Alternatively Pacala et al. (1993) describes the crown radius for betula alleghaniensis as: 
+Cr = 0.109iJ [m] 
+(2) 
+The allometric formulation of Nagel et al. (2002) for the prediction of the crown radius is: 
+Cr 
+= 
+0.1617 + 0.1030 DBH 
+This is not too different from the crown radius estimate of Bragg (2001) for yellow birch (Betula 
+alleghaniensis), who provide another crown-width estimation for paper birch (Betula papyrifera): 
+CT 
+= 
+ì (Ό.723785 + 0.666365DBH067727A 
+[m] 
+Betula alleghaniensis 
+(3) 
+CT 
+= 
+\- (Ί.933184 + 0.04892 DBHl325MA 
+[m] 
+Betula pay rif era 
+All of these relationships are shown in Figure 5 together with actual data from Halliwell, D. H. 
+and Apps, M. J. (1997) 
+Betula pendula 
+—ι 
+1 
+1 
+1 
+1 
+1 
+1 
+1 
+1 —
+r 
+Bragg, 2001 (yellow birch) 
+- 1 
+Γ> 
+I T -
+/ 
+/ /' 
+Bragg, 2001 (paper birch) 
+/ , ' 
+/ 1 
+/,' 
+O Halliwell & Apps, 1997 
+Webster & Lorimer, 2003//'' 
+- - - 
+Nagel et al., 2002 
+Pacala et al., 1993 using as tree height: 
+Pacala et al., 1993 (29 m) 
+Oinas & Sikanen, 2000 
+40 
+DBH [cm] 
+80 
+Figure 5: Allometric relationships for the radius of the tree crown of betula alleghaniensis according 
+to Pacala et al., (1993), Nagel et al., (2002), Webster and Lorimer (2003), as well as some data from 
+Halliwell and Apps, 1997. 
+12 
+
+
+2.7 
+Leaf Area Index, LAI 
+[tree­1] 
+The (one sided) leaf area (A{) of young Birch stands can be described according to the informa­
+tion in appendix 4 of Bugmann (1994): 
+Αι = 0.028 DBHXM 
+[n^tree"1] 
+(4) 
+Martin et al. (1998) describes a leaf area ­ DBH relationship for Betula lenta as (dashed line 
+in the left hand panel of Figure 6): 
+At = 0.148252 DBH2008 
+[matree­1] 
+(5) 
+The average leaf area index of a typical beech tree of height H can thus be obtained by dividing 
+the above estimates of A\ by the downward projected surface area of that tree (π C2). The right 
+hand panel of Figure 6 shows a series of LAI estimates derived from equations 4 and 5 for the 
+leaf area, as well as equations 1, 2 and 3 for the crown radius. It can be seen that the leaf area 
+relationship of Bugmann (1994) yields an increase of the LAI value at small DBH values (this 
+was true for all equations of Cr even though only one such example is presented in figure 6). 
+Data points for paper birch at two different sites in Central British Columbia (Comeau et al. 
+1999), as well as for a betula pubescens stand in Central Siberia—mean height 15m; tree density 
+4600 stem/ha and mean DBH 
+15cm—(Röser et al. 2002) are also provided. 
+An empirical relationship was fitted (thick line) such as 1) to reflect the observed data as well as 
+some of the trends in the above allometric relationships, and 2) to yield the maximum attainable 
+LAI for beech trees (5.59) according to Tiangxiang et al. (2002) at the maximum value for the 
+diameter at breast height (DBHmax 
+= 116 cm) of Bugmann (1994): 
+It should be noted that during the course of a year the LAI of any given birch tree changes 
+as a function of time, and modulations of the above LAI function should thus be performed to 
+account for this. 
+2.8 
+Foliage and Biomass 
+The leaves of Betula pendula are oval to triangular in shape, measure between 2.5 ­ 5 cm in 
+length and about 3 cm in width. For Betula pubescens the leaf length is 1.5 to 5.5 cm and its 
+width around 3 cm. Joosten and Lehtonen (2002) presented data of total dry biomass for birch 
+trees in Finland that can be approximated with the following relationship: 
+Wt = 0.3DBH 2 2 2 
+[kg tree"1] 
+Martin et al. (1998) produced an allometric relationship for Betula lenta in the Appalachian 
+region of the United States. His tree samples covered DBH 
+values up to about 40 cm (see 
+dashed line in Figure 7. He noted large differences in the specific leaf area for this birch species, 
+ranging from 161.8 to 538.2 [cm2 g ­ 1]. 
+Wt = 0.0564937DBH2726 
+[kg tree­1] 
+13 
+
+
+übU 
+200 
+150 
+100 
+50 
+n 
+-
+-
+-
+-
+Betula 
+■ 
+Martin et ai., 1998/ _ 
+-
+/ 
+/ 
+-
+,'/^Burgman, 1994 . 
+Í 
+ι 
+ι 
+ι — 
+Betula 
+10 
+20 
+30 
+40 
+DBH [cm] 
+bO 
+30 
+40 
+DBH [cm] 
+Figure 6: Left panel: One sided leaf area (Αι) for birch, as derived from the relationships of Bugmann 
+(1994) and Martin et al. (1998). Right panel: One sided leaf area index per tree, derived from the ratio 
+of Αι and AT (the downward projected crown area). Estimates of the latter quantity used the crown 
+radius CT relationships of Webster and Lorimer (2003), Pacala et al., (1996) and Nagel et al (2002) to 
+compute the downward­projected crown area: AT = nC%. Data from Comeau et al. (1999) and Röser 
+et al. (2002) are provided. The empirical fit was obtained by forcing the maximum LAI value (5.59) for 
+beech (Tianxiang et al., 2002) to occur at the maximum DBH value (116 cm) of Bugmann (1994). 
+Jenkins et al. (2003) give the following equation for the dry biomass of betula in the USA: 
+Wt 
+= 0.133627 DBH2·4342 
+[kg tree"1] 
+(r2 = 0.981) 
+betula 
+3000 
+2500 
+~ 
+2000 
+.51 1500 
+5 
+1000 
+500 
+" Ί 
+!■■■» 
+■ 
+" ' I ' 
+Joosten and Lehtonen, 
+Jenkins et al., 2003 
+! 
+Mortin et al., 1998 
+; 
+. ι ■ 
+rf=rST.,,,. 
+ι 
+ι 
+ι, 
+ι 
+2002 
+if 
+if 
+if 
+if 
+if 
+if 
+ι n | M IM 
+ι ι -
+/ / 
+if 
+_ 
+-
+-
+I l I II ι ι" 
+0 
+10 
+20 
+30 
+40 
+DBH [cm] 
+50 
+60 
+Figure 7: Allometric relationships for total dry weight of birch trees in Finland (Joosten and Lehtonen, 
+2002), as well as, birch in general (Jenkins et al., 2003) and Betula lenta (Martin et al., 1998) in the 
+United States. 
+14 
+
+
+3 
+European Beech (Fagus Silvática) 
+The naturally distribution of the European beech ranges from the southern tip of Scandinavia, 
+through middle and western Europe, and some of the higher elevation locations of southern 
+Europe. In the northern Alps and the Appennines, for example, the European beech can exists 
+at altitude up to about 1600 ­ 1800 m, respectively (Röhrig 1980). 
+3.1 
+Crown shape 
+European beech trees are relatively tolerant to shade as well as winter frost. They grow best if 
+sufficient water is available and continue to do so for a very long time. Often the European beech 
+occurs together with other tree species in the same stand, whether this is with Norway spruce in 
+mountainous areas, or with the larch, ash, maple, elm, lime and cherry trees (Röhrig 1980). Due 
+to the closed crown layer in many beech forests little light is available for the understory and 
+consequently these forest types are often devoid of large bushes. The crown shape of the beech 
+can be represented using a hemispherical and a conical element, as outlined by Pretzsch (1992). 
+The base of the hemisphere touches the base of the conical section at a height Hcr, forming the 
+widest part of the crown as indicated in the middle panel of Figure 8. The right hand panel 
+in the same Figure shows a 3­D visualization of a mature beech stand with a somewhat more 
+differentiated crown shape representation. 
+Hc 
+i 
+U : 
+i 
+R< 
+: 
+-1* 
+1 
+x 
+À 
+! 
+/ 
+■ 
+' 
+­­'. 
+í­
+Ç 
+He 
+. 
+H e b 
+« Λ 
+H » b 
+Figure 8: Left panel: European beech forest photographed by Anna­Lena Anderberg, (Source: 
+http : //linnaeus .nrm. se/f lora/). Middle panel: Crown model of Fagus sylvatica after Pretzsch, 1992. 
+Right Panel: 3­D visualization of a 20 m high beech stand for which the reflectance fields can be modelled 
+using the radiation transfer model of Govaerts and Vertstraete, 1998. 
+Pretzsch (1992) provides two equations to describe the crown radius 1) r¿ from the top of the 
+crown down to the maximum crown radius Cr, and 2) r¡, from the largest lateral extent of the 
+crown down to the bottom of the crown (d [m] is the distance from the crown top downwards) : 
+L/r 
+:rf3 
+η 
+= 
+Rc ­ Cr 
+Γ;, 
+= 
+UT — ~ 
+ττ~ -Π, 
+Hr — Η. 
+et + d 
+et 
+Re — O7. 
+Hr — H. 
+et 
+[m] 
+M 
+3.2 
+Tree height, H [m] 
+The total tree height H for Fagus silvática in north­western Germany has been related by 
+Guericke (2001) to the trunk diameter at breast height (DBH [cm]) on the basis of tree height 
+15 
+
+
+measurements between 10 and ~40 m (or DBH values between 8 and ~70 cm) with r2 = 0.8664 
+in his figure 4-22: 
+H = 11.447 \a(DBH) - 11.885 [m] 
+However, since this equation does not offer suitable tree height estimates below about 7 m, a 
+linear approximation is proposed to bridge the gap (compare with thick grey line in the· right 
+hand panel of Figure 9): 
+H = 1.37 + 1.28855 DBH 
+[m] 
+0 < DBH < 7.0 [cm] 
+50 
+Fagus sylvatica 
+- | 
+1 
+1 
+, 
+1 
+1 
+1 
+1 -
+tree height 
+Forstreuter, 1999 
+Bartelink, 1997 
+Guericke, 2001: 
+Appendix 4 (mean) 
+Figure 4-22 
+Kindermann, 1998 
+. 
+. 
+I 
+. 
+I 
+I 
+I 
+I 
+I 
+I 
+I 
+I 
+l _ 
+40 
+60 
+80 
+DBH [cm] 
+Figure 9: Tree height - DBH relationship of Guericke, 2001: thin dotted lines are all the data of his 
+appendix 4, the thick black dashed line was generated with the mean parameters of his appendix 4, and 
+the thick grey line is his logarithmic equation of Figure 4-22 (with a linear cut-off below DBH=7 cm). 
+Also provided is the relationship of Kindermann, 1998, Bartelink, 1997 and Forstreuter, 1999. 
+In his appendix 4 Guericke (2001) provides further biometrie estimates of the tree height distri­
+bution with DBH using the equation of Kramer (1982) (thin black lines in the right hand panel 
+of Figure 9), i.e.: 
+H = 1.3 + 
+DBH 
+\ 
+ao + aiDBH 
+M 
+By averaging the various coefficients of an and αχ in the appendix 4 of Guericke (2001) a tree 
+height curve can be obtained (thick dashed line in right hand panel of Figure 9) that is in agree­
+ment with the author's logarithmic equation from figure 4-22 (see above) with the additional 
+benefit that the lower tree heights are provided as well: 
+16 
+
+
+For comparison the allometric relationship of Kindermann (1998) for a 93 year old stand are 
+also provided in Figure 9: 
+Γ) Ώ Γ72 
+' 
++ 2.07 + 0.507 DBH + 0.0215 DBH2 
+^ 
+Similarly the relationship derived by Bartelink (1997) for a stand with 2 < DBH 
+< 32 cm 
+(r2 = 0.934) in the Netherlands is provided: 
+Η = 1.732 + DBH0769 
+[m] 
+Forstreuter, M (1999) provides several allometric equations for biomass estimations that allow 
+to construct a tree height-DBH relationship (shown as a dash-dotted line in Figure 9): 
+H 
+= 
+3.240838 DBH0613065 
+[m] 
+3.3 
+Height to crown, Ht [m] 
+The allometric equation describing the relationship between DBH > 8.71 cm and the height to 
+the tree crown (Ht) of figure 4-22 from Guericke (2001) (r2 = 0.462) is: 
+Ht = 5.6627 la(DBH) - 5.9119 [m] 
+In his appendix 4 Guericke (2001) provides further biometrie estimates of the height-to-the-
+crown distribution with DBH using the equation of Van Deusen and Bigin (1985) (thin dotted 
+lines in the right hand panel of Figure 10): 
+Ht = H* ( l - exp~(&0 + 6 lõw) 2 j [m] 
+By selecting a 'best' couple of the òn and b\ coefficients from appendix 4 of Guericke (2001) 
+a crown height curve can be obtained (thick grey line in Figure 10) that follows closely the 
+logarithmic curve of the same authors and accounts for the observed spread of his data at higher 
+DBH values: 
+Ht 
+= Hil 
+-exp-(°- 9 5 0 7 3 5- 0- 0 8 1 2 8 3 0^H) 2ì[m] 
+DBH > 0.11055 [cm] 
+Ht 
+= 0.0 [m] 
+DBH < 0.11055 [cm] 
+This relation is also very close to that provided by Pretzsch et al. (2002) (r2 = 0.73) and indi-
+cated as a thick black line with long dashes in the right hand panel of Figure 10: 
+Bartelink (1997) provides a relationship for a beech stand in the Netherlands (2 < DBH < 30 
+cm) that allows for the computing of Ht (see long dashed lines in Figure 10): 
+Ht = H - (2.897 + 0.0112469 DBH2) 
+[m] 
+Again, it should be kept in mind, that the height to the bottom of the tree crown depends on 
+the density of trees in a stand, as well as, the resulting availability of light and the tolerance to 
+shade of the species under consideration. 
+17 
+
+
+ε 
+o 
+"o 
+30 
+25 
+20 
+15 
+υ 
+5 
+0 
+Fagus sylvatica 
+ι 
+ι 
+ι 
+! 
+1 
+I 
+1 
+J 
+1 
+I 
+1 
+J 
+1 
+I 
+1 
+J 
+ι 
+ι 
+ι 
+. . ' " ' 
+_ . . . - - ■" 
+,y,::-.-^ 
+. . · ' ' 
+.,./""""' 
+\\\'. 
+■■"' '..'■..ίϊΐί.»β6ί 
+.·:·-:·;"" ..···.·■·■'"".' - ■■•.■■'•r-r^-.rrrr^üfi 
+,->'*' .'" ,.:>^2^¿5--^ 
+...•'¿*^.·.'-'·' .-·■' .^■'■'..•Vh>r^:^>!*^^^'"'' 
+■ ·*.. ' .'„O V '■ '.. ■ ,■* 
+.¿¿$&**^7:··^~' 
+/ ¿\>£y S¿&$^'' 
+■'.'.'..':.■.■-
+-' * ■'■\·.- ' ¿jfi¡*& 
+- nåøiøv 
+: / / ; # $ ■' 
+~ 
+i:;sMW/ 
+Bartelink, 1997 
+vMftp·'/ 
+Guericke, 2 0 0 1 : 
+■ -Wf'-; 
+Appendix 4 (best) 
+- Wr ■' 
+~ 
+' W'■·'' 
+Figure 4 - 2 2 
+'W 
+Prpt7srh Pt ni , 2 0 0 ? ' 
+™. 
+. , ι 
+, . , 
+20 
+40 
+60 
+80 
+DBH fcml 
+Figure 10: Ensemble of allometric relationships from appendix 4 (dotted lines) of Guericke (2001) for 
+the 'height to the bottom of the tree crown' Ht, together with the 'best' estimate thereof and another 
+logarithmic equation from Figure 4­22 of the same author. The relationship of Bartelink (1997) and that 
+of Pretzsch et al. (2002) are also shown. 
+3.4 
+Height to the maximum crown width, Hcr [ni] 
+In figure 4­40 and table 4­15 Guericke (2001) describes the relationship between H and the 
+height to the maximum crown diameter (Hcr = Ht + Hcb) as follows (r2 = 0.90): 
+HCr = 0.7874 F + 0.5441 [m] 
+However, Pretzsch (1992) simplifies this by saying that Hcr = Ht + 3Hc/5 where Hc — H — Ht). 
+Figure 11 shows that this approximation (dashed line) is acceptable. Thus: 
+3.5 
+Height to first dead branch, Hnb [m] 
+The allometric equation describing the relationship between DBH > 6.72 cm and the height to 
+the first dead branch (Hnb) was taken from figure 4­22 of Guericke (2001) (r2 = 0.4963): 
+Hnb 
+Hnb 
+6.1522 la(DBH) ­ 11.718 [m] 
+0.0 [ml 
+6.72 < DBH [cm] 
+DBH < 6.72 [cm] 
+18 
+
+
+50 
+Fogus sylvotica 
+40 
+60 
+DBH [cm] 
+Figure 11: Allometric relationships (solid lines) of Guericke, (2001) for 'tree height' H, 'bottom of crown 
+height' Ht, 'height to the maximum crown width' Hcr, and 'height to first dead branch' Hnb, as well as, 
+the simplified approach (dashed line) of Pretzsch (1992) for Hcr­
+3.6 
+M a x i m u m crown radius, Cr [m] 
+In figure 4­27 and table 4­9 Guericke (2001) describes the relationship between tree height H 
+and maximum crown diameter (2 * CT) [m] (r2 = 0.77) as (compare with Figure 12): 
+Cr = 0.0821 DBH + 0.7694 [m] 
+This equation holds well when compared to the mean (CT = 0.078307 DBH + 0.905689 [m]) of a 
+series of estimates of Cr for individual stands from appendix 4 of Guericke (2001). Note however 
+that CT does not go to zero as DBH —» 0 (see Figure 12). This is not the case for the allometric 
+relation of Nagel et al. (2002) which increases slowly at small heights to become equivalent to 
+the functions of Guericke (2001) at larger DBH values (solid black line in Figure 12): 
+(
+I DRH \!·3341 \ 
+l ­ e x p ­ t ^ 2 9 2 ) 
+[m] 
+Bartelink (1997) provides a relationship for a beech stand in the Netherlands (2 < DBH < 30 
+cm) that allows for the computing of Cr (see short dashed lines in Figure 12): 
+Gr 
+1 /8.560 + 0.0286 D Β H2e23 
+\lñ\ 
+3.38 
+0.98232 
+m 
+3.7 
+B o t t o m crown radius, Rc [m] 
+According to Pretzsch (1992) the radius of the tree crown at the bottom of the crown (that is 
+at height Ht) can be approximated with (see Figure 12): 
+19 
+
+
+Fagus sylvatica 
+6 --
+4 -
+ι 
+I 
+1 
+| 
+ι 
+ι 
+1 
+| 
+1 
+1 
+Nagel et al, 2002 
+' Guericke, 2001 
+Appendix 4 (mean) 
+Figure 4 - 2 7 
+/Æ 
+' ■·' ■■'··''■·' <äM 
+Ir.' 
+S-uérjf''· '■■■' 
+- 'W-' 
+Æ< 
+t/M-: 
+. / .>*'" 
+/ ' , 
+, , ι 
+1 ■' ' ■ ■ ..ι y,y 
+■■'■'■ 
+/
+'
+/ 
+//s/ 
+tây 
+W^ 
+>$&?'' 
+W 
+\y 
+Max. crown 
+':'" 
+radius [m] 
+bottom crown 
+radius [ml , 
+.- Pretzsch, 1992 
+1 
+1 
+I 
+1 
+, 
+1 
+I 
+1 
+-
+-
+-
+-
+-
+-
+" 
+--
+_ 
+20 
+40 
+60 
+DBH [cm] 
+80 
+Figure 12: Allometric relationships of Guericke (2001), Bartelink (1997), and Nagel et al. (2002) for the 
+maximum crown radius, Cr, as well as, the relationship of Pretzsch (1992)—applied to Cr of Nagel et al. 
+(2002)—for the radius of the crown at its lower end, Rc. 
+3.8 
+Leaf Area Index, LAI 
+[tree­1] 
+The (one sided) leaf area (.A/) of young Beech stands was estimated by Prskawetz and Lexer 
+(2000) for 12 pure stands in central Europe using: 
+Λ = 0.307279 DBH1803 
+[m2 tree­1] 
+The average leaf area index of a typical beech tree of height Η can thus be obtained by di­
+viding the above by the downward projected surface area of that tree (π C2) ­ where we used 
+(Cr = 0.078307DBH + 0.905689 [m]) the mean relationship from the appendix of Guericke 
+(2001) in Figure 13: 
+LAI 
+= 
+0.307279 
+DBH1803 
+7Γ (0.078307 DB Η + 0.905689)2 [tree­1] 
+The relationship of Burger 1949 for leaf area per tree (A;) [m2] shows good agreement over 
+its verified range (DBH < 50 cm) when compared to the leaf area index per tree estimate of 
+Prskawetz and Lexer (2000), (LAI = 
+Ai/(nCr
+2): 
+20 
+
+
+LAI = 1.187 DBH + 0.0955 DBH2 +0.00095 DBH3 
+. 
+_,. 
+—2- 
+[tree ] 
+7Γ C r 
+Fagus sylvatica 
+Ί — ' — ' — ' 
+1 ' 
+'—'—I 
+Burger, 1949 / 
+Prskawetz and Lexer, 2000 
+40 
+60 
+DBH [cm] 
+80 
+100 
+Figure 13: Leaf area index (LAI) derived from the allometric relationship for one sided leaf area A¡ of 
+1) Burger (1949), and 2) Prskawetz and Lexer (2000), using the mean relationship from the data in the 
+appendix of Guericke, (2001) for the maximum crown radius Cr to compute the (circular) downward-
+projected crown area: Ar — nC^ 
+To account for the dynamical behaviour of the LAI during the growing season of a mixed 
+oak/beech forest, Muusche et al. (2001) proposed in their case study to describe the temporal 
+behaviour of the LAI as: 
+LAI = -7.87 + 0.12 td - 0.00027^ 
+[tree-1] 
+where t¿ is the day-number in the year (0 -+ 365). However, such a seasonal variation in LAI is 
+highly dependent on both climatic and geographic effects as well as the various factors affecting 
+the local site conditions. 
+3.9 
+Foliage and Biomass 
+The leaves of Fagus sylvatica are elliptical in shape, 5 to 10 cm long and approximately 5 cm 
+wide. Bartelink (1997) provides a series of relationships to estimate the dry weight of the foliage 
+Wf, branches Wb, crown Wc, trunk Ws and the total tree Wt [kg tree-1]. 
+His dataset applies to 
+a beech stand in the Netherlands with 2 < DBH < 30 cm. Relying only on DBH resulted in: 
+wf 
+wb 
+wc 
+ws 
+w, 
+= 
+0.375 +0.0024 
+DBH2517 
+= 
+0.0020 DBH3265 
+= 
+0.0031 DBH3161 
+= 
+0.0762 DBH2523 
+= 
+0.0798 
+DBH2mi 
+r2 
+r2 
+r2 
+r2 
+r2 
+= 0.906 
+= 0.916 
+= 0.924 
+= 0.979 
+= 0.988 
+[kg tree - ] 
+[kg tree" ] 
+[kg tree - ] 
+[kg tree - ] 
+[kg tree - ] 
+21 
+
+
+whereas using DBH and tree height (H) values yielded: 
+Wf 
+Wb 
+Wc 
+Ws 
+Wt 
+­1.101 
+= 
+0.0167 
+DBH^'H 
+= 
+0.0114DBH3682 
+Η~1031 
+= 
+0.0183DBH3614 
+Η'1078 
+= 
+0.0109 DBH1951 
+Η1262 
+= 
+0.0306 DBH2347 
+Η0590 
+r2 = 0.923 
+[kg tree­1] 
+r2 = 0.920 
+[kg tree­1] 
+r2 = 0.929 
+[kg tree­1] 
+r2 = 0.996 
+[kg tree­1] 
+r2 = 0.991 
+[kg tree­1] 
+Figure 14 shows the results of the above equations over their valid range of DBH values—between 
+2 and 32 cm—together with two equations provided by Forstreuter, M (1999) to estimate the 
+total dry weight Wt [kg/tree] aboveground: 
+Wt 
+= 0.1293 DBH244 
+[kg tree­1] 
+Wt 
+= 0.0012 F 3 9 8 
+[kg tree­1] 
+r2 = 0.98 
+r2 = 0.96 
+800 
+500 
+Λ00 
+Fagus sylvatica 
+200 -
+.Bartelink, 1997: 
+Tnick grey lines: y = d * DBH'2 
+Thin black lines: y = cO 4- d * 
+, tnlnl trpp 
+■ Forstreuter, 1999: 
+total tree 
+/ 
+if 
+f // 
+/ 
+tf 
+/ 
+f 
+/ 
+l> 
+/ 
+t 
+f 
+/ 
+yyr ■ ■ ■ 
+DBH7/Í ' 
+//' ' 
+II i ' 
+Ih ¡ ,' 
+II' ι' ' 
+Ι/ι ·' ' 
+! ! ! 
+/ ι ,' 
+t / 
+l i 
+ι 
+ι 
+ι 
+ι 
+ι 
+ι 
+10 
+20 
+DBH [cm] 
+00 
+'Ό 
+250 
+200 
+S 150 
+« 100 
+50 
+Fagus sylvatica 
+"Barte 
+Thick 
+.Thin 
+■ 
+-
+-
+, 
+, , 
+ι 
+, : 
+ink, 1997: 
+grey lines 
+Dlack lines 
+r r n w n 
+y = 
+y = 
+es 
+m Τ Τ Τ 
+I 
+d * 
+cO + 
+- - r r : 
+DBH" 
+d » 
+? 
+| 
+* H" 
+/, 
+DBHl! /J 
+1 '· I i 
+l i * 
+/ / / 
+~ 
+jií 
+¡fi 
+//i 
+t 
+--**"""'" 
+10 
+20 
+DBH [cm] 
+JO 
+ΊΟ 
+Figure 14: Allometric relationships of Bartelink (1997) for estimating the dry weight of the foliage, 
+branches and the total crown (left hand panel), as well as for the tree trunk and the total above ground dry 
+weight of the tree (right hand panel). The equations were derived from a beech stand in the Netherlands 
+having 2 < DBH < 32 cm. Also shown is the relationship of Forstreuter (1999) for total aboveground 
+dry weight (left hand panel). 
+22 
+
+
+4 
+European Larch (Larix decidua) 
+Like all other existing larch species, the natural distribution of the European larch is restricted 
+to the northern hemisphere, and this primarily to the boreal range of coniferous forests in Russia, 
+and the alpine and sub-alpine region of mountainous areas like the Alps and Tatra. Whereas 
+in the eastern Alps and lower Tatra, larch trees occur at elevations from 400 to 1000 m, they 
+are equally well encountered at greater heights and occasionally even up to altitudes of 2400 m 
+(Röhrig 1980). 
+4.1 
+Crown shape 
+European larch trees are relatively demanding as regards the availability of light. They are 
+pioneer trees that occupy empty tracts of land such as those cleared by avalanches, and can 
+proliferate well in dry mountainous areas. Within mixed stands the European larch can only 
+succeed if (due to its initial rapid growth) it remains free from too much shadowing (Röhrig 
+1980). Naturally grown larch stock in mountainous areas are thus relatively sparse in density 
+and often have a dense undergrowth. Due to the lower early growth-rate (and the substantial 
+shade-tolerance) of the beech, the European larch is often mixed with this species. The crown 
+shape of the European larch can be represented using two conical elements, as outlined by 
+Pretzsch (1992). The bases of these conical elements are touching and form the widest part of 
+the crown, as indicated in the middle graph of Figure 15. The right hand panel in the same 
+Figure shows a 3-D visualization of a mature Larch stand with a somewhat more differentiated 
+crown shape representation. 
+Figure 15: Left panel: Autumnal larch tree with yellowish needles photographed by Anna-Lena Ander-
+berg, (Source: http://linnaeus.nrm.se/flora/). Middle panel: Crown model oí Larix decidua after 
+Pretzsch, 1992. Right Panel: 3-D visualization of a 20 m high larch stand for which the reflectance fields 
+can be modelled using the radiation transfer model of Govaerts and Vertstraete, 1998. 
+23 
+
+
+4.2 
+Tree height, H [m] 
+Lischke et al. (1998) propose a Ker­Smith equation to relate the total tree height H for Larix 
+decidua to the trunk diameter at breast height (DBH [cm]) for a stand with a maximum tree 
+height of 52 m and a maximum DBH of 185 cm: 
+H = 1.37 + 2(52.0 ­ 1.37) ^ ξ ­ 
+­ (52.0 ­ 1.37) f^­j^­j 
+[m] 
+Guericke (2001) relates total tree height H to the DBH [cm] on the basis of tree height mea­
+surements between 16 and ~40 m (or DBH values between 20 and ~70 cm) in his figure 4­22 
+(r2 = 0.6497): 
+H = 17.795 \a(DBH) ­ 37.317 [m] 
+It can be seen in Figure 16 that the Ker­Smith equation of Lischke et al. 
+(1998) (dotted 
+line) continuously underestimates the tree heights for DBH > 20 cm when compared to the 
+relationship of Guericke (2001). Shao, G. (1986) also noted this behaviour (especially for small 
+and medium sized trees). However, given the near­linear rise of the Ker­Smith equation below 
+DBH values of 20 cm, one could relate the tree height linearly between the H — 1.37 m value 
+(at DBH = 0 cm) and the H = 16.8 m value (at DBH = 21 cm) from the equation of Guericke 
+(2001): 
+H 
+= 
+17.795 \a(DBH) ­ 37.317 [m] 
+20.0 < DBH [cm] 
+H 
+= 0.73876 DBH + 1.37 [m] 
+DBH < 20.0 [cm] 
+An alternative allometric relationship is that provided by Kindermann (1998) for a 93 year old 
+stand (see long dashed line in Figure 16) (afa = ±3.12m): 
+H 
+= 
+1.3 + 
+—
+Ï 
+[m] 
+(0.155+ 3Ö£) 
+4.3 
+Height to crown, Ht [m] 
+The allometric equation describing the relationship between DBH > 8.71 cm and the height to 
+the tree crown (Ht) was taken from figure 4­22 of Guericke (2001) (r2 — 0.4532): 
+Ht 
+= 
+13.337\n(DBH)­ 
+28.860 
+[m] 
+8.71 < DBH [cm] 
+Ht 
+= 
+0.0 
+[m] 
+DBH 
+< 8.71 [cm] 
+4.4 
+Height to t h e m a x i m u m crown width, Hcr [m] 
+In his figure 4­40 and table 4­15 Guericke (2001) describes the relationship between H and the 
+height to the maximum crown diameter (Hcr — Ht + Hcb) as follows (r2 = 0.93): 
+HCr = 0.8925 H ­ 2.8278 [m] 
+24 
+
+
+50 
+40 
+J L 3 0 
+Tree Height 
+o 
+o 
+O 
+_ ι 
+ι 
+ι 
+ι 
+'-
+'-_ 
+f η 
+Ι ν 
+/ '/ .'"' 
+/ 
+' / 
+■■' 
+- 
+/
+*
+/
+·
+■
+' 
+/ ' /'* 
+/ / ./ 
+/ / y f 
+- 
+/ / 
+■■■ / 
+/'■■' 
+/ 
+■ , /, 
+, 
+ι 
+Larix decidua 
+t 
+ι 
+ι 
+Ι 
+. 
+Ι 
+j 
+ι 
+Ι 
+Ι 
+| 
+. 
+. 
+ι _ 
+^
+^ 
+-
+/ ^ ^ ^ ^ ^ 
+Guericke, 2001 
+linear start 
+& Fischlin, 1998 
+, 
+, 
+ι 
+, 
+, 
+, ■ 
+0 
+20 
+40 
+60 
+DBH [cm] 
+80 
+Figure 16: The DBH­tree height relationship for European larch according to Guericke (2001) , Lischke 
+et al. (1998), and Kindermann (1998). Also shown is the linear approximation below DBH=20 cm for 
+the Guericke curve (small dashed line). 
+However, the same author then utilizes the simplified approach of Pretzsch (1992) who main­
+tains that Hcr = Ht + Hc/3 (for picea abies) where Hc — Η — Ht). Figure 17 shows that this 
+approximation (dashed line) is indeed acceptable for larix decidua. Thus: 
+H Cr 
+Ht + 
+^-^H 
+4.5 
+Height to first dead branch, Hnb [m] 
+The allometric equation describing the relationship between DBH > 22.18 cm and the height 
+to the first dead branch (Hnb) was taken from figure 4­22 of Guericke (2001) (r2 = 0.2528): 
+Hnb 
+= 
+10.224 In(DBH)­ 
+31.688 [m] 
+Hnb = 
+0.0 [m] 
+22.18 <DBH 
+[cm] 
+DBH < 22.18 [cm] 
+4.6 
+M a x i m u m crown radius, Cr [m] 
+In his figure 4­27 and table 4­9 Guericke (2001) describes the relationship between tree height 
+H and maximum crown diameter (Cu — 2Cr) [m] (r2 = 0.71) as (see grey dashed line in 
+Figure 18): 
+Cr = 0.0707 DBH ­ 0.0729 [m] 
+25 
+
+
+'M 
+40 
+30 
+20 
+10 
+n 
+-
+-
+: 
+: 
+- 
+fl. 
+Larix decidua 
+ι 
+Ι 
+Ι 
+, 
+, 
+, 
+, 
+, 
+, 
+, 
+, 
+, 
+, 
+, 
+, 
+, 
+tree height : 
+^•^rnax crown -
+yr 
+diameter^·«-« 
+/ 
+^^^ 
+^^^^ 
+" 
+/ 
+^ ^ 
+^
+^ 
+bottom of -
+/ 
+<s ^ ^ 
+crown height -
+/ 
+/
+/ 
+-j 
+J/ 
+^ ^ ^ ^ 
+first dead J 
+^ ^ ^ 
+branch height : 
+20 
+40 
+60 
+DBH [cm] 
+80 
+Figure 17: Allometric relationships for European larch of Guericke (2001) for 'height to bottom of crown' 
+Ht, 'height to the maximum crown diameter' Hcr: and 'height to first dead branch' Hnb, as well as, the 
+simplified approach (dashed line) of Pretzsch (1992) for Hcr-
+This simple equation holds well when compared to a series of estimates of Cr for individual 
+stands from appendix 4 of Guericke (2001), even though it is less than zero for values of DBH 
+smaller than 1.03 cm (compare with dotted lines in Figure 18). Note that from amongst the 
+ensemble of dotted lines the ones with the smallest slopes have been derived from populations 
+with the greatest range of DBH values (10 - 75 cm). For example, plot 310, which does not 
+deliver negative values of Cr as DBH —r 0, yields (r2=0.66): 
+CT = 0.0540 DBH + 0.07947 [m] 
+Interestingly, Nagel et al. (2002) provides a non-linear relationship that mimics this behaviour: 
+4.7 
+B o t t o m crown radius, Rc [m] 
+According to Pretzsch (1992) the radius of the tree crown at the bottom of the crown (that is 
+at height Ht) can be approximated with (see Figure 18): 
+26 
+
+
+Larix decidua 
+- ι 
+1 
+1 
+1 
+1 
+1 
+ι 
+1 
+1 
+1 
+1 
+1 
+1 
+T^TT—,-|,- .. ι 
+1 / I 
+Nagel et al, 2002 
+Guericke, 2001 
+Figure 4-27 
+.··' , 
+Appendix 4 (mean) 
+'S' 
+/ 
+plot 310 (1994) 
+¿Ι//'' 
+bottom crown 
+radius [m] 
+Pretzsch, 1992 
+40 
+60 
+DBH [cm] 
+100 
+Figure 18: DBH­maximum crown radius relationships for European larch according to Guericke (2001). 
+Shown are the data from his appendix 4 and his figure 4­27. The relationship of Nagel et al. (2002) for 
+the maximum crown radius is also provided. In addition Pretzsch (1992) was used to compute the value 
+of the lower crown radius Rc from the latter estimate of Cr. 
+4.8 
+Leaf Area Index, LAI 
+[tree­1] 
+Very limited information as to the leaf area index of European larch trees was found in the 
+literature. Burger (1945) provided an equation to determine the one sided leaf area of larch 
+trees (A; [m2 tree­1]): 
+A{ = i (l.l74DBH 
++ 0.046DBH2 + 0.0007DBHA 
+[m2tree­1] 
+The left hand panel of figure 19 shows that relationship together with some data points from 
+the study of Gower et al. (1999), and an allometric expression of the latter Gower et al. (1993) 
+for the one sided leaf area of Larix decidua (solid line): 
+Αι = 0.006 DBH2921 
+[m2tree­1] 
+(r2 = 0.902) 
+The deviations between the two curves could for example result due to geographic and temporal 
+differences in the foliage characteristics of larch trees. 
+To convert the leaf area per tree into an estimate of the leaf area index per tree, one has to 
+divide Αι by the downward projected surface area of that tree (π C2). In the case of larch most 
+of the equations that were provided previously to compute the crown radius did not allow for 
+a well behaved LAI ­ DBH relationship (see, for example, the dashed lines in the right hand 
+panel of Figure 19. In the case of the data provided by Guericke (2001) (Cr­DBH relationships 
+in his Figure 4­27 and the mean of his Appendix 4) this misbehaviour related to the fact that 
+these linear relationships were generally derived for values of DBH lying between 20 and 80 cm, 
+and often yielded very small or even negative crown radii values as DBH —>■ 0.. The same issue 
+arose with the crown radius equation of Nagel et al. (2002). However, in order to provide at 
+least an indication of a possible LAI­DBH relationship for the European larch, the solid lines in 
+27 
+
+
+Figure 19 were derived from the linear relationship for CT of plot 310 in Appendix 4 of Guericke 
+(2001). The thick version of this line relates to the leaf area estimate of Burger (1945), whereas 
+the thin solidline relates to A¡ of Gower et al. (1993). The latter relationship—although stringly 
+increasing at larger DBH values—has the benefit that it agrees reasonably well with the stated 
+LAI of 5.1 ±0.1 that was provided by Gower et al. (1993) for their stand with a mean DBH 
+around 24cm. 
+LAI 
+= 
+Al 
+[tree­1] 
+π (0.054 ΖλΒΪΥ + 0.7947)2 
+It should be noted that during the course of a year the LAI of any given larch tree changes as 
+a function of time. Appropriate modulations of the above LAI function for a given tree height 
+have to be performed. 
+QJ 
+O 
+\ 
+OJ 
+o 
+o 
+D 
+D 
+100 
+80 
+60 
+40 
+20 
+0 
+-
+■ 
+* 
+_.-
+. Burger 
+- Gower 
+Gower 
+<r*.. 
+Larix Decidua 
+, 1945 
+1 
+et al., 1993 ƒ 
+et al., 1999/ 
+,' 
+. 
+/ 
+* 
+ï 
+-
+/ 
+* 
+* / 
+/ ''* 
+M,' 
+l i . . . 
+Larix decidua 
+10 
+20 
+30 
+DBH [cm] 
+40 
+20 
+30 
+DBH [cm] 
+Figure 19: Left panel: Allometric relationships of Burger (1945) and Gower et al (1993) describing 
+the one sided leaf area (A¡) for European larch. Also shown are data from Gower et al. (1999). Right 
+panel: The one sided leaf area index per tree as derived from 1) the allometric equations of Burger (1945) 
+and Gower et al., (1993) for leaf area, and 2) the maximum crown radius equations of Guericke, (2001) 
+and Nagel et al. (2002) to compute the (circular) downward-projected crown area. It can be seen that 
+under these conditions the crown radius equation of Nagel et al, (2002) does not deliver reasonable LAI 
+estimates at medium to small DBH values. 
+4.9 
+Foliage and Biomass 
+The needles of Larix decidua are typically 15-30 mm long and about 0.5-0.8 mm wide. Kajimoto 
+et al. (1999) provides the following estimates for stem Ws , branch Wb and needle Wf dry 
+weight for Larix gmelinii for a stand with a mean (maximum) height of 5.5 (11.2) m, a mean 
+(maximum) DBH of 6.8 (18.5) cm and a tree density of 1910 stems/hectare: 
+Ws 
+= 0.1680DBH2978 
+[kg tree-1] 
+(r2 = 0.98) 
+28 
+
+
+Wb = 
+0.0545DBH2845 
+[kg tree­1] 
+(r2 = 0.98) 
+Wf 
+= 0.0222DBH2788 
+[kg tree­1] 
+(r2 = 0.98) 
+Figure 20 shows the sum of the above equations, i.e., the total aboveground biomass Wt — 
+Ws + Wb + Wf [kg / tree] as well as the same parameter estimated with the equation of Jenkins 
+et al. (2003) for cedar/larch species in the USA: 
+Wt 
+0.130864DBH22592 
+[kg tree­1] 
+(r2 = 0.981) 
+Gower et al. (1993) provides a series of allometric equations that allow to estimate the dry 
+weight for the stem (Ws), the live (Wib) and dead (W¿b) branches, as well as the foliage (Wf) 
+of Larix decidua trees: 
+Ws 
+Wib 
+wdb 
+Wf 
+0.248313 DBH2111 
+[kg tree­1] 
+0.000553 DBH 3· 4 2 3 [kg tree­1] 
+0.001770 DBH2850 
+[kg tree­1] 
+0.000492 DBH2912 
+[kg tree­1] 
+(r2 = 0.974) 
+(r2 = 0.964) 
+(r2 = 0.523) 
+(r2 = 0.907) 
+The total above ground dry weight for Larix decidua, Wt = Ws + Wib + Wdb + Wf can thus be 
+computed (see Figure 20). 
+Larix 
+1000 
+CJ> 
+'ai 
+5 
+>, 
+TD 
+800 -
+çp 
+600 -
+400 
+200 
+Η-I 
+Γ 
+Kajimoto et al., 1999-
+Jenkins et al., 2003 
+Gower et al., 1993 
+40 
+60 
+DBH [cm] 
+80 
+100 
+Figure 20: Total aboveground dry weight for 1) Larix decidua according to Gower et al. (2003), 2) 
+cedar/larch trees in the USA according to Jenkins et al., (2003) and 3) Larix gmelinii in Siberia according 
+to Kajimoto et al., (1999). 
+29 
+
+
+5 
+Norway Spruce (Picea Abies) 
+Norway spruce is naturally distributed across Scandinavia, the Baltic States and further east 
+beyond the Ural mountains. It is also encountered in parts of middle and south-eastern Europe 
+as well as in smaller pockets across former Yugoslavia and the Carpathian Mountain range 
+(Röhrig 1980). Norway spruce can be encountered close to sea-level in the North and up to an 
+elevation of 2200 m in the Alps (Schmidt-Vogt 1976). 
+5.1 
+Crown shape 
+Norway spruce trees are relatively tolerant to shade. Young trees are often amongst the under-
+story or middle layer of mixed stands (containing, for example, fir, pine and beech). Although 
+it tends to occur naturally in coldish continental climates, Norway spruce has proven very apt 
+to central European climate conditions (Röhrig 1980). The crown shape of the Norway spruce 
+is predominantly conical, with broad crowns occurring in lower altitudes of central Europe and 
+tall and pointy crowns at higher elevations or further to the north. Pretzsch (1992) represents 
+the crown shape of the Norway Spruce using two conical elements although representations of a 
+cone on top of a cylinder were used by Chen et al. (1997) for black spruce. The bases of these 
+conical elements are touching and form the widest part of the crown as indicated in the middle 
+panel of Figure 21. 
+The right_ hand panel in the same Figure shows a 3-D visualization of a mature Norway spruce 
+stand with a somewhat more differentiated crown shape representation. 
+Figure 21: Left panel: Mature Norway spruce photographed by Anna-Lena Anderberg, (Source: 
+http://linnaeus.nrm.se/flora/). Middle panel: Crown model of Picea abies after Pretzsch, 1992. 
+Right Panel: 3-D visualization of a 20 m high Norway spruce stand for which the reflectance fields can 
+be modelled using the radiation transfer model of Govaerts and Vertstraete, 1998. 
+Pretzsch (1992) provides two equations to describe the crown radius: 1) r¿ from the top of the 
+crown down to the maximum crown radius Cr, and 2) r& from the largest lateral extent of the 
+crown to the bottom of the crown (d is the downward distance from the top of the crown): 
+30 
+
+
+n 
+= 
+-r--d 
+[m] 
+ü et 
+Rc — Cr „ 
+Rc — Cr 
+r η 
+rb 
+= 
+Cr­Jf 
+W~Hct + 
+d~R 
+W 
+Η 
+Jtlc — tlct 
+üc — Het 
+5.2 
+Tree height, H [m] 
+The total tree height H for Picea abies in Finland has been related by Siipilehto (2000) to the 
+trunk diameter at breast height (DBH [cm]) using Näslund's height curve: 
+TT 
+, o 
+( 
+DBH 
+\ 3 
+. . 
+g = L 3 + U.811 +0.308 W 
+[m] 
+Oinas and Sikanen (2000) provide the following H to DBH relationship for spruce: 
+TT 
+, ο 
+Λ ^ 
+22·88 
+24.75 
+\ 
+. . 
+/f = 1.3 + exp (3.71 ­ ^
+^ 
+­ 
+( p g g + 5 ) 2 ) 
+H 
+Kindermann (1998) provides two allometric relationships for the tree height, one exponential ­
+with the standard deviation of the fit being σ — ±3.07 m ­ that was retrieved from a 63 year 
+old Norway spruce stand in Austria: 
+H = 1.3 + exp (3.85 ­ ¿ | | ) 
+[m] 
+and another with a better standard deviation of the fit (σ = ±1.62 m) from a 98 year old stand 
+(solid line in Figure 22): 
+5.3 
+Height to crown, Ht [m] 
+An allometric equation describing the relationship between DBH 
+and the height to the tree 
+crown (Ht) is given by Pretzsch et al. (2002) with r2 = 0.79 (see Figure 23): 
+5.4 
+Height to the m a x i m u m crown width, HCr 
+[m] 
+Pretzsch (1992) indicates that the height to the maximum crown width for Norway spruce is 
+Hcr = Ht + Hc/3 where Hc = H — Ht (compare with Figure 23): 
+" 
+— Ht 
+r , 
+Her 
+= 
+Ht + 
+— - 
+[m] 
+31 
+
+
+Picea abies 
+10 
+20 
+DBH [cm] 
+Figure 22: Allometric DBH-tree height relationship for Norway spruce according to Siipilehto (2000) 
+together with 2 allometric relationships from Kindermann (1998), and that of Oinas and Sikanen (2000). 
+Also shown are data from a variety of sources in the literature. 
+5.5 
+Height to first dead branch, Hnb [m] 
+Schmidt (2001) provides two empirical relationships (equations 31 and 32) that can be utilized 
+to compute the height to the lowest dead branch: 
+/ 
+(0.523 H ) 1 ' 7 
+\ 
+Hnb = 
+#SÒ (exp 
+looo 
+- 1 J 
+[m] 
+Hgb = 
+Ht (1 - 0.359 exp" 0 0 8 0 7 H t) 
+[m] 
+where Hgb is an estimate of the lowest green branch - which can be situated below what Schmidt 
+(2001) terms the height to the bottom of the crown. Nevertheless Hnb if computed by equation 6 
+differs only minimally whether using Hgb or the actual Ht-
+5.6 
+M a x i m u m crown radius, Cr [m] 
+Nagel et al. (2002) describes the relationship between tree height H and the maximum crown 
+diameter (Co = 2Cr) [m] as (thin line in Figure 24): 
+Cr = (0.6122 + 0.0536 DBH) 
+[m] 
+Equation 12 in Pretzsch et al. (2002) uses an exponential relationship to come to a very similar 
+result (compare with thick line in Figure 24). Using the parameter in table 8 of their appendix 
+(r2 = 0.73): 
+32 
+
+
+Picea abies 
+> 
+30 
+25 
+20 
+15 
+10 
+1 
+-
+-
+-
+-
+, 
+f, 
+/// 
+ι 
+Kindermann, 1998 -
+tree-top ^ ^ - - ^ 
+/ 
+Pretzsch, 1992 -
+/ 
+max—crown-width 
+/ 
+y ^ 
+bottom —of—crown 
+/yS 
+Pretzsch et al., 2002-
+Schmidt, 2001 -
+first-dead-branch 
+_ « — - Τ - Ι - Γ - Γ Τ Τ Τ 
+I 
+. 
+10 
+20 
+DBH [cm] 
+30 
+40 
+Figure 23: Allometric relationships for Norway spruce describing 1) the 'height-to-tree-top' Η (Kinder­
+mann, 1998), 2) the 'height-to-bottom-of-crown' Ht (Pretzsch et al., 2002), 3) the 'height-to-maximum-
+crown-width' Hcr (Pretzsch, 1992), and 4) the 'height to the first dead branch' Hnb (Schmidt, 2001). 
+1 
+Η 
+Cr = - exp (Ό.2195 + 0.2545 In(DBH) + 0.009Η - 0.6735 In -=-=7=) [m] 
+2 
+^ 
+DBH' 
+(6) 
+5.7 
+B o t t o m crown radius, Rc [m] 
+According to table 2.1 of Pretzsch (1992) the crown radius at the bottom of the tree crown (that 
+is at height Ht) can be approximated with (see Figure 24): 
+Rc = Cr/2. 
+[m] 
+5.8 
+Leaf Area Index, LAI 
+[tree x] 
+Many authors have provided estimates for biomass or leaf area rather than the leaf area index 
+(per tree) itself. Burger (1941a), for example, provided two relationships between the (one sided) 
+leaf area A¡ [m2/tree] and the DBH [cm] that have been verified empirically up to DBH ~ 50cm: 
+Αι 
+= 
+1.4375 DBH + 0.074 DBH2 
+[m2tree_1] (a) 
+Αι 
+= 
+­0.6245DBH 
++0.287 DBH2­0.00023 
+DBH3 
+[m2tree_1] (b) 
+Grote (1999) uses an exponential relationship to relate foliage biomass Wi [kg/tree] with the 
+DBH [cm]. The (single sided) foliage area A¡ [m2/tree] can then be retrieved if the one­sided 
+specific leaf area value (SLAp = PLA/Wi 
+[m2/kg]) is known: A/ = Wi SLAp ­ with PLA [m2] 
+33 
+
+
+Picea abies 
+5 2 
+o ¿­
+ι—'—'—'—ι—'—<~ 
+crown radius 
+at maximum width 
+Pretzsch et al., 2002 
+Nagel et al., 2002 
+, , - ' 
+- - ' 
+DBH 
+I 
+40 
+[cm] 
+crown radius 
+bottom of 
+Pretzsch, 
+I 
+60 
+crown 
+1992 
+Figure 24: The allometric relationships between the DBH [cm] and the maximum crown radius Cr for 
+Norway spruce, as implemented in the SILVA model (Pretzsch et al., 2002) and the BWINPro6.1 model 
+(Nagel et al., 2002). Also shown is the relation of Pretzsch (1992) for the lower crown radius Rc from the 
+estimate of CT of Pretzsch et al. (2002). 
+being the projected needle area. To obtain the one sided specific needle area we assume all 
+needles to be flat, i.e., SLAP « SLA/2. 
+A large dispersion of specific total leaf area values SLA 
+(accounting for the total i.e., double sided, needle area) has been indicated in the literature, 
+e.g., 5.9 m2/kg by Johansson (1999), 12.4 m2/kg by Burger (1941a), and 3.0 m2/kg by Gower 
+et al. (1993). In the following SLAp thus refers to half of the values of Johansson (1999) unless 
+indicated otherwise. 
+The relationship of Grote (1999) has only been validated empirically for trees between 8 < 
+DBH < 20 cm (furthermore A¡ does not tend to zero as DBH —τ 0). 
+Αι = 9.363SLAp βχρ 0 0 0 1 0 9 9 5 6 D B" 2 
+[m
+2tree"1] 
+Nilson et al. (1999) uses an equation from Marklund (1988) together with their estimate of the 
+SLAp (6.58 m2/kg) to retrieve the leaf area A/ [m2/tree]: 
+8.4127 DBH 
+Αι = 0.207381 SLAP exp DBH+I2 
+H' 1.5628 jyl.4032 
+[m2tree_1] 
+where Hc is the length of the crown. Obviously the values for A/ depend on what we use as the 
+bottom of the crown to determine the crown length Hc = Η — Ht or Hc = H — Hgb­ Similarly 
+the choice of the value for the SLAp matters. In the left hand panel of Figure 25, Hgb and (half 
+of) the SLA value of the authors themselves was used. 
+Johansson (1999) provides another relationship that has the advantage that A¡ ­> 0 as DBH —τ 0 
+and furthermore that A¡ assymptotically reaches a maximum value for large values of DBH (this 
+is unlike some of the relationships seen before), and finally it has been empirically verified for 
+34 
+
+
+4.9 < DBH < 33.0 cm (see solid line in the left hand panel of Figure 25: 
+Αι = 36.2826SLAp (1 ­ exp" 0 0 8 D B H ) 2 1 5 7 6 
+[m2 tree"1] 
+The allometric expression of Gower et al. (1993) for the one sided leaf area of Picea Abies is: 
+Αι = 0.13366 DBH2163 
+[n^tree ­ 1] 
+(r2 = 0.952) 
+The right hand panel of Figure 25 shows an estimate of the leaf area index as derived from 
+the leaf area estimate of Johansson (1999) —SLA P — 2.95 m2/kg —and the projected Crown 
+Area was computed with the Cr values of Pretzsch et al. (2002). The long dashed (dotted) line 
+describes the proposed relationship within (outside) the available range of DBH values (6 ­ 33 
+cm). Some data points as presented by Johansson (1999) are also shown. 
+( l ­ e x p ­ ^ 8 ^ ) 2 ­ 1 5 7 6 
+O7· 
+LAI 
+= 
+136.28 [­ 
+P 
+^ 2 
+'­ 
+[tree"1] 
+Figure 25 also shows a possible DBH — LAI relationship, computed with the leaf area relation 
+of Gower et al. (1993) and the downward projected crown area computed with the Cr values 
+of Pretzsch et al. (2002) (again the dotted line indicates an extrapolation of the prescribed 
+relationship outside the range of available data points in the study of Gower et al. 1993). The 
+steep (flat) short dashed line in Figure 25 was constructed using the leaf area equation a (b) 
+of Burger (1941a) (apparently valid for DBH = 0 to 50 cm) and the crown radius of Pretzsch 
+et al. (2002) (to estimate Cr). Finally, the two allometric DBH — LAI equation of the study 
+of Küssner and Mosandl (2000)—who measured half of the actual surface area of the concave 
+needles of Norway spruce to compute the equivalent of the one­sided leaf area (of deciduous 
+trees) from which they then obtained their allometric relationship for LAI—are also displayed 
+in Figure 25 (as dotted lines outside the available range of DBH values (15­40 cm) for that 
+study): 
+LAI 
+= 
+3.52 + 2.282 log(DBH) 
+[tree­1] 
+(7) 
+LAI 
+= 
+3.52 + 2.504 log(DBH) 
+[tree­1] 
+A drawback of the latter equations is that they do no fall below LAI values of 3.52 as the 
+DBH —> 0. A similar argument applies also to the flatter of the two DBH —LAI relationships of 
+Burger (1941a), whereas the steeper of his estimates has negative LAI values for DBH < 2 cm. 
+These findings, together with the increasing and then decreasing LAI relationship derived from 
+the Αι of Johansson (1999) are however partly due to the crown radius estimator of Pretzsch 
+et al. (2002), and the imposed formula to compute A; from this estimate. 
+The thick grey line in Figure 25 was fitted empirically to provide a single DBH — LAI rela­
+tionships that spanned 1) a large range of DBH values, and b) is relatively close to most of the 
+above LAI estimations (within their range of applicability). Since several authors have noted 
+LAI value sof 10 or above for Norway spruce ( 10.8 m 2/m 2 by von Droste zu Hülshoff (1969) 
+for a 76 year old spruce stand, 11.5 m 2/m 2 by Nihlgård (1972) for a 55 year­old plantation of 
+Norway spruce in southern Sweden, 9.1 ­ 10.6 m 2/m 2 by Dohrenbusch et al. (1993) for a 58 
+year­old spruce stand.) the proposed curve was fitted alongside the estimates of Küssner and 
+Mosandl (2000): 
+35 
+
+
+LAI 
+= 
+12.25 (1 ­ exp ­O.IDBH \1.6 
+Γ 6 
+[tree"1] 
+P i c e a 
+a b i e s 
+Picea 
+a b i e s 
+250 
+200 
+150 
+100 
+50 
+-
+-
+■ 
+■ 
+-
+. 
+— 
+s 
+-H**TT 
+1 i 
+1 I 
+1 | 
+1 , 
+. 
+1 | 1 
+Johansson, 1999 
+Grote, 2002 
+Burger (a), 1941 
+Burger (b), 1941 
+Nilson, 1999 
+Gower et al., 1993 
+Gower et al., 1999 
+^
+— 
+yS^fïg* 
+-τ**?, . . 1 . . . . 1 . 
+/ 
+1 1 
+T 
+f / 
+1 I 
+, , , , , , ι , ι 
+/ 
+ƒ 
+Α 
+/ 
+Γ 
+f / 
+/ / 
+f / 
+f / 
+» 
+/ / 
+/ / 
+■ 
+.
+.
+.
+.
+I
+I
+.
+.
+. 
+10 
+15 
+20 
+DBH [cm] 
+25 
+30 
+12 -
+10 -
+--
+-
+. 
+.,·;' 
+- / 
+; * 
+1 
+1 t 
+/ ! 
+■ 
+■ 
+/ 
+> ' 
+#?'. , , 
+/ 
+ι ή 
+ι f Ι Ι 
+'/¡Ι 
+ι; 
+-
+, . Ι . 
+/ 
+/ 
+-4^* 
+■• ■7 / / 
+/ /-* * 
+^--' 
+ξ Ι 
+* 
+* 
+.-
+— 
+* 
+* 
+— Gower et al., 
+s-
+1993 
+- ^Johansson, 1999 
+— Kuessner and 
+·- Burger, 1941 
+— Empirical fit 
+* 
+ν 
+Mosandl, 
+. , ι . 
+. 
+„_—-
+. 
+-
+-
+"-·-
+-
+. 
+-
+2000-
+-
+■ 
+10 
+20 
+DBH [cm] 
+30 
+40 
+Figure 25: Left panel: The allometric relationships for Norway spruce of Johansson (1999), Nilson et al. 
+(1999), Burger (1941), Grote (2002) and Gower et al., (1993) for the one sided leaf area (A/) ­ together 
+with data from Gower et al. (1999). Right panel: The one sided leaf area index per tree as derived 
+from the allometric equations for A¡ of Johansson (1999), Burger (1941) and Gower et al. (1993) using 
+the crown radius (Cr) estimates of Pretzsch (2002) to compute the downward­projected crown area: 
+Ar = nC~. Also shown are data from Johansson (1999), the two DBH — LAI relationship of Kuessner 
+and Mosandl (2000), and an empirical fit to the available information (thick grey line). Dotted lines are 
+extrapolations outside the range of available DBH data for the various studies. 
+5.9 
+Foliage and Biomass 
+Johansson (1999) reports an average needle length of 17.5 (11.6 ­ 21.0) mm. This corresponds 
+to a total surface area of 52 mm2 (or 58 mm2 according to the formula of Kerner et al. (1977) 
+who state that the total needle area ranges between 40 ­ 60 mm2 depending on the origin of the 
+needle in the crown). Similarly, Johansson (1999) presents a relationship between DBH [mm] 
+and the total biomass above stump level, AGB [tons dry weight/hectare] as follows: 
+AGB = 353968 (1 ­ exp" 0 0 1 4 D B H )5'707 
+[kgha"1] 
+The same author also provides a relationship (r2 = 0.975) between DBH and the dry weight 
+for the needles (Wf), the dry weight for the stems and twigs (WB), as well as the total (stem 
++ branches + needles) dry weight Wt [kg/tree], that compares well with four independently 
+conducted studies: 
+­0.0006 DBH \2.44 
+. - l l 
+Wt 
+= 
+21988.7574(1 _ e x p ­ ™> ^ ) ^ 
+[kgtree" 
+Wb 
+= 
+1910.3700(1­exp" 0 0 0 2 9 D B H) 3· 9 8 4 6 
+[kgtree"1] 
+Wf 
+= 
+36.2826(1­exp" 0· 0 0 8 0 D B / i) 2­ 1 5 7 6 
+[kgtree"1] 
+0.955 
+0.961 
+0.975 
+36 
+
+
+Gower et al. (1993) provides a series of allometric equations that allow to estimate the dry 
+weight for the stem (Ws), the live (Wib) a n d dead {Wdb) branches, as well as the foliage (Wf) 
+of Picea abies trees: 
+Ws 
+= 
+0.105196 DBH2310 
+[kgtree"1] 
+Wib = 0.011350 DBH2570 
+[kg tree-1] 
+Wdb 
+= 
+0.027669 DBH2226 
+[kg tree-1] 
+Wf 
+= 0.029174 DBH2292 
+[kg tree-1] 
+(r2 = 0.975) 
+(r2 = 0.976) 
+(r2 = 0.765) 
+(r2 = 0.960) 
+The total above ground dry weight for Picea abies, Wt = Ws + Wib + Wdb + Wf can thus be 
+computed (see Figure 26). 
+Picea abies 
+500 F 
+400 
+300 
+200 
+100 
+r' ' ' 
+; -
+': -
+Γ 
+r 
+: 
+'. 
+': 
+': 
+ι ι ι ι ι ι Ι ι ι ι I 1 I 1 I 1 J ι ι ι ι ι ι ι ι ι I ; ι 
+-- Johansson, 1999 
+/ 
+— Gower et al., 1993 
+/ 
+— Jenkins et al., 2003 
+/ 
+/ 
+/ 
+·' 
+' 
+/ 
+■'' 
+' ' 
+1 
+■' 
+' 
+/
+t
+' 
+I I ' 
+f 
+f 
+/ 
+/ 
+· / 
+/ / / 
+/sí'' 
+! 
+i 
+i 
+/ 
+ι 
+t 
+1 
+I 
+I 
+I 1 
+—^ 
+/ 
+'' ; 
+\ 
+-_ 
+\ 
+; 
+J 
+; 
+10 
+20 
+DBH [cm] 
+30 
+40 
+Figure 26: The total above ground dry weight for Norway spruce as described by Johansson (1999) and 
+Gower et al. (1993), as well as the estimate of Jenkins et al (2003) for spruce species in the USA. 
+37 
+
+
+6 
+Scots Pine (Pinus sylvestris) 
+Scots pine is naturally distributed from Scotland to eastern Siberia, as well as from the boreal 
+to the temperate vegetation zones as far south as the Sierra Nevada in Spain, or the Pontus 
+Mountain range in Turkey (Stenberg et al. 1994, Röhrig 1980). In northern Scandinavia Scots 
+pine forms the alpine and arctic timber line against tundra, in southern Europe it naturally 
+occupies sites in the mountains up to an elevation of 2000 m. 
+6.1 
+Crown shape 
+Scots pine trees require substantial amounts of light. 
+They are relatively resilient against 
+cold/frost and grow both on dry and wet soils. Their growth pattern is monopodial, with 
+young trees being approximately conical in shape. As the trees mature the crown form often 
+becomes more rounded because elongation of the main stem is reduced relative to the laterals 
+(Stenberg et al. 1994). The lower portion of the trunk is characterised by fissures and a dark 
+brown (grey-brown) bark colour for young (old) trees. In the upper portion of the trunk the 
+bark is reddish-brown in colour. The crown shape of the Scots Pine can thus be represented 
+using two conical elements, as outlined by Pretzsch (1992), where the bases of the two conical 
+elements are touching and form the widest part of the crown as indicated in the middle panel 
+of Figure 27. The right hand panel in the same Figure shows a 3-D visualization of a mature 
+Scots pine stand with a somewhat more differentiated crown shape representation. 
+Figure 27: 
+Left panel: 
+Mature Scots pine photographed by Anna-Lena Anderberg, (Source: 
+http://linnaeus.nrm.se/flora/). 
+Middle panel: Crown model of Pinus sylvestris after Pretzsch, 
+1992. Right Panel: 3-D visualization of a 20 m high Scots pine stand for which the reflectance fields can 
+be modelled using the radiation transfer model of Govaerts and Vertstraete, 1998. 
+6.2 
+Tree height, H [m] 
+In order to relate the total height H [m] of a Pinus sylvestris tree to its diameter at breast height 
+(DBH [cm]) Kindermann (1998) applied the following allometric equation in two different stands 
+in Germany: 
+38 
+
+
+aO+DBH 
+where a0 = 0.208 (0.202) and αχ = 0.466 (0.130) for stand Α (Β) and the standard deviation 
+of the resulting fit was σ = ±0.99 (±1.55) [m]. Sloboda (1991) provides another equation for 
+Scots pine stands in Germany: 
+H = 1.3 + b0e^­b^DBH^ 
+[m] 
+with b0 = 50.532 (49.937) and ¡n = 24.88 (30.99) for his first (second) stand. Figure 28 shows 
+that these estimates differ from those of Kindermann (1998), especially at relatively small and 
+large DBH values. Somewhat between the above estimates lies the relationship of Cermák et al. 
+(1998), which was derived for a Pinus sylvestris stand in Belgium (r2 = 0.98): 
+tf = 24.8(l­exp(­ D B Í Í/ 1 4· 4)) 0· 7 5 8 [m] 
+Eberswalde (2001) provides the following H to DBH relationship for a mixed stand of Pinus 
+sylvestris and Pinus ponderosa where the available DBH values of the former tree type range 
+from 25 to 55 cm: 
+­16.43036 
+. 
+, 
+H = 1.3 + 36.21845 exp DBH 
+[m] 
+Oinas and Sikanen (2000) provide the following H to DBH relationship for pine: 
+The total tree height Η for Pinus sylvestris in Finland, as provided by Siipilehto (2000) using 
+Näslund's height curve, is very similar to that provided by Cermák et al. (1998) but without 
+having an upper tree height limit: 
+6.3 
+Height to crown, Ht [m] 
+The SILVA model of Pretzsch et al. (2002) makes use of the following relationship (r2 = 0.79) 
+to describe the relationship between DBH [cm] and the height to the tree crown Ht [m] ­ see 
+dashed line in Figure 29): 
+Ht = HÍl­ 
+exp(0­376­0.9963^f7r­0.0218 DBH) \ 
+[ m ] 
+However, this allometric formulation makes that Ht is almost equal to the tree height H at low 
+DBH values thus almost completely eliminating the crown length. To account for the fact that 
+the crown of young trees often extends almost to the ground, the relationship of Cermák et al. 
+(1998) with r2 = 0.62 for a Scots pine forest with a stem density of 672 ha~l is also provided 
+39 
+
+
+gi 
+'ai 
+χ 
+3b 
+30 
+2b 
+20 
+15 
+10 
+b 
+0 
+Pinus 
+. 
+Kindermann (a) 
+Kindermann (b) 
+sylvestris 
+, 1998 
+, - ' 
+, 1998 
+. 
+Sloboda (a), 1991 
+, ' ' 
+y" 
+- 
+Sloboda (b), 1991 
+- ' 
+y>-' 
+j o f ^ ^ 
+- ·'"' 
+y*' 
+,'S 
+' 
+■'■ 
+''/ 
+/ .·'"/ 
+L/ 
+/ / 
+/// 
+■: 
+ι // 
+/ · 
+/ 
+'■■ ι 
+/ 
+' 
+-■ ι// 
+/ 
+·■' 
+: ¡Il 
+/ ,' ■■■ 
+"-il /! ■' 
+— 
+: / / / 
+/ / 
+f' ,y 
+" 
+' - ' "
+x _ ^ - * — - " — ^ ^ 
+· " · ■" " " " 
+? 
+-^^¿*~-~ 
+_ · · ' 
+il"^^-^^—^*"*^ 
+^C— -^--T^''' 
+• 
+-
+-
+-
+--
+Cermak et al., 1997 
+Siipilehto, 2000 
+Eberswalde, 2001 
+Oinas Sc Sikanen, 2000 ■ 
+ι 
+I 
+" 
+10 
+20 
+30 
+40 
+DBH [cm] 
+50 
+60 
+Figure 28: Tree height curves for Scots pine according to the allometric relationships of Kindermann 
+(1998), Sloboda (1991), Cermák et al. (1997), Siipilehto (2000), Eberswalde (2001) and Oinas and Sikanen 
+(2000). 
+(see solid line in Figure 29): 
+6.4 
+Height to the m a x i m u m crown width, Hcr [m] 
+Pretzsch et al. (2002) indicates that the height to the maximum crown width for Scots pine can 
+be approximated by Hcr — Ht + Hc/2 where Hc = H — Ht. Thus: 
+6.5 
+Height to first dead branch, Hnb [m] 
+No direct information as to a possible parameterization of Hnb for Scots pine was available. 
+Schmidt (2001) provides two empirical relationships (equations 31 and 32) to determine the 
+height to the lowest dead branch: 
+40 
+
+
+σι 
+Χ 
+2b 
+20 
+15 
+10 
+b 
+0 
+-
+I 
+I 
+.1 
+I 
+1 J-
+Pinus sylvestris 
+Cermak et al., 1997 
+Pretzsch et al., 2002 
+-
+/bottom—of—crown, - - ' ' 
+/ 
+I 
+1 
+ι 
+1 
+first-dead-branch 
+/ 
+Schmidt, 2001 " 
+/ , , ^-t-T-rrrrrrrriTT 
+, , ι , , 
+, , ι , , 
+10 
+20 
+30 
+DBH [cm] 
+40 
+50 
+Figure 29: Allometric relationships of Cermák et al., (1997) and Pretzsch et al., (2002) for the height 
+to the bottom of the live crown of Scots pine. 
+Η nb 
+, 
+(¡>o H)bl 
+. 
+Hgb (exp 
+b2 
+­ l j [m] 
+Hgb = 
+Ht(l­ 
+0.39017 exp" 0 0 1 2 0 2 HA 
+[m] 
+where Hgb is an estimate of the lowest green branch ­ which can be situated below what Schmidt 
+(2001) terms the height to the bottom of the crown. In the above, however, only the equation 
+for Hgb was parameterized for Scots pine. Due to a lack of data points, Schmidt (2001) could not 
+provide any information as to the parameters for the equation giving Hnb­ As a possible solution 
+the values indicated for Picea abies (bo = 0.523; &i = 1.7, b2 — 1000) are shown in Figure 29. 
+6.6 
+M a x i m u m crown radius, Cr [ni] 
+Equation 12 in Pretzsch et al. (2002) describes the relationship between tree height H and 
+the maximum crown diameter (CD = 2 Cr) [m] in an exponential manner (compare with short 
+dashed line in Figure 30). Using the parameter of their Table 8 (r2 = 0.79): 
+Cr = exp ( ­ 0.5515 + 0.6468 In (jyõlj) 
+~ ° · 0 0 6 2 H + ° · 1 9 0 4 l n ( D B H ) ) 
+[m] 
+Nagel et al. (2002) provides another relationship between DBH and crown radius: (long dashed 
+line in Figure 30): 
+(
+I DBH 
+\!­33944 \ 
+1 ­ exp­ i 8^0522 J 
+J [m] 
+The allometric equation of Cermák et al. (1998) (r2=0.853) lies somewhat in between the esti­
+mates of the two equations above (thick line in Figure 30): 
+41 
+
+
+τ 
+Ό 
+i -
+c 
+s 
+o 
+ò 
+5 
+4 
+3 
+2 
+1 
+η 
+-
+\ 
+-_ 
+Γ 
+Γ 
+Pinus Sylvestris 
+, 
+, 
+, 
+, 
+| 
+, 
+, 
+, 
+| 
+, 
+, 
+Pretzsch et al., 2002 
+/ 
+Nagel et al., 2002 
+/ 
+Cermak et al., 1997 
+/ 
+/
+' 
+/
+/ ,........■ J
+/ 
+/ . 
+" crown radius : 
+/ 
+.¿S 
+at maximum width-
+/' 
+S 
+' ' ¿ 
+■■' ¿Ζ 
+,-'"' 
+radius at 
+/'sf 
+, - " " 
+bottom of crown J 
+20 
+40 
+DBH [cm] 
+60 
+Figure 30: The allometric relationships for Scots pine of Pretzsch et al., (2002) between the DBH [cm] 
+and the maximum crown radius CT [m] as implemented in the SILVA model, the equivalent relationship 
+of Nagel et al. (2002) as implemented in the BWINProö.l model, and the same relationship when derived 
+by Cermák et al. (1997). Also indicated is the radius at the bottom of the live crown based on the CT 
+values of Cermák et al. (1997) 
+6.7 
+B o t t o m crown radius, Rc [m] 
+According to table 2.1 of Pretzsch (1992) the crown radius at the bottom of the tree crown (that 
+is at height Ht) can be approximated with (see Figure 30): 
+6.8 
+Leaf Area Index, LAI 
+[tree­1] 
+Cermák et al. (1998) provides two relationships to estimate the needle area A¿ [m2 tree­1] and 
+the crown projected area CA [ai2 tree­1] on the basis of DBH 
+[cm] measurements (between 
+16 and 48 cm) for a Scots pine stand in Braschaat, Belgium. The leaf area index per tree 
+LAI = Αι/CA 
+can thus be written (compare with solid and dashed black line in Figure 31): 
+LAI 
+= 
+12.607 DBH ­ 5.093 
+1.389 DBH ­ 3.061 
+42 
+[tree­1] 
+
+
+Burger (1941b) provides the following relationship for the single sided foliage area A¿: 
+Αι 
+= ­( 1.548DBH ±0.078DBH 2) 
+[m2tree­1] 
+The leaf area index values that may be derived from this measure of A; (using the crown area 
+of Cermák et al. (1998)) are shown in Figure 31 and do not converge to zero at small values of 
+the DBH. The same is also true for the LAI relationship of Cermák et al. (1998), which when 
+extrapolated yields an LAI superior to 1 as the DBH —τ 0. An empirical relationship has been 
+fitted to the valid range of the latter data to force the LAI to tend towards zero as the DBH 
+—τ 0 (compare with thick grey line in Figure 31). The difference in LAI between this and the 
+original curves at DBH=70 cm is roughly 0.5. 
+LAI 
+= exp(0.375) DBH0375 
+[tree­1] 
+Pinus sylvestris 
+r "ï i r τ ι ι ι ι ι ι 
+Cermak et al., 1997 
+available DBH range 
+extrapolated DBH range 
+Burger, 1941 
+Empirical fit: 
+LAI = exp(0.375) * DBH' 
+10 
+20 
+30 
+40 
+DBH [cm] 
+50 
+Figure 31: The Leaf Area Index (LAI) for Scots pine when derived from the allometric relationships 
+for 'leaf area per tree' and 'crown projection area per tree' of Cermák et al. (1997): The black solid line 
+indicates the range of available DBH data from which the relationship was derived, the thin dashed lines 
+are extrapolated values. The thick grey line is an empirical fit to the DBH­LAI relationship of Cermák 
+et al., that forces the LAI to vanish in the limit as the DBH ­> 0 cm. Also shown is the ratio of Burger's 
+leaf area estimate and the projected crown area using CT of Cermák et al. (thick dashed line). 
+6.9 
+Foliage and Biomass 
+According to Stenberg et al. (1994) the needles of Pinus sylvestris achieve a length of 5­7 cm 
+in favourable conditions. Their retention time is between 3 and 6 years, being longer in the 
+higher latitudes. The mean specific needle area (all sides) is ~ 14 m2/kg but variations are large 
+(although Nilson et al. (1999) indicates also a value of 7.52 m2/kg for the (one sided) specific 
+needle area). Stenberg et al. (1994) indicates that the vertical distribution of foliar biomass is 
+43 
+
+
+skewed towards the upper half of the tree height (compare with section 7.3). 
+Cermák et al. (1998) provides a relationship to estimate the dry mass of the needles per tree 
+Wf [kg tree-1] 
+on the basis of DBH [cm] measurements for a Scots pine stand in Braschaat, 
+Belgium (r2 = 0.956): 
+Wf 
+= 
+-0.0003 DBH2 ±0.0433 DBH -0.4908 
+[kg tree-1] 
+Mencuccini and Grace (1994) provide the following allometric relationships for the needle dry 
+mass (Wf) of two stands in the north (r2 = 0.72) and south (r2 = 0.69) of the United Kingdom: 
+Wf 
+= 0.0943 DBH2- 
+0.950 [kg tree-1] 
+Wf 
+= 0.0628 DBH2- 
+0.380 [kg tree-1] 
+Marklund (1988) provides a series of biomass estimates for Scots pine although that report is 
+written in Swedish. Lehtonen and Vayred (2002) compare the total above ground dry weight for 
+Scots pine in Finland (using the biomass equations of Marklund (1988)) and Catalonia, Spain. 
+Their data can be expressed by the following (empirical) relationships: 
+Wt 
+= 0.0943 DBH2 - 0.950 [kg tree-1] 
+Wt 
+= 
+0.0628 DBH2 - 0.380 [kg tree-1] 
+400 
+300 
+200 
+100 
+0 
+-
+'z 
+-
+Pinus Sylvestris 
+1 1 ' I 
+1 ' ' ' 
+ι | ι ι i i ι ι ι 
+Finland 
+/ 
+/ 
+Catalonia^ 
+rl 
+Ι Ι Ι Ι ~Γ~ΓΊ 
+1 1 1 l i l i 
+ι ι Ι Ι ι 1 ι ι Ι ι ι ■ ι r ι 
+|_J 
+1 
+: 
+-
+; 
+—1 — 
+10 
+20 
+DBH [cm] 
+30 
+40 
+Figure 32: Total aboveground dry weight relationship for Scots pine as described by Lehtonen and 
+Vayreda, (2002) for Scots pine in Finland and Catalonia. 
+44 
+
+
+General Properties of Forest Canopies 
+The second part of this document will describe several issues regarding structural properties 
+of forest canopies and/or individual trees, for which not enough information was available for 
+individual species. 
+45 
+
+
+7 
+General Properties of Forest Canopies 
+In this section an overview will be provided regarding 1) the shape, orientation and distribution 
+of leaves and needles in the tree crown, 2) the spatial distribution of individual trees, the height 
+distribution and maximum stem densities in forests, 3) inter-species competition and mixing 
+patterns, and 4) the fractions of dead wood in forests. 
+7.1 
+The shape of leaves and needles 
+For the purpose of modelling the radiation transfer within forest canopies it is not sufficient 
+to describe the tree structure, without accounting for the size (and shape) of these primary 
+scattering elements themselves. They play an important role in defining the hot spot effect—a 
+strong increase in the observed reflectance value when the view direction falls exactly along the 
+illumination direction, due to the absence of shadows within the field of view of the observer 
+in that case. In most radiation transfer models, foliage elements are simulated as flat disc-like 
+entities of a particular size, the spatial locations of which are either described in a deterministic 
+manner, or else statistically accounted for within certain predefined volumes (i.e., within the 
+crown, or, within the shoot). 
+Figure 33: Top row from left to right: The shoots of Pinus sylvestris, Picea abies and Larix 
+decidua. Bottom row from left to right: A pair of leaves from Fagus sylvatica and Betula 
+pendula. Photographs by Anna-Lena Anderberg, (Source: http://linnaeus.nrm.se/flora/). 
+Figure 33 presents the shape of typical leaves (bottom row) and needles (top row) for the 
+tree species described in this report. To a good approximation most leaf-shapes (despite being 
+irregular in their outline) agree sufficiently well with the disc-like scatterer assumption often 
+46 
+
+
+encountered in radiation transfer models. Needles, however, are of a very different nature. First 
+they are rarely flat in their cross­sections, and second, they possess no clearly distinctive upper 
+and lower sides. Furthermore needles tend to be clumped into shoots, which themselves occur 
+along branches attached to individual whorls. Such features may impose a different approach to 
+characterising the properties of needles (e.g., the one sided leaf area index), and/or may require 
+the definition of new observational protocols. 
+7.2 
+The orientation of foliage in crowns 
+Leaf orientation is of importance since, together with leaf shape and size, it accounts for the 
+intercepted fraction of solar radiation and thus affects photosynthesis. The proper statistical 
+description of leaf orientation is a complex issue due to extreme variety of vegetation forms in 
+space and time as well as across plant species. For example, in conifers the needles are clumped 
+into shoots, which themselves appear to be oriented in an azimuthally independent manner 
+(Stenberg et al. 1994). Other plants, like the sunflowers for example, are known to change their 
+orientations in response to solar illumination. 
+Nevertheless, a series of mathematical expressions have been formulated that—although 
+simplifications of reality—allow for the description of a wide range of existing leaf angle distri­
+butions. These statistical distributions assume a large number of foliage elements whose spatial 
+orientation is described by the direction of their normal OL(9L, Φι) to the upper surface, where 
+$£, is the zenith angle of the leaf normal, and φι, is the azimuth angle of the outward normal. 
+The leaf­normal distribution (LND) function <7L(Z, ΩΖ,); then denotes the fraction of total leaf 
+area in the horizontal layer of unit thickness at height ζ whose normals fall within a unit solid 
+angle around the direction íi¿, and must satisfy the following normalization criterion (Ross 
+1981): 
+If 
+1 Γ2π 
+r/2 
+— è 
+gL(^L)dnL 
+= — 
+dφL \ 
+gL{0L,<l>L)smeLML ΞΞ 1 
+■¿π J2TT+ 
+¿TT Ja 
+Jo 
+Although two­dimensional LND's have been treated in theoretical studies (Strebel et al. 1985, 
+Verstraete 1987) observations (e.g., Oker­Blom and Smolander 1988, Stenberg et al. 1994) have 
+shown that for a significant number of species the foliage or shoot orientation is to a large degree 
+azimuthally independent. Such an assumption significantly reduces the mathematical complexity 
+of the function g^L­, Φι,)· Out of the various models to describe azimuthally independent leaf 
+normal distribution functions (ÖL(^L) = 9L(ÖL) sin#¿), the two most commonly used are 1) the 
+trigonometric functions of Bunnik (1978): 
+9L(0L) 
+= {a + b cos 201 ± c cos 46L ) 
+(8) 
+and 2) the beta functions of (Goel and Strebel 1984): 
+M*-\*~W 
+0<x<i 
+m 
+where Β(ξ, ν) = Τ(ξ)Γ(ν)/Γ(ξ 
++ ιι) is the beta function, Γ is the gamma function and χ = 20¿/7r. 
+In Table 1 the parameters for the above two representations of g¿(0¿) are given for a variety 
+of leaf normal distributions. Note however, that the descriptive term given to the LNDs refers 
+to g*L rather than g¿. This is most notably seen in what are termed uniform and spherical leaf 
+normal distributions, namely: 
+9L(0L) 
+= 
+£(sin0 L) ­ 1 
+g*L(eL) 
+= 
+£ 
+uniform 
+9L(0L) 
+= 
+1 
+5L(0L) 
+= 
+sin0L 
+spherical 
+47 
+
+
+Table 1: Parameter values for the trigonometrical (a, b, c) and beta (ξ, u) function representation 
+of the probability density function, <?¿(0L) for 6 different leaf­normal distributions. 
+uniform 
+spherical 
+planophile 
+erectophile 
+plagiophile 
+extremophile 
+2/π 
+0 
+0 
+1.000 
+1.000 
+sin οχ, 
+0 
+0 
+1.101 (1.066)t 
+1.930 (1.853) 
+2/π 
+2/π 
+0 
+2.770 (2.531) 
+1.172 (1.096) 
+2/π 
+­2/π 
+0 
+1.172 (1.096) 
+2.770 (2.531) 
+2/π 
+0 
+­2/π 
+3.326 
+3.326 
+2/π 
+0 
+2/π 
+0.433 
+0.433 
+^The values used by Govaerts (1996) are shown in brackets if different from Goel and Strebel (1984). 
+1.4 
+1 
+, 
+1 
+1 
+1 
+1 
+1 
+1 
+1 
+1 
+1 
+1 
+1 
+1 
+,-
+PLAN 
+SPHE 
+EREC !-, Λ!, 
+EXTR 
+UNIf 
+0 
+20 
+40 
+60 
+80 
+leaf normal zenith angle, Θ, [degree] 
+0 
+20 
+40 
+60 
+80 
+leaf normal zenith angle, Θ, [degree] 
+Figure 34: Left panel: The function g*L(ÇÏ)L for the azimuthally independent leaf normal dis­
+tribution CIL according to Bunnik's formulation. Right panel: The function g*L(Cl)L for the 
+azimuthally independent leaf normal distribution Ωχ, according to Goel's (dashed) and Gov­
+aert's (solid) formulation. 
+Erectophile and planophile leaf normal distributions are known to occur in nature. For ex­
+ample, clover is essentially planophile, whereas most grasses, as well as Eucalyptus and Weeping 
+Willow foliage on the other hand are erectophile. (Hagemeier 2002) states that, in the lower 
+shadowed part of the crown, the leaf angle deviations from the horizontal are 20° for beech, 15° 
+for lime and 19° for oak, whereas pioneer trees like the birch have leaf angle deviations from 
+the horizontal that lie around 42°. However, within the crowns of individual trees different leaf 
+normal distributions may occur at different heights as was shown by (Stenberg et al. 1994) for 
+the shoot zenith angle distribution in Scots pine stands. 
+7.3 
+The distribution of foliage in crowns 
+The distribution of foliage is not random within tree crowns. Many empirical studies have been 
+performed to determine the one or two dimensional distributions of foliage within tree crowns, 
+e.g., Stenberg et al. (1994), Kinerson and Fritschen (1970), Wang et al. (1990). Cermák et al. 
+(1998) report an upward skewed foliage area distribution in Scots pine, Massman (1982) spec­
+48 
+
+
+ified that the maximum foliage amount is often located at about 80 % of the tree height for 
+old­growth coniferous tree canopies. Webb and Ungs (1992) even provide information on the 
+three­dimensional distribution patterns of needle surface area in a single Douglas fir tree. Over­
+all, it can be stated that a single peak in the vertical leaf area density distribution is common 
+amongst many vegetation canopies e.g., Ross (1981). 
+10 
+N 
+c 
+s 
+o 
+υ 
+- 
+4 
+'<D 
+-C 
+' - « . ' , 
+' 
+ι 
+ι 
+I 
+1 
+I 
+1 
+I 
+1 
+I 
+1 
+I 
+I 
+1 
+I 
+ι 
+ι 
+\ 
+"*^H­­^ 
+' 
+N. 
+"*""■».,*, 
+| 
+­\ \ . 
+~ ' " T — 
+^ - ^ 
+I 
+^.^ 
+- 
+x 
+^"^^ 
+^•-» 
+v 
+^ ~ - ^ ^ 
+I 
+"·■»■ 
+^"~r\ 
+ν 
+^^­~­\ 
+N· 
+^ - 
+^~^"\ 
+i 
+^*\ 
+/ 
+"K 
+\
+/ 
+1 " "· - 
+..^\ 
+v«(z)i 
+^ > < ^ ' 
+) 
+' *.·** 
+s . 
+,^-ι 
+^ 
+\ 
+.**' 
+1 
+^ " ^ 
+1 
+^ ^ ^ 
+.** 
+1 ^<*^ 
+/ 
+xy 
+1*-^ 
+,y 
+^
+^ 
+*■ ' 
+— 
+/ 
+^
+^
+"
+^ 
+^ 
+, ­ 
+■" 
+~ r 
+J ^ ^ ^ 
+— 
+*" 
+/ 
+s
+^ 
+­ { ­ " ' ' 
+- -τ "" 1 
+1 
+1 
+!.. . 1 „1 
+1 
+1 
+1 
+1 
+1 
+1 
+1 
+1 
+1 
+1 
+1 
+1 
+! 
+ι 
+r 
+1 
+1 
+­
+_ 
+­
+v,(z) . 
+v,(z) : 
+Vz(z) : 
+. 
+— 
+­
+­
+2 -
+0 
+0.00 
+0.05 
+0.10 
+0.15 
+, , Q.20 . 
+Ό.25 
+normalized leaf area density, V(z) [rn2/m3J 
+Figure 35: Four examples for the vertical distribution of the normalized leaf area density in a 
+tree crown of Hc = 10 m vertical extent - according to Chen (1994). Note that the integral of 
+the normalized leaf area density over Hc is unity. 
+Chen et al. (1994) provide a series of equations to describe the vertical variations of the 
+normalized leaf area density V(z), where ζ is some height above the bottom of the tree crown 
+(z = 0 at Ht) and below the top of the crown (H). Thus 0 < ζ < Η — Ht = Hc and the leaf 
+area index of any particular height interval Az = Z2 — z\ of a tree having a total leaf area index 
+of LAI can be calculated as: 
+LAIAz 
+rz2 
+V(z)LAIdz 
+[m2/m2] 
+Four different vertical profiles are provided by Chen et al. (1994): V\(z) - which peaks in 
+the lower part of the canopy, V2(z) - which has the highest foliage density in the middle part of 
+the crown, V$(z) - having its peak in the upper part of the crown, and V$(z) - which is constant 
+throughout the vertical extent of the tree crown: 
+Vi(z) 
+= 
+V2(z) 
+= 
+V3(z) 
+= 
+V4(z) 
+= 
+Hc 
+π 
+2HC 
+π 
+2HC 
+1 
+IT 
+ι 
+<2πΖ\ 
+. ,2τζ 
+1 . 
+πζ 
+sm(-FT) 
++ õ s m ( 7 r ) 
+tlc 
+¿ 
+ric 
+,2πζ 
+1 
+,κζ 
+sin(—­) ­ 
+­ s m ( — ) 
+Hr 
+Hr 
+[m2/m3] 
+[m2/m3] 
+[m2/m3] 
+[m2/m3] 
+49 
+
+
+Both Massman (1982) and Cermák et al. (1998) report on an upward skewed leaf area dis-
+tribution for conifers that is not unlike the one described by Vz(z). 
+7.4 
+The foliage-free interior of crowns 
+When trees grow their leaf area is generally increasing as well. Since the outer regions of a tree 
+crown tend to receive more light than their inner counterparts (i.e., those that are closer to 
+the tree trunk), foliage growth occurs predominantly on the fringes of the crown. This process 
+will however reduce the light availability along the central axis of the crown, which will lead 
+to the development of foliage free volumes within the crown. The larger the size of a tree, the 
+more shadowing of the inner crown volume will occur, and hence the greater the foliage-free 
+volume within the crown Mayer (1980). Only qualitative evidence of this process was found in 
+the literature. Figure 36 is an adaptation from works of Badoux (1952), Burger (1927), and 
+Assman (1961). 
+spruce 
+beech 
+pine 
+m 
+35 
+30 
+25 
+20 
+15 
+10 
+needle-filled , 
+crown mantle 
+needle-free 
+crown interior 
+illuminated crown top 
+foliage-free 
+crown interior 
+downward projected 
+crown area, 
+Figure 36: The vertical extent of the foliage-free crown volume for 90 year old spruce, beech and 
+pine trees - adapted from the works of Badoux (1952), Burger (1927) and Assman (1961). 
+One can see from Figure 36 that the vertical extent of the foliage free crown volume depends 
+on tree species (as well as on tree age and stand density among others). In the absence of further 
+quantitative information, it is suggested here to utilize the vertical profiles of subsection 7.3, to 
+delineate the vertical variations in the foliage-free crown volume. 
+7.5 
+The spatial distribution of tree locations 
+Frelich et al. (1993) propose three factors that influence forest patterns: 1) the disturbance 
+history , 2) competitive interactions, and 3) invaders. The published results on tree distributions 
+50 
+
+
+in unmanaged forests have shown a predominance of random patterns (Szwagrzyk 1990, Tomppo 
+1986). The findings of Franklin et al. (1985), Moeur (1993) and Kenkel (1983) suggest that 
+clustering patterns are not common to most forests: smaller trees tend to exhibit more random 
+features while larger trees show more uniform or regular patterns. However, the density of the 
+stand and the scale of investigation are two major variables affecting the statistical conclusion 
+on the spatial organisation of trees (Cressie 1993). 3-D radiation transfer simulations of forest 
+stands, that are to be used in LUT-based inversion schemes, thus simulate the spatial distribution 
+of the trees with a simple Poisson model regardless of the stand densities (Wu and Strahler 1994, 
+Franklin et al. 1985). Case studies might however require the generation of various degrees of 
+tree-clustering. One such example was taken from Coops and Culvenor (2000) and is presented 
+in Figure 37. 
+Figure 37: Regular organisation of point patterns (left panel), as well as various types of spatial 
+patterns from random (second from left) to more and more clustered (second from right and 
+rightmost panel) as generated by Coops and Culvenor (2000). 
+7.6 
+The height distribution of trees 
+Although tree height distributions are often assumed to behave log-normal (Hafley and Scheuner 
+1977), tree height, age and DBH are interlinked in relatively complex manner depending on 
+species and forest site. The first two of these variables are often linked to each other through 
+the Chapman-Richards equation: 
+Hpot = A (1 - exp-fci f [τα] 
+where Hpot is the potential tree height at age t, and A, k and ρ are species-specific parameters, 
+which are derived from a vector of site variables. Tree height can then be related to DBH via 
+a series of allometric equations like those described in the first part of this document. 
+An alternative approach is to derive the DBH distribution for individual species and then 
+to relate this directly to the tree heights in the stand. Nagel and Biging (1995) describe the 
+distribution of DBH values for individual species using a Weibull function with two parameters 
+that depend on 1) the diameter-at-breast-height value of the tree with the average basal area in 
+the stand, Dg [cm], 2) the maximum DBH value in the stand, Dmax 
+[cm] and, 3) the downward 
+projected total area of the stand, G [m2/ha]. 
+7.7 
+The maximum tree density in forests 
+Maximum tree density numbers result from the natural size of tree crowns as well as their 
+requirements for light availability. According to Reineke (1933), in even-aged 'full-density' stands 
+the relationship between the quadratic mean diameter-at-breast-height, D, and their number 
+per unit, Ν is linear on a log-log scale: 
+log(iV) = a - b log(DBH) 
+51 
+
+
+where α and b are species specific parameters. Zeide (1995) provides an additional term (c) to 
+this equation, claiming that it improves the accuracy of the prediction: 
+log(JV) = a -(b 
++ cH) 
+log(DBH) 
+Pretzsch et al. (2002) give the following equation for the maximum tree density of Picea Abies: 
+log(N) = -1.75 log(Dg) + 19.63 
+where Dg is the diameter-at-breast-height of the tree in the stand having the average basal area. 
+Figure 38 shows the evolution of trunk density as a function of tree age as provided by Mayer 
+(1980). 
+L;irdi 
+loo 
+in 
+' « 
+Years 
+Figure 38: The number of trees as a function of age for a series of European tree species as 
+provided by Mayer (1980) 
+7.8 
+The fraction of dead wood in forests 
+Ferguson and Archibald (2002) find that tree mortality is relatively constant across forest age. 
+They find a 3/4 power law between live and dead tree basal area. The percentage of stems that 
+were dead was greatest in young forest (18% of stems in 0-60-year-old forests), decreased to a 
+low percentage of 12% in 61-80-year-old forests, and thereafter increased with age of forests from 
+15% to 16% in 81-100, > 100 year-old forests. Nilsson et al. (2002) state that amongst old-
+growth trees in Europe, 1) about 10% of all standing trunks are dead and 2) about 30% of the 
+basal area and volume of dead trees are standing (snags). However, the distribution of the dead 
+wood amongst standing stems with and without crown, and lying stems is species-dependent. 
+For example, Spelsberg (2000) indicates that amongst the total dead wood for beech (oak) in 
+western Germany 25% (64%) are standing with crown, 27% (25%) are standing but without 
+crown, and 48% (19%) are lying. Overall they claim that the fraction of dead wood is about 1% 
+of that of living wood. 
+52 
+
+
+7.9 
+Mixed forests, tree competition and mortality 
+The stand density and crown closure of a forest is a compromise between two opposing processes: 
+lateral growth of the branches and roots which increases closure, and mortality of trees (by 
+whatever cause) which diminishes it. As trees become older and larger, the size of a gap created 
+by a fallen tree increases, while the ability of neighbouring trees to close the gap decreases. Soil 
+properties, light and water availability, and local weather conditions affect the development of 
+individual trees. To simulate the evolution of forests over time—with or without disturbances— 
+a series of dynamical models have been developped. Whilst these models go beyond the scope of 
+this document, the interested reader is invited to investigate the references below: Nagel et al. 
+(2002), Botkin (1993), Pacala et al. (1993), Pretzsch et al. (2002), Bugmann (1994). 
+53 
+
+
+Table 2: List of mathematical symbols, their meaning and units. 
+Variable 
+Meaning 
+Units 
+m2 tree * 
+m 
+kg h a ­ 1 
+m 
+m 
+m 
+cm 
+cm 
+cm 
+cm 
+cm 
+m2 h a ­ 1 
+m 
+m 
+m 
+m 
+m 
+m 
+m 
+m 
+m 
+m 
+m2 m 2 tree 
+l 
+m2 m ­ 2 tree ­ 1 
+m' 
+m 
+m 
+m 
+A¿ 
+Ar 
+AGB 
+Co 
+Cr 
+d 
+DBH 
+D *3 Í~Í max 
+D 
+Dg 
+Umax 
+G 
+9L(Z,ÍÍL) 
+H 
+■Η­max 
+Hcb 
+Hcr 
+Hct 
+Hdb 
+Hnb 
+Hpot 
+Ht 
+LAIAz 
+LAI 
+Ν 
+PLA 
+Rc 
+η 
+η 
+t 
+td 
+V (ζ) 
+wb 
+Wc 
+ws 
+Wt 
+ζ 
+Az 
+θι. 
+Φι, 
+leaf area of crown 
+vertically downward projected crown area 
+above ground biomass 
+maximum crown diameter 
+maximum crown radius 
+downward distance from top of the tree crown 
+diameter at breast height (137 cm above ground) 
+maximum occurring diameter at breast height 
+quadratic mean DBH in stand 
+DBH value of tree with average basal area in stand 
+maximum DBH value in the stand 
+downward projected total area of the stand 
+leaf normal distribution function 
+tree height 
+maximum occurring tree height 
+vertical dimension of the crown 
+vertical dimension of the bottom part of the crown 
+height from ground to the maximum lateral crown dimension 
+vertical dimension of the top part of the crown 
+height from first dead branch to onset of (lower) crown 
+height from ground to the first dead branch 
+potential height of a tree at age t 
+height to the crown 
+leaf Area Index within height interval Az 
+maximum occurring leaf area index per tree 
+leaf Area Index per tree 
+tree number per unit area 
+projected leaf area 
+crown radius at lower end (bottom) of crown 
+crown radius within bottom part of the crown 
+crown radius within top part of the crown 
+specific leaf area 
+tree age in years 
+day in year 
+normalized leaf area index 
+dry weight of branches per tree 
+dry weight of crown (branches + foliage) per tree 
+dry weight of foliage per tree 
+dry weight of stem (trunk) per tree 
+total dry weight of tree 
+height within the canopy 
+height interval within canopy/crown 
+zenith angle of the leaf normal 
+azimuth angle of the leaf normal 
+direction of the leaf normal 
+m2 kg x 
+year 
+m m 
+kg tree" 
+kg tree" 
+kg tree" 
+kg tree" 
+kg tree" 
+m 
+in 
+rad 
+rad 
+rad 
+M 
+
+
+References 
+Assman, E. (1961). Waldertragskunde. München ­ Bonn ­ Wien: BLV Verlag. 
+Badoux, E. (1952). Notes sur la production du mélèze. Mitteilungen der S.A.F.V. 28, Schweiz­
+erische Anstalt für das Forstliche Versuchswesen, Züricherstrasse 111, CH­8903 Birmens­
+dorf, SLF Davos, Switzerland. 
+Bartelink, H. H. (1997). Allometric relationships for biomass and leaf area of beech (Fagus 
+Sylvatica L.). Annales des Sciences Forestières 54, 39­50. 
+Botkin, D. Β. (1993). Forest Dynamics: An ecological model. New York: Oxford University 
+Press. 
+Bragg, D. C. (2001). A local basal area adjustment for crown width prediction. Northern 
+Journal of Applied Forestry 18, 22­28. 
+Bugmann, Η. Κ. M. (1994). On the ecology of mountainous forests in a changing climate: A 
+simulation study. PhD Dissertation 10638, Swiss Federal Institute of Technology Zürich, 
+Zürich, Switzerland. 
+Bunnik, N. J. J. (1978). The multispectral reflectance of shortwave radiation of agricultural 
+crops in relation with their morphological and optical properties. Technical report, Med­
+edelingen Landbouwhogeschool, Wageningen, The Netherlands. 
+Burger, H. (1927). Die Lebensdauer der Fichtennadeln. Mitteilungen der S.A.F.V. 78, Schweiz­
+erische Anstalt für das Forstliche Versuchswesen, Züricherstrasse 111, CH­8903 Birmens­
+dorf, SLF Davos, Switzerland. 
+Burger, Η. (1941a). Holz Blattmenge und Zuwachs: V Fichten und Föhren verschiedener 
+Herkunft auf verschiedenen Kulturorten. Mitteilungen der S.A.F.V. 22, Schweizerische 
+Anstalt für das Forstliche Versuchswesen, Züricherstrasse 111, CH­8903 Birmensdorf, SLF 
+Davos, Switzerland. 
+Burger, Η. (1941b). Holz Blattmenge und Zuwachs: VI Ein Plenterwlad mittlerer Stan­
+dortsgüte. Mitteilungen der S.A.F.V. 22, Schweizerische Anstalt für das Forstliche Ver­
+suchswesen, Züricherstrasse 111, CH­8903 Birmensdorf, SLF Davos, Switzerland. 
+Burger, Η. (1945). Holz Blattmenge und Zuwachs: 
+V Die Lärche. Mitteilungen der 
+S.A.F.V. 24, Schweizerische Anstalt für das Forstliche Versuchswesen, Züricherstrasse 111, 
+CH­8903 Birmensdorf, SLF Davos, Switzerland. 
+Burger, Η. (1949). Holz Blattmenge und Zuwachs: 
+V Die Buche. Mitteilungen der 
+S.A.F.V. 26, Schweizerische Anstalt für das Forstliche Versuchswesen, Züricherstrasse 111, 
+CH­8903 Birmensdorf, SLF Davos, Switzerland. 
+Cermák, J., F. Riguzzi, and R. Ceulemanns (1998). Scaling up from individual tree to the 
+stand level in Scots pine. I. Needle distribution, overall crown and root geometry. Annales 
+des Sciences Forestières 55, 63­88. 
+Cescatti, A. (1997). Modelling the radiative transfer in discontinuous canopies of assymetric 
+crowns. I. Model structure and algorithms. Ecological Modelling 101, 263­274. 
+Chen, J. M., P. M. Rich, S. T. Gower, J. M. Norman, and S. Plummer (1997). Leaf area 
+index of boreal forests: Theory, techniques and measurements. Journal of Geophysical 
+Research 102, 29,429­29,443. 
+Chen, S. C , B. Y. Shao, I. Impens, and R. Ceulemans (1994). Effects of plant canopy struc­
+ture on light interception and photosynthesis. Journal of Quantitative Spectroscopy and 
+Radiation Transfer 52, 115­123. 
+
+
+Comeau, P., J. Wang, T. Letchford, and D. Coopersmith (1999). Effects of spacing paper 
+birch­mixedwood stands in central British Columbia FRBC project HQ96423­RE (MOF 
+EP 1193). Extension Note 29, British Columbia Ministry of Forest Research Program. 
+Coops, N. and D. Culvenor (2000). Utilizing local variance of simulated high spatial resolution 
+imagery to predict spatial pattern of forest structure. Remote Sensing of Environment 71, 
+248­260. 
+Cressie, N. A. (1993). Statistics for spatial data. New York: John Wiley and Sons. 
+De Reffye, P. and F. Houllier (1997). Modelling plant growth and architecture: Some recent 
+advances and applications to agronomy and forestry. Current Science 73, 984­992. 
+Diner, D. J., J. C. Beckert, T. H. Reilly, C. J. Bruegge, J. E. Conel, R. A. Kahn, J. V. Mar­
+tonchik, T. P. Ackerman, R. Davies, S. A. W. Gerstl, H. R. Gordon, J.­P. Muller, R. Β. 
+Myneni, P. J. Sellers, Β. Pinty, and M. M. Verstraete (1998). Multi­angle imaging spectro­
+radiometer MISR instrument description and overview. IEEE Transactions on Geoscience 
+and Remote Sensing 36, 1072­1087. 
+Dohrenbusch, Α., R. Grote, and H. W. Fritz (1993). Struktur und Wachstum eines Fichtenbe­
+standes unter experimenteller Manipulation des Stoffeinträge. Forstarchiv 64, 172­177. 
+Eberswalde, L. (2001). Adam Schwappach ­ ein Forstwissenschaftler 
+und sein Erbe. 29582 
+Hanstedt, Germany: Nimrod Verlag. 
+Ferguson, S. H. and D. J. Archibald (2002). The 3/4 power law in forest management: How 
+to grow dead trees. Forest Ecology and Management 169, 283­292. 
+Forstreuter, M (1999). Ergebnisbericht: Ökologie der Gehölze i. Report SS99, Institut für 
+Ökologie und Biologie, Technische Universität Berlin, Königin­Luise­Str. 22, Berlin 14195. 
+Franklin, J., J. Michaelsen, and A. H. Strahler (1985). Spatial analysis of density pattern in 
+coniferous forest stands. Vegetatio 64, 29­36. 
+Freiich, L. E., R. L. Calcóte, Μ. Β. Davis, and J. Pastor (1993). Patch formation and main­
+tenance in an old­growth hemlock­hardwood forest. Ecology 72, 513­527. 
+Goel, N. S., L. B. Knox, and J. M. Norman (1991). From artificial life to real life: Computer 
+simulation of plant growth. International Journal of General Systems 18, 291­319. 
+Goel, N. S. and D. E. Strebel (1984). Simple beta distribution representation of leaf orientation 
+in vegetation canopies. Agronomy Journal 76, 800­803. 
+Govaerts, Y. (1996). A model of light scattering in three­dimensional plant canopies: A Monte 
+Carlo ray tracing approach. EUR Report No. 16394 EN, Space Applications Institute. 
+Govaerts, Y., O. Engelsen, Β. Pinty, and M. M. Verstraete (1997). Identification of a particu­
+lar tropical forest environment on the basis of simulated NOAA­AVHRR reflectance fac­
+tors. In Proceedings of the 7th IS Ρ RS International Symposium on Physical Measurements 
+and Signatures in Remote Sensing, Courchevel, France, 7­11 April 1997, pp. 727­734. 
+Balkema/Rotterdam/Brookfield. 
+Govaerts, Y. and M. M. Verstraete (1998). Raytran: A Monte Carlo ray tracing model to 
+compute light scattering in three­dimensional heterogeneous media. IEEE 
+Transactions 
+on Geoscience and Remote Sensing 36, 493­505. 
+Gower, T. S., C. J. Kucharik, and J. M. Norman (1999). Direct and indirect estimation of 
+leaf area index, FAPAR, and net primary production of terrestrial ecosystems. Remote 
+Sensing of Environment 
+70, 29­51. 
+Gower, T. S., P. B. Reich, and Y. Son (1993). Canopy dynamics and aboveground production 
+of five tree species with different leaf longevities. Tree Physiology 12, 327­345. 
+56 
+
+
+Grote, R. (1999). Foliage and branch biomass estimation of coniferous and deciduous tree 
+species. Silva Fennica 36, 779­788. 
+Guericke, M. (2001). Growth dynamics of mixed stands of beech and European larch. Technical 
+report, Fakultät für Forstwissenschaften und Waldökologie, Georg­August­Universität, 
+Göttingen, Germany. 
+Hafley, W. I. and H. T. Scheuner (1977). Statistical distributions for fitting diameter and 
+height data in even aged stands. Canadian Journal of Forest Research 7, 481­489. 
+Hagemeier, M. (2002). A functional study of the treetop architecture of Central European 
+silver birch, scots pine, sessile oak, little leaf linden and European beech. Berlin, Stuttgart, 
+Germany: Dissertationes Botanicae, Band 361, Gebr. Borntraeger. 
+Halliwell, D. H. and Apps, M. J. (1997). BOReal Ecosystem­Atmosphere Study (BOREAS) 
+biometry and auxiliary sites: overstory and understory data. Report Version 3.03, Cana­
+dian Forest Service, Northern Forest Centre, 5320 122 Street, Edmonton, Alberta, Canada. 
+Herajärvi, H. (2001). Technical properties of mature birch (Betula pendula and B. pubescens) 
+for saw milling in Finland. Silva Fennica 35, 469­485. 
+Jenkins, J. C , D. C. Chojnacky, L. S. Heath, and R. A. Birdsey (2003). National­scale biomass 
+estimators for United­States tree species. Forest Science 49, 12­35. 
+Johansson, T. (1999). Biomass production of Norway Spruce (Picea abies (L.) Karst.) growing 
+on abandoned farmland. Silva Fennica 33, 261­280. 
+Joosten, R. and A. Lehtonen (2002). Comparison of biomass expansion factors be­
+tween conifer and broadleaf species in temperate and boreal forests. First re­
+sults of a biomass study 
+in the German state 
+North Rhine­Westphalia 
+and 
+a joint project 
+university of applied science Lippe and Höxter 
+and 
+METLA 
+(Helsinki). In COST E21 workshop, 
+7­8 October 2002, 
+Valencia, Spain, pp. 
+5. 
+http://www.bib.fsagx.ac.be/coste21/report/2002­10­07.html. 
+Kajimoto, T., Y. Matsuura, M. A. Sofrono, Α. V. Volokitina, S. Mori, A. Osawa, and A. P. 
+Abaimov (1999). Above­ and below ground biomass and net primary productivity of a 
+Larix gmelinii stand near Tura, central Siberia. Tree Physiology 19, 815­822. 
+Kenkel, N. C. (1983). Pattern of self­thinning in Jack pine: Testing the random mortality 
+hypothesis. Ecology 69, 1017­1024. 
+Kerner, H., E. Gross, and W. Koch (1977). Structure of the assimilation system of a dominat­
+ing spruce tree (Picea abies (L.) Karst.) of closed stands: Computation of needle surface 
+area by means of variable geometric needle model. Flora 166, 449­459. 
+Kindermann, G. E. (1998). Die Flächenanteile der Baumarten. Diplomarbeit, Institut für 
+Waldwachstumsforschung, Universität für Bodenkultur, Perchtoldsdorf, Deutschland. 
+Kinerson, R. J. and L. J. Fritschen (1970). Modelling a coniferous forest. Agricultural Meteo­
+rology 8, 439­445. 
+Knape, C. (1996). Waldbauliche Behandlung von Birkenbeständen auf R­ und K­Standorten 
+in Mecklenburg­Vorpommern. Dissertation, Technische Universität Dresden, 01735 Tha­
+randt, Germany. 
+Knyazikhin, Y., J. V. Martonchik, D. J. Diner, R. B. Myneni, M. M. Verstraete, B. Pinty, 
+and N. Gobron (1998). Estimation of vegetation canopy leaf area index and fraction of ab­
+sorbed photosynthetically active radiation from atmosphere­corrected MISR data. Journal 
+of Geophysical Research 103, 32,239­32,256. 
+
+
+Kramer, H. (1982). Kurzfristige Zuwachsreaktionen bei Buche in Abhängigkeit von Witterung 
+und verschiedenen Baummerkmalen. Allgemeine Forst und Jagdzeitung 153, 57-67. 
+Kranigk, J., F. Gruber, J. Heimann, and A. Thorwest (1994). Ein Modell für die Kronen-
+raumstruktur und die räumliche Verteilung der Nadeloberfläche in einem Fichtenbestand. 
+Allgemeine Forst und Jagd Zeitung 165, Jg. 10-11, 193-197. 
+Küssner, R. and R. Mosandl (2000). Comparison of direct and indirect estimation of leaf area 
+index in mature Norway spruce stands of eastern Germany. Canadian Journal of Forest 
+Research 30, 440-447. 
+Lehtonen, 
+A. and 
+J. Vayred 
+(2002). Biomass expansion factors 
+for 
+Scots 
+pine 
+(Pinus 
+sylvestris), 
+comparison 
+between 
+Catalonia 
+and 
+Finland. 
+In 
+COST 
+E21, 
+WG-1 
+workshop 
+on biomass, 
+4-5 
+July 
+2002, 
+Besalú, 
+Spain, 
+pp. 
+5. 
+http ://www.bib.f sagx.ac.be/coste21/report/2002-07-04.html. 
+Lischke, H., T. J. Loefner, and A. Fischlin (1998). Aggregation of individual trees and patches 
+in forest succession models: Capturing variability with height structures, random, spatial 
+distributions. Theoretical Population Biology 54, 213-226. 
+Marklund, L. G. (1988). Biomass functions for pine, spruce and birch in Sweden. Report 45, 
+Swedish University of Agricultural Sciences, Department of Forest Survey, Umeå. 
+Martin, J. G., B. D. Kloeppel, T. L. Schaefer, D. L. Kimbier, and S. G. McNulty (1998). 
+Aboveground biomass and nitrogen allocation of ten deciduous southern Appalachian tree 
+species. Canadian Journal of Forest Research 28, 1648-1659. 
+Massman, J. W. (1982). Foliage distribution in old-growth coniferous tree canopies. Canadian 
+Journal of Forest Research 12, 10-17. 
+Mayer, H. (1980). Waldbau. Stuttgart, New York: Gustav Fischer Verlag. 
+Mencuccini, M. and J. Grace (1994). Climate influences the leaf area/ sap wo o d area ratio in 
+Scots pine. Tree Physiology 15, 1-10. 
+Moeur, M. (1993). Characterizing spatial patterns of trees using stem-mapped data. Forest 
+Science 39, 756-775. 
+Muusche, S., R. Samson, L. Nachtergale, A. De Schrijver, R. Lemeur, and N. Lust (2001). 
+A comparison of optical and direct methods for monitoring the seasonal dynamics of leaf 
+area index in deciduous forests. Silva Fennica 35, 373-384. 
+Myneni, R. B., R. R. Nemani, and S. W. Running (1997). Estimation of global leaf area index 
+and absorbed PAR using radiative transfer models. IEEE Transactions on Geoscience and 
+Remote Sensing 35, 1380-1393. 
+Nagel, J., M. Albert, and M. Schmidt (2002). Das waldbauliche Prognose- und Entschei-
+dungsmodell BWINPro 6.1. Forst und Holz 57, 486-493. 
+Nagel, J. and G. S. Biging (1995). Schätzung der Parameter der Weibullfunkt ion zur Gener-
+ierung von Durchmesserverteilungen. Allgemeine Forst und Jagd Zeitung 166, 185-189. 
+Nihlgård, B. (1972). Plant biomass, primary production and distribution of chemical elements 
+in a beech and planted spruce forest in southern Sweden. OIK OS 23, 69-81. 
+Nilson, T., J. Anniste, M. Lang, and J. Praks (1999). Determination of needle area indices of 
+coniferous forest canopies in the NOPEX region by ground based optical measurements 
+and satellite images. Agricultural and Forest Meteorology 98-99, 449-462. 
+Nilsson, S. G., M. Niklasson, J. Hedin, G. Aronsson, J. M. Gutowski, P. Linder, H. Ljungberg, 
+G. Mikusinski, and T. Rainus (2002). Densities of large living and dead trees in old-growth 
+temperate and boreal forests. Forest Ecology and Management 161, 189-204. 
+58 
+
+
+North, P. R. J. (1996). Three­dimensional forest light interaction model using a Monte Carlo 
+method. IEEE Transactions on Geoscience and Remote Sensing 34, 946­956. 
+Oinas, S. and L. Sikanen (2000). Discrete event simulation model for purchasing of marked 
+stands, timber harvesting and transportation. Forestry 73, 283­301. 
+Oker­Blom, P. and H. Smolander (1988). The ratio of shoot silhouette area to total needle 
+area in Scots Pine. Forest Science 34, 894­906. 
+Pacala, S. W., C. D. Canham, and J. A. J. Silander (1993). Forest models defined by field 
+measurements: I The design of the northeastern forest simulator. Canadian Journal of 
+Forest Research 23, 1980­1988. 
+Pacala, S. W., C. D. Canham, J. A. J. Silander, R. K. Kobe, and E. Ribbens (1996). Forest 
+models defined by field measurements: Estimation, error analysis and dynamics. Ecological 
+Monographs 66, 1­43. 
+Pinty, Β., J.­L. Widlowski, N. Gobron, and Μ. M. Verstraete (2002). Uniqueness of multi­
+angular information ­ Part 1: A surface heterogeneity indicator from MISR. IEEE Trans­
+actions on Geoscience and Remote Sensing 40, 1560­1573. 
+Pretzsch, 
+H. (1992). Konzeption und Konstruktion von Wuchsmodellen für Rein­
+und Mischbestände. Forstliche Forschungsberichte München 115, Schriftenreihe der 
+Forstwissenschaftlichen 
+Fakultät 
+der Universität 
+München 
+und 
+der 
+Bayerischen 
+Forstlichen Versuchs­ und Forschungsanstalt. 
+Pretzsch, H., P. Biber, and J. Dursky (2002). The single tree­based stand simulator SILVA: 
+construction, application and evaluation. Forest Ecology and Management 162, 3­21. 
+Prskawetz, M. and M. J. Lexer (2000). Evaluierung des LI­COR LAI­2000 zur Ermittlung 
+des Blattflächenindex in Buchenjungbeständen. Allgemeine Forst und Jagdzeitung 171, 
+185­191. 
+Reineke, L. H. (1933). Perfecting a stand­density index for even­aged forests. Journal of 
+Agricultural Research 46, 627­638. 
+Röhrig, E. (1980). Waldbau auf öologischer Grundlage. Der Wald als Vegetationstyp und seine 
+Bedeutung für den Menschen. Hamburg and Belrin, Germany: Paul Parey. 
+Röser, C, R. Montagnani, E. Detlef­Schulze, D. Mollicone, O. Kolle, M. Meroni, D. Papale, 
+L. B. Marchesini, S. Federici, and R. Valentini (2002). Net C02­exchange rates in three 
+different successional stage of 'Dark Taiga' of Central Siberia. Tellus 54, 642­659. 
+Ross, J. (1981). The Radiation Regime and Architecture of Plant Stands. Boston: W. Junk. 
+Scharf, E. (2001). Das Wachstum der Baumart Sandbirke (Betula pendula ROTH) in aus­
+gewählten Beständen der Sächsischen Forstämter Colditz und Strassgräbchen. Disserta­
+tion, Thüringer Fachhochschule für Forstwirtschaft, Schwarzburg, Germany. 
+Scherzer, J., F. Suckow, J. Müller, M. Wegehenkel, M. Lukes, K. Hammel, Α. Kniess, and 
+M. Meesenburg (2003). Wasserhaushalt von Waldökosystemen: Methodenleitfaden zur 
+Bestimmung der Wasserhaushaltskomponenten auf Level II­Flächen. Level ii ag Wasser­
+haushalt, Bundesministerium für Ernährung, Landwirtschaft und Forsten, Rochusstrae 1, 
+53123 Bonn. 
+Schmidt, M. (2001). Models for predicting wood quality criteria of important tree species. 
+Technical report, Fakultät für Forstwissenschaften und Waldökologie, Georg­August­
+Universität, Göttingen, Germany. 
+Schmidt­Vogt, H. (1976). Fichtenherkünfte der Bundesrepublik Deutschland. Erste Auswer­
+tung der Versuchsreihe 1959/66. Allgemeine Forst und Jagdzeitung 147, 149­163. 
+59 
+
+
+Shao, G. (1986). Kopide: A computer model of forest growth and succession on Changbai 
+mountain. Ph.d. dissertation, Chinese Academy of Sciences. 
+Siipilehto, J. (2000). A comparison of two parameter prediction methods for stand structure 
+in Finland. Silva Fennica 34 (4), 331­349. 
+Sloboda, Β. (1991). Untersuchungen zur Erstellung eines regionalen und bestandesindi­
+viduellen Sortenmodells für die Pfälzer Kiefer. Sachbericht zum Forschungsprojekt AZ 
+D/0228/7211/Je, Abteilung für forstliche Biometrie und Informatik der Universität 
+Göttingen, Göttingen, Germany. 
+Spelsberg, G. (2000). Totholz im Nordrhein­Westfälischen Wald. Bericht über den 
+ökologischen Zustand des Waldes, Ministerium für Umwelt und Naturschutz, Land­
+wirtschaft und Verbraucherschutz, LOBF Recklinghausen. 
+Stenberg, P., T. Kuuluvainen, T. Kellomaeki, J. C. Grace, E. J. Jokela, and H. L. Gholz 
+(1994). Crown structure, light interception and productivity of pine trees and stands. In 
+H. L. Gholz, R. McMurthie, and S. Linder (Eds.), A comparative analysis of pine forest 
+productivity, pp. 20­43. Copenhagen: Ecological Bulletins (43). 
+Strebel, D. E., N. S. Goel, and K. J. Ranson (1985). Two­dimensional leaf orientation distri­
+butions. IEEE Transactions on Geoscience and Remote Sensing 23, 640­647. 
+Szwagrzyk, J. (1990). Small­scale spatial patterns of trees in a mixed Pinus sylvestris­Fagus 
+sylvatica forest. Forest Ecology and Management 51, 301­315. 
+Thompson, R. L. and N. S. Goel (1998). Two models for rapidly calculating bidirectional 
+reflectance: Photon spread (ps) model and statistical photon spread (sps) model. Remote 
+Sensing Reviews 16, 157­207. 
+Tiangxiang, L., R. P. Neilson, C. J. Vörösmarty, H. Zúa, and S. Liu (2002). A model for 
+seasonality and distribution of leaf area index of forests and its application to China. 
+Journal of Vegetation Science 13, 817­830. 
+Tomppo, E. (1986). Models and methods for analyzing spatial patterns of trees. Communica­
+tiones Instituti Forestáis Fenniae 138, 65. 
+Tomppo, E. (2000). Remote sensing requirements to support forest inventories. In M. M. 
+Verstraete, M. Menenti, and J. Peltoniemi (Eds.), Observing Land from Space: Science, 
+Customers and Technology, pp. 151­160. Dordrecht, Boston, London: Kluwer Academic 
+Publishers. 
+Van Deusen, P. C. and G. S. Bigin (1985). STAG ­ A stand generator for mixed species stands. 
+Research Note 11, Northern California Forest Yield Cooperative, Department of Forestry 
+and Rescource Management, University of California, Berkeley, USA. 
+Verstraete, M. M. (1987). Radiation transfer in plant canopies: Transmission of direct solar 
+radiation and the role of leaf orientation. Journal of Geophysical Research 92, 10,985­
+10,995. 
+Viherä­Aarnio, A. and P. Veiling (1999). Growth and stem quality of mature birches in a 
+combined species progeny trial. Silva Fennica 33, 225­234. 
+von Droste zu Hülshoff, B. F. (1969). Struktur und Biomasse eines Fichtenbestandes 
+auf Grund einer Dimensionsanalyse an oberirdischen Baumorganen. 
+Dissertation, 
+Staatswirtschaftliche Fakultät der Ludwig­Maximillians­Universität München, Munich, 
+Germany. 
+Wang, J. R. and J. P. Kimmins (2002). Height growth and competitive relationship between 
+paper birch and Douglas fir in coast and interior of British Columbia. Forest Ecology and 
+Management 165, 285­293. 
+GO 
+
+
+Wang, Y. P., P. G. Jarvis, and M. L. Benson (1990). Two-dimensional needle-area density 
+distribution within the crowns of Pinus radiata. Forest Ecology and Management 32, 217-
+237. 
+Webb, W. and M. J. Ungs (1992). Three-dimensional distribution of needle and stem surface 
+area in a Douglas fir. ÎVee Physiology 13, 203-212. 
+Webster, R. C. and C. G. Lorimer (2003). Comparative growing space efficiency of four tree 
+species in mixed conifer-hardwood forests. Forest Ecology and Management 177, 361-377. 
+Widlowski, J.-L., B. Pinty, N. Gobron, and M. M. Verstraete (2001). Detection and charac-
+terization of boreal coniferous forests from remote sensing data. Journal of Geophysical 
+Research 106, 33,405-33,419. 
+Wu, Y. and A. H. Strahler (1994). Remote estimate of crown size, stand density and biomass 
+on the Oregon transect. Ecological Applications 4, 299-312. 
+Zeide, B. (1995). A relationship between size of trees and their number. Forest Ecology and 
+Management 72, 265-272. 
+61 
+
+
+
+
+
+
+
+
+
+
+Mission of the JRC 
+The mission of the JRC is to provide customer-driven scientific and technical support for the 
+conception, development, implementation and monitoring of EU policies. As a service of the 
+European Commission, the JRC functions as a reference centre of science and technology for the 
+Union. Close to the policy-making process, it serves the common interest of the Member States, 
+while being independent of special interests, whether private or national. 
+EUROPEAN COMMISSION 
+DIRECTORATE-GENERAL 
+Joint Research Centre 
+EUNA20855ENC

@@ -4,10 +4,10 @@ type: Concept
 description: "Evaluation concept for tree detection in dense stands where crown overlap breaks bbox-centric NMS and segmentation boundaries drive errors."
 tags: [dense-stands, evaluation, detection, instance-segmentation, dense/open]
 status: stable
-updated: 2026-10-12
+updated: 2026-10-23
 generated:
   by: agent:conifervision-wiki
-  at: 2026-10-12T12:00:00Z
+  at: 2026-10-23T12:00:00Z
 related_methods:
   - methods/merge-detections
   - methods/deimv2-canopy
@@ -23,6 +23,8 @@ sources:
   - sources/paper-treepseco_scaling_individual_tree_crown_segmentation_using_large_vision_models-isprs-archives-xlviii-m-7-2025-275-2025
   - sources/paper-zero-shot_tree_detection_and_segmentation_from_aerial_forest_imagery-2506-03114v1
   - sources/paper-refdrone_llms
+  - sources/paper-evaluation of growth functions used in the swedish forest planning system heureka_article1013
+  - sources/paper-a crown width-diameter model for natural even-aged black pine forest management-forests-09-00610-v2
   - sources/paper-fsod-vfm
 ---
 # Dense stand detection (before clearing)
@@ -48,7 +50,7 @@ Expected dense-specific error modes:
 
 Used to structure experiments in `[[project/research-tree-detection-ensemble]]`:
 
-- baseline measurements per layer in open vs dense splits (**deferred** on current golden — see [[experiments/exp-001-per-layer-baselines]] H1 v1.1: `kaxen_197_1` is small-sparse R-class, not closed-canopy overlap)
+- baseline measurements per layer in open vs dense splits (**deferred** on current golden — see [[experiments/r-class-itd/exp-001-per-layer-baselines]] H1 v1.1: `kaxen_197_1` is small-sparse R-class, not closed-canopy overlap)
 - H1 interim: size-stratified ceilings + domain FT on that hold-out
 - error taxonomy specialized for dense plots (requires measurable crown-overlap GT)
 - fusion strategy validation where segmentation boundary quality matters
@@ -79,6 +81,7 @@ TBD:
 ## Related
 
 - `[[project/research-tree-detection-ensemble]]`
+- [[concepts/understory-tree-detection]] — a tree under another crown, not two crowns that touch side by side
 - `[[methods/merge-detections]]`
 - `[[methods/edgecrafter-ecseg]]`
 
@@ -96,3 +99,4 @@ TBD:
 - Can point-prompted SAM mask proposals effectively resolve under-segmentation in extremely dense, multi-layered conifer stands without high-resolution CHM inputs?
 - How does the boundary delineation accuracy of box-prompted SAM2 scale in extremely dense conifer stands compared to specialized instance segmentation models like EdgeCrafter ECSeg?
 - How does the performance of explicit numerical reasoning (like NGDINO's count bins) scale when applied to extremely dense conifer stands containing hundreds of overlapping tree crowns?
+- How can local competition indices (e.g. basal area of larger trees, BAL) derived from dense crown detections be normalized against carrying-capacity biases observed in unthinned Swedish stands?

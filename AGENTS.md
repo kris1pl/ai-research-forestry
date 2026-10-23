@@ -109,6 +109,7 @@ Concept ID = path relative to `conifervision/` without `.md`.
    `## [YYYY-MM-DD] ingest | Source title` (automated by `ingest_paper`).
 6. Flag contradictions with existing pages (“Contradictions” section or inline note).
 7. Suggest commit: `ingest: short English description`.
+8. **Concept gate, after a batch rather than after one paragraph.** Run `make concept-gate` (after `make okf-lint`). It writes [[project/concept-proposals]]. The human sets `decision` to `accept` or `reject`, or edits `name`, `slug`, and `why`. `make concept-gate APPLY=1` writes a concept page only for `accept`. The bar: the idea is in at least two ingested sources, or the pipeline must name it (height, site index, volume). A model family, a software system, or a single-paper measurement stays on the source page. A paragraph attached during `make ingest-paper WRITE=1` is not that gate.
 
 **Do not modify** files in `raw/` except what the user adds.
 
@@ -146,7 +147,7 @@ Propose, refine, and record **testable** hypotheses toward dense-stand tree dete
 
 1. Read `conifervision/index.md`, `project/research-tree-detection-ensemble.md`, `project/hypothesis-validation-loop.md`, then relevant `methods/`, `concepts/`, and `sources/` pages.
 2. Propose **2–3** candidate hypotheses in chat, each with wiki citations and a one-line kill criterion. Do **not** invent numeric thresholds — use `TBD` or “per field calibration”.
-3. After the human picks one (or names a single hypothesis): create/update `conifervision/experiments/exp-NNN-<slug>.md` from `.templates/experiment.md` (full sections including Pseudocode, Success/Kill, Handoff). Update `experiments/index.md`.
+3. After the human picks one (or names a single hypothesis): create/update `conifervision/experiments/<domain>/exp-NNN-<slug>.md` from `.templates/experiment.md` (full sections including Pseudocode, Success/Kill, Handoff). Update `experiments/index.md`.
 4. Optionally draft an ADR in `project/decisions.md` (`approved to run` | `rejected`).
 5. Prepend `conifervision/log.md`: `## [YYYY-MM-DD] hypothesis | short title`.
 6. When run results return: fill Results + Conclusion (`accept` | `reject` | `iterate`); refresh **Replication notes** on touched methods; flag contradictions vs `pipeline-overview` / research program.

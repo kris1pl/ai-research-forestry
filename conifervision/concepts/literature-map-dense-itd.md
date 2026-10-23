@@ -4,7 +4,7 @@ type: Concept
 description: "Prioritized synthesis of ingested papers for dense-stand tree detection/segmentation from drone RGB and LiDAR/CHM — what to test first vs background."
 tags: [literature-map, dense-stands, itd, segmentation, ensemble, synthesis]
 status: stable
-updated: 2026-10-13
+updated: 2026-10-23
 generated:
   by: agent:conifervision-wiki
   at: 2026-10-12T12:00:00Z
@@ -25,7 +25,7 @@ sources:
 ---
 # Literature map — dense ITD
 
-Living synthesis for agents and humans: among ~25 ingested sources, **what matters first** for the Conifervision objective (drone ortho + CHM/3D, **dense stands before thinning**, ensemble path). North star: [[project/research-tree-detection-ensemble]]. Dense eval concept: [[concepts/dense-stand-detection]].
+Living synthesis for agents and humans: among 34 ingested sources, **what matters first** for the Conifervision objective (drone ortho + CHM/3D, **dense stands before thinning**, ensemble path). North star: [[project/research-tree-detection-ensemble]]. Dense eval concept: [[concepts/dense-stand-detection]].
 
 This page does **not** replace individual [[sources/index]] summaries. Refresh after major ingests or when experiment conclusions contradict claims below.
 
@@ -45,7 +45,7 @@ This page does **not** replace individual [[sources/index]] summaries. Refresh a
 | Theme | Sources (examples) |
 |-------|-------------------|
 | Hybrid CHM + point morphology | [[sources/paper-individual_tree_segmentation_based_on_region-growing_and_density-guided_canopy_3-d_morphology_detection_using_uav_lidar_data]] (RDT) |
-| 3D density / understory | [[sources/paper-tree_crown_segmentation_in_three_dimensions_using_density_models_derived_from_airborne_laser_scanning-holmgren_j_et_al_220114]] |
+| 3D density / understory | [[concepts/understory-tree-detection]]; [[sources/paper-tree_crown_segmentation_in_three_dimensions_using_density_models_derived_from_airborne_laser_scanning-holmgren_j_et_al_220114]] |
 | End-to-end 3D instance (LiDAR) | [[sources/paper-forestformer3d_a_unified_framework_for_end-to-end_segmentation_of_forest_lidar_3dpoint_clouds-2506-16991v1]] |
 | Bottom-up ALS clustering | [[sources/paper-a simple oriented search and clustering method for extracting individual forest trees from als point clouds-1-s2-0-s157495412400520x-main]] |
 | Denoise before ITD | [[sources/paper-lidar_point_cloud_denoising_for_individual_tree_extraction_based_on_the_noise4denoise-fpls-15-1490660]] |
@@ -56,20 +56,20 @@ This page does **not** replace individual [[sources/index]] summaries. Refresh a
 | Theme | Sources |
 |-------|---------|
 | Gold / benchmark LiDAR crowns | [[sources/paper-borfit_a_novel_lidar-based_training_dataset_for_individual_tree-essd-2025-340]] |
-| SSL point segmentation | [[sources/paper-self_supervised_learning_for_precise_individual_tree_segmentation_in_airborne_lidar_point_clouds]] |
+| SSL point segmentation | [[sources/paper-self-supervised_learning_for_precise_individual_tree_segmentation_in_airborne_lidar_point_clouds]] |
 | Weak-label / SSL curation | [[sources/vo-2024-automatic-data-curation]] |
 | Species / PTC / synthetic canopies | [[sources/miao-zhang-2024-ptc-uav-species]], [[sources/paper-linguistic_guided_image_diffusion_model_for_tree_species_generation]], [[sources/paper-treeflow]] |
 | Few-shot detector training tricks | [[sources/paper-fine-tuning_matters_and_parallel_decoder_helps]] |
 
 ## Implications for the hypothesis loop
 
-1. Run [[experiments/exp-001-per-layer-baselines]] with **size-stratified ceilings** first (H1 v1.1 — current golden is small-sparse R-class). **Open vs dense** remains Tier A once crown-overlap GT exists (Sparks / Young lesson); do not block H1 on it.
-2. Optionally compare RGB instance backends ([[experiments/exp-002-rgb-seg-backend-ceiling]]) before locking ECSeg for fusion — dense boundary claims need overlap GT; plumbing on current tiles is proxy-only.
-3. Prefer **mask-aware fusion** ([[experiments/exp-003-merge-fusion-v1]]) once RGB seg has a chosen ceiling (dense Variant B gated on overlap GT).
+1. Run [[experiments/r-class-itd/exp-001-per-layer-baselines]] with **size-stratified ceilings** first (H1 v1.1 — current golden is small-sparse R-class). **Open vs dense** remains Tier A once crown-overlap GT exists (Sparks / Young lesson); do not block H1 on it.
+2. Optionally compare RGB instance backends ([[experiments/r-class-itd/exp-002-rgb-seg-backend-ceiling]]) before locking ECSeg for fusion — dense boundary claims need overlap GT; plumbing on current tiles is proxy-only.
+3. Prefer **mask-aware fusion** ([[experiments/r-class-itd/exp-003-merge-fusion-v1]]) once RGB seg has a chosen ceiling (dense Variant B gated on overlap GT).
 4. Treat pure 3D end-to-end models as **parallel track** unless AREA workflow already commits to dense UAV LiDAR as primary input.
 5. Species and synthetic data stay **downstream** of instance detection quality.
 
-Approved queue: **ADR-002** (H1 → H3 → H2) in [[project/decisions]]. Sequencing note (2026-10-13): [[experiments/exp-004-rgb-small-student-pseudo-v2]] runs before H2; H3 follow-ups wait on that gate.
+Approved queue: **ADR-002** (H1 → H3 → H2) in [[project/decisions]]. Sequencing note (2026-10-13): [[experiments/r-class-itd/exp-004-rgb-small-student-pseudo-v2]] runs before H2; H3 follow-ups wait on that gate. Proposed superseded by ADR-003 (2026-10-21): the current proposal is [[project/research-normal-forest]]; the next smoke is [[experiments/normal-forest/exp-005-normal-forest-ownership-smoke]].
 
 ## Related
 

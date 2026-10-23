@@ -4,7 +4,7 @@ type: Experiment
 description: "H2 — First fusion design iteration: bbox-centric NMS vs mask-aware merge under dense stands. Run after H1 (exp-001) and exp-002 (H3 mask backend pick)."
 tags: [ensemble, merge, fusion, dense-stands, H2]
 status: stable
-updated: 2026-10-13
+updated: 2026-10-21
 area: "Same AREA eval set as exp-001; report open vs dense separately"
 hypothesis: "In dense stands, mask-aware fusion rules (mask-first / mask-overlap conflict resolution) reduce duplicates and under-segmentation relative to bbox-only NMS with layer priorities, without catastrophic regression on open stands."
 metrics:
@@ -27,8 +27,8 @@ generated:
 
 # exp-003 merge / fusion v1 (segmentation-aware)
 
-**Queue:** [[experiments/exp-001-per-layer-baselines]] (H1) → [[experiments/exp-002-rgb-seg-backend-ceiling]] (H3, closed preliminary) → [[experiments/exp-004-rgb-small-student-pseudo-v2]] → **exp-003 / H2 (this page)**.  
-**Gate:** ADR-002 sequencing note (2026-10-13) — **do not start** until exp-004 meets its small-tree usefulness gate ([[project/decisions]]).
+**Queue:** H1 ([[experiments/r-class-itd/exp-001-per-layer-baselines]]) and H3 ([[experiments/r-class-itd/exp-002-rgb-seg-backend-ceiling]], closed preliminary) are done. **exp-003 / H2 (this page) is parked.** It is not the step after [[experiments/r-class-itd/exp-004-rgb-small-student-pseudo-v2]].  
+**Gate:** parked under proposed ADR-003 because the current cohort is normal forest, not because this page is waiting on an exp-004 small-tree score. Do not start. ([[project/decisions]])
 
 ## Hypothesis
 
@@ -36,8 +36,8 @@ In dense stands, **mask-aware fusion rules** (mask-first / mask-overlap conflict
 
 ## Motivation
 
-- Depends on ceilings from [[experiments/exp-001-per-layer-baselines]]
-- Prefer mask backend chosen in [[experiments/exp-002-rgb-seg-backend-ceiling]] (fallback: ECSeg if H3 skipped/killed with documented reason)
+- Depends on ceilings from [[experiments/r-class-itd/exp-001-per-layer-baselines]]
+- Prefer mask backend chosen in [[experiments/r-class-itd/exp-002-rgb-seg-backend-ceiling]] (fallback: ECSeg if H3 skipped/killed with documented reason)
 - Fusion stub: [[methods/merge-detections]]
 - Overlap reweight idea: [[sources/paper-fsod-vfm]]
 - Dense errors: [[concepts/dense-stand-detection]]
@@ -125,5 +125,5 @@ TBD
 - [[concepts/literature-map-dense-itd]]
 - [[methods/merge-detections]]
 - [[methods/edgecrafter-ecseg]]
-- [[experiments/exp-001-per-layer-baselines]]
-- [[experiments/exp-002-rgb-seg-backend-ceiling]]
+- [[experiments/r-class-itd/exp-001-per-layer-baselines]]
+- [[experiments/r-class-itd/exp-002-rgb-seg-backend-ceiling]]

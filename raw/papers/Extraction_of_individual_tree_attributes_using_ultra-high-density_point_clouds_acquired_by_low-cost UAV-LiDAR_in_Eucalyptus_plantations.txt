@@ -1,0 +1,1931 @@
+HAL Id: hal-05072320
+https://hal.science/hal-05072320v1
+Submitted on 19 May 2025
+HAL is a multi-disciplinary open access archive
+for the deposit and dissemination of scientific re-
+search documents, whether they are published or not.
+The documents may come from teaching and research
+institutions in France or abroad, or from public or pri-
+vate research centers.
+L’archive ouverte pluridisciplinaire HAL, est des-
+tinée au dépôt et à la diffusion de documents scien-
+tifiques de niveau recherche, publiés ou non, émanant
+des établissements d’enseignement et de recherche
+français ou étrangers, des laboratoires publics ou
+privés.
+HAL Authorization
+Extraction of individual tree attributes using
+ultra-high-density point clouds acquired by low-cost
+UAV-LiDAR in Eucalyptus plantations
+Mei Zhou, Chungan Li, Zhen Li
+To cite this version:
+Mei Zhou, Chungan Li, Zhen Li. Extraction of individual tree attributes using ultra-high-density point clouds
+acquired by low-cost UAV-LiDAR in Eucalyptus plantations. Annals of Forest Science, 2025, 82 (1), pp.20.
+⟨10.1186/s13595-025-01291-w⟩. ⟨hal-05072320⟩
+
+
+Zhou et al. Annals of Forest Science           (2025) 82:20  
+https://doi.org/10.1186/s13595-025-01291-w
+RESEARCH PAPER
+Open Access
+© The Author(s) 2025. Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which 
+permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the 
+original author(s) and the source, provide a link to the Creative Commons licence, and indicate if changes were made. The images or 
+other third party material in this article are included in the article’s Creative Commons licence, unless indicated otherwise in a credit line 
+to the material. If material is not included in the article’s Creative Commons licence and your intended use is not permitted by statutory 
+regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this 
+licence, visit http://creativecommons.org/licenses/by/4.0/.
+Annals of
+ 
+Forest Science
+Extraction of individual tree attributes using 
+ultra-high-density point clouds acquired by low-
+cost UAV-LiDAR in Eucalyptus plantations
+Mei Zhou1, Chungan Li2*    and Zhen Li3 
+Abstract 
+Key message  In this paper, we first introduced a novel method for directly measuring tree diameters from UAV-LiDAR 
+point clouds utilizing the χ2-filtering technique and a technique for measuring tree heights using pseudo-waveforms.
+Context  Eucalyptus plantation forests constitute the largest expanse of planted broad-leaved forests worldwide. 
+Detailed and accurate individual tree attributes are essential for precision forestry. Terrestrial laser scanning (TLS) 
+and mobile laser scanning (MLS) are frequently employed to acquire information on individual trees. However, 
+both technologies suffer from low efficiency. Therefore, the challenge remains how to access this information 
+efficiently.
+Aims  Consequently, this paper investigated a novel technical approach to automatically extract individual tree attrib-
+utes using low-cost UAV-LiDAR technology.
+Methods  The framework consists of three independent yet interrelated approaches. Firstly, the tree trunks were 
+detected using an approach based on the hierarchical density-based spatial clustering of applications with noise 
+(HDBSCAN) algorithm. It utilized 3D point clouds to achieve precise tree counts and their approximate locations. 
+These locations then enabled cylindrical segmentation of the point clouds at the trunk level, facilitating diameter 
+measurement. Secondly, stem diameters were directly measured using the probability density function of the chi-
+square distribution. This process produced precise stem diameters, trunk positions, and growth directions, which 
+were subsequently used to determine the center of the crown top for tree height extraction. Lastly, the tree height 
+was estimated based on the pseudo-waveforms. We validated this framework by acquiring ultra-high-density UAV-
+LiDAR data in an Eucalyptus plantation.
+Results  The result indicated a precision of 91.1% for individual tree detection, with an F-score of 0.916. The root mean 
+square errors (RMSEs) for direct measurements of diameter at breast height (DBH) and tree height were 14.60% (2.18 
+cm) and 2.69% (0.31 m), respectively. Furthermore, this study suggested that the classical circle-fitting method might 
+not be suitable for directly measuring tree diameter using low-cost UAV-LiDAR data.
+Conclusion  The proposed framework facilitates automated inventory and monitoring in Eucalyptus plantation for-
+ests. However, more trials are needed to verify the framework’s applicability in other planted and natural forests.
+Handling editor: Shengli Tao.
+*Correspondence:
+Chungan Li
+chungan@gxu.edu.cn
+Full list of author information is available at the end of the article
+
+
+Page 2 of 22
+Zhou et al. Annals of Forest Science           (2025) 82:20 
+Keywords  Individual tree detection, Tree count and position, Stem diameter, Tree height, Chi-square distribution, 
+Pseudo-waveforms
+1  Introduction
+Since the beginning of the century, airborne LiDAR 
+technology has emerged as a practical tool for for-
+est inventories at various scales, from forest stands to 
+local to national levels (Næsset et  al. 2004; Maltamo 
+and Packalen 2014; White et  al. 2017; Li et  al. 2023). 
+Regional airborne LiDAR forest inventories typically 
+adopt the area-based approach (ABA). This two-stage 
+procedure comprehensively maps forest attributes, such 
+as mean diameter at breast height (DBH), mean height, 
+basal area, stand volume, and above-ground biomass 
+(Næsset and Bjerknes 2001; Næsset 2002). Since the 
+pioneering application in 2010 (Jaakkola et  al. 2010), 
+UAV-LiDAR has rapidly gained popularity as an appeal-
+ing alternative to airborne LiDAR due to its ease of 
+deployment, flexible sensor configurations, high tem-
+poral and spatial resolution, adaptable and reproducible 
+data acquisition, and cost-efficiency (Kukkonen et  al. 
+2022). As a result, UAV-LiDAR is widely employed for 
+local-scale forest management inventory and monitor-
+ing (Dainelli et al. 2021). Its low altitude and slow flight 
+speed enable UAV-LiDAR to generate high-density 
+point clouds, effectively penetrating the forest canopy 
+and capturing comprehensive information across the 
+vertical profile. Consequently, this improves the accu-
+racy of estimating structural forest attributes (Dalla 
+Corte et  al. 2020). Besides utilizing the conventional 
+ABA for forest attribute estimation (López-Amoedo 
+et al. 2023; Maesano et al. 2022; d’Oliveira et al. 2020), 
+UAV-LiDAR also facilitates precise extraction of forest 
+tree specifics, encompassing tree count, location, and 
+attributes. These attributes are achieved through indi-
+vidual tree segmentation (ITS) techniques, allowing for 
+the accurate measurements of diameter, tree height, 
+crown-based height, crown area, canopy volume, stem 
+volume, and biomass (Zhang et al. 2022a; Krůček et al. 
+2020). Furthermore, UAV-LiDAR can derive the stand 
+volume and biomass by utilizing estimated taper curves 
+(Liang et  al. 2019; Hyyppä et  al. 2020b) or allomet-
+ric equations (Lin et  al. 2023), therefore replacing the 
+field plot measurements in regional airborne LiDAR 
+applications (Xiang et al. 2024). UAV-LiDAR also offers 
+additional capabilities, such as reconstructing tree 
+branching structures (Cárdenas et al. 2022), determin-
+ing growth direction (Neuville et al. 2021), and aiding in 
+the classification of forest types and species (Scheeres 
+et al. 2023; McGaughey et al. 2024; Hakula et al. 2023). 
+The ABA primarily captures a group of mean forest 
+attributes within a grid. However, the individual tree 
+approach provides detailed information about trees, 
+which is crucial for understanding the forest ecosystem 
+structure and function comprehensively and precisely 
+(Guo et al. 2020). This information also benefits preci-
+sion forestry management (Fu et al. 2024).
+This paper primarily focuses on extracting individual 
+tree attributes using low-cost UAV-LiDAR technology 
+in Eucalyptus plantation forests. These forests repre-
+sent the vastest expanse of planted broad-leaved forests 
+worldwide, with eucalyptus trees being cultivated in over 
+100 countries across six continents, covering an area 
+exceeding 20 million hectares (Hua et  al. 2022; Zheng 
+and Wang 2021). As such, investigating the automatic 
+acquisition of parameters related to eucalyptus planta-
+tion forests is immensely importance for precision for-
+estry. The low-cost UAV-LiDAR system is comparable 
+to the survey-grade UAV-LiDAR system, exemplified 
+by the Riegl VUX- 1 laser scanner (Riegl Laser Meas-
+urement System GmbH, Horm, Austria), which is char-
+acterized by its range-accuracy of 1 cm (Li et al. 2019; 
+Kuželka et al. 2020). Although the range accuracy of low-
+cost UAV-LiDAR systems is not as high as survey-grade 
+UAV-LiDAR systems, they are less expensive, making 
+them widely affordable in practical forest management 
+applications. This study includes three key facets: deter-
+mining the tree count and their locations and measuring 
+their diameters and heights. Determining tree count and 
+position relies on individual tree detection (ITD), also 
+called ITS (Pu et al. 2023). Numerous studies have been 
+focused on ITD or ITS, resulting in numerous detection 
+methods. These methods are further classified into two 
+groups: individual tree crown (ITC) detection, which 
+segments trees by identifying gaps between neighboring 
+crowns (Deng et  al. 2024), and trunk detection, which 
+emphasizes the isolation of tree trunks. Tree crown 
+detection techniques can be further classified into ras-
+ter-based and point cloud-based approaches (Soininen 
+et al. 2022). Classical algorithms include the watershed 
+and its variants, graph-cut segmentation (Strîmbu and 
+Strîmbu 2015), and fishing net dragging simulations 
+(Liu et  al. 2015). Although raster-based methods have 
+advantages in computational efficiency and detection of 
+dominant trees, they lose 3D information during rasteri-
+zation and may miss smaller trees beneath the canopy 
+(Jeronimo et  al. 2018). In contrast, point cloud-based 
+methods directly segment individual trees from voxel 
+or point cloud spaces (Deng et al. 2024), assuming that 
+
+
+Page 3 of 22
+Zhou et al. Annals of Forest Science           (2025) 82:20 
+	
+the canopy center exhibits a higher point cloud density 
+(Mongus and Žalik 2015). Segmentation techniques 
+are mainly clustering algorithms, such as region grow-
+ing (Li et al. 2012; Torresan et al. 2020), layer-stacking 
+(Ayrey et al. 2017), K-means (Gupta et al. 2010), mean-
+shift (Xiao et al. 2019), normalized cut (Yan et al. 2018), 
+and density-based spatial clustering of applications with 
+noise (DBSCAN) (Neuville et  al. 2021). Deep learning 
+networks have recently gained much attention in ITS. 
+These algorithms include YOLO (Sun et al. 2022; Straker 
+et al. 2023), ForAINet (Xiang et al. 2024), and PointNet + 
++ (Kim et al. 2023). Although point cloud-based segmen-
+tation demands much computational resources, it often 
+achieves higher accuracy. However, it is easy to produce 
+omissions and commission errors when the crowns are 
+squeezed against each other and the shape of the crowns 
+is irregular. Trunk detection also utilizes 3D point clouds 
+to detect individual trees. However, it focuses only on 
+a specific height interval (the trunk layers). The signifi-
+cant algorithms currently in use include DBSCAN, ran-
+dom sample consistency (RANSAC) (Deng et al. 2024), 
+Hough transform, robust least trimmed squares (RLTS), 
+supervised individual-tree squares (RLTS) (Kuželka et al. 
+2020), and graph-cut clustering (Williams et  al. 2020; 
+Dersch et  al. 2021). Due to the distinct clustering of 
+point clouds, trunk detection tends to be more accurate. 
+However, it needs a high point cloud density. To improve 
+detection accuracy and computational effectiveness, we 
+need to improve existing algorithms and develop new 
+ones adapted for various forest scenarios, especially for 
+complex ones, such as natural forests and planted forests 
+with rich understory vegetation.
+DBH and height are the critical individual tree attrib-
+utes. The primary method for direct measurements of 
+individual tree DBH using UAV-LiDAR data relied on 
+a circle-fitting algorithm grounded in the geometry of 
+the point cloud distribution. This approach involved 
+fitting the circles or cylinders of LiDAR point clouds 
+at horizontal trunk sections (“slices” or “bins”), such 
+as cylinders encompassing trunk heights of 1.2–1.4 
+m (Brede et al. 2017), as described by Kukkonen et al. 
+(2022). For a long time, the circle-fitting technique for 
+measuring tree diameters has been implemented in ter-
+restrial laser scanning (TLS) (Maas et  al. 2008). TLS 
+has a high density, high positional accuracy of point 
+clouds, and a near-circular or arc-shaped distribution 
+of laser points on the trunk (Liu et al. 2018). Therefore, 
+its direct measurement of diameters is usually very 
+accurate (Lee and Lee 2024). For UAV-LiDAR, espe-
+cially for low-cost LiDAR, direct diameter measure-
+ment is difficult to achieve the desired accuracy due to 
+the sparse point clouds of tree trunks (Neuville et  al. 
+2021) and limited precision in point cloud position-
+ing (Lin et al. 2021). Although some studies employed 
+principal component analysis (PCA) for directly meas-
+uring tree diameters, their results were slightly worse 
+than those of the circle-fitting methods (Jaakkola et al. 
+2017). Therefore, we must explore innovative algo-
+rithms to enhance the accuracy of directly measuring 
+diameters. Analyzing the probability distribution of 
+the point clouds surrounding the trunk might help us 
+develop new diameter measurement methods. On the 
+other hand, direct UAV-LiDAR measurements of tree 
+height are both straightforward and precise. The pri-
+mary method entails calculating tree height by measur-
+ing the distance from the topmost point of the crown 
+to the ground, which is accomplished through the 
+techniques of individual tree detection and segmenta-
+tion. Both CHM (Lin et al. 2021; Picos et al. 2020; Ganz 
+et  al. 2019) and 3D point clouds (Dalla Corte et  al. 
+2020; Krůček et al. 2020; Hyyppä et al. 2020b) could be 
+utilized for extracting tree height. However, maintain-
+ing consistency between the tree heights extracted by 
+CHM or 3Dpoint clouds and those obtained through 
+field measurements remains a significant challenge. 
+Despite the exceptional data quality of survey-grade 
+UAV-LiDAR, its high cost (Hu et  al. 2021) often 
+exceeds its practicality for forest resource applications 
+(Wallace et  al. 2012). Therefore, exploring the utiliza-
+tion of low-cost UAV-LiDAR data to extract individual 
+tree attributes for “automated forest inventory” (Xiang 
+et  al. 2024) or “autonomous forest field investigation” 
+(Jaakkola et al. 2017) remains a critical research focus 
+in the academic community.
+The primary goal of this paper was to automatically 
+extract individual tree attributes, encompassing tree 
+count and position, stem diameter, and height, using 
+low-cost UAV-LiDAR technology. To fulfill this goal, 
+UAV-LiDAR and ground-truth data were collected 
+in an Eucalyptus plantation. The specific objectives 
+encompassed: (1) developing a methodology to deter-
+mine the number and location of forest trees using 3D 
+point clouds based on the HBDSCAN algorithm; (2) 
+examining the statistical distribution of point clouds 
+on the trunks and proposing an innovative approach 
+for directly measuring stem diameter using 3D point 
+clouds based on the probability density function (PDF) 
+of the chi-square ( χ2 ) distribution; and (3) introduc-
+ing a pseudo-waveform-based approach to extract 
+tree height, yielding estimates that align closely with 
+field measurements. The authors hope to offer a novel 
+framework for automated forest inventory and moni-
+toring in forest plantations.
+
+
+Page 4 of 22
+Zhou et al. Annals of Forest Science           (2025) 82:20 
+2  Materials and methods
+2.1  Test site
+The study area encompasses an intensively managed 
+Eucalyptus urophylla S. T. Blake plantation, spanning 0.4 
+hectares and located within the state-operated Gaofeng 
+forest farm (Zhang et  al. 2019) in the center of the 
+Guangxi Zhuang Autonomous Region, southern China 
+(108°35′27″E, 22°59′59″N) (Fig. 1a, b, and c). This for-
+est is seven years old and is a second-rotation coppice 
+of fast-growing Eucalyptus plantations, established after 
+the original forest underwent clear-cutting in the spring 
+of 2015, with a 6–8-year rotation cycle. The initial plant-
+ing adhered to contour lines, maintaining a spacing of 
+approximately 2 × 3 m (1667 trees·ha−1). Significantly, all 
+trees within this forest were of the same age and exhib-
+ited uniform growth in diameter and height (Fig.  1d). 
+The terrain of the study area is characterized by hilly and 
+mountainous landscapes, with altitudes ranging from 
+174.6 to 234.3 m above sea level. Slopes range from 15° to 
+35°, with an average slope of 25°. The forest was abundant 
+in understory trees, herbaceous plants, climbing vines, 
+and stripped but not yet shed bark.
+2.2  Data collection
+On April 8, 2022, the LiDAR data acquisition mission 
+was conducted using the DJI Matrice 300 RTK UAV 
+system from Shenzhen Dajiang Innovation Technol-
+ogy Co. Ltd. (Shenzhen, China). The 6.3 kg quadcopter 
+UAV system is equipped with an Automatic Dependent 
+Surveillance-Broadcast (ADS-B) anti-collision system, 
+enabling it to achieve a positioning accuracy of 1.0–1.5 
+cm + 1 ppm through the real-time kinematic-global 
+navigation satellite system (RTK-GNSS). The M300 RTK 
+can be equipped with various sensors, including the DJI 
+Zenmuse P1 camera and the DJI Zenmuse L1 laser scan-
+ner for aerial surveys. The Zenmuse L1 integrates Livox 
+LiDAR modules, a high-precision IMU, and a 50-meg-
+apixel CMOS camera on a three-axis stabilized gimbal. It 
+boasts a range of 450 m with a field of view (FOV) of 70° 
+and can manage up to three echoes per laser emission. 
+In the repetitive scanning mode, the L1 sensor achieves a 
+point rate of up to 480,000 points per second. The system 
+attitude accuracy is 10 cm, while the altitude accuracy is 
+5 cm at a flight altitude 50 m above the ground. The laser 
+scanner’s distance measurement accuracy (RMS1σ) is 3 
+cm @ 100 m.
+During the data acquisition phase, the flight mode was 
+set to terrain-following, with a flight altitude maintained 
+50 m above the ground surface. The flight speed was set 
+at 5 m·s−1, and a strip overlap rate of 60% was employed 
+to ensure data redundancy. Mutually perpendicular 
+directions were used for repeated scanning to achieve 
+Fig. 1  Study site and forest stands. (a) Location of Guangxi in China; (b) location of study site in Guangxi; (c) CHM of the study site and the location 
+of the reference trees and the field-measure tree; (d) forest stand just before logging; and (e) the measurements of the felling tree at the time 
+of logging down
+
+
+Page 5 of 22
+Zhou et al. Annals of Forest Science           (2025) 82:20 
+	
+ultra-high-density point cloud data. The collected laser 
+point cloud data was preprocessed using TerraSolid soft-
+ware (Terrasolid, Helsinki, Finland). This preprocessing 
+included point cloud classification using the progressive 
+triangular irregular network (TIN) filtering algorithm, 
+and digital elevation model (DEM) production. The DEM 
+(0.5 m resolution) was then utilized to normalize the 
+laser point cloud elevation. The final mean point cloud 
+density achieved was 19,230 pts·m−2. The point cloud 
+density was further analyzed based on altitude ranges, 
+revealing 982 pts·m−2 below 1 m, 4388 pts·m−2 between 
+1 and 6 m, and 13,861 pts·m−2 above 6 m.
+There were 413 trees in the study site. On April 10, 2022, 
+the DBHs (1.3 m above ground) of the 33 trees with DBH 
+≥ 5 cm were measured using a steel tape, and the stem 
+coordinates were obtained using the network RTK-GNSS 
+of Hi-Target D8pro (Hi-Target Satellite Navigation Tech-
+nology Co. Ltd. Guangzhou, China) based on the Qianxun 
+continuously operating reference station (CORS) net-
+work, with a horizontal positioning accuracy of ± 8 mm. 
+Two days later, as the forests were cleared cut, the diame-
+ters of the felled reference trees at 2, 4, 6 m, … were meas-
+ured one by one, and their total lengths (heights) were 
+measured using a tape measure on the trunk (Fig. 1e). The 
+individual stem volume (VOL) was calculated using the 
+following allometric equation (Zhang et al. 2022b).
+where DBH is the diameter at breast height, H is the tree 
+height. The mean DBH, height, and stem volume of the 
+33 field-measured reference trees were 15.19 ± 2.10 cm, 
+19.75 ± 1.46 m, and 0.1708 ± 0.0479 ­m3, respectively.
+2.3  Methodology for extracting individual tree attributes
+The procedure for extracting individual tree attributes 
+using ultra-high-density point clouds comprised three 
+distinct yet interrelated steps:
+•	 Determination of tree count and stem location. The 
+first step involved identifying the number of trees 
+within the stand and locating the center of the stem 
+base. This step was achieved through trunk detection 
+based on the HDBSCAN algorithm (Neuville et  al. 
+2021), enabling the calculation of the total tree count 
+and the approximate coordinates of the stem centers 
+at 2 m above ground level.
+•	 DBH measurement. This step involved cylindrical 
+clipping point clouds of the trunk, directly measur-
+ing tree diameters, and extracting the precise coor-
+dinates of the trunk’s center by filtering point clouds 
+using the PDF of χ2 -distribution. This step also 
+(1)
+VOL = 4.354 × 10−5DBH1.71874H1.1927
+obtained the DBH and its center position, the diam-
+eter, and center position at a tree height of 7 m.
+•	 Estimation of tree height. The final step involved calculat-
+ing the center of the crown top based on the coordinates 
+of the stem centers at heights of 1.3 m and 7.0 m and the 
+canopy height model (CHM). With the cylindrical seg-
+mentation of the crown’s point clouds, this step finally 
+extracted the tree height based on pseudo-waveforms.
+The entire procedure of individual tree attribute extrac-
+tion is illustrated in Fig. 2.
+In this paper, individual tree attributes were extracted 
+fully automatically, without manual intervention. All 
+codes for the process were written in Python (Python 
+Software Foundation, Python version 3.8).
+2.3.1  Tree stem detection
+Identifying trees’ quantity and approximate locations is 
+pivotal in extracting individual tree attributes. Our study 
+employed the HDBSCAN algorithm for trunk detection, 
+aiming to determine the tree count and their positions. 
+The methodology entails the following steps:
+(1)	 Segmentation of point clouds of the trunk layer. The 
+understory canopy and tree foliage exert a significant 
+impact on trunk detection. After repeated trials, the 
+normalized point clouds with 2–4 m height were 
+cropped and utilized for trunk detection to minimize 
+these effects.
+(2)	 HDBSCAN clustering. The HDBSCAN algo-
+rithm was used to cluster the point clouds of 
+four height slices, i.e. 2–2.5 m, 2.5–3 m, 3–3.5 
+m, and 3.5–4 m, at the trunk layer to obtain clus-
+ters of the point clouds, respectively. Labels 
+were then assigned to each cluster, denoted as 
+Ch
+i (h = 1, 2, · · · , 4; i = 1, 2, · · · , n) , where h is the 
+number of height slices, and n is the total number 
+of clusters. The results of this clustering for trunk 
+detection were of utmost importance.
+(3)	 Noise filtering and trunk diameter extraction. For 
+the point clouds of each cluster, the PDF of χ2 
+-distribution was employed to effectively filter out 
+noises and calculate the approximate diameter 
+( Dh
+i , h = 1, 2, · · · , 4, i = 1, 2, · · · , n ) of the tree 
+trunk and its geometric central coordinates ( xh
+0i, yh
+0i ) 
+for each height slice. The detailed methodologies 
+for these processes are outlined in Sect. 2.3.2.
+(4)	 Cluster matching. If the point cloud density is high 
+enough, there will always be a large number of con-
+tinuously distributed point clouds in the vertical 
+direction of the tree stem. Consequently, the trunk 
+center coordinates ( x1
+i , y1
+i ) of the cluster within first 
+height slice were utilized as a reference to systemati-
+
+
+Page 6 of 22
+Zhou et al. Annals of Forest Science           (2025) 82:20 
+cally assign each cluster of the remaining height 
+slices according to the following criteria: For the i 
+cluster of the first height slice, if the distance 
+( d(1i, kj) ) between the center horizontal-plane 
+coordinates ( xk
+j , yk
+j ) of the j cluster of the k height 
+slice and ( x1
+i , y1
+i ) was less than 50 cm (depending on 
+the lean of the stem and the structure of understory 
+vegetation, e.g., the more understory vegetation, the 
+greater the distance), i.e. d(1i, kj) =
+(x1
+i −xk
+j )2 + (y1
+i −yk
+j )2 ≤50 
+cm, it was concluded that cluster Ck
+j  belongs to the 
+same trunk as cluster C1
+i  . Once all clusters across all 
+height slices had been analyzed, all point cloud clus-
+ters could be matched, indicating the completion of 
+trunk isolation. Clusters absent in the first height 
+slice but present in others were deemed non-stem 
+clusters and excluded from further steps.
+(5)	 Tree stem determination and isolation. For a given 
+trunk, if two of the four height slices had a diameter 
+greater than 5 cm and less than 35 cm (depending 
+on the lean of the stem and the structure of under-
+story vegetation), the trunk was determined to be a 
+tree stem. Otherwise, the trunk was not a tree stem 
+but might be the canopy of undergrowth vegetation 
+or a climbing vine.
+(6)	 Determination of the approximate horizontal-plane 
+center of tree stem. For the cluster belonging to the 
+tree stem, the remaining point clouds after filtering 
+by the PDF ofχ2 -distribution in the first height slice 
+Fig. 2  A flowchart depicting the procedures for extracting individual tree attributes using UAV-LiDAR data. Dx: diameters at height-intervals 
+of 2–2.5 m, 2.5–3 m, or 1.3 ± 0.25 m, 2.0 ± 0.25 m, 3.0 ± 0.25 m, etc
+
+
+Page 7 of 22
+Zhou et al. Annals of Forest Science           (2025) 82:20 
+	
+was used to calculate the approximate horizontal-
+plane center of the tree stem ( x1,i
+0 , y1,i
+0 ).
+2.3.2  Direct measurement of tree diameters
+A buffer zone, whose radius is 0.25 m but may vary based 
+on factors such as the diameter distribution of trees 
+and the density of understory vegetation (for instance, 
+a denser understory may necessitate a smaller radius), 
+was delineated around the base horizontal-plane center 
+of the tree, as determined in Sect. 2.3.1. This buffer zone 
+was then utilized to perform a cylindrical clipping of the 
+tree trunk’s point clouds. When extracting a tree trunk’s 
+diameter at a specific height, a ± 0.25-m (depending on 
+the point cloud density, the higher the point cloud den-
+sity; the smaller the height interval) point cloud segment 
+centered on that height was clipped. Figure 3a illustrates 
+the point cloud clipping for DBH extraction.
+The inertial measurement unit (IMU), global navi-
+gation satellite system (GNSS), and laser sensors 
+employed in this study were of non-survey-grade qual-
+ity, resulting in less-than-optimal spatial positional 
+accuracy with horizontal positional errors approxi-
+mately measuring 10 cm (Stroner et al. 2023). Conse-
+quently, the distribution of laser point clouds within 
+the trunk cross-section displayed a nearly solid circu-
+lar pattern accompanied by overlap (Fig.  3b). We cal-
+culated the horizontal plane center of the point clouds 
+inside the cylinder and the distance of each point 
+cloud from that center. Following this, we segmented 
+the distance from the trunk’s center to the outermost 
+point cloud (representing the maximum distance) into 
+50 equal intervals (depending on the number of point 
+clouds in the tree trunk, the larger the number of point 
+clouds, the larger the number of distance intervals). 
+We then computed the frequency of the point clouds 
+within each interval to produce a distance-frequency 
+histogram illustrating the point cloud distribution, as 
+shown in Fig. 3c.
+Since tree trunks do not allow for penetration of laser 
+point clouds, their position errors were random. It is 
+assumed that the trunk’s point clouds follow a normal 
+distribution centered on the bark. When the trunk’s 
+radius exceeds the point cloud’s error, we postulate that 
+the laser plus hitting and echoing from the trunk in a 
+particular direction obeys a normal distribution cen-
+tered on the bark. Furthermore, we hypothesize that 
+the distance-frequency histogram of the point clouds 
+(Fig.  3c) follows a χ2 -distribution with v degrees of 
+freedom, denoted as X ~ 2(v). Consequently, in this 
+study, the PDF of χ2 -distribution was employed to 
+model the distance-frequency histogram of the trunk’s 
+point clouds, and the trunk diameter was determined 
+after eliminating all anomalous data at a threshold of 
+α = 0.05. The direct measurement of tree diameters 
+was conducted on a per-tree basis. The methodological 
+steps for the direct measurement of DBH are described 
+in detail below. This procedure also measures diameters 
+at other heights (e.g., 1.8 m, 2.0 m, 3 m).
+(1)	 Cylindrical segmenting point clouds on the trunk. 
+Firstly, a buffer zone with a radius of 0.50 m was 
+generated based on the center of the tree trunk 
+obtained in Sect. 2.3.1. Then, a cylinder with a radius 
+of 0.5 m and a height of 0.5 m (1.3 m ± 0.25 m) was 
+utilized to segment the point clouds at 1.3 m of 
+Fig. 3  3D trunk’s point clouds and their distribution. Cylindrical segmentation of the trunk’s point clouds (a). Their distribution in the trunk’s 
+cross-section (b). Their 2D distance-frequency histograms (c). The blue dashed circles and vertical lines in (b) and (c) are the simulated positions 
+of the trunk and bark based on field-measurements, respectively
+
+
+Page 8 of 22
+Zhou et al. Annals of Forest Science           (2025) 82:20 
+trunk height (Fig. 3a). These point clouds were used 
+to measure the DBH of the trees.
+(2)	 Calculating the coordinates ( x0, y0 ) of the plane 
+geometry center of the point clouds on the trunk: 
+x0 = 1
+N
+N
+i=1
+xi , y0 = 1
+N
+N
+i=1
+yi , where xi and yi is the 
+horizontal-plane coordinates of point clouds, N is 
+the total number of point clouds.
+(3)	 Calculating the distances ( d(i) ) between point 
+clouds and the geometric center of the trunk: 
+d(i) =
+
+(xi −x0)2 + (yi −y0)2 , and their maxi-
+mum distance is dmax , dmax = max
+i∈N (d(i)).
+(4)	 Calculating the distance-frequency histogram. 
+The interval [0, dmax ] was divided into 50 uniform 
+intervals, and the relative frequency ( f (di) ) of the 
+point clouds of each interval was calculated by the 
+ratio of the point clouds present in a specific inter-
+val to the total number of point clouds. Specifically, 
+f (di) = n(di)
+
+N represents the relative frequency, 
+where n(di) is the count of point clouds within the 
+i distance interval, N is the total number of point 
+clouds. Based on these calculations, a distance-fre-
+quency histogram was generated (Fig. 3c).
+(5)	 Noise filtering. The distance-frequency histogram 
+was fitted using the χ2 -distribution, resulting in a 
+PDF, 
+f (x) , 
+which 
+was 
+given 
+by 
+f (x) =
+
+
+
+
+
+
+
+1
+2v/2Ŵ(v/2) x
+v
+2 −1e−x/2, x > 0
+0, x ≤0
+ , where x is the distance, v 
+is the degree of freedom, and Γ is the gamma func-
+tion. To remove anomalous data (noise), a threshold 
+of α = 0.05 was employed.
+(6)	 Repeated steps (2)–(5) until no anomalous data 
+were removed.
+(7)	 Extraction of trunk diameter. After thoroughly 
+removing all anomalous data, the distance asso-
+ciated with the peak probability density value 
+was defined as the radius ( R ) of tree trunk, e.g., 
+R = x, x ∈max f (x) . Subsequently, the DBH was 
+yielded, calculated as DBH = 2R.
+In extracting tree diameters, abnormal diameter esti-
+mates (too large or too small) often arose due to the influ-
+ence of branch, understory and herbaceous canopies, 
+climbing vines, and barks that have been stripped but 
+has not yet shed (this is common in eucalyptus forests). 
+Based on statistics from 192 field plots of Eucalyptus for-
+ests with an average height of at least 15.0 m in Guangxi, 
+it was found that only 3.5% of the trees had a diameter of 
+20 cm or more (Zhang et al. 2022b). Therefore, the sub-
+sequent rule for determining the tree trunk diameter was 
+formulated as follows:
+(1)	 The threshold for individual tree diameter was 
+established between 5 and 20 cm. If the initially 
+measured diameter fell outside this range, we 
+moved 0.5 m upward from the designated trunk 
+height (for example, we moved up from 1.3 m to 
+1.8 m), re-segmented the point clouds, and meas-
+ured the diameter again. If the newly acquired 
+diameter fell within the diameter threshold range, 
+it should supersede the previous measurement. On 
+the contrary, if the new diameter remained outside 
+the diameter threshold range, it descended 0.5 m 
+from the original trunk height (for example, moved 
+down from 1.3 m to 0.8 m), re-segmented the point 
+clouds, and conducted another diameter measure-
+ment.
+(2)	 Repeat the procedure of upward-downward 
+movement, maintaining a height interval of 0.5 
+m for each movement, to re-segment the point 
+clouds and re-extract the tree diameters. If none 
+of the tree diameters within the range of specified 
+height ± 1.0 m (example: 1.3–1.0–1.3 + 1.0 m.) 
+fell within the diameter threshold range, the tree 
+diameter was replaced by the average diameter of 
+all the trees.
+Utilizing point clouds without noises, we com-
+puted the geometric centers, ( x1.3
+0 , y1.3
+0  ) and ( x7
+0, y7
+0 ), 
+for the cross-sections at stem heights of 1.3 m and 7.0 
+m, respectively. These centers determined the tree’s 
+growth direction and the crown’s apex (shown in 
+Sect.  2.3.3). Although we could derive the centers of 
+trunks of different heights, we chose to use ( x1.3
+0 , y1.3
+0  ) 
+as the trunk’s centroid in this study to align with meth-
+odologies employed in other research. Owing to the 
+impact of the understory vegetation, a small number 
+of trees might exist wherein all measured trunk diame-
+ters exceeded the maximum diameter threshold within 
+the specific height intervals of 0.8–2.3 m and 6.0–8.0 
+m. For these particular trees, we utilized noise-filtered 
+point clouds, aligning with their most minor diameter, 
+to determine the geometric centers of the trunks at the 
+heights of 1.3 m and 7.0 m.
+In addition to extracting tree diameters using the meth-
+ods above, we employed a classic circle-fitting method 
+to extract the DBH to evaluate its suitability for directly 
+measuring tree diameter using low-cost UAV-LiDAR 
+point clouds.
+2.3.3  Tree height and stem volume estimations
+Pinpointing the crown top is crucial to measuring 
+tree heights accurately. Since Eucalyptus trees have 
+
+
+Page 9 of 22
+Zhou et al. Annals of Forest Science           (2025) 82:20 
+	
+tall, slender stems that are often slightly angled rather 
+than perfectly perpendicular to the ground, especially 
+those located at the edge of the stand (Fig. 1d and e), 
+the task becomes more challenging. Based on the stem 
+centers measured at heights of 1.3 m and 7.0 m, along 
+with the CHM, we calculated the plane coordinates of 
+the crown’s apex. Following this, the crown was seg-
+mented. We utilized pseudo-waveforms (Muss et  al. 
+2011) to estimate tree heights, minimize the impact 
+of elevated objects like birds or sporadically distrib-
+uted point clouds hovering above the canopy, and be 
+consistent with field measurements. The extraction of 
+individual tree heights involved several steps, as out-
+lined below:
+(1)	 Calculating the plane coordinates of the canopy top. 
+The planar coordinates of the canopy top were cal-
+culated by the following methods and steps.
+•	For tree −→
+oA , according to Sect.  2.3.2, the coor-
+dinates of the center of its stem at 1.3 m (a) and 
+7.0 m (b) in 3D space are ( x1.3, y1.3, z1.3 ) and 
+( x7, y7, z7 ), where: z1.3 = 1.3 , z7 = 7 (Fig.  4). The 
+coordinate origin point o is at the tree’s base, 
+which central coordinates at (x0, y0, z0) , where: 
+x0 = x1.3 + (x7 −x1.3) × 5.7
+1.3 , y0 = y1.3 + (y7 −y1.3) × 5.7
+1.3 , 
+z0 = 0.
+•	Let −→
+oA projects onto the xoy plane as −→
+oB , and the 
+angle between −→
+oB and the xoy plane is β, then,
+•	Let α be the angle in plane zoB, then,
+•	Suppose in CHM, the projection of −→
+oA is −→
+o′A . 
+The coordinate of any pixel c in the direction of 
+−→
+o′A (determined by β) are ( xc, yc, zc ). Suppose the 
+angle ∠coB in the zoB plane is λ, then,
+•	A is the center at the top of the tree crown, and 
+its coordinate was ( xtop, ytop, ztop ). When λ = α, c 
+coincides with point A, meaning c is the vertex of 
+the tree crown at −→
+oA . At this point, the z-value of 
+pixel c, ztop , can be read from CHM. Therefore, the 
+coordinates of A in the xoy plane are:
+(2)	 Let −→
+oA projects onto the xoy plane as −→
+oB , and the 
+angle between −→
+oB and the xoy plane is β, then,
+Let α be the angle in plane zoB, then,
+(2)
+β = arccos
+
+x7 −x1.3
+
+(x7 −x1.3)2 + (y7 −y1.3)2
+
+(3)
+β = arccos
+
+x7 −x1.3
+
+(x7 −x1.3)2 + (y7 −y1.3)2
+
+Fig. 4  Calculating the coordinates of the center of the crown top based on the coordinates of the tree stem at heights of 1.3 m and 7.0 m 
+and CHM. The black dotted ellipse centered on A illustrates the extent of crown segmentation (radius of 0.75 m)
+
+
+Page 10 of 22
+Zhou et al. Annals of Forest Science           (2025) 82:20 
+Suppose in CHM, the projection of −→
+oA is −→
+o′A . The coor-
+dinate of any pixel c in the direction of −→
+o′A (determined by 
+β) are ( xc, yc, zc ). Suppose the angle ∠coB in the zoB plane 
+is λ, then,
+A is the center at the top of the tree crown, and its 
+coordinate was ( xtop, ytop, ztop ). When λ = α, c coincides 
+with point A, meaning c is the vertex of the tree crown at 
+−→
+oA . At this point, the z-value of pixel c, ztop , can be read 
+from CHM. Therefore, the coordinates of A in the xoy 
+plane are:
+xtop = x1.3 + (ztop−z1.3)(x7−x1.3)
+ztop−z1.3
+ 
+, 
+ytop = y1.3 + (ztop−z1.3)(y7−y1.3)
+ztop−z1.3
+        (5).
+(2)	 Cylinder segmentation of the tree crown. A buffer 
+zone with a radius of 0.75 m (depending on the size 
+of the crown diameter and the density of the tree, 
+e.g., the greater the density of trees, the smaller the 
+radius.) was generated at the center of the crown 
+top ( xtop, ytop ) for cylindrical segmentation of the 
+individual tree crown to extract the point clouds of 
+the crown (Fig. 5a, c).
+(3)	 Calculating the height-relative frequency histo-
+gram. The point cloud data was divided into 100 
+height bins, spanning from the highest point to 
+(4)
+ = arccos
+
+(xc −x1.3)(x7 −x1.3) + (yc −y1.3)(y7 −y1.3)
+
+(xc −x1.3)2 + (yc −y1.3)2 + (zc −z1.3)2 ×
+
+(x7 −x1.3)2 + (y7 −y1.3)2
+
+(5)
+xtop = x1.3 + (ztop −z1.3)(x7 −x1.3)
+ztop −z1.3
+, ytop = y1.3 + (ztop −z1.3)(y7 −y1.3)
+ztop −z1.3
+the ground. The height of each bin is h max
+100  . Subse-
+quently, the frequency of the point clouds within 
+each height bin was calculated (also referred to as 
+the fractional cover, representing the proportion of 
+all point clouds contained in that bin). This process 
+resulted in the generation of height-relative fre-
+quency histograms for the point clouds (Fig. 5b, d).
+(4)	 Fitting the height-relative frequency histograms. A 
+univariate 
+ten-order 
+polynomial, 
+f (x) =
+10
+
+i=1
+ai−1x10−i+1 + k , where f (x) is the point 
+cloud frequency, x is the median height of the 
+height bins, ai(i = 1, 2, · · · , 10) is the model coeffi-
+cient, k is the constant, was used to fit the height-
+frequency 
+histogram 
+using 
+the 
+least-squares 
+method to obtain the pseudo-waveform of the 
+height-frequency histograms (Fig.  5b, d). f (x) is 
+continuous in the interval [0 + 1
+2 × h max
+100 , h max −1
+2 × h max
+100 ].
+(5)	 Identifying the convex and concave intervals. Cal-
+culate the second-order derivative f ′′(x) of f (x) . 
+Find all inflection points for f ′′(x) = 0 and add two 
+inflection points for x = 0 and x = h max . Divide 
+the f (x) into intervals based on the inflection 
+points. If in the interval [a, b], f ′′(x) > 0 , f (x) is 
+concave and the interval is concave; if in the inter-
+Fig. 5  Extraction of individual tree heights via pseudo-waveforms. (a) and (c) are 3D point clouds of individual tree crowns clipped 
+from cylinders, (a) is an upright tree, and (c) is an inclined tree. (b) and (d) are histograms of the height-frequency (coverage) of the point clouds 
+and pseudo-waveform fitted by an univariate ten-order polynomial, with the red dots being the extreme points of the highest convex intervals, 
+the height of which is the tree height
+
+
+Page 11 of 22
+Zhou et al. Annals of Forest Science           (2025) 82:20 
+	
+val [c, d], f ′′(x) < 0 , f (x) is convex and the interval 
+is convex. Using this method, we can divide f (x) 
+into a number of convex and concave intervals.
+(6)	 Finding the extreme points. In the concave interval 
+[a, b], if A = min f (x), x ∈[a, b] , A is a minimum, 
+and (A, x) is a minima point; in the convex interval 
+[c, d], if A = max f (x), x ∈[a, b] , B is a maximum 
+and (B, x) is a minima point.
+(7)	 Determining the tree height. For the convex inter-
+val where x ( x is the height of the tree) is largest, if 
+there is only one inflection point above the point of 
+maximal value, the x of that maximal point is the tree 
+height(Fig. 5b, d); if there are more than one inflection 
+point above the point of maximal value, there is a con-
+cave interval above it, and the x of the point of mini-
+mal value of the concave interval is the tree height.
+Using the coordinates of point o and point A (Fig. 4), 
+we could calculate the length of the leaning tree. Never-
+theless, to ensure consistency with ground-based meas-
+urements, the tree heights documented in this study were 
+exclusively calculated as vertical heights, discounting any 
+extra length resulting from the trees’ natural inclination.
+2.3.4  Approach evaluation
+Utilizing point clouds with a height of 1–5 m, we were able 
+to precisely identify the tree trunks of 413 reference trees 
+and their respective center positions individually in the 
+study site through visual interpretation within the Terra-
+Solid and ArcGIS Desktop environments, ultimately achiev-
+ing the reference dataset. Taking into account the noise level 
+present in the point clouds, the manually pinpointed trunk 
+locations were anticipated to be accurate to 3–5 cm, serv-
+ing as the ground truth for further analysis. If the distance 
+between the center of a detected tree A and a reference tree 
+B was found to be less than 0.5 m, A and B were consid-
+ered to be a match. In cases where tree B had two or more 
+potential matches, the tree with the shortest distance was 
+considered the valid match. Three key statistical parameters 
+were utilized to assess the performance of individual tree 
+detection algorithms, namely, “recall” (Re), representing the 
+detection rate of trees; “precision” (Pr), indicating the detec-
+tion accuracy of identified trees; and “F-score,” reflecting the 
+overall accuracy, encompassing both omissions and com-
+missions. These three measures were calculated as follows:
+(6)
+Re = TP
+
+(TP + FN)
+(7)
+Pr = TP
+
+(TP + FP)
+(8)
+F −score = 2 × Pr × Re
+Pr + Re
+where TP represents the matched trees, FN is the number 
+of trees are not detected (omission error), FP is the num-
+ber of trees wrongly detected (commission error). Fur-
+thermore, we calculated the plane differences between 
+the identified trunk locations and their corresponding 
+ground truth data. Subsequently, we reported the root-
+mean-square error (RMSE) and the mean distance to 
+measure the detection accuracy quantitatively.
+The extraction performance of DBH, tree height (H), 
+and stem volume (VOL) was thoroughly evaluated by 
+comparing UAV measurements or estimations with field 
+measurements, using mean error (bias) and RMSE as 
+metrics. Both absolute error (in cm/m/m3) and relative 
+error (%) were computed for bias and RMSE to facilitate 
+comparisons of detection performance with other stud-
+ies. These four statistics were defined as follows:
+where ˆyi is the UAV-derived attribute, yi is the field-
+measure reference attribute, y is the mean of yi , and n is 
+the number of trees.
+3  Results
+3.1  Accuracy of individual tree truck detection
+There were 413 reference trees in the study area, and 
+the algorithm detected 417 tree trunks across the entire 
+region. Specifically, of these 417 detected trees, 380 were 
+accurately identified. At the same time, 33 were over-
+looked (resulting in omission), and 37 were incorrectly 
+labeled (resulting in commission) (Fig. 6). The algorithm 
+achieved a recall rate of 92.0% for detecting individ-
+ual trees and a precision of 91.1%, leading to an overall 
+F-score of 0.916.
+By meticulously and carefully analyzing the missed 
+and wrongly detected trees using TerraSolid and Arc-
+GIS software, we found that several factors contributed 
+to these errors. These included (1) clusters of understory 
+crowns encircling the stems, understory canopies situ-
+ated at varying height intervals, climbing vines, proxim-
+ity to two budding trees, and significantly leaning trunks. 
+(9)
+bias = 1
+n
+n
+
+i=1
+(yi −ˆyi)
+(10)
+RMSE =
+
+
+
+1
+n
+n
+
+i=1
+(yi −ˆyi)2
+(11)
+bias(%) = bias
+y
+× 100
+(12)
+RMSE(%) = RMSE
+y
+× 100
+
+
+Page 12 of 22
+Zhou et al. Annals of Forest Science           (2025) 82:20 
+Collectively, these factors interfered with the point cloud 
+clustering process, leading to variations in the number of 
+clusters at different heights and the geometric positioning 
+of their centers. Consequently, this interference affected 
+the diameter extracted from the point clouds, which were 
+misclassified as non-tree elements and identified as the 
+primary cause of missed detections; (2) the main reason 
+for the incorrect detection of stems was the misidentifica-
+tion of understories or large branches as trees.
+Among the 33 field-measured reference trees, the 
+variations in the differences between the x and y coor-
+dinates of the detected and field-measured centers 
+spanned from − 22.6 to 8.0 cm and − 16.1 to 10.5 cm, 
+respectively. The average differences were − 0.140 cm 
+for the x-coordinate and − 0.052 cm for the y-coor-
+dinate. Furthermore, the RMSE was 15.3 cm for the 
+x-coordinate and 7.9 cm for the y-coordinate. The dis-
+tance between the detected and measured centers of 
+the trees ranged from 10.0 to 24.4 cm, with an aver-
+age of 16.9 ± 3.2 cm. It is crucial to note that the meas-
+ured center of the field-measured reference tree was 
+not precisely at the actual center but on the outer bark 
+and not measured at a similar location. After subtract-
+ing the individual trees’ radii from the above distances, 
+Fig. 6  Comparison of the trunk detection and reference dataset derived by the visual interpretation using 3D point clouds
+Fig. 7  Process of measuring trunk diameters directly from point clouds via the χ2-filtering method. (a) Changes in the PDF curve 
+of the 2-distribution during the iteration process. Specifically, the red point marks the location of the maximum probability density on this curve. 
+The corresponding x-coordinate (9.11) signifies the radius of the tree trunk. (b) Distribution of rejected and retained point clouds on the trunk’s 
+cross-section during iterations. The notation I- 1–1–5 refers to the point clouds rejected during iterations 1 through 5, while I- 0 represents 
+the retained point clouds. Additionally, the red circle depicts the circle drawn using the radius of the trunk, and the blue one is the circle drawn 
+using the field-measured diameter
+
+
+Page 13 of 22
+Zhou et al. Annals of Forest Science           (2025) 82:20 
+	
+the mean distance between the trees detected and field 
+measurement centers was 9.2 ± 3.4 cm.
+3.2  Accuracy of stem diameter measurement
+The distance-frequency of point clouds in the trunk’s 
+cross-section typically exhibits a χ2-distribution, charac-
+terized by 9 to 12 degrees of freedom. The fitting of the 
+PDF for the χ2-distribution and the subsequent removing 
+anomalous data was generally accomplished within 2 to 5 
+iterations (Fig. 7), with a maximum iteration of 29. Dur-
+ing the direct measurement of DBH for 33 field-meas-
+ured reference trees, 30 trees were successfully measured 
+at the standard height of 1.3 m, one at 1.8 m, another 
+at 2.3 m, and one tree could not be directly measured 
+within the height range of 0.8 m to 2.3 m. As a result, its 
+DBH was substituted using the mean value derived from 
+the direct measurements of the remaining 32 trees.
+Across all 33 field-measured reference trees, the mean 
+error (bias) of UAV-LiDAR DBH measurements was 
+2.04% (0.26 cm), and the RMSE was 14.60% (2.18 cm). 
+Notably, the accuracies of UAV-LiDAR diameters meas-
+ured at 2, 4, and 6 m of the trunk were significantly lower 
+than those of the UAV-LiDAR DBH, evident from the 
+substantially larger bias and RMSE compared to the latter 
+(Table 1).
+Scatter plots were computed for cross-validation pur-
+poses, contrasting the tree diameters obtained through 
+field measurement with those measured by UAV (Fig. 8). 
+While the UAV-LiDAR-derived DBHs were distributed 
+on both sides of the 1:1 line with residuals showing ran-
+dom dispersion, the deviations from this line were sub-
+stantial, indicating a less-than-satisfactory agreement 
+between UAV-LiDAR-derived DBH and field-measured 
+DBH (R2 = 0.37) (Fig. 8a). Furthermore, the UAV-LiDAR-
+derived diameters at heights of 2.0 m, 4.0 m, and 6.0 m 
+exhibited even more significant deviations from the 1:1 
+line, with an even poorer correlation between UAV-
+LiDAR-derived diameters and field-measured diameters 
+(R2 ranging from 0.17 to 0.26). Notably, most of these 
+points were positioned to the right of the 1:1 line, sug-
+gesting overestimation by the UAV-LiDAR measure-
+ments (Fig. 8b, c, and d).
+When measuring tree diameters using the circle-fitting 
+method, 28 of the 33 field-measured reference trees had 
+diameters greater than 20 cm, resulting in a significant 
+bias (Table 1 and Fig. 9).
+The bias and RMSE observed in the DBH measure-
+ments obtained using the circle-fitting method were 
+much larger than those extracted using the χ2-filtering 
+method, which were − 50.30% (− 7.64 cm) and 53.92% 
+(8.19 cm), respectively (Table  1). Such a large error is 
+unacceptable in practical application.
+After clipping the trunk point clouds with a cylinder 
+having a radius of 0.5 m and a height of 0.5 m, the num-
+ber of point clouds observed at various heights along the 
+tree stem exhibited minimal variation. Among the 33 
+field-measured reference trees, the coefficients of varia-
+tion for the point clouds counts at heights of 1.3, 2.0, 4.0, 
+Table 1  Bias and root-mean-square error (RMSE) are associated with UAV-diameter measurements at various tree heights, specifically 
+at 1.3 m (DBH), 2 m (D2 m), 4 m (D4 m), and 6 m (D6 m)
+Note: DBH (circle fitting) is the DBH measured with the circle fitting method; DBH, D2 m, D4 m, and D6 m are measured by χ2-filtering
+Statistics
+DBH (circle fitting)
+DBH
+D2 m
+D4 m
+D6 m
+Bias (%/cm)
+ − 50.30/− 7.64
+ − 1.70/− 0.26
+ − 15.67/− 2.21
+ − 16.058/− 2.05
+6.30/− 0.73
+RMSE (%/cm)
+53.92/8.19
+14.37/2.18
+23.16/3.27
+24.14/3.08
+26.99/3.12
+Fig. 8  UAV-LiDAR-derived diameters versus field-measured diameters at heights of 1.3 m (DBH), 2.0 m (D2 m), 4.0 m (D4 m), and 6.0 m (D6 m) of all 
+33 field-measured reference trees. The black dashed line indicates the 1:1 reference line
+
+
+Page 14 of 22
+Zhou et al. Annals of Forest Science           (2025) 82:20 
+and 6.0 m ranged from 0.09 to 0.75. Notably, the coeffi-
+cients of variation for approximately 70% of the trees fell 
+below 0.5. However, there was a considerable variation in 
+the number of point clouds among the different reference 
+trees. Specifically, at a height of 1.3 m, the point cloud 
+counts ranged from 197 to 2484 points, resulting in a 
+maximum difference of 13 times. Similarly, the maximum 
+difference at a height of 4.0 m also reached eight times.
+However, when limiting diameter measurements to a 
+trunk height of 1.3 ± 0.25 m, we found that the accuracy 
+of direct DBH measurements did not exhibit strong 
+correlation with either the number of point clouds in 
+the trunk (Fig.  10a) or the average distance between 
+these point clouds and the trunk’s center (Fig.  10b). 
+Furthermore, we also observed no strong correlation 
+between the accuracy of tree DBH measurement and 
+the mean distances among point clouds (Fig. 10c) or the 
+standard deviation of these distances (Fig. 10d). These 
+suggested that the accuracy of the diameter measure-
+ment was independent of the dispersion pattern of the 
+laser point clouds.
+Upon analyzing the distribution of point clouds within 
+the trunk’s cross-section, we observed that:
+When the point clouds were concentrated in a cir-
+cular pattern centered around the trunk’s center, 
+the direct DBH measurement was highly accurate 
+(Fig. 11a).
+Conversely, if the point cloud distribution was dif-
+fuse, the accuracy of the DBH measurement declined 
+(Fig. 11b).
+In extreme cases where the point clouds exhibited a 
+highly dispersed and multicentric distribution, the 
+accuracy of the DBH measurement was significantly 
+low (Fig. 11c).
+Fig. 9  Comparison of the circle-fitting and χ2-filtering methods for direct DBH measurement using point clouds. (a) Field-measured DBHs 
+versus UAV-LiDAR-derived DBHs using two methods of all field-measured reference trees; (b) DBHs obtained by two methods on a trunk’s 
+cross-section
+Fig. 10  Relationship between measurement errors of the DBH and the following point cloud statistics: (a) the number of point clouds in the trunk 
+cylinders; (b) the mean distances between the point clouds and the center of the trunk; (c) the mean distances among the point clouds; and (d) 
+the standard deviations of the mean distances
+
+
+Page 15 of 22
+Zhou et al. Annals of Forest Science           (2025) 82:20 
+	
+3.3  Accuracy of tree height estimations
+Out of the 33 field-measured reference trees, the biases 
+for tree height measurements using 3D point clouds 
+ranged from − 7.53 to 6.94%, equivalent to − 1.43 to 1.18 
+m, with a mean bias of − 0.01% (− 0.01 m) and an RMSE 
+of 2.69% (0.31 m). There were good agreements between 
+UAV-LiDAR-derived tree heights and field-measured 
+tree heights (R2 = 0.79), and their relationships were close 
+to the 1:1 line (Fig. 12a).
+Stem volume is often one of the critical outputs of 
+forest inventory. Utilizing the direct DBH and tree 
+height measurements, stem volumes (VOL) were cal-
+culated using Eq. (1). The estimation biases for UAV-
+derived VOL varied from − 35.8% to 55.3%, with a 
+mean bias of 5.00% and an RMSE of 25.09%. The UAV-
+LiDAR-derived VOL relationships deviated slightly 
+from the 1:1 line. However, the agreement between 
+the UAV-LiDAR-derived VOL and field-calculated 
+VOL was still better than that of the UAV-LiDAR-
+derived DBH and field-measured DBH (Figs.  12b 
+and 8a). The UAV-LiDAR-derived measurement 
+error for tree height was notably smaller than that of 
+DBH. Applying the principle of error propagation, 
+we hypothesized that the leading cause of estimation 
+inaccuracies in stem volume originated from errors in 
+DBH measurements.
+4  Discussion
+In this study, we introduced an innovative framework 
+for the automatic and direct extraction of individual 
+tree attributes, including tree number and location, 
+diameter, and height, utilizing low-cost UAV-LiDAR 
+point clouds. This framework employed HDBSCAN 
+algorithms to detect tree trunks and ascertain the 
+number of trees. Additionally, it utilized the probabil-
+ity density function of 2-distribution for filtering point 
+clouds to measure tree diameters and pinpoint tree 
+locations. Furthermore, the framework extracted tree 
+heights through pseudo-waveforms. Our results dem-
+onstrated that this framework offered an efficient solu-
+tion for automated plantation forest inventory. Notably, 
+to our best knowledge, this marked a pioneering effort 
+Fig. 11  Distribution pattern of point clouds and bias in direct DBH measurements
+Fig. 12  Scatter plots between the field measurement and UAV-derived individual tree height (a) and stem volume (b)
+
+
+Page 16 of 22
+Zhou et al. Annals of Forest Science           (2025) 82:20 
+where individual tree diameters were directly meas-
+ured using a 2-filtering method, and tree heights were 
+determined through pseudo-waveforms. This study also 
+demonstrated for the first time that the classical circle-
+fitting method was unsuitable for tree diameter meas-
+urement using low-cost UAV-LiDAR data.
+4.1  Crown detection versus tree trunk detection
+The accuracy of individual tree detection through top-
+down canopy segmentation was found to be limited, 
+primarily due to the significant overlap and complex 
+interlacing of the canopy (Yu et al. 2024; Yan et al. 2024; 
+Zhang et  al. 2022a; Liu et  al. 2023; Xiang et  al. 2024). 
+Given that tree trunks are distinctly separated, bottom-
+up trunk detection and segmentation techniques emerge 
+as a feasible approach to overcome the difficulties associ-
+ated with canopy segmentation. The stem or trunk detec-
+tion approach significantly enhances detection accuracy 
+in scenarios where point cloud density is substantial. For 
+instance, Neuville et al. (2021) employed the HDBSCAN 
+algorithm to detect tree trunks, achieving an F-score of 
+0.89 under leaf-off conditions. Similarly, Lin et al. (2021) 
+introduced a bottom-up approach for individual tree 
+localization and segmentation, leveraging 2D peak detec-
+tion and Voronoi diagrams. This method proved effective 
+under deciduous and partially deciduous cover, achiev-
+ing overall single tree detection accuracies of 0.98 and 
+0.88, respectively, with point densities of 5500 and 4500 
+pts·m−2 (at the 75 th percentile) in broad-leaved forests 
+with a tree density of 5 × 2.5 m. Remarkably, even with 
+moderate point cloud densities ranging from 400 to 1264 
+pts·m−2, Deng et al. (2024) achieved excellent segmenta-
+tion results (F-score of 0.92 to 1.00) for detecting Euca-
+lyptus young forests of 1, 2, and 4 years old. In recent 
+years, deep learning algorithms such as PointNet, CNN, 
+YOLO, and ForAINet have emerged as focal points for 
+LiDAR-based individual tree segmentation (Kim et  al. 
+2023; Sun et  al. 2023; Xiang et  al. 2024; Straker et  al. 
+2023). Hence, there is an urgent requirement for future 
+research to confirm the effectiveness of these algorithms 
+in detecting trunks within Eucalyptus plantations.
+One of the most significant challenges in trunk detec-
+tion is minimizing the interference caused by foliage and 
+understory vegetation. Considering the biological traits 
+of tree species and the forest structure, rationally deter-
+mining the height interval of point cloud segmenting in 
+the trunk layer is an important measure to mitigate the 
+above impacts. Thanks to the algorithm we developed, 
+we could quickly perform trunk segmentation experi-
+ments with various height slices in this study. Ultimately, 
+our finding revealed that point clouds with a height 
+interval of 2–4 m were optimal for trunk detection. The 
+results indicated that the height interval for trunk layer 
+segmentation was not fixed and must be determined 
+based on the specific forest structural contexts.
+The diameter of the understory vegetation canopy is 
+usually more significant than the diameter of the forest 
+trees. Therefore, to minimize these effects, we employed 
+a technique involving the extraction of trunk diameters 
+from trunk slices, followed by determining the stem 
+based on these measurements. By leveraging the HDB-
+SCAN algorithm for point cloud clustering at the trunk 
+level, our study successfully achieved accurate individual 
+tree detection through this methodology. The detection 
+precision reached 91.1%, with an accompanying F-score 
+of 0.916. Taking into account the density of forest trees 
+and the structural features of the understory vegetation 
+within the study area, we deem this level of accuracy as 
+satisfactory and sufficient to meet the demands of pre-
+cise forestry management. Furthermore, Kukkonen 
+et  al. (2022) further assert that integrating segmented 
+tree trunks and crowns enhances individual tree detec-
+tion’s precision and guides future research in a promising 
+direction.
+4.2  Statistical distribution of point clouds and direct tree 
+diameter measurement
+For survey-grade laser scanners encompassing terrestrial, 
+mobile, and UAV-based systems, the laser point clouds 
+that reflects from a tree trunk exhibits a hollow circle or 
+circular arc when projected onto the (x, y) plane, as noted 
+by Čerňava et al. (2019). Consequently, the current prac-
+tice of directly measuring tree diameters with LiDAR data 
+often involves utilizing a sample circle-fitting method and 
+its evolutionary approach (Xiang et al. 2024; Brede et al. 
+2017). Despite the advancements in UAV-LiDAR technol-
+ogy, the direct measurement of individual tree diameters 
+using this data still needs the desired level of accuracy, 
+regardless of whether it involves survey-grade or low-
+cost scanners. In their respective studies, Brede et  al. 
+(2017) and Xiang et  al. (2024) employed survey-grade 
+scanners to measure tree DBH directly, achieving RMSEs 
+of 4.24 cm (at a point cloud density of 140 pts·m−2) and 
+5–10 cm (at 9529 pts·m−2), respectively. Regarding low-
+cost UAV-LiDAR, Kuželka et al. (2020) yielded an RMSE 
+range of 17–20%. Krůček et al. (2020) reported a resid-
+ual standard error (RSE) of 8.91 cm with a point cloud 
+density of 4387 pts·m−2. Neuville et al. (2021) employed 
+principal component analysis to estimate DBH, achieving 
+RMSEs of 15 cm and 19 cm for leaf-on and leaf-off condi-
+tions, respectively. Jaakkola et al. (2017) achieved RMSEs 
+of 5.5 cm (22.12%) and 6.8 cm (27.46%) at a point cloud 
+density of 800 pts·m−2, employing principal component 
+analysis (PCA) and circle fitting methods, respectively. 
+Various factors hamper the accuracy of UAV-LiDAR tree 
+diameter measurements. These factors encompass the 
+
+
+Page 17 of 22
+Zhou et al. Annals of Forest Science           (2025) 82:20 
+	
+sparsity and noise present in the point clouds surround-
+ing tree trunks (Xiang et al. 2024), ranging and orienta-
+tion errors, the significant divergence of the laser beam, 
+and the specific processing algorithm utilized (Jaakkola 
+et al. 2017). We proposed that the primary cause of the 
+reduced accuracy in direct tree diameter measurements 
+obtained by low-cost UAV-LiDAR (Table  1 and Fig.  9) 
+stemmed from the fact that the point clouds generated by 
+such systems exhibited a solid-circle distribution in the 
+trunk cross-section rather than a hollow circle or arcs 
+(Figs. 3b, 7b, 9b, and 11). This deviation led to an absence 
+of a mathematical foundation for employing the circle-
+fitting method to measure tree diameters.
+The Matrice 300 RTK UAS system employed in this 
+study boasts a manufacturer-stated accuracy of 0.1 m per 
+50 m horizontally and 0.05 m vertically (standard devia-
+tion) for the DJI Zenmuse L1 scanning system. Specifi-
+cally, the laser scanner’s distance measurement precision 
+(RMS 1σ) is 3 cm at a 100 m distance (DJI 2024). A recent 
+test revealed that, at a height of 10 m, the estimated x 
+and y differences using the UAV’s attitude were 0.13 m 
+and 0.04 m, respectively, with standard deviations of 0.05 
+m and 0.02 m. The horizontal discrepancy intensifies as 
+altitude increases (Czyża et al. 2023). In forest environ-
+ments, the Zenmuse L1 system achieves an elevation 
+accuracy (RMSE) of 0.044–0.065 m when flying at 100 m 
+(Stroner et al. 2023).
+When projecting the point clouds within the trunk 
+cylinder onto the (x, y) plane, it assumed a near-solid 
+circular shape (Figs. 3b, 7b, 9b, and 11), as a result, the 
+accuracy of diameter measurement using the circle fitting 
+method was very low (Table  1). To analyze these point 
+clouds, we employed the following techniques:
+(1)	 A thin cube (sheet) with a length width height equal 
+to 50 cm 5 cm 50 cm was used to crop the point 
+clouds on the trunk, centered on the center of the 
+trunk cross-section at the height of 1.3 m of the tree 
+(Fig.  13a), and calculating the mean x-coordinate 
+( x0 = 1
+n
+n
+i=1
+xi ), where n represents the number of 
+point clouds and x0 marks the trunk’s central 
+x-coordinates.
+(2)	 Computing the one-dimensional horizontal-plane 
+distances ( d(i) ) between point clouds and the trunk 
+center, d(i) = xi −x0 , along with the maximum 
+distance ( dmax).
+(3)	 Dividing the distance interval [0, dmax ] into 30 equal 
+segments and tallying the point cloud frequencies 
+in each segment to generate a distance-frequency 
+histogram (bilateral).
+The results indicated that although the number of 
+point clouds was small, with a mean (standard deviation) 
+of 635.5 ± 459.4 pts·m−2, most reference trees exhibited 
+bimodal histograms, with the dividing line close to the 
+trunk’s center and the two peaks positioned near the bark 
+(Fig. 13b).
+For laser scanners with notable errors in point cloud 
+positioning, similar to the one utilized in this study, if 
+the point cloud density is high and the trunk diameter 
+exceeds the error margin, we posit that when projecting 
+the trunk’s point clouds onto the (x, y) plane in a particu-
+lar direction, the point clouds exhibit a normal distri-
+bution centered on the bark. Specifically, the frequency 
+(density) of points is highest at the bark and gradually 
+tapers off to zero on both sides. We computed the two-
+dimensional planar distances from all these points to the 
+trunk’s center, segmented the maximum distance into 50 
+equal intervals, and tallied the frequencies within each 
+interval to generate a two-dimensional distance-fre-
+quency histogram (Fig. 13c).
+Based on the observations above, we postulate that if 
+the positional error of the point cloud is less than the 
+tree trunk’s radius, the trunk’s point cloud histograms are 
+Fig. 13  Cubic clipping and histogram analysis of point clouds on a tree trunk. (a) Clipping point clouds with a thin cube. 
+One- and two-dimensional distance-frequency histograms (b and c) of the point clouds. The red and green dashed vertical lines in (b) and (c) 
+indicate the locations of the trunk center and bark, respectively, as simulated from field-measure DBH. The blue dashed curves in (b) and (c) are 
+the simulated curves of normal and χ2-distribution, respectively
+
+
+Page 18 of 22
+Zhou et al. Annals of Forest Science           (2025) 82:20 
+distinct, meaning that the one-dimensional distance-fre-
+quency histogram follows two separate normal distribu-
+tions. Similarly, the two-dimensional distance-frequency 
+histogram also adheres to a normal distribution. Con-
+versely, suppose the positional error of the point cloud is 
+smaller than the tree’s diameter but more significant than 
+its radius; the one-dimensional distance-frequency his-
+togram conforms to two normal distributions that inter-
+sect (Fig. 13b). The two-dimensional distance-frequency 
+histogram conforms to the 2-distribution (Fig.  13c). 
+Based on this assumption, we fitted the histograms using 
+the corresponding PDF and refined our trunk diameter 
+measurements by eliminating anomalous point clouds 
+(Fig. 7). Although we recognize that our diameter meas-
+urements, with a RMSE of 14.6% (2.18 cm) (Table 1), still 
+have room for improvement, they nonetheless surpass 
+the results obtained in most previous studies, e.g., Jaak-
+kola et al. (2017), Kukkonen et al. (2017), Kuželka et al. 
+(2020), Neuville et  al. (2021), and Xiang et  al. (2024). 
+Therefore, the approach proposed in this paper for direct 
+measurement of tree diameters using 3D point clouds is 
+reliable and has a solid mathematical foundation. Our 
+future efforts will verify the above hypothesis, unravel the 
+factors contributing to measurement inaccuracies and 
+refine our algorithm to achieve greater precision. Fur-
+thermore, given the increased inefficiencies and expenses 
+associated with high-density point clouds in UAV-LiDAR 
+data collection and preprocessing, we also intend to 
+explore how point cloud density impacts diameter meas-
+urement accuracy, aiming to optimize density to reduce 
+data acquisition costs.
+Specific experimental outcomes revealed that when 
+utilizing the under-canopy UAV-LiDAR, the RMSE for 
+direct DBH extraction in sparse and obstructed plots 
+stood at 0.60 cm (2.2%) and 0.92 cm (3.1%), respectively. 
+Moreover, the integration of under- and above-canopy 
+UAVs led to an RMSE of 10.1% for stem volume estima-
+tion, as reported by Hyyppä et al. (2020a). This figure is 
+considerably higher than when only the above-canopy 
+UAV is employed. Therefore, this approach merits fur-
+ther exploration in subsequent research endeavors.
+4.3  Tree height estimation consistent with field 
+measurement
+The height of a tree is defined as the vertical distance 
+between its tallest point and the base where it meets 
+the ground. In UAV-LiDAR tree height measurements, 
+both CHM-based tree height determinations (e.g., Liao 
+et al. 2022; Ganz et al. 2019; Hyyppä et al. 2020a) and 3D 
+point cloud-derived measurements (e.g., Krůček et  al. 
+2020; Hyyppä et al. 2020b) exhibited excellent accuracy, 
+typically yielding an RMSE of less than 5%. However, the 
+measurement method for the reference tree’s height sig-
+nificantly influenced the accuracy evaluation. Liao et al. 
+(2022) found that altimeter (telescopic pole) measure-
+ments exhibited a bias ranging from − 4.8 to − 6.7% and 
+an RMSE of 9.0% to 9.9%, significantly underperforming 
+compared to UAV-CHM measurements and post-felling 
+measurements. Similarly, Ganz et  al. (2019) concluded 
+that altimeter (Vertex IV hypsometer) measurements 
+were less accurate than UAV-CHM extractions. Krause 
+et al. (2019) observed that altimeter (hypsometer) meas-
+urements overestimated tree height with a bias of 0.86% 
+and an RMSE of 1.82%, while photogrammetric CHM 
+measurements underestimated it with a bias of − 0.81% 
+and an RMSE of 2.07%. Therefore, when validating the 
+accuracy of UAV-LiDAR tree height measurements, it is 
+advisable to fall the trees for reference tree height meas-
+urements, if conditions permit, to ensure the highest 
+level of accuracy.
+A critical issue to consider for tree height measure-
+ments is the determination of the top center of the 
+crown. The trees were not uniformly perpendicular to the 
+ground; most were tilted at various angles. In our study, 
+the Eucalyptus forests featured tall, slender trunks lean-
+ing at significant angles, particularly those positioned 
+at the edges of the stands. These trees displayed a pro-
+nounced offset, where the canopy’s top center deviated 
+from the trunk base’s center by over 1 m. Consequently, 
+for precise individual tree segmentation relying on trunk 
+detection, pinpointing the exact location of the crown’s 
+top center becomes paramount for accurate tree height 
+measurements. We used the center coordinates at 1.3 m 
+and 7.0 m of the trunk and CHM to calculate the centers’ 
+positions at the top of the canopy (Fig. 4). Following this, 
+we extracted the tree height by segmenting individual 
+trees using a cylindrical clipping of the point clouds with 
+a 0.75 m radius. This methodology allowed us to gauge 
+the accuracy of our tree height measurements efficiently.
+Another essential issue to consider when measur-
+ing tree height is its application scenario. One of the 
+crucial applications of tree height measurements lies 
+in estimating stem volume and biomass. Traditionally, 
+when collecting data for modeling these parameters, 
+tree height is measured after falling using a tape on the 
+trunk in China. However, accurately determining the 
+topmost point of a tree, whether by using an altimeter 
+for standing trees or a tape measure for felled ones, is 
+challenging. The actual measured height often falls 
+short of the tree’s accurate height. To ensure precision 
+in estimating standing tree volume and biomass, UAV-
+LiDAR measurements of individual tree heights must 
+
+
+Page 19 of 22
+Zhou et al. Annals of Forest Science           (2025) 82:20 
+	
+align as closely as possible with actual field measure-
+ments. In our study, we identified the extreme value 
+of the highest convex interval in the height-frequency 
+pseudo-waveforms of the point clouds rather than just 
+the highest z-value as the tree height. This extreme 
+point signifies the position with the densest foliage dis-
+tribution in the topmost layer of the tree or the inter-
+face between the second-to-top and topmost layers, 
+and it is identified as the highest point of the tree by 
+the surveyor. This approach ensures that the start of 
+the UAV-LiDAR measurements is consistent with field 
+measurements. The results showed a minimal bias of 
+− 0.01% (− 0.01 m) in our tree height measurements 
+and an RMSE of 2.69% (0.31 m), indicating that we have 
+successfully achieved our objectives. It is worth noting 
+that while we can directly measure the actual length of 
+leaning trees based on their growth direction (Fig. 4), 
+we still used the vertical height in this study to main-
+tain consistency with field measurements.
+4.4  Application of the proposed framework
+This study was conducted in a relatively simplistic struc-
+ture of Eucalyptus plantation forests. The subject was 
+a single-story forest with a canopy characterized by a 
+relatively spare distribution of twigs and leaves. Based 
+on our extensive UAV-LiDAR dataset covering 4700 ha 
+with a density of 350 pts ­m−2 in the same region, the 
+average canopy cover of the Eucalyptus plantations was 
+0.80, which was notably lower compared to the canopy 
+cover of the planted Chinese fir forests (0.96), Masson 
+pine forests (0.94), and broad-leaved forests (0.95). Given 
+that LiDAR point clouds are unable to penetrate canopy 
+material, we believe that the individual-tree segmen-
+tation framework proposed in this paper is likely only 
+applicable to Eucalyptus plantation forests and planted 
+forests with simpler and sparser structures and not to 
+natural forests. Further experimentation is necessary to 
+assess the adaptability of this framework.
+A key factor contributing to the success of this study is 
+the ultra-high density of the point clouds. Regrettably, we 
+were unable to ascertain the minimum point cloud density 
+required. Nevertheless, we hypothesize that a density of at 
+least approximately 20,000 pts ­m−2 or even higher is neces-
+sary to ensure adequate reflection of point clouds from the 
+tree trunk for segmentation. Furthermore, factors such as 
+flight altitude, scanning angle, and route planning also sig-
+nificantly impact the quality of the point cloud, and these 
+aspects require further investigation in future studies.
+The fundamental premise of the diameter measurement 
+method introduced in this paper is that the cross-sec-
+tion of the trunk is circular. Nevertheless, as Wang et al. 
+(2017) pointed out, the trunk cross-section is never per-
+fectly circular. When the shape of the trunk cross-section 
+deviates significantly from a circle, it is inadvisable to 
+apply the method proposed herein. Instead, alternative 
+methods such as iterative Fourier series approximation 
+(Wang et  al. 2017) or the convex hull algorithm (You 
+et al. 2016) should be employed.
+5  Conclusion
+This paper introduced a novel framework for automati-
+cally and directly measuring individual tree attributes, 
+leveraging ultra-high-density point clouds collected by 
+low-cost UAV-LiDAR. The framework exhibited out-
+standing performance in Eucalyptus plantations, the 
+largest planted broad-leaved forests globally. Further-
+more, our study indicated that the classical circle-fitting 
+method might not be adequate for directly measuring 
+tree diameter using low-cost UAV-LiDAR data.
+The HDBSCAN algorithm efficiently clusters point 
+clouds in the trunk layer. By clipping the trunk layer 
+point clouds at an appropriate height interval from the 
+normalized version, we effectively minimized the impact 
+of foliage and understory vegetation on tree trunk detec-
+tion. Using a probability density function of 2-distri-
+bution to filter the noise point clouds, we accurately 
+determined the diameters at various height slices along 
+the trunks. These diameters facilitated precise identifica-
+tion of the number of tree stems and calculation of their 
+approximate locations. The point clouds centered around 
+the trunk exhibited a normal distribution, with the bark 
+as its focal point. Upon calculating the distances from 
+the point clouds to the trunk center and generating a 
+distance-relative frequency histogram, it became evident 
+that the point clouds follow a χ2-distribution. Therefore, 
+by segmenting the trunk’s point clouds using a cylinder, 
+we could directly extract the diameters of the tree stems 
+at different heights and their accurate position after fil-
+tering the point clouds. The coordinates of the crown’s 
+topmost center could be precisely calculated using the 
+coordinates of the trunk centers at 1.3 m and 7.0 m, along 
+with CHM. By cylindrical segmenting the point clouds 
+of the tree crown, we could extract the tree height using 
+pseudo-waveforms, ensuring consistency between the 
+extracted results and field measurements.
+The relevant algorithms presented in this paper require 
+further optimization, and additional experiments in vari-
+ous forest contexts are necessary to verify the adaptabil-
+ity of the framework proposed in this paper.
+Acknowledgements
+The authors sincerely express their gratitude to Chengling Yang, Jinfeng Jiang, 
+Zhihao Long, Xin Lin, Yao Liang, and Zhengfeng Liu from the Guangxi Forest 
+Inventory and Planning Institute (FIPI-GX), as well as Dr. Kai Su and Xiang-
+bei Zhou from the Forest College of Guangxi University, for their valuable 
+contributions in UAV-LiDAR data collection and fieldwork. Additionally, we 
+extend our appreciation to the anonymous reviewers and the editors for their 
+thoughtful recommendations.
+
+
+Page 20 of 22
+Zhou et al. Annals of Forest Science           (2025) 82:20 
+Code availability
+The codes developed for the current study are available from the correspond-
+ing author on reasonable request.
+Authors’ contributions
+MZ: methodology, formal analysis, investigation, data curation, writing—origi-
+nal draft. CL: conceptualization, methodology, formal analysis, writing—origi-
+nal draft and—review and editing, project administration, funding acquisition. 
+ZL: investigation, data curation, funding acquisition. The authors read and 
+approved the final manuscript.
+Funding
+This work received financial support from the Forestry Department of Guangxi 
+Zhuang Autonomous Region, China (GXLY2020 KT02), and the Guangxi Forest 
+Inventory and Planning Institute (GXFIPI-KY202401).
+Data availability
+The data that support the findings of this study are available at https://​doi.​org/​10.​
+57760/​scien​cedb.​14659.
+Ethics approval consent to participate
+Not applicable.
+Consent for publication
+All authors gave their informed consent to this publication and its content.
+Competing interests
+The authors declare that they have no competing interests.
+Author details
+1 School of Computer, Electronic and Information, Guangxi University, 100 East 
+Daxue Rd., Nanning 530004, China. 2 Forestry College, Guangxi University, 100 
+East Daxue Rd., Nanning 530004, China. 3 Guangxi Forest Inventory & Planning 
+Institute, 14 Zhonghua Rd., Nanning 530011, China. 
+Received: 23 October 2024   Accepted: 4 April 2025
+References
+Ayrey E, Fraver S, Kershaw JA, Kenefic LS, Hayes D, Weiskittel AR, Roth BE (2017) 
+Layer stacking: A novel algorithm for individual forest tree segmentation 
+from LiDAR point clouds. Can J Remote Sens 43:16–27. https://​doi.​org/​10.​
+1080/​07038​992.​2017.​12529​07
+Brede B, Lau A, Bartholomeus HM, Kooistra L (2017) Comparing RIEGL RiCOP-
+TER UAV LiDAR derived canopy height and DBH with terrestrial LiDAR. 
+Sensors 17:2371. https://​doi.​org/​10.​3390/​s1710​2371
+Cárdenas JL, López A, Ogayar CJ, Feito FR, Juan M, Jurado JM (2022) Recon-
+struction of tree branching structures from UAV-LiDAR data. Front Environ 
+Sci 10:960083. https://​doi.​org/​10.​3389/​fenvs.​2022.​960083
+Čerňava J, Mokroš M, Tucček J, Antal M, Slatkovská Z (2019) Processing chain 
+for estimation of tree diameter from GNSS-IMU-based mobile laser scan-
+ning data. Remote Sens 11:615. https://​doi.​org/​10.​3390/​rs110​60615
+Czyża S, Szuniewicz K, Kowalczyk K, Dumalski A, Ogrodniczak M, Zieleniewicz 
+L (2023) Assessment of accuracy in unmanned aerial vehicle (UAV) pose 
+estimation with the real-time kinematic (RTK) method on the example of 
+DJI Matrice 300 RTK. Sensors 23:2092. https://​doi.​org/​10.​3390/​s2304​2092
+d’Oliveira MVN, Broadbent EN, Oliveira LC, Almeida DRA, Papa DA, Ferreira ME, 
+Zambrano AMAA et al (2020) Aboveground biomass estimation in Ama-
+zonian tropical forests: a comparison of aircraft- and GatorEye UAV-borne 
+LiDAR data in the Chico Mendes Extractive Reserve in Acre. Brazil Remote 
+Sens 12:1754. https://​doi.​org/​10.​3390/​rs121​11754
+Dainelli R, Toscano P, Di Gennaro SF, Matese A (2021) Recent advances in 
+unmanned aerial vehicle forest remote sensing—A systematic review. 
+Forests 12:327. https://​doi.​org/​10.​3390/​f1203​0327
+Dalla Corte AP, Rex FE, Almeida DRA, de Sanquetta CR, Silva CA, Moura MM 
+et al (2020) Measuring individual tree diameter and height using Gator-
+Eye high-density UAV-Lidar in an integrated crop-livestock-forest system. 
+Remote Sens 12(5):863. https://​doi.​org/​10.​3390/​rs120​50863
+Deng S, Xu Q, Yue Y, Jing S, Wang Y (2024) Individual tree detection and seg-
+mentation from unmanned aerial vehicle-LiDAR data based on a trunk 
+point distribution indicator. Comput Electron Agr 218:108717. https://​doi.​
+org/​10.​1016/j.​compag.​2024.​108717
+Dersch S, Heurich M, Krueger N, Krzystek P (2021) Combining graph-cut clus-
+tering with object-based stem detection for tree segmentation in highly 
+dense airborne lidar point clouds. ISPRS J Photogrammet Remote Sen 
+172:207–222. https://​doi.​org/​10.​1016/j.​isprs​jprs.​2020.​11.​016
+DJI (2024) M300 RTK User Manual CHS v3.4.pdf.https://dl.djicdn.com/down-
+loads/matrice-300/20230526UM/M300_RTK_User_Manual_CHS_v3.4.pdf. 
+[2024–04–20].
+Fu Y, Niu Y, Wang L, Li W (2024) Individual-tree segmentation from UAV–LiDAR 
+data using a region-growing segmentation and supervoxel-weighted 
+fuzzy clustering approach. Remote Sens 16:608. https://​doi.​org/​10.​3390/​
+rs160​40608
+Ganz S, Käber Y, Adler P (2019) Measuring tree height with remote sensing—
+A comparison of photogrammetric and LiDAR data with different field 
+measurements. Forests 10:694. https://​doi.​org/​10.​3390/​f1008​0694
+Guo Q, Su Y, Hu T, Guan H, Jin S, Zhang J, Zhao X, Xu K, Wei D, Kelly M, Coops N 
+(2020) Lidar boosts 3D ecological observations and modeling: A review 
+and perspective. IEEE Geosci Rem Sen M 232–257:232. https://​doi.​org/​10.​
+1109/​MGRS.​2020.​30327​13
+Gupta S, Weinacker H, Koch B (2010) Comparative analysis of clustering-based 
+approaches for 3-D single tree detection using airborne fullwave lidar 
+data. Remote Sens 2:968–989. https://​doi.​org/​10.​3390/​rs204​0968
+Hakula A, Ruoppa L, Lehtomäki M, Yu X, Kukko A, Kaartinen H, Taher J et al 
+(2023) Individual tree segmentation and species classification using 
+high-density close-range multispectral laser scanning data. ISPRS Open 
+J Photogramm Remote Sens 9:100039. https://​doi.​org/​10.​1016/j.​ophoto.​
+2023.​100039
+Hu T, Sun X, Su Y, Guan H, Sun Q, Kelly M, Guo Q (2021) Development and 
+performance evaluation of a very low-cost UAV-Lidar system for forestry 
+applications. Remote Sens 13:77. https://​doi.​org/​10.​3390/​rs130​10077
+Hua LS, Chen L. W, Antov P, Kristak L, Tahir, PM (2022) Engineering Wood Prod-
+ucts from Eucalyptus spp. Adv Mater Sci Eng 8000780. https://​doi.​org/​10.​
+1155/​2022/​80007​80
+Hyyppä E, Hyyppä J, Hakala T, Kukko A, Wulder MA, White JC, Pyörälä J et al 
+(2020) Under-canopy UAV laser scanning for accurate forest field meas-
+urements. ISPRS J Photogramm Remote Sens 164:41–60. https://​doi.​org/​
+10.​1016/j.​isprs​jprs.​2020.​03.​021
+Hyyppä E, Kukko A, Kaijaluoto R, White JC, Wulder MA, Pyörälä J, Liang X et al 
+(2020) Accurate derivation of stem curve and volume using backpack 
+mobile laser scanning. ISPRS J Photogramm Remote Sens 161:246–262. 
+https://​doi.​org/​10.​1016/j.​isprs​jprs.​2020.​01.​018
+Jaakkola A, Hyyppä J, Kukko A, Yu X, Kaartinen H, Lehtomäki M, Lin Y (2010) A 
+low-cost multi-sensoral mobile mapping system and its feasibility for tree 
+measurements. ISPRS J Photogramm Remote Sens 65:514–522. https://​
+doi.​org/​10.​1016/j.​isprs​jprs.​2010.​08.​002
+Jaakkola A, Hyyppä J, Yu X, Kukko A, Kaartinen H, Liang X, Hyyppä H, Wang Y 
+(2017) Autonomous collection of forest field reference—The outlook and 
+a first step with UAV laser scanning. Remote Sens 9:785. https://​doi.​org/​
+10.​3390/​rs908​0785
+Jeronimo SMA, Kane VR, Churchill DJ, McGaughey RJ, Franklin JF (2018) 
+Applying LiDAR individual tree detection to management of structurally 
+diverse forest landscapes. J for 116:336–346. https://​doi.​org/​10.​1093/​
+jofore/​fvy023
+Kim D-H, Ko C-U, Kim D-G, Kang J-T, Park J-M, Cho H-J (2023) Automated seg-
+mentation of individual tree structures using deep learning over LiDAR 
+point cloud data. Forests 14:1159. https://​doi.​org/​10.​3390/​f1406​1159
+Krause S, Sanders TGM, Mund J-P, Greve K (2019) UAV-based photogrammetric 
+tree height measurement for intensive forest monitoring. Remote Sens 
+11:758. https://​doi.​org/​10.​3390/​rs110​70758
+Krůček M, Král K, Cushman KC, Missarov A, Kellner JR (2020) Supervised 
+segmentation of ultra-high-density drone lidar for large-area mapping 
+of individual trees. Remote Sens 12:3260. https://​doi.​org/​10.​3390/​rs121​
+93260
+Kukkonen M, Maltamo M, Korhonen L, Packalen P (2022) Evaluation of UAS 
+LiDAR data for tree segmentation and diameter estimation in boreal 
+forests using trunk- and crown-based methods. Can J For Res 52:674–84. 
+https://​doi.​org/​10.​1139/​cjfr-​2021-​0217
+
+
+Page 21 of 22
+Zhou et al. Annals of Forest Science           (2025) 82:20 
+	
+Kuželka K, Slavík M, Surový P (2020) Very high density point clouds from UAV 
+laser scanning for automatic tree stem detection and direct diameter 
+measurement. Remote Sens 12:1236. https://​doi.​org/​10.​3390/​rs120​81236
+Lee Y, Lee J (2024) Evaluation of accuracy in estimating diameter at breast 
+height based on the scanning conditions of terrestrial laser scanning and 
+circular fitting algorithm. Forests 15:313. https://​doi.​org/​10.​3390/​f1502​
+0313
+Li W, Guo Q, Jakubowski MK, Kelly M (2012) A new method for segmenting 
+individual trees from the lidar point cloud. Photogramm Eng Remote 
+Sens 78(1):75–84. https://​doi.​org/​10.​14358/​PERS.​78.1.​75
+Li J, Yang B, Cong Y, Cao L, Fu X, Dong Z (2019) 3D forest mapping using a low-
+cost UAV laser scanning system: Investigation and comparison. Remote 
+Sens 11:717. https://​doi.​org/​10.​3390/​rs110​60717
+Li C, Chen Z, Zhou X, Zhou M, Li Z (2023) Generalized models for subtropical 
+forest inventory attribute estimations using a rule-based exhaustive com-
+bination approach with airborne LiDAR-derived metrics. Gisci Remote 
+Sens 60(1):2194601. https://​doi.​org/​10.​1080/​15481​603.​2023.​21946​01
+Liang X, Wang Y, Pyrl J, Lehtomki M, Yu X, Kaartinen H, Kukko A. et al. (2019) 
+Forest in situ observations using unmanned aerial vehicle as an alterna-
+tive of terrestrial measurements. For Ecosyst 6(20). https://​doi.​org/​10.​
+1186/​s40663-​019-​0173-3
+Liao K, Li Y, Zou B, Li D, Lu D (2022) Examining the role of UAV Lidar data in 
+improving tree volume calculation accuracy. Remote Sens 14:4410. 
+https://​doi.​org/​10.​3390/​rs141​74410
+Lin Y-C, Liu J, Fei S, Habib A (2021) Leaf-off and leaf-on UAV LiDAR surveys for 
+single-tree inventory in forest plantations. Drones 5:115. https://​doi.​org/​
+10.​3390/​drone​s5040​115
+Lin J, Chen D, Yang S, Liao X (2023) Precise aboveground biomass estimation 
+of plantation forest trees using the novel allometric model and UAV-
+borne LiDAR. Front for Glob Change 6:1166349. https://​doi.​org/​10.​3389/​
+ffgc.​2023.​11663​49
+Liu T, Im J, Quackenbush LJ (2015) A novel transferable individual tree crown 
+delineation model based on Fishing Net Dragging and boundary clas-
+sification. ISPRS J Photogramm Remote Sens 110:2. https://​doi.​org/​10.​
+1016/j.​isprs​jprs.​2015.​10.​002
+Liu C, Xing Y, Duanmu J, Tian X (2018) Evaluating different methods for esti-
+mating diameter at breast height from terrestrial laser scanning. Remote 
+Sens 10:513. https://​doi.​org/​10.​3390/​rs100​40513
+Liu Y, You H, Tang X, You Q, Huang Y, Chen J (2023) Study on individual tree 
+segmentation of different tree species using different segmentation 
+algorithms based on 3D UAV data. Forests 14:1327. https://​doi.​org/​10.​
+3390/​f1407​1327
+López-Amoedo A, Silvosa MR, Lago MB, Lorenzo H, Acuña-Alonso C, Álvarez X 
+(2023) Weight estimation models for commercial Pinus radiata wood in 
+small felling stands based on UAV-LiDAR data. Trees, Forests and People 
+14:100436. https://​doi.​org/​10.​1016/j.​tfp.​2023.​100436
+Maas H-G, Bienert A, Scheller S, Keane E (2008) Automatic forest inventory 
+parameter determination from terrestrial laser scanner data. Int J Remote 
+Sens 29:1579–93.https://​doi.​org/​10.​1080/​01431​16070​17364​06
+Maesano M, Santopuoli G, Moresi FV, Matteucci G, Lasserre B, Mugnozza GS 
+(2022) Above ground biomass estimation from UAV high resolution 
+RGB images and LiDAR data in a pine forest in southern Italy. iForest 
+15:451–457. https://​doi.​org/​10.​3832/​ifor3​781-​015
+Maltamo M, Packalen P (2014) Species-specific management inventory in 
+Finland. Chapter 12 in Maltamo M, Naset E, Vauhkonen J (eds) Forestry 
+applications of airborne laser scanning: Concepts and case studies. 
+Springer, Dordrecht. p 464
+McGaughey RT, Kruper A, Bobsin CR, Bormann BT (2024) Tree species clas-
+sification based on upper crown morphology captured by uncrewed 
+aircraft system lidar data. Remote Sens 16:603. https://​doi.​org/​10.​3390/​
+rs160​40603
+Mongus D, Žalik B (2015) An efficient approach to 3D single tree-crown 
+delineation in LiDAR data. ISPRS J Photogramm Remote Sens 108:219–
+233. https://​doi.​org/​10.​1016/j.​isprs​jprs.​2015.​08.​004
+Muss JD, Mladenoff DJ, Philip A, Townsend PA (2011) A pseudo-waveform 
+technique to assess forest structure using discrete lidar data. Remote 
+Sens Environ 115:824–835. https://​doi.​org/​10.​1016/j.​rse.​2010.​11.​008
+Næsset E (2002) Predicting forest stand characteristics with airborne scanning 
+laser using a practical two-stage procedure and field data. Remote Sens 
+Environ 80:88–99. https://​doi.​org/​10.​1016/​S0034-​4257(01)​00290-5
+Næsset E, Bjerknes K-O (2001) Estimating tree heights and number of stems 
+in young forest stands using airborne laser scanner data. Remote Sens 
+Environ 78:328 /340. https://​doi.​org/​10.​1016/​S0034-​4257(01)​00228-0
+Næsset E, Gobakken T, Holmgren J, Hyyppä HHJ, Maltamo M, Nilsson M, 
+Olsson H et al (2004) Laser scanning of forest resources: the nordic 
+experience. Scand J for Res 19(6):482–499. https://​doi.​org/​10.​1080/​02827​
+58041​00195​53
+Neuville R, Bates JS, Jonard F (2021) Estimating forest structure from UAV-
+mounted LiDAR point cloud using machine learning. Remote Sens 
+13:352. https://​doi.​org/​10.​3390/​rs130​30352
+Picos J, Bastos G, Daniel M, Alonso L, Armesto J (2020) Individual tree detection 
+in a eucalyptus plantation using unmanned aerial vehicle (UAV)-LiDAR. 
+Remote Sens 12:885. https://​doi.​org/​10.​3390/​rs120​50885
+Pu Y, Xu D, Wang H, Li X, Xu X (2023) A new strategy for individual tree detec-
+tion and segmentation from leaf-on and leaf-off UAV-LiDAR point clouds 
+based on automatic detection of seed points. Remote Sens 15:1619. 
+https://​doi.​org/​10.​3390/​rs150​61619
+Scheeres J, de Jong J, Brede B, Brancalion PHS, Broadbent EN, Zambrano AMA, 
+Gorgens EB et al (2023) Distinguishing forest types in restored tropical 
+landscapes with UAV-borne LiDAR. Remote Sens Environ 290:113533. 
+https://​doi.​org/​10.​1016/j.​rse.​2023.​113533
+Soininen V, Kukko A, Yu X, Kaartinen H, Luoma V, Saikkonen O, Holopainen 
+M, Matikainen L, Lehtomäki M, Hyyppä J (2022) Predicting growth of 
+individual trees directly and indirectly using 20-year bitemporal airborne 
+laser scanning point cloud data. Forests 13:2040. https://​doi.​org/​10.​3390/​
+f1312​2040
+Straker A, Puliti S, Breidenbach J, Kleinn C, Pearse G, Astrup R, Magdon P (2023) 
+Instance segmentation of individual tree crowns with YOLOv5: A com-
+parison of approaches using the ForInstance benchmark LiDAR dataset. 
+ISPRS Open J Photogramm Remote Sens 9:100045. https://​doi.​org/​10.​
+1016/j.​ophoto.​2023.​100045
+Strîmbu VF, Strîmbu BM (2015) A graph-based segmentation algorithm for 
+tree crown extraction using airborne LiDAR data. ISPRS J Photogramm 
+Remote Sens 104:18. https://​doi.​org/​10.​52638/​rfpt.​2015.​555
+Stroner M, Urban R, Kremen T, Braun J (2023) UAV DTM acquisition in a forested 
+area—Comparison of low-cost photogrammetry (DJI Zenmuse P1) and 
+LiDAR solutions (DJI Zenmuse L1). Eur J Remote Sens 56:2179942. https://​
+doi.​org/​10.​1080/​22797​254.​2023.​21799​42
+Sun C, Huang C, Zhang H, Chen B, An F, Wang L, Yun T (2022) Individual tree 
+crown segmentation and crown width extraction from a heightmap 
+derived from aerial laser scanning data using a deep learning framework. 
+Front Plant Sci 13:914974. https://​doi.​org/​10.​3389/​fpls.​2022.​914974
+Sun Z, Wang Y-F, Ding Z-D, Liang R-T, Xie Y-H, Li R, Li H-W, Pan L, Sun Y-J (2023) 
+Individual tree segmentation and biomass estimation based on UAV 
+digital aerial photograph. J Mt Sci 20(3):724–737. https://​doi.​org/​10.​1007/​
+s11629-​022-​7563-7
+Torresan C, Carotenuto F, Chiavetta U, Miglietta F, Zaldei A, Gioli B (2020) Indi-
+vidual tree crown segmentation in two-layered dense mixed forests from 
+UAV LiDAR data. Drones 4:10. https://​doi.​org/​10.​3390/​drone​s4020​010
+Wallace L, Lucieer A, Watson C, Turner D (2012) Development of a UAV-LiDAR 
+system with application to forest inventory. Remote Sens 4:1519–1543. 
+https://​doi.​org/​10.​3390/​rs406​1519
+Wang D, Kankare V, Puttonen E, Hollaus M, Pfeifer N (2017) Reconstructing 
+stem cross section shapes from terrestrial laser scanning. IEEE Geosci Rem 
+Sen M 14(2):272–276. https://​doi.​org/​10.​1109/​LGRS.​2016.​26387​38
+White JC, Tompalski P, Vastaranta M, Wulder MA, Saarinen N, Stepper C, Coops 
+NC (2017) A model development and application guide for generating 
+an enhanced forest inventory using airborne laser scanning data and an 
+area-based approach. 38 CWFC Information Report FI-X-018, Canadian 
+Forest Service, Pacific Forestry Centre, Victoria, BC, Canada. http://​cfs.​
+nrcan.​gc.​ca/​pubwa​rehou​se/​pdfs/​38945.​pdf
+Williams J, Schönlieb C-B, Swinfield T, Lee J, Cai X, Qie L, Coomes DA (2020) 3D 
+segmentation of trees through a flexible multiclass graph cut algorithm. 
+IEEE T Geosci Remote 58:2. https://​doi.​org/​10.​1109/​TGRS.​2019.​29401​46
+Xiang B, Wielgosz M, Kontogianni T, Peters T, Puliti S, Astrup R, Schindler K 
+(2024) Automated forest inventory: Analysis of high-density airborne 
+LiDAR point clouds with 3D deep learning. Remote Sens Environ 
+305:114078. https://​doi.​org/​10.​1016/j.​rse.​2024.​114078
+Xiao W, Zaforemska A, Smigaj M, Wang Y, Gaulton R (2019) Mean shift segmen-
+tation assessment for individual forest tree delineation from airborne lidar 
+data. Remote Sens 11:1263. https://​doi.​org/​10.​3390/​rs111​11263
+
+
+Page 22 of 22
+Zhou et al. Annals of Forest Science           (2025) 82:20 
+Yan W, Guan H, Cao L, Yu Y, Gao S, Lu J (2018) An automated hierarchical 
+approach for three-dimensional segmentation of single trees using UAV 
+LiDAR data. Remote Sens 10:1999. https://​doi.​org/​10.​3390/​rs101​21999
+Yan Y, Lei J, Jin J, Shi S, Huang Y (2024) Unmanned aerial vehicle–light detec-
+tion and ranging-based individual tree segmentation in Eucalyptus spp. 
+forests: Performance and sensitivity. Forests 15:209. https://​doi.​org/​10.​
+3390/​f1501​0209
+You L, Tang S, Song X, Lei Y, Zang H, Lou M, Zhuang C (2016) Precise Measure-
+ment of Stem Diameter by Simulating the Path of Diameter Tape from 
+Terrestrial Laser Scanning Data. Remote Sens 8:717. https://​doi.​org/​10.​
+3390/​rs809​0717
+Yu J, Lei L, Li Z (2024) Individual tree segmentation based on seed points 
+detected by an adaptive crown shaped algorithm using UAV-LiDAR data. 
+Remote Sens 16:825. https://​doi.​org/​10.​3390/​rs160​50825
+Zhang Y, Wang X (2021) Geographical spatial distribution and productivity 
+dynamic change of eucalyptus plantations in China. Sci Rep 11:19764. 
+https://​doi.​org/​10.​1038/​s41598-​021-​97089-7
+Zhang Z, Cao L, Mulverhill C, Liu H, Pang Y, Li Z (2019) Prediction of diameter 
+distributions with multimodal models using LiDAR data in subtropical 
+planted forests. Forests 10:125. https://​doi.​org/​10.​3390/​f1002​0125
+Zhang B, Li X, Du H, Zhou G, Mao F, Huang Z, Zhou L et al (2022) Estimation 
+of urban forest characteristic parameters using UAV-Lidar coupled with 
+canopy volume. Remote Sens 14:6375. https://​doi.​org/​10.​3390/​rs142​
+46375
+Zhang W, Cen J, Feng J, Tan C, Huang X (2022b) Study on binary volume 
+model for Eucalyptus based on tree height and crown width in Guangxi. 
+Guangxi Sci 29(4):785–792. https://​doi.​org/​10.​13656/j.​cnki.​gxkx.​20220​
+919.​021
+Publisher’s Note
+Springer Nature remains neutral with regard to jurisdictional claims in pub-
+lished maps and institutional affiliations.

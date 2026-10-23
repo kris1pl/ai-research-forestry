@@ -4,10 +4,10 @@ type: Method
 description: "Detect tree tops from a 3D surface or CHM using local maximum (LM) filtering with a sliding / variable-size window to estimate height and support tree detection."
 tags: [detection, height, 3d, local-maxima]
 status: stable
-updated: 2026-08-21
+updated: 2026-10-23
 generated:
   by: agent:conifervision-wiki
-  at: 2026-08-21T12:00:00Z
+  at: 2026-10-23T12:00:00Z
 related_methods:
   - methods/chm-detection
   - methods/merge-detections
@@ -22,6 +22,9 @@ sources:
   - sources/paper-the_accuracy_of_image-based_individual_tree_crown_detection_and_delineation_across_vegetation_types-isprs-archives-xlviii-g-2025-1223-2025
   - sources/paper-tree_crown_segmentation_in_three_dimensions_using_density_models_derived_from_airborne_laser_scanning-holmgren_j_et_al_220114
   - sources/paper-uav-based_lidar_scanning_for_individual_tree_detection_and_height_measurement_in_young_forest-5_2021
+  - sources/paper-extraction_of_individual_tree_attributes_using_ultra-high-density_point_clouds_acquired_by_low-cost uav-lidar_in_eucalyptus_plantations
+  - sources/paper-mean_height_or_dominant_height_–_what_to_prefer_for_modelling_the_site_index_of_estonian_forests
+  - sources/paper-site index models for main forest-forming tree species in poland_forests-11-00301
   - sources/popescu-wynne-2004-seeing-the-trees
 ---
 # Local maxima
@@ -76,7 +79,15 @@ Full step-by-step pseudocode: [[sources/popescu-wynne-2004-seeing-the-trees#Repl
 | Scale search radius dynamically by local height h_max | aligned |
 | Extract local point cloud distributions for template matching | not used |
 | Identify local maxima on 10 cm CHM | aligned |
+| Extrapolate 3D stem vector from base slices (1.3 m and 7.0 m) to CHM | TBD |
+| 0.75 m cylinder pseudo-waveform height refinement | not used |
+| Sample dominant/codominant trees (100 thickest/tallest per ha) | Aligned (LM picks local maxima in upper canopy layer) |
+| Evaluate dynamic GADA height curve at base age 100 | TBD (not yet implemented in pipeline post-processing) |
 
+
+Pseudocode: [[sources/paper-site index models for main forest-forming tree species in poland_forests-11-00301#Replication pseudocode]].
+
+Pseudocode: [[sources/paper-extraction_of_individual_tree_attributes_using_ultra-high-density_point_clouds_acquired_by_low-cost uav-lidar_in_eucalyptus_plantations#Replication pseudocode]].
 
 Pseudocode: [[sources/paper-uav-based_lidar_scanning_for_individual_tree_detection_and_height_measurement_in_young_forest-5_2021#Replication pseudocode]].
 
@@ -115,6 +126,7 @@ _(fill in: window size, resolution, thresholds, circular vs square, variable-win
 - Can the spatial discrepancy between local height maxima and local density maxima be systematically used to detect asymmetric or leaning tree crowns?
 - How does the multi-attribute energy function for treetop detection compare in commission/omission rates against variable-window local maxima on CHMs in dense conifer stands?
 - What are the optimal sliding window sizes and maximum crown radius parameters for the DalPonte algorithm across different canopy density classes?
+- In dense stands on steep terrain, does horizontal displacement between local maxima apex candidates and bottom-up stem locations introduce systematic crown misattribution?
 ## Related
 
 - [[concepts/canopy-height-model]]
