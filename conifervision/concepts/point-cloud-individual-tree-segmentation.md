@@ -3,7 +3,7 @@ title: "Point Cloud Individual Tree Segmentation"
 type: Concept
 description: "Existing concept canopy-height-model and literature-map-dense-itd focus on raster CHMs or dense 2D imagery, leaving direct 3D point cloud clustering and bottom-up tree instance segmentation unrepresented."
 tags: [point, cloud, individual, tree, segmentation]
-status: draft
+status: stable
 updated: 2026-10-23
 generated:
   by: agent:concept-gate

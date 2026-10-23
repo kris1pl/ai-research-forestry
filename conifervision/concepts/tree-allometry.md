@@ -3,7 +3,7 @@ title: "Tree-Level Allometric Scaling"
 type: Concept
 description: "Existing concept site-index-and-yield explicitly restricts coverage to stand-level site index, dominant height, basal area, and yield capacity, leaving individual tree DBH, crown width, crown base height, and stem volume relationships unrepresented."
 tags: [tree, allometry]
-status: draft
+status: stable
 updated: 2026-10-23
 generated:
   by: agent:concept-gate

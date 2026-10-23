@@ -3,7 +3,7 @@ title: Research domains
 type: Project
 description: "Catalog of research programs and the recipe for adding the next one. Experiment ids stay global. This page does not authorize new work."
 tags: [research, domains, experiments]
-status: draft
+status: stable
 updated: 2026-10-21
 generated:
   by: agent:conifervision-wiki

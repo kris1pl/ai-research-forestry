@@ -2,6 +2,12 @@
 
 Chronological record of ingest, query, hypothesis, and lint operations.
 
+## [2026-10-23] lint | Publish reader pages that were still drafts
+
+- Set `status: stable` so Quartz emits them: [[concepts/crown-ownership]], [[concepts/normal-forest]], [[concepts/site-index-and-yield]], [[concepts/tree-allometry]], [[concepts/understory-tree-detection]], [[concepts/point-cloud-individual-tree-segmentation]], [[project/research-normal-forest]], [[project/normal-forest-flow]], [[project/domains]], [[experiments/normal-forest/exp-005-normal-forest-ownership-smoke]]
+- Left [[project/concept-proposals]] as draft (review sheet, not a reader page)
+- Page prose still says ADR-003 is proposed and exp-005 has not run
+
 ## [2026-10-23] query | Concept accepted: Point Cloud Individual Tree Segmentation
 
 - Added [[concepts/point-cloud-individual-tree-segmentation]] from [[project/concept-proposals]]

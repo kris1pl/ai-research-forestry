@@ -3,7 +3,7 @@ title: Normal forest
 type: Concept
 description: "Merchantable crowns larger than R-class, with separable tops. Not any stand that is not R, and not closed canopy before thinning."
 tags: [normal-forest, cohort, detection]
-status: draft
+status: stable
 updated: 2026-10-21
 generated:
   by: agent:conifervision-wiki

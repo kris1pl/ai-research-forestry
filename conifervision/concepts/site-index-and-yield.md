@@ -3,7 +3,7 @@ title: Site index and stand yield
 type: Concept
 description: "Dominant height at a reference age, then stand volume and yield capacity. Tree-level stem allometry stays on the source pages."
 tags: [site-index, dominant-height, basal-area, yield, allometry]
-status: draft
+status: stable
 updated: 2026-10-23
 generated:
   by: agent:conifervision-wiki

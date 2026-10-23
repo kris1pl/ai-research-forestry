@@ -3,7 +3,7 @@ title: Crown ownership
 type: Concept
 description: "An 800 box owns one crown only after one peak sits in its core, height clears a floor still to be written, and a fixed human sample of that frozen rule passes a bar that must be locked before CVAT."
 tags: [crown-ownership, normal-forest, pseudo-labels, audit, detection]
-status: draft
+status: stable
 updated: 2026-10-23
 area: "One normal-forest test AREA, id TBD. Not kaxen_197_1. Not AREA 540."
 generated:

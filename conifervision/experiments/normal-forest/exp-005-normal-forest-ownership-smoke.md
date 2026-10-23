@@ -3,7 +3,7 @@ title: exp-005 normal-forest ownership smoke
 type: Experiment
 description: "Draft smoke on one normal-forest AREA, id TBD: are SAHI 800 boxes with one peak in the core and height above an unwritten floor acceptable crowns on a 150-box sample? No student."
 tags: [normal-forest, crown-ownership, detection, DEIMv2, audit]
-status: draft
+status: stable
 updated: 2026-10-22
 area: "One normal-forest test AREA, id TBD. Not kaxen_197_1. Not AREA 540. Not AREA 481."
 hypothesis: "On that AREA, are SAHI 800 boxes that contain one local-maxima peak in the core and sit above the height floor acceptable crowns at a proposed precision of at least 0.95 on a 150-box sample? The 0.95 and 0.80 figures are the proposed bar to lock before CVAT, not a signed threshold."

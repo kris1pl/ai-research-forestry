@@ -3,7 +3,7 @@ title: Normal-forest crown detection and segmentation
 type: Project
 description: "Proposed program: one box per crown on trees larger than R-class where a peak maps to one crown, then outlines after those boxes are trusted. ADR-003 is proposed."
 tags: [research, normal-forest, detection, segmentation, crown-ownership]
-status: draft
+status: stable
 updated: 2026-10-22
 generated:
   by: agent:conifervision-wiki

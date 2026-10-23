@@ -3,7 +3,7 @@ title: Understory tree detection
 type: Concept
 description: "Trees under the top canopy that a canopy-height surface does not show. Separate from side-by-side crown overlap in a dense stand."
 tags: [understory, sub-canopy, itd, point-cloud, chm]
-status: draft
+status: stable
 updated: 2026-10-23
 generated:
   by: agent:concept-gate

@@ -3,7 +3,7 @@ type: Project
 title: "Normal-forest task flow"
 description: "Discussion sheet for the proposed normal-forest path: ownership sample, labels, score, then a detector student and outlines. ADR-003 stays proposed."
 tags: [research, normal-forest, crown-ownership, detection, segmentation]
-status: draft
+status: stable
 updated: 2026-10-22
 generated:
   by: agent:conifervision-wiki
