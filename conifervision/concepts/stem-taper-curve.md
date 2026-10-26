@@ -3,7 +3,7 @@ title: "Stem Taper Curve"
 type: Concept
 description: "Existing concept tree-allometry covers total stem volume and whole-tree scaling relations, leaving continuous longitudinal diameter profile functions along tree height unrepresented."
 tags: [stem, taper, curve]
-status: draft
+status: stable
 updated: 2026-10-26
 generated:
   by: agent:concept-gate

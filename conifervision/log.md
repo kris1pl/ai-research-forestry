@@ -2,6 +2,11 @@
 
 Chronological record of ingest, query, hypothesis, and lint operations.
 
+## [2026-10-26] lint | Publish accepted concepts still marked draft
+
+- Set `status: stable` on [[concepts/area-based-approach]], [[concepts/foundation-model-tree-delineation]], [[concepts/direct-stem-dbh-point-cloud]], [[concepts/height-diameter-inversion]], [[concepts/stem-taper-curve]]
+- `make concept-gate APPLY=1` now writes new concept pages as `stable`. [[project/concept-proposals]] stays a draft review sheet.
+
 ## [2026-10-26] query | Concept accepted: Stem Taper Curve
 
 - Added [[concepts/stem-taper-curve]] from [[project/concept-proposals]]

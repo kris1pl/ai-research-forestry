@@ -3,7 +3,7 @@ title: "Height-Diameter and Crown-Diameter Inversion"
 type: Concept
 description: "Existing concept tree-allometry covers forward scaling of DBH to volume/crown metrics, whereas remote sensing inventory relies on inverted allometric formulations predicting DBH from height, crown width, and stand density."
 tags: [height, diameter, inversion]
-status: draft
+status: stable
 updated: 2026-10-26
 generated:
   by: agent:concept-gate

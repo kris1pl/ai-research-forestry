@@ -3,7 +3,7 @@ title: "Area-Based Approach"
 type: Concept
 description: "Existing concept literature-map-dense-itd covers individual tree detection workflows, leaving the standard plot- and grid-level statistical modeling of forest structural attributes (ABA) unrepresented."
 tags: [area, based, approach]
-status: draft
+status: stable
 updated: 2026-10-26
 generated:
   by: agent:concept-gate

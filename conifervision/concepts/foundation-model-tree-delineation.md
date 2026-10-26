@@ -3,7 +3,7 @@ title: "Foundation Model Prompting for Tree Delineation"
 type: Concept
 description: "Existing concepts literature-map-dense-itd and dense-stand-detection focus on conventional CNN/watershed/NMS detection pipelines rather than zero-shot/few-shot prompting workflows leveraging vision foundation models (SAM/SAM2/DINOv2/v3) for crown delineation."
 tags: [foundation, model, tree, delineation]
-status: draft
+status: stable
 updated: 2026-10-26
 generated:
   by: agent:concept-gate

@@ -330,7 +330,7 @@ title: {json.dumps(row['name'])}
 type: Concept
 description: {json.dumps(why)}
 tags: [{tags}]
-status: draft
+status: stable
 updated: {date.today().isoformat()}
 generated:
   by: agent:concept-gate

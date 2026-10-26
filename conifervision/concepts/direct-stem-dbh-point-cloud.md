@@ -3,7 +3,7 @@ title: "Direct Stem and DBH Measurement from 3D Point Clouds"
 type: Concept
 description: "Existing concept tree-allometry covers empirical/allometric models predicting DBH from height or crown metrics rather than direct geometric stem reconstruction, trunk detection, and diameter extraction directly from 3D point cloud slices."
 tags: [direct, stem, dbh, point, cloud]
-status: draft
+status: stable
 updated: 2026-10-26
 generated:
   by: agent:concept-gate
