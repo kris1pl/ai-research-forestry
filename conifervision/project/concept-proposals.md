@@ -4,10 +4,10 @@ title: "Concept proposals"
 description: "Review sheet for proposed concept pages. Accept, reject, or correct them here."
 tags: [concepts, review]
 status: draft
-updated: 2026-10-23
+updated: 2026-10-26
 generated:
   by: agent:concept-gate
-  at: 2026-10-23T11:37:49Z
+  at: 2026-10-26T11:10:34Z
 ---
 
 # Concept proposals
@@ -26,6 +26,61 @@ flowchart LR
   accept --> page["Concept page"]
 ```
 
+## area-based-approach
+
+decision: accepted
+name: Area-Based Approach
+slug: area-based-approach
+why: Existing concept literature-map-dense-itd covers individual tree detection workflows, leaving the standard plot- and grid-level statistical modeling of forest structural attributes (ABA) unrepresented.
+sources:
+- sources/paper-flygburen laserskanning för skogliga skattningar-faktaskog_04_2014
+- sources/paper-skoglig fjärranalys-ljungbergs_sv_20180824
+- sources/paper-skattningar i gallringsskog med hjälp av flygburen laserskanning -beräkningar med massaslutenhet
+
+## stem-taper-curve
+
+decision: accepted
+name: Stem Taper Curve
+slug: stem-taper-curve
+why: Existing concept tree-allometry covers total stem volume and whole-tree scaling relations, leaving continuous longitudinal diameter profile functions along tree height unrepresented.
+sources:
+- sources/paper-taper curve and volume functions for pine, spruce and birch-951-40-0589-9
+- sources/paper-a rapid method for estimating the median diameter of the stem profile of norway spruce trees-iforest_ifor1945-009_vasilescu
+- sources/paper-diameter, height and volume increment single tree models for improved sitka spruce in great britain-cpab049
+
+## height-diameter-inversion
+
+decision: accepted
+name: Height-Diameter and Crown-Diameter Inversion
+slug: height-diameter-inversion
+why: Existing concept tree-allometry covers forward scaling of DBH to volume/crown metrics, whereas remote sensing inventory relies on inverted allometric formulations predicting DBH from height, crown width, and stand density.
+sources:
+- sources/paper-dbh vs height 1-s2-0-s0378112725008801-main
+- sources/paper-prediction of diameter using height and crown attributes - filipescu_etal2012wjafdbh_ht_model
+- sources/paper-robust height-diameter allometries for 41 european tree species - stand characteristics and structure matter-2025-09-29-679156v2_full
+
+## direct-stem-dbh-point-cloud
+
+decision: accepted
+name: Direct Stem and DBH Measurement from 3D Point Clouds
+slug: direct-stem-dbh-point-cloud
+why: Existing concept tree-allometry covers empirical/allometric models predicting DBH from height or crown metrics rather than direct geometric stem reconstruction, trunk detection, and diameter extraction directly from 3D point cloud slices.
+sources:
+- sources/paper-extraction_of_individual_tree_attributes_using_ultra-high-density_point_clouds_acquired_by_low-cost uav-lidar_in_eucalyptus_plantations
+- sources/paper-comparison_of_individual_tree-twec21_public
+- sources/paper-estimating tree diameter at breast height (dbh) from uav data-1-s2-0-s2666017225001373-main
+
+## foundation-model-tree-delineation
+
+decision: accepted
+name: Foundation Model Prompting for Tree Delineation
+slug: foundation-model-tree-delineation
+why: Existing concepts literature-map-dense-itd and dense-stand-detection focus on conventional CNN/watershed/NMS detection pipelines rather than zero-shot/few-shot prompting workflows leveraging vision foundation models (SAM/SAM2/DINOv2/v3) for crown delineation.
+sources:
+- sources/paper-treepseco_scaling_individual_tree_crown_segmentation_using_large_vision_models-isprs-archives-xlviii-m-7-2025-275-2025
+- sources/paper-zero-shot_tree_detection_and_segmentation_from_aerial_forest_imagery-2506-03114v1
+- sources/paper-fsod-vfm
+
 ## point-cloud-individual-tree-segmentation
 
 decision: accepted
@@ -36,17 +91,6 @@ sources:
 - sources/paper-a simple oriented search and clustering method for extracting individual forest trees from als point clouds-1-s2-0-s157495412400520x-main
 - sources/paper-forestformer3d_a_unified_framework_for_end-to-end_segmentation_of_forest_lidar_3dpoint_clouds-2506-16991v1
 - sources/paper-self-supervised_learning_for_precise_individual_tree_segmentation_in_airborne_lidar_point_clouds
-
-## promptable-tree-crown-segmentation
-
-decision: accpept
-name: Promptable Tree Crown Segmentation
-slug: promptable-tree-crown-segmentation
-why: Existing concepts crown-ownership and literature-map-dense-itd do not cover foundation model zero-shot prompting workflows (e.g. SAM/SAM2 driven by bounding boxes or point queries) for tree crown delineation.
-sources:
-- sources/paper-zero-shot_tree_detection_and_segmentation_from_aerial_forest_imagery-2506-03114v1
-- sources/paper-treepseco_scaling_individual_tree_crown_segmentation_using_large_vision_models-isprs-archives-xlviii-m-7-2025-275-2025
-- sources/paper-fsod-vfm
 
 ## tree-allometry
 

@@ -4,11 +4,11 @@ type: Concept
 description: "An 800 box owns one crown only after one peak sits in its core, height clears a floor still to be written, and a fixed human sample of that frozen rule passes a bar that must be locked before CVAT."
 tags: [crown-ownership, normal-forest, pseudo-labels, audit, detection]
 status: stable
-updated: 2026-10-23
+updated: 2026-10-26
 area: "One normal-forest test AREA, id TBD. Not kaxen_197_1. Not AREA 540."
 generated:
   by: agent:conifervision-wiki
-  at: 2026-10-23T12:00:00Z
+  at: 2026-10-26T12:00:00Z
 related_methods:
   - methods/deimv2-canopy
   - methods/local-maxima
@@ -16,6 +16,9 @@ related_methods:
 sources:
   - sources/paper-a crown width-diameter model for natural even-aged black pine forest management-forests-09-00610-v2
   - sources/paper-allometric relationships of selected european tree-gp_eudor_pdfa1b_euna20855enc_001
+  - sources/paper-interregional crown width models for individual trees growing in pure and mixed stands in austria-forests-11-00114-v3
+  - sources/paper-pine crown and trunk diameter dependence research-27_short_paper
+  - sources/paper-tree allometry of douglas fir and norway spruce on a nutrient-poor and a nutrient-rich site_urban_dg_2012
   - sources/paper-extraction_of_individual_tree_attributes_using_ultra-high-density_point_clouds_acquired_by_low-cost uav-lidar_in_eucalyptus_plantations
 ---
 # Crown ownership

@@ -1,0 +1,990 @@
+Technical 
+Specification for the 
+Biomass Equations 
+Developed for the 
+2011 Forecast 
+ 
+ 
+Tim Randle 
+Robert Matthews 
+Tom Jenkins 
+ 
+
+
+Mensuration 
+2    |    Revised biomass equations    |    Randle, Matthews & Jenkins    |    27/01/2014 
+Revised Biomass Equations 
+Existing crown and root biomass equations overestimate the biomass content of larger 
+trees.  Revised equations have therefore been prepared for estimating the crown and 
+root biomass, in oven-dry tonnes, of tree species grown in Great Britain.  The form of 
+these equations is presented below, together with the species-specific parameters to be 
+used. 
+Crown biomass equations 
+Three separate equations have been developed for estimating the biomass contained in 
+tree crowns.  All three equations use diameter at breast height (dbh) as the input 
+variable, and the equation used is dictated by the dbh of the tree being assessed.  
+Crown biomass includes the tip, branches, twigs and foliage. 
+Crown biomass equation for trees with dbh < 7 cm 
+A tree of less than 7 cm dbh is assumed to contain no merchantable stem volume.  The 
+output of the crown biomass equation for trees of less than 7 cm dbh therefore 
+incorporates the biomass, in oven-dry tonnes, contained in the tree stem in addition to 
+the biomass contained in the crown (i.e. all above-ground tree biomass). 
+The format of the equation is: 
+ 
+Above-ground biomass(dbh < 7 cm) = b × dbhp 
+Equation 1 
+where b and p are species-specific parameters, and dbh is diameter at breast height 
+(1.3 m) less than 7 cm. 
+The values for the species-specific parameters for use in Equation 1 are presented in 
+Table 1. 
+Table 1: 
+Species/group-specific coefficients for Equation 1, the above-ground 
+biomass equation for trees less than 7 cm dbh. 
+Species/species group 
+b 
+p 
+larches 
+0.0002855835 
+1.459047 
+Corsican pine 
+0.0002341451 
+1.459047 
+lodgepole pine 
+0.0002693744 
+1.459047 
+Scots pine 
+0.0002694943 
+1.459047 
+firs, spruces, cedars and hemlocks 
+0.0001047720 
+1.459047 
+Douglas fir 
+0.0002710716 
+1.459047 
+beech 
+0.0001172993 
+2.000000 
+oak 
+0.0001136009 
+2.000000 
+
+
+Mensuration 
+3    |    Revised biomass equations    |    Randle, Matthews & Jenkins    |    27/01/2014 
+ 
+Crown biomass equation for trees with dbh 7 cm to 50 cm 
+The output of the crown biomass equation for trees between 7 cm and 50 cm dbh gives 
+an estimate of the biomass, in oven-dry tonnes, contained in the above-ground parts of 
+the tree, excluding the merchantable tree stem biomass (i.e. excluding the part of the 
+stem accounted for in M1 and/or Forest Yield in the Forecast System).   
+The format of the equation is: 
+ 
+Crown biomass(7 cm ≤ dbh ≤ 50 cm) = b × dbhp 
+Equation 2 
+and p are species-specific parameters, and dbh is diameter at breast height (1.3 m) 
+between 7.0 cm and 50.0 cm. 
+The values for the species-specific parameters for use in Equation 2 are presented in 
+Table 2. 
+Table 2: 
+Species/group-specific coefficients for Equation 2, the crown biomass 
+equation for trees between 7 cm dbh and 50 cm dbh. 
+Species/species group 
+b 
+p 
+larches 
+0.0000438717 
+2.0291 
+Corsican pine 
+0.0000122645 
+2.4767 
+lodgepole pine 
+0.0000176287 
+2.4767 
+Scots pine 
+0.0000161411 
+2.4767 
+firs, spruces, cedars and hemlocks 
+0.0000144620 
+2.4767 
+Douglas fir 
+0.0000168602 
+2.4767 
+beech 
+0.0000188154 
+2.4767 
+oak 
+0.0000168513 
+2.4767 
+ 
+ 
+Crown biomass equation for trees with dbh > 50 cm 
+The output of the crown biomass equation for trees with a dbh greater than 50 cm gives 
+an estimate of the biomass, in oven-dry tonnes, contained in the above-ground parts of 
+the tree, excluding the merchantable tree stem biomass (i.e. excluding the part of the 
+stem accounted for in M1 and/or Forest Yield in the Forecast System).   
+The format of the equation is: 
+ 
+Crown biomass(dbh > 50 cm) = a + b × dbh 
+Equation 3 
+where a and b are species-specific parameters, and dbh is diameter at breast height 
+(1.3 m) greater than 50 cm. 
+
+
+Mensuration 
+4    |    Revised biomass equations    |    Randle, Matthews & Jenkins    |    27/01/2014 
+The values for the species-specific parameters for use in Equation 3 are presented in 
+Table 3. 
+Table 3: 
+Species/group-specific coefficients for Equation 3, the crown biomass 
+equation for trees greater than 50 cm dbh. 
+Species/species group 
+a 
+b 
+larches 
+-0.129046967 
+0.005039011 
+Corsican pine 
+-0.299529453 
+0.009948982 
+lodgepole pine 
+-0.430536496 
+0.014300429 
+Scots pine 
+-0.394205622 
+0.013093685 
+firs, spruces, cedars and hemlocks 
+-0.353197843 
+0.011731597 
+Douglas fir 
+-0.411767824 
+0.013677021 
+beech 
+-0.459518648 
+0.015263082 
+oak 
+-0.411550464 
+0.013669801 
+ 
+ 
+Root biomass equations 
+Two equations have been developed for estimating the biomass contained in tree roots 
+(not differentiated into biomass estimates of coarse and fine roots).  Both equations use 
+diameter at breast height (dbh) as the input variable, and the equation used is dictated 
+by the dbh of the tree being assessed. 
+ 
+Root biomass equation for trees with dbh ≤ 30 cm 
+The output of the root biomass equation for trees up to and including 30 cm dbh 
+estimates the total biomass, in oven-dry tonnes, contained in tree roots (i.e. not 
+differentiated into biomass estimates of coarse and fine roots).   
+The format of the equation is: 
+ 
+Root biomass(dbh ≤ 30 cm) = b × dbh2.5 
+Equation 4 
+where b is a species-specific parameter, and dbh is diameter at breast height (1.3 m) in 
+centimetres. 
+The values for the species-specific parameter for use in Equation 4 are presented in 
+Table 4. 
+ 
+
+
+Mensuration 
+5    |    Revised biomass equations    |    Randle, Matthews & Jenkins    |    27/01/2014 
+Table 4: 
+Species/group-specific coefficients for Equation 4, the root biomass 
+equation for trees up to and including 30 cm dbh. 
+Species/species group 
+b 
+western red cedar, noble fir, Corsican pine 
+0.000010722 
+Norway spruce 
+0.000011883 
+grand fir, Scots pine, western hemlock 
+0.000015404 
+Douglas fir, Japanese larch, lodgepole pine 
+0.000017326 
+Sitka spruce 
+0.000020454 
+red alder 
+0.000022700 
+ 
+Root biomass equation for trees with dbh > 30 cm 
+The output of the root biomass equation for trees greater than 30 cm dbh estimates the 
+total biomass, in oven-dry tonnes, contained in tree roots (i.e. not differentiated into 
+biomass estimates for coarse and fine roots).   
+The format of the equation is: 
+ 
+Root biomass(dbh > 30 cm) = a + b × dbh 
+Equation 5 
+where a and b are species-specific parameters, and dbh is diameter at breast height 
+(1.3 m) greater than 30 cm. 
+The values for the species-specific parameters for use in Equation 5 are presented in 
+Table 5. 
+Table 5: 
+Species/group-specific coefficients for Equation 5, the root biomass 
+equation for trees greater than 30 cm dbh. 
+Species/species group 
+a 
+b 
+western red cedar, noble fir, Corsican pine 
+-0.082602857 
+0.004515233 
+Norway spruce 
+-0.091547262 
+0.005004152 
+grand fir, Scots pine, western hemlock 
+-0.118673233 
+0.006486910 
+Douglas fir, Japanese larch, lodgepole pine 
+-0.133480423 
+0.007296300 
+Sitka spruce 
+-0.157578701 
+0.008613559 
+red alder 
+-0.174882004 
+0.009559391 
+ 
+
+
+Mensuration 
+6    |    Revised biomass equations    |    Randle, Matthews & Jenkins    |    27/01/2014 
+Species mapping 
+The quantities of data available for calibrating revised biomass equations for use in Great 
+Britain are generally insubstantial, variable, and do not cover all species commonly 
+grown as forest trees.  In order to satisfactorily calibrate the revised biomass equations, 
+it has been necessary to pool data according to apparent statistical similarities.  This 
+approach has resulted in slightly different species groupings for crown and root biomass. 
+The revised biomass equations were subsequently subjectively assigned (“mapped”) to 
+species for which no suitable calibration data existed, on the basis of perceived 
+similarities in silvicultural and morphological characteristics.  The resultant species 
+mappings are presented in Tables 6 and 7.  This approach is entirely consistent with 
+mapping exercises that have previously been carried out for other growth and yield 
+models applied to tree species in Great Britain. 
+ 
+Table 6: 
+Species mappings for broadleaves. 
+PF 
+Code 
+FC 
+Code 
+Species name 
+Mapping for 
+Crown 
+Biomass 
+Functions 
+Mapping for  
+Root 
+Biomass 
+Functions 
+34 OK 
+Oak 
+oak 
+red alder 
+35 POK 
+Pedunculate oak 
+oak 
+red alder 
+36 SOK 
+Sessile oak 
+oak 
+red alder 
+37 ROK 
+Red oak 
+oak 
+red alder 
+38 BE 
+Beech 
+beech 
+red alder 
+39 SY 
+Sycamore 
+beech 
+red alder 
+40 NOM 
+Norway maple 
+beech 
+red alder 
+41 AH 
+Ash 
+oak 
+red alder 
+42 BI 
+Birch 
+oak 
+red alder 
+43 PO 
+Poplar 
+oak 
+red alder 
+44 SC 
+Sweet chestnut 
+beech 
+red alder 
+45 HCH 
+Horse Chestnut 
+oak 
+red alder 
+46 AR 
+Alder 
+oak 
+red alder 
+47 CAR 
+Common alder 
+oak 
+red alder 
+48 GAR 
+Grey alder 
+oak 
+red alder 
+49 RAR 
+Red alder 
+oak 
+red alder 
+50 SAR 
+Sitka alder 
+oak 
+red alder 
+51 VAR 
+Green alder 
+oak 
+red alder 
+52 LI 
+Lime 
+oak 
+red alder 
+53 CLI 
+Common Lime 
+oak 
+red alder 
+54 SLI 
+Small-leaved lime 
+oak 
+red alder 
+ 
+
+
+Mensuration 
+7    |    Revised biomass equations    |    Randle, Matthews & Jenkins    |    27/01/2014 
+Table 6 (continued): 
+Species mappings for broadleaves. 
+PF 
+Code 
+FC 
+Code 
+Species name 
+Mapping for 
+Crown 
+Biomass 
+Functions 
+Mapping for  
+Root 
+Biomass 
+Functions 
+55 LLI 
+Large-leaved lime 
+oak 
+red alder 
+56 EM 
+Elm 
+oak 
+red alder 
+57 EEM 
+English elm 
+oak 
+red alder 
+58 WEM 
+Wych elm 
+oak 
+red alder 
+59 SEM 
+Smooth-leaved elm 
+oak 
+red alder 
+60 WCH 
+Wild cherry, gean 
+oak 
+red alder 
+61 BCH 
+Bird cherry 
+oak 
+red alder 
+62 HBM 
+Hornbeam 
+beech 
+red alder 
+63 RON 
+Roble 
+beech 
+red alder 
+64 RAN 
+Raoul 
+beech 
+red alder 
+65 DUM 
+Dummy 
+oak 
+red alder 
+66 XB 
+Other broadleaves 
+oak 
+red alder 
+67 MB 
+Mixed broadleaves 
+oak 
+red alder 
+68 HAZ 
+Hazel 
+oak 
+red alder 
+1014 WWL 
+White willow 
+oak 
+red alder 
+1015 WPO 
+White poplar 
+oak 
+red alder 
+1016 GPO 
+Grey poplar 
+oak 
+red alder 
+1017 XB2 
+Aspen 
+oak 
+red alder 
+1018 BPO 
+Black poplar 
+oak 
+red alder 
+1019 XB9 
+Hybrid black poplar 
+oak 
+red alder 
+1020 XB5 
+Eastern cottonwood 
+oak 
+red alder 
+1021 IAR 
+Italian alder 
+oak 
+red alder 
+1022 XB12 
+Pin oak 
+oak 
+red alder 
+1023 QIL 
+Holm oak 
+oak 
+red alder 
+1024 XB4 
+Cork oak 
+oak 
+red alder 
+1025 XB17 
+Turkey oak 
+oak 
+red alder 
+1026 XB15 
+Small-leaved elm 
+oak 
+red alder 
+1027 TUL 
+Tulip tree 
+beech 
+red alder 
+1028 LPL 
+London plane 
+beech 
+red alder 
+1029 XB14 
+Service tree 
+oak 
+red alder 
+1030 XB13 
+Rowan 
+oak 
+red alder 
+1031 WHI 
+Common whitebeam 
+oak 
+red alder 
+1032 FM 
+Field maple 
+beech 
+red alder 
+1033 WL 
+Willow 
+oak 
+red alder 
+1034 ROW 
+Rowan 
+oak 
+red alder 
+1035 ASP 
+Aspen 
+oak 
+red alder 
+1037 HOL 
+Holly 
+beech 
+red alder 
+1039 HAW 
+Hawthorn 
+oak 
+red alder 
+1053 QCE 
+Turkey oak 
+oak 
+red alder 
+1054 QFR 
+Hungarian oak 
+oak 
+red alder 
+ 
+
+
+Mensuration 
+8    |    Revised biomass equations    |    Randle, Matthews & Jenkins    |    27/01/2014 
+Table 6 (continued): 
+Species mappings for broadleaves. 
+PF 
+Code 
+FC 
+Code 
+Species name 
+Mapping for 
+Crown 
+Biomass 
+Functions 
+Mapping for  
+Root 
+Biomass 
+Functions 
+1055 QPY 
+Pyrenean oak 
+oak 
+red alder 
+1056 QPU 
+Downy oak 
+oak 
+red alder 
+1057 JRE 
+Common walnut 
+oak 
+red alder 
+1058 QAL 
+White oak 
+oak 
+red alder 
+1059 XOK 
+Other oak 
+oak 
+red alder 
+1060 XWA 
+Other walnut 
+oak 
+red alder 
+1061 JNI 
+Black walnut 
+oak 
+red alder 
+1062 ENI 
+Shining gum 
+oak 
+red alder 
+1063 XEU 
+Other eucalyptus 
+oak 
+red alder 
+1064 XPO 
+Other poplar 
+oak 
+red alder 
+1065 NPU 
+Lenga 
+beech 
+red alder 
+1066 XNO 
+Other Nothofagus 
+beech 
+red alder 
+1067 FAM 
+White ash/american ash 
+oak 
+red alder 
+1068 ASA 
+Silver maple 
+beech 
+red alder 
+1069 BPA 
+Paper bark birch 
+oak 
+red alder 
+1070 SCI 
+Grey willow 
+oak 
+red alder 
+1071 CAP 
+Crab apple 
+oak 
+red alder 
+1072 FPE 
+Red ash 
+oak 
+red alder 
+1073 BOX 
+Box 
+beech 
+red alder 
+1074 EGU 
+Cider gum 
+oak 
+red alder 
+1075 PBI 
+Downy birch 
+oak 
+red alder 
+1076 CWL 
+Crack willow 
+oak 
+red alder 
+1077 FM 
+Field maple 
+beech 
+red alder 
+1078 GWL 
+Goat willow 
+oak 
+red alder 
+1079 AMA 
+Big leaf maple 
+beech 
+red alder 
+1080 WST 
+Wild service tree 
+oak 
+red alder 
+1081 FAN 
+Narrow-leafed ash 
+oak 
+red alder 
+1082 PSP 
+Blackthorn 
+oak 
+red alder 
+1083 SBI 
+Silver birch 
+oak 
+red alder 
+1084 XWL 
+Other willows 
+oak 
+red alder 
+1085 XBI 
+Other birch 
+oak 
+red alder 
+1086 XCH 
+Other cherry 
+oak 
+red alder 
+1087 XPL 
+Other plane 
+beech 
+red alder 
+1088 COV 
+Shagbark hickory 
+oak 
+red alder 
+1090 FOR 
+Oriental beech 
+beech 
+red alder 
+ 
+ 
+
+
+ 
+ 
+Mensuration
+9    |    Revised biomass equations    |    Randle, Matthews & Jenkins    |    27/01/2014 
+Table 7: 
+Species mappings for conifers. 
+PF 
+Code 
+FC 
+Code 
+Species name 
+Mapping for  
+Crown Biomass Functions 
+Mapping for  
+Root Biomass Functions 
+1 SP 
+Scots pine 
+Scots pine 
+grand fir, Scots pine, western hemlock 
+2 CP 
+Corsican pine  
+Corsican pine 
+western red cedar, noble fir, Corsican pine 
+3 LP 
+lodgepole pine 
+lodgepole pine 
+Douglas fir, Japanese larch, lodgepole pine 
+4 AUP 
+Austrian pine 
+Corsican pine 
+western red cedar, noble fir, Corsican pine 
+5 MAP 
+maritime pine 
+lodgepole pine 
+Douglas fir, Japanese larch, lodgepole pine 
+6 WEP 
+Weymouth pine 
+Corsican pine 
+western red cedar, noble fir, Corsican pine 
+7 MOP 
+mountain pine 
+lodgepole pine 
+Douglas fir, Japanese larch, lodgepole pine 
+8 BIP 
+Bishop pine 
+Corsican pine 
+western red cedar, noble fir, Corsican pine 
+9 RAP 
+Monterey/Radiata pine 
+Corsican pine 
+western red cedar, noble fir, Corsican pine 
+10 PDP 
+ponderosa pine 
+Corsican pine 
+western red cedar, noble fir, Corsican pine 
+11 MCP 
+Macedonian pine 
+Corsican pine 
+western red cedar, noble fir, Corsican pine 
+12 XP 
+other pines 
+Scots pine 
+grand fir, Scots pine, western hemlock 
+13 SS 
+Sitka spruce 
+firs, spruces, cedars and hemlocks 
+Sitka spruce 
+14 NS 
+Norway spruce 
+firs, spruces, cedars and hemlocks 
+Norway spruce 
+15 OMS 
+Omorika spruce 
+firs, spruces, cedars and hemlocks 
+Norway spruce 
+16 XS 
+other spruces 
+firs, spruces, cedars and hemlocks 
+Norway spruce 
+17 EL 
+European larch 
+larches 
+Douglas fir, Japanese larch, lodgepole pine 
+18 JL 
+Japanese larch 
+larches 
+Douglas fir, Japanese larch, lodgepole pine 
+19 HL 
+hybrid larch 
+larches 
+Douglas fir, Japanese larch, lodgepole pine 
+20 DF 
+Douglas fir 
+Douglas fir 
+Douglas fir, Japanese larch, lodgepole pine 
+21 WH 
+western hemlock 
+firs, spruces, cedars and hemlocks 
+grand fir, Scots pine, western hemlock 
+22 RC 
+western red cedar 
+firs, spruces, cedars and hemlocks 
+western red cedar, noble fir, Corsican pine 
+23 LC 
+Lawsons cypress 
+firs, spruces, cedars and hemlocks 
+western red cedar, noble fir, Corsican pine 
+24 LEC 
+Leyland cypress 
+firs, spruces, cedars and hemlocks 
+western red cedar, noble fir, Corsican pine 
+25 GF 
+grand fir 
+firs, spruces, cedars and hemlocks 
+grand fir, Scots pine, western hemlock 
+26 NF 
+noble fir 
+firs, spruces, cedars and hemlocks 
+western red cedar, noble fir, Corsican pine 
+27 ESF 
+silver fir 
+firs, spruces, cedars and hemlocks 
+grand fir, Scots pine, western hemlock 
+28 XF 
+other firs (abies) 
+firs, spruces, cedars and hemlocks 
+western red cedar, noble fir, Corsican pine 
+29 JCR 
+Japanese cedar 
+firs, spruces, cedars and hemlocks 
+western red cedar, noble fir, Corsican pine 
+30 RSQ 
+coast redwood 
+firs, spruces, cedars and hemlocks 
+grand fir, Scots pine, western hemlock 
+31 WSQ 
+Wellingtonia 
+firs, spruces, cedars and hemlocks 
+grand fir, Scots pine, western hemlock 
+32 XC 
+other conifers 
+firs, spruces, cedars and hemlocks 
+Norway spruce 
+
+
+ 
+ 
+Mensuration
+10    |    Revised biomass equations    |    Randle, Matthews & Jenkins    |    27/01/2014 
+Table 7 (continued): 
+Species mappings for conifers. 
+PF 
+Code 
+FC 
+Code 
+Species name 
+Mapping for  
+Crown Biomass Functions 
+Mapping for  
+Root Biomass Functions 
+33 MC 
+mixed conifers 
+firs, spruces, cedars and hemlocks 
+Norway spruce 
+1001 XF2 
+Siberian fir 
+firs, spruces, cedars and hemlocks 
+western red cedar, noble fir, Corsican pine 
+1002 NMF 
+Nordmann/Caucasian fir 
+firs, spruces, cedars and hemlocks 
+western red cedar, noble fir, Corsican pine 
+1003 ORS 
+oriental spruce 
+firs, spruces, cedars and hemlocks 
+Norway spruce 
+1004 XS2 
+white spruce 
+firs, spruces, cedars and hemlocks 
+Norway spruce 
+1005 XS4 
+Engelmann spruce 
+firs, spruces, cedars and hemlocks 
+Norway spruce 
+1006 XS1 
+blue spruce 
+firs, spruces, cedars and hemlocks 
+Norway spruce 
+1007 XC3 
+deodar cedar 
+Scots pine 
+grand fir, Scots pine, western hemlock 
+1008 XC1 
+Atlantic cedar 
+Scots pine 
+grand fir, Scots pine, western hemlock 
+1009 PMO 
+western white pine 
+Corsican pine 
+western red cedar, noble fir, Corsican pine 
+1010 MET 
+dawn redwood 
+firs, spruces, cedars and hemlocks 
+grand fir, Scots pine, western hemlock 
+1011 XC4 
+Monterey cypress 
+firs, spruces, cedars and hemlocks 
+western red cedar, noble fir, Corsican pine 
+1012 XC5 
+Nootka cypress 
+firs, spruces, cedars and hemlocks 
+western red cedar, noble fir, Corsican pine 
+1013 XC6 
+yew 
+firs, spruces, cedars and hemlocks 
+western red cedar, noble fir, Corsican pine 
+1036 JUN 
+juniper 
+firs, spruces, cedars and hemlocks 
+western red cedar, noble fir, Corsican pine 
+1038 YEW 
+yew 
+firs, spruces, cedars and hemlocks 
+western red cedar, noble fir, Corsican pine 
+1040 CAT 
+Atlas cedar 
+Scots pine 
+grand fir, Scots pine, western hemlock 
+1041 XCD 
+other cedar 
+Scots pine 
+grand fir, Scots pine, western hemlock 
+1042 PAY 
+Mexican white pine 
+Scots pine 
+grand fir, Scots pine, western hemlock 
+1043 PBR 
+Calabrian pine 
+lodgepole pine 
+Douglas fir, Japanese larch, lodgepole pine 
+1044 PKO 
+Korean pine 
+Scots pine 
+grand fir, Scots pine, western hemlock 
+1045 PWA 
+Bhutan pine 
+Corsican pine 
+western red cedar, noble fir, Corsican pine 
+1046 PYU 
+Yunnan pine 
+Scots pine 
+grand fir, Scots pine, western hemlock 
+1048 BMF 
+Bornmuller's fir 
+firs, spruces, cedars and hemlocks 
+western red cedar, noble fir, Corsican pine 
+1049 LCD 
+cedar of Lebanon 
+Scots pine 
+grand fir, Scots pine, western hemlock 
+1051 GKF 
+Greek fir 
+firs, spruces, cedars and hemlocks 
+western red cedar, noble fir, Corsican pine 
+1089 PAR 
+Armand's pine 
+Scots pine 
+grand fir, Scots pine, western hemlock 
+1091 PTA 
+loblolly pine 
+Corsican pine 
+western red cedar, noble fir, Corsican pine 
+1092 XL 
+other larches 
+larches 
+Douglas fir, Japanese larch, lodgepole pine 
+1093 RF 
+red (pacific silver) fir 
+firs, spruces, cedars and hemlocks 
+western red cedar, noble fir, Corsican pine 
+1094 PEL 
+slash pine 
+lodgepole pine 
+Douglas fir, Japanese larch, lodgepole pine

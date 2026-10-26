@@ -1,0 +1,2729 @@
+Drone imaging-based wall-to-wall processing pipelines for individual tree 
+level inventory in boreal forest plots
+Olli Nevalainen a,d,*
+, Niko Koivum¨aki b, Raquel Alves de Oliveira b, Teemu Hakala b,  
+Roope N¨asi b, Xinlian Liang c, Yunsheng Wang b, Juha Hyypp¨a b, Eija Honkavaara b
+a Climate System Research, Finnish Meteorological Institute, Helsinki, Finland
+b Department of Remote Sensing and Photogrammetry, Finnish Geospatial Research Institute, National Land Survey of Finland, Espoo, Finland
+c State Key Laboratory of Information Engineering in Surveying, Mapping and Remote Sensing, Wuhan University, Wuhan, China
+d Department of Built Environment, Aalto University, Espoo, Finland
+A R T I C L E  I N F O
+Keywords:
+Close-range sensing
+Forest inventory
+Drones
+Photogrammetry
+Spectral imaging
+A B S T R A C T
+Precise individual tree data are essential for forest management, strategic planning, efficient commercial 
+forestry, and accurate carbon stock assessments. In this study, a wall-to-wall drone-imaging-based forest in­
+ventory processing pipeline was developed and assessed. Different cameras and data analysis methods were 
+assessed for individual tree detection and attribute estimation at the tree and plot levels. The experiment was 
+conducted in Finland in six boreal forest study areas, with three major tree species: Scots pine (Pinus sylvestris), 
+Norway spruce (Picea abies), and birch (Betula pendula and Betula pubescens). RGB and multispectral (MS) 
+cameras provided single-sensor solutions for the forest inventory pipeline, whereas a hyperspectral (HS) camera 
+was used in combination with the RGB camera to enhance species classification. High-quality RGB data per­
+formed better than MS data for tree detection and attribute estimation. The best tree detection rates were 56–84 
+% in areas with mostly dominant and co-dominant trees. The two evaluated tree detection methods (local 
+maximum and segmentation) provided similar tree detection rates and tree attribute estimation accuracies. Tree 
+level attributes were estimated with root mean square errors (RMSEs) of 0.97 m (5.1 %) for tree height, 3.1 cm 
+(14 %) for diameter at breast height (DBH), 129.6 cm2 (25 %) for the basal area, and 0.13 m3 (23 %) for the 
+volume. The HS camera yielded the highest tree species classification performance, with maximum f-scores of 
+0.81 for RGB, 0.88 for MS, and 0.89 for combined HS + RGB data. At the plot level, RMSEs for stem density, basal 
+area, and volume were 855.7 ha-1 (74.6 %), 6.9 m2 ha−1 (24.2 %), and 48.6 m3 ha−1 (17.6 %), respectively. This 
+study was the first to assess entire inventory pipelines with a comprehensive camera setup and proved that low- 
+cost RGB and MS cameras provide acceptable performance for tree inventories in boreal forests. These results can 
+guide the implementation of low-cost forest inventory processes.
+1. Introduction
+Precise individual tree data are fundamental for optimized multi­
+functional forest management, strategic planning, efficient commercial 
+forestry, and accurate carbon stock assessments. Such data enable 
+detailed individual tree analyses and plot-level assessments by aggre­
+gating at lower spatial resolutions.
+Conventionally, individual tree level data are collected in field 
+measurements. Recent advancements in close-range remote sensing 
+technologies have made it possible to conduct similar in-situ forest 
+measurements with less labor-intensive fieldwork (Liang et al., 2022). 
+One such is drone-based remote sensing (Wallace et al., 2016; Torresan 
+et al., 2017; Hyypp¨a et al. 2020a, 2022; Liang et al., 2019). Although 
+drone remote sensing often misses suppressed trees, limiting the com­
+plete delineation of individual trees (Wang et al., 2016), it remains a 
+critical source of training data for large-area forest inventories based on 
+remote sensing (Hyypp¨a et al., 2022). In addition, the top canopy layer 
+accounts for most of the aboveground biomass in the forests (Wang 
+et al., 2019).
+In drone-based sensing, camera systems are considerably more cost- 
+effective than lidar-based systems. By employing photogrammetric 
+methods, the cameras can produce three-dimensional (3D) information 
+* Corresponding author. Climate System Research, Finnish Meteorological Institute, Helsinki, Finland.
+E-mail address: olli.nevalainen@fmi.fi (O. Nevalainen). 
+Contents lists available at ScienceDirect
+ISPRS Open Journal of Photogrammetry  
+and Remote Sensing
+journal homepage: www.journals.elsevier.com/isprs-open-journal-of-photogrammetry-and-remote- 
+sensing
+https://doi.org/10.1016/j.ophoto.2025.100099
+Received 9 May 2025; Received in revised form 8 August 2025; Accepted 13 August 2025  
+ISPRS Open Journal of Photogrammetry and Remote Sensing 17 (2025) 100099 
+Available online 14 August 2025 
+2667-3932/© 2025 The Authors. Published by Elsevier B.V. on behalf of International Society of Photogrammetry and Remote Sensing. This is an open access article 
+under the CC BY license ( http://creativecommons.org/licenses/by/4.0/ ). 
+
+
+for individual tree-level data acquisition and forest research (Puliti et al., 
+2015; Iglhaut et al., 2019). Camera systems can be used to locate trees 
+and estimate tree height, crown width, and diameter-at-breast-height 
+(DBH), similar to drone-based lidar (or airborne laser scanning) sys­
+tems (Liang et al., 2022). In addition, multispectral (MS) and hyper­
+spectral (HS) cameras can provide spectral information beneficial for 
+tree species classification (Yu et al., 2017; Nevalainen et al., 2017; Chen 
+et al., 2024; Liang et al., 2025). Tree species information is not only 
+important for forest inventories but is also essential for allometric 
+equations used in tree volume estimation. Consequently, methodologies 
+that can provide tree species information along with tree height and 
+DBH, are of great interest.
+Machine learning is the fundamental technique for extracting species 
+information and to estimate tree attributes from remote sensing data. 
+Traditional machine learning relies on handcrafted features, while deep 
+learning automatically learns the relevant features during training. One 
+advantage of traditional machine learning methods is their interpret­
+ability, feature relevance can be more easily assessed, which is useful for 
+selecting or designing sensors tailored to specific tasks in individual tree 
+level forest inventories.
+Previous studies have explored various phases of forest inventory 
+using drone-based laser scanning (Liang et al., 2019; Corte et al., 2020; 
+Gyawali et al., 2022; Hyypp¨a et al., 2022; Sun et al., 2022; Qin et al., 
+2022), and imaging (Iglhaut et al., 2019; Fujimoto et al., 2019; Nezami 
+et al., 2020; Kuzmin et al., 2021). However, image-based approaches 
+have focused only on a few steps in the inventory process, such as tree 
+detection or classification. In contrast, when aiming to implement a fully 
+digital forest inventory workflow, a comprehensive wall-to-wall pipeline 
+is preferred, i.e., one that integrates all phases from individual tree 
+detection to the final inventory output. Implementing such pipelines 
+involves several aspects to consider regarding the use of remote sensing 
+data and analysis methods.
+In this study, a wall-to-wall drone image-based forest inventory 
+pipeline was developed and assessed. Various camera combinations 
+were evaluated for their effectiveness in detecting individual trees and 
+estimating commonly used forest inventory parameters, such as tree 
+height, DBH, basal area, species, and volume. The camera setups tested 
+included a dual-RGB camera system (RGB), an MS camera, a combina­
+tion of the RGB and MS cameras, and a combination of the RGB and HS 
+cameras. These setups differ in terms of cost and operational complexity. 
+The evaluation encompassed various approaches for individual tree 
+analysis. These included two techniques for tree detection (segmenta­
+tion and local maxima-based), three strategies for tree crown delinea­
+tion, two methods for DBH estimation (random forest and linear 
+regression), and several feature sets for classifying tree species. The 
+experiment was conducted in a boreal forest in Finland in six study areas 
+with varying forest complexities (Liang et al., 2018).
+The primary research questions are as follows: 1) How do RGB and 
+MS cameras perform in measuring commonly used forest inventory 
+parameters at both the individual tree and plot levels? 2) To what extent 
+does a high-cost HS camera enhance tree species classification compared 
+to more affordable MS or RGB cameras? 3) Can 3D data from MS images 
+Fig. 1. Study areas and reference trees. The study areas were classified into three difficulty classes: easy, medium, and hard, based on stem visibility, stem density, 
+and DBH distribution. The blue boundary contour is the reference area within which tree detection was evaluated. Background orthophotos were obtained using the 
+RGB camera system used in this study. Locations of the training set trees are shown with circles and test set trees with crosses. Other species include Trembling aspen, 
+Gray alder, Black alder, European rowan, Lodgepole pine, Larch, Common juniper, and other unclassified species.
+O. Nevalainen et al.                                                                                                                                                                                                                            
+ISPRS Open Journal of Photogrammetry and Remote Sensing 17 (2025) 100099 
+2 
+
+
+with a 7 cm ground sampling distance (GSD) yield similar results in 
+individual tree detection and attribute estimation when compared to 
+RGB data with a higher spatial resolution (1.3 cm GSD) and a wider 
+field-of-view? 4) How does the method of tree crown delineation affect 
+the accuracy of estimating tree inventory parameters?
+2. Materials and methods
+2.1. Study areas and reference data collection
+The study areas are boreal forests located in Evo, H¨ameenlinna, 
+Finland (61.19◦N, 25.11◦E). Data were collected from six different areas 
+with varying forest densities and species compositions (Fig. 1). The 
+study areas were classified into three difficulty classes: easy, medium, 
+and hard, based on forest densities and assumed difficulties according to 
+the stem visibility (the level of possible occlusion effects) at the ground 
+level, stem density, and DBH distribution in the sample plots (Table 1). 
+The ground reference data collected during the summer of 2014 
+included the tree location, species, height, and DBH (Fig. 2, Table A.1). 
+Logged and fallen trees were removed from the reference data after­
+wards using airborne laser scanning (ALS) data collected in 2017. More 
+details about the forest conditions and field measurements can be found 
+in Liang et al. (2018). Trees in all study areas, except in area 5, were 
+classified into four crown classes: dominant, co-dominant, intermediate, 
+and suppressed (Fig. 3, Wang et al. (2016)).
+We employed plot- and species-wise stratified sampling to partition 
+the reference data into training and testing datasets. This approach 
+ensured that the test set comprised 20 % of the reference data in each 
+study area while maintaining equal proportions of tree species in both 
+the test and training sets. The training set was used for method devel­
+opment, model training, and cross-validation. This includes tree detec­
+tion parameter tuning and the training of machine learning methods for 
+tree species classification and DBH estimation. We used only pine, 
+spruce, and birch trees in this study because there were too few in­
+dividuals from other species. The training and test set trees are shown in 
+Fig. 1.
+2.2. Drone data collection and processing
+The drone flights were carried out on 3rd and August 8, 2018 using a 
+drone system with a Gryphon Dynamics quadcopter frame, Pixhawk 
+autopilot, Trimble’s APX-15 EI UAV GNSS-inertial OEM positioning 
+system consisting of a multiband GNSS, an Inertial Measurement Unit 
+(IMU), and a Harxon HX-CHX600A Antenna (Fig. 4). RGB images were 
+collected using a dual camera system with two Sony A7R II digital 
+cameras equipped with a Sony FE 35 mm f/2.8 ZA Carl Zeiss Sonnar T* 
+lens. The HS camera was based on a 2D image format and utilized a 
+tunable Fabry-P´erot interferometer (FPI) to scan the spectral bands 
+(Senop Ltd., Oulu, Finland). The camera was set to collect 46 spectral 
+bands in the spectral range from 500 to 900 nm, with full width at half 
+maximum (FWHM) varying from 4 to 10 nm (see Table 2 for band de­
+tails). The MS images were captured using a five-band MicaSense 
+RedEdge-M camera (AgEagle Aerial Systems Inc., Wichita, Kansas, 
+USA). During data collection, the illumination conditions varied from 
+cloudy to sunny, and sun zenith angles from 44.1◦to 53.1◦(Table 3). 
+The flying speed was 4 m/s and the flying height was 120 m at the 
+starting position. Owing to the varying canopy heights, the distance 
+from the top of the canopy was approximately 100 m. At least 75 % 
+forward and side overlap were achieved at the treetops for every sensor 
+(Table 4). For different plots, five to six ground control points (GCPs) 
+were measured with a Topcon Hiper HR RTK dual-band receiver with an 
+expected accuracy of 32.4 mm horizontally and 19.0 mm vertically. 
+Additionally, an ASD Field Spec Pro spectrometer (Malvern Panalytical 
+Ltd., Malvern, United Kingdom) was installed to measure irradiance 
+during data collection to support radiometric processing.
+Photogrammetric processing was conducted using Agisoft PhotoScan 
+1.4.3 (Agisoft LLC, St. Petersburg, Russia). The GCPs and GNSS/IMU 
+camera orientation data were used for georeferencing the RGB images. 
+The post-processed kinematic (PPK) GNSS/IMU image positions and 
+angles of the dual-camera images were calculated using single-base 
+differential GNSS-inertial processing in the Applanix POSPac UAV 
+(Version 8.3). Virtual reference station (VRS) data for the base station 
+were obtained from the National Land Survey of Finland (NLS) RINEX 
+service 
+(https://www.maanmittauslaitos.fi/en/finpos/rinex). 
+The 
+initial values for the MS image processing were obtained from the 
+camera interior orientation parameters (IOPs), GNSS data, and radio­
+metric parameters contained in the image metadata. After georefer­
+encing, the estimated accuracy (RMSEs of residuals at GCPs) was 
+generally less than one GSD (4–8 cm for horizontal and 4–7 cm for 
+vertical coordinates). Agisoft PhotoScan was also used for combined 
+processing of the RGB data and two bands of the HS images. For the 
+remaining HS bands, the EOPs were calculated using in-house software 
+(Honkavaara et al., 2017). Study area 5 had an estimated RMSE of 
+approximately two GSDs for the combined RGB and HS processing. The 
+RGB dense point clouds were generated using the “high” density and 
+“mild” depth filtering and the dense MS point cloud with “ultra high” 
+density and “mild” depth filtering options.
+The reflectance transformation of MS images was performed based 
+on calibration panel images and a downwelling light sensor (DLS) in­
+formation (“Use reflectance panels” and “Use sun sensor” options in 
+Agisoft Photoscan). The MS reflectance orthomosaics (16-bit orthor­
+ectified GeoTIFF file) were calculated using the orthomosaic blending 
+mode. Radiometric processing and orthorectification of the HS data 
+were performed using an in-house software (Honkavaara and Khoram­
+shahi, 2018). Reflectance transformations for the HS and RGB data were 
+performed using the empirical line method and two radiometric panels 
+(3 % and 10 % reflectance).
+The outputs for each study area included RGB, HS, and MS 
+orthoimages with GSDs of 2, 8, and 8 cm, respectively, and photo­
+grammetric point clouds for the RGB (1200–1400 points/m2) and MS 
+data (170–210 points/m2). The georeferencing accuracy was estimated 
+to be 1–2 GSDs for each coordinate axis direction.
+2.3. Drone image-based method for individual tree level inventory
+The developed individual tree level inventory method provides es­
+timates of tree location, species, height, DBH, crown diameter, basal 
+area, and stem volume. Fig. 5 presents an overview of the tree inventory 
+method, whose main steps are (1) computation of the canopy height 
+model (CHM), (2) tree detection from the CHM, (3) feature extraction, 
+(4) tree species classification, and (5) tree attribute estimation.
+2.3.1. Digital terrain model (DTM) and canopy height model (CHM)
+In this study, the DTM used for height normalization was generated 
+from the RGB and MS photogrammetric point clouds. This was possible 
+because of high-resolution point clouds and forests that contained open 
+areas and relatively flat terrain. Alternatively, available ALS data could 
+have been used to derive the DTM, but our goal was to evaluate the 
+individual tree inventory method without external data sources. DTM 
+from the ALS data was, however, used in the development phase to 
+visually check that the photogrammetric DTMs did not include rough 
+Table 1 
+Difficulty classes and descriptions of the study areas.
+Area
+Difficulty
+Description
+1
+Easy
+Mature Scots pine forest, with sparse understory vegetation.
+2
+Easy
+Scots pine forest on peatland.
+3
+Medium
+Parklike forest.
+4
+Medium
+Norway spruce forest.
+5
+Hard
+Scots pine and Norway spruce forest with a dense understory 
+layer of small trees.
+6
+Hard
+Birch and spruce forest with dense understory spruce layer.
+O. Nevalainen et al.                                                                                                                                                                                                                            
+ISPRS Open Journal of Photogrammetry and Remote Sensing 17 (2025) 100099 
+3 
+
+
+Fig. 2. Species statistics (mean ± standard deviation for height and DBH) for pine, spruce, and birch in the study areas (n: number of trees; DBH: diameter at breast 
+height). The standard deviation is missing if only one tree of a particular tree species existed in an area.
+Fig. 3. Crown class distribution for all trees in the study areas (dom: dominant; co-dom: co-dominant).
+Fig. 4. The drone system and payload.
+O. Nevalainen et al.                                                                                                                                                                                                                            
+ISPRS Open Journal of Photogrammetry and Remote Sensing 17 (2025) 100099 
+4 
+
+
+errors. The DTM and CHM were computed using algorithms from LAS­
+tools (LAStools, rapidlasso GmbH) and FUSION software (FUSION 
+version 3.50, US Department of Agriculture, Forest Service, Pacific 
+Northwest Research Station). The CHM was created as follows: (1) 
+classifying and cleaning the ground points (FUSION: groundfilter and 
+LAStools: lasnoise), (3) creating the DTM (FUSION: gridSurfaceCreate), 
+and (4) deriving the CHM from the point cloud using the DTM (FUSION: 
+CanopyModel). The CHM generation and parameters used in each step 
+are explained in detail in Supplement S1.
+2.3.2. Tree detection
+Two different tree detection methods based on CHM were tested: a 
+method utilizing local maxima detection by Popescu and Wynne, 2004
+(FUSION: CanopyMaxima) and a method based on watershed segmen­
+tation. The local maxima method has been proven to work well for 
+managed boreal forests, where trees do not significantly overlap with 
+each other (i.e., forests with dominant and co-dominant trees only), and 
+they have narrow single peaks (Nevalainen et al., 2017). The outputs of 
+the local maxima method (FUSION: CanopyMaxima) include the loca­
+tion, height, and crown diameter of the trees.
+A limitation of the local maxima-based approach is its inability to 
+accurately delineate the actual boundaries of the tree crowns. Thus, the 
+actual data of the tree (pixels from the images and points from the point 
+cloud) must be extracted using a predefined, generally circular, sam­
+pling area around the detected tree location. The extent of this sampling 
+area can be predefined or based on, for example, the estimated crown 
+width.
+We hypothesized that tree data extracted from actual tree crown 
+boundaries would provide better results for tree attribute estimation and 
+tree species classification, as was the case for classification in Liang et al. 
+(2024). Thus, we implemented a segmentation-based tree detection 
+pipeline that delineates tree crown boundaries. As a segmentation al­
+gorithm, we used the watershed segmentation algorithm available in the 
+EBIMAGE R package (Pau et al., 2010). A detailed description of the tree 
+detection pipeline is provided in Supplementary S1.2. The tree location 
+was defined as the location of the maximum height within the 
+segmented crown in the CHM.
+We evaluated the performance of tree species classification and tree 
+attribute estimation using three tree crown delineation approaches: 
+local maxima with a constant 1-m radius sampling area, local maxima 
+with sampling area radius based on estimated tree crown width, and 
+watershed segmentation.
+2.3.3. Feature extraction
+Various feature combinations were evaluated in the classification of 
+tree species. These included spectral features derived from RGB, MS, and 
+HS imagery, textural features from RGB imagery, and structural features 
+from photogrammetric point clouds. While all feature types were 
+employed for tree species classification, only structural features were 
+utilized for estimating the DBH. In the segmentation approach, features 
+were calculated from the pixels or points within the segments. For the 
+local maxima method, two delineation approaches were tested: (1) a 
+constant 1 m radius around the tree and (2) a radius equal to half of the 
+estimated crown width.
+The spectral features from the MS and HS data included the mean 
+and median reflectance features and continuum-removed spectra 
+(Table B.1), similar to those of Nevalainen et al. (2017). In addition, we 
+computed several existing vegetation indices (VIs) found from the 
+literature, mainly from Main et al. (2011) (Table B.2). The closest 
+available bands in the MS and HS data were used as the spectral bands in 
+the VI. First, the VI was calculated for the individual pixels extracted 
+from a tree, and the average of these pixels was used as the VI of the tree. 
+With the MS data, we only computed VIs whose spectral bands were 
+reasonably close to the MS sensor bands (own evaluation). The VIs 
+computed for the MS data are listed in Table B.2.
+The RGB features were calculated for both the RGB and MS data. The 
+features included spectral features based on the calibrated red, green, 
+and blue bands (Table B.3), and textural features (Table B.4). The RGB 
+textural features included 13 gray-level co-occurrence matrix features 
+(GLCM), i.e., Haralick features (Haralick et al., 1973), Local Binary 
+Patterns (LBP; Ojala et al., 1994), Zernike Moments (Teague, 1980), and 
+Threshold Adjacency Statistics (TAS; Hamilton et al., 2007). These were 
+calculated from grayscale images derived from the RGB data and using 
+the Mahotas computer vision package (https://mahotas.readthedocs.io 
+/; Coelho, 2013). Textural features and their parameterizations are lis­
+ted in Table B.4. Parametrization was different for the RGB and MS data 
+because of their different spatial resolutions.
+The structural features included point cloud features depicting the 
+vertical structure of the tree and the estimated crown width (Table B.5). 
+For tree species classification, the structural features were normalized 
+by the estimated tree height to avoid classification based on the absolute 
+height of the tree. In the case of the DBH estimation, the structural 
+features were not normalized, and the height was included as a regres­
+sion feature. The structural features were computed from the point 
+clouds using the LAStools software.
+Table 2 
+Spectral band centers (L0) and their full widths at half maximum (FWHM) for 
+hyperspectral (HS) and multispectral (MS) cameras.
+MS
+L0 (nm): 475, 560, 668, 717, 840
+FWHM (nm): 20, 20, 10, 10, 40
+HS
+L0 (nm): 502.28, 511.4, 520.469, 529.185, 538.416, 547.202, 556.438, 
+565.216, 574.029, 583.186, 592.356, 600.556, 609.935, 619.074, 627.896, 
+640.328, 646.138, 655.169, 664.4, 673.384, 682.372, 691.046, 700.268, 
+709.344, 718.474, 727.334, 736.47, 745.335, 754.361, 763.481, 772.289, 
+781.42, 790.186, 799.387, 807.984, 817.039, 825.982, 834.98, 844.182, 
+853.259, 861.523, 871.432, 879.62, 888.536, 897.714, 906.731
+FWHM (nm): 6.36, 7.26, 7.47, 6.75, 7.42, 6.64, 7.35, 6.47, 7.02, 6.6, 6.18, 
+6.49, 7.64, 8.3, 7.05, 6.76, 6.58, 7.58, 6.72, 7.52, 6.66, 6.82, 5.01, 4.43, 4.97, 
+3.92, 4.86, 4.11, 4.49, 3.67, 4.3, 5.95, 5.8, 6.46, 5.67, 6.62, 9.05, 10.16, 9.24, 
+9.93, 9.46, 9.21, 9.55, 9.03, 9.58, 8.9
+Table 3 
+Data collection date, time, weather, sun angles, and number of images captured with RGB, hyperspectral (HS), and multispectral (MS) cameras.
+Date
+Study area
+Time (UTC+3)
+Weather
+Sun zenith (◦)
+Sun azimuth (◦)
+RGB images
+HS images
+MS images
+2018-08-03
+3
+12:08–12:23
+Cloudy
+45.491
+155.965
+850
+2767
+3100
+1
+13:44–14:09
+Cloudy
+44.1
+191.141
+335
+1223
+1250
+5
+16:10–16:25
+Sunny
+53.122
+234.075
+352
+1160
+1405
+2018-08-08
+2
+11:01–11:15
+Sunny
+51.26
+136.04
+372
+1224
+1270
+4
+12:36–12:54
+Sunny
+45.66
+166.43
+517
+1933
+1405
+6
+13:54–14:10
+Cloudy/Sunny
+45.624
+193.102
+409
+1592
+1465
+Table 4 
+Flight height (FH), ground sampling distance (GSD), and forward (fw) and side 
+(sl) overlap in the ground and treetops.
+Dataset
+Ground
+Tree tops
+FH (m)
+GSD (m)
+fw; sl (%)
+FH (m)
+GSD (m)
+fw; sl (%)
+RGB
+120
+0.015
+90; 87
+100
+0.013
+88; 84
+HS
+120
+0.073
+89; 78
+100
+0.061
+87; 74
+MS
+120
+0.083
+90; 85
+100
+0.069
+88; 82
+O. Nevalainen et al.                                                                                                                                                                                                                            
+ISPRS Open Journal of Photogrammetry and Remote Sensing 17 (2025) 100099 
+5 
+
+
+2.3.4. Tree species classification
+Tree species classification was performed using the Scikit-learn 
+(Pedregosa et al., 2011) random forest classifier (Breiman, 2001), 
+which is a fast and robust algorithm that is not prone to overfitting with 
+a high number of features. In addition, it readily provides a ranking of 
+features and performed well in our previous study on tree species clas­
+sification (Nevalainen et al., 2017). The number of decision trees was set 
+to 100 and the Gini impurity index was used as a quality metric for 
+splitting the decision trees. Decision tree nodes were expanded until all 
+the leaves were pure or contained fewer than two samples. Before 
+feature selection and classifier training, the features were standardized 
+by removing the mean and scaling to unit variance. We also evaluated 
+feature selection (recursive feature elimination using cross-validation, 
+Guyon et al., 2002) combined with hyperparameter tuning (parameter 
+grid search, Scikit-learn GridSearchCV), but they did not have a notable 
+effect on the results and were thus excluded from this study.
+The tree species classifier was trained for pines, spruces, and birches 
+by using the detected training set trees. Other tree species were omitted 
+due to the small number of available training data. We performed two 
+separate performance evaluations: one with the detected training set 
+trees using leave-one-out cross-validation (LOOCV), and the other with 
+detected test set trees.
+2.3.5. Tree attribute estimation
+With the local maxima method, tree height and crown diameter were 
+provided by the CanopyMaxima function in FUSION software. With 
+watershed segmentation, the tree height corresponded to the maximum 
+height of the CHM within each segment, and the crown width was 
+defined as the diameter of a circle with an area equal to the tree segment.
+Two different methods were tested for DBH estimation: (1) linear 
+regression with a two-parameter model, where the independent vari­
+ables were the estimated tree height and crown diameter (Equation (1)), 
+and (2) random forest regression using structural features. 
+DBH = α h + βD + γ
+(1) 
+where h is the tree height; D is the crown diameter; and α, β, and γ are the 
+fitted model parameters. For the random forest regression, the number 
+of decision trees was set to 100, and the mean squared error quality 
+metric was used to split the decision trees. The features for linear and 
+random forest regression were standardized by removing the mean and 
+scaling to unit variance. Species-specific models were trained using both 
+the linear regression and random forest methods.
+The basal area (BA) was calculated directly from the DBH (DBH) 
+(Equation (2)) and tree stem volume including bark (V) using species- 
+wise allometric equations based on DBH and height (h) by Laasase­
+naho, (1982) (Equations (3)–(5)). 
+BA = π
+(DBH
+2
+)2
+(2) 
+Vpine = 0.036089 × DBH2.01395 × 0.99676DBH × h2.07025 × (h −1.3)−1.07209
+(3) 
+Vspruce = 0.022927 × DBH1.91505 × 0.99146DBH × h2.82541 × (h −1.3)−1.53547
+(4) 
+Vbirch = 0.011197 × DBH2.10253 × 0.98600DBH × h0.98600 × (h −1.3)−2.65900
+(5) 
+Tree height was estimated for all tree species, whereas DBH, basal 
+area, and volume were estimated only for pine, spruce, and birch trees. 
+Other species were omitted because there was insufficient training data.
+2.4. Plot-level estimates
+The entire inventory pipeline was tested in a plot-level inventory, 
+where the estimated attributes included stem density, basal area per 
+hectare, and volume per hectare. This approach included the following 
+steps: (1) detection of all trees within the study area, including both 
+training and test set trees; (2) tree and feature extraction; (3) species 
+classification; (4) tree height, DBH, basal area, and volume estimation of 
+individual trees; and (5) aggregating the individual tree results to the 
+plot level. Because the tree species classifier and DBH regression could 
+only be developed for pines, spruces, and birches, the plot-level esti­
+mates were possible only for the study areas that included only these 
+species (i.e., study areas 1, 2, 5, and 6).
+2.5. Performance evaluation
+The performance of tree detection using the watershed segmentation 
+and local maxima methods was evaluated by calculating the detection 
+and commission rates at each study area using the training and test sets 
+together, because tree detection did not employ training data. The 
+Fig. 5. Overview of the individual tree level inventory method.
+O. Nevalainen et al.                                                                                                                                                                                                                            
+ISPRS Open Journal of Photogrammetry and Remote Sensing 17 (2025) 100099 
+6 
+
+
+detection rate was defined as the percentage of reference trees found in 
+the area, and the commission rate was the percentage of false positive 
+detections. A tree was considered a true detection if its Euclidean dis­
+tance to the closest reference tree was less than or equal to 2 m and there 
+were no other detected trees closer to that particular reference tree. The 
+performance was evaluated separately for the dominant, co-dominant, 
+and all tree crown classes. To evaluate the commission rate, a manu­
+ally delineated area containing the reference data was defined for each 
+study area (Fig. 1).
+Tree species classification was evaluated using the accuracy, preci­
+sion, recall, and f-score (fscore) averaged across all classes for different 
+feature sets (Equations (6)–(9)): 
+accuracy = TP
+N
+(6) 
+precision =
+TP
+(TP + FP)
+(7) 
+recall =
+TP
+(TP + FN)
+(8) 
+fscore = 2*( precision × recall)
+(precision + recall)
+(9) 
+where N is the total number of reference trees, TP the number of true 
+positives, FP the number of false positives, and FN the number of false 
+negatives. Confusion matrices were used to perform a more detailed 
+evaluation of the tree species classification.
+Tree attribute estimation was evaluated using the root mean squared 
+error (RMSE) and the relative RMSE normalized by the mean (rRMSE). 
+Additionally, bias (i.e., mean absolute error) and random error (i.e., 
+standard deviation of the errors) were calculated for summary tables and 
+height estimation. Performance was estimated using an independent test 
+set and leave-one-out cross-validation (LOOCV).
+Tree species classification and plot level estimation were evaluated 
+for four different cases: (Case 1: RGB) tree detection from RGB and all 
+features from RGB data; (Case 2: RGB + MS) tree detection from RGB 
+and all features from RGB and MS; (Case 3: RGB + HS) tree detection 
+from RGB and all features from RGB and HS; and (Case 4: MS) tree 
+detection from MS and all features from MS.
+3. Results
+3.1. Tree detection
+Fig. 6 shows the tree detection results using RGB and MS data. There 
+was no significant difference between the segmentation (SEG) and local- 
+maxima (LM) methods, as both exhibited nearly identical tree detection 
+and commission rates for RGB and MS data. Overall, the results were 
+highly specific to the area. In areas classified as “Easy” (areas 1 and 2), 
+detection rates ranged from 56 to 84 % for RGB data and 46–82 % for MS 
+data. In “Medium” areas (areas 3 and 5), detection rates were 16–44 % 
+for RGB data and 13–35 % for MS data. In “Hard” areas (areas 4 and 6), 
+detection rates were 16–30 % for RGB data and 14–19 % for MS data. 
+The poorest results were observed in area 5 (“Hard”), with detection 
+rates of 14–17 % and commission rates of 34–49 %. Surprisingly, tree 
+detection performance was worse in “Medium” area 3, with detection 
+rates of 14–26 % for dominant and co-dominant classes and a minimum 
+commission rate of 54 %, compared to “Hard” area 6, which had 
+detection rates of 53–82 % for dominant and co-dominant classes.
+RGB data performed better with co-dominant trees than MS data, 
+particularly in study areas 4 and 6 (64 % vs. 36 % detection rates in area 
+4 and ~80 % vs. ~45 % in area 6). Area 6 included most of the birches, 
+and the MS SEG performed poorly there. As a result, the MS SEG training 
+set consisted of only four birches. In total, there were 226 dominant and 
+co-dominant trees in the test plots, of which 160 and 139 were detected 
+Fig. 6. Tree detection and commission rates using the RGB and multispectral (MS) camera point cloud data (SEG: segmentation method; LM: local maxima method; 
+dom: dominating trees; co-dom: co-dominating trees).
+O. Nevalainen et al.                                                                                                                                                                                                                            
+ISPRS Open Journal of Photogrammetry and Remote Sensing 17 (2025) 100099 
+7 
+
+
+from the RGB and MS data using the best-performing tree detection 
+method, respectively. The number of different tree species detected in 
+the different study areas is shown in Tables C.1 and C.2. Most spruces 
+were in study area 4, which had a low detection rate. Thus, the total 
+number of spruces in the test set was only two to three, depending on the 
+used data source and detection method.
+3.2. Tree species classification
+Tree species classification was evaluated for four different cases: 
+Case 1 (RGB only); Case 2 (RGB + MS); Case 3 (RGB + HS); and Case 4 
+(MS only). In addition, the three tree crown delineation approaches 
+were evaluated in each case (SEG: segmentation, LMC: local maxima 
+method with tree crown delineation using constant radius circle; and 
+LMV: local maxima method with tree crown delineation using variable 
+radius circle). We used the f-score as the main metric to evaluate the 
+feature set combinations.
+Fig. 7 (and Table D.1 and D.2) presents the results for all cases. The 
+highest f-score was 89.0 % in Case 3, using SEG and feature set including 
+only spectral features from HS data (feature set {HS: sp}). The lowest f- 
+score was 51.6 % with Case 1 using the LMC and feature set including 
+only structural features from RGB data (feature set {RGB: 3D}). On 
+average, the best f-scores for Cases 1–3 were achieved using SEG tree 
+crown delineation (average f-score 79.3 %), followed by LMV (average f- 
+score 76.1 %). The LMC tree crown delineation had notably poorer re­
+sults (average f-score 68.1 %).
+The highest f-score of 89.0 % was also achieved in Case 3 using a 
+feature set including spectral features from HS data and blue band from 
+MS data (feature set {HS: sp, MS: blue}). This feature set was created 
+because the blue band was a significant feature with MS data in Cases 2 
+and 4 but was missing from the HS data. Nonetheless, the inclusion of 
+this feature did not improve significantly the f-score compared to the 
+feature set {HS: sp}. However, incorporating RGB features into the HS- 
+based features negatively impacted performance; the f-score dropped by 
+11.1 % with the feature set {HS: sp, RGB: 3D} compared to the feature 
+set {HS: sp}.
+The best results in Case 1 were achieved using LMV tree crown 
+delineation with the feature set {RGB: 3D} (f-score 81.4 %). However, 
+the same feature set produced the worst results when combined with the 
+LMC tree crown delineation. In Case 2, the best f-score was obtained 
+with the SEG and a feature set including vegetation indices from MS data 
+(feature set {MS: VI}; f-score 82.9 %).
+In Case 4, the best performance was achieved with the LMV using 
+feature set including vector-normalized spectral features from MS data 
+(feature set {MS: sp_norm}), resulting in an f-score of 88.2 %. The 
+second-best performance came from SEG with the same feature set, 
+achieving an f-score of 78.0 %. In Case 4, the textural feature set {MS: 
+tx} performed the worst (average f-score 45.9 %), and incorporating it 
+into any other feature set resulted in a decrease in f-scores. When using 
+MS-based features (Cases 2 and 4), better outcomes were observed in 
+Case 2, which utilized RGB data for tree detection.
+A few observations can be drawn from the results of the training data 
+(Supplement S2.1). The highest f-scores achieved with the training data 
+for Cases 1, 2, and 3 were 92.5 %, 92.8 %, and 90.3 %, respectively, 
+suggesting that the HS data did not outperform in species classification. 
+Whereas with the test data, Case 3 performed the best; the highest f- 
+scores being 81.4 %, 82.9 %, and 89 % for Cases 1, 2, and 3, respectively. 
+In Case 4, the highest f-score with the training data was 93.8 % using the 
+feature set {MS: VI}, whereas with the test data, the highest f-score of 
+88.2 % was achieved using the feature set {MS: sp_norm}. For the test 
+data, the most favorable outcomes for Cases 2, 3, and 4 were obtained by 
+employing only spectral features from the spectral camera. The inclu­
+sion of RGB textural and 3D features did not enhance the results.
+Table 5 displays the confusion matrices for the best-performing 
+feature sets in each scenario. The most frequent misclassifications 
+involved birches, while the few spruces of the test set were consistently 
+identified correctly, albeit with some false positives. The importance of 
+the features was evaluated based on the feature importances provided by 
+Fig. 7. Classification f-scores for different cases and feature sets using the test set. The total number of individual features is indicated in parentheses after the feature 
+set name. SEG: segmentation method; LMC: local maxima method with tree crown delineation using constant radius circle; LMV: local maxima method with tree 
+crown delineation using variable radius circle; MS: multispectral data; HS: hyperspectral data; tx: textural features; sp; spectral features; VI: vegetation index features; 
+3D: structural features; and sp_norm: vector-normalized spectral features.
+O. Nevalainen et al.                                                                                                                                                                                                                            
+ISPRS Open Journal of Photogrammetry and Remote Sensing 17 (2025) 100099 
+8 
+
+
+the random forest classifier. Table 6 presents the top ten features for 
+each case calculated with a feature set that includes all the features of 
+the case. In Case 1, textural RGB features were the most important. The 
+only non-textural features included in the top ten features were the 
+meanB and meanG spectral features. The top ten features did not include 
+any RGB 3D features. In Case 2, the top features mostly included MS VIs 
+and RGB textural features; however, the first and third most important 
+features were vector-normalized features based on the MS blue band (at 
+474 nm). In Case 3, the majority of the top ten features were vector- 
+normalized spectral features included in {HS: sp} feature set. Notably, 
+all these features were based on spectral bands from 619 nm to the 
+smaller wavelengths, that is, no bands from the red-edge or near- 
+infrared region. In Case 4, the top ten features included only the vege­
+tation indices or normalized spectral features.
+3.3. Height estimation
+The SEG and LM tree detection methods were assessed individually 
+across different study areas, as well as collectively in a dataset encom­
+passing all study areas. The results specific to each area for the test set 
+trees are illustrated for the RGB and MS data in Fig. 8 (and Supplement 
+S2.2 for training set results). Fig. 9 displays the results for both the 
+training and test sets for a combined all-area dataset using the seg­
+mentation approach.
+As there was a four-year difference between the reference data 
+collection and drone measurements, we calculated the random error and 
+bias between the reference and measurements; a negative bias indi­
+cating that the reference heights were smaller. The biases were notably 
+area-specific; areas 1, 3, 4 and 5 had negative bias from −0.29 m to 
+−1.29 m, whereas area 2 had near-zero bias and area 6 positive bias 
+(0.69–0.73 m). The negative bias is either caused by tree height growth 
+after the field measurements or by possible systematic errors in the 
+CHM. The random error reflects the accuracy in the absence of bias. For 
+instance, in area 1, a small random error compared to the RMSE suggests 
+that the RMSE is primarily influenced by bias. In area 2, the random 
+error matched the RMSE, indicating no significant bias was present.
+The SEG and LM methods for estimating tree height performed 
+Table 5 
+Confusion matrices for the best feature sets for all cases using the test set. SEG: 
+segmentation method; LMV: local maxima method with tree crown delineation 
+using variable radius circle; MS: multispectral data; HS: hyperspectral data; tx: 
+textural features; sp; spectral features; VI: vegetation index features; 3D: struc­
+tural features; and sp_norm: vector-normalized spectral features.
+Case 1, LMV: {RGB: 3D}
+Predicted
+Pine
+Spruce
+Birch
+Ground truth
+Pine
+17
+0
+0
+Spruce
+0
+2
+0
+Birch
+5
+1
+10
+Case 2, SEG: {MS: VI}
+Predicted
+Pine
+Spruce
+Birch
+Ground truth
+Pine
+19
+2
+0
+Spruce
+0
+3
+0
+Birch
+0
+2
+15
+Case 3, SEG: {HS: sp, MS: blue}
+Predicted
+Pine
+Spruce
+Birch
+Ground truth
+Pine
+20
+1
+0
+Spruce
+0
+3
+0
+Birch
+3
+0
+14
+Case 4, LMV: {MS: sp_norm}
+Predicted
+Pine
+Spruce
+Birch
+Ground truth
+Pine
+17
+0
+0
+Spruce
+0
+2
+0
+Birch
+1
+1
+7
+Table 6 
+Feature importance from training the random forest classification model using all possible features. 3D: structural features; MS: multispectral data; HS: hyperspectral data; sp; spectral features; VI: vegetation index 
+features; sp_norm: vector-normalized spectral features, and tx: textural features. See Appendix B tables for the feature descriptions.
+Case 1: RGB: 3D, sp, tx
+Case 2: MS: sp, VI, sp_norm, RGB: 3D, sp, tx
+Case 3: HS: sp, VI, sp_norm, RGB: 3D, sp, tx
+Case 4: MS: 3D, sp, VI, sp_norm, tx
+feature
+importance
+feature
+importance
+feature
+importance
+feature
+importance
+TAS12
+0.023
+meanSpectra_vnorm_6max475_MS
+0.022
+meanSpectra_vnorm520_HS
+0.017
+meanSpectra_vnorm475_MS
+0.037
+SumAverageMean3
+0.020
+TAS12
+0.022
+continuumRemovedMeanSpectra511_HS
+0.017
+MCARI_MS
+0.032
+SumEntropyMean3
+0.017
+meanSpectra_vnorm_dark475_MS
+0.019
+meanSpectra_vnorm_dark511_HS
+0.017
+meanSpectra_vnorm_dark475_MS
+0.030
+meanB
+0.017
+normedMeanR
+0.018
+meanSpectra_vnorm_dark538_HS
+0.016
+meanSpectraNormalized475_MS
+0.029
+TAS11
+0.016
+TAS4
+0.017
+continuumRemovedMeanSpectra583_HS
+0.016
+meanSpectra_vnorm560_MS
+0.028
+SumAverageMean5
+0.016
+TCARI_MS
+0.016
+continuumRemovedMeanSpectra619_HS
+0.015
+meanSpectra_vnorm_dark668_MS
+0.027
+SumEntropyMean20
+0.015
+OSAVI1_MS
+0.016
+meanSpectra_vnorm_dark574_HS
+0.015
+meanSpectraNormalized668_MS
+0.023
+meanG
+0.015
+NDVI_MS
+0.016
+meanSpectra_vnorm_dark520_HS
+0.015
+GNDVI1_MS
+0.022
+TAS5
+0.015
+SR1_MS
+0.016
+TAS13
+0.013
+SR1_MS
+0.021
+InverseDifferenceMomentMean40
+0.015
+TAS11
+0.015
+meanSpectraNormalized520_HS
+0.012
+NDVI_MS
+0.020
+O. Nevalainen et al.                                                                                                                                                                                                                            
+ISPRS Open Journal of Photogrammetry and Remote Sensing 17 (2025) 100099 
+9 
+
+
+equally well across different areas and with the combined dataset that 
+included all areas (Fig. 9). Estimations were more accurate using RGB 
+data (RMSE 0.87–0.97 m) compared to MS data (RMSE 0.93–1.12 m). 
+With the combined dataset, the bias was nearly zero, making the random 
+error approximately equal to the RMSE.
+3.4. DBH
+The DBH estimation models were assessed individually for various 
+combinations of tree detection and crown delineation methods. We 
+conducted evaluations using both RGB and MS data at the species level, 
+as well as with combined all-species sets (see Figs. 10 and 11, Supple­
+ment S2.3 for training set results).
+With RF regression, the model performance with RGB data remained 
+consistent across all tree detection and crown delineation methods, with 
+an RMSE ranging from 3.8 to 4.3 cm (Fig. 10). In contrast, linear 
+regression showed greater variability between methods, with RMSE 
+values spanning from 3.1 to 4.8 cm. The best performance across species 
+was achieved through segmentation using linear regression, yielding an 
+RMSE of 3.1 cm and a rRMSE of 14 % (Fig. 11). The local maxima-based 
+methods showed significant variability with spruces, as there was an 
+approximately 19–20 % difference in the rRMSEs between the RF and LR 
+regression results. This variation is likely due to the test set containing 
+only three spruces. Such discrepancies were not observed in the training 
+set (Fig. S6), where the results were consistent with those of other tree 
+species.
+The results derived from the MS data alone (Fig. 10) were similar to 
+those obtained using the RGB data. Segmentation employing linear 
+regression yielded the best results (RMSE 3.7 cm, rRMSE 17 %, Fig. 11), 
+although all other methods exhibited a rRMSE within 4 %. The vari­
+ability in the results for spruces was notably more pronounced, as the 
+Fig. 8. Tree height estimation from RGB and multispectral (MS) data using the test set (SEG: segmentation method; LM: local maxima method; RE: random error). 
+The standard deviation is missing if the test set included only one tree in an area.
+Fig. 9. Tree height estimation using RGB (top row) and multispectral (MS; 
+bottom row) data using segmentation. RMSE: root mean squared error; RE: 
+random error, and rRMSE: relative RMSE.
+O. Nevalainen et al.                                                                                                                                                                                                                            
+ISPRS Open Journal of Photogrammetry and Remote Sensing 17 (2025) 100099 
+10 
+
+
+test set with the MS data comprised only two spruces.
+3.5. Basal area estimation
+The basal area was directly calculated using the estimated DBH 
+values. Like DBH, it was assessed separately for various combinations of 
+tree detection, tree crown delineation, and DBH estimation methods. 
+Fig. 12 displays the species-level results using the test set from the RGB 
+and MS data (training set results available in Supplement S2.4).
+For both RGB and MS data, the best performance was achieved using 
+segmentation with linear regression (all-species rRMSE of 29 % with 
+RGB data and 27 % with MS). The basal area of birches was more 
+accurately estimated using linear regression (rRMSEs 12–15 % larger 
+with RF). Such a distinct difference is not observed with pines; however, 
+for spruces, the results are influenced by the small sample size, similar to 
+the case with DBH.
+3.6. Volume estimation
+Fig. 13 presents the volume estimation results with species-specific 
+allometric equations using estimated height and DBH for the RGB and 
+MS data (training set results in Supplement S2.5). The volume estima­
+tion was evaluated separately for different combinations of tree detec­
+tion, tree crown delineation, and DBH estimation methods.
+When using RGB data, the difference in results between RF and linear 
+regression were within 4 % rRMSE when employing local maxima-based 
+methods. However, with segmentation, linear regression exhibited a 10 
+% lower rRMSE compared to RF. The most significant species-wise dif­
+ferences between linear regression and RF were observed with birches, 
+where the rRMSEs differed by 16–17 %. With MS data, the combined 
+results of all species with MS data showed similar trend between RF and 
+linear regression as was observed with the RGB results; segmentation 
+with RF and LR had a 20 % difference in the rRMSE, and with other 
+approaches, the differences were within 3 %.
+Again, the model that performed best using both RGB and MS data 
+was the segmentation with linear regression, achieving RMSE and 
+rRMSEs of 0.13 m3 and 29 % with RGB data, and 0.12 m3 and 25 % with 
+MS data, respectively. Additionally, the small sample size is again 
+evident in local maxima-based methods with spruces.
+3.7. Plot-level estimates
+The plot-level estimates were derived using the best-performing 
+volume regression method, which for all cases was segmentation with 
+DBH estimation using linear regression. Trees were classified using the 
+feature set that performed the best with segmentation for each case: Case 
+1, {RGB: sp}; Case 2, {MS: VI}; Case 3, {HS: sp}; and Case 4, {MS: 
+sp_norm}.
+Fig. 14 illustrates the per hectare results at the plot level for the 
+number of trees, basal area, and volume. Across all areas, the number of 
+trees was underestimated. The smallest underestimation occurred in 
+Fig. 10. DBH estimation RMSEs and relative RMSEs from RGB and multispectral (MS) data using the test set. SEG: segmentation method; LMC: local maxima method 
+with tree crown delineation using constant radius circle; LMV: local maxima method with tree crown delineation using variable radius circle; RF: random forest; and 
+LR: linear regression.
+Fig. 11. The best-performing DBH estimation model according to test set re­
+sults using RGB data (SEG-LR; top row) and multispectral (MS) data (SEG-LR; 
+bottom row). SEG: segmentation method; LR: linear regression. RMSE: root 
+mean squared error and rRMSE: relative RMSE.
+O. Nevalainen et al.                                                                                                                                                                                                                            
+ISPRS Open Journal of Photogrammetry and Remote Sensing 17 (2025) 100099 
+11 
+
+
+study area 1, which was predominantly composed of dominant and co- 
+dominant trees, showing a relative difference of −9.1 % with RGB and 
+−13.6 % with MS compared to the reference. In contrast, the largest 
+underestimation was observed in area 6, which contained numerous 
+intermediate and suppressed trees, with a relative difference of −66.2 % 
+with RGB and −77.1 % with MS. The undetected trees are typically 
+small, as evident in area 6, where plot-level volume estimates were 
+underestimated by 19.8–21.6 % with RGB data, despite a 66.2 % un­
+derestimation in trees per hectare.
+The results for Cases 1, 2, and 3 were essentially the same, as tree 
+detection and height estimation in all cases relied on RGB data with 
+segmentation, and DBH was estimated using the linear regression 
+model. The only variation among these cases stemmed from tree species 
+classification, which nonetheless yielded similar outcomes in these 
+areas. Case 4 showed minor differences from the other cases in areas 1, 
+2, and 4, whereas in area 6, the difference was significant. This differ­
+ence is caused by poorer tree detection of MS data in area 6 compared to 
+RGB data. With MS data, the tree detection rates using SEG were 0.53 for 
+dominant trees and 0.44 for co-dominant trees, whereas with RGB data, 
+the detection rates were 0.74 and 0.80, respectively.
+Fig. 12. Basal area estimation using RGB and multispectral (MS) data and the test set. SEG: segmentation method; LMC: local maxima method with tree crown 
+delineation using constant radius circle; LMV: local maxima method with tree crown delineation using variable radius circle; RF: random forest regression; and LR: 
+linear regression.
+Fig. 13. Volume estimation using RGB and multispectral (MS) data and the test set. SEG: segmentation method; LMC: local maxima method with tree crown 
+delineation using constant radius circle; LMV: local maxima method with tree crown delineation using variable radius circle; RF: random forest regression; and LR: 
+linear regression.
+O. Nevalainen et al.                                                                                                                                                                                                                            
+ISPRS Open Journal of Photogrammetry and Remote Sensing 17 (2025) 100099 
+12 
+
+
+The overestimation of the basal area (18.9 % with RGB and 23.1 % 
+with MS) and volume (25.1 % with RGB and 28.6 % with MS) in area 1 is 
+likely due to forest growth between the reference and drone data 
+collection, which was also observed as negative tree height bias in area 1 
+(Fig. 6).
+3.8. Summary of the individual tree and plot level results
+Table 7 presents a summary of individual tree-level attribute esti­
+mations for height, DBH, basal area, and volume, while Table 8 provides 
+a summary of plot-level results. Since the plot-level results for Cases 1–3 
+were nearly identical (Fig. 14), only Case 3, which used HS for classi­
+fication, is displayed.
+At the individual tree level, RGB slightly outperformed MS in all 
+attributes except for volume estimation. However, the MS results were 
+based on a somewhat smaller sample of trees due to its lower tree 
+detection rate. Consequently, RGB surpassed MS at the plot level across 
+all attributes (Table 8). The plot-level findings indicate that while the 
+rRMSE for stem density estimation is high (74.55 % for RGB and 84.86 % 
+for MS), the rRMSE for volume is significantly lower (17.6 % for RGB 
+and 27.5 % for MS).
+4. Discussion
+4.1. Assessment of results
+The goal of this study was to develop and assess a wall-to-wall drone 
+imaging-based forest inventory methodology. The methodology consists 
+of four main phases: tree detection, feature extraction, species classifi­
+cation, and tree attribute estimation (height, DBH, basal area, and vol­
+ume). Various sensor configurations and data analysis techniques were 
+investigated to optimize performance. Three remote sensing camera 
+setups were tested individually and in different combinations: a dual 
+RGB camera system, an MS camera, a combination of RGB and HS 
+cameras, and a combination of RGB and MS cameras. Additionally, 
+multiple analytical approaches were evaluated, including two tree 
+detection methods, three tree crown delineation approaches, two DBH 
+estimation methods, and various features for tree species classification. 
+Tree detection and tree height estimation were conducted using unsu­
+pervised techniques, whereas supervised techniques were used for tree 
+species classification, DBH, basal area, and volume estimation. The 
+methodology was evaluated at the individual tree and plot levels, with a 
+summary of individual tree level estimation results provided in Table 7
+and a summary of plot level attribute estimation in Table 8.
+In tree detection, the high-resolution RGB image from a large-format 
+Fig. 14. Plot-level estimation using the best-performing volume regression method. Trees were classified using a classifier that performed the best with the tree 
+crown delineation approach used. HS: hyperspectral camera; MS: multispectral camera; Ref.: reference data.
+Table 7 
+Summary results for individual tree level attribute estimation using the RGB and multispectral (MS) data with the test set and best-performing estimation method 
+(segmentation using linear regression-based DBH estimation).
+Datasource
+Attribute
+Bias
+Relative Bias
+RMSE
+Relative RMSE
+Random Error
+Relative Random Error
+RGB
+Height
+−0.04 m
+−0.23 %
+0.97 m
+5.06 %
+0.97 m
+5.05 %
+DBH
+−0.92 cm
+−4.17 %
+3.09 cm
+13.92 %
+2.94 cm
+13.28 %
+Basal area
+−40.84 cm2
+−9.19 %
+129.64 cm2
+29.16 %
+123.04 cm2
+27.68 %
+Volume
+−0.05 m3
+−9.97 %
+0.13 m3
+28.66 %
+0.13 m3
+26.88 %
+MS
+Height
+0.0 m
+0.02 %
+1.12 m
+5.92 %
+1.12 m
+5.92 %
+DBH
+−0.9 cm
+−4.1 %
+3.74 cm
+17.01 %
+3.63 cm
+16.51 %
+Basal area
+−41.99 cm2
+−9.34 %
+122.77 cm2
+27.31 %
+115.36 cm2
+25.66 %
+Volume
+−0.05 m3
+−9.84 %
+0.12 m3
+25.03 %
+0.11 m3
+23.02 %
+O. Nevalainen et al.                                                                                                                                                                                                                            
+ISPRS Open Journal of Photogrammetry and Remote Sensing 17 (2025) 100099 
+13 
+
+
+dual-RGB camera system outperformed MS data, especially in the 
+“Medium” and “Hard” study areas. However, the tree detection rates 
+remained consistent between the local maxima and segmentation 
+methods, regardless of whether RGB or MS data were used. The tree 
+detection results were similar to those of our previous study (Nevalainen 
+et al., 2017), where the same local maxima method was used with 
+drone-based photogrammetric point cloud data, with an average tree 
+detection rate of 82 % for 4151 dominant and co-dominant reference 
+trees. In the current study, detection was more challenging in study 
+areas with a high proportion of intermediate and suppressed trees, as 
+they are difficult to identify from photogrammetric drone data. Thus, the 
+method was well suited for detecting dominant and co-dominant trees, 
+which 
+aligns 
+with 
+the 
+expected 
+performance 
+of 
+structure-from-motion-based point clouds.
+The most critical aspect of our tree detection method is the quality of 
+the CHM. The CHM should be smooth, with distinguishable treetops and 
+boundaries between trees. We attempted to identify general parameters 
+that could be applied across all study areas, and we successfully found 
+parameters that worked well in five of the six study areas. An important 
+future development topic is the development of an automated method­
+ology for identifying area-specific parameters. In addition, our study 
+areas were forests with flat terrain and open areas, which allowed us to 
+use DTMs derived from the photogrammetric data. This might not be 
+applicable in forests with denser canopies or in forests with rougher 
+terrain and large height differences. Presently, national level LiDAR 
+datasets that are becoming widely available in different countries could 
+be used as the terrain reference.
+The best results in tree species classification were achieved with the 
+HS data, showing the benefits of hyperspectral data in capturing the 
+distinct spectral features of different tree species. MS data, however, 
+performed well and were clearly more consistent with different feature 
+sets compared to using only RGB data. The classification results with 
+RGB data varied greatly among the feature sets and tree crown delin­
+eation approaches. The best-performing classifier with MS data was 
+better when tree detection was also performed using MS data (Case 4) 
+instead of RGB data (Case 2); however, in general, the classification 
+results with different tree crown delineation approaches were better in 
+Case 2.
+Tree species classification was influenced by the tree crown delin­
+eation approach, with the LMC yielding significantly poorer results than 
+the LMV or SEG methods. This difference was most notable when only 
+RGB data were used. These results suggest that moving from constant- 
+sized circles in tree crown delineation to variable-sized circles or seg­
+mentation improves tree species classification. The likely reason for this 
+improvement is that LMV and SEG utilized more accurately captured 
+crown data, whereas LMC either captured only part of the tree crown or 
+extended beyond it, incorporating data from the surrounding area, 
+which likely led to a less precise classification.
+Tree height was estimated with similar accuracy using all tested tree 
+crown delineation methods, whereas the high-resolution RGB data 
+yielded slightly better results than the MS data. However, a four-year 
+difference between the drone measurements and reference data collec­
+tion introduced some uncertainty, particularly in tree height estimation. 
+It is highly recommended that reference and drone data collection 
+should always be performed at close dates.
+Linear regression performed slightly better in DBH estimation than 
+the random forest when the segmentation approach was used. Other­
+wise, tree detection and tree crown delineation methods did not have a 
+strong impact on DBH estimation. Basal area and volume estimations 
+were highly connected to the estimation performance of DBH; thus, they 
+were also best estimated using a linear regression approach and were 
+unaffected by the tree detection or tree crown delineation approach.
+The plot-level results revealed that while many small undetected 
+trees within a plot could affect tree detection rates, their omission did 
+not significantly impact the overall plot-level estimates. However, un­
+derestimation of basal area and volume at the plot level was still notable, 
+except in Area 1, where the forest growth between the field and drone 
+measurements led to overestimation of the plot-level estimates. Plot- 
+level estimates would be best evaluated using a completely indepen­
+dent study area. Unfortunately, this was not possible due to the species- 
+wise imbalance in the study areas.
+4.2. Comparison to previous studies
+To the best of our knowledge, our study is the first to evaluate a wall- 
+to-wall individual tree inventory pipeline using image data as compre­
+hensively as we did. Furthermore, data from all three cameras (RGB, MS, 
+and HS) were collected simultaneously, ensuring a fair comparison 
+under identical illumination conditions. Recent studies have focused on 
+testing drone-based laser scanning in some or all parts of an individual 
+tree inventory (Liang et al., 2019; Gyawali et al., 2022; Hyypp¨a et al. 
+2020b, 2022), but photogrammetric data have also been used (Fujimoto 
+et al., 2019; Nezami et al., 2020; Kuzmin et al., 2021).
+Liang et al. (2019) evaluated the accuracy of various laser scanning 
+methods—terrestrial, mobile, and drone-based—in estimating tree 
+location, height, DBH, stem curve, and volume across three study areas, 
+specifically areas 1, 4, and 6, which are also included in this paper. Their 
+approach involved estimating all tree attributes directly from the stems 
+visible in the point cloud data. In contrast, we employed machine 
+learning to indirectly estimate DBH and used allometric equations to 
+determine the volume. Direct measurements eliminate the need for 
+separate feature engineering, model training, or the application of 
+allometric equations. With drone-based laser scanning data, they ach­
+ieved tree detection rates of approximately 55 %, 35 %, and 13 % in 
+areas 1, 4, and 6, respectively). Compared with the results of this study, 
+the detection rates were lower, as we achieved 82–84 %, 43–44 %, and 
+29–30 % detection rates with RGB data in areas 1, 4, and 6, respectively. 
+They estimated tree height with rRMSEs of approximately 10 % in areas 
+1 and 4 and 13 % in area 6, while in our study, the rRMSEs for height 
+were 6.2–6.6 %, 4.9–5.9 % and 5.0–5.3 % for areas 1, 4, and 6, 
+respectively. The rRMSEs for the DBH estimation in their study were 
+approximately 17 %, 31 %, and 52 % for areas 1, 4, and 6, respectively, 
+whereas we achieved an average rRMSE of 13.9 % at best across all 
+study areas (RGB data with segmentation and linear regression). The 
+tree volumes in Liang et al. (2019) were estimated with approximate 
+rRMSE of 60 %, 120 %, and 220 % for areas 1, 4, and 6, respectively. We 
+achieved volume estimates with a rRMSE of 23–32 % (combined 
+all-species), depending on the methods and data source used. We were 
+able to estimate DBH and volume only for pines, spruces, and birches 
+because of the need for training data, whereas Liang et al. (2019)
+Table 8 
+Plot-level estimation results using RGB and multispectral (MS) cameras. The RGB results are based on Case 3, where a hyperspectral (HS) camera was used for tree 
+species classification. n: number of trees.
+Datasource
+Attribute
+Bias
+Relative Bias
+RMSE
+Relative RMSE
+Random Error
+Relative Random Error
+RGB (Case 3)
+Stem density
+−620.92 n/ha
+−54.1 %
+855.7 n/ha
+74.55 %
+588.8 n/ha
+51.3 %
+Basal area
+−4.32 m2/ha
+−15.21 %
+6.85 m2/ha
+24.15 %
+5.32 m2/ha
+18.75 %
+Volume
+−20.5 m3/ha
+−7.42 %
+48.64 m3/ha
+17.6 %
+44.11 m3/ha
+15.96 %
+MS (Case 4)
+Stem density
+−687.82 n/ha
+−59.92 %
+974.09 n/ha
+84.86 %
+689.75 n/ha
+60.09 %
+Basal area
+−5.13 m2/ha
+−18.08 %
+9.58 m2/ha
+33.76 %
+8.09 m2/ha
+28.52 %
+Volume
+−28.53 m3/ha
+−10.32 %
+76.0 m3/ha
+27.5 %
+70.44 m3/ha
+25.49 %
+O. Nevalainen et al.                                                                                                                                                                                                                            
+ISPRS Open Journal of Photogrammetry and Remote Sensing 17 (2025) 100099 
+14 
+
+
+estimated the DBH and volume for all species. The lower detection rates 
+and estimation accuracies reported by Liang et al. (2019) may stem from 
+their tree detection and attribute estimation approach, which was 
+tailored for ground-based laser scanning data rather than drone-based 
+laser scanning data. In the same study, higher detection rates and 
+attribute estimation accuracies were achieved using ground-based laser 
+scanning methods.
+Hyypp¨a et al. (2020b) assessed six mobile laser scanning method­
+ologies, including an above-canopy drone-based individual tree 
+approach, for automated field reference data acquisition in boreal forest 
+environments. In the obstructed plot, tree detection rates ranged from 
+83 % to 86 %, while the volume estimation errors were approximately 
+50 %. The study concluded that under-canopy mobile laser scanning 
+significantly outperformed the above-canopy individual-tree approach. 
+Hyypp¨a et al. (2022) improved the method of Hyypp¨a et al. (2020b) for 
+above-canopy individual tree reference data collection and used point 
+cloud data from a high-resolution ALS system on a helicopter for tree 
+detection and height, diameter, and volume estimation. At best, they 
+achieved detection rates of 87–97 % and rRMSEs of DBH and stem 
+volumes of 8–10 % (RMSE 2.2–2.9 cm) and 12–21 % (RMSE 0.1–0.15 
+m3), respectively. These results are better than we achieved and are a 
+result of the high-resolution point cloud data, which enabled them to 
+estimate the stem curve and height, and therefore, volume more directly 
+from the data without the need for allometric equations. However, the 
+original concept relied on high-cost sensors and multi-angle tree mea­
+surements. While achieving high detection rates in some instances, the 
+system was designed to generate high-quality reference samples, rather 
+than comprehensive plot-level tree inventories. Additionally, the study 
+focused on spruce forests, which exhibit a slightly simpler volume esti­
+mation than pine or birch, which limits direct result comparability.
+High-density point clouds were also used in tree detection by Hakula 
+et al. (2023). They used airborne lidar point clouds (>1000 pt/m2) with 
+a segmentation method that utilized the full 3D information of the point 
+clouds. They achieved 89.5 % and 78 % detection rates for the dominant 
+and co-dominant trees, respectively. This confirms the quality of our tree 
+detection results, with limited potential for further improvement.
+Gyawali et al. (2022) estimated individual tree height from both 
+laser scanning and photogrammetric point clouds from drones in 
+southeastern Finland. With photogrammetric point cloud data, the 
+estimation RMSEs were 2.13 m for pine, 2.08 m for birch and 1.26 m for 
+spruce. In our study, tree height was best estimated using the RGB data 
+and segmentation approach, with an RMSE of 0.97 m.
+Kuzmin et al. (2021) employed an MS camera similar to the one used 
+in our study for classifying tree species in boreal forests in Finland. They 
+utilized RGB data alongside two MS cameras (Parrot Sequoia and 
+MicaSense RedEdge-M), achieving an overall classification accuracy of 
+83.3 % for four tree species: pine, spruce, birch, and aspen. This accu­
+racy is over 9 % lower than what we achieved using the MS data 
+(Table D.2).
+Nezami et al. (2020) achieved high tree species classification accu­
+racies by employing a hyperspectral (HS) camera similar to the one used 
+in this study. They utilized deep learning convolutional neural networks 
+to classify tree species—pine, spruce, and birch—using RGB, HS, and 
+CHM bands, attaining an overall accuracy of 98 % using an independent 
+test set. This is 8 % higher than the best accuracy achieved in this study. 
+It is important to note, however, that the tree data in Nezami et al. 
+(2020) comprised clearly distinguishable trees. Nonetheless, this in­
+dicates that the classification component of the method introduced in 
+this study might benefit from being replaced by a deep learning-based 
+approach with reduced feature engineering.
+Fujimoto et al. (2019) used drone-based photogrammetric data for 
+tree detection and DBH estimation. They achieved 92.3 % tree detection 
+rate and an RMSE of 4.7–7.5 cm for DBH estimation. The detection rates 
+were clearly better than ours, but the results were obtained in a sparser 
+forest. The DBH results, on the other hand, are in the same range as our 
+results.
+The first study to estimate plot level forest inventory variables using 
+photogrammetric point clouds was conducted by Puliti et al. (2015). 
+They used structural features from photogrammetric point clouds and 
+spectral features from the red, green, and near-infrared bands. The 
+RMSE (and rRMSE) based on LOOCV were 538.2 ha-1 (39.2 %), 4.5 m2 
+ha−1 (15.4 %) and 38.3 m3 ha−1 (14.5 %) for the stem density, basal 
+area, and volume, respectively. The study was conducted in a boreal 
+forest in Norway. Similarly, Goodbody et al. (2017) used drone-based 
+photogrammetric data to estimate plot-level volume and achieved a 
+rRMSE of 18.5 %. Our RMSEs (and rRMSEs) using RGB data were 855.7 
+ha-1 (74.6 %), 6.9 m2 ha−1 (24.2 %), and 48.6 m3 ha−1 (17.6 %) for stem 
+density, basal area, and volume, respectively. The results of Puliti et al. 
+(2015) and Goodbody et al. (2017) are not directly comparable to ours, 
+as they generated plot-level estimates using plot-level features without 
+aggregating results from individual tree-level estimates. In contrast, 
+Kukkonen et al. (2021) and Puliti et al. (2020) used drone-based laser 
+scanning data to derive plot-level results from individual tree-level es­
+timates, achieving plot-level volume estimates with rRMSEs of 18.8 % 
+and 32.2 %, respectively.
+The MS and RGB single-sensor solutions proposed in this study 
+provide high-quality plot-level estimates in mature managed forest 
+plots. This is relevant for various applications, including the standing 
+timber trade and property value assessment.
+4.3. Future developments
+The MS and RGB cameras used in this study enabled photogram­
+metric point cloud generation and a wall-to-wall forest inventory pro­
+cess. However, the MS camera outperformed the RGB camera in species 
+classification, whereas the RGB camera excelled in point cloud analyses. 
+Furthermore, tree species classification in forests with high biodiversity 
+and forest health assessments will continue to benefit from HS data. 
+Miniaturized camera technologies are advancing rapidly, with new MS 
+cameras already offering enhanced spatial resolutions. For instance, the 
+novel Micasense Altum-PT provides a 2.5 cm GSD in pansharpened 
+mode from a 120 m flight altitude, compared to the 8.9 cm GSD of the 
+RedEdge camera used in this study, thus approaching the performance 
+of RGB cameras (https://ageagle.com/drone-sensors/altum-pt-came 
+ra/). Moreover, emerging MS camera systems, such as the Agrowing, 
+equipped with 14 spectral bands and a wide-angle RGB camera, are 
+approaching the capabilities of HS cameras while also providing the 
+added advantage of high-quality RGB data (https://agrowing.com/). 
+However, our results are also applicable to emerging sensor technolo­
+gies, suggesting that the next generation cameras will incorporate the 
+advantages identified with different sensor types. These advancements 
+are expected to deliver high-performance results to single-sensor 
+solutions.
+Deep learning methods are widely utilized and continuously devel­
+oped for analyzing remote sensing data (Paheding et al., 2024). They 
+have demonstrated outstanding performance in classifying tree species 
+using drone data from HS cameras (Nezami et al., 2020; Sothe et al., 
+2020; Miyoshi et al., 2020) and RGB cameras (Onishi and Ise, 2021). 
+Additionally, they have been applied to tree detection (Cloutier et al., 
+2024; Lee et al., 2024; Liang et al., 2024) and height estimation (Fu 
+et al., 2024). The complexity of deep learning methods has made it 
+difficult to gain insight into the features on which the deep learning 
+model relies. In this study, we focused on machine learning methods for 
+which the features are engineered, and the importance of each feature 
+can be easily evaluated. This is beneficial for designing future sensors or 
+sensor combinations and provides insights into the reasons why a spe­
+cific sensor or method performs as it does.
+In a study by Hyypp¨a et al., (2024), it was shown that the new na­
+tional ALS data of Finland (5 pt/m2) can be used to detect individual 
+trees and estimate their attributes (height, DBH, and volume) with ac­
+curacies similar to those in this study. This makes individual tree level 
+forest inventories possible on a large scale in regions where such ALS 
+O. Nevalainen et al.                                                                                                                                                                                                                            
+ISPRS Open Journal of Photogrammetry and Remote Sensing 17 (2025) 100099 
+15 
+
+
+data are available. However, each of the tested methods in this study 
+outperformed the national ALS data in terms of species classification 
+performance. In addition, a small-scale inventory is needed to maintain 
+and improve forest information between large-scale ALS campaigns, 
+which is required for various forestry applications, such as standing 
+timber trade and property value assessment.
+Although the detection of suppressed trees using drone-based laser 
+scanning or photogrammetry presents a significant challenge, their 
+presence can be inferred through the application of theoretical distri­
+bution functions. For example, Maltamo (2004) employed two distinct 
+methodologies to predict the suppressed trees. The first method utilized 
+parameter prediction models to estimate the parameters of a complete 
+Weibull distribution, thereby deriving the suppressed tree population 
+from the predicted tree height distribution. The second method involved 
+fitting a two-parameter left-truncated Weibull distribution directly to 
+the detected tree height distribution.
+5. Conclusions
+A wall-to-wall drone image-based forest inventory processing pipe­
+lines using a dual-RGB camera system (RGB), a multispectral camera 
+(MS), a combination of RGB and MS, and a combination of RGB and 
+hyperspectral (HS) cameras was developed and assessed in this study.
+The best tree species classification results were achieved using a 
+combination of RGB and HS cameras. However, both the RGB and MS 
+cameras also provided a single sensor solution for a wall-to-wall indi­
+vidual tree-level forest inventory pipeline with reasonable accuracy. 
+Tree detection, however, was only feasible for dominant and co- 
+dominant trees, which remains a challenge for airborne remote 
+sensing technologies. The RGB data, with its higher spatial resolution, 
+provided slightly better results than the MS data for tree detection and 
+attribute estimation. The tree detection rates and attribute estimation 
+accuracies were similar for both the local maxima- and segmentation- 
+based tree detection methods.
+Our results demonstrated that the RGB and MS single-camera ap­
+proaches offer sufficient performance for forest inventory pipelines in 
+boreal managed forests, offering efficiency considering data processing 
+and costs. However, in forests with higher biodiversity, HS data are 
+likely to outperform in tree species classification. Due to the challenges 
+of detecting trees growing beneath dominant and co-dominant trees, the 
+methodology developed in this study is particularly well-suited for 
+evaluating mature managed forests, making it highly relevant for ap­
+plications such as timely standing timber trade and property value 
+assessment.
+The ongoing advancements in drone camera technologies combine 
+the benefits of RGB, MS, and HS datasets, incorporating the advantages 
+of each sensor type identified in this study. This holds a significant po­
+tential for developing low-cost drone-based forest inventory pipelines. 
+To the best of our knowledge, this study is the first to implement a 
+complete wall-to-wall forest inventory pipeline while comparing 
+different camera technologies.
+CRediT authorship contribution statement
+Olli Nevalainen: Writing – review & editing, Writing – original 
+draft, Visualization, Software, Methodology, Investigation, Formal 
+analysis, Data curation, Conceptualization. Niko Koivum¨aki: Writing – 
+review & editing, Writing – original draft, Visualization, Software, 
+Methodology, Investigation, Formal analysis, Data curation, Conceptu­
+alization. Raquel Alves Oliveira: Writing – review & editing, Writing – 
+original draft, Software, Methodology, Investigation, Formal analysis, 
+Data curation, Conceptualization. Teemu Hakala: Writing – original 
+draft, Software, Resources, Methodology, Investigation, Data curation, 
+Conceptualization. Roope N¨asi: Writing – review & editing, Writing – 
+original draft, Software, Methodology, Investigation, Formal analysis, 
+Data curation, Conceptualization. Xinlian Liang: Writing – review & 
+editing, Writing – original draft, Resources, Methodology, Investigation, 
+Funding acquisition, Data curation, Conceptualization. Yunsheng 
+Wang: Writing – review & editing, Writing – original draft, Resources, 
+Methodology, Investigation, Data curation, Conceptualization. Juha 
+Hyypp¨a: Writing – review & editing, Writing – original draft, Supervi­
+sion, Resources, Project administration, Methodology, Funding acqui­
+sition, Conceptualization. Eija Honkavaara: Writing – review & 
+editing, Writing – original draft, Visualization, Supervision, Software, 
+Resources, Project administration, Methodology, Investigation, Funding 
+acquisition, Data curation, Conceptualization.
+Declaration of generative AI and AI-assisted technologies in the writing process
+During the preparation of this work the author(s) used Paperpal in 
+order to improve the readability and language of the manuscript. After 
+using this tool/service, the author(s) reviewed and edited the content as 
+needed and take(s) full responsibility for the content of the publication.
+Declaration of competing interest
+The authors declare that they have no known competing financial 
+interests or personal relationships that could have appeared to influence 
+the work reported in this paper.
+The author is an Editorial Board Member/Editor-in-Chief/Associate 
+Editor/Guest Editor for this journal and was not involved in the edito­
+rial review or the decision to publish this article.
+Acknowledgements
+This research was funded by the Research Council of Finland within 
+grant DRONE4TREE (359404). This study has been performed with 
+affiliation to the Research Council of Finland Flagships Forest­
+–Human–Machine Interplay—Building Resilience, Redefining Value 
+Networks and Enabling Meaningful Experiences (UNITE) (decision no. 
+359175) and the Atmosphere and Climate Competence Center (ACCC) 
+(decision no. 337552).
+Appendix A. Supplementary data
+Supplementary data to this article can be found online at https://doi.org/10.1016/j.ophoto.2025.100099.
+O. Nevalainen et al.                                                                                                                                                                                                                            
+ISPRS Open Journal of Photogrammetry and Remote Sensing 17 (2025) 100099 
+16 
+
+
+7 Appendix
+A Reference data
+Table A.1 
+Species statistics for the study plots. The standard deviation (STD) is missing if the study area contained only one tree of the species.
+Area
+Species
+Number of trees (%)
+Height ± STD
+DBH ± STD
+1
+Scots pine
+40 (90.9 %)
+20.3 ± 1.3 m
+25.3 ± 3.3 cm
+Norway spruce
+3 (6.8 %)
+9.7 ± 0.6 m
+9.5 ± 2.0 cm
+Birch
+1 (2.3 %)
+12.3 m
+9.1 cm
+2
+Scots pine
+79 (94.0 %)
+13.9 ± 3.9 m
+16.4 ± 6.8 cm
+Norway spruce
+1 (1.2 %)
+6.7 m
+8.8 cm
+Birch
+4 (4.8 %)
+11.2 ± 3.8 m
+8.5 ± 3.4 cm
+3
+Scots pine
+3 (3.2 %)
+26.6 ± 2.2 m
+51.1 ± 3.9 cm
+Norway spruce
+56 (60.2 %)
+9.6 ± 3.9 m
+10.4 ± 5.5 cm
+Birch
+18 (19.4 %)
+18.1 ± 8.4 m
+20.3 ± 13.9 cm
+Trembling aspen
+4 (4.3 %)
+20.3 ± 9.4 m
+23.5 ± 18.1 cm
+Gray alder
+1 (1.1 %)
+10.9 m
+6.5 cm
+European rowan
+1 (1.1 %)
+5.2 m
+11.7 cm
+Larch
+1 (1.1 %)
+30.0 m
+61.2 cm
+Fir
+1 (1.1 %)
+8.9 m
+8.6 cm
+Common juniper
+1 (1.1 %)
+3.2 m
+5.1 cm
+Other
+7 (7.5 %)
+15.8 ± 3.3 m
+39.4 ± 10.9 cm
+4
+Scots pine
+6 (7.8 %)
+26.2 ± 3.6 m
+39.7 ± 11.4 cm
+Norway spruce
+66 (85.7 %)
+14.9 ± 10.2 m
+17.5 ± 12.8 cm
+Birch
+4 (5.2 %)
+18.1 ± 8.0 m
+18.2 ± 10.9 cm
+Gray alder
+1 (1.3 %)
+9.2 m
+13.7 cm
+5
+Scots pine
+10 (7.8 %)
+29.6 ± 3.3 m
+51.2 ± 8.5 cm
+Norway spruce
+30 (23.3 %)
+12.9 ± 7.8 m
+14.2 ± 12.5 cm
+Birch
+10 (7.8 %)
+14.7 ± 4.5 m
+12.3 ± 6.9 cm
+Trembling aspen
+2 (1.6 %)
+9.6 ± 0.8 m
+5.8 ± 0.9 cm
+Gray alder
+33 (25.6 %)
+11.9 ± 3.3 m
+10.4 ± 4.6 cm
+European rowan
+4 (3.1 %)
+9.0 ± 1.8 m
+6.7 ± 1.0 cm
+Fir
+35 (27.1 %)
+9.0 ± 2.9 m
+9.0 ± 3.1 cm
+Other
+5 (3.9 %)
+18.9 ± 3.8 m
+20.6 ± 3.7 cm
+6
+Scots pine
+2 (0.9 %)
+21.1 ± 1.6 m
+25.4 ± 4.9 cm
+Norway spruce
+129 (55.8 %)
+8.8 ± 3.4 m
+9.2 ± 3.5 cm
+Birch
+100 (43.3 %)
+18.6 ± 4.6 m
+15.9 ± 5.1 cm
+B Feature tables
+Table B.1 
+Spectral features computed from multispectral and hyperspectral orthoimages.
+Feature name
+Description
+MeanSpectra
+Mean Spectra of all pixels
+MedianSpectra
+Median spectra of all pixels
+MeanSpectraBright
+Mean Spectra of pixels brighter than the average of all pixels
+MedianSpectraBright
+Median Spectra of pixels brighter than the average of all pixels
+MeanSpectraDark
+Mean Spectra of pixels darker than the average of all pixels
+MedianSpectraDark
+Median Spectra of pixels darker than the average of all pixels
+MeanSpectra6Max
+Mean Spectra of six brightest pixels
+MedianSpectra6Max
+Median Spectra of six brightest pixels
+MeanSpectraNormalized
+Mean Spectra of all pixels where each spectral band is divided by the sum of all bands.
+ContinuumRemovedSpectra
+Continuum removed spectra
+vNormed
+Vector-normalized spectra, i.e. band value divided by the length of a vector formed by the band values.
+Table B.2 
+Vegetation indices calculated for the hyperspectral and multispectral data. All indices were calculated for the hyperspectral data. The indices calculated for the 
+multispectral data are marked with M.
+Abbreviation
+Full name
+Equation
+Reference
+NDVIM
+Normalized Difference Vegetation Index
+(R800 −
+R670)/(R800 + R670)
+Tucker (1979)
+NDVI_Red_Edge
+Red-edge Normalized Difference Vegetation Index
+(R750 −
+R710)/(R750 + R710)
+Gitelson and Merzlyak (1996)
+GNDVI1M
+Green Normalized Difference Vegetation Index 1
+(R800 −
+R550)/(R800 + R550)
+Gitelson et al. (1996)
+GNDVI2
+Green Normalized Difference Vegetation Index 2
+(R750 −
+R550)/(R750 + R550)
+Gitelson et al. (1996)
+(continued on next page)
+O. Nevalainen et al.                                                                                                                                                                                                                            
+ISPRS Open Journal of Photogrammetry and Remote Sensing 17 (2025) 100099 
+17 
+
+
+Table B.2 (continued)
+REP_Li1
+Red-edge Position Linear Interpolation
+700 + (780 −
+670)*REPre −R700
+R740 + R700 
+REPre = (R670 + R780)/2
+Guyot and Baret (1988)
+SR1M
+Simple Ratio 1
+R800/R680
+Jordan (1969)
+SR6
+Simple Ratio 6
+R750/R710
+Zarco-Tejada and Miller (1999)
+MSR1M
+Modified Simple Ratio 1
+(R800
+R670 −
+1
+)
+/
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+R800
+R670 + 1
+√
+Sims and Gamon (2002)
+MSR2
+Modified Simple Ratio 2
+(R750
+R710 −
+1
+)
+/
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+R750
+R710 + 1
+√
+Wu et al. (2008)
+OSAVI1M
+Optimized Soil-adjusted Vegetation Index 1
+(1 + 0.16)*
+R800 −R670
+R800 + R670 + 0.16
+Rondeaux et al. (1996)
+OSAVI2
+Optimized Soil-adjusted Vegetation Index 2
+(1 + 0.16)*
+R750 −R710
+R750 + R710 + 0.16
+Wu et al. (2008)
+MCARIM
+Modified Chlorophyll Absorption Ratio Index
+((R700 −
+R670) −
+0.2*(R700 −
+R550))*R700
+R670
+Daughtry, 2000
+MCARI750
+Modified Chlorophyll Absorption Ratio Index 750 nm
+((R750 −
+R705) −
+0.2*(R750 −
+R550))*R750
+R705
+Wu et al. (2008)
+MTCI
+MERIS Terrestrial Chlorophyll Index
+(R750 −
+R705)/(R705 −
+R680)
+Dash and Curran, 2004
+TCARIM
+Transformed Chlorophyll Absorption Ratio Index
+3*
+(
+(R700 −
+R670) −
+0.2*(R700 −
+R550)*R700
+R670
+)
+Haboudane et al. (2002)
+TCARI2
+Transformed Chlorophyll Absorption Ratio Index 2
+3*
+(
+(R750 −
+R705) −
+0.2*(R750 −
+R550)*R760
+R705
+)
+Wu et al. (2008)
+CARI
+Chlorophyll Absorption Ratio Index
+R700*
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+(CARIa*670 + R670*CARIb)2
+√
+/
+(
+R670*
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+CARIa2 + 1
+√
+)
+CARIa = (R700 −
+R670)/(700 −
+550)
+CARIb = (R550 −
+(CARIa*550))
+Kim et al. (1994)
+GitelsonM
+Gitelson
+1/R700
+Gitelson et al. (1999)
+Gitelson2
+Gitelson 2
+(
+R750 −
+R800
+R695 −
+R740
+)
+−
+1
+Gitelson et al. (2003)
+Maccioni
+Maccioni
+(R780 −
+R710)/(R780 −
+R680)
+Maccioni et al. (2001)
+DD
+Double Difference Index
+(R750 −
+R720) −
+(R700 −
+R670)
+le Maire et al., 2004
+TVIM
+Triangular Vegetation Index
+(670 −550)*(R750 −R550) −((750 −550)*(R670 −R550))
+2
+Broge and Leblanc, 2001
+NDRE
+Normalized Difference Red-edge Index
+(R790 −
+R720)/(R790 + R720)
+Barnes et al. (2000)
+CCCI1
+Canopy Chlorophyll Content Index 1
+NDRE/NDVI
+Barnes et al. (2000)
+TCI
+Triangular Chlorophyll Index
+TCIRi −R675
+R800 −R700 
+TCIRi = R800 + 1.5*R550
+Gao (2006)
+RDVI1M
+Renormalised Differential Vegetation Index 1
+(R800 −
+R670)/
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+R800 + R670
+√
+Roujean and Breon (1995)
+Table B.3 
+RGB spectral features and their parameters.
+Name
+Description
+meanX
+Mean of channel X.
+normedMeanX
+Normalized mean of channel X.
+normedVarianceX
+Normalized variance of channel X.
+varianceX
+Variance of channel X.
+vnormedMeanX
+Vector-normalized mean of channel X.
+vnormedVarianceX
+Vector-normalized variance of channel X.
+Table B.4 
+RGB textural features and their parameterizations.
+Name
+Description
+AngularSecondMomentMean/Range
+Haralick feature 1 (Haralick et al., 1973): 
+Distance RGB: [1,3,5,10,15,20,40,50] 
+Distance MS: [1,3,5,10]
+ContrastMean/Range
+Haralick feature 2
+CorrelationMean/Range
+Haralick feature 3
+DifferenceEntropyMean/Range
+Haralick feature 4
+DifferenceVarianceMean/Range
+Haralick feature 5
+EntropyMean/Range
+Haralick feature 6
+InformationMeasureCorrelationMean/Range
+Haralick feature 7
+InformationMeasureCorrelation2Mean/ 
+Range
+Haralick feature 8
+InverseDifferenceMomentMean/Range
+Haralick feature 9
+SumAverageMean/Range
+Haralick feature 10
+SumEntropyMean/Range
+Haralick feature 11
+SumVarianceMean/Range
+Haralick feature 12
+SumofSquares:VarianceMean/Range
+Haralick feature 13
+PFTAS_X
+Parameter free Threshold Adjacency Statistics (Coelho et al., 2010), X = feature number
+(continued on next page)
+O. Nevalainen et al.                                                                                                                                                                                                                            
+ISPRS Open Journal of Photogrammetry and Remote Sensing 17 (2025) 100099 
+18 
+
+
+Table B.4 (continued)
+Name 
+Description
+TAS_X
+Threshold Adjacency Statistics (Hamilton et al., 2007), X = feature number
+lbp_rA_pB_C
+Local binary pattern (Ojala et al., 1994), A radius, B point, C id: 
+Point: 10 
+Radius RGB: [5,10,15,20,30,40,50] 
+Radius MS: [5,10,15]
+zernike_edgeX
+Zernike Moments (Teague, 1980) for Sobel edge detection image, Zernike moment radius was set to 25 pixels, X = feature number.
+Table B.5 
+Structural features computed from the point clouds.
+Feature Name
+Description
+Min
+Normalized minimum height
+Avg
+Normalized average height
+Std
+Normalized deviation of height
+Ske
+Skewness (i.e., measure of asymmetry) of point height distribution
+Kur
+Kurtosis (i.e., “tailedness”) of point height distribution
+Cov
+Canopy cover computed as the number of points above breast height (i.e., 1.37 m) divided by the total number of points.
+Percentiles N%, where N = 5, 15, 25, 50, 75, 90, 95
+Normalized height percentiles. Height below which N percent of points lay.
+Bicentiles, N%, where N = 50, 70, 80, 90, 95
+Percentage of the points whose heights are below N% of the maximum height.
+C Area-specific tree detection numbers
+Table C.1 
+Tree detection numbers for pines, spruces, and birches using RGB data with segmentation and local maxima methods and the total number of dominant and co- 
+dominant trees included in the reference data.
+Area
+Segmentation (Training; Testing)
+Local max (Training; Testing)
+Reference (dom & co-dom)
+Pine
+Spruce
+Birch
+Total
+Pine
+Spruce
+Birch
+Total
+Pine
+Spruce
+Birch
+Total
+1
+30; 7
+0; 0
+0; 0
+30; 7
+30; 6
+0; 0
+0; 0
+30; 6
+39
+2
+0
+41
+2
+38; 10
+0; 0
+1:0
+39; 10
+37; 9
+0; 0
+0; 1
+37; 10
+47
+0
+2
+49
+3
+0; 1
+6; 1
+1; 2
+7; 4
+1; 1
+6; 0
+1; 2
+8; 3
+3
+18
+7
+28
+4
+4; 1
+17; 2
+0; 0
+21; 3
+5; 1
+15; 2
+1; 0
+21; 3
+5
+37
+2
+44
+5
+6; 1
+3; 0
+0; 2
+9; 3
+6; 1
+1; 0
+0; 0
+7; 1
+0
+0
+0
+0
+6
+1; 1
+4; 0
+49; 13
+54; 14
+1; 1
+3; 0
+49; 13
+53; 14
+1
+2
+61
+64
+Total
+79; 21
+30; 3
+51; 17
+160; 41
+80; 19
+25; 2
+51; 16
+156; 37
+95
+59
+72
+226
+Table C.2 
+Tree detection numbers for pines, spruces, and birches using multispectral data with segmentation and local maxima methods.
+Area
+Segmentation (Training; Testing)
+Local max (Training; Testing)
+Pine
+Spruce
+Birch
+Total
+Pine
+Spruce
+Birch
+Total
+1
+29; 7
+0; 0
+0; 0
+29; 7
+29; 6
+0; 0
+0; 0
+29; 6
+2
+31; 7
+0; 0
+0; 1
+31; 8
+32; 8
+0; 0
+0; 1
+32; 9
+3
+1; 1
+3; 0
+3; 0
+7; 1
+1; 1
+5; 0
+3; 0
+9; 1
+4
+3; 1
+18; 3
+0; 0
+21; 4
+4; 1
+17; 3
+1; 0
+22; 4
+5
+6; 1
+4; 0
+0; 1
+10; 2
+6; 1
+5; 0
+0; 1
+11; 2
+6
+1; 1
+1; 0
+31; 6
+33; 7
+1; 1
+3; 0
+32; 8
+36; 9
+Total
+71; 18
+26; 3
+34; 8
+131; 29
+73; 18
+30; 3
+36; 10
+139; 31
+O. Nevalainen et al.                                                                                                                                                                                                                            
+ISPRS Open Journal of Photogrammetry and Remote Sensing 17 (2025) 100099 
+19 
+
+
+D Classification tables
+Table D.1 
+Tree species classification results with tree detection from RGB point clouds and feature extraction from RGB, MS, and HS data (Cases 1–3). The results were calculated 
+using the test set (accuracy/precision/recall/f-score). SEG: segmentation method; LMC: local maxima method with tree crown delineation using constant radius circle; 
+and LMV: local maxima method with tree crown delineation using variable radius circle.
+Case
+Feature set; n features
+SEG
+LMC
+LMV
+Mean
+Case 1: RGB
+RGB: tx; 1097
+82.9/72.2/77.9/72.9
+78.4/54.3/54.8/54.3
+82.9/68.7/73.0/69.2
+81.4/65.1/68.6/65.5
+RGB_ sp; 18
+85.4/76.9/89.0/78.9
+78.4/55.4/54.8/54.6
+85.7/77.0/89.8/80.5
+83.2/69.8/77.9/71.3
+RGB: 3D; 18
+73.2/64.6/70.4/64.2
+73.0/53.7/51.0/51.6
+82.9/81.3/87.5/81.4
+76.3/66.5/69.6/65.7
+RGB: sp, tx, 3D; 1133
+80.5/70.7/75.9/70.9
+83.8/90.2/73.2/78.4
+80.0/67.5/71.1/68.6
+81.4/76.1/73.4/72.6
+​
+Mean
+80.5/71.1/78.3/71.7
+78.4/63.4/58.5/59.7
+82.9/73.6/80.4/74.9
+​
+Case 2: RGB + MS
+MS: sp; 50
+87.8/79.2/90.9/80.0
+81.1/68.3/71.5/67.2
+82.9/70.0/72.9/68.9
+83.9/72.5/78.5/72.0
+MS: sp_norm; 20
+80.5/74.9/85.4/73.0
+86.5/77.3/75.3/75.8
+85.7/76.3/89.7/78.1
+84.2/76.2/83.5/75.6
+MS: VI; 10
+90.2/81.0/92.9/82.9
+86.5/77.5/75.0/75.4
+88.6/79.8/91.7/82.3
+88.4/79.4/86.5/80.2
+MS: sp, VI; 60
+87.8/79.3/90.9/81.0
+83.8/70.2/73.2/69.7
+85.7/72.8/75.0/72.5
+85.8/74.1/79.7/74.4
+MS: sp, VI, sp_norm 80
+85.4/77.5/89.0/78.0
+81.1/68.7/71.5/68.0
+82.9/69.7/73.0/69.3
+83.1/72.0/77.8/71.8
+MS: sp, 3D; 68
+87.8/79.4/90.6/80.6
+83.8/70.2/73.2/69.7
+85.7/72.8/75.0/72.5
+85.8/74.1/79.6/74.3
+MS: sp, VI, 3D; 78
+87.8/76.2/81.4/76.7
+83.8/71.7/73.2/71.2
+85.7/72.8/75.0/72.5
+85.8/73.6/76.6/73.5
+MS: sp, VI, sp_norm, 3D, tx, sp; 1213
+80.5/70.5/75.9/70.2
+81.1/59.4/56.6/57.1
+85.7/76.5/89.6/77.7
+82.4/68.8/74.0/68.3
+​
+Mean
+86.0/77.2/87.1/77.8
+83.4/70.4/71.2/69.3
+85.4/73.8/80.2/74.2
+​
+Case 3: RGB + HS
+HS: sp; 460
+90.2/87.3/92.5/89.0
+83.8/70.2/73.2/69.7
+88.6/79.8/91.7/82.3
+87.5/79.1/85.8/80.3
+HS: sp; MS: blue; 469
+90.2/87.3/92.5/89.0
+81.1/68.7/71.5/66.7
+88.6/83.9/91.7/85.9
+86.6/80.0/85.2/80.5
+HS: sp_norm; 184
+92.7/85.1/94.5/88.0
+83.8/70.4/73.6/71.3
+85.7/71.3/75.1/71.5
+87.4/75.6/81.1/76.9
+HS: VI; 30
+90.2/80.4/83.0/81.0
+81.1/68.7/71.5/68.0
+85.7/72.8/75.0/72.5
+85.7/74.0/76.5/73.8
+HS: sp, VI; 490
+87.8/79.0/81.4/79.5
+83.8/70.2/73.2/69.7
+82.9/70.0/72.9/68.9
+84.8/73.1/75.9/72.7
+HS: sp, VI, sp_norm; 647
+90.2/81.7/92.5/84.1
+78.4/67.9/69.4/64.4
+85.7/75.9/89.6/76.2
+84.8/75.2/83.8/74.9
+HS: sp, RGB: 3D; 478
+85.4/77.5/79.8/77.9
+86.5/73.0/75.3/73.2
+88.6/79.8/91.7/82.3
+86.8/76.8/82.3/77.8
+HS: sp, VI; RGB: 3D; 508
+90.2/80.3/83.4/81.3
+86.5/73.0/75.3/73.2
+85.7/78.3/89.6/80.0
+87.5/77.2/82.8/78.2
+HS: sp, VI; RGB: 3D, tx; 1605
+85.4/75.7/79.5/75.9
+86.5/71.7/75.3/71.8
+88.6/78.1/91.7/80.0
+86.8/75.2/82.2/75.9
+HS: sp, VI; RGB: 3D, sp, tx; 1623
+90.2/81.7/92.5/84.1
+86.5/73.2/75.0/72.8
+85.7/75.8/89.7/76.6
+87.5/76.9/85.7/77.8
+HS: sp, VI, sp_norm; RGB: 3D, sp, tx; 1807
+90.2/83.6/92.5/86.1
+86.5/73.2/75.0/72.8
+88.6/78.1/91.7/80.0
+88.4/78.3/86.4/79.6
+​
+Mean
+89.4/81.8/87.7/83.3
+84.0/70.9/73.5/70.3
+86.8/76.7/86.4/77.8
+​
+All Cases
+Mean
+86.6/78.3/85.8/79.3
+82.8/69.5/70.1/68.1
+85.6/75.2/83.2/76.1
+​
+Table D.2 
+Tree species classification results using only multispectral (MS) data for both tree detection and feature extraction (Case 4). The results were calculated using the test 
+set (accuracy/precision/recall/f-score). SEG: segmentation method; LMC: local maxima method with tree crown delineation using constant radius circle; and LMV: 
+local maxima method with tree crown delineation using variable radius circle.
+Feature set; n features
+SEG
+LMC
+LMV
+Mean
+MS: sp; 50
+82.8/79.0/83.8/76.1
+77.4/72.7/70.4/66.2
+82.1/71.5/68.5/66.4
+80.8/74.4/74.2/69.6
+MS: sp_norm; 29
+82.8/78.9/86.1/78.0
+80.6/75.0/73.7/71.5
+92.9/87.0/92.6/88.2
+85.4/80.3/84.1/79.2
+MS: VI; 10
+79.3/74.1/72.7/70.1
+80.6/77.4/81.5/72.9
+85.7/78.1/85.2/75.2
+81.9/76.6/79.8/72.7
+MS: tx; 561
+58.6/33.3/50.0/39.0
+67.7/77.8/58.9/54.9
+57.1/46.1/49.6/43.9
+61.2/52.4/52.8/45.9
+MS: sp, VI; 60
+79.3/74.1/72.7/70.1
+80.6/77.3/81.5/71.9
+82.1/71.5/68.5/66.4
+80.7/74.3/74.2/69.5
+MS: sp, RGB_3D; 68
+82.8/75.8/83.8/76.5
+77.4/72.8/70.4/66.9
+82.1/71.5/68.5/66.4
+80.8/73.4/74.2/69.9
+MS: sp, VI, 3D; 78
+79.3/74.1/72.7/70.1
+80.6/75.0/73.7/71.5
+82.1/71.5/68.5/66.4
+80.7/73.5/71.6/69.3
+MS: tx, 3D; 597
+72.4/65.0/64.4/61.4
+74.2/71.4/68.5/69.2
+71.4/ 61.5/59.2/56.8
+72.7/66.0/64.0/62.5
+MS: sp, VI, 3D, tx; 639
+79.3/70.7/72.7/70.1
+83.9/78.6/75.6/74.8
+85.7/73.1/72.2/70.2
+83.0/74.2/73.5/71.7
+MS: sp, VI, sp_norm, 3D, tx; 668
+79.3/74.1/72.7/70.1
+80.6/75.0/73.7/71.5
+85.7/74.3/72.2/71.5
+81.9/74.4/72.9/71.0
+Mean
+77.6/69.9/73.1/68.1
+78.7/75.7/73.0/69.5
+80.7/70.6/70.5/67.1
+​
+References
+Barnes, E., Clarke, T., Richards, S., Colaizzi, P., Haberland, J., Kostrzewski, M., 
+Waller, P., Choi, C., Riley, E., Thompson, T., others, 2000. Coincident detection of 
+crop water stress, nitrogen status and canopy density using ground based 
+multispectral data. In: Proceedings of the Fifth International Conference on Precision 
+Agriculture, p. 6. Bloomington, MN, USA. 
+Breiman, L., 2001. Random forests. Mach. Learn. 45, 5–32. https://doi.org/10.1023/A: 
+1010933404324.
+Broge, N.H., Leblanc, E., 2001. Comparing prediction power and stability of broadband 
+and hyperspectral vegetation indices for estimation of green leaf area index and 
+canopy chlorophyll density. Rem. Sens. Environ. 76, 156–172. https://doi.org/ 
+10.1016/S0034-4257(00)00197-8.
+Chen, J., Liang, X., Liu, Z., Gong, W., Chen, Y., Hyypp¨a, J., Kukko, A., Wang, Y., 2024. 
+Tree species recognition from close-range sensing: a review. Rem. Sens. Environ. 
+313, 114337. https://doi.org/10.1016/j.rse.2024.114337.
+Cloutier, M., Germain, M., Lalibert´e, E., 2024. Influence of temperate forest autumn leaf 
+phenology on segmentation of tree species from UAV imagery using deep learning. 
+Rem. Sens. Environ. 311, 114283. https://doi.org/10.1016/j.rse.2024.114283.
+Coelho, 2013. Mahotas: open source software for scriptable computer vision. J. Open 
+Res. Software 1, e3. https://doi.org/10.5334/jors.ac.
+Coelho, L.P., Ahmed, A., Arnold, A., Kangas, J., Sheikh, A.-S., Xing, E.P., Cohen, W.W., 
+Murphy, R.F., 2010. Structured literature image finder: extracting information from 
+text and images in biomedical literature. In: Blaschke, C., Shatkay, H. (Eds.), Linking 
+Literature, Information, and Knowledge for Biology, Lecture Notes in Computer 
+Science. Springer, Berlin Heidelberg, Berlin, Heidelberg, pp. 23–32. https://doi.org/ 
+10.1007/978-3-642-13131-8_4.
+Corte, A.P.D., Souza, D.V., Rex, F.E., Sanquetta, C.R., Mohan, M., Silva, C.A., 
+Zambrano, A.M.A., Prata, G., Alves de Almeida, D.R., Trautenmüller, J.W., 
+Klauberg, C., de Moraes, A., Sanquetta, M.N., Wilkinson, B., Broadbent, E.N., 2020. 
+Forest inventory with high-density UAV-Lidar: machine learning approaches for 
+predicting individual tree attributes. Comput. Electron. Agric. 179, 105815. https:// 
+doi.org/10.1016/j.compag.2020.105815.
+O. Nevalainen et al.                                                                                                                                                                                                                            
+ISPRS Open Journal of Photogrammetry and Remote Sensing 17 (2025) 100099 
+20 
+
+
+Dash, J., Curran, P.J., 2004. The MERIS terrestrial chlorophyll index. Int. J. Rem. Sens. 
+25, 5403–5413. https://doi.org/10.1080/0143116042000274015.
+Daughtry, C., 2000. Estimating corn leaf chlorophyll concentration from leaf and canopy 
+reflectance. Rem. Sens. Environ. 74, 229–239. https://doi.org/10.1016/S0034-4257 
+(00)00113-9.
+Fu, H., Zhao, H., Jiang, J., Zhang, Y., Liu, G., Xiao, W., Du, S., Guo, W., Liu, X., 2024. 
+Automatic detection tree crown and height using mask R-CNN based on unmanned 
+aerial vehicles images for biomass mapping. For. Ecol. Manag. 555, 121712. https:// 
+doi.org/10.1016/j.foreco.2024.121712.
+Fujimoto, Haga, Matsui, Machimura, Hayashi, Sugita, Takagi, 2019. An end to end 
+process development for UAV-SfM based forest monitoring: individual tree 
+detection, species classification and carbon dynamics simulation. Forests 10, 680. 
+https://doi.org/10.3390/f10080680.
+Gao, J., 2006. Canopy Chlorophyll Estimation with Hyperspectral Remote Sensing. 
+Kansas State University.
+Gitelson, A.A., Buschmann, C., Lichtenthaler, H.K., 1999. The chlorophyll fluorescence 
+ratio F735/F700 as an accurate measure of the chlorophyll content in plants. Rem. 
+Sens. Environ. 69, 296–302. https://doi.org/10.1016/S0034-4257(99)00023-1.
+Gitelson, A.A., Gritz, Y., Merzlyak, M.N., 2003. Relationships between leaf chlorophyll 
+content and spectral reflectance and algorithms for non-destructive chlorophyll 
+assessment in higher plant leaves. J. Plant Physiol. 160, 271–282. https://doi.org/ 
+10.1078/0176-1617-00887.
+Gitelson, A.A., Kaufman, Y.J., Merzlyak, M.N., 1996. Use of a green channel in remote 
+sensing of global vegetation from EOS-MODIS. Rem. Sens. Environ. 58, 289–298. 
+https://doi.org/10.1016/S0034-4257(96)00072-7.
+Gitelson, A.A., Merzlyak, M.N., 1996. Signature analysis of leaf reflectance spectra: 
+algorithm development for remote sensing of chlorophyll. J. Plant Physiol. 148, 
+494–500. https://doi.org/10.1016/S0176-1617(96)80284-7.
+Goodbody, T.R.H., Coops, N.C., Tompalski, P., Crawford, P., Day, K.J.K., 2017. Updating 
+residual stem volume estimates using ALS- and UAV-Acquired stereo- 
+photogrammetric point clouds. Int. J. Rem. Sens. 38, 2938–2953. https://doi.org/ 
+10.1080/01431161.2016.1219425.
+Guyon, I., Weston, J., Barnhill, S., Vapnik, V., 2002. Gene selection for cancer 
+classification using support vector machines. Mach. Learn. 46, 389–422. https://doi. 
+org/10.1023/A:1012487302797.
+Guyot, G., Baret, F., 1988. Utilisation De La Haute Resolution Spectrale Pour Suivre 
+L’Etat Des Couverts Vegetaux, vol. 287, p. 279.
+Gyawali, A., Aalto, M., Peuhkurinen, J., Villikka, M., Ranta, T., 2022. Comparison of 
+individual tree height estimated from LiDAR and digital aerial photogrammetry in 
+young forests. Sustainability 14, 3720. https://doi.org/10.3390/su14073720.
+Haboudane, D., Miller, J.R., Tremblay, N., Zarco-Tejada, P.J., Dextraze, L., 2002. 
+Integrated narrow-band vegetation indices for prediction of crop chlorophyll content 
+for application to precision agriculture. Rem. Sens. Environ. 81, 416–426. https:// 
+doi.org/10.1016/S0034-4257(02)00018-4.
+Hakula, A., Ruoppa, L., Lehtom¨aki, M., Yu, X., Kukko, A., Kaartinen, H., Taher, J., 
+Matikainen, L., Hyypp¨a, E., Luoma, V., Holopainen, M., Kankare, V., Hyypp¨a, J., 
+2023. Individual tree segmentation and species classification using high-density 
+close-range multispectral laser scanning data. ISPRS Open J. Photogram. Rem. Sens. 
+9, 100039. https://doi.org/10.1016/j.ophoto.2023.100039.
+Hamilton, N.A., Pantelic, R.S., Hanson, K., Teasdale, R.D., 2007. Fast automated cell 
+phenotype image classification. BMC Bioinf. 8, 110. https://doi.org/10.1186/1471- 
+2105-8-110.
+Haralick, R.M., Dinstein, I., Shanmugam, K., 1973. Textural features for image 
+classification. IEEE Transact. Syst. Man Cybernet. 3, 610–621.
+Honkavaara, E., Khoramshahi, E., 2018. Radiometric correction of close-range spectral 
+image blocks captured using an unmanned aerial vehicle with a radiometric block 
+adjustment. Remote Sens. 10, 256. https://doi.org/10.3390/rs10020256.
+Honkavaara, E., Rosnell, T., Oliveira, R., Tommaselli, A., 2017. Band registration of 
+tuneable frame format hyperspectral UAV imagers in complex scenes. ISPRS J. 
+Photogrammetry Remote Sens. 134, 96–109. https://doi.org/10.1016/j. 
+isprsjprs.2017.10.014.
+Hyypp¨a, E., Hyypp¨a, J., Hakala, T., Kukko, A., Wulder, M.A., White, J.C., Py¨or¨al¨a, J., 
+Yu, X., Wang, Y., Virtanen, J.-P., Pohjavirta, O., Liang, X., Holopainen, M., 
+Kaartinen, H., 2020a. Under-canopy UAV laser scanning for accurate forest field 
+measurements. ISPRS J. Photogrammetry Remote Sens. 164, 41–60. https://doi.org/ 
+10.1016/j.isprsjprs.2020.03.021.
+Hyypp¨a, E., Kukko, A., Kaartinen, H., Yu, X., Muhojoki, J., Hakala, T., Hyypp¨a, J., 2022. 
+Direct and automatic measurements of stem curve and volume using a high- 
+resolution airborne laser scanning system. Sci. Rem. Sens. 5, 100050. https://doi. 
+org/10.1016/j.srs.2022.100050.
+Hyypp¨a, E., Yu, X., Kaartinen, H., Hakala, T., Kukko, A., Vastaranta, M., Hyypp¨a, J., 
+2020b. Comparison of backpack, handheld, under-canopy UAV, and above-canopy 
+UAV laser scanning for field reference data collection in boreal forests. Remote Sens. 
+12, 3327. https://doi.org/10.3390/rs12203327.
+Hyypp¨a, M., Turppa, T., Hyyti, H., Yu, X., Handolin, H., Kukko, A., Hyypp¨a, J., 
+Virtanen, J.-P., 2024. Concepts towards nation-wide individual tree data and virtual 
+forests. IJGI 13, 424. https://doi.org/10.3390/ijgi13120424.
+Iglhaut, J., Cabo, C., Puliti, S., Piermattei, L., O’Connor, J., Rosette, J., 2019. Structure 
+from motion photogrammetry in forestry: a review. Curr Forestry Rep 5, 155–168. 
+https://doi.org/10.1007/s40725-019-00094-3.
+Jordan, C.F., 1969. Derivation of leaf-area index from quality of light on the forest floor. 
+Ecology 50, 663–666. https://doi.org/10.2307/1936256.
+Kim, M.S., Daughtry, C., Chappelle, E., McMurtrey, J., Walthall, C., 1994. The use of high 
+spectral resolution bands for estimating absorbed photosynthetically active radiation 
+(A par). In: CNES, Proceedings of 6th International Symposium on Physical 
+Measurements and Signatures in Remote Sensing.
+Kukkonen, M., Maltamo, M., Korhonen, L., Packalen, P., 2021. Fusion of crown and trunk 
+detections from airborne UAS based laser scanning for small area forest inventories. 
+Int. J. Appl. Earth Obs. Geoinf. 100, 102327. https://doi.org/10.1016/j. 
+jag.2021.102327.
+Kuzmin, A., Korhonen, L., Kivinen, S., Hurskainen, P., Korpelainen, P., Tanhuanp¨a¨a, T., 
+Maltamo, M., Vihervaara, P., Kumpula, T., 2021. Detection of european aspen 
+(Populus tremula L.) based on an unmanned aerial vehicle approach in boreal 
+forests. Remote Sens. 13, 1723. https://doi.org/10.3390/rs13091723.
+Laasasenaho, J., 1982. Taper Curve and Volume Functions for Pine, Spruce and Birch, 
+Communicationes Instituti Forestalis Fenniae. The Finnish Forest Research Institute 
+Mets¨antutkimuslaitos, Helsinki. http://urn.fi/URN:ISBN:951-40-0589-9. 
+le Maire, G., François, C., Dufrˆene, E., 2004. Towards universal broad leaf chlorophyll 
+indices using PROSPECT simulated database and hyperspectral reflectance 
+measurements. Rem. Sens. Environ. 89, 1–28. https://doi.org/10.1016/j. 
+rse.2003.09.004.
+Lee, S.S., Lim, L.G., Palaiahnakote, S., Cheong, J.X., Lock, S.S.M., Ayub, M.N.B., 2024. 
+Oil palm tree detection in UAV imagery using an enhanced RetinaNet. Comput. 
+Electron. Agric. 227, 109530. https://doi.org/10.1016/j.compag.2024.109530.
+Liang, X., Chen, J., Gong, W., Puttonen, E., Wang, Y., 2025. Influence of data and 
+methods on high-resolution imagery-based tree species recognition considering 
+phenology: the case of temperate forests. Rem. Sens. Environ. 323, 114654. https:// 
+doi.org/10.1016/j.rse.2025.114654.
+Liang, X., Hyypp¨a, J., Kaartinen, H., Lehtom¨aki, M., Py¨or¨al¨a, J., Pfeifer, N., 
+Holopainen, M., Brolly, G., Francesco, P., Hackenberg, J., Huang, H., Jo, H.-W., 
+Katoh, M., Liu, L., Mokroˇs, M., Morel, J., Olofsson, K., Poveda-Lopez, J., Trochta, J., 
+Wang, D., Wang, J., Xi, Z., Yang, B., Zheng, G., Kankare, V., Luoma, V., Yu, X., 
+Chen, L., Vastaranta, M., Saarinen, N., Wang, Y., 2018. International benchmarking 
+of terrestrial laser scanning approaches for forest inventories. ISPRS J. 
+Photogrammetry Remote Sens. 144, 137–179. https://doi.org/10.1016/j. 
+isprsjprs.2018.06.021.
+Liang, X., Kukko, A., Balenovic, I., Saarinen, N., Junttila, S., Kankare, V., Holopainen, M., 
+Mokros, M., Surovy, P., Kaartinen, H., Jurjevic, L., Honkavaara, E., Nasi, R., Liu, J., 
+Hollaus, M., Tian, J., Yu, X., Pan, J., Cai, S., Virtanen, J.-P., Wang, Y., Hyyppa, J., 
+2022. Close-range remote sensing of Forests: the state of the art, challenges, and 
+opportunities for systems and data acquisitions. IEEE Geosci. Remote Sens. Mag. 10, 
+32–71. https://doi.org/10.1109/MGRS.2022.3168135.
+Liang, X., Wang, Y., Pan, J., Wang, M., Yang, J., Gong, J., 2024. The ISPRS international 
+contest on individual tree crown segmentation using high-resolution images and the 
+initial findings. Int. Arch. Photogramm. Remote Sens. Spatial Inf. Sci. XLVIII-3–2024 
+637–641. https://doi.org/10.5194/isprs-archives-XLVIII-3-2024-637-2024.
+Liang, X., Wang, Y., Py¨or¨al¨a, J., Lehtom¨aki, M., Yu, X., Kaartinen, H., Kukko, A., 
+Honkavaara, E., Issaoui, A.E.I., Nevalainen, O., Vaaja, M., Virtanen, J.-P., Katoh, M., 
+Deng, S., 2019. Forest in situ observations using unmanned aerial vehicle as an 
+alternative of terrestrial measurements. For. Ecosyst. 6, 20. https://doi.org/ 
+10.1186/s40663-019-0173-3.
+Maccioni, A., Agati, G., Mazzinghi, P., 2001. New vegetation indices for remote 
+measurement of chlorophylls based on leaf directional reflectance spectra. 
+J. Photochem. Photobiol. B Biol. 61, 52–61. https://doi.org/10.1016/S1011-1344 
+(01)00145-2.
+Main, R., Cho, M.A., Mathieu, R., O’Kennedy, M.M., Ramoelo, A., Koch, S., 2011. An 
+investigation into robust spectral indices for leaf chlorophyll estimation. ISPRS J. 
+Photogrammetry Remote Sens. 66, 751–761. https://doi.org/10.1016/j. 
+isprsjprs.2011.08.001.
+Maltamo, M., 2004. Estimation of timber volume and stem density based on scanning 
+laser altimetry and expected tree size distribution functions. Rem. Sens. Environ. 90, 
+319–330. https://doi.org/10.1016/j.rse.2004.01.006.
+Miyoshi, G.T., Arruda, M.D.S., Osco, L.P., Marcato Junior, J., Gonçalves, D.N., Imai, N. 
+N., Tommaselli, A.M.G., Honkavaara, E., Gonçalves, W.N., 2020. A novel deep 
+learning method to identify single tree species in UAV-based hyperspectral images. 
+Remote Sens. 12, 1294. https://doi.org/10.3390/rs12081294.
+Nevalainen, O., Honkavaara, E., Tuominen, S., Viljanen, N., Hakala, T., Yu, X., 
+Hyypp¨a, J., Saari, H., P¨ol¨onen, I., Imai, N., Tommaselli, A., 2017. Individual tree 
+detection and classification with UAV-based photogrammetric point clouds and 
+hyperspectral imaging. Remote Sens. 9, 185. https://doi.org/10.3390/rs9030185.
+Nezami, S., Khoramshahi, E., Nevalainen, O., P¨ol¨onen, I., Honkavaara, E., 2020. Tree 
+species classification of drone hyperspectral and RGB imagery with deep learning 
+convolutional neural networks. Remote Sens. 12, 1070. https://doi.org/10.3390/ 
+rs12071070.
+Ojala, T., Pietikainen, M., Harwood, D., 1994. Performance evaluation of texture 
+measures with classification based on kullback discrimination of distributions. In: 
+Proceedings of 12th International Conference on Pattern Recognition. Presented at 
+the 12th International Conference on Pattern Recognition, IEEE Comput. Soc. Press, 
+Jerusalem, Israel, pp. 582–585. https://doi.org/10.1109/ICPR.1994.576366.
+Onishi, M., Ise, T., 2021. Explainable identification and mapping of trees using UAV RGB 
+image and deep learning. Sci. Rep. 11, 903. https://doi.org/10.1038/s41598-020- 
+79653-9.
+Paheding, S., Saleem, A., Siddiqui, M.F.H., Rawashdeh, N., Essa, A., Reyes, A.A., 2024. 
+Advancing Horizons in remote sensing: a comprehensive survey of deep learning 
+models and applications in image classification and beyond. Neural Comput. Appl. 
+36, 16727–16767. https://doi.org/10.1007/s00521-024-10165-7.
+Pau, G., Fuchs, F., Sklyar, O., Boutros, M., Huber, W., 2010. EBImage–an R package for 
+image processing with applications to cellular phenotypes. Bioinformatics 26, 
+979–981. https://doi.org/10.1093/bioinformatics/btq046.
+Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., 
+Blondel, M., Prettenhofer, P., Weiss, R., Dubourg, V., Vanderplas, J., Passos, A., 
+O. Nevalainen et al.                                                                                                                                                                                                                            
+ISPRS Open Journal of Photogrammetry and Remote Sensing 17 (2025) 100099 
+21 
+
+
+Cournapeau, D., Brucher, M., Perrot, M., Duchesnay, E., 2011. Scikit-learn: machine 
+learning in python. J. Mach. Learn. Res. 12, 2825–2830.
+Popescu, S.C., Wynne, R.H., 2004. Seeing the trees in the forest. Photogramm. Eng. Rem. 
+Sens. 70, 589–604. https://doi.org/10.14358/PERS.70.5.589.
+Puliti, S., Dash, J.P., Watt, M.S., Breidenbach, J., Pearse, G.D., 2020. A comparison of 
+UAV laser scanning, photogrammetry and airborne laser scanning for precision 
+inventory of small-forest properties. Forestry: Int. J. Financ. Res. 93, 150–162. 
+https://doi.org/10.1093/forestry/cpz057.
+Puliti, S., Ørka, H., Gobakken, T., Næsset, E., 2015. Inventory of small forest areas using 
+an unmanned aerial system. Remote Sens. 7, 9632–9654. https://doi.org/10.3390/ 
+rs70809632.
+Qin, H., Zhou, W., Yao, Y., Wang, W., 2022. Individual tree segmentation and tree 
+species classification in subtropical broadleaf forests using UAV-Based LiDAR, 
+hyperspectral, and ultrahigh-resolution RGB data. Rem. Sens. Environ. 280, 113143. 
+https://doi.org/10.1016/j.rse.2022.113143.
+Rondeaux, G., Steven, M., Baret, F., 1996. Optimization of soil-adjusted vegetation 
+indices. Rem. Sens. Environ. 55, 95–107. https://doi.org/10.1016/0034-4257(95) 
+00186-7.
+Roujean, J.-L., Breon, F.-M., 1995. Estimating PAR absorbed by vegetation from 
+bidirectional reflectance measurements. Rem. Sens. Environ. 51, 375–384. https:// 
+doi.org/10.1016/0034-4257(94)00114-3.
+Sims, D.A., Gamon, J.A., 2002. Relationships between leaf pigment content and spectral 
+reflectance across a wide range of species, leaf structures and developmental stages. 
+Rem. Sens. Environ. 81, 337–354. https://doi.org/10.1016/S0034-4257(02)00010- 
+X.
+Sothe, C., De Almeida, C.M., Schimalski, M.B., La Rosa, L.E.C., Castro, J.D.B., Feitosa, R. 
+Q., Dalponte, M., Lima, C.L., Liesenberg, V., Miyoshi, G.T., Tommaselli, A.M.G., 
+2020. Comparative performance of convolutional neural network, weighted and 
+conventional support vector machine and random forest for classifying tree species 
+using hyperspectral and photogrammetric data. GIScience Remote Sens. 57, 
+369–394. https://doi.org/10.1080/15481603.2020.1712102.
+Sun, Y., Jin, X., Pukkala, T., Li, F., 2022. Predicting individual tree diameter of larch 
+(Larix olgensis) from UAV-LiDAR data using six different algorithms. Remote Sens. 
+14, 1125. https://doi.org/10.3390/rs14051125.
+Teague, M.R., 1980. Image analysis via the general theory of moments. Josa 70, 
+920–930.
+Torresan, C., Berton, A., Carotenuto, F., Di Gennaro, S.F., Gioli, B., Matese, A., 
+Miglietta, F., Vagnoli, C., Zaldei, A., Wallace, L., 2017. Forestry applications of UAVs 
+in Europe: a review. Int. J. Rem. Sens. 38, 2427–2447. https://doi.org/10.1080/ 
+01431161.2016.1252477.
+Tucker, C.J., 1979. Red and photographic infrared linear combinations for monitoring 
+vegetation. Rem. Sens. Environ. 8, 127–150. https://doi.org/10.1016/0034-4257 
+(79)90013-0.
+Wallace, L., Lucieer, A., Malenovský, Z., Turner, D., Vopˇenka, P., 2016. Assessment of 
+forest structure using two UAV techniques: a comparison of airborne laser scanning 
+and structure from motion (SfM) point clouds. Forests 7, 62. https://doi.org/ 
+10.3390/f7030062.
+Wang, Y., Hyyppa, J., Liang, X., Kaartinen, H., Yu, X., Lindberg, E., Holmgren, J., Qin, Y., 
+Mallet, C., Ferraz, A., Torabzadeh, H., Morsdorf, F., Zhu, L., Liu, J., Alho, P., 2016. 
+International benchmarking of the individual tree detection methods for modeling 3- 
+D canopy structure for silviculture and forest ecology using airborne laser scanning. 
+IEEE Trans. Geosci. Remote Sensing 54, 5011–5027. https://doi.org/10.1109/ 
+TGRS.2016.2543225.
+Wang, Y., Py¨or¨al¨a, J., Liang, X., Lehtom¨aki, M., Kukko, A., Yu, X., Kaartinen, H., 
+Hyypp¨a, J., 2019. In situ biomass estimation at tree and plot levels: what did data 
+record and what did algorithms derive from terrestrial and aerial point clouds in 
+boreal forest. Rem. Sens. Environ. 232, 111309. https://doi.org/10.1016/j. 
+rse.2019.111309.
+Wu, C., Niu, Z., Tang, Q., Huang, W., 2008. Estimating chlorophyll content from 
+hyperspectral vegetation indices: modeling and validation. Agric. For. Meteorol. 
+148, 1230–1241. https://doi.org/10.1016/j.agrformet.2008.03.005.
+Yu, X., Hyypp¨a, J., Litkey, P., Kaartinen, H., Vastaranta, M., Holopainen, M., 2017. 
+Single-sensor solution to tree species classification using multispectral airborne laser 
+scanning. Remote Sens. 9, 108. https://doi.org/10.3390/rs9020108.
+Zarco-Tejada, P.J., Miller, J.R., 1999. Land cover mapping at BOREAS using red edge 
+spectral parameters from CASI imagery. J. Geophys. Res. 104, 27921–27933. 
+https://doi.org/10.1029/1999JD900161.
+O. Nevalainen et al.                                                                                                                                                                                                                            
+ISPRS Open Journal of Photogrammetry and Remote Sensing 17 (2025) 100099 
+22

@@ -4,10 +4,10 @@ type: Concept
 description: "Evaluation concept for tree detection in dense stands where crown overlap breaks bbox-centric NMS and segmentation boundaries drive errors."
 tags: [dense-stands, evaluation, detection, instance-segmentation, dense/open]
 status: stable
-updated: 2026-10-23
+updated: 2026-10-26
 generated:
   by: agent:conifervision-wiki
-  at: 2026-10-23T12:00:00Z
+  at: 2026-10-26T12:00:00Z
 related_methods:
   - methods/merge-detections
   - methods/deimv2-canopy
@@ -25,6 +25,8 @@ sources:
   - sources/paper-refdrone_llms
   - sources/paper-evaluation of growth functions used in the swedish forest planning system heureka_article1013
   - sources/paper-a crown width-diameter model for natural even-aged black pine forest management-forests-09-00610-v2
+  - sources/paper-skattningar i gallringsskog med hjälp av flygburen laserskanning -beräkningar med massaslutenhet
+  - sources/paper-simplifying uav-based photogrammetry in forestry_how to generate accurate digital terrain model and assess flight mission settings-forests-13-00173
   - sources/paper-fsod-vfm
 ---
 # Dense stand detection (before clearing)
@@ -100,3 +102,4 @@ TBD:
 - How does the boundary delineation accuracy of box-prompted SAM2 scale in extremely dense conifer stands compared to specialized instance segmentation models like EdgeCrafter ECSeg?
 - How does the performance of explicit numerical reasoning (like NGDINO's count bins) scale when applied to extremely dense conifer stands containing hundreds of overlapping tree crowns?
 - How can local competition indices (e.g. basal area of larger trees, BAL) derived from dense crown detections be normalized against carrying-capacity biases observed in unthinned Swedish stands?
+- Does incorporating oblique camera passes (60°) in drone missions resolve crown boundary merging and understory truncation in dense conifer stands prior to thinning?

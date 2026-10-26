@@ -4,10 +4,10 @@ type: Method
 description: "Tree detection with DEIMv2 on multiple CHM height layers (small vs large trees)."
 tags: [deimv2, detection, ai]
 status: stable
-updated: 2026-10-23
+updated: 2026-10-26
 generated:
   by: agent:conifervision-wiki
-  at: 2026-10-23T12:00:00Z
+  at: 2026-10-26T12:00:00Z
 sources:
   - sources/paper-edgecrafter
   - sources/paper-deimv2
@@ -16,6 +16,8 @@ sources:
   - sources/paper-a crown width-diameter model for natural even-aged black pine forest management-forests-09-00610-v2
   - sources/paper-a_linkage_among_tree_diameter_height_crown_base_he
   - sources/paper-allometric relationships of selected european tree-gp_eudor_pdfa1b_euna20855enc_001
+  - sources/paper-interregional crown width models for individual trees growing in pure and mixed stands in austria-forests-11-00114-v3
+  - sources/paper-parameterization of height–diameter and crown radius-diameter relationship across the globe - rtae005
   - sources/paper-fsod-vfm
 ---
 # DEIMv2
@@ -48,3 +50,5 @@ _(after ingest)_
 - Can stand density proxies (e.g. basal area or relative spacing from preliminary CHM local maxima density) be used to dynamically parameterize expected crown bounding box sizes in DEIMv2 inference?
 - Can the age-dependent joint confidence ellipsoids of height and crown width from Rupšys & Petrauskas (2017) guide height-stratified anchor or box-size priors in DEIMv2 canopy detection?
 - Can the empirical height-to-crown-radius ($H \leftrightarrow C_r$) curves from Widlowski et al. (2003) serve as dynamic bounding box aspect/size priors during height-stratified DEIMv2 inference to suppress over-split crowns in spruce and pine stands?
+- Can the species-specific crown width allometries and admixture adjustment factors from Buchacher & Ledermann (2020) serve as bounding box priors or over-segmentation filters in DEIMv2 canopy detection?
+- Can PFT-specific crown radius-to-height allometric bounds (e.g. Chapman–Richards or Logistic curves from Song et al., 2024) be used as dynamic box-size sanity filters to prune false positive DEIMv2 canopy proposals?

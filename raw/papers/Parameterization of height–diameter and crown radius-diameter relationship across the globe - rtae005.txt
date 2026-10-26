@@ -1,0 +1,894 @@
+Journal of
+ Plant Ecology
+JOURNAL OF PLANT ECOLOGY | https://doi.org/10.1093/jpe/rtae005
+1
+© The Author(s) 2024. Published by Oxford University Press on behalf of the Institute of Botany, Chinese Academy of Sciences and the Botanical Society of China.
+This is an Open Access article distributed under the terms of the Creative Commons Attribution License (https://creativecommons.org/licenses/by/4.0/), which permits 
+unrestricted reuse, distribution, and reproduction in any medium, provided the original work is properly cited.
+Research Article
+Parameterization of height–diameter and crown radius–
+diameter relationships across the globe
+Xiang Song1,*, Jinxu Li2 and Xiaodong Zeng1,3
+1International Center for Climate and Environment Sciences, Institute of Atmospheric Physics, Chinese Academy of Sciences, Beijing 
+100029, China, 2School of Mathematics and Statistics, North China University of Water Resources and Electric Power, Zhengzhou 
+450046, China, 3College of Earth and Planetary Sciences, University of Chinese Academy of Sciences, Beijing 100049, China
+*Corresponding author. E-mail: songxiang@mail.iap.ac.cn
+Handling Editor: Yichun Xie
+Received: 4 October 2023, First Decision: 2 December 2023, Accepted: 13 January 2024, Online Publication: 1 February 2024
+Abstract 
+The tree height–diameter at breast height (H–DBH) and crown radius–DBH (CR–DBH) relationships are key 
+for forest carbon/biomass estimation, parameterization in vegetation models and vegetation–atmosphere 
+interactions. Although the H–DBH relationship has been widely investigated on site or regional scales, and a few 
+of studies have involved CR–DBH relationships based on plot-level data, few studies have quantitatively verified 
+the universality of these two relationships on a global scale. This study evaluated the ability of 29 functions to fit 
+the H–DBH and CR–DBH relationships for six different plant functional types (PFTs) on a global scale, based on 
+a global plant trait database. Results showed that most functions were able to capture the H–DBH relationship 
+for tropical PFTs and boreal needleleaf trees relatively accurately, but slightly less for temperate PFTs and boreal 
+broadleaf trees (BB). For boreal PFTs, the S-shaped Logistic function fitted the H–DBH relationship best, while 
+for temperate PFTs the Chapman–Richards function performed well. For tropical needleleaf trees, the fractional 
+function of DBH satisfactorily captured the H–DBH relationship, while for tropical broadleaf trees, the Weibull 
+function and a composite function of fractions were the best choices. For CR–DBH, the fitting capabilities of 
+all the functions were comparable for all PFTs except BB. The Logistic function performed best for two boreal 
+PFTs and temperate broadleaf trees, but for temperate needleleaf trees and two tropical PFTs, some exponential 
+functions demonstrated higher skill. This work provides valuable information for parameterization improvements 
+in vegetation models and forest field investigations.
+Keywords: tree height, diameter at breast height, crown radius, fitting function, parameterization, vegetation 
+model
+全球尺度上树高-胸径和树冠半径-胸径关系的参数化方案
+摘要：树高-胸径(H–DBH)、树冠半径-胸径(CR–DBH)函数关系不仅是森林碳库/植被生物量估算的关
+键，同时也是植被模式参数化方案的重要组成部分，对陆-气相互作用的模拟起着至关重要的作用。目
+前，已有大量工作研究了站点或区域尺度的H–DBH函数关系，也有少量工作基于站点观测数据探讨
+了CR–DBH函数关系，但鲜有研究在全球尺度上定量研究这些函数关系的普适性。因此，本文基于全
+球植物性状数据库，率先在全球尺度上评估了29种函数对6种不同植物功能型 (Plant Functional Types, 
+Downloaded from academic.oup.com/jpe/article/17/2/rtae005/7595929 by guest on 15 October 2026
+
+
+2
+JOURNAL OF PLANT ECOLOGY | 2024, 17:rtae005
+PFTs)的H–DBH和CR–DBH关系的拟合能力。研究结果显示，大多数函数能够较准确地刻画热带PFTs和
+寒带针叶林的H–DBH关系，但对温带PFTs和寒带阔叶林的拟合稍差。Logistic函数最适合拟合寒
+带PFTs的H–DBH关系，而对于温带PFTs而言，Chapman–Richards函数表现较好。分数函数能够较好
+地刻画热带针叶林H-DBH关系，而Weibull函数和一些复合函数则是热带阔叶林的最佳选择。对于大多
+数PFTs(寒带阔叶林除外)而言，所有函数对CR–DBH关系的拟合能力相当，其中，Logistic函数对两种
+寒带PFTs和温带阔叶林的CR–DBH关系拟合最佳，而一些指数函数对温带针叶林和两种热带PFTs的拟合
+效果更好。本研究为植被模式参数化方案的改进和森林实地调查研究提供了宝贵的信息。
+关键词：树高，胸径，树冠半径，拟合函数，参数化方案，植被模式
+INTRODUCTION
+Tree height (H), diameter at breast height (DBH) 
+and crown radius (CR) are three basic physical 
+quantities that describe the growth and size of 
+individual trees (Larjavaara 2021). They are closely 
+related to the biophysical and biochemical processes 
+of ecosystems. H governs light access (Falster 
+and Westoby 2003) and seed dispersal distance 
+(Thomson et al. 2011), while DBH influences water 
+transport and mechanical support within the plant, 
+and also affects leaf biomass. The relationship 
+between these variables reflects the trade-off in the 
+‘growth versus survival’ life strategy. Additionally, 
+CR exhibits a strong relationship with leaf area 
+(Kenefic and Seymour 1999), directly impacting 
+photosynthesis and evapotranspiration, as well as 
+forest microclimate dynamics, which drive plant 
+responses to warming (Zellweger et al. 2020).
+How to describe the relationships of H–DBH 
+and CR–DBH is of significant concern to ecosystem 
+modelers who develop mathematical representations 
+or parameterization schemes in Earth System Models 
+(ESMs) or Dynamic Global Vegetation Models 
+(DGVMs) (Ma et al. 2022; Suwa 2013; Weng et al. 
+2015; Zeng et al. 2014). This is because an inadequate 
+description of the morphology of individual trees can 
+lead to simulation biases in H (Dai et al. 2020), leaf area 
+index (LAI) (Song et al. 2021), carbon fluxes (Toda 
+et al. 2023), vegetation biomass (Song et al. 2017), 
+fractional coverage distributions and more. Such 
+biases can further propagate into simulation biases 
+of canopy precipitation interception (Klamerus-
+Iwan et al. 2020), radiative transfer (Yuan et al. 
+2014), evapotranspiration, surface albedo (Hartley 
+et al. 2017) and even temperature and precipitation 
+(Dong et al. 2016; Huang et al. 2018) in vegetation–
+atmosphere interaction. Furthermore, due to the 
+dependence of stem volume on H and DBH, and the 
+effects of tree canopy on carbon and water cycles, 
+the H–DBH and CR–DBH relationships are also crucial 
+for foresters when estimating forest carbon/biomass 
+(Ni et al. 2017; Sato et al. 2015), as well as ecologists 
+when studying the climate and environment (Ryan 
+2002).
+Up to now, studies of observed tree H–DBH 
+relationships have mostly applied nonlinear concave 
+functions (e.g. Alvarez-Buylla and Martinez-Ramos 
+1992; Jucker et al. 2022; Kooyman and Westoby 2009; 
+Lines et al. 2012; Rasmussen et al. 2011) or S-type 
+functions (e.g. Logistic function, Weibull function 
+and Schnute function) (Huang and Trrus 1992; 
+Huang et al. 2000). It has been shown that power 
+functions and exponential functions are applicable in 
+describing the H–DBH relationship for tropical forests 
+(Kooyman and Westoby 2009; Osunkoya et al. 2007), 
+while S-type functions are more appropriate for 
+boreal forests (Huang and Trrus 1992). For temperate 
+forests, both power functions (Zhao et al. 2021) and 
+S-type functions (Ahmadi et al. 2013) have been 
+adopted. However, in most of current DGVMs, power 
+functions formed of H = a × DBHb (e.g. Maignan 
+et al. 2011; Moorcroft et al. 2001; Zeng et al. 2014) 
+and fractional function H = (1/(a × DBH) + 1/b)−1 
+(Suwa 2013) have been widely used to describe 
+tree individual growth in globe, without distinction 
+among different plant functional types (PFTs). 
+Unified simple function forms and parameters across 
+the globe simplifies parameterization in DGVMs, but 
+it may make large biases in vegetation structure and 
+biomass.
+In contrast, there have been relatively few studies 
+on the CR–DBH relationship, and most that have 
+been conducted have focused on coniferous forests 
+(Sileshi et al. 2014). For example, ln(CR)–ln(DBH) 
+(Hasenauer 1999; Meng et al. 2007) and CR–ln(DBH) 
+(Novotný et al. 2020) linear models have been used 
+for needleleaf evergreen trees, while a CR–DBH 
+linear function was used to describe the morphology 
+Downloaded from academic.oup.com/jpe/article/17/2/rtae005/7595929 by guest on 15 October 2026
+
+
+3
+JOURNAL OF PLANT ECOLOGY | 2024, 17:rtae005
+of needleleaf deciduous trees (Gilmore 2001). Sileshi 
+et al. (2014) compared four power functions between 
+the crown diameter (CD) and DBH for tropical trees 
+and found that the CD–DBH linear function (model 
+exponent = 1) had the smallest Akaike information 
+criterion value.
+Some studies have investigated the morphological 
+variances of different tree species via parameter 
+selections, based on typically adopted existing 
+models without identifying their appropriateness. 
+Actually, the choice of different fitting functions 
+often reflects the diverse ways in which trees 
+allocate photosynthetic products, and their different 
+mathematical 
+properties 
+also 
+imply 
+different 
+hypotheses. Some studies have suggested that 
+functions with asymptotic behavior can effectively 
+represent the hydraulic constraint hypothesis (Wood 
+et al. 2015; Zhao et al. 2021). However, Bontemps 
+and Duplat (2012) argued that asymptotic functions 
+tend to underestimate the inherent growth rate of 
+the tree, and proposed that functions with non-
+asymptotic behavior could better describe the 
+growth process of the tree. Hence, the selection of 
+the best fitting functions should be a preliminary 
+step before further analysis (Huang et al. 2000; 
+Temesgen et al. 2014).
+Existing studies have derived morphological 
+functions based on site or regional observations 
+with a limited number of samples and species, 
+and universality of these models has not yet been 
+verified across different ecoregions, or on a global 
+scale. Hence, applying these morphological functions 
+in ESMs/DGVMs may lead to significant biases in 
+predicted tree traits (Huang et al. 2000) and global 
+vegetation distributions (Song et al. 2021).
+Therefore, in this study, the optimum fitting 
+functions for the H–DBH and CR–DBH relationships 
+for 
+different 
+PFTs 
+were 
+determined 
+through 
+validation and comparison among 29 functions, 
+based on a global plant trait dataset. Furthermore, 
+their mathematical properties were also thoroughly 
+examined. The aim in carrying out this work was 
+to provide a valuable foundation for improving 
+parameterization in vegetation models, and to offer 
+insights for forest field investigations.
+DATA AND METHODS
+Data
+The data used in this study were obtained from 
+Jucker et al. (2022). They encompass a collection 
+of 498 839 trees sampled from 61 856 unique sites 
+around the world. The data cover all major forest 
+and non-forest biomes, including data on 5163 
+species from 1453 genera and 187 plant families. 
+The dataset mainly includes information on whether 
+samples are angiosperms or gymnosperms, along 
+with their family/genus/species names, the latitude 
+and longitude of the sites and the DBH (cm), H (m) 
+and CR (m) of the trees.
+Because not all the samples have a complete 
+set of information, in this study, a total of 418 643 
+observations were included, encompassing detailed 
+information as mentioned above. Then, they were 
+classified into needleleaf and broadleaf trees based 
+on their species names, and three climate zones 
+with the criteria of tropical zones 23.5° S–23.5° N, 
+temperate zones 23.5° S–66.5° S or 23.5° N–66.5° 
+N and boreal zones 66.5° S–90° S or 66.5° N–90° N. 
+At last, the observational data were divided into six 
+PFTs based on leaf traits and climate zones (Table 
+1). This gave a subset of 102 886 observations of 
+needleleaf trees, with 1658 from boreal regions, 
+100 312 from temperate regions and 916 from 
+tropical regions. For broadleaf PFTs, the dataset 
+contained 315 757 observations, with 265 from 
+boreal regions, 161 963 from temperate regions and 
+153 529 from tropical regions.
+Methods
+Twenty-nine different functions were used to 
+model the H–DBH and CR–DBH relationships 
+(Table 2). These functions encompassed linear 
+functions 
+(Func.24), 
+logarithmic 
+functions 
+(Func.25), fractional functions (e.g. Func.17, 
+19–22), power functions (e.g. Func.1, 28), 
+exponential functions (e.g. Func.2–4, 26–27) 
+and some composite functions (e.g. Func.13–15). 
+A few of these functions were from Huang et al. 
+(2000) and Feldpausch et al. (2011). The coefficient 
+of determination (R2), root-mean-squared error 
+(RMSE) were used as skill scores to assess the 
+goodness-of-fit. If both R2 and RMSE were close (R2 
+and RMSE differences less than 0.001), functions 
+with less parameters won. In addition, in most 
+countries, the height of 1.3 m above the ground is 
+defined as DBH. So, many popular functions (such 
+as Func.1–22) have the constant term C0 = 1.3 
+which makes the left-hand value of functions no 
+less than 1.3. Therefore, when fitting Func.1–22 
+for H–DBH relationship, data with H less than 1.3 m 
+were excluded.
+Downloaded from academic.oup.com/jpe/article/17/2/rtae005/7595929 by guest on 15 October 2026
+
+
+4
+JOURNAL OF PLANT ECOLOGY | 2024, 17:rtae005
+RESULTS
+Regression between H and DBH
+Twenty-nine functions (Table 2) were utilized 
+to model the H–DBH relationship. Compared 
+to broadleaf trees, the prediction skill of these 
+functions was generally higher for needleleaf trees 
+in each climatic zone, with the average R2 ranging 
+from 0.47 to 0.72 for needleleaf trees, and from 
+0.36 to 0.66 for broadleaf trees. As evidenced by 
+the high R2 and low RMSE, most of these functions 
+could capture the H–DBH relationship relatively 
+Table 2:  H/CR–DBH functions for evaluation
+Function number
+Functions
+Function number
+Functions
+1
+y = C0 + axb
+16
+y = C0 + ax(bx−c)
+2
+y = C0 + a exp(b/x)
+17
+y = C0 + ax/(b + x)
+3
+y = C0 + a exp(−bx−c)
+18
+y = C0 + a/(1 + 1/(bxc))
+4
+y = C0 + exp(a + bxc)
+19
+y = C0 + ax2/(a + bx)2
+5
+y = C0 + ax exp(−bx)
+20
+y = C0 + bx + ax/(x + 1)
+6
+y = C0 + axb exp(−cx2)
+21
+y = C0 + a(x/(1 + x))b
+7
+y = C0 + exp(a + b/(x + 1))
+22
+y = C0 + x2/(a + bx + cx2)
+8
+y = C0 + a exp(b/(x + c))
+23
+y = a + b/x
+9
+y = C0 + a exp(−b exp(−cx))
+24
+y = a + bx
+10
+y = C0 + a/(1 + b exp(−cx))
+25
+y = a + b ln x
+11
+y = C0 + a(1 −exp(−bx))
+26
+y = a exp(b/x)
+12
+y = C0 + a(1 −exp(−bxc))
+27
+y = a exp(bx)
+13
+y = C0 + a(1 −exp(−bx))c
+28
+y = axb
+14
+y = C0 + a(1 −b exp(−cx))d
+29
+y = abx
+15
+y = C0 + a(1 −exp(−bxc))d
+Note: x: DBH (cm), y: H/CR (m), a, b, c, d: parameters, C0 is 1.3 for H–DBH relationship, but it equals to 0 for CR–DBH 
+relationship where Func.1 is the same as Func.28, and Func.2 is the same as Func.26.
+Table 1:  Characteristics of the H, stem diameter and CR of different PFTs
+Variables
+Boreal
+Temperate
+Tropical
+Needleleaf 
+(BN)
+Broadleaf 
+(BB)
+Needleleaf 
+(MN)
+Broadleaf 
+(MB)
+Needleleaf 
+(TN)
+Broadleaf 
+(TB)
+Height (m)
+Number
+1658
+265
+100 312
+161 963
+916
+153 529
+Media
+14.10
+10.90
+10.40
+8.50
+13.00
+9.00
+Mean
+13.76
+10.78
+12.32
+11.49
+14.00
+11.65
+CR (m)
+Number
+1558
+265
+75 425
+109 140
+799
+91 980
+Media
+1.35
+1.75
+2.00
+2.00
+1.75
+1.25
+Mean
+1.56
+1.75
+2.07
+2.42
+2.19
+1.81
+DBH (cm)
+Number
+1658
+265
+100 312
+161 963
+916
+153 529
+Media
+20.60
+16.30
+19.90
+16.10
+18.15
+11.10
+Mean
+22.59
+17.08
+22.94
+22.40
+24.63
+15.97
+Downloaded from academic.oup.com/jpe/article/17/2/rtae005/7595929 by guest on 15 October 2026
+
+
+5
+JOURNAL OF PLANT ECOLOGY | 2024, 17:rtae005
+accurately for boreal PFTs (average R2 of 0.68 and 
+0.41, and RMSE of 2.48 and 2.47 m, respectively) 
+and tropical PFTs (average R2 of 0.72 and 0.66, and 
+RMSE of 4.43 and 4.84 m, respectively), but slightly 
+less so in temperate zones (average R2 of 0.47 and 
+0.36, and RMSE of 5.72 and 7.07 m, respectively) 
+(Fig. 1; Supplementary Table S1).
+For boreal needleleaf trees (BN), obvious 
+differences existed in the fitting capabilities among 
+different functions, among which Func.10 fitted 
+best (R2 = 0.76, RMSE = 2.20 m), closely followed 
+by Func.5 and Func.12 (R2 = 0.75, RMSE = 2.22 
+and 2.21 m, respectively) (Fig. 1a and b). For boreal 
+broadleaf trees (BB), probably due to its lower 
+data availability, different functions had much 
+closer R2 values, wherein the best fitting functions 
+were Func.9, Func.13 and Func.22 (R2 = 0.43, 
+RMSE = 2.42 m) (Fig. 1c and d), but with no obvious 
+differences (Fig. 2b). Furthermore, there were many 
+other functions with equivalent fitting ability, such 
+as Func.3, Func.10, Func.16 and Func.18. Notably, 
+the best fitting functions for boreal regions were all 
+S-shaped, consistent with the previous conclusion 
+of Huang and Trrus (1992) that S-type functions are 
+suitable for describing the H–DBH relationship for 
+boreal trees. For the two PFTs in temperate regions, 
+Func.13 performed best, achieving R2 values of 0.50 
+and 0.40, along with RMSE values of 5.54 and 6.87 
+m, respectively. For temperate needleleaf trees (MN), 
+Func.6 was comparable to Func.13, with similar 
+R2 and RMSE (Fig. 1e–h), with slight differences 
+for large trees (Fig. 2c). For temperate broadleaf 
+trees (MB), Func.13 obviously underestimated the 
+H for individuals whose actual H exceeded 35 m 
+(Fig. 2d), which was the main reason behind the 
+low R2. For tropical regions, Func.17 was the best 
+fitting function for tropical needleleaf trees (TN), 
+with R2 of 0.77 and RMSE of 3.89 m (Figs 1i, j and 
+2e); while for tropical broadleaf trees (TB), Func.12 
+and Func.22 were comparable with R2 of 0.71 and 
+RMSE of 4.52 m (Figs 1k, l and 2f).
+In addition to the best fitting functions for each 
+category, Func.18 also had great fitting capability for all 
+PFTs, with R2 values of approximately 0.75 and 0.43 for 
+boreal PFTs, 0.50 and 0.40 for temperate PFTs and 0.77 
+and 0.71 for tropical PFTs, respectively. Meanwhile, 
+Func.12 and Func.16 were good candidates for 
+needleleaf and broadleaf trees, respectively.
+As shown in Fig. 1, there were several functions 
+with satisfactory fitting capabilities, with very similar 
+R2 and RMSE values to the best fitting function for 
+some PFTs. Usually, different functional forms may 
+have different mathematical properties, such as 
+convexity and asymptotic behavior, which reflect 
+different individual growth processes of trees. For 
+example, when H–DBH relationship is represented 
+by convex functions, it will be indicated that the 
+growth rate of tree height is first faster and then 
+slower with DBH. But when S-shaped functions 
+are used, the growth rate of tree height with DBH 
+shows a slow–fast–slow process. Thus, to investigate 
+whether existing obvious prediction differences 
+among different functions with similar R2 and 
+RMSE, the relative predictive biases RMSE/Hobs were 
+compared among functions with R2 difference less 
+than 0.001 (Fig. 3). For BN, Func.10 had obvious 
+advantage (higher R2) over other functions, so 
+only its RMSE/Hobs was shown for BN. Overall, the 
+tendency between the relative bias and observed H 
+was similar among the selected functions. For boreal 
+trees, individuals with observed H of approximately 
+6–7 m had the highest relative biases, which was 
+above 20% (Fig. 3a and b); while for temperate trees, 
+the relative biases of individuals with observed H of 
+35–40 and 15–20 m were around 89.68%–105.47% 
+and 
+145.70%–175.13%, 
+respectively—several 
+times higher than small and large individuals (Fig. 
+3c and d). Both types of tropical trees had their 
+highest relative biases for individuals with observed 
+H of approximately below 10 m; however, for large 
+individuals, the relative bias decreased to below 20% 
+for TN, but reached 40% for TB (Fig. 3e and f). On 
+the other hand, there were significant predictive 
+differences among different functions for individuals 
+with relatively small or large sizes. For example, the 
+relative biases from different functions ranged from 
+20.86% to 28.74% for individuals with observed H 
+of approximately 7 m for BB, while it varied from 
+6.69% to 37.18% for individuals above 80 m for MB. 
+Furthermore, the advantages of different functions 
+were reflected in different size classes. Taking BB as 
+an example, Func.10 had the smallest relative bias for 
+small individuals, while Func.22 and Func.23 held 
+the advantage for relatively tall individuals. Similar 
+phenomena occurred between middle and large size 
+classes for MN, MB and TB. Thus, it is evident that 
+choosing different functions may result in significant 
+differences in the predicted H for small and large 
+trees, even when these functions have similar R2 and 
+RMSE values.
+Regression between CR and DBH
+The fitting capabilities of 27 functions (Func.1 and 
+Func.28 were the same for CR–DBH, so did Func.2 
+Downloaded from academic.oup.com/jpe/article/17/2/rtae005/7595929 by guest on 15 October 2026
+
+
+6
+JOURNAL OF PLANT ECOLOGY | 2024, 17:rtae005
+Figure 1:  The R2 (a, c, e, g, i, k) and RMSE (b, d, f, h, j, l) from 29 different fitting functions for the relationship between H 
+and DBH for six different PFTs. The blanks denoted that the corresponding fitting functions were nonsignificant. Dark blue 
+bars were the best fitting functions, and the gray line was the mean value of R2 or RMSE of all fitting functions.
+Downloaded from academic.oup.com/jpe/article/17/2/rtae005/7595929 by guest on 15 October 2026
+
+
+7
+JOURNAL OF PLANT ECOLOGY | 2024, 17:rtae005
+and Func.26) were comparable for all the different 
+PFTs except BB, with average R2 values ranging from 
+0.60 to 0.68, and RMSE ranging from 0.42 to 1.07 m 
+(Fig. 4; Supplementary Table S2). Similar to the H–
+DBH results, the prediction skill of these functions 
+was higher for needleleaf trees than for broadleaf 
+trees for each climatic zone. For boreal trees, the 
+S-shaped Func.10 performed best (R2 = 0.73 and 0.47, 
+RMSE = 0.39 and 0.38 m, respectively) (Figs 4a–d 
+and 5a, b). For temperate trees, Func.8 and Func.10 
+proved to be the best fitting functions for MN and MB, 
+yielding R2 values of 0.65 and 0.67, with corresponding 
+RMSE values of 0.60 and 0.89 m, respectively (Figs 
+4e–h and 5c, d). For tropical trees, there were two 
+best options for TN—namely, Func.3 and Func.16—
+yielding an average R2 of 0.69 and RMSE of 0.85 
+m; while for TB, Func.8 had the highest skill scores 
+(R2 = 0.67, RMSE = 0.98 m) (Figs 4i–l and 5e, f).
+Besides the best fitting functions for each PFT, 
+Func.6, Func.13, Func.15 and Func.18 displayed 
+great fitting capabilities for all PFTs except BN, 
+for which the best fitting function had obvious 
+advantages. Furthermore, aside from BN and MB, 
+Func.28 was also a good choice for other PFTs.
+Similar to the approach for the H–DBH relationship, 
+the relative predictive biases among functions with 
+similar R2 and RMSE for the CR–DBH relationship of 
+each PFT were also compared (Fig. 6). Generally, the 
+relative biases of CR were large for individuals with 
+small CR. For BB, MN and TN, significant predictive 
+differences among selected functions appeared for 
+individuals with relatively large CR (Fig. 6b, c and 
+e). For BN, BB and MN, changes in relative CR 
+biases synchronized with those of relative H biases; 
+however, for MB, TN and TB, these changes seemed 
+opposite when CR increased from intermediate to 
+large values (Figs 3 and 6).
+DISCUSSION AND CONCLUSIONS
+The relationships among H, CR and DBH are of 
+paramount importance for parameterizations in 
+Figure 2:  The relationship between H and DBH for six different PFTs (a–f). The blue line is the best fitting function for 
+each PFT.
+Downloaded from academic.oup.com/jpe/article/17/2/rtae005/7595929 by guest on 15 October 2026
+
+
+8
+JOURNAL OF PLANT ECOLOGY | 2024, 17:rtae005
+vegetation models and forestry estimation. While 
+there have been numerous studies conducted at 
+site or regional scales, until now, there has been a 
+lack of systematic research on the universality of 
+these fitting functions at a global scale. Therefore, 
+this study employed 29 functions to fit H–DBH and 
+CR–DBH relationships for six different PFTs using a 
+comprehensive global plant trait dataset.
+Results showed that different PFTs had different 
+satisfactory 
+morphological 
+fitting 
+functions. 
+S-shaped functions were good choices for boreal 
+trees, consistent with previous studies (e.g. Huang 
+and Trrus 1992). The Chapman–Richard function 
+(Func.13) was the best fitting function for the H–DBH 
+relationship of temperate trees (MN and MB), which 
+agrees with the outcomes reported for temperate 
+forests by Ahmadi et al. (2013). On the other hand, 
+although the Gompertz function (Func.9) was one of 
+the good choices to predict the H–DBH relationship 
+for BB, it did not have high predictive performance 
+for needleleaf trees in all three climate regions (R2 
+ranging from 0.46 to 0.57, RMSE ranging from 2.42 
+Figure 3:  Comparison among functions with similar R2 and RMSE for H–DBH of six different PFTs (a–f). For BN, the best 
+fitting function Func.10 had obvious advantage (higher R2) over other functions, and there were no functions with R2 
+difference less than 0.001 with Func.10, so only RMSE/Hobs of Func.10 was shown.
+Downloaded from academic.oup.com/jpe/article/17/2/rtae005/7595929 by guest on 15 October 2026
+
+
+9
+JOURNAL OF PLANT ECOLOGY | 2024, 17:rtae005
+Figure 4:  As in Fig. 1 but for the relationship between CR and DBH for six different PFTs. The left column (a, c, e, g, i, k) 
+is R2 and the right column (b, d, f, h, j, l) is RMSE. Here, Func.1 was the same as Func.28, and Func.2 was the same as 
+Func.26, so they were omitted.
+Downloaded from academic.oup.com/jpe/article/17/2/rtae005/7595929 by guest on 15 October 2026
+
+
+10
+JOURNAL OF PLANT ECOLOGY | 2024, 17:rtae005
+to 5.77 m). Such a finding differs from the results 
+reported for needleleaf forests in subalpine and 
+boreal habitats in northeast North America by Wood 
+et al. (2015). The discrepancy is probably attributable 
+to the use of different datasets related to regional 
+variations.
+Besides identifying the best fitting functions 
+for each individual PFT, it was also found that the 
+Weibull function (Func.12) and the modified Logistic 
+function (Func.18) were also good candidates for 
+all PFTs (except Func.12 for BB). Furthermore, 
+the power function H = a × DBHb (Func.28) also 
+fitted the H–DBH relationship well in temperate 
+and tropical regions, which is consistent with 
+the results reported by Feldpausch et al. (2011) 
+based on tropical forest trees. Some studies have 
+reported that the quadratic polynomial function 
+ln(H) = a × ln(DBH) + b × (ln(DBH))2 
+fits 
+well 
+for deciduous trees in North America (Niklas 
+1995), and for tropical/subtropical forests and 
+woodland savannas (Chave et al. 2015). However, 
+compared with H = a × DBHb (Func.28, equivalent 
+to 
+ln(H) = ln a + b × ln(DBH), 
+the 
+function 
+ln(H) = a × ln(DBH) + b × (ln(DBH))2 
+did 
+not 
+obviously improve the fitting score for the H–DBH or 
+CR–DBH for all PFTs in our dataset.
+There are a limited number of studies on the CR–DBH 
+relationship in the published literature. In the present 
+study, besides the best fitting functions for each PFT, 
+exponential functions (Func.3 and 8) and the Logistic 
+function (Func.10) satisfied predictive results regarding 
+the CR–DBH relationship. Furthermore, Func.28 was a 
+good choice for all PFTs. For TB, the conclusion was not 
+consistent with Sileshi et al. (2014), who reported the 
+best fitting function to be a linear function between CR 
+and DBH (Func.24). In addition to the data of different 
+quantity and observation ranges, another reason 
+leading to different optimal fitting functions may be the 
+difference in the space or light competition intensity 
+among neighboring individuals.
+In most ecological numerical models, the power 
+function (Func.28) is used to describe H–DBH and 
+CR–DBH relationships, but this leads to obvious 
+biases in tree morphology and biomass. The best 
+Figure 5:  The relationship between CR and DBH for six different PFTs (a–f). The blue line is the best fitting function for 
+each PFT.
+Downloaded from academic.oup.com/jpe/article/17/2/rtae005/7595929 by guest on 15 October 2026
+
+
+11
+JOURNAL OF PLANT ECOLOGY | 2024, 17:rtae005
+fitting functions identified in this study are expected 
+to improve tree morphology parameterizations, and 
+then reduce model simulations biases in ecosystem 
+structure (tree height, crown area, LAI, etc.) and 
+biomass in DGVMs, and even improve model 
+performance on vegetation–atmosphere interactions 
+in ESMs. However, further improvements are 
+still needed. First, many ecological models have 
+considered leaf phenology (evergreen/deciduous). 
+But Jucker’s original database provides data at 
+the species level without information about leaf 
+phenology. When it was aggregated at the PFT level, 
+the phenology of the same species may differ in 
+different regions and/or climatic zones, which might 
+lead to inaccurate leaf phenological classification. 
+So, more data should be further collected to take it 
+into account. Second, this study has shown that the 
+relative biases in predicted H and CR were high for 
+small or medium-sized individuals. When the selected 
+functions in this study are adopted to estimate forest 
+carbon stocks (static target), there is no need to focus 
+on the fitting accuracy for small individuals because a 
+Figure 6:  Comparison among functions with similar R2 and RMSE for CR–DBH of different PFTs (a–f). For BN and MB, the 
+best fitting function Func.10 had obvious advantage (higher R2) over other functions, and there were no functions with R2 
+difference less than 0.001 with Func.10, so only RMSE/Hobs of Func.10 was shown.
+Downloaded from academic.oup.com/jpe/article/17/2/rtae005/7595929 by guest on 15 October 2026
+
+
+12
+JOURNAL OF PLANT ECOLOGY | 2024, 17:rtae005
+large proportion of the predictive RMSE derives from 
+the prediction of large individuals. However, when 
+they serve dynamic modeling, attention should 
+be paid to predictions of small individuals. This is 
+because large trees usually grow from small ones, 
+and biases for small individuals not only generate 
+biases in their resource competition, growth and 
+mortality rates, but also further result in irrationality 
+of ecosystem structure and succession time scales. 
+In addition, we observed large standard deviations 
+of H and CR for a given DBH, which suggests that 
+other factors, such as climate, soil characteristics and 
+individual competition likely contribute to the spatial 
+heterogeneity in H–DBH and CR–DBH relationships. 
+Therefore, in the next step for this line of research, 
+the effects from abiotic factors on H–DBH and CR–
+DBH relationships will be further investigated to 
+gain a more comprehensive understanding of the 
+complexities underlying tree growth patterns and 
+crown characteristics.
+Supplementary Material
+Supplementary material is available at Journal of 
+Plant Ecology online.
+Table S1: H–DBH functions.
+Table S2: CR–DBH functions.
+Funding
+This study is supported by the National Natural Science 
+Foundation of China (42275177) and the National 
+Key Scientific and Technological Infrastructure 
+project ‘Earth System Science Numerical Simulator 
+Facility’ (EarthLab).
+Data Availability
+The data used in this study are from Jucker et al. 
+(2022), and can be downloaded on Zenodo (https://
+doi.org/10.5281/zenodo.6637599).
+Conflict of interest statement. The authors declare that 
+they have no conflict of interest.
+REFERENCES
+Ahmadi K, Alavi JS, Kouchaksaraei TM, et al. (2013) Non-
+linear height-diameter models for oriental beech (Fagus 
+orientalis Lipsky) in the Hyrcanian forests. Biotechnol Agron 
+Soc Environ 17:431–440.
+Alvarez-Buylla ER, Martinez-Ramos M (1992) Demography 
+and allometry of Cecropia obtusifolia, a neotropical pioneer 
+tree—an evaluation of the climax–pioneer paradigm for 
+tropical rain forests. J Ecol 80:275–290.
+Bontemps J, Duplat P (2012) A non-asymptotic sigmoid 
+growth curve for top height growth in forest stands. Forestry 
+85:353–368.
+Chave J, Rejou-Mechain M, Burquez A, et al. (2015) Improved 
+allometric models to estimate the aboveground biomass of 
+tropical trees. Glob Change Biol 20:3177–3190.
+Dai JY, Liu HY, Wang YC, et al. (2020) Drought-modulated 
+allometric patterns of trees in semi-arid forests. Commun 
+Biol 3:405.
+Dong WJ, Yuan WP, Teng F, et al. (2016) Coupling Earth 
+System Model and integrated assessment model. Adv Earth 
+Sci 31:1215–1219.
+Falster DS, Westoby M (2003) Plant height and evolutionary 
+games. Trends Ecol Evol 18:337–343.
+Feldpausch TR, Banin L, Phillips OL, et al. (2011) Height-
+diameter allometry of tropical forest trees. Biogeosciences 
+8:1081–1106.
+Gilmore DW (2001) Equations to describe crown allometry 
+of Larix require local validation. For Ecol Manage 
+148:109–116.
+Hartley AJ, MacBean N, Georgievski G, et al. (2017) 
+Uncertainty in plant functional type distributions and its 
+impact on land surface models. Remote Sens Environ 203:
+71–89.
+Hasenauer H (1999) Dimensional relationships of open-grown 
+trees in Austria. For Ecol Manage 96:197–206.
+Huang QH, Chen HS, Hua WJ (2018) Stronger warming 
+amplification over arid ecoregions and its relationship 
+to vegetation cover in China since 1982. Clim Environ Res 
+23:72–82.
+Huang SM, Price D, Titus SJ (2000) Development of ecoregion-
+based height-diameter models for white spruce in boreal 
+forests. For Ecol Manage 129:125–141.
+Huang SM, Trrus SJ (1992) Comparison of nonlinear height-
+diameter functions for major Alberta tree species. Can J For 
+Res 22:1297–1304.
+Jucker T, Fischer FJ, Chave J, et al. (2022) Tallo: a global tree 
+allometry and crown architecture database. Glob Change Biol 
+28:5254–5268.
+Kenefic LS, Seymour RS (1999) Leaf area prediction models 
+for Tsuga canadensis in Maine. Can J For Res 29:1574–1582.
+Klamerus-Iwan A, Link TE, Keim RF, et al. (2020) Storage and 
+Routing of Precipitation Through Canopies. Cham, Switzerland: 
+Springer.
+Kooyman RM, Westoby M (2009) Costs of height gain in 
+rainforest saplings: main-scaling, functional traits and 
+strategy variation across 75 species. Ann Bot 104:987–993.
+Larjavaara M (2021) What would a tree say about its size? 
+Front Ecol Evol 8:564302.
+Lines ER, Zavala AM, Purves DW, et al. (2012) Predictable 
+changes in aboveground allometry of trees along gradients 
+of temperature, aridity and competition. Glob Ecol Biogeogr 
+21:1017–1028.
+Ma L, Hurtt G, Ott L, et al. (2022) Global evaluation of the 
+Ecosystem Demography model (ED v3.0). Geosci Model Dev 
+15:1971–1994.
+Maignan F, Bréon FM, Chevallier F, et al. (2011) Evaluation 
+of a global vegetation model using time series of satellite 
+vegetation indices. Geosci Model Dev 4:1103–1114.
+Meng SX, Lieffers VJ, Huang SM (2007) Modeling crown 
+volume of lodgepole pine based upon the uniform stress 
+theory. For Ecol Manage 251:174–181.
+Downloaded from academic.oup.com/jpe/article/17/2/rtae005/7595929 by guest on 15 October 2026
+
+
+13
+JOURNAL OF PLANT ECOLOGY | 2024, 17:rtae005
+Moorcroft PR, Hurtt GC, Pacala SW (2001) A method for 
+scaling vegetation dynamics: the ecosystem demography 
+model (ED). Ecol Monogr 71:557–586.
+Ni X, Cao C, Zhou Y, et al. (2017) Estimation of forest biomass 
+patterns across northeast China based on allometric scale 
+relationship. Forests 8:288.
+Niklas KJ (1995) Size-dependent allometry of tree height, 
+diameter and trunk-taper. Ann Bot 75:217–227.
+Novotný J, Navrátilová B, Janoutová R, et al. (2020) Influence of 
+site-specific conditions on estimation of forest above ground 
+biomass from airborne laser scanning. Forests 11:1–18.
+Osunkoya OO, Omar-Ali K, Amit N, et al. (2007) Comparative 
+height-crown allometry and mechanical design in 22 tree 
+species of Kuala Belalong rainforest, Brunei, Borneo. Am J 
+Bot 94:1951–1962.
+Rasmussen MO, Göttsche FM, Diop D, et al. (2011) Tree survey 
+and allometric models for tiger bush in northern Senegal and 
+comparison with tree parameters derived from high resolution 
+satellite data. Int J Appl Earth Obs Geoinf 13:517–527.
+Ryan MG (2002) Canopy processes research. Tree Physiol 
+22:1035–1043.
+Sato T, Saito M, Ramĺrez D, et al. (2015) Development of 
+allometric equations for tree biomass in forest ecosystems 
+in Paraguay. Jpn Agric Res Q 49:281–291.
+Sileshi GW, Nyoka BI, Beedy TL, et al. (2014) Modelling the 
+scaling of stem growth with crown size and optimum 
+stocking densities for systematic grid plantation of Faidherbia 
+albida. New For 45:699–714.
+Song X, Hoffman FM, Iversen CM, et al. (2017) Significant 
+inconsistency of vegetation carbon density in CMIP5 Earth 
+system models against observation data. J Geophys Res 
+Biogeosci 122:2282–2297.
+Song X, Wang DY, Li F, et al. (2021) Evaluating the performance 
+of CMIP6 Earth system models in simulating global 
+vegetation structure and distribution. Adv Clim Change Res 
+12:584–595.
+Suwa R (2013) Evaluation of the wave attenuation function 
+of a coastal black pine Pinus thunbergia forest using the 
+individual-based dynamic vegetation model SEIB-DGVM. 
+J For Res 18:238–245.
+Temesgen H, Zhang CH, Zhao XH (2014) Modelling tree 
+height-diameter relationships in multi-species and multi-
+layered forests: a large observational study from Northeast 
+China. For Ecol Manage 316:78–89.
+Thomson FJ, Moles AT, Auld TD, et al. (2011) Seed dispersal 
+distance is more strongly correlated with plant height than 
+with seed mass. J Ecol 99:1299–1307.
+Toda M, Knohl A, Luyssaert S, et al. (2023) Simulated effects 
+of canopy structural complexity on forest productivity. For 
+Ecol Manage 538:120978.
+Weng ES, Malyshev S, Lichstein JW, et al. (2015) Scaling from 
+individual trees to forests in an Earth system modelling 
+framework using a mathematically tractable model of 
+height-structured competition. Biogeosciences 12:2655–2694.
+Wood ZT, Peart DR, Palmiotto PA, et al. (2015) Asymptotic 
+allometry and transition to the canopy in Abies balsamea. J 
+Ecol 103:1658–1666.
+Yuan H, Dickinson RE, Dai YJ, et al. (2014) A 3D canopy radiative 
+transfer model for global climate modeling: description, 
+validation, and application. J Clim 27:1168–1192.
+Zellweger F, Pieter DF, Lenoir J, et al. (2020) Forest 
+microclimate dynamics drive plant responses to warming. 
+Science 368:772–775.
+Zeng XD, Li F, Song X (2014) Development of the IAP Dynamic 
+Global Vegetation Model. Adv Atmos Sci 31:505–514.
+Zhao MF, Tian SH, Zhu Y, et al. (2021) Allometric relationships, 
+functional differentiations, and scaling of growth rates 
+across 151 tree species in China. Ecosphere 12:e03522.
+Downloaded from academic.oup.com/jpe/article/17/2/rtae005/7595929 by guest on 15 October 2026

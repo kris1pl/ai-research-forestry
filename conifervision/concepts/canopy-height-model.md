@@ -4,10 +4,10 @@ type: Concept
 description: "Normalized height of vegetation above ground: CHM = surface model of canopy top − digital terrain model (DTM)."
 tags: [chm, dtm, dsm, lidar, height]
 status: stable
-updated: 2026-10-23
+updated: 2026-10-26
 generated:
   by: agent:conifervision-wiki
-  at: 2026-10-23T12:00:00Z
+  at: 2026-10-26T12:00:00Z
 related_methods:
   - methods/chm-detection
   - methods/local-maxima
@@ -28,6 +28,8 @@ sources:
   - sources/paper-extraction_of_individual_tree_attributes_using_ultra-high-density_point_clouds_acquired_by_low-cost uav-lidar_in_eucalyptus_plantations
   - sources/paper-mean_height_or_dominant_height_–_what_to_prefer_for_modelling_the_site_index_of_estonian_forests
   - sources/paper-site index models for main forest-forming tree species in poland_forests-11-00301
+  - sources/paper-e_pb_laserdata_nedladdning_skog
+  - sources/paper-simplifying uav-based photogrammetry in forestry_how to generate accurate digital terrain model and assess flight mission settings-forests-13-00173
   - sources/popescu-wynne-2004-seeing-the-trees
 ---
 # Canopy height model (CHM)

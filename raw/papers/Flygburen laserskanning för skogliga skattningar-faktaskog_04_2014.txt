@@ -1,0 +1,343 @@
+Figur 1. Laserskannern mäter avstånd och riktning för varje laserpuls varpå positionerna för reflektionerna kan bestämmas.
+fakta skog
+4  • 2014  •  Rön från Sveriges lantbruksuniversitet
+• Flygburen laserskanning har under de senaste 15 åren 
+blivit en datakälla för skogsbruksplanering. Data från 
+flygburen laserskanning är noggranna tredimensionella 
+mätningar av mark och vegetation med laserljus från ett 
+flygplan eller helikopter.
+• Flygburna laserdata kan kombineras med referens- 
+data 
+från 
+fältobservationer 
+för 
+att 
+automatiskt 
+ta fram heltäckande skogsskattningar.
+• Skogsägare och skogsförvaltare kan använda resultaten 
+för bättre planering av avverkningar och naturvård.
+• Om man mäter tillräckligt tätt kan enskilda träd identi-
+fieras i laserdata. Detta ger nya möjligheter att effektivt 
+beskriva både diameterfördelningar och trädslag för 
+stora områden.
+Flygburen laserskanning för skogliga skattningar
+Eva Lindberg • Johan Holmgren
+
+
+ 
+Figur 2. Exempel på täta flygburna laserdata från ett område i skogen med medianhöjd (50:e percentilen eller H50), maxhöjd (100:e percentilen eller 
+H100) samt 20:e och 95:e percentilerna markerade (t.v.). Illustration av sambandet mellan en skoglig variabel (dvs. grundytevägd medelhöjd) och en 
+laservariabel (dvs. maxhöjd över marken) inom provytor (t.h.).
+Skogsinventering kan göras på flera 
+olika skalor. I Sverige inventerar Riks-
+skogstaxeringen skog i hela landet och 
+producerar statistik på nationell och 
+regional nivå för myndigheter och fors-
+kare. På regional nivå är Skogsstyrelsen 
+och länsstyrelserna intresserade av att 
+hitta områden med höga naturvärden. 
+Markägare behöver kartor på bestånds-
+nivå för att planera skötsel av skogen och 
+välja ut områden för åtgärder.
+Tolkning av flygfoton kan användas 
+för att dela in skogsmarken i bestånd 
+och bestämma trädslag och virkesför-
+råd, speciellt 3D-tolkning av flyg- 
+foton med hjälp av stereofotogram-
+metri. Flygfototolkning är en fjärrana-
+lysteknik, dvs. en teknik för att erhålla 
+information om egenskaper hos jorden 
+och olika objekt på avstånd. Analys av 
+satellitbilder är en annan fjärranalys-
+teknik, som kan kombineras med refe-
+rensdata från fältobservationer för att 
+automatiskt ta fram heltäckande skogs-
+skattningar. Lite förenklat kan man säga 
+att fältobservationerna används för att 
+ta reda på vad färgerna hos satellitbil-
+den i samma punkt betyder varpå hela 
+satellitbilden kan tolkas. Detta görs idag 
+på SLU i Umeå med metoden k Nea-
+rest Neighbours (Egberth et al. 2013). 
+Som referensdata används provytor 
+från Riksskogstaxeringen. Resultatet är 
+skattningar av virkesförråd (trädslags-
+visa skattningar samt totalt virkesför-
+råd), beståndsmedelålder och medelhöjd 
+i 25×25 m2 stora rasterceller. De är 
+framförallt till för att användas inom 
+skogsområden större än några hundra 
+hektar (Egberth et al. 2013).
+En relativt ny fjärranalysteknik är 
+laserskanning, som kan göras både 
+från flyg och med detektorer stående 
+på marken. Data från laserskanning är 
+3D-koordinatmätningar av ljusreflek-
+tioner från marken och andra föremål, 
+Flygburen laserskanning för skogliga skattningar
+så kallade laserreturer eller punkter. 
+Flygburna laserskannersystem bygger 
+vanligen på den så kallade time-of-
+flight-principen: Lasern skickar ut en 
+kort puls av ljus och mäter tiden det tar 
+för ljuset att komma tillbaka. Avstån-
+det kan bestämmas genom att ljushas-
+tigheten är känd. Positionen för varje 
+reflektion kan beräknas från det upp-
+mätta avståndet och riktningen för den 
+utsända laserpulsen tillsammans med 
+positionen för laserskannern, som mäts 
+med GPS (Figur 1).
+De senaste 15 åren har flygbu-
+ren laserskanning börjat användas för 
+skoglig inventering. Laserskanningen 
+mäter både mark och vegetation och 
+därigenom kan skogens höjd och tät-
+het bestämmas. Skogsskattningarna kan 
+göras med areabaserade metoder eller 
+genom att identifiera enskilda träd i 
+laserdata (Lindberg 2012). Båda meto-
+derna beskrivs i de följande avsnitten.
+Figur 3: En ytmodell skapad från flygburna laserdata i en skog (t.v.) samt en segmentering eller avgränsning av trädkronorna i ytmodellen sett uppifrån med 
+fältmätta träd inom en cirkelformad provyta (t.h.).
+
+
+Flygburen laserskanning för skogliga skattningar
+Areabaserade metoder
+Areabaserade metoder ger skattningar 
+av skogliga variabler för vissa bestämda 
+ytenheter, t.ex. 10x10 meter stora raster-
+celler. De skogliga variablerna är i detta 
+fall medelvärden och summor, t.ex. vir-
+kesförråd per hektar eller medelstam-
+diameter. Resultatet kan presenteras 
+som en karta med skattade värden. Me-
+toderna bygger på korrelationen mellan 
+skogliga variabler och variabler som kan 
+beräknas från laserdata i rastercellerna. 
+Den grundytevägda medelhöjden i sko-
+gen är t.ex. korrelerad med maxvärdet 
+av höjden över marken för laserreturer-
+na (Figur 2).
+Andra laservariabler kan vara ande-
+len returer över en viss höjd, som säger 
+något om tätheten på skogen, eller per-
+centiler av höjden över marken. En per-
+centil är det värde nedanför vilken en 
+viss procent av mätningarna hamnar. 
+Till exempel är den tjugonde percenti-
+len (H20) det värde som delar laserretu-
+rerna så att 20 procent av dem är lägre 
+än H20 och 80 procent är högre än H20.
+Skogliga variabler kan skattas inom 
+hela det laserskannade området genom att 
+skapa modeller där fältmätta värden står 
+som beroende av laservariablerna. För 
+att ta fram modellerna behövs referens-
+data, dvs. skogliga variabler mätta i fält, 
+t.ex. inom provytor. En vanlig metod 
+är multipel regression, en parametrisk 
+metod som beskriver sambanden med 
+en matematisk modell. Ibland används 
+istället icke-parametriska metoder där 
+sambanden inte behöver följa en mate-
+matisk modell. Exempel på icke-para-
+metriska metoder är Random Forests, 
+kNN och k Most Similar Neighbours.
+Areabaserade metoder bygger på 
+starka samband mellan skogliga variab-
+ler och laservariabler och fungerar med 
+låg punkttäthet (ca 0,5 punkter/m2), 
+men kräver mycket fältdata. Som tum-
+regel behövs minst 30 provytor för mul-
+tipel regression om skogen inte är alltför 
+heterogen. För icke- parametriska meto-
+der behövs i storleksordningen minst 
+100 provytor. För att täcka in mer varie-
+rad skog behövs fler provytor.
+Laserskanning i hela Sverige
+Lantmäteriet har under 2009–2013 
+skannat hela Sverige utom fjällen med 
+låg punkttäthet (0,5 punkter/m2). Re-
+sultatet kommer att vara klart under 
+2015. Det primära syftet är att skapa en 
+ny nationell höjdmodell för marken, 
+men dessutom kommer laserdata att fin-
+nas tillgängligt till exempel för skogs-
+bruket.
+Skogsstyrelsen har fått ett regerings- 
+uppdrag att tillsammans med SLU för-
+bättra skattningen av skogliga grundda-
+ta med hjälp av data från den nationella 
+laserskanningen. Resultatet kommer 
+att bli en rasterkarta för hela landet 
+med 12,5×12,5 m2 pixlar eller raster-
+celler. För varje rastercell kommer vir-
+kesförråd, biomassa, grundyta, medel- 
+diameter, samt medelhöjd att skattas. 
+Som referensdata används provytor 
+från Riksskogstaxeringen precis som 
+för kNN-Sverige. Arbetet ska enligt 
+planerna vara färdigt under 2015.
+SLU utvecklar även metoder för att 
+kombinera satellitbilder med laserdata. 
+Optiska satellitbilder bidrar i det sam-
+manhanget främst med information om 
+trädslag, medan laserdata ger noggranna 
+skattningar av medelhöjd och virkesför-
+råd. De två datakällorna kompletterar 
+varandra och kombinationen ger bättre 
+resultat än varje datakälla för sig.
+Enskilda träd-metoder 
+Med täta laserdata (> 5 punkter/m2) kan 
+även enskilda träd urskiljas. Med hjälp 
+av automatiserade metoder liknande 
+bildanalys kan träden ringas in, så kallad 
+segmentering. Detta görs ofta genom att 
+först skapa en ytmodell, sedan identi-
+fiera toppar i ytmodellen och avgränsa 
+området omkring varje topp till en träd-
+krona, ett så kallat segment (Figur 3). 
+Enskilda träd-metoder utnyttjar mer av 
+3D-informationen i laserdata och ger 
+mer information än areabaserade meto-
+der, men kräver högre punkttäthet och 
+mer avancerade algoritmer.
+Ett vanligt sätt att skapa en ytmodell 
+är att utgå från de högsta laserreturerna i 
+små rasterceller, t.ex. 0,5× 0,5 m2. Detta 
+ger en ytmodell där trädtopparna syns 
+för en stor del av träden. En nyare metod 
+är att anpassa tredimensionella mallar av 
+trädkronor i form av ellipsoider direkt 
+till laserdata och skapa en ytmodell där 
+”höjden” utgörs av korrelationen, dvs. 
+hur väl mallen passar i varje raster-
+cell. Fördelen med detta är dels att mer 
+information i laserdata utnyttjas efter-
+som inte bara de högsta laserreturerna 
+används och dels att ytmodellen bygger 
+på kunskap om former och proportio-
+ner hos trädkronorna. Denna metod har 
+utvecklats på SLU i Umeå och har gett 
+goda resultat i en internationell jämfö-
+relse med andra enskilda träd-metoder 
+(Holmgren & Lindberg 2013).
+Ytmodeller beskriver endast det 
+högsta skiktet i skogen. Täta laserdata 
+innehåller även mätningar från träd 
+och buskar under det högsta skiktet och 
+därför har metoder utvecklats för att 
+Figur 4. Exempel på flygburna laserdata från en tall (t.v.) och en gran (t.h.).
+
+
+– Kunskap för en hållbar utveckling
+Flygburen laserskanning för skogliga skattningar
+FAKTA SKOG – Rön från Sveriges lantbruksuniversitet. ISSN: 1400-7789. Produktion: SLU, Fakulteten för skogsvetenskap 2014. Ansvarig utgivare: Peter.Hogberg@slu.se. 
+Redaktör: Goran.Sjoberg@slu.se. Illustratör: Fredrik Saarkoppel, Kobolt Media AB. Tryck: Danagård LiTHO, Linköping. Prenumeration: www.slu.se/faktaskog. 
+Författare
+johan holmgren
+Forskare FLK, 
+institutionen för skoglig 
+resurshushållning, SLU, 
+901 83 Umeå 
+090-786 86 02 
+Johan.Holmgren@slu.se 
+Ämnesord
+Skogliga data, skattningar, fjärranalys, 
+laserskanning, enskilda träd, trädslag.
+Egberth, M., Nilsson, M. & Axensten, P. 
+kNN-Sverige – Aktuella kartdata över 
+skogsmarken. [online] Available from: 
+http://skogskarta.slu.se/. 
+[Accessed 
+December 9, 2013].
+Läs mer
+avgränsa trädkronor i tre dimensioner 
+direkt från laserreturerna. Metoderna 
+bygger på att hitta grupper eller kluster 
+av laserreturer. Det är vanligt att utgå 
+från en ytmodell för att få initiala posi-
+tioner för de högsta träden och en upp-
+skattning av totala antalet träd. Genom 
+att använda modeller av trädkronor även 
+i detta fall kan kunskap om former och 
+proportioner hos trädkronorna utnytt-
+jas. En sådan metod har utvecklats på 
+SLU i Umeå och kommer att utveck-
+las vidare och även jämföras med andra 
+metoder (Lindberg et al. 2013).
+Enskilda träd-metoder ger mer infor-
+mation än areabaserade metoder om 
+t.ex. diameterfördelningen, speciellt om 
+fältmätningar för enskilda träd finns. I 
+idealfallet ska varje träd ge upphov till 
+ett segment. I praktiken omfattar dock 
+en del av segmenten flera träd. Det kan 
+vara träd som står tätt intill varandra och 
+vars kronor går in i varandra. Om seg-
+menteringen görs utifrån en ytmodell 
+kan som tidigare nämnts endast träden 
+i det högsta skiktet avgränsas. För att 
+de skogliga skattningarna ska bli kor-
+rekta kan man koppla fältmätningar av 
+enskilda träd till segmenten. För varje 
+segment kan noll, ett eller flera träd 
+kopplas. Med hjälp av egenskaper hos 
+segmentet, t.ex. vidden relativt höjden, 
+kan man sedan skatta antalet träd och 
+egenskaper hos träden.
+En annan fördel är att trädslagsklassi-
+ficering kan göras för enskilda träd, vil-
+ket är speciellt användbart i blandskogar. 
+Proportionerna hos trädkronorna skiljer 
+eva lindberg
+Postdoktor,  
+institutionen för skoglig 
+resurshushållning, SLU, 
+901 83 Umeå 
+090-786 85 36
+Eva.Lindberg@slu.se
+sig åt mellan olika trädslag liksom stor-
+lek, form och reflektans hos löven eller 
+barren. Detta medför att olika trädslag 
+ger olika geometriska egenskaper för 
+segmenten som härleds från laserdata 
+och olika intensitet hos det reflekterade 
+laserljuset (Figur 4). Genom att koppla 
+segmenten till fältmätta träd med kända 
+trädslag kan man skaffa information om 
+dessa egenskaper som sedan kan använ-
+das för att klassificera trädslagen för 
+segment i områden utan fältmätningar 
+(Holmgren & Persson 2004).
+Tack
+Arbetet med att skriva detta nummer 
+av Fakta Skog har finansierats av Karl 
+Erik Önnesjös stiftelse för vetenskaplig 
+forskning och utveckling. Tack till Mats 
+Nilsson och Håkan Olsson, avdelningen 
+för skoglig fjärranalys, institutionen för 
+skoglig resurshushållning, SLU i Umeå, 
+för hjälp med bakgrundsfakta och 
+granskning.
+Holmgren, J. & Lindberg, E. 2013. Tree 
+crown segmentation based on a geo-
+metric tree crown model for prediction 
+of forest variables. Canadian Journal of 
+Remote Sensing, S1–S13.
+Holmgren, J. & Persson, Å. 2004. Iden-
+tifying species of individual trees using 
+airborne laser scanner. Remote Sensing 
+of Environment 90(4), 415–423.
+Lindberg, E. 2012. Estimation of canopy 
+structure and individual trees from laser 
+scanning data. Avhandling, SLU, Umeå. 
+ISBN: 978-91-576-7669-6, ISSN:1652-
+6880.
+Lindberg, E., Holmgren, J., Olofsson, K., 
+Wallerman, J. & Olsson, H. 2013. Esti-
+mation of tree lists from airborne laser 
+scanning using tree model clustering and 
+k-MSN imputation. Remote Sensing 5, 
+1932–1955.

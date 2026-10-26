@@ -4,16 +4,16 @@ type: Concept
 description: "Existing concept canopy-height-model and literature-map-dense-itd focus on raster CHMs or dense 2D imagery, leaving direct 3D point cloud clustering and bottom-up tree instance segmentation unrepresented."
 tags: [point, cloud, individual, tree, segmentation]
 status: stable
-updated: 2026-10-23
+updated: 2026-10-26
 generated:
   by: agent:concept-gate
-  at: 2026-10-23T11:37:49Z
+  at: 2026-10-26T12:00:00Z
 sources:
   - sources/paper-a simple oriented search and clustering method for extracting individual forest trees from als point clouds-1-s2-0-s157495412400520x-main
   - sources/paper-forestformer3d_a_unified_framework_for_end-to-end_segmentation_of_forest_lidar_3dpoint_clouds-2506-16991v1
+  - sources/paper-estimating tree diameter at breast height (dbh) from uav data-1-s2-0-s2666017225001373-main
   - sources/paper-self-supervised_learning_for_precise_individual_tree_segmentation_in_airborne_lidar_point_clouds
 ---
-
 # Point Cloud Individual Tree Segmentation
 
 Existing concept canopy-height-model and literature-map-dense-itd focus on raster CHMs or dense 2D imagery, leaving direct 3D point cloud clustering and bottom-up tree instance segmentation unrepresented.

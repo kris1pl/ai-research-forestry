@@ -1,0 +1,2833 @@
+Robust height-diameter allometries for 41 European tree species: stand 
+1 
+characteristics and structure matter 
+2 
+ 
+3 
+Natacha Savine*, Thomas Cordonnier, Gauthier Ligot, Patrick Vallet 
+4 
+ 
+5 
+Natacha Savine 
+6 
+Univ. Grenoble Alpes, INRAE, LESSEM, 2 rue de la Papeterie-BP 76, F-38402 St-Martin-d'Hères, France 
+7 
+orcid: 0009-0002-5978-3487 
+8 
+ 
+9 
+Thomas cordonnier 
+10 
+Office National des Forêts, Recherche Développement et Innovation, 21 rue du Muguet, 39100 Dole, France 
+11 
+orcid: 0000-0003-3684-4662 
+12 
+  
+13 
+Gauthier Ligot 
+14 
+TERRA Teaching and Research Centre, Gembloux Agro-Bio Tech, University of Liège, Gembloux, Belgium 
+15 
+orcid: 0000-0002-5508-4358 
+16 
+ 
+17 
+Patrick Vallet 
+18 
+Univ. Grenoble Alpes, INRAE, LESSEM, F-38402 St-Martin-d'Hères, France 
+19 
+orcid: 0000-0003-2649-9447 
+20 
+ 
+21 
+*Corresponding author: natacha.savine@inrae.fr 
+22 
+ 
+23 
+ 
+24 
+ 
+25 
+ 
+26 
+ 
+27 
+ 
+28 
+ 
+29 
+ 
+30 
+ 
+31 
+ 
+32 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+Abstract 
+33 
+Tree height is a key variable for assessing forest functioning and resources (e.g volume, carbon stocks) at both 
+34 
+tree and stand levels. However, direct field measurements are costly and time-consuming. Developing accurate 
+35 
+and unbiased height-diameter allometries applicable over large spatial scales is therefore crucial for forest 
+36 
+research and management.  
+37 
+Based on the French National Forest Inventory, with 269,460 tree-height observations on 49,120 plots measured, 
+38 
+we developed generalized, species-specific height-diameter allometries that integrate stand dendrometrical 
+39 
+characteristics and stand structure. The models cover 41 European tree species and the four main stand 
+40 
+structures: even-aged, uneven-aged, coppice-with-standards and coppice. To enhance local accuracy, we 
+41 
+developed an optional recalibration method at the plot level, assessing how many additional trees should be 
+42 
+measured and which ones to select to maximize the improvement of the model. By integrating basal area as stand 
+43 
+density and quadratic mean diameter as an indicator of stand development stage, our models enable us to assess 
+44 
+the influence stand dendrometrical characteristics on these allometries and evaluate how different species 
+45 
+responded to competition.  
+46 
+Results indicate that with increasing competition, tree height tends to be higher for a given diameter, and that 
+47 
+stand structure significantly influences 28 out of the 41 species. Local recalibration showed that measuring just 
+48 
+one to six trees (among the largest and thinnest diameter) per plot reduced prediction error by 10 to 70%, 
+49 
+depending on species.  
+50 
+This study provides a useful, robust and scalable tool for forest research and management, for the most 
+51 
+widespread species in Europe, while offering precision for local applications. 
+52 
+ 
+53 
+Keywords: Height-diameter allometry, European tree species, stand structure, National Forest Inventory, 
+54 
+nonlinear mixed effects model, local recalibration. 
+55 
+ 
+56 
+ 
+57 
+ 
+58 
+ 
+59 
+ 
+60 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+ 
+61 
+Declarations 
+62 
+ 
+63 
+Funding 
+64 
+The French National Forest Office funded this work under the grant "Régénération, croissance et production des 
+65 
+forêts de plaine, 2022-2024" 
+66 
+ 
+67 
+Conflicts of interest 
+68 
+The authors declare that they have no known competing financial interests or personal relationships that could 
+69 
+have appeared to influence the work reported in this paper. 
+70 
+ 
+71 
+Availability of data and material 
+72 
+Data from the French National Forest Inventory are available online. 
+73 
+ 
+74 
+Author’s contributions 
+75 
+Natacha Savine: Writing – original draft, Validation, Methodology, Investigation, Data curation, 
+76 
+Conceptualization. 
+77 
+ 
+78 
+Thomas Cordonnier: Writing – review & editing, Supervision, Methodology, Investigation, Conceptualization. 
+79 
+ 
+80 
+Gauthier Ligot: Writing – review & editing, Supervision, Methodology, Investigation. 
+81 
+ 
+82 
+Patrick Vallet: Writing – review & editing, Supervision, Methodology, Investigation, Funding acquisition, 
+83 
+Conceptualization. 
+84 
+ 
+85 
+Acknowledgments: 
+86 
+The authors wish to thank the French National Forest Office, who funded this work under the grant 
+87 
+"Régénération, croissance et production des forêts de plaine, 2022-2024". The authors also thank the National 
+88 
+Forest Inventory for making the data available free of charge. 
+89 
+ 
+90 
+ 
+91 
+ 
+92 
+ 
+93 
+ 
+94 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+ Introduction 
+95 
+Forest management involves not only assessing existing resources but also evaluating how they have changed, or 
+96 
+will change, over time. In this respect, along with diameter, tree height is a key variable to assess forest ecosystem 
+97 
+functioning and forest ecosystem services such as carbon storage or wood production (Hunter et al., 2013; 
+98 
+Teobaldelli et al., 2009). Studying height variability across individuals can be key to understanding important 
+99 
+ecological processes, such as competitive and facilitation interactions between individuals.  
+100 
+However, accurately measuring tree height is often time-consuming and technically challenging especially on 
+101 
+slopes or stands with low visibility. As a consequence, tree height measurements are often performed on a limited 
+102 
+sample of trees.  
+103 
+ 
+104 
+In biological organisms, allometries defines how the size of an organ changes in relation to the size of another one, 
+105 
+or to the size of the whole organism. These allometries are used to understand how variables are interconnected, 
+106 
+and can serve as an alternative for variables that are difficult to measure directly. In forestry, allometric models 
+107 
+can be used to estimate tree characteristics such as biomass (Pilli et al., 2006) or volume (Vallet et al., 2006), being 
+108 
+common examples. For these two allometric models, the most accurate models include height measurements, or 
+109 
+height estimates. Tree height can also be estimated indirectly through allometric relationships, most commonly by 
+110 
+using diameter at breast height (dbh), a variable that is much easier to obtain in the field (Ciceu et al., 2023).  
+111 
+ 
+112 
+Height-diameter allometries are known to differ across species, due to biological constraints, limitations and 
+113 
+growth strategies inherent to each species (Vázquez-Veloso et al., 2025). Allometries can therefore be species-
+114 
+specific (Adame et al., 2008; Ciceu et al., 2020; Huang et al., 1992) or can take species characteristics directly into 
+115 
+account in the model (Sharma et al., 2019b). 
+116 
+It is also essential to consider the specific environmental conditions influencing individual growth. When trees 
+117 
+grow in proximity to other individuals, they compete for resources in different ways. In dense areas, where space 
+118 
+is limited, trees may allocate more resources to vertical growth, which increases height, rather than to radial 
+119 
+growth. This phenomenon can be integrated into allometric models by considering the social status of the tree 
+120 
+(Aussenac et al., 2023; Trouvé et al., 2015). Social status can be used per se in the models, or can be included as 
+121 
+a competitive index as in Mugasha et al. (2019). 
+122 
+The dendrometrical characteristics of the stand also play a role in shaping height-diameter allometries. Stand 
+123 
+density variables such as basal area, for example, are commonly used to account for competition. As a result, trees 
+124 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+growing in highly competitive environments present greater height for a given diameter compared to those in less 
+125 
+competitive ones.  
+126 
+Ciceu et al (2023) highlighted that dominant height is used to reflect the effect of stand developmental stage in 
+127 
+most studies working on height-diameter allometry. However, to obtain this variable, the height of a subset of trees 
+128 
+must be measured. The widespread inclusion of dominant height in empirical models is likely due to the strong 
+129 
+correlation between dominant height and individual tree heights. Alternative variables, such as the quadratic mean 
+130 
+diameter, also reflect stand development stage (Aussenac et al., 2023; Ciceu et al., 2020; Feldpausch et al., 2011; 
+131 
+Gonçalves, 2022; Mugasha et al., 2019; Temesgen and v. Gadow, 2004).  
+132 
+The structure of the stand (even-aged, uneven-aged and other configurations) also influences height-diameter 
+133 
+allometry(Gonçalves, 2022). Different stand structures reflect different stand dynamics and result in diverse tree 
+134 
+diameter distributions. For instance, even-aged stands are characterized by individuals of similar ages and heights, 
+135 
+whereas uneven-aged stands exhibit more diverse ages and height structures, potentially resulting in different 
+136 
+allometric patterns.  
+137 
+ 
+138 
+Throughout the diversity of environmental conditions and forest structures, the French metropolitan forest area is 
+139 
+covered by 58% of even-aged stands. This leaves 42% of the stands that are managed under other regimes such as 
+140 
+uneven-aged, coppice or coppice-with-standards systems (described in figure S1, Supplementary Materials). The 
+141 
+even-aged structure has been the focus of most studies on forest structure, as it is one of the most represented and 
+142 
+constitutes a simple silvicultural system (Bettinger et al., 2017). However, since structure plays an important role 
+143 
+in growth, especially with different competitive relationships, it is necessary to study how height-diameter 
+144 
+allometries are affected by each structure specifically. This could prevent overestimations or underestimations 
+145 
+when assessing forest resources (Gonçalves, 2022).  
+146 
+Eventually, allometric models can be developed at different scales, from local to continental. While large-scale 
+147 
+models can provide higher genericity, they may introduce estimation bias when applied to specific local conditions. 
+148 
+Studies by Sullivan et al. (2018), Mensah et al. (2018) and Kearsley et al. (2017) have shown that locally calibrated 
+149 
+models perform better than large scale models. To improve the genericity and performance of these models, it can 
+150 
+be beneficial to incorporate local factors such as soil fertility, water availability or climate, thus allowing the model 
+151 
+to adapt to specific conditions. 
+152 
+ 
+153 
+In this study, we developed height-diameter allometries for 41 species. We hypothesized that this relationship 
+154 
+would be influenced by individual-tree and stand characteristics such as stand basal area, mean diameter and stand 
+155 
+structure (even-aged, uneven-aged, etc.). We attempted to provide the most practical and generic models possible, 
+156 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+for the most species, and for different stand structures. We also developed a method to locally adapt large-scale 
+157 
+models, with as few field measurements as possible.  
+158 
+ 
+159 
+ Material 
+160 
+ 
+Measurement protocol 
+161 
+We used data collected by the French National Forest Inventory (NFI) between 2005 and 2022 (IGN, 2023). The 
+162 
+plots were located throughout the French metropolitan area, on a systematic sampling grid of 1x1 km. Each year, 
+163 
+one twentieth of the grid was sampled, representing approximately 6000 plots per year. The plots are composed 
+164 
+of three concentric subplots with 6-, 9- and 15-meter radii. Very small trees (dbh [7.5-12.5cm [ ) and small trees 
+165 
+(dbh [12.5-22.5cm [ ) are measured in the 6-meter radius subplots, medium trees (dbh [22.5 – 37.5cm [ ) are 
+166 
+measured in the 9-meter radius subplots, and large (dbh [37.5 – 52.5 cm [ ) and very large trees (dbh over 52.5 
+167 
+cm) are measured in the 15-meter radius subplots. To account for the concentric circle sampling design, the NFI 
+168 
+assigns a weight to each tree based on its diameter class (very small, small, medium, large and very large). These 
+169 
+weights are then used to calculate stand-level variables, such as quadratic mean diameter and basal area.  
+170 
+ 
+171 
+Until 2013, height was measured for six trees per diameter class and per species. From 2014 to 2015, only one tree 
+172 
+was measured per category and per species. In 2016, the very-small-tree category was added and additional height 
+173 
+measurements were carried out on very small trees. During the inventories, height and diameter are measured, 
+174 
+along with some other tree variables such as the vegetative state (living or dead) or stem singularities (broken, 
+175 
+abnormal, pollarded). The complete measurement protocol is described in Dalmasso et al. (2014). 
+176 
+ 
+177 
+From 2005 to 2013, the NFI classified stand structures in five categories based on the characteristics of the stand, 
+178 
+combining the regeneration method (coppice, coppice-with-standards, even-aged forest, uneven-aged forest, no 
+179 
+structure) and vertical distribution. From 2014 to 2022, the NFI used different stand structure classifications, which 
+180 
+we aggregated to distinguish four stand structures: even-aged (EA), uneven-aged (UA), coppice-with-standards 
+181 
+(CWS) and coppice (C) (aggregation criteria are described in Supplementary Materials, table S1).  
+182 
+ 
+183 
+ 
+Dataset sub-samples 
+184 
+We selected plots dominated by one species and for which stand structure was available. The dominant species 
+185 
+had to represent at least 75% of the plot basal area, considering only living trees. We discarded plots for which 
+186 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+stand structure was not available (structure not registered, undefined, or registered as no structure). Within the 
+187 
+selected plots, we excluded trees with special stem characteristics, such as broken or pollarded trees. This 
+188 
+eliminated 1.38% of the dataset. Additionally, we selected species for which there were at least one hundred tree 
+189 
+records. Only the combinations of species and stand structure for which we had at least ten tree records were 
+190 
+analyzed. 
+191 
+Our sample contained tree records for 51 species in all: 30 species in all four stand structures, 16 species in three 
+192 
+structures (14 not present in coppice stands, 2 not present in uneven-aged stands), and five species in two stand 
+193 
+structures (even-aged and coppice-with-standards standards). We also discarded the few tree records of 
+194 
+coniferous species in coppice stands. 
+195 
+ 
+196 
+Our final models were fitted for 41 out of the 51 species. For ten species, the fitting procedure did not reach 
+197 
+convergence, most likely because we had too few observations or because individual height was not evenly 
+198 
+distributed across diameter ranges. 
+199 
+  
+200 
+The final calibration dataset contained 269,460 measured trees on 49,120 temporary plots. All 41 species are 
+201 
+presented in the Supplementary Materials, table S2, and the ten most sampled species are described in table 1. 
+202 
+ 
+203 
+Species 
+Number 
+of trees 
+Number 
+of plots 
+Number of trees per structure 
+ 
+DBH (cm) 
+ 
+Height (m) 
+EA 
+UA 
+CWS 
+C 
+ 
+min 
+mean 
+max 
+ 
+min 
+mean 
+max 
+ 
+Abies alba 
+19,055 
+2,361 
+12,502 
+3,772 
+2,781 
+0 
+ 
+7.48 
+36.91 
+129.23 
+ 
+2.4 
+21.90 
+46.2 
+ 
+Castanea 
+sativa 
+14,334 
+2,670 
+2,993 
+417 
+7,050 
+3,874 
+ 
+7.48 
+27.46 
+262.92  
+2.2 
+15.40 
+34.8 
+ 
+Fagus 
+sylvatica 
+28,135 
+4,402 
+16,437 
+1,302 
+9,201 
+1,195 
+ 
+7.48 
+33.52 
+174.12 
+ 
+1.3 
+20.21 
+47.1 
+ 
+Picea abies 
+19,176 
+2,664 
+14,933 
+2,127 
+2,116 
+0 
+ 
+7.51 
+32.14 
+127.01  
+1.6 
+21.68 
+48.4 
+ 
+Pinus 
+pinaster 
+20,695 
+4,075 
+16,204 
+551 
+3,940 
+0 
+ 
+7.48 
+30.61 
+111.09 
+ 
+2.6 
+16.93 
+39.1 
+ 
+Pinus 
+sylvestris 
+21,865 
+3,572 
+15,409 
+1,988 
+4,468 
+0 
+ 
+7.48 
+27.22 
+98.96 
+ 
+1.7 
+13.97 
+41.2 
+ 
+Pseudotsuga 
+menziesii 
+13,691 
+2,151 
+11,809 
+207 
+1,675 
+0 
+ 
+7.51 
+33.20 
+140.69 
+ 
+2.0 
+23.62 
+49.4 
+ 
+Quercus 
+petraea 
+31,927 
+5,772 
+16,779 
+575 
+13,370 
+1,203 
+ 
+7.48 
+35.64 
+137.35  
+1.9 
+20.95 
+44.0 
+ 
+Quercus 
+pubescens 
+20,689 
+4,655 
+5,527 
+879 
+9,188 
+5,095 
+ 
+7.48 
+20.80 
+192.26 
+ 
+1.8 
+11.39 
+30.8 
+ 
+Quercus 
+robur 
+28,049 
+5,691 
+13,362 
+935 
+12,762 
+990 
+ 
+7.48 
+35.68 
+164.12  
+2.2 
+18.83 
+43.2 
+ 
+Table 1:Description of the sampling characteristics of the ten most sampled species in the calibration dataset. 
+204 
+EA: Even-aged, UA: Uneven-aged, CWS: Coppice-With-Standards, C: Coppice. The full list is available in 
+205 
+Supplementary Materials, Table S1. 
+206 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+ 
+207 
+ 
+Validation datasets 
+208 
+In addition to our calibration dataset, we used two other independent datasets for validation purposes. These 
+209 
+datasets enabled us to test both the performance and the robustness of our models, and were not used for the 
+210 
+calibration. To assess prediction bias, we conducted a t-test on the residuals (observed minus predicted heights) 
+211 
+to determine whether the mean of the prediction error differed significantly from zero.  
+212 
+ 
+213 
+The internal validation dataset contains NFI data collected in 2023 (IGN, 2023). This data was collected 
+214 
+following the same protocol as the calibration dataset. It includes a large number of height measurements from a 
+215 
+large number of species and for the various stand structures. By applying the same criteria as for the calibration 
+216 
+dataset, we selected 8,771 height measurements from 2,548 plots, covering 40 species.  
+217 
+This second dataset will be referred to as the NFI_2023 dataset, and is described in Supplementary Materials, 
+218 
+table S3.  
+219 
+ 
+220 
+We also used an external dataset for validation, which included six species. This data was collected following a 
+221 
+different protocol than that of the NFI. The trees were measured between 1920 and 1955. The plots were sampled 
+222 
+among pure highly-productivity even-aged permanent plots established by the former French Forest 
+223 
+Administration. The measurement and selection protocol are described in Vallet et al. (2006). 
+224 
+This third dataset will be referred to as the FFA dataset, and is described in table 2. 
+225 
+ 
+226 
+Species 
+Number of 
+trees 
+ 
+Number of 
+plots 
+ 
+dbh (cm) 
+ 
+Height (m) 
+ 
+ 
+min 
+mean 
+max 
+ 
+min 
+mean 
+max 
+Abies alba 
+762 
+ 
+28 
+ 
+7.64 
+31.99 
+102.81 
+ 
+9.9 
+23.45 
+39.4 
+Fagus sylvatica 
+1,293 
+ 
+50 
+ 
+2.86 
+24.54 
+79.58 
+ 
+5.4 
+22.16 
+42.5 
+Pinus sylvestris 
+389 
+ 
+17 
+ 
+6.68 
+22.40 
+53.16 
+ 
+9.0 
+19.18 
+28.5 
+Picea abies 
+309 
+ 
+8 
+ 
+15.28 
+32.27 
+70.98 
+ 
+10.9 
+26.45 
+41.3 
+Pseudotsuga menziesii 
+224 
+ 
+7 
+ 
+4.77 
+14.95 
+34.06 
+ 
+5.5 
+15.12 
+25.0 
+Quercus petraea 
+1,222 
+ 
+58 
+ 
+4.46 
+23.15 
+89.45 
+ 
+6.0 
+20.55 
+39.5 
+Table 2: Description of the French Forest Administration validation dataset 
+227 
+ 
+228 
+ Method 
+229 
+ 
+General principles of the study 
+230 
+ 
+231 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+Following the general principles for fitting allometric relationships (Mehtätalo et al., 2015; Zhou et al., 2023), we 
+232 
+developed generic models: for each species, the same equation was calibrated, incorporating both tree social status 
+233 
+(𝑑𝑏ℎ𝐷𝑔
+⁄
+) and stand variables. Stand basal area (BA) was used as a proxy for stand density, and quadratic mean 
+234 
+diameter (Dg) for development stage. We also included the effect of stand structure (even-aged, uneven-aged, 
+235 
+coppice-with-standards and coppice) on the height-diameter allometry. Our models were tested for accuracy and 
+236 
+robustness on both validation datasets. 
+237 
+Finally, to improve the height estimates for a given forest plot, we developed a local recalibration method based 
+238 
+on a limited number of height measurements. 
+239 
+ 
+240 
+ 
+Functions 
+241 
+3.2.1 General equation 
+242 
+Allometries can take many forms and curve shapes (Mehtätalo et al., 2015). To develop our models, we considered 
+243 
+commonly used functions (Ciceu et al., 2023). We selected three three-parameter sigmoidal functions: the 
+244 
+Chapman – Richards (Huang et al., 1992; Richards, 1959), Hossfeld II (Elfving and Kiviste, 1997; Vallet and 
+245 
+Perot, 2016) and Weibull (Weibull, 1951) functions.  
+246 
+As we aimed to develop generic models, we fitted the same equation to all the species. By comparing the Akaike 
+247 
+Information Criterion (AIC)(Akaike, 1974), we selected the Hossfeld II function (Eq.1), which gave the best 
+248 
+adjustments.  
+249 
+𝑦= 1.3 + 𝑎𝑠∗
+1
+1+ 𝑏𝑠
+𝑥𝑐𝑠
+ (1) 
+250 
+Parameters 𝑎𝑠, 𝑏𝑠 and 𝑐𝑠 (Eq.1) were species dependent. In this function, the height equals 1.3m when the diameter 
+251 
+tends to zero, and the sum of 1.3 + 𝑎𝑠 is the asymptotic height value for large diameters. 𝑐𝑠 is a shape coefficient, 
+252 
+and 𝑏𝑠 is linked by a power function to the diameter at half asymptotic height (dha) as dha = 𝑏𝑠
+1 𝑐𝑠
+⁄ . The social 
+253 
+status of the tree was used as the explicative variable in order to take intra-plot competition into account.  
+254 
+ 
+255 
+3.2.2 Inclusion of stand variables in relation to tree growth and biological 
+256 
+constraints 
+257 
+When developing our models, we considered practical constraints related to fieldwork. Diameter measurements 
+258 
+for all trees can be rapidly and efficiently measured, and are necessary when evaluating stand characteristics such 
+259 
+as basal area and quadratic mean diameter. The use of a stand development stage variable, usually characterized 
+260 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+by its dominant height, can significantly improve the fit of height-diameter allometries (Adame et al., 2008; Ciceu 
+261 
+et al., 2023; Patrício et al., 2022). However, the quadratic mean diameter can be used as a substitute (Vallet and 
+262 
+Perot, 2016). The quadratic diameter has the advantage of not requiring any field measurements other than tree 
+263 
+diameter. Therefore, we chose to use basal area and quadratic mean diameter as the sole calculated stand variables, 
+264 
+thereby simplifying the necessary field measurements.  
+265 
+We developed our models to quantify the influence of stand structure on height-diameter allometry. The even-
+266 
+aged stand structure was used as the reference condition. Other structures (uneven-aged, coppice-with-standards 
+267 
+and coppice) were added as multiplicative adjustments representing their relative effect compared to the even-aged 
+268 
+reference.  
+269 
+• 
+𝑎𝑠 parameter 
+270 
+Stand variables were introduced into the asymptotic height parameter (𝑎𝑠) as formulated in equation 2:  
+271 
+𝑎𝑠= 𝑎𝑠1 ∗(1 + 𝑎𝑠,𝑈𝐴+ 𝑎𝑠,𝐶𝑊𝑆+ 𝑎𝑠,𝐶) ∗(1 + 𝑎𝑠2 ∗𝐵𝐴) ∗(1 −𝑒−𝑎𝑠3∗𝐷𝑔𝑎𝑠4) (2) 
+272 
+Where 𝑎𝑠1 is the reference value corresponding to the even-aged structure, and 𝑎𝑠,𝑈𝐴  , 𝑎𝑠,𝐶𝑊𝑆 and 𝑎𝑠,𝐶 are the 
+273 
+parameters expressing the relative difference in asymptotic height for uneven-aged, coppice-with-standards and 
+274 
+coppice stand structures, respectively, included as dummy variables. BA is the basal area (in m2/ha) of the stand, 
+275 
+Dg is the quadratic mean diameter (in cm) of the dominant species of the stand, and 𝑎𝑠2, 𝑎𝑠3, and 𝑎𝑠4 their 
+276 
+corresponding parameters. 
+277 
+The quadratic mean diameter (Dg) was integrated into the model to reflect the biological assumption that dominant 
+278 
+height, and therefore asymptotic height, increases as the stand ages. This effect was modeled with a negative 
+279 
+exponential form. This form represents the relationship between quadratic diameter and dominant height, and also 
+280 
+reflects the saturating nature of height growth over time.  
+281 
+The addition of basal area reflects its demonstrated influence on maximum tree height, as supported by del Río et 
+282 
+al (2019) and Gonçalves (2022). Following similar modeling approaches (Adame et al., 2008; Temesgen and v. 
+283 
+Gadow, 2004), we used a linear form to incorporate basal area into the asymptotic parameter. This allowed us to 
+284 
+evaluate both the statistical significance and biological impact of stand basal area on individual tree height. 
+285 
+ 
+286 
+• 
+𝑏𝑠 parameter 
+287 
+The 𝑏𝑠 parameter, as the diameter at half asymptotic height, was developed as follows (equation 3):  
+288 
+𝑏𝑠= 𝑏𝑠1 ∗(1 + 𝑏𝑠,𝑈𝐴+ 𝑏𝑠,𝐶𝑊𝑆+ 𝑏𝑠,𝐶) ∗(𝑒−𝑏𝑠2∗𝐵𝐴) (3) 
+289 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+Where 𝑏𝑠1 is the reference value corresponding to the even-aged structure, 𝑏𝑠,𝑈𝐴 , 𝑏𝑠,𝐶𝑊𝑆 and 𝑏𝑠,𝐶 are the 
+290 
+structure-specific adjustment parameters, added as dummy variables.  
+291 
+Structure-specific effects were added similarly to those for 𝑎𝑠. 𝑏𝑠2 is the parameter associated with basal area. The 
+292 
+exponential form for basal area was chosen to satisfy two criteria: i) the 𝑏 parameter must remain positive to ensure 
+293 
+realistic and biologically acceptable height estimates; ii) as basal area increases, diameter growth is limited due to 
+294 
+competition, but height growth may continue at a similar rate (Eichhorn law, (Decourt, 1973)). Therefore, for a 
+295 
+given diameter, small-diameter trees will be taller in a denser stand.  
+296 
+ 
+297 
+3.2.3 Final calibrated equation 
+298 
+When all stand variables are taken into account, equation 4 results as follows:  
+299 
+ℎ𝑡𝑜𝑡= 1,3 + (1 + 𝜆𝑖) ∗𝑎𝑠1 ∗(1 + 𝑎𝑠,𝑈𝐴+ 𝑎𝑠,𝐶𝑊𝑆+ 𝑎𝑠,𝐶) ∗(1 + 𝑎𝑠2 ∗𝐵𝐴) ∗(1 −
+300 
+𝑒𝑥𝑝(−𝑎𝑠3 ∗𝐷𝑔
+𝑎𝑠4)) ∗
+1
+1+
+𝑏𝑠1∗(1+𝑏𝑠,𝑈𝐴+𝑏𝑠,𝐶𝑊𝑆+𝑏𝑠,𝐶)∗(𝑒𝑥𝑝(−𝑏𝑠2∗𝐵𝐴))
+(𝑑𝑏ℎ
+𝐷𝑔)
+𝑐𝑠
+ (4) 
+301 
+Where ℎ𝑡𝑜𝑡 is height in m, BA is basal area in m²/ha, and Dg is quadratic mean diameter in cm. 𝜆𝑖 refers to the 
+302 
+random effect calibrated (described in 3.3.1). When applying the model, its value can either be 0 (using only the 
+303 
+fixed effects of the model) or estimated using local recalibration (described in 3.4). 
+304 
+ 
+305 
+ 
+Statistical choices 
+306 
+To take spatial dependency, due to trees sampled per plots, into account, we used non-linear mixed-effect models 
+307 
+(NLME)  (Pinheiro and Bates, 2006). The model included a plot random effect 𝜆𝑖, where 𝑖 identified each plot 
+308 
+(equation 4). The 𝜆𝑖 parameter will henceforth be referred to as the site parameter.  
+309 
+ 
+310 
+The residual model variance was not constant as tree height variance generally increases with tree size. Moreover, 
+311 
+as the trees were inventoried in subplots of different radii, tree height variance was typically smaller for the smallest 
+312 
+trees in each category, and higher for the largest. To take these two effects into account, we used a varIdent variance 
+313 
+function from the “nlme” package (Pinheiro and Bates, 2006). We defined ten variance groups by splitting each 
+314 
+of the five NFI diameter categories (very small trees, small trees, medium trees, large trees, and very large trees) 
+315 
+at their median value. 
+316 
+ 
+317 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+ 
+Local recalibration process  
+318 
+3.4.1 Principle 
+319 
+The local recalibration approach consisted in estimating the random site parameter (𝜆𝑖) with data that could easily 
+320 
+be collected in the field: the height of a small subsample of trees. This allowed the height-diameter allometric 
+321 
+relationship to be adjusted to each plot with only a few height measurements, as illustrated in figure 1, and 
+322 
+demonstrated in Supplementary Materials, section C. 
+323 
+ 
+324 
+Figure 1: Example of local recalibration for a given Fagus sylvatica plot. The three trees with the largest diameter 
+325 
+and the one tree with the smallest diameter were used to estimate the site parameter associated to the plot - FFA 
+326 
+dataset. 
+327 
+We estimated 𝜆𝑚,𝑗 with the mean-based approach shown in equation 5, relying only on a subset of Nj trees from 
+328 
+the plot j:   
+329 
+𝜆𝑚,𝑗=
+1
+𝑁𝑗∑(
+ℎ𝑡𝑜𝑡,𝑖𝑗−1,3
+ℎ0,𝑖𝑗
+^ −1,3 ) −1     (5) 
+330 
+ 
+331 
+We then assessed the optimal tree subsample that would allow the site parameter to be accurately estimated and 
+332 
+reduce the root-mean-square error (RMSE) at best, while minimizing field effort. 
+333 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+ 
+334 
+3.4.2 Sub-samples and performance evaluation 
+335 
+We estimated 𝜆𝑚,𝑗 with different samples of tree height. These samples varied in terms of size (number of trees) 
+336 
+and in terms of relative tree diameter. We selected one to six trees according to three sampling strategies: 
+337 
+selecting only the thinnest trees, only the largest trees, or a combination of both diameter classes. For this last 
+338 
+strategy, we evaluated two scenarios. In the first scenario, large-diameter trees were predominant, following the 
+339 
+distribution: 1 large; 1 large with 1 small; 2 large with 1 small; 3 large with 1 small; 3 large with 2 small and 4 
+340 
+large with 2 small. In the second scenario, small-diameter trees were predominant and distributed as: 1 small; 1 
+341 
+small with 1 large; 2 small with 1 large; 3 small with 1 large; 3 small with 2 large and 4 small with 2 large. 
+342 
+ 
+343 
+We applied this method to all FFA dataset plots, that had at least 13 tree records. The six largest diameter trees 
+344 
+and the six thinnest, which were used for site parameter estimation (following the different combination 
+345 
+described above), were then removed from the dataset. We then calculated the RMSE associated to the height 
+346 
+prediction for each type of sub-samples, for all remaining individuals. We then identified the best diameter-class 
+347 
+combinations based on the root-mean-square error RMSE difference relative to (i) the RMSE obtained when 
+348 
+height was predicted using fixed effects only – and (ii) the RMSE obtained using the optimal site-parameter 
+349 
+value, where height was predicted using 𝜆𝑚,𝑗 as the site parameter and all available trees.  
+350 
+ 
+351 
+The best performing combination was then re-applied to the FFA dataset. In this second step, only the trees 
+352 
+involved in the selected combination (ie., 6 trees of the largest, smallest or a mix of both), were removed from 
+353 
+each plot, instead of systematically removing the six smallest and six largest diameter trees. RMSE was then 
+354 
+calculated using all remaining individuals. To evaluate the efficiency of the local recalibration method, and 
+355 
+identify the optimal number of trees needed, we calculated the relative RMSE improvement (RRI) as the 
+356 
+difference between the fixed-effect model RMSE and the recalibrated model RMSE, divided by the fixed-effect 
+357 
+RMSE. 
+358 
+ Results 
+359 
+ 
+Calibration 
+360 
+Our models highlight a positive influence of quadratic mean diameter and basal area on the asymptotic height, and 
+361 
+a negative impact of basal area on the diameter at half asymptotic height (i.e., half asymptotic height is reached 
+362 
+for smaller diameters) (Table 3 and table S5).  
+363 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+The effect of stand structure on the allometric curve was species-dependent. Parameter estimates (figure 2) 
+364 
+revealed a predominantly negative effect of coppice structure on asymptotic height compared to even-aged stands, 
+365 
+and a strong similarity between even-aged and coppice-with-standards stands. In contrast, the effect of an uneven-
+366 
+aged structure on asymptotic height differed by species group, being positive for conifers and negative for 
+367 
+broadleaved species.  
+368 
+For the diameter at half asymptotic height, structural effects were substantially more mixed, with positive, negative 
+369 
+and non-significant responses observed across species. All effects for the ten most represented species are 
+370 
+summarized in Figure 3 and in the Supplementary Materials (figures S2 - S11).
+371 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+ 
+Species 
+Estimation and  
+Statistics 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+Residual 
+deviation 
+Deviation of 
+random effects 
+parameter 
+𝑎𝑠1 
+𝑎𝑠,𝑈𝐴 
+𝑎𝑠,𝐶𝑊𝑆 
+𝑎𝑠,𝐶 
+𝑎𝑠2 
+𝑎𝑠3 
+𝑎𝑠4 
+𝑏𝑠1 
+𝑏𝑠,𝑈𝐴 
+𝑏𝑠,𝐶𝑊𝑆 
+𝑏𝑠,𝐶 
+𝑏𝑠2 
+𝑐𝑠 
+  
+  
+Abies alba 
+estimate 
+59.27 
+0.1295 
+0.0106 
+- 
+0.0003 
+0.0200 
+1.0637 
+0.7621 
+0.5553 
+0.0832 
+- 
+0.0094 
+1.5730 
+2.04 
+0.13 
+significativity *** 
+*** 
+. 
+- 
+. 
+*** 
+*** 
+*** 
+*** 
+*** 
+- 
+*** 
+*** 
+stddev 
+2.64 
+0.01113 
+0.01003 
+- 
+0.00027 
+0.00108 
+0.03178 
+0.02310 
+0.02907 
+0.02282 
+- 
+0.00051 
+0.01615 
+Castanea sativa 
+estimate 
+21.36 
+-0.0798 
+-0.0260 
+0.0096 
+0.0031 
+0.0762 
+1.0608 
+0.3808 
+0.0305 
+-0.0671 
+0.1576 
+0.0097 
+1.5726 
+1.67 
+0.21 
+significativity *** 
+** 
+* 
+. 
+*** 
+*** 
+*** 
+*** 
+. 
+* 
+*** 
+*** 
+*** 
+stddev 
+0.52 
+0.02736 
+0.01280 
+0.01654 
+0.00045 
+0.00926 
+0.05363 
+0.02140 
+0.08879 
+0.03017 
+0.04726 
+0.00085 
+0.03545 
+Fagus sylvatica 
+estimate 
+49.75 
+0.0412 
+-0.0338 
+-0.1867 
+0.0005 
+0.0318 
+0.9863 
+0.4410 
+0.5103 
+0.0530 
+0.1154 
+0.0029 
+1.5511 
+2.38 
+0.19 
+significativity *** 
+* 
+*** 
+*** 
+. 
+*** 
+*** 
+*** 
+*** 
+** 
+. 
+*** 
+*** 
+stddev 
+1.48 
+0.01789 
+0.00757 
+0.01948 
+0.00028 
+0.00134 
+0.02421 
+0.01293 
+0.05093 
+0.01709 
+0.06320 
+0.00053 
+0.01841 
+Picea abies 
+estimate 
+39.91 
+0.07737 
+0.01371 
+- 
+0.00246 
+0.01509 
+1.26384 
+0.43086 
+0.65289 
+0.06797 
+- 
+0.00797 
+1.93804 
+1.92 
+0.15 
+significativity *** 
+*** 
+. 
+- 
+*** 
+*** 
+. 
+*** 
+*** 
+* 
+- 
+*** 
+*** 
+stddev 
+1.06 
+0.01273 
+0.01118 
+- 
+0.00028 
+0.00107 
+0.03250 
+0.01399 
+0.03865 
+0.02768 
+- 
+0.00049 
+0.02503 
+Pinus pinaster 
+estimate 
+35.06 
+0.23787 
+-0.01374 
+- 
+0.00092 
+0.00967 
+1.40117 
+0.47802 
+1.17399 
+0.04229 
+- 
+0.00921 
+1.42384 
+1.18 
+0.15 
+significativity *** 
+*** 
+. 
+- 
+** 
+*** 
+*** 
+*** 
+*** 
+. 
+- 
+*** 
+*** 
+stddev 
+0.71 
+0.02923 
+0.00899 
+- 
+0.00030 
+0.00036 
+0.01761 
+0.01922 
+0.08918 
+0.02406 
+- 
+0.00065 
+0.02941 
+Pinus sylvestris 
+estimate 
+103.55 -0.08569 
+0.01118 
+- 
+0.01033 
+0.00743 
+0.91605 
+0.32923 
+0.26842 
+0.04402 
+- 
+0.00518 
+1.81832 
+2.32 
+0.25 
+significativity . 
+*** 
+. 
+- 
+*** 
+. 
+*** 
+*** 
+*** 
+. 
+- 
+*** 
+*** 
+stddev 
+86.87 
+0.01670 
+0.01188 
+- 
+0.00063 
+0.00534 
+0.06061 
+0.01348 
+0.05030 
+0.02640 
+- 
+0.00072 
+0.03242 
+Pseudotsuga 
+menziesii 
+estimate 
+45.07 
+0.20845 
+0.01852 
+- 
+0.00160 
+0.00718 
+1.45561 
+0.39143 
+0.97330 
+0.05445 
+- 
+0.00652 
+1.74230 
+1.85 
+0.13 
+significativity *** 
+*** 
+. 
+- 
+*** 
+*** 
+*** 
+*** 
+*** 
+. 
+- 
+*** 
+*** 
+stddev 
+1.01 
+0.0377 
+0.0111 
+- 
+0.0003 
+0.0004 
+0.0234 
+0.0153 
+0.1216 
+0.0299 
+- 
+0.0005 
+0.0338 
+Quercus  
+petraea 
+estimate 
+32.63 
+-0.0534 
+-0.0294 
+-0.0721 
+0.0060 
+0.0330 
+1.0137 
+0.1874 
+0.5170 
+-0.0003 
+0.6569 
+0.0061 
+2.1660 
+2.02 
+0.15 
+significativity *** 
+** 
+*** 
+*** 
+*** 
+*** 
+*** 
+*** 
+*** 
+. 
+*** 
+*** 
+*** 
+stddev 
+0.54 
+0.01642 
+0.00470 
+0.01659 
+0.00032 
+0.00121 
+0.01770 
+0.00609 
+0.08860 
+0.01602 
+0.09265 
+0.00080 
+0.02605 
+Quercus  
+pubescens 
+estimate 
+22.58 
+-0.06542 
+0.00810 
+-0.11512 
+0.01122 
+0.04416 
+0.99286 
+0.42095 
+0.06926 
+0.02891 
+0.16874 
+0.00583 
+1.70921 
+1.27 
+0.24 
+significativity *** 
+** 
+. 
+*** 
+*** 
+*** 
+*** 
+*** 
+. 
+. 
+*** 
+*** 
+*** 
+stddev 
+1.2 
+0.02237 
+0.01155 
+0.01390 
+0.00071 
+0.00293 
+0.04387 
+0.01796 
+0.06035 
+0.02370 
+0.04067 
+0.00090 
+0.03229 
+Quercus robur 
+estimate 
+30.27 
+-0.08605 
+0.00685 
+-0.00597 
+0.00396 
+0.03890 
+0.99302 
+0.27664 
+0.16480 
+0.02373 
+0.28099 
+0.00844 
+1.91118 
+2.11 
+0.17 
+significativity *** 
+*** 
+. 
+. 
+*** 
+*** 
+*** 
+*** 
+** 
+. 
+*** 
+*** 
+*** 
+stddev 
+0.55 
+0.01471 
+0.00620 
+0.02071 
+0.00033 
+0.00176 
+0.02094 
+0.00985 
+0.06260 
+0.01900 
+0.08086 
+0.00080 
+0.02957 
+Table 3: Model parameters and statistics for fitting of equation 4 for the ten most represented species. Significance: ***: p-value<0.001, **: p-value <0.01, *: p-value <0.05
+372 
+
+
+ 
+ 
+373 
+Figure 2: Stand structure effects on asymptotic height and diameter at half asymptotic height, compared to the 
+374 
+even-aged reference. Estimates and associated standard deviations are presented by structure and species. Due 
+375 
+to high non-significant values, estimates and standard deviations for Quercus cerris are not presented for 
+376 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+parameters 𝑎𝑠,𝐶𝑊𝑆 and 𝑏𝑠,𝐶𝑊𝑆. Standard deviation was not represented for Pinus pinea for 𝑏𝑠,𝐶𝑊𝑆, nor for Corylus 
+377 
+avellana for 𝑏𝑠,𝐶. 
+378 
+ 
+379 
+Figure 3: Presentation of the Quercus petraea model, for varying basal area, quadratic diameter and stand 
+380 
+characteristics. Predictions are limited to the range of diameter values observed for each structure in the 
+381 
+calibration dataset.  
+382 
+ 
+Validation (fixed effects only) 
+383 
+We calculated the errors associated to ℎ0^ . Without the site parameter, height estimates were contained between 
+384 
+three and five meters for the calibration dataset. Table 4 highlights similar results for model errors between the 
+385 
+calibration and NFI_2023 datasets. As expected, the results for the FFA dataset were less similar to the calibration 
+386 
+dataset. A bias in estimation can be observed when predicted height is confronted to observed height (figure 4). 
+387 
+Models’ residual graphs are presented in supplementary materials, section G. Results of the one-sample t-test 
+388 
+showed a significant bias of -0.22m on the NFI_2023 dataset. For the FFA dataset, the t-test showed a significant 
+389 
+difference of 2.75m. 
+390 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+ 
+391 
+Species 
+Calibration dataset 
+ NFI_2023 
+ FFA 
+RMSE0(m) 
+Nb obs. 
+ RMSE0(m) 
+Nb obs. 
+ RMSE0(m) 
+Nb obs. 
+Abies alba 
+3.5551 
+19 055 
+ 3.5644 
+606 
+ 2.7906 
+618 
+Fagus sylvatica 
+4.535 
+28 135 
+ 5.1654 
+853 
+ 5.0553 
+816 
+Picea abies 
+3.7235 
+19 176 
+ 3.8088 
+390 
+ 4.4948 
+287 
+Pinus sylvestris 
+3.8592 
+21 865 
+ 4.2631 
+496 
+ 5.3985 
+246 
+Pseudotsuga menziesii 
+3.3942 
+13 691 
+ 3.3494 
+475 
+ 2.611 
+212 
+Quercus petraea 
+3.5309 
+31 927 
+  3.6339 
+1 187 
+  3.5484 
+830 
+Table 4: Validation results for 6 species across all datasets. For the calibration dataset and NFI_2023, results 
+392 
+aggregate all stand structure types. Only even-aged structures are present in the FFA dataset. 
+393 
+Figure 4: Observed height compared to predicted height for the whole NFI_2023 dataset (A – 40 species; 8771 
+394 
+observations) and the FFA dataset (B – 6 species; 3009 observations). The black line represents perfect 
+395 
+prediction (1:1). The red line shows the overall trend in the data (lowess regression).   
+396 
+ 
+Local recalibration 
+397 
+The selection of a combination of trees with a predominance in trees with the largest diameter reduced RMSE the 
+398 
+most (figure 5). From one to three trees, adding an additional tree provided a strong reduction in RMSE; thereafter, 
+399 
+adding more trees only slightly improved the reduction in RMSE. 
+400 
+A 
+B 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+ 
+401 
+Figure 5: RMSE values for tree height prediction with recalibration, with different tree sub-samples based on 
+402 
+number and diameter class of the trees on the calibration dataset, per species (Quercus petraea (A) and Pinus 
+403 
+sylvestris (B)) 
+404 
+The root-mean-square error of tree height predictions following local recalibration applied to the FFA dataset, with 
+405 
+sub-samples of one to six trees with a predominance of large diameter trees, are presented in table 5.  
+406 
+Estimating the site parameter with all trees present on the plot (optimal value) consistently improved prediction 
+407 
+accuracy across species, with relative RMSE improvement (RRI) ranging from 20 to 70 %, compared to fixed 
+408 
+effects.  
+409 
+When the site parameter was estimated from a sub-sample of three to four trees (2 large with 1small and 3large 
+410 
+with 1 small), substantial improvements in RMSE generally resulted, compared to using fixed effects only. The 
+411 
+RRI ranges from 10 to 70%, except for Abies alba, for which the use of sub-samples led to higher RMSEs than 
+412 
+the fixed-effects baseline. This is likely due to Abies alba plots displaying a height-diameter relationship closer to 
+413 
+those of the calibration dataset than those of the other species. 
+414 
+ 
+415 
+ 
+416 
+A 
+B 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+ 
+417 
+Site parameter 
+estimates 
+Abies alba 
+ Fagus sylvatica 
+ Picea abies 
+ Pinus sylvestris 
+ Pseudotsuga 
+menziesii 
+ 
+Quercus petraea 
+RMSE (m) 
+RRI 
+ RMSE (m) 
+RRI 
+ 
+RMSE (m) 
+RRI 
+ 
+RMSE (m) 
+RRI 
+ 
+RMSE (m) 
+RRI 
+ 
+RMSE (m) 
+RRI 
+(%) 
+ 
+(%) 
+(%) 
+(%) 
+(%) 
+(%) 
+ 
+Fixed 
+effects 
+2.66 
+- 
+ 
+5.06 
+- 
+ 
+4.40 
+- 
+ 
+5.46 
+- 
+ 
+2.65 
+- 
+ 
+3.51 
+- 
+ 
+Optimal 
+value 
+1.98 
+25.76  
+1.84 
+63.60  
+2.42 
+44.86  
+1.21 
+77.77  
+1.26 
+52.39  
+1.57 
+55.45 
+Number 
+of trees 
+selected 
+among 
+the 
+largest 
+1 
+3.00 
+-12.64  
+3.44 
+31.92  
+2.87 
+34.82  
+1.90 
+65.21  
+2.57 
+2.82  
+2.15 
+38.94 
+2 
+3.35 
+-25.56  
+2.29 
+54.79  
+3.70 
+15.95  
+1.53 
+72.02  
+2.81 
+-6.04  
+1.89 
+46.33 
+3 
+2.82 
+-5.66 
+ 
+2.06 
+59.38 
+ 
+3.08 
+29.95 
+ 
+1.33 
+75.68 
+ 
+2.41 
+8.81 
+ 
+1.76 
+49.95 
+4 
+2.69 
+-0.85  
+2.15 
+57.57  
+2.80 
+36.27  
+1.31 
+75.97  
+2.22 
+16.08  
+1.77 
+49.57 
+5 
+2.50 
+6.29 
+ 
+2.02 
+60.04 
+ 
+2.95 
+32.92 
+ 
+1.30 
+76.24 
+ 
+2.17 
+17.85 
+ 
+1.76 
+49.99 
+6 
+2.42 
+9.06  
+2.05 
+59.52  
+2.74 
+37.75  
+1.28 
+76.51  
+1.99 
+24.96  
+1.69 
+52.03 
+Number of trees 
+480 
+  
+  
+652 
+  
+  
+245 
+  
+  
+176 
+  
+  
+176 
+  
+  
+648 
+ 
+Table 5: Local recalibration results for the FFA dataset, compared to fixed-effects-only height prediction. RMSE 
+418 
+in meters and relative RMSE improvement (RRI) in percentage, for height predictions with fixed effects, optimal 
+419 
+RMSE value, and sub-samples of one to six trees selected among the largest and smallest diameters with 
+420 
+predominant large trees, for the FFA dataset. RRI is calculated relative to the fixed-effects baseline. 
+421 
+ Discussion 
+422 
+ 
+Effects of stand characteristics on height-diameter allometry  
+423 
+5.1.1 Influence of stand structure 
+424 
+Stand structure had a significant effect on height-diameter allometry for 30 species. However, a few species, 
+425 
+such as Populus tremula, showed no significant parameter estimates for any of the stand structures. Overall, the 
+426 
+stand structure parameter estimates (figure 2) highlight the influence of forest management on allometric 
+427 
+relationships. 
+428 
+In coppice stands, results were consistent with the regeneration method (vegetative sprouting from existing root 
+429 
+system), which generally leads to reduced tree height growth compared to even-aged stands for a given diameter. 
+430 
+However, the diameter at half asymptotic height (dha) was often greater than in even-aged conditions. This shift 
+431 
+suggests a reallocation of resources toward radial rather than vertical growth, a pattern observed in previous 
+432 
+studies (Corcuera et al., 2006; Deforce and Haneca, 2015).  
+433 
+In uneven-aged stands, competition between individuals is generally reduced compared to that in even-aged 
+434 
+stands, because density is lower. As highlighted by del Rìo et al. 2019, higher competition leads to greater tree 
+435 
+heights for a given diameter, due to the increased drive for vertical growth under denser conditions. This pattern 
+436 
+is consistent with the fact that reduced competition, particularly for light in uneven-aged stands, allows 
+437 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+individuals to allocate more resources to radial growth than to height. As a result, trees in uneven-aged stands 
+438 
+tend to be of smaller height for a given diameter, leading to a negative effect on asymptotic height compared to 
+439 
+trees in even-aged stands. Our results for broadleaved species were consistent with this observation. However, 
+440 
+coniferous species showed a positive effect on asymptotic height, which can partly be explained by the 
+441 
+correlation between asymptotic height and dha parameters: the diameter range for these species corresponds to a 
+442 
+section of the curves where height is greater for even-aged stands even if the asymptotic height is lower (the 
+443 
+same effect as in Supplementary Materials, section F).  
+444 
+Additionally, our results indicate an increase in dha in uneven-aged stands, which is consistent with lesser light 
+445 
+competition compared to even-aged stands. Under high competition, such as in even-aged stands, trees prioritize 
+446 
+height growth over radial growth, shifting the allometry curve to the left. Therefore, for a given diameter (among 
+447 
+small trees), trees in uneven-aged stands tend to be shorter than those in even-aged stands (trends for parameters 
+448 
+𝑎 and 𝑏 in the HossfledII equation (Vallet and Perot, 2016)). 
+449 
+ 
+450 
+5.1.2 Influence of basal area 
+451 
+Tree height for a given diameter can increase with stand density. Basal area (BA), often used as a proxy for stand 
+452 
+density, also serves as an index for competition among trees. As basal area increases, competition for resources 
+453 
+intensifies, and trees tend to allocate more energy to vertical growth in order to maintain access to light. 
+454 
+Consequently, for a given diameter, tree height is expected to be greater in denser stands, as highlighted by del 
+455 
+Río et al. (2019) and Gonçalves (2022).  
+456 
+In our models, this effect is reflected through an increase in asymptotic height and a corresponding decrease in the 
+457 
+diameter at half asymptotic height (parameters 𝑎𝑠2 and 𝑏𝑠2), consistent with our expectations. As a result, the 
+458 
+height-diameter allometric curve shifts upward: for a given diameter, predicted height increases with basal area 
+459 
+(Figure 2). However, this trend did not apply uniformly across all species. For Corylus avellana, Pinus halepensis 
+460 
+and Tilia cordata, basal area had a significant negative effect on asymptotic tree height. As illustrated in figure 
+461 
+S12 (Supplementary Materials, section F), in the case of Tilia cordata, the high effect of basal area over diameter 
+462 
+at half asymptotic height, associated with a lack of observation for large diameters, tended to bend the allometric 
+463 
+curve to the left, inducing a reduction in asymptotic height by mathematical construction. Hence, as for some 
+464 
+effects in uneven-aged stands, for the observed range of diameters of these species, the height is still higher with 
+465 
+increasing BA even if the asymptotic parameter is negative.  
+466 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+In addition to its effect on asymptotic height, increased competition directly influences diameter growth. As 
+467 
+emphasized by Aleinikovas et al. (2014),  increased competition has a negative effect on tree diameter growth. As 
+468 
+a consequence, the height-diameter curve is shifted to the left, indicating greater heights for a given diameter. 
+469 
+ 
+470 
+5.1.3 Influence of quadratic mean diameter 
+471 
+Quadratic mean diameter provides insights into the developmental stage of the stand (Aussenac et al., 2023; 
+472 
+Sharma et al., 2019a). The silvicultural system applied to each structure will induce different growth dynamics. 
+473 
+For example, even-aged stands are typically allowed to grow for several decades, enabling trees to reach greater 
+474 
+heights and diameters. In contrast, coppice systems imply periodic cutting, and the trees regenerate from stump 
+475 
+sprouts, resulting in shorter growth periods, and more limited development in size. In both uneven-aged and 
+476 
+coppice structures, Dg values tended to remain relatively stable over time, due to the continuous or cyclical nature 
+477 
+of their management regimes. 
+478 
+Across all species studied, Dg had a positive effect on the asymptotic height in the height diameter allometry. As 
+479 
+Dg increased, the height asymptote also increased. This pattern aligns with findings in the literature, which report 
+480 
+a strong relationship between Dg, dominant height, and height-diameter allometry (Schmidt et al., 2018; Sharma 
+481 
+et al., 2019a). The increase in asymptotic height with Dg reflects a typical stand development trajectory, where 
+482 
+older and more developed stands support taller dominant trees. 
+483 
+ 
+484 
+ 
+Optimization of model accuracy and predictive performance  
+485 
+5.2.1 Quality of the models 
+486 
+Using National Forest Inventory (NFI) data enabled the inclusion of a wide range of species and tree records, 
+487 
+covering diverse climatic, structural and edaphic conditions across the French mainland territory. The robustness 
+488 
+of the dataset increases the confidence in applying our models across Europe as well, as was proven possible for 
+489 
+studies on growth (Mahnken et al., 2022). Additionally, the large size of the dataset reduced the influence of 
+490 
+outliers during calibration, enhancing parameter stability and reliability. The RMSE obtained for each species are 
+491 
+in line with other studies, where the models selected had a RMSE between 1 and 3.5 meters (Adame et al., 2008; 
+492 
+Gómez-García et al., 2015; Mehtätalo et al., 2015; Vázquez-Veloso et al., 2025).  
+493 
+To assess the efficiency of including a stand structure effect in our models, we evaluated the RMSE associated 
+494 
+with applying the even-aged calibrated model to plots with different stand structures and compared it to 
+495 
+structure-specific model errors. Estimations were done using only fixed effects. The relative error difference 
+496 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+calculated for the calibration dataset (Table 6) indicates a strong improvement in model accuracy with structure-
+497 
+specific models for uneven-aged and coppice stand structures. In contrast, applying the even-aged model to 
+498 
+coppice-with-standards plots revealed a high degree of similarity between the two structures, as reflected by the 
+499 
+relatively small RMSE differences. As mentioned in Gonçalves (2022), using even-aged models to predict tree 
+500 
+height in uneven-aged stands can lead to estimation errors of up to 20%. Our models show similar degrees of 
+501 
+difference between estimation errors (table 6). Our results were obtained with only the fixed effects of our 
+502 
+models, which explains the negative result for Pseudotsuga menziesii. Thus, adding stand structure to our models 
+503 
+improved the accuracy of estimated tree height across diverse management systems, and provided insights into 
+504 
+less studied structures and how they differ from the even-aged structure.   
+505 
+ 
+506 
+Finally, model bias observed on validation datasets can largely be attributed to the lack of site-specific information. 
+507 
+This limitation arises from applying a generalized model to a specific region, a known source of error when site 
+508 
+fertility or climate diverges from the average conditions of the calibration dataset (Mensah et al., 2018). 
+509 
+Nevertheless, the low bias observed on the NFI_2023 dataset suggests high consistency with the calibration data. 
+510 
+In contrast, the underestimation of tree height in the FFA dataset was expected, as these plots concern more fertile 
+511 
+areas than do the calibration plots.   
+512 
+Species 
+Even-aged model applied to stand structure 
+Uneven-aged 
+Coppice-with-standards 
+Coppice 
+Abies alba 
++6.8 
++1.2 
+ 
+Castanea sativa 
++15.5 
++1.9 
++2.0 
+Fagus sylvatica 
++11.7 
++5.3 
++50.8 
+Picea abies 
++8.4 
++0.2 
+ 
+Pinus pinaster 
++9.8 
++3.6 
+ 
+Pinus sylvestris 
++26.4 
+-0.3 
+ 
+Pseudotsuga menziesii 
+-1.2 
+-0.3 
+ 
+Quercus petraea 
++16.5 
++3.9 
++24.8 
+Quercus pubescens 
++10.9 
+-0.2 
++21.8 
+Quercus robur 
++19.5 
+-0.2 
++6.4 
+Table 6: Relative difference in RMSE (%) when applying models calibrated for even-aged plots to stands with 
+513 
+other structures. Positive values indicate higher prediction error for the even-aged model than for structure-
+514 
+specific models, while negative values indicate better accuracy for the even-aged model. These results are based 
+515 
+on the calibration dataset. 
+516 
+5.2.2 Benefits of local recalibration  
+517 
+This approach significantly improved performance on the FFA dataset, especially where site fertility deviated from 
+518 
+the average. Our recalibration strategy focused on a predominant number of trees with the largest diameters, in 
+519 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+line with recommendations from Sullivan et al. (2018), who showed that using large-diameter trees improves 
+520 
+recalibration outcomes. Furthermore, as shown by Sharma and Breidenbach (2015), including trees from different 
+521 
+species when estimating site parameters induces error. We therefore performed species-specific recalibrations. 
+522 
+ 
+523 
+ 
+Limits 
+524 
+We chose to develop a single model structure that could be adapted to different stand types by adding structure 
+525 
+parameters. While this approach simplifies generalization and cross-species comparison, it may have limitations. 
+526 
+For example, coppice systems, which are managed through frequent cutting cycles, pose particular modeling 
+527 
+challenges and can complicate convergence when the same stand variables as those applied to other structures 
+528 
+are used. In uneven-aged stands, the management process tends to maintain basal area and quadratic mean 
+529 
+diameter within a narrow range, unlike in even-aged stands. Consequently, using the same variables to 
+530 
+characterize structurally distinct stands may reduce model relevance or performance in some cases. 
+531 
+We also used a single functional form across species, selected based on the overall AIC comparison. For a few 
+532 
+less-represented species, alternative functional forms would have produced lower AIC values. Developing 
+533 
+species-specific functions could improve model accuracy, but maintaining a consistent equation enables 
+534 
+parameter comparisons across species and the development of generic models for practical use. 
+535 
+We also used species-specific models to test each species’ response to competition and stand dynamics.  
+536 
+ 
+537 
+ 
+Implications for forest modelling and management 
+538 
+The models developed in this study account for both stand structure and dendrometrical characteristics, 
+539 
+providing highly accurate height estimates across different management systems (even-aged, uneven-aged, 
+540 
+coppice and coppice-with-standards). This represents a notable advancement in modeling, and can improve 
+541 
+estimates of other critical forest variables such as timber volume and carbon stocks.  
+542 
+Our validation results show strong predictive performance in plots with characteristics similar to the calibration 
+543 
+dataset. In plots with high fertility or atypical conditions, applying local recalibration reduced bias (see practical 
+544 
+method in Supplementary Materials, section C). The number of trees required for recalibration can be adjusted 
+545 
+depending on the desired accuracy of the height estimates, but as few as one to four trees could already strongly 
+546 
+improve the results (Table 5). 
+547 
+ 
+548 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+ 
+549 
+ Conclusion 
+550 
+ 
+551 
+Based on data from more than 40,000 stands surveyed by the French National Forest Inventory, we developed 
+552 
+height-diameter allometries for 41 European species that take into account stand characteristics.  
+553 
+We found that stand structure (even-aged, uneven-aged, coppice-with-standards and coppice) did significantly 
+554 
+impact height-diameter allometry, as did the quadratic mean diameter and the basal area of the stand. Given the 
+555 
+large diversity of climates, stand structures and soil fertility present in the French metropolitan area, the models 
+556 
+developed here could be applied all over Europe. Moreover, to address the loss of local accuracy when applying 
+557 
+a large-scale model at stand level, we developed a recalibration method requiring only a few height 
+558 
+measurements on the largest trees in the stand. Measuring one to four trees can considerably reduce estimation 
+559 
+errors. 
+560 
+ 
+561 
+ 
+562 
+ 
+563 
+ 
+564 
+ 
+565 
+ 
+566 
+ 
+567 
+ 
+568 
+ 
+569 
+ 
+570 
+ 
+571 
+ 
+572 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+ 
+573 
+References 
+574 
+Adame, P., del Río, M., Cañellas, I., 2008. A mixed nonlinear height–diameter model for pyrenean 
+575 
+oak (Quercus pyrenaica Willd.). For. Ecol. Manag. 256, 88–98. 
+576 
+https://doi.org/10.1016/j.foreco.2008.04.006 
+577 
+Akaike, H., 1974. A new look at the statistical model identification. IEEE Trans. Autom. Control 19, 
+578 
+716–723. https://doi.org/10.1109/TAC.1974.1100705 
+579 
+Aleinikovas, M., Linkevičius, E., Kuliešis, A., Rolhle, H., Schroeder, J., 2014. The Impact of 
+580 
+Competition for Growing Space on Diameter, Basal Area and Height Growth in Pine Trees. 
+581 
+Balt. For. 20. 
+582 
+Aussenac, R., Monnet, J.-M., Klopčič, M., Hawryło, P., Socha, J., Mahnken, M., Gutsch, M., 
+583 
+Cordonnier, T., Vallet, P., 2023. Diameter, height and species of 42 million trees in three 
+584 
+European landscapes generated from field data and airborne laser scanning data. Open Res. 
+585 
+Eur. 3, 32. https://doi.org/10.12688/openreseurope.15373.2 
+586 
+Bettinger, P., Boston, K., Siry, J.P., Grebner, D.L., 2017. Estimation and Projection of Stand and 
+587 
+Forest Conditions, in: Forest Management and Planning. Elsevier, pp. 87–111. 
+588 
+https://doi.org/10.1016/B978-0-12-809476-1.00004-7 
+589 
+Ciceu, A., Chakraborty, D., Ledermann, T., 2023. Examining the transferability of height–diameter 
+590 
+model calibration strategies across studies. For. Int. J. For. Res. cpad063. 
+591 
+https://doi.org/10.1093/forestry/cpad063 
+592 
+Ciceu, A., Garcia-Duro, J., Seceleanu, I., Badea, O., 2020. A generalized nonlinear mixed-effects 
+593 
+height–diameter model for Norway spruce in mixed-uneven aged stands. For. Ecol. Manag. 
+594 
+477, 118507. https://doi.org/10.1016/j.foreco.2020.118507 
+595 
+Corcuera, L., Camarero, J.J., Sisó, S., Gil-Pelegrín, E., 2006. Radial-growth and wood-anatomical 
+596 
+changes in overaged Quercus pyrenaica coppice stands: functional responses in a new 
+597 
+Mediterranean landscape. Trees 20, 91–98. https://doi.org/10.1007/s00468-005-0016-4 
+598 
+Dalmasso, M., Derrière, N., Wurpillot, S., 2014. Les données de l’inventaire forestier : Etat des lieux 
+599 
+et évolution [WWW Document]. URL https://inventaire-forestier.ign.fr/IMG/pdf/LP_1.pdf 
+600 
+(accessed 7.18.24). 
+601 
+Decourt, N., 1973. Production primaire, production utile : méthodes d’évaluation, indices de 
+602 
+productivité. Ann. Sci. For. 30, 219–237. https://doi.org/10.1051/forest/19730302 
+603 
+Deforce, K., Haneca, K., 2015. Tree-ring analysis of archaeological charcoal as a tool to identify past 
+604 
+woodland management: The case from a 14th century site from Oudenaarde (Belgium). Quat. 
+605 
+Int., Charcoal: resource and ubiquitous proxy 366, 70–80. 
+606 
+https://doi.org/10.1016/j.quaint.2014.05.056 
+607 
+del Río, M., Bravo-Oviedo, A., Ruiz-Peinado, R., Condés, S., 2019. Tree allometry variation in 
+608 
+response to intra- and inter-specific competitions. Trees 33, 121–138. 
+609 
+https://doi.org/10.1007/s00468-018-1763-3 
+610 
+Elfving, B., Kiviste, A., 1997. Construction of site index equations for Pinus sylvestris L. using 
+611 
+permanent plot data in Sweden. For. Ecol. Manag. 98, 125–134. 
+612 
+https://doi.org/10.1016/S0378-1127(97)00077-7 
+613 
+Feldpausch, T.R., Banin, L., Phillips, O.L., Baker, T.R., Lewis, S.L., Quesada, C.A., Affum-Baffoe, 
+614 
+K., Arets, E.J.M.M., Berry, N.J., Bird, M., Brondizio, E.S., de Camargo, P., Chave, J., 
+615 
+Djagbletey, G., Domingues, T.F., Drescher, M., Fearnside, P.M., França, M.B., Fyllas, N.M., 
+616 
+Lopez-Gonzalez, G., Hladik, A., Higuchi, N., Hunter, M.O., Iida, Y., Salim, K.A., Kassim, 
+617 
+A.R., Keller, M., Kemp, J., King, D.A., Lovett, J.C., Marimon, B.S., Marimon-Junior, B.H., 
+618 
+Lenza, E., Marshall, A.R., Metcalfe, D.J., Mitchard, E.T.A., Moran, E.F., Nelson, B.W., 
+619 
+Nilus, R., Nogueira, E.M., Palace, M., Patiño, S., Peh, K.S.-H., Raventos, M.T., Reitsma, 
+620 
+J.M., Saiz, G., Schrodt, F., Sonké, B., Taedoumg, H.E., Tan, S., White, L., Wöll, H., Lloyd, J., 
+621 
+2011. Height-diameter allometry of tropical forest trees. Biogeosciences 8, 1081–1106. 
+622 
+https://doi.org/10.5194/bg-8-1081-2011 
+623 
+Gómez-García, E., Fonseca, T.F., Crecente-Campo, F., Almeida, L.R., Diéguez-Aranda, U., Huang, 
+624 
+S., Marques, C.P., 2015. Height-diameter models for maritime pine in Portugal: a comparison 
+625 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+of basic, generalized and mixed-effects models. IForest - Biogeosciences For. 9, 72. 
+626 
+https://doi.org/10.3832/ifor1520-008 
+627 
+Gonçalves, A.C., 2022. Stand Structure Impacts on Forest Modelling. Appl. Sci. 12, 6963. 
+628 
+https://doi.org/10.3390/app12146963 
+629 
+Huang, S., Titus, S.J., Wiens, D.P., 1992. Comparison of nonlinear height–diameter functions for 
+630 
+major Alberta tree species. Can. J. For. Res. 22, 1297–1304. https://doi.org/10.1139/x92-172 
+631 
+Hunter, M.O., Keller, M., Vitoria, D., Morton, D.C., 2013. Tree height and tropical forest biomass 
+632 
+estimation. Biogeosciences 108385-8399. https://doi.org/10.5194/bg-10-8385-2013 
+633 
+IGN, 2023. IGN – Inventaire forestier national français, Données brutes, Campagnes annuelles 2005 et 
+634 
+suivantes [WWW Document]. URL https://inventaire-forestier.ign.fr/dataIFN/ (accessed 
+635 
+5.27.25). 
+636 
+Kearsley, E., Moonen, P.C., Hufkens, K., Doetterl, S., Lisingo, J., Boyemba Bosela, F., Boeckx, P., 
+637 
+Beeckman, H., Verbeeck, H., 2017. Model performance of tree height-diameter relationships 
+638 
+in the central Congo Basin. Ann. For. Sci. 74, 1–13. https://doi.org/10.1007/s13595-016-0611-
+639 
+0 
+640 
+Mehtätalo, L., de-Miguel, S., Gregoire, T.G., 2015. Modeling height-diameter curves for prediction. 
+641 
+Can. J. For. Res. 45, 826–837. https://doi.org/10.1139/cjfr-2015-0054 
+642 
+Mensah, S., Pienaar, O.L., Kunneke, A., du Toit, B., Seydack, A., Uhl, E., Pretzsch, H., Seifert, T., 
+643 
+2018. Height – Diameter allometry in South Africa’s indigenous high forests: Assessing 
+644 
+generic models performance and function forms. For. Ecol. Manag. 410, 1–11. 
+645 
+https://doi.org/10.1016/j.foreco.2017.12.030 
+646 
+Mugasha, W.A., Mauya, E.W., Njana, A.M., Karlsson, K., Malimbwi, R.E., Ernest, S., 2019. Height-
+647 
+Diameter Allometry for Tree Species in Tanzania Mainland. Int. J. For. Res. 2019, 4832849. 
+648 
+https://doi.org/10.1155/2019/4832849 
+649 
+Patrício, M.S., Dias, C.R.G., Nunes, L., 2022. Mixed-effects generalized height-diameter model: A 
+650 
+tool for forestry management of young sweet chestnut stands. For. Ecol. Manag. 514, 120209. 
+651 
+https://doi.org/10.1016/j.foreco.2022.120209 
+652 
+Pilli, R., Anfodillo, T., Carrer, M., 2006. Towards a functional and simplified allometry for estimating 
+653 
+forest biomass. For. Ecol. Manag. 237, 583–593. https://doi.org/10.1016/j.foreco.2006.10.004 
+654 
+Pinheiro, J.C., Bates, D., 2006. Mixed-Effects Models in S and S-PLUS | SpringerLink [WWW 
+655 
+Document]. URL https://link.springer.com/book/10.1007/b98882 (accessed 8.15.24). 
+656 
+Richards, F.J., 1959. A Flexible Growth Function for Empirical Use. J. Exp. Bot. 10, 290–301. 
+657 
+https://doi.org/10.1093/jxb/10.2.290 
+658 
+Schmidt, M., Breidenbach, J., Astrup, R., 2018. Longitudinal height-diameter curves for Norway 
+659 
+spruce, Scots pine and silver birch in Norway based on shape constraint additive regression 
+660 
+models. For. Ecosyst. 5, 9. https://doi.org/10.1186/s40663-017-0125-8 
+661 
+Sharma, R.P., Breidenbach, J., 2015. Modeling height-diameter relationships for Norway spruce, Scots 
+662 
+pine, and downy birch using Norwegian national forest inventory data. For. Sci. Technol. 11, 
+663 
+44–53. https://doi.org/10.1080/21580103.2014.957354 
+664 
+Sharma, R.P., Štefančík, I., Vacek, Z., Vacek, S., 2019a. Generalized Nonlinear Mixed-Effects 
+665 
+Individual Tree Diameter Increment Models for Beech Forests in Slovakia. Forests 10, 451. 
+666 
+https://doi.org/10.3390/f10050451 
+667 
+Sharma, R.P., Vacek, Z., Vacek, S., Kučera, M., 2019b. Modelling individual tree height–diameter 
+668 
+relationships for multi-layered and multi-species forests in central Europe. Trees 33, 103–119. 
+669 
+https://doi.org/10.1007/s00468-018-1762-4 
+670 
+Sullivan, M.J.P., Lewis, S.L., Hubau, W., Qie, L., Baker, T.R., Banin, L.F., Chave, J., Cuni‐Sanchez, 
+671 
+A., Feldpausch, T.R., Lopez‐Gonzalez, G., Arets, E., Ashton, P., Bastin, J., Berry, N.J., 
+672 
+Bogaert, J., Boot, R., Brearley, F.Q., Brienen, R., Burslem, D.F.R.P., De Canniere, C., 
+673 
+Chudomelová, M., Dančák, M., Ewango, C., Hédl, R., Lloyd, J., Makana, J., Malhi, Y., 
+674 
+Marimon, B.S., Junior, B.H.M., Metali, F., Moore, S., Nagy, L., Vargas, P.N., Pendry, C.A., 
+675 
+Ramírez‐Angulo, H., Reitsma, J., Rutishauser, E., Salim, K.A., Sonké, B., Sukri, R.S., 
+676 
+Sunderland, T., Svátek, M., Umunay, P.M., Martinez, R.V., Vernimmen, R.R.E., Torre, E.V., 
+677 
+Vleminckx, J., Vos, V., Phillips, O.L., 2018. Field methods for sampling tree height for 
+678 
+tropical forest biomass estimation. Methods Ecol. Evol. 9, 1179–1189. 
+679 
+https://doi.org/10.1111/2041-210X.12962 
+680 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint 
+
+
+ 
+Temesgen, H., v. Gadow, K., 2004. Generalized height–diameter models—an application for major 
+681 
+tree species in complex stands of interior British Columbia. Eur. J. For. Res. 123, 45–51. 
+682 
+https://doi.org/10.1007/s10342-004-0020-z 
+683 
+Teobaldelli, M., Somogyi, Z., Migliavacca, M., Usoltsev, V.A., 2009. Generalized functions of 
+684 
+biomass expansion factors for conifers and broadleaved by stand age, growing stock and site 
+685 
+index. For. Ecol. Manag. 257, 1004–1013. https://doi.org/10.1016/j.foreco.2008.11.002 
+686 
+Trouvé, R., Bontemps, J.-D., Seynave, I., Collet, C., Lebourgeois, F., 2015. Stand density, tree social 
+687 
+status and water stress influence allocation in height and diameter growth of Quercus petraea 
+688 
+(Liebl.) | Tree Physiology | Oxford Academic [WWW Document]. URL 
+689 
+https://academic.oup.com/treephys/article/35/10/1035/2364497 (accessed 8.8.24). 
+690 
+Vallet, P., Dhôte, J.-F., Moguédec, G.L., Ravart, M., Pignard, G., 2006. Development of total 
+691 
+aboveground volume equations for seven important forest tree species in France. For. Ecol. 
+692 
+Manag. 229, 98–110. https://doi.org/10.1016/j.foreco.2006.03.013 
+693 
+Vallet, P., Perot, T., 2016. Tree diversity effect on dominant height in temperate forest. For. Ecol. 
+694 
+Manag. 381, 106–114. https://doi.org/10.1016/j.foreco.2016.09.024 
+695 
+Vázquez-Veloso, A., Yang, S.-I., Bullock, B.P., Bravo, F., 2025. One model to rule them all: A 
+696 
+nationwide height–diameter model for 91 Spanish forest species. For. Ecol. Manag. 595, 
+697 
+122981. https://doi.org/10.1016/j.foreco.2025.122981 
+698 
+Weibull, W., 1951. A Statistical Distribution Function of Wide Applicability. J. Appl. Mech. 
+699 
+Zhou, X., Kutchartt, E., Hernández, J., Corvalán, P., Promis, Á., Zwanzig, M., 2023. Determination of 
+700 
+optimal tree height models and calibration designs for Araucaria araucana and Nothofagus 
+701 
+pumilio in mixed stands affected to different levels by anthropogenic disturbance in South-
+702 
+Central Chile. Ann. For. Sci. 80, 18. https://doi.org/10.1186/s13595-023-01185-9 
+703 
+ 
+704 
+.
+CC-BY-NC-ND 4.0 International license
+made available under a 
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is 
+The copyright holder for this preprint
+this version posted March 3, 2026. 
+; 
+https://doi.org/10.1101/2025.09.29.679156
+doi: 
+bioRxiv preprint

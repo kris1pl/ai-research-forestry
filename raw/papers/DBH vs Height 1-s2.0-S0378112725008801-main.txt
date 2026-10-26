@@ -1,0 +1,1139 @@
+Species-specific modeling of tree diameter at breast height using tree height 
+and relative density with implications for remote sensing-based 
+forest inventory
+Soheil Soheili Esfahani *, Fan-Rui Meng , Christopher YS Wong
+Faculty of Forestry and Environmental Management, University of New Brunswick, 28 Dineen Drive, Fredericton, New Brunswick E3B 5A3, Canada
+A R T I C L E  I N F O
+Keywords:
+Tree diameter at breast height (DBH)
+Allometric models
+Relative stand density (RD)
+DBH prediction
+Species-specific models
+Permanent sample plots
+Mixed temperate forests
+A B S T R A C T
+Accurate estimation of tree diameter at breast height (DBH) is essential for forest monitoring, biomass modeling, 
+and carbon accounting. While DBH is traditionally measured in the field, this approach is labor-intensive and 
+costly, especially at large scales. In contrast, tree height can now be efficiently obtained from remote sensing 
+platforms such as airborne LiDAR and photogrammetry, creating opportunities to estimate DBH indirectly. To 
+address this, we developed a species-specific nonlinear framework to predict DBH from tree height and stand- 
+level relative density (RD) in the mixed temperate forests of New Brunswick, Canada. Our analysis used 1807 
+trees from 653 permanent sample plots (1985–2014), representing six dominant species: Abies balsamea, Acer 
+rubrum, Acer saccharum, Picea mariana, Picea rubens, and Picea glauca. Allometric (height-only) models explained 
+part of DBH variation, with R² ranging from 0.15 to 0.35 (broadleaves) and 0.41–0.74 (conifers), but predictive 
+accuracy was notably low for Acer rubrum and Acer saccharum. Incorporating RD as a competition index sub­
+stantially improved model performance, with R² increasing to 0.85–0.89 (broadleaves) and 0.72–0.88 (conifers). 
+Prediction errors (RMSE and MAE) consistently decreased, with broadleaves showing the greatest improvement 
+compared to conifers, reflecting their stronger sensitivity to stand density. These findings demonstrate that 
+combining tree height with RD provides reliable estimates of DBH across diverse species. The framework bridges 
+ground-based inventory with remote sensing applications, offering a scalable approach for biomass estimation, 
+stand density analysis, and sustainable forest management in temperate mixed-species forests.
+1. Introduction
+Measuring tree diameter at breast height (DBH) is a cornerstone of 
+forest monitoring, growth modeling, and biomass estimation. DBH plays 
+a pivotal role in forest management plans, carbon stock assessments, and 
+wood inventory calculations. Although traditionally measured using 
+simple field tools such as measuring tapes or calipers, DBH collection 
+can be labor-intensive and challenging, particularly in remote or densely 
+vegetated forests. In contrast, tree height is now widely accessible via 
+remote sensing technologies, including airborne LiDAR, drone-based 
+LiDAR, and photogrammetry, offering high accuracy over large 
+forested landscapes (Hyypp¨a et al., 2008; White et al., 2013).
+This difference in measurement accessibility has opened new ave­
+nues for indirectly estimating DBH from tree height using statistical 
+modeling frameworks.
+The height–DBH relationship has been extensively studied in 
+forestry. Historically, DBH has been the independent variable used to 
+predict tree height, due to its ease of field measurement and strong 
+correlation with height (Huang et al., 1992; Fang and Bailey, 1998). For 
+example, Huang et al. (1992) and Peng et al. (2001) developed and 
+validated nonlinear height–diameter models for major species in Alberta 
+and Ontario, respectively. Temesgen et al. (2014)
+analyzed 
+height–diameter relationships for multi-species, multi-layered forests in 
+Northeast China, while Fang and Bailey (1998) developed robust models 
+for tropical forests. These studies have shown that DBH can explain over 
+80 % of the variation in height for many forest types.
+However, the reverse modeling approach—predicting DBH from tree 
+height—has received significantly less attention. With the rise of remote 
+sensing technologies, height has become a readily available and 
+spatially continuous variable, offering a valuable opportunity to esti­
+mate DBH in areas where field access is limited. Studies by White et al. 
+(2013) and Hyypp¨a et al. (2008) demonstrated that LiDAR-derived 
+* Corresponding author.
+E-mail addresses: soheil.soheili@unb.ca (S.S. Esfahani), fmeng@unb.ca (F.-R. Meng), chris.wong@unb.ca (C.Y. Wong). 
+Contents lists available at ScienceDirect
+Forest Ecology and Management
+journal homepage: www.elsevier.com/locate/foreco
+https://doi.org/10.1016/j.foreco.2025.123372
+Received 10 October 2025; Received in revised form 12 November 2025; Accepted 17 November 2025  
+Forest Ecology and Management 601 (2026) 123372 
+Available online 21 November 2025 
+0378-1127/© 2025 The Authors. Published by Elsevier B.V. This is an open access article under the CC BY license ( http://creativecommons.org/licenses/by/4.0/ ). 
+
+
+canopy height models (CHMs) offer precise vertical structure data, but 
+direct DBH measurements remain unattainable from above-canopy 
+remote sensing, especially in closed-canopy and multi-layered forests. 
+Consequently, reliable models that estimate DBH from height can serve 
+as critical links between remote sensing and traditional forest inventory 
+methods.
+Several recent studies have begun to address this challenge. For 
+instance, Zhang et al. (2016) modeled DBH from height in mixed conifer 
+forests in the western United States, incorporating stand structure and 
+species variation. Similarly, Chave et al. (2005) incorporated height and 
+wood density into allometric models for DBH and aboveground biomass 
+estimation in tropical forests. Despite these efforts, most models remain 
+species-specific or ecosystem-limited, with limited application to cold, 
+mixed-species forests like those found in New Brunswick, Canada. 
+Moreover, many models have overlooked the influence of structural 
+variables such as relative density (RD), which plays a significant role in 
+modifying the height–DBH relationship.
+Relative density, defined as the ratio of actual stand density to the 
+maximum stand density for a given size class, reflects inter-tree 
+competition for resources like light and water. In denser stands, trees 
+often invest more in vertical growth to access light, leading to taller but 
+thinner stems (i.e., lower DBH for a given height) (Zhang et al., 2005). 
+Zhang et al. (2005) showed that incorporating RD in height–diameter 
+models significantly improves predictive accuracy, particularly in 
+complex, multi-layered forests.
+New Brunswick’s forests, covering more than 85 % of the provincial 
+landbase, contain a rich mix of economically and ecologically important 
+species such as Balsam Fir (Abies balsamea), Red Maple (Acer rubrum), 
+Sugar Maple (Acer saccharum), Black Spruce (Picea mariana), Red Spruce 
+(Picea rubens), and White Spruce (Picea glauca) (Porter et al., 2001; NB 
+Ecosystem Classification Working Group, 2003). These species differ in 
+growth form, shade tolerance, and morphological responses to stand 
+structure. As a result, general DBH–height models may be insufficient 
+across these diverse forest types. Developing species-specific models 
+based on measurable variables like height and RD is therefore crucial, 
+particularly for integrating LiDAR data into operational forest 
+management.
+The objective of this study is to develop accurate, species-specific, 
+and scalable nonlinear models for predicting DBH using tree height 
+and relative density in the mixed-species forests of New Brunswick. The 
+specific goals are to: 
+1. Develop nonlinear DBH prediction models using height and RD as 
+independent variables;
+2. Evaluate model performance across six dominant tree species (both 
+conifers and broadleaf);
+3. Assess species-level differences in model accuracy and suitability for 
+remote sensing applications.
+The findings of this study are expected to facilitate the integration of 
+remote sensing and field-based forest inventories, providing robust tools 
+for forest structure analysis, carbon estimation, and climate adaptation 
+strategies in boreal and temperate forests.
+2. Materials and methods
+2.1. Study area
+The study area for this research is the province of New Brunswick 
+(NB), Canada (Fig. 1). Forested area makes up more than 85 % of the 
+NB’s seven million hectares (ha). The province consists of seven distinct 
+ecoregions (Statistics Canada, 2018). (Table 1, Fig. 1), classified based 
+on predominant climatic, geologic, topographic, and floristic commu­
+nities and conditions (Ecological Stratification Working Group, 1996). 
+An important aspect of selecting this region for the study is the broad 
+diversity of species and environmental conditions, making it a suitable 
+sample for examining the behavior of different species under changing 
+conditions. The area provides valuable information for predicting tree 
+height due to the distinct ecological differences across various regions of 
+the province.
+The climate of New Brunswick is characterized by cold, snowy 
+winters, and warm, humid summers with an annual average 
+Fig. 1. Location of permanent sample plots and ecoregions in New Brunswick of eastern Canada (inset). Ecoregion number in the legend corresponds to that in 
+Table 1. https://doi.org/10.1371/journal.pone.0250991.g001.
+S.S. Esfahani et al.                                                                                                                                                                                                                             
+Forest Ecology and Management 601 (2026) 123372 
+2 
+
+
+temperature range from 2.0 to 6.3◦C. Mean annual precipitation varies 
+between 1000–1500 mm, with approximately half occurring as snow 
+(Environment and Climate Change Canada, 2011). New Brunswick has 
+39 native tree species, most of which are conifers. Of these native spe­
+cies, 28 were found within the province’s permanent sample plots (PSP) 
+(Table 2). Commercially significant conifers include Balsam Fir (Abies 
+balsamea), Red Spruce (Picea rubens), White Spruce (Picea glauca), and 
+Black Spruce (Picea mariana). Abundant shade intolerant hardwoods 
+include trembling aspen (Populus tremuloides), Red Maple (Acer rubrum), 
+and White Birch (Betula papyrifera), whereas shade tolerant hardwoods 
+include Yellow Birch (Betula alleghaniensis), Sugar Maple (Acer saccha­
+rum), Ironwood (Ostrya virginiana), Black Cherry (Prunus serotina), 
+White Ash (Fraxinus americana), Red Oak (Quercus sp.), and American 
+Beech (Fagus grandifolia) (NB Ecosystem Classification Working Group, 
+2003).
+2.2. Permanent sample plot data
+Permanent sample plot (PSP) inventory database is maintained by 
+the New Brunswick Department of Natural Resources and Energy 
+Development (Porter et al., 2001). The network containing nearly 1900 
+PSPs, more than 165,000 individual trees, and 580,000 tree measure­
+ments spanning a period from 1985 to 2014 (Porter et al., 2001). Plots in 
+NB use a standard area of 400 m² and are re-measured at periods of 3 or 
+5 years depending on stand age (Porter et al., 2001). The spatial dis­
+tribution of NB’s network of PSPs is illustrated in Fig. 1. Tree species and 
+diameter at breast height (DBH) are recorded by technicians for every 
+live tree in the plot with a DBH > 5.1 cm. All tree records from PSPs that 
+had been subject to fire, insect defoliation, windthrow, or timber har­
+vesting were excluded from this analysis. Among the 1900 permanent 
+sample plots (PSP) available, 653 plots with an area of 400 square me­
+ters were selected based on the availability of complete DBH and height 
+records that were directly measured in the field. In total, 1807 trees 
+representing six dominant species—Balsam Fir (FB), Red Maple (MR), 
+Sugar Maple (MS), Black Spruce (SB), Red Spruce (SR) and White Spruce 
+(SW)—were included in the analysis. A summary of the number of trees 
+and plots for each species used in this study is provided in Table 3.
+The primary selection criteria required the simultaneous availability 
+of both DBH and tree height data. In addition, only trees that were alive 
+and healthy at the time of measurement, and not affected by distur­
+bances such as fire, insect defoliation, windthrow, or harvesting were 
+retained. Tree height values used in this study were obtained from direct 
+field measurements recorded in the PSP inventory. Additional indices 
+used in the model are as follows:
+2.3. Relative density index (RD)
+The Relative Density Index (RD) is a frequently used measure of 
+overall competition intensity within a stand. It is defined as the ratio of 
+the current stand density to the maximum potential density of the stand. 
+The RD concept was originally developed based on self-thinning law of 
+even-aged pure stands (Reineke, 1933). However, it is also applied to 
+evaluate the competition intensity of uneven-aged mixed species stands. 
+The maximum potential density of the stand was calculated based on the 
+law of self-thinning (Reineke, 1933). According to this law, the 
+maximum number of trees a stand can support decreases exponentially 
+with mean tree size (Ishizuka et al., 1997; Boulanger et al., 2013): 
+Nmax = α
+(
+DBHplot
+DBHr
+)−β
+(1) 
+Where:
+- Nmax: The maximum potential stand density corresponding to the 
+mean plot-level DBH.
+- α: The maximum stand density at the reference diameter DBHr (set 
+to 20 cm in this study).
+- β: The self-thinning coefficient.
+The relative density index RD is defined as: 
+RD = Nplot
+Nmax
+= Nplot
+α
+(
+DBHplot
+DBHr
+)β
+(2) 
+In this study, RD was calculated at the plot level, where Nplot is the 
+observed stand density (trees ha⁻¹) and DBHplot is the mean diameter of 
+all trees within the plot. Therefore, RD represents a stand-level 
+Table 1 
+Ecoregion and permanent sample plot (PSP) inventory summary.
+Ecoregion No.
+Ecoregion
+Area
+Plots
+Ar
+Arp
+Cr
+Crp
+1
+Highlands
+4908
+6.74
+421
+11.65
+2
+Northern Uplands
+8761
+12.03
+577
+15.97
+3
+Central Uplands
+12008
+16.49
+527
+14.59
+4
+Fundy Coastal
+2223
+3.05
+39
+1.08
+5
+Valley Lowlands
+20278
+27.85
+903
+24.99
+6
+Eastern Lowlands
+20856
+28.64
+1047
+28.98
+7
+Grand Lake Lowlands
+3779
+5.19
+99
+2.74
+Total
+​
+72813
+3613
+Source: https://doi.org/10.1371/journal.pone.0250991.t001
+Ar is the ecoregion area (km2), Arp the proportion of NB that makes up the 
+ecoregion (%), Cr the number of PSPs within the ecoregion, and Crp the pro­
+portion of plots which constitute NB’s total PSP inventory within a specific 
+ecoregion (%).
+Table 2 
+Tree species common and scientific names, where N is the number of tree ob­
+servations across all permanent sample plots.
+Common Name
+Scientific Name
+Code
+N
+American Mountain Ash
+Sorbus americana
+AA
+305
+Black Ash
+Fraxinus nigra
+AB
+607
+White Ash
+Fraxinus americana
+AW
+1294
+Grey Birch
+Betula populifolia
+BG
+3751
+White Birch
+Betula papyrifera
+BW
+33,489
+Yellow Birch
+Betula alleghaniensis
+BY
+13,040
+Pin Cherry
+Prunus pensylvanica
+CP
+1950
+Eastern White Cedar
+Thuja occidentalis
+EC
+16,816
+American Beech
+Fagus grandifolia
+EE
+15,874
+Eastern Hemlock
+Tsuga canadensis
+EH
+1418
+Balsam Fir
+Abies balsamea
+FB
+163,119
+Hoptree
+Ptelea trifoliata
+IW
+878
+Speckled Alder
+Alnus incana
+KA
+436
+Tamarack
+Larix laricina
+LT
+3739
+Mountain Maple
+Acer spicatum
+MM
+1868
+Red Maple
+Acer rubrum
+MR
+56,676
+Sugar Maple
+Acer saccharum
+MS
+24,358
+Striped Maple
+Acer pensylvanicum
+MT
+5426
+Red Oak
+Quercus rubra
+OR
+267
+Jack Pine
+Pinus banksiana
+PB
+448
+Red Pine
+Pinus resinosa
+PR
+372
+Balsam Poplar
+Populus balsamifera
+RB
+776
+Large-tooth Aspen
+Populus grandidentata
+RL
+1561
+Trembling Aspen
+Populus tremuloides
+RT
+21,137
+Black Spruce
+Picea mariana
+SB
+108,378
+Red Spruce
+Picea rubens
+SR
+62,614
+White Spruce
+Picea glauca
+SW
+33,158
+Willow
+Salix nigra
+XW
+257
+Table 3 
+Summary of sample size and plot distribution for six dominant tree species 
+included in the study.
+Common Name
+Scientific Name
+Code
+N trees
+N plots
+Balsam Fir
+Abies balsamea
+FB
+514
+193
+Red Maple
+Acer rubrum
+MR
+235
+97
+Sugar Maple
+Acer saccharum
+MS
+145
+48
+Black Spruce
+Picea mariana
+SB
+366
+119
+Red Spruce
+Picea rubens
+SR
+442
+155
+White Spruce
+Picea glauca
+SW
+105
+41
+S.S. Esfahani et al.                                                                                                                                                                                                                             
+Forest Ecology and Management 601 (2026) 123372 
+3 
+
+
+competition index shared by all trees in the same plot. In mixed-species 
+stands, RD was computed using the total stand density and mean plot- 
+level DBH,(irrespective of species identity. As a result, RD reflects the 
+combined crowding pressure of all trees in the plot and implicitly in­
+corporates both intra- and interspecific competition. Species-specific 
+responses to this shared competitive environment are accounted for in 
+Eq. (4) through the species-specific coefficients (e.g., k0, kh, and kr), 
+which determine how each species responds to the same stand-level 
+competition signal. This index accounts for competition intensity, 
+which varies by species and stand conditions (Boulanger et al., 2013). 
+All parameters and RD values used in this study were calculated from 
+PSP plot measurements described in Section 2.2.
+2.3.1. Estimation of α and β parameters
+To estimate the self-thinning parameters α and β, the nonlinear 
+equation was log–linearized as follows: 
+ln(Nha)
+= ln(α)–β⋅ln
+(
+DBHplot
+DBHr
+)
+(3) 
+where Nha is the observed stand density (trees ha⁻¹), DBHplot is the mean 
+plot-level DBH, and DBHr is the reference diameter (20 cm). In practice, 
+the observed stand density (Nha) from the New Brunswick PSP database 
+was used only to fit the upper self-thinning boundary and estimate the 
+species-specific parameters α and β. After parameter estimation, Nmax 
+was predicted using Eq. (1), and RD was subsequently calculated using 
+Eq. (2).The log-linear model was fitted separately for each species using 
+ordinary least squares (OLS) regression in R with the function lm() in the 
+stats package. From the regression output, the intercept was back- 
+transformed to obtain α (α = ea), and β was derived from the negative 
+slope (β = –b) (Reineke, 1933; Drew and Flewelling, 1979).
+It is important to note that the classical self-thinning slope (β ≈
+–1.605) reported by Reineke (1933) was developed for even-aged, pure, 
+and fully stocked stands with uniform crown structure. In contrast, the 
+PSP stands used in this study are mixed-species and multi-cohort forests, 
+where canopy stratification, uneven age structures, and interspecific 
+competition lead to different density–size dynamics. As demonstrated in 
+previous research, the self-thinning slope is not universal, and typically 
+becomes less negative in structurally heterogeneous or mixed stands due 
+to reduced or delayed density-driven mortality (Weiskittel et al., 2009; 
+Charru et al., 2012; Pretzsch and Biber, 2016).
+2.4. Model development
+To predict tree diameter at breast height (DBH), a nonlinear 
+regression model was developed and applied separately to each of the 
+six selected species: Balsam Fir (Abies balsamea), Red Maple (Acer 
+rubrum), Sugar Maple (Acer saccharum), Black Spruce (Picea mariana), 
+Red Spruce (Picea rubens), and White Spruce (Picea glauca). The model 
+was designed to examine the relationship between DBH and two 
+explanatory variables: tree height and relative density (RD). Each spe­
+cies was modeled individually to account for species-specific growth 
+patterns and structural differences.
+The general form of the nonlinear model used is as follows: 
+DBH= (1+K0) × HEIGHTKh × RDKr                                                
+(4)
+Where:
+- DBH = Diameter at breast height (cm)
+- HEIGHT = Total tree height (m)
+- RD = Relative density (unitless)
+- K₀, Kₕ, Kᵣ = species-specific regression coefficients
+This multiplicative power-law formulation was selected based on 
+ecological and statistical considerations. In mixed-species and multi- 
+cohort forest stands, such as those represented in the PSP data, trees 
+of similar height may exhibit different DBH values due to variation in 
+crown competition intensity and stand developmental stage. Under 
+these conditions, parameter-varying extensions of the classical allome­
+tric model (e.g., a(RD), b(RD)) often suffer from parameter non- 
+identifiability and collinearity between HEIGHT and RD, leading to 
+unstable coefficient estimation (Zhang et al., 2005; Temesgen et al., 
+2014). In contrast, the chosen model maintains parameter stability 
+while allowing HEIGHT to represent vertical growth allocation and RD 
+to represent competition-driven suppression of diameter growth. This 
+interpretation is consistent with self-thinning and crown competition 
+theory (Reineke, 1933; Drew and Flewelling, 1979).
+The model was fitted using nonlinear least squares (NLS) in R for 
+each species. The goodness-of-fit was evaluated using R², root mean 
+square error (RMSE), and mean absolute error (MAE). Residual plots 
+were also examined to assess model assumptions and potential bias. (all 
+parameters (DBH, HEIGHT and RD values were derived directly from 
+PSP data).
+2.5. Model selection and statistical analysis
+The nonlinear regression model selected for this study was chosen 
+based on both scientific and practical considerations:
+- Capturing Nonlinear Relationships
+Tree growth involves complex, nonlinear interactions between 
+structural variables such as tree height and relative density (RD). 
+Traditional linear models fail to capture these curvilinear patterns, 
+whereas nonlinear models provide greater flexibility to describe such 
+natural relationships accurately.
+- Species-Specific Flexibility
+The model structure allows for species-specific parameterization, 
+enabling independent coefficient estimation for each of the six dominant 
+species. This design facilitates precise comparison of allometric patterns 
+across different coniferous and broadleaf species in New Brunswick’s 
+forests.
+- High Predictive Accuracy
+Due to its multiplicative-exponential structure, the model provides 
+high accuracy in estimating DBH from measurable inputs like tree height 
+and RD. This is particularly useful when analyzing heterogeneous 
+datasets from mixed-species forests.
+- Compatibility with PSP Data
+The model leverages high-resolution, long-term data from New 
+Brunswick’s Permanent Sample Plot (PSP) network. These datasets 
+include detailed measurements on tree size and stand structure, 
+providing a reliable basis for model calibration and validation.
+2.6. Statistical methods and software
+All statistical analyses were performed using R software (version 
+4.4.2; R Core Team, 2023). Parameter estimation was conducted using 
+nonlinear least squares (NLS), and 95 % confidence intervals were 
+calculated for each model coefficient. Data preprocessing, including 
+relative density calculations and PSP data organization, was carried out 
+in Microsoft Excel for Microsoft 365 (Microsoft Corporation, 2023).
+The following statistical tests were applied to analyze interspecies 
+differences among model coefficients and input variables:
+- Shapiro–Wilk Test: Used to assess the normality of each variable. A 
+p-value > 0.05 indicates normal distribution, while a p-value < 0.05 
+suggests non-normality.
+- ANOVA (Analysis of Variance): For variables that followed a normal 
+distribution, one-way ANOVA was applied to compare means across 
+species.
+- Kruskal–Wallis Test: For non-normally distributed variables, the 
+non-parametric Kruskal–Wallis test was used to detect significant dif­
+ferences between species groups.
+Dunn’s Test with Bonferroni Correction: When either ANOVA or 
+Kruskal–Wallis identified significant differences (p < 0.05), post-hoc 
+pairwise comparisons were conducted using Dunn’s test. Bonferroni 
+adjustment was applied to control for Type I error due to multiple 
+S.S. Esfahani et al.                                                                                                                                                                                                                             
+Forest Ecology and Management 601 (2026) 123372 
+4 
+
+
+comparisons.
+The stats package (R Core Team, 2023) was used for the Shapir­
+o–Wilk test, Kruskal–Wallis test, and log–linear regression (lm()). 
+Nonlinear regression was conducted using the nls function in base R. The 
+car package (Fox and Weisberg, 2019) was employed for ANOVA and 
+residual diagnostics, while the dunn.test package (Dinno, 2017) was 
+used for post-hoc comparisons with Bonferroni correction. Model visu­
+alization and diagnostic plotting were performed using the ggplot2 
+package (Wickham, 2016), and group comparison letters were gener­
+ated using the multcompView package (Graves et al., 2015).
+3. Results
+3.1. Descriptive structural characteristics of six dominant species
+To provide a baseline understanding of interspecific differences, 
+descriptive statistics were calculated for diameter at breast height 
+(DBH), total tree height, stand density (N/ha), trees per plot, and rela­
+tive density (RD) across the six dominant tree species in New Brunswick. 
+A complete summary of these metrics is provided in Table A1 in Ap­
+pendix A, while the distributions of DBH, height, and RD are visualized 
+in Fig. 2. These metrics reflect the structural heterogeneity of forest 
+stands and provide the empirical foundation for subsequent model 
+development.
+Among the selected species, Balsam Fir (FB) had the largest sample 
+size (N = 514, across 193 plots; 2.66 trees/plot), highlighting its 
+dominance in New Brunswick’s forest composition. In contrast, White 
+Spruce (SW) had the smallest sample size (N = 105, across 41 plots; 2.56 
+trees/plot), reflecting its relatively lower representation in the PSP 
+dataset compared to other species.
+In terms of tree diameter, White Spruce (SW) exhibited the largest 
+mean DBH (28.36 cm ± 8.34), while Balsam Fir (FB) had the smallest 
+(20.55 cm ± 6.33). Regarding tree height, Sugar Maple (MS) recorded 
+the greatest mean tree height (19.02 m ± 3.74), whereas Balsam Fir 
+(FB) showed the shortest average height (15.38 m ± 3.96), consistent 
+with its known shade-tolerant and slow-growing characteristics.
+Relative density (RD) varied notably among the six dominant tree 
+species. Balsam Fir (FB) recorded the highest mean RD (0.62 ± 0.17), 
+reflecting its tendency to grow under crowded conditions with stronger 
+intraspecific competition. In contrast, Black Spruce (SB) showed the 
+lowest mean RD (0.53 ± 0.16), indicating reduced competitive intensity 
+and lower realized stand density. The other species exhibited interme­
+diate values: Red Maple (MR: 0.59 ± 0.20), Sugar Maple (MS: 0.58 
+± 0.23), Red Spruce (SR: 0.55 ± 0.19), and White Spruce (SW: 0.60 
+± 0.22), highlighting differences in ecological strategies and stand oc­
+cupancy. Note that RD is calculated at the plot level and is shared among 
+all trees within the same plot. The RD values reported for each species 
+represent the average RD of the plots in which that species occurred, and 
+therefore do not reflect species-specific RD calculations. This approach 
+ensures that RD captures the combined crowding pressure of both intra- 
+and interspecific competition within mixed stands.
+These interspecific variations underscore the structural complexity 
+of New Brunswick’s mixed-species forests and justify the use of species- 
+specific nonlinear models to better represent their growth dynamics. The 
+distribution patterns shown in Fig. 2 reinforce these findings, with 
+boxplots highlighting the broader spread in DBH for Sugar Maple (MS), 
+the consistently smaller dimensions of Balsam Fir (FB), and the rela­
+tively high density of FB compared to the lower density of Black Spruce 
+(SB). In terms of height, Sugar Maple (MS) exhibited the tallest in­
+dividuals, while Balsam Fir (FB) was the shortest, consistent with their 
+contrasting growth strategies.
+3.2. Estimated self-thinning parameters (α and β)
+The estimated self-thinning parameters (α and β) exhibited clear 
+interspecific variation (Table A2 in Appendix A). Among the six domi­
+nant species, the highest α value was observed for Black Spruce (SB: 
+99.45), indicating its relatively high maximum stand density potential, 
+while the lowest α occurred in Red Maple (MR: 62.64). For the self- 
+thinning coefficient (β), values ranged from –0.05 in SB, suggesting 
+minimal self-thinning tendency, to –1.075 in Sugar Maple (MS), which 
+was closest to the classical –3/2 self-thinning rule. Balsam Fir (FB), Red 
+Spruce (SR), and White Spruce (SW) exhibited intermediate β values 
+(–0.734 to –0.765), consistent with moderate density-dependent mor­
+tality. These results highlight species-specific differences in density 
+regulation and competitive dynamics.
+3.3. Statistical analysis results
+In this study, various statistical tests were used to analyze data 
+related to DBH (Diameter at Breast Height), Height, and RD (Relative 
+Density) across different species in the forests of New Brunswick. 
+Initially, the normality of the data was checked using the Shapiro–Wilk 
+test. Then, to compare means between different species, the Krus­
+kal–Wallis test and Dunn’s test (with Bonferroni method) were applied. 
+Below are the detailed steps of the analysis.
+3.3.1. Normality check with the Shapiro-Wilk test
+The Shapiro–Wilk test was used to assess the normality of data for 
+DBH, Height and RD. The results indicated that none of the variables 
+followed a normal distribution (all p < 0.05; Table A3 in Appendix A). 
+Therefore, non-parametric tests were applied for subsequent group 
+comparisons.
+Fig. 2. Boxplots of diameter at breast height (DBH), tree height and relative density (RD) across six tree species (FB, MR, MS, SB, SR, SW) in New Brunswick 
+permanent sample plots.
+S.S. Esfahani et al.                                                                                                                                                                                                                             
+Forest Ecology and Management 601 (2026) 123372 
+5 
+
+
+3.3.2. Kruskal-Wallis test for group comparison
+Since the data were not normally distributed, the non-parametric 
+Kruskal–Wallis test was applied to compare DBH, Height, and RD 
+across different species. The results showed significant interspecific 
+differences for all variables (p < 0.05; Table A4 in Appendix A). To 
+further explore these differences, Dunn’s test with Bonferroni adjust­
+ment was conducted for pairwise comparisons.
+3.3.3. Dunn’s Test with Bonferroni correction for pairwise comparisons
+After the Kruskal–Wallis test, Dunn’s test with Bonferroni adjustment 
+was applied to conduct detailed pairwise comparisons among species. 
+For each comparison, the test statistic and adjusted p-value are reported 
+(Tables A5–A7 in Appendix A). An asterisk (*) denotes statistical sig­
+nificance at α = 0.05.
+Significant interspecific differences in DBH were observed 
+(Table A5). Balsam Fir (FB) consistently exhibited smaller DBH than all 
+other species. Red Maple (MR) differed from FB, MS, SR, and SW, but did 
+not differ from Black Spruce (SB). Sugar Maple (MS) differed from FB, 
+MR, and SB, but showed no significant difference compared with SR and 
+SW. SB differed from FB, MS, SR, and SW, but not from MR. SR differed 
+from FB, MR, and SB, but not from MS or SW. SW differed from FB, MR, 
+and SB, but not from MS or SR. Overall, FB had the smallest DBH, MS 
+and SW had the largest, while SB and SR occupied intermediate posi­
+tions, with MR being similar to SB.
+Tree height also varied significantly among species (Table A6). FB 
+was the shortest species. MR differed from FB, MS, SR, and SW, but not 
+from SB. MS was taller than FB, MR, and SB, but did not differ from SR or 
+SW. SB differed from FB, MS, SR, and SW, but not from MR. SR differed 
+from FB, MR, and SB, but not from MS or SW. SW was taller than FB, MR, 
+and SB, but did not differ from MS or SR Overall, FB exhibited the lowest 
+heights, MS the greatest, and MR, SB, SR, and SW showed intermediate 
+or overlapping height distributions.
+Differences in relative density (RD) were less pronounced (Table A7). 
+FB had higher RD than SB, SR, and MS, but did not differ from MR or SW. 
+MR showed no significant differences with any species. MS differed only 
+from FB. SB and SR differed only from FB. SW showed no significant 
+differences with any species.
+Overall, relative density patterns were broadly similar among spe­
+cies, with the exception of Balsam Fir (FB), which tended to occur under 
+higher stand densities compared to Black Spruce (SB) and Red Spruce 
+(SR).3.4. Nonlinear Regression Analysis of Tree Diameter Across 
+Species.
+To model tree diameter at breast height (DBH) as a function of 
+structural stand variables, species-specific nonlinear regression models 
+were developed using total tree height and relative density (RD) as 
+predictors. The model followed a multiplicative power form: 
+DBH= (1+K0) × HEIGHTKh × RDKr                                                     
+This formulation allows for nonlinear scaling of DBH with respect to 
+both tree height and competitive stand conditions, accounting for 
+interspecific allometric variation and density-dependent growth pat­
+terns. Each species was modeled independently to capture species- 
+specific structural dynamics.
+Parameter estimates, standard errors, t-values, and p-values for each 
+model are summarized in Table A8 in Appendix A, along with model 
+performance metrics including the coefficient of determination (R²), 
+root mean square error (RMSE), and mean absolute error (MAE).The 
+results demonstrate that the nonlinear regression model effectively 
+captures species-specific variation in tree diameter through the inclu­
+sion of height and RD as explanatory variables. The intercept parameter 
+(K₀) was statistically significant across all species, serving as a funda­
+mental scaling constant in the model. The height coefficient (Kₕ) showed 
+strong and statistically significant positive effects in five of the six spe­
+cies, confirming that tree height is a dominant structural predictor of 
+DBH. In the case of White Spruce (Picea glauca), the Kₕ value was lower 
+and only marginally significant, suggesting weaker coupling between 
+height and diameter in this species, potentially due to greater structural 
+variability or environmental heterogeneity.
+The relative density coefficient (Kᵣ) was negative across all species 
+and statistically significant in most cases. This pattern supports estab­
+lished ecological theory, indicating that higher competition levels (i.e., 
+greater RD) are associated with reduced diameter growth for a given 
+height. This density effect was most pronounced in Sugar Maple (Acer 
+saccharum) and White Spruce, where Kᵣ values indicated steeper diam­
+eter reduction under denser stand conditions.
+In terms of model fit, Sugar Maple and Red Spruce exhibited the 
+highest performance, with R² values of 0.89 and 0.88, respectively, and 
+low RMSE and MAE values. The model performed less effectively for 
+White Spruce (R² = 0.72), suggesting higher structural heterogeneity or 
+the influence of unmodeled factors such as site quality, microsite vari­
+ation, or genetic diversity. Nonetheless, the models provided acceptable 
+levels of predictive accuracy across all six species.
+Overall, these findings highlight the importance of species-specific 
+nonlinear modeling in forest structure analysis.
+3.3.4. Comparative statistical analysis of parameters
+The Shapiro–Wilk test confirmed that regression parameters (K₀, Kₕ, 
+Kᵣ) followed a normal distribution (p > 0.05), supporting the use of 
+parametric tests (ANOVA) for interspecific comparisons (Table A9 in 
+Appendix A).
+The ANOVA results revealed a statistically significant difference 
+across species only for the height coefficient (Kₕ, p = 0.0098), while no 
+significant interspecific differences were observed for the intercept (K₀, 
+p = 0.4921) or the relative density coefficient (Kᵣ, p = 0.1382) 
+(Table A10 in Appendix A).
+Given the significant result for Kₕ, post-hoc pairwise comparisons 
+were performed. Dunn’s test indicated significant differences among 
+most species pairs, except between Black Spruce (SB) and Red Maple 
+(MR) (p > 0.05), and between Sugar Maple (MS) and White Spruce (SW) 
+(p = 0.0543), where no significant differences were observed 
+(Table A11 in Appendix A).
+3.3.5. Comparative performance of height-only vs. height+RD models in 
+predicting DBH
+The comparative evaluation of Height-only and Height+RD models 
+demonstrated distinct species-specific patterns in DBH prediction. For 
+Abies balsamea, the Height-only model explained 74 % of the variation in 
+DBH (R² = 0.74), with relatively high errors (RMSE = 4.12 cm, MAE =
+2.89 cm). Incorporating RD improved the model to R² = 0.86, while 
+reducing RMSE to 2.39 cm and MAE to 1.73 cm. A similar improvement 
+was observed for Acer rubrum, where the Height-only model exhibited 
+poor performance (R² = 0.35, RMSE = 5.44 cm, MAE = 3.90 cm), but 
+accuracy increased substantially when RD was included (R² = 0.85, 
+RMSE = 2.88 cm, MAE = 2.11 cm).
+The largest improvement occurred in Acer saccharum, where the 
+Height-only model performed very poorly (R² = 0.15, RMSE = 6.27 cm, 
+MAE = 4.69 cm), but the inclusion of RD raised model fit to R² = 0.89 
+and reduced errors by more than half (RMSE = 3.15 cm, MAE =
+2.05 cm). Picea mariana also benefited strongly, with R² increasing from 
+0.54 to 0.82 and errors decreasing from RMSE = 5.14 cm to 2.61 cm and 
+MAE from 3.74 cm to 1.96 cm. In Picea rubens, the Height-only model 
+showed weak predictive capacity (R² = 0.41, RMSE = 6.15 cm, MAE =
+4.48 cm), but performance improved markedly when RD was added (R² 
+= 0.88, RMSE = 3.01 cm, MAE = 2.16 cm). By contrast, Picea glauca 
+showed the 402 smallest gain: R² increased only from 0.58 to 0.72, with 
+modest reductions in error (RMSE from 5.91 cm to 4.42 cm; MAE from 
+4.20 cm to 2.92 cm). Overall, these results confirm that RD substantially 
+enhances predictive accuracy for most species, particularly broadleaves 
+such as Acer saccharum and Acer rubrum, while its effect is comparatively 
+limited for Picea glauca (Fig. 3).
+S.S. Esfahani et al.                                                                                                                                                                                                                             
+Forest Ecology and Management 601 (2026) 123372 
+6 
+
+
+Fig. 3. Observed vs. predicted DBH for six dominant tree species in New Brunswick under Height-only and Height+RD models. The dashed green line represents the 
+1:1 relationship, while the solid black line shows the best-fit regression line. Scatter points illustrate species-specific model fits.
+S.S. Esfahani et al.                                                                                                                                                                                                                             
+Forest Ecology and Management 601 (2026) 123372 
+7 
+
+
+3.3.6. Model accuracy metrics
+Building on the comparative analysis presented in Section 3.5, the 
+Height+RD model demonstrated consistently strong predictive perfor­
+mance across most species. Coefficient of determination (R²) values 
+generally exceeded 0.82, with RMSE and MAE remaining within 
+ecologically acceptable ranges, highlighting the robustness of the 
+nonlinear formulation. The only exception was White Spruce, which 
+exhibited a comparatively weaker fit (R² = 0.72), likely due to higher 
+intraspecific variability and limited sample size. Overall, these results 
+confirm that tree height and relative density are reliable predictors of 
+DBH for the dominant forest species in New Brunswick.
+4. Discussion and conclusion
+4.1. Integrated analysis of height and relative density in DBH prediction
+The nonlinear regression model developed in this study demon­
+strated strong predictive ability for estimating tree diameter at breast 
+height (DBH) using tree height and relative density (RD) across six 
+dominant tree species in New Brunswick. However, the magnitude of 
+predictive accuracy varied notably among species, reflecting differences 
+in morphological traits, competitive strategies, and ecological adapt­
+ability. The overarching goal of the modeling framework was to derive 
+reliable DBH estimates from tree height—an inversion of the traditional 
+allometric approach in which DBH is used to predict height. Historically, 
+forest biometric studies have often relied on DBH as the primary inde­
+pendent variable due to its ease of field measurement, but in dense or 
+inaccessible forests, measuring DBH can be difficult or impractical. With 
+the advent of modern remote sensing technologies such as airborne and 
+drone-based LiDAR, tree height has become widely and accurately 
+measurable across large spatial scales (McKenney et al., 2011). This shift 
+creates a pressing need to establish robust equations for predicting DBH 
+from height, thereby bridging the gap between remotely sensed canopy 
+information and ground-based inventory data.
+The results of this study demonstrate that tree height alone is a sig­
+nificant predictor of DBH, with positive and statistically significant co­
+efficients (Kₕ) in five of the six species. For Balsam Fir (Abies balsamea), 
+the model performed well (R² = 0.86; RMSE = 2.39 cm; MAE =
+1.73 cm), confirming consistent allometric scaling. Similar results were 
+found for Black Spruce (Picea mariana, R² = 0.82) and Red Spruce (Picea 
+rubens, R² = 0.88), which exhibited strong height–diameter coupling (Kₕ 
+= 0.60–0.67), reflecting their predictable structural patterns under 
+boreal and mesic conditions (Kwon and Reynolds, 2005). In contrast, 
+Sugar Maple (Acer saccharum), despite showing the highest overall 
+model fit (R² = 0.89), had a relatively lower height coefficient (Kₕ =
+0.39), indicating that DBH development in this species may also depend 
+on site quality, stand history, or gap dynamics (Thomas and Knowles, 
+2007). Red Maple (Acer rubrum) displayed a strong height effect (Kₕ =
+0.66), reflecting its ecological flexibility and ability to respond rapidly to 
+changes in light availability (Wright et al., 2011). White Spruce (Picea 
+glauca), however, exhibited the weakest relationship (R² = 0.72; Kₕ =
+0.10), suggesting that other unmodeled factors—such as microsite 
+variation, soil fertility, or genetic diversity—play a greater role in 
+shaping diameter growth (K¨orner and Oechel, 2008). These results align 
+with earlier studies showing that shade-tolerant species often decouple 
+height and diameter growth under stress (Poorter and Bongers, 2006), 
+and that species with broad ecological ranges, such as White Spruce, 
+tend to show less predictable allometric relationships (Botkin, 1993; 
+McKenney et al., 2011).
+Although height proved to be an important predictor, the accuracy of 
+height-only models was limited in some species, particularly for Sugar 
+Maple, Red Maple, and White Spruce. When RD was introduced into the 
+models, predictive performance improved substantially, confirming the 
+critical role of competition in regulating DBH. The inclusion of RD 
+consistently produced negative coefficients (Kᵣ), indicating that higher 
+stand density suppresses diameter growth for a given height. The 
+strength of this effect, however, varied by species. Sugar Maple (Kᵣ =
+–0.45) and Balsam Fir (Kᵣ = –0.34) were most strongly affected, 
+demonstrating that dense canopy conditions can significantly restrict 
+radial expansion in shade-tolerant or conservative species (Poorter and 
+Bongers, 2006; Thomas and Knowles, 2007; Spies and Helms, 2007; 
+Kwon and Reynolds, 2005). White Spruce also showed a notable nega­
+tive RD effect (Kᵣ = –0.35), although its overall model accuracy 
+remained low, suggesting that structural plasticity and broad habitat 
+distribution complicate diameter prediction (Botkin, 1993; K¨orner and 
+Oechel, 2008). By contrast, Black Spruce (Kᵣ = –0.07) and Red Spruce (Kᵣ 
+= –0.06) exhibited weak RD effects, likely reflecting their ability to 
+persist in saturated or nutrient-poor soils where competitive pressure is 
+naturally reduced (Viereck and Johnston, 1990). Red Maple showed 
+moderate sensitivity (Kᵣ = –0.23), consistent with its mid-successional 
+role and high plasticity in crown expansion (Wright et al., 2011).
+The comparative evaluation of Height-only versus Height+RD 
+models revealed clear gains in predictive accuracy across nearly all 
+species. For instance, R² values for Sugar Maple improved from 0.15 to 
+0.89, and for Red Maple from 0.35–0.85, while errors (RMSE and MAE) 
+were reduced by more than half. Red Spruce and Balsam Fir also showed 
+substantial improvements, whereas White Spruce exhibited only modest 
+gains (R² from 0.58 to 0.72). These findings confirm that RD substan­
+tially enhances predictive accuracy for most species, particularly 
+broadleaves such as Sugar Maple and Red Maple, while its effect is 
+comparatively limited for White Spruce. This pattern is consistent with 
+the theoretical framework of Reineke’s self-thinning law (Reineke, 
+1933) and with studies emphasizing the role of competition in regu­
+lating diameter growth in shade-tolerant conifers and hardwoods (Spies 
+and Helms, 2007).
+When viewed across species, these results highlight important con­
+trasts between conifers and broadleaves. Broadleaf species (Acer sac­
+charum, Acer rubrum) were especially sensitive to RD, showing large 
+improvements in model performance when stand density was consid­
+ered. In contrast, some conifers (Picea mariana, Picea rubens) showed 
+relatively stable height–DBH relationships, with RD playing only a 
+minor role. Such differences underscore that shade tolerance alone does 
+not fully explain competitive responses, as previously noted by Poorter 
+and Bongers (2006); rather, structural and life-history traits must be 
+considered within a species-specific and region-specific framework.
+The integration of these findings with prior ecological modeling 
+studies further supports the robustness of the approach. For example, 
+Kwon and Reynolds (2005) reported that balsam fir and red spruce 
+exhibit predictable height–diameter scaling under both light- and 
+shade-limited conditions, findings echoed in the strong performance of 
+our models for these species. Similarly, Botkin’s (1993) forest dynamic 
+models emphasized the necessity of incorporating demographic traits 
+and competition to accurately represent forest structure, a principle 
+directly supported by the inclusion of RD in our models. Wright et al. 
+(2011) showed that North American species shift ecological strategies 
+along environmental gradients, a trend also evident in our results: red 
+maple’s 
+adaptability 
+contrasts 
+with 
+sugar 
+maple’s 
+strong 
+competition-induced suppression.
+From an applied perspective, these results hold significant implica­
+tions for remote sensing and forest management. Since tree height can 
+now be readily obtained from LiDAR and other drone and airborne 
+sensors, species-specific height–RD models offer a scalable means to 
+estimate DBH across large forested landscapes (McKenney et al., 2011). 
+This is especially valuable in mixed and dense forests, where measuring 
+DBH directly is costly, labor-intensive, or infeasible. Incorporating RD 
+alongside height further improves accuracy, particularly for species with 
+strong competition sensitivity such as sugar maple and balsam fir. At the 
+same time, species like white spruce may require additional varia­
+bles—such as soil properties, slope, or climatic indices—to achieve 
+reliable predictions (Reich and Oleksyn, 2004). By combining remotely 
+sensed canopy height models with ground-based competition indices, 
+forest managers can better estimate stand volume, density, and carbon 
+S.S. Esfahani et al.                                                                                                                                                                                                                             
+Forest Ecology and Management 601 (2026) 123372 
+8 
+
+
+stocks, and design precision forestry interventions tailored to species 
+composition and site conditions.
+In summary, this study provides one of the first comprehensive 
+evaluations of DBH prediction models in the mixed-species forests of 
+New Brunswick using tree height and relative density as predictors. The 
+findings confirm that height alone is a powerful predictor, but that RD 
+greatly enhances model performance by capturing the suppressive ef­
+fects of competition. Species-specific differences in height–DBH 
+coupling and RD sensitivity reflect divergent ecological strategies, 
+ranging from conservative hardwoods like sugar maple to structurally 
+plastic conifers like white spruce. These insights not only extend clas­
+sical allometric and self-thinning theory (Reineke, 1933; Poorter and 
+Bongers, 2006; Spies and Helms, 2007) but also demonstrate their 
+practical relevance for modern forest inventory systems, particularly in 
+the context of LiDAR-based remote sensing. It should be noted that this 
+study does not directly utilize remote sensing data. However, the 
+developed DBH prediction framework is fully compatible with remotely 
+sensed height products (e.g., LiDAR- or photogrammetry-derived can­
+opy height models), and therefore can be readily integrated into remote 
+sensing–based forest inventory systems.
+Recent advances in remote sensing have enabled species identifica­
+tion at varying levels of taxonomic resolution in Atlantic Canada. Mul­
+tispectral satellite imagery (e.g., Sentinel-2) combined with seasonal 
+phenology metrics typically yields ~75–85 % overall accuracy at genus 
+or species-group level, while airborne LiDAR fused with multispectral or 
+hyperspectral data can achieve ~85–95 % accuracy for dominant can­
+opy species when individual tree crowns are delineated. Classification 
+performance tends to be higher for conifer vs. broadleaf separation, but 
+greater confusion is reported among shade-tolerant conifers such as 
+Abies balsamea, Picea rubens, and Picea glauca, where class-wise F1 scores 
+can fall to ~0.60–0.80. In the context of applying our species-specific 
+DBH models, such classification errors would not affect the height 
+input, but may result in model-selection error (assigning a tree to the 
+wrong species-specific equation). This may introduce bias in predicted 
+DBH, especially for species pairs with differing competitive responses. 
+To address this, we recommend (1) using species-group (e.g., conifer vs. 
+broadleaf) model forms when species-level confidence is low, (2) 
+incorporating LiDAR-derived structural features to improve species 
+classification, and (3) propagating classification uncertainty using 
+confusion-matrix-based sensitivity analysis when applying these models 
+in operational remote sensing workflows.
+By integrating field-derived stand density indices with remotely 
+measurable tree height, this study advances a hybrid approach to forest 
+modeling that bridges ecological theory and operational management, 
+offering a scalable and species-sensitive framework for sustainable 
+forestry in the 21st century.
+CRediT authorship contribution statement
+Soheil Soheili Esfahani: Writing – review & editing, Writing – 
+original draft, Visualization, Methodology, Formal analysis. Fan-Rui 
+Meng: Supervision, Methodology, Conceptualization. Christopher YS 
+Wong: Writing – review & editing.
+Funding
+This research did not receive any specific grant from funding 
+agencies in the public, commercial, or not-for-profit sectors.
+Declaration of Competing Interest
+The authors declare that they have no known competing financial 
+interests or personal relationships that could have appeared to influence 
+the work reported in this paper.
+Acknowledgments
+We would like to thank the New Brunswick Department of Natural 
+Resources and Energy Development for the provision of their forest in­
+ventory (permanent sample plot) data.
+Appendix A. Supporting information
+Supplementary data associated with this article can be found in the 
+online version at doi:10.1016/j.foreco.2025.123372.
+Data availability
+The authors do not have permission to share data.
+References
+Botkin, D.B., 1993. Forest Dynamics: An Ecological Model. Oxford University Press, 
+Oxford, UK. 
+Boulanger, Y., Gauthier, S., Gray, D.R., Le Goff, H., Lefort, P., Morissette, J., 2013. Fire 
+regime zonation under current and future climate over eastern Canada. Ecol. Appl. 
+23, 904–923. https://doi.org/10.1890/12-0698.1.
+Charru, M., Seynave, I., Morneau, F., Rivoire, M., Bontemps, J.-D., 2012. Significant 
+differences and curvilinearity in the self-thinning relationships of 11 temperate tree 
+species assessed from forest inventory data. Ann. For. Sci. 69, 195–205. https://doi. 
+org/10.1007/s13595-011-0149-0.
+Chave, J., Andalo, C., Brown, S., Cairns, M.A., Chambers, J.Q., Eamus, D., F¨olster, H., 
+Fromard, F., Higuchi, N., Kira, T., Lescure, J.P., Nelson, B.W., Ogawa, H., Puig, H., 
+Ri´era, B., Yamakura, T., 2005. Tree allometry and improved estimation of carbon 
+stocks and balance in tropical forests. Oecologia 145 (1), 87–99. https://doi.org/ 
+10.1007/s00442-005-0100-x.
+R. Core Team. 2023. R: A language and environment for statistical computing. R 
+Foundation for Statistical Computing, Vienna, Austria.
+Dinno, A., 2017. dunn.test: Dunn’s Test of Multiple Comparisons Using Rank Sums. 
+R. Package Version 1 (3), 5.
+Drew, T.J., Flewelling, J.W., 1979. Stand density management: An alternative approach 
+and its application to Douglas-fir plantations. For. Sci. 25 (3), 518–532. https://doi. 
+org/10.1093/forestscience/25.3.518.
+Ecological Stratification Working Group (Canada), 1996. A National Ecological Framework 
+for Canada. The Group, Ottawa.
+Environment and Climate Change Canada, 2011. Canadian Climate Normals 1971–2000 
+Station Data. Environment and Climate Change Canada, Ottawa. [Cited 30 July 
+2020]. Available from: 〈https://climate.weather.gc.ca/climate_normals/results_e. 
+html?stnID=5097&autofwd=1〉.
+Fang, Z., Bailey, R.L., 1998. Height–diameter models for tropical forests on Hainan Island 
+in southern China. For. Ecol. Manag. 110 (1–3), 315–327. https://doi.org/10.1016/ 
+S0378-1127(98)00297-7.
+Fox, J., Weisberg, S., 2019. An R Companion to Applied Regression, third ed. Sage 
+Publications, Thousand Oaks, CA. 
+Graves, S., Piepho, H.-P., Selzer, L., Dorai-Raj, S., 2015. multcompView: Visualizations of 
+Paired Comparisons. R. Package Version 0, 1–8.
+Huang, S., Titus, S.J., Wiens, D.P., 1992. Comparison of nonlinear height–diameter 
+functions for major Alberta tree species. Can. J. For. Res. 22 (9), 1297–1304. https:// 
+doi.org/10.1139/x92-172.
+Hyypp¨a, J., Hyypp¨a, H., Leckie, D., Gougeon, F., Yu, X., Maltamo, M., 2008. Review of 
+methods of small-footprint airborne laser scanning for extracting forest inventory 
+data in boreal forests. Int. J. Remote Sens. 29 (5), 1339–1366. https://doi.org/ 
+10.1080/01431160701736489.
+Ishizuka, M., Toyooka, H., Osawa, A., Kushima, H., Kanazawa, Y., Sato, A., 1997. 
+Secondary succession following catastrophic windthrow in a boreal forest in 
+Hokkaido, Japan: The timing of tree establishment. J. Sustain. For. 6, 367–388. 
+https://doi.org/10.1300/J091v06n03_08.
+K¨orner, C., Oechel, W.C., 2008. Thermal adaptation of vascular plants: A framework for 
+ecophysiological, phylogenetic and biogeographical analyses. Plant Cell Environ. 31 
+(9), 1113–1126.
+Kwon, S.H., Reynolds, S.J., 2005. Growth and biomass of red spruce and balsam fir 
+seedlings growing under light and shade conditions. For. Ecol. Manag. 214 (1–3), 
+69–80.
+McKenney, D.W., Hutchinson, M.F., Papadopol, P., Lawrence, K., Pedlar, J., 
+Campbell, K., et al., 2011. Customized spatial climate models for North America. 
+Bull. Am. Meteorol. Soc. 92 (12), 1611–1622. https://doi.org/10.1175/ 
+2011BAMS3132.1.
+Microsoft Corporation, 2023. Microsoft Excel for Microsoft 365. Microsoft Corporation, 
+Redmond, WA, USA.
+NB Ecosystem Classification Working Group, 2003. Our Landscape Heritage. New 
+Brunswick Department of Natural Resources, Fredericton, NB. Available from: 〈htt 
+ps://www2.gnb.ca/content/gnb/en/departments/erd/natural_resources/content/ 
+ForestsCrownLands/content/ProtectedNaturalAreas/OurLandscapeHeritage.html〉.
+Peng, C., Zhang, L., Liu, J., 2001. Developing and validating nonlinear height–diameter 
+models for major tree species of Ontario’s boreal forests. North. J. Appl. For. 18 (3), 
+87–94. https://doi.org/10.1093/njaf/18.3.87.
+S.S. Esfahani et al.                                                                                                                                                                                                                             
+Forest Ecology and Management 601 (2026) 123372 
+9 
+
+
+Poorter, L., Bongers, F., 2006. Leaf traits are good predictors of plant performance across 
+53 rain forest species. Ecology 87 (7), 1733–1743. https://doi.org/10.1890/0012- 
+9658(2006)87[1733:LTAGPO]2.0.CO;2.
+Porter, K.B., MacLean, D.A., Beaton, K.P., Upshall, J.. (Eds.), 2001. New Brunswick 
+Permanent Sample Plot Database (PSDB v1.0): User’s Guide and Analysis. Canadian 
+Forest Service, Atlantic Forestry Centre, Natural Resources Canada, Fredericton, NB.
+Pretzsch, H., Biber, P., 2016. Tree species mixing can increase maximum stand density. 
+Can. J. For. Res. 46, 1179–1193. https://doi.org/10.1139/cjfr-2015-0413.
+Reich, P.B., Oleksyn, J., 2004. Global patterns of plant leaf N and P in relation to 
+temperature and latitude. Proc. Natl. Acad. Sci. 101 (30), 11001–11006. https://doi. 
+org/10.1073/pnas.0403588101.
+Reineke, L.H., 1933. Perfecting a stand-density index for even-aged forests. J. Agric. Res. 
+46, 627–638.
+Spies, T.A., Helms, M.C., 2007. Competitive interactions in conifers: A meta-analysis. 
+For. Ecol. Manag. 244 (1–2), 4–20.
+Statistics Canada, 2018. Ecological Land Classification, 2017. Statistics Canada, Ottawa. 
+Available from: 〈http://epe.lac-bac.gc.ca/100/201/301/weekly_acquisitions_lis 
+t-ef/2018/18-09/publications.gc.ca/collections/collection_2018/statcan/12 
+-607-x/12-607-x2018001-eng.pdf〉.
+Temesgen, H., Zhang Zhang, C., Zhao, X.H., 2014. Modelling tree height–diameter 
+relationships in multi-species and multi-layered forests: A large observational study 
+from Northeast China. For. Ecol. Manag. 316, 78–89. https://doi.org/10.1016/j. 
+foreco.2013.07.035.
+Thomas, D.T., Knowles, T.H., 2007. Tree Physiology: A Field and Laboratory Manual. 
+Springer, New York. 
+Viereck, L.A., Johnston, W.F., 1990. Black spruce (Picea mariana). In: Burns, R.M., 
+Honkala, B.H. (Eds.), Silvics of North America: Volume 1. Conifers, 654. U.S. 
+Department of Agriculture, Forest Service, Agriculture Handbook, pp. 227–237.
+Weiskittel, A.R., Gould, P.J., Temesgen, H., 2009. Sources of variation in the self- 
+thinning boundary line for three species with varying shade tolerance. For. Sci. 55, 
+84–93.
+White, J.C., Wulder, M.A., Varhola, A., Vastaranta, M., Coops, N.C., Cook, B.D., Pitt, D., 
+Woods, M., 2013. A best practices guide for generating forest inventory attributes 
+from airborne laser scanning data using an area-based approach. For. Chron. 89 (5), 
+573–588. https://doi.org/10.5558/tfc2013-132.
+Wickham, H., 2016. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag, New 
+York. 
+Wright, S.J., Cabral, C.S., Castro, M.P., Medrano, H., 2011. Ecological strategy shifts of 
+North American tree species along a moisture gradient. J. Ecol. 99 (2), 377–389. 
+https://doi.org/10.1111/j.1365-2745.2010.01753.x.
+Zhang, L., Bi, H., Gove, J.H., Heath, L.S., 2005. A comparison of alternative methods for 
+estimating the self-thinning boundary line. Can. J. For. Res. 35 (6), 1507–1514. 
+https://doi.org/10.1139/x05-070.
+Zhang, Q., Sun, Y., Huang, H., 2016. Modeling tree height–diameter relationships for 
+mixed conifer forests in the western United States. For. Ecol. Manag. 380, 37–45. 
+https://doi.org/10.1016/j.foreco.2016.08.036.
+S.S. Esfahani et al.                                                                                                                                                                                                                             
+Forest Ecology and Management 601 (2026) 123372 
+10

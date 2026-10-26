@@ -1,0 +1,266 @@
+2023-01-24 
+ 
+ 
+PRODUCT DESCRIPTION 
+Laser data Download, forest 
+DOCUMENT VERSION: 1.6 
+Figure 1. Example laser data. 
+ 
+
+
+LANTMÄTERIET 
+2(7) 
+Table of contents 
+1 
+GENERAL DESCRIPTION 
+3 
+1.1 
+CONTENTS 
+3 
+1.2 
+GEOGRAPHIC COVERAGE 
+3 
+1.3 
+GEOGRAPHIC CUT-OUT 
+3 
+1.4 
+REFERENCE SYSTEMS 
+3 
+2 
+QUALITY DESCRIPTION 
+3 
+2.1 
+PURPOSE AND UTILITY 
+3 
+2.2 
+DATA CAPTURE 
+3 
+2.2.1 
+Lineage 
+3 
+2.3 
+MAINTENANCE 
+4 
+2.3.1 
+Maintenance frequency 
+4 
+2.4 
+METADATA 
+4 
+3 
+DATA ACCESS AND CONTENTS 
+6 
+3.1 
+FILE SETS AND CONTENTS 
+6 
+ 
+ 
+ 
+
+
+LANTMÄTERIET 
+3(7) 
+1 General description 
+Laser data Download, forest gives you access to a point cloud with classi-
+fied points collected through airborne laser scanning. 
+Laser data Download, forest is provided as open data. 
+1.1 Contents 
+The product contains a point cloud with a point density of 1-2 points/m2. 
+Each point is classified as ground, water, low point (noise), high noise (for 
+example cloud), point on bridges (only classification level 3) or unclassi-
+fied. 
+The product contains metadata and trajectory data. 
+1.2 Geographic coverage 
+Geographic coverage will be about 75% of the Swedish area. 
+Detailed presentation of geographic coverage is presented under Planer och 
+utfall on the website. 
+1.3 Geographic cut-out 
+Laser data Download, forest is provided in files corresponding 2,5 x 2,5 km 
+index tiles. 
+1.4 Reference systems 
+In plane: SWEREF 99 TM. 
+In height: RH 2000. 
+2 Quality description 
+More detailed description of quality see the pdf-file Quality description of 
+laser data, which can be found alongside this product description at Laser 
+data Download, forest. 
+2.1 Purpose and utility 
+Laser data Download, forest can for example be used for 
+• calculation of forest parameters 
+• update of the National Elevation Model 
+2.2 Data capture 
+2.2.1 
+LINEAGE 
+Data capture for Laser data Download, forest began 2018. Laser data is cap-
+tured through airborne laser scanning of the terrain. 
+Each laser point is classified in any of the following classes: 
+
+
+LANTMÄTERIET 
+4(7) 
+1 
+Unclassified, also includes any incorrect points 
+2 
+Point on ground 
+7 
+Low point (noise) - point under ground level 
+9 
+Point on water 
+17 
+Point on bridges (only classification level 3) 
+18 
+High noise - point over ground, vegetation, building for example 
+cloud 
+When laser scanning, classification and quality control are finished for a 
+scanning area it will be provided in classification level 1 – Automatic classi-
+fication. 
+After that every scanning area go through a new classification which means 
+classification of points on bridges, improved ground classification of dams 
+and improved separation between water and ground. This new classification 
+corresponds to classification level 3. When the new classification has been 
+done for a scanning area it will be provided in classification level 3 instead. 
+Current classification level is presented in metadata and at the website 
+Planer och utfall. 
+2.3 Maintenance 
+2.3.1 
+MAINTENANCE FREQUENCY 
+The laser scanning will be regularly according to a long-term scanning plan. 
+For detailed presentation of production plans and available scanning areas 
+see the website Planer och utfall. 
+• Skanningsplan (pdf) – The annual scanning plan. 
+• Produktionsstatus – A status overview presenting areas at different 
+status level; scanning has started (“Skanning pågår”), scanning is 
+completed (“Skanning avslutad”, re-scanning may be considered if 
+the quality is not approved during the subsequent verification), qual-
+ity control has started (“Kvalitetskontroll pågår”) and areas ready for 
+download (“Klart för nedladdning”). 
+• Långsiktig skanningsplan - The long-term scanning plan. This plan 
+will be reviewed every year and is underlying the detailed annual 
+scanning plan. 
+2.4 Metadata 
+Metadata is presented in two files per tile of 2,5 x 2,5 km according to de-
+scriptions below. 
+
+
+LANTMÄTERIET 
+5(7) 
+Table 1. Description and example of contents in metadata file, grouped by flight line. 
+Field 
+Description 
+Example 
+ 
+Geometry, polygon 
+The approximate area of the flight line 
+ 
+id 
+Identity of the flight line, Point Source 
+ID 
+1 
+datum 
+Scanning date 
+20180301 
+kommentar 
+Scanning notes 
+ 
+flyghojd 
+Planed height above ground (metre) 
+3000 
+flyghastighet 
+Planed speed (knots) 
+135 
+overtackning 
+Planed overlap between flight lines (%) 
+22 
+punkttathet 
+Planed minimum point density inside a 
+flight line (points/m2) 
+1.46 
+skannerid 
+Scanner ID 
+8236 
+skannerfabrikat 
+Scanner manufacturer 
+Leitech 
+skannermodell 
+Scanner model 
+LS1A 
+oppningsvinkel 
+Field of view (degrees) 
+40 
+pulsfrekvens 
+Pulse frequency (Hertz) 
+180000 
+skanningsfre-
+kvens 
+Scan frequency (Hertz) 
+50 
+uteffekt 
+Scanner output power, as percentage of 
+maximum possible (%) 
+80 
+Table 2. Description and example of contents in metadata file, grouped by tile. 
+Field 
+Description 
+Example 
+ 
+Geometri, polygon  
+The area of the tile 
+ 
+
+
+LANTMÄTERIET 
+6(7) 
+Field 
+Description 
+Example 
+klassificeringsniva Classification level 
+1 
+senastandrad 
+Date of the most recent update for ex-
+ample classification 
+20190508 
+3 Data access and contents 
+Download with Geotorget Beställning generate folders and files according 
+to description below. 
+Figure 2. Example of a delivery from Geotorget Beställning 
+ 
+ 
+3.1 File sets and contents 
+Table 3. Description of files downloaded with Geotorget Beställning 
+File name (example) 
+Description 
+18D022_670_55_0025.las 
+ (supplied compressed in .laz) 
+Laser data in LAS-format version 1.2, point data record 
+format 1, compressed with Laszip. 
+The filename includes the identity of the scanning area 
+and the coordinates of the lower left corner of the tile. 
+18D022_670_55_0025_strip.json 
+Metadata in GeoJSON-format, one file for each las-file. 
+18D022_670_55_0025_tile.json 
+Metadata in GeoJSON-format, one file for each las-file 
+18D022_0001.trj 
+18D022_0022_cross.trj 
+Trajectory data, one file for each flight line included in 
+current scanning area and cross lines. 
+The filename includes the identity of the scanning area 
+and ID for the flight line (Point Source ID). 
+
+
+LANTMÄTERIET 
+7(7) 
+File name (example) 
+Description 
+18D022_leveransrapport.pdf 
+The contractor´s report on collection, processing and 
+quality control. 
+ 
+Borders are not automatically included in the delivery, the user must make 
+an active choice in Geotorget beställning to include borders in your order. 
+ 
+Figure 3. Example of how borders are included in the delivery 
+ 
+ 
+Borders can be important for certain applications, for example, they provide 
+a means of smoothing out differences between adjacent scan areas. 
+Lantmäteriet, TELEFON 0771-63 63 63 E-POST lantmateriet@lm.se WEBBPLATS www.lantmateriet.se

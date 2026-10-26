@@ -2,6 +2,200 @@
 
 Chronological record of ingest, query, hypothesis, and lint operations.
 
+## [2026-10-26] query | Concept accepted: Stem Taper Curve
+
+- Added [[concepts/stem-taper-curve]] from [[project/concept-proposals]]
+
+## [2026-10-26] query | Concept accepted: Area-Based Approach
+
+- Added [[concepts/area-based-approach]] from [[project/concept-proposals]]
+
+## [2026-10-26] ingest | Hartley et al. (2025) — ULS vs UAV-SfM height and crown-derived DBH modeling
+
+- Source: `raw/papers/UAV-enabled evaluation of forestry plantations_A comprehensive assessment of laser scanning and photogrammetric approa-1-s2.0-S2666017225000513-main.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-uav-enabled evaluation of forestry plantations_a comprehensive assessment of laser scanning and photogrammetric approa-1-s2-0-s2666017225000513-main]]
+- Updated [[index]], [[methods/chm-detection]], [[methods/local-maxima]], [[concepts/height-diameter-inversion]], [[sources/index]]
+
+## [2026-10-26] ingest | Urban et al. (2012) — Allometric scaling and site fertility effects for Douglas fir and Norway spruce
+
+- Source: `raw/papers/Tree allometry of Douglas fir and Norway spruce on a nutrient-poor and a nutrient-rich site_urban_dg_2012.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-tree allometry of douglas fir and norway spruce on a nutrient-poor and a nutrient-rich site_urban_dg_2012]]
+- Updated [[index]], [[concepts/height-diameter-inversion]], [[concepts/tree-allometry]], [[concepts/crown-ownership]], [[sources/index]]
+
+## [2026-10-26] ingest | Petrauskas & Rupšys (2013) — Generalized H-D equations for Scots pine in Lithuania
+
+- Source: `raw/papers/The Generalised Height-Diameter Equations of Scots Pine Trees in Lithuania-E_PetrauskasP_Rupsys.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-the generalised height-diameter equations of scots pine trees in lithuania-e_petrauskasp_rupsys]]
+- Updated [[index]], [[concepts/height-diameter-inversion]], [[concepts/tree-allometry]], [[sources/index]]
+
+## [2026-10-26] ingest | Laasasenaho (1982) — Finnish taper curve and stem volume functions
+
+- Source: `raw/papers/TAPER CURVE AND VOLUME FUNCTIONS FOR PINE, SPRUCE AND BIRCH-951-40-0589-9.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-taper curve and volume functions for pine, spruce and birch-951-40-0589-9]]
+- Updated [[index]], [[methods/dinov3-classification]], [[concepts/tree-allometry]], [[concepts/height-diameter-inversion]], [[sources/index]]
+
+## [2026-10-26] ingest | Appel (2017) — ALS vs UAV-LiDAR single-tree detection and CHM height stratification in Finnish forestry
+
+- Source: `raw/papers/Skogsinventering med flygburen laserskanning-Appel_Lucas.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-skogsinventering med flygburen laserskanning-appel_lucas]]
+- Updated [[index]], [[methods/chm-detection]], [[methods/local-maxima]], [[sources/index]]
+
+## [2026-10-26] ingest | Reese et al. (2016) — remote sensing fundamentals and operational CHM generation
+
+- Source: `raw/papers/skoglig_fjarranalys_v1_0_161211.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-skoglig_fjarranalys_v1_0_161211]]
+- Updated [[index]], [[methods/chm-detection]], [[methods/dinov3-classification]], [[sources/index]]
+
+## [2026-10-26] ingest | Reese et al. (2018) — Swedish remote sensing textbook
+
+- Source: `raw/papers/Skoglig Fjärranalys-Ljungbergs_SV_20180824.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-skoglig fjärranalys-ljungbergs_sv_20180824]]
+- Updated [[index]], [[methods/chm-detection]], [[methods/local-maxima]], [[methods/dinov3-classification]], [[sources/index]]
+
+## [2026-10-26] ingest | Sjödin (2010) — ALS volume density for pre-thinning delineation
+
+- Source: `raw/papers/Skattningar i gallringsskog med hjälp av flygburen laserskanning -beräkningar med massaslutenhet.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-skattningar i gallringsskog med hjälp av flygburen laserskanning -beräkningar med massaslutenhet]]
+- Updated [[index]], [[methods/chm-detection]], [[concepts/site-index-and-yield]], [[concepts/dense-stand-detection]], [[sources/index]]
+
+## [2026-10-26] ingest | Heiðarsson et al. (2023) — Sitka spruce stem volume and biomass models in Iceland
+
+- Source: `raw/papers/Sitka_Spruce IAS-2023-6-L-Heidarsson-K-Nystrom-A-Snorrason-69-80.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-sitka_spruce ias-2023-6-l-heidarsson-k-nystrom-a-snorrason-69-80]]
+- Updated [[index]], [[concepts/tree-allometry]], [[concepts/height-diameter-inversion]], [[methods/dinov3-classification]], [[sources/index]]
+
+## [2026-10-26] ingest | Pessacg et al. (2022) — photogrammetric DTM and mission parameters
+
+- Source: `raw/papers/Simplifying UAV-Based Photogrammetry in Forestry_How to Generate Accurate Digital Terrain Model and Assess Flight Mission Settings-forests-13-00173.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-simplifying uav-based photogrammetry in forestry_how to generate accurate digital terrain model and assess flight mission settings-forests-13-00173]]
+- Updated [[index]], [[methods/chm-detection]], [[concepts/canopy-height-model]], [[sources/index]]
+
+## [2026-10-26] query | Concept accepted: Height-Diameter and Crown-Diameter Inversion
+
+- Added [[concepts/height-diameter-inversion]] from [[project/concept-proposals]]
+
+## [2026-10-26] ingest | Vallet et al. (2025) — Height-diameter allometries for 41 European species
+
+- Source: `raw/papers/Robust height-diameter allometries for 41 European tree species - supplementary data-2025.09.29.679156v2_media-1.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-robust height-diameter allometries for 41 european tree species - supplementary data-2025-09-29-679156v2_media-1]]
+- Updated [[index]], [[methods/chm-detection]], [[methods/dinov3-classification]], [[sources/index]]
+
+## [2026-10-26] ingest | Savine et al. (2025) — generalized H-D allometries across 41 European species and stand structures
+
+- Source: `raw/papers/Robust height-diameter allometries for 41 European tree species - stand characteristics and structure matter-2025.09.29.679156v2_full.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-robust height-diameter allometries for 41 european tree species - stand characteristics and structure matter-2025-09-29-679156v2_full]]
+- Updated [[index]], [[concepts/tree-allometry]], [[methods/chm-detection]], [[concepts/site-index-and-yield]], [[sources/index]]
+
+## [2026-10-26] ingest | Randle et al. (2014) — FC Piecewise Crown and Root Biomass Equations
+
+- Source: `raw/papers/revised-biomass-equations-27jan2014.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-revised-biomass-equations-27jan2014]]
+- Updated [[index]], [[concepts/tree-allometry]], [[methods/dinov3-classification]], [[sources/index]]
+
+## [2026-10-26] ingest | Shupe et al. (2022) — Quercus robur DBH-only carbon allometry
+
+- Source: `raw/papers/Quercus robur allometry_1-s2.0-S2215016122001807-main.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-quercus robur allometry_1-s2-0-s2215016122001807-main]]
+- Updated [[index]], [[methods/dinov3-classification]], [[sources/index]]
+
+## [2026-10-26] ingest | Lantmäteriet (2022) — National LiDAR Quality and DTM Error Characteristics
+
+- Source: `raw/papers/quality_description_lidar.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-quality_description_lidar]]
+- Updated [[index]], [[methods/chm-detection]], [[methods/local-maxima]], [[sources/index]]
+
+## [2026-10-26] ingest | Filipescu et al. (2012) — DBH prediction from height, crown area, and CAL competition
+
+- Source: `raw/papers/Prediction of Diameter Using Height and Crown Attributes - Filipescu_etal2012WJAFDbh_ht_model.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-prediction of diameter using height and crown attributes - filipescu_etal2012wjafdbh_ht_model]]
+- Updated [[index]], [[methods/chm-detection]], [[concepts/tree-allometry]], [[sources/index]]
+
+## [2026-10-26] ingest | Hou & Chai (2022) — Nonlinear mixed-effects crown width models with competition
+
+- Source: `raw/papers/Predicting_crown_width_using_nonlinear_mixed-effec.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-predicting_crown_width_using_nonlinear_mixed-effec]]
+- Updated [[index]], [[methods/local-maxima]], [[methods/chm-detection]], [[concepts/tree-allometry]], [[sources/index]]
+
+## [2026-10-26] ingest | Pyataev & Vais (2019) — Scots pine DBH–crown width Gaussian allometry
+
+- Source: `raw/papers/Pine Crown and Trunk Diameter Dependence Research-27_short_paper.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-pine crown and trunk diameter dependence research-27_short_paper]]
+- Updated [[index]], [[methods/chm-detection]], [[concepts/tree-allometry]], [[concepts/crown-ownership]], [[sources/index]]
+
+## [2026-10-26] ingest | Song et al. (2024) — Global height–crown–DBH parameterization across PFTs
+
+- Source: `raw/papers/Parameterization of height–diameter and crown radius-diameter relationship across the globe - rtae005.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-parameterization of height–diameter and crown radius-diameter relationship across the globe - rtae005]]
+- Updated [[index]], [[methods/deimv2-canopy]], [[methods/chm-detection]], [[sources/index]]
+
+## [2026-10-26] ingest | Brandel (1990) — Swedish national volume functions for pine, spruce, and birch
+
+- Source: `raw/papers/Nya volymfunktioner för Tall, Gran och Björk-brandel.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-nya volymfunktioner för tall, gran och björk-brandel]]
+- Updated [[index]], [[concepts/tree-allometry]], [[concepts/site-index-and-yield]], [[methods/dinov3-classification]], [[sources/index]]
+
+## [2026-10-26] ingest | Rytter et al. (1998) — Swedish broadleaf and mixed-stand silviculture
+
+- Source: `raw/papers/Löv och lövblandbestånd - ekologi och skötsel-rytter_1998_redogorelse_8_100dpi.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-löv och lövblandbestånd - ekologi och skötsel-rytter_1998_redogorelse_8_100dpi]]
+- Updated [[index]], [[methods/dinov3-classification]], [[methods/chm-detection]], [[methods/local-maxima]], [[sources/index]]
+
+## [2026-10-26] ingest | Buchacher & Ledermann (2020) — mixed-effects crown width models
+
+- Source: `raw/papers/Interregional Crown Width Models for Individual Trees Growing in Pure and Mixed Stands in Austria-forests-11-00114-v3.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-interregional crown width models for individual trees growing in pure and mixed stands in austria-forests-11-00114-v3]]
+- Updated [[index]], [[methods/deimv2-canopy]], [[concepts/tree-allometry]], [[concepts/crown-ownership]], [[sources/index]]
+
+## [2026-10-26] ingest | Näslund (1947) — Swedish stem volume equations and form-factor tables
+
+- Source: `raw/papers/FUNKTIONER OCH TABELLER FÖR KUBERING AV STAENDE TRÄD-medd_statens_skogsforskningsinst_036_03.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-funktioner och tabeller för kubering av staende träd-medd_statens_skogsforskningsinst_036_03]]
+- Updated [[index]], [[concepts/tree-allometry]], [[methods/dinov3-classification]], [[sources/index]]
+
+## [2026-10-26] query | Concept accepted: Foundation Model Prompting for Tree Delineation
+
+- Added [[concepts/foundation-model-tree-delineation]] from [[project/concept-proposals]]
+
+## [2026-10-26] query | Concept accepted: Direct Stem and DBH Measurement from 3D Point Clouds
+
+- Added [[concepts/direct-stem-dbh-point-cloud]] from [[project/concept-proposals]]
+
+## [2026-10-26] ingest | Lindberg & Holmgren (2014) — ALS area-based vs ITD methods for Swedish forestry
+
+- Source: `raw/papers/Flygburen laserskanning för skogliga skattningar-faktaskog_04_2014.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-flygburen laserskanning för skogliga skattningar-faktaskog_04_2014]]
+- Updated [[index]], [[methods/chm-detection]], [[methods/local-maxima]], [[methods/dinov3-classification]], [[sources/index]]
+
+## [2026-10-26] ingest | Erfanifard et al. (2025) — multi-angle UAV-DAP DBH and allometric modeling
+
+- Source: `raw/papers/Estimating tree diameter at breast height (DBH) from UAV data-1-s2.0-S2666017225001373-main.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-estimating tree diameter at breast height (dbh) from uav data-1-s2-0-s2666017225001373-main]]
+- Updated [[index]], [[concepts/tree-allometry]], [[concepts/point-cloud-individual-tree-segmentation]], [[methods/chm-detection]], [[sources/index]]
+
+## [2026-10-26] ingest | Lantmäteriet (2023) — Laser Data Download, Forest product description
+
+- Source: `raw/papers/e_pb_laserdata_nedladdning_skog.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-e_pb_laserdata_nedladdning_skog]]
+- Updated [[index]], [[methods/chm-detection]], [[concepts/canopy-height-model]], [[sources/index]]
+
+## [2026-10-26] ingest | Nevalainen et al. (2025) — wall-to-wall UAV inventory pipelines
+
+- Source: `raw/papers/Drone imaging-based wall-to-wall processing pipelines for individual tree level inventory in boreal forest plots.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-drone imaging-based wall-to-wall processing pipelines for individual tree level inventory in boreal forest plots]]
+- Updated [[index]], [[methods/local-maxima]], [[methods/chm-detection]], [[methods/dinov3-classification]], [[sources/index]]
+
+## [2026-10-26] ingest | Manso et al. (2022) — dynamic Sitka spruce allometry and volume forecasting
+
+- Source: `raw/papers/Diameter, height and volume increment single tree models for improved Sitka spruce in Great Britain-cpab049.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-diameter, height and volume increment single tree models for improved sitka spruce in great britain-cpab049]]
+- Updated [[index]], [[concepts/tree-allometry]], [[concepts/site-index-and-yield]], [[sources/index]]
+
+## [2026-10-26] ingest | Esfahani et al. (2026) — species-specific DBH prediction from height and relative density
+
+- Source: `raw/papers/DBH vs Height 1-s2.0-S0378112725008801-main.pdf` (LLM: `gemini-3.8-flash` via `make ingest-paper`)
+- Added [[sources/paper-dbh vs height 1-s2-0-s0378112725008801-main]]
+- Updated [[index]], [[concepts/tree-allometry]], [[methods/dinov3-classification]], [[sources/index]]
+
 ## [2026-10-23] lint | Publish reader pages that were still drafts
 
 - Set `status: stable` so Quartz emits them: [[concepts/crown-ownership]], [[concepts/normal-forest]], [[concepts/site-index-and-yield]], [[concepts/tree-allometry]], [[concepts/understory-tree-detection]], [[concepts/point-cloud-individual-tree-segmentation]], [[project/research-normal-forest]], [[project/normal-forest-flow]], [[project/domains]], [[experiments/normal-forest/exp-005-normal-forest-ownership-smoke]]

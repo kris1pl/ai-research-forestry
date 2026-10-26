@@ -1,0 +1,2808 @@
+UAV-enabled evaluation of forestry plantations: A comprehensive 
+assessment of laser scanning and photogrammetric approaches
+Robin J.L. Hartley a,*
+, Sadeepa Jayathunga a
+, Joane S. Elleouet b, Benjamin S.C. Steer a
+,  
+Michael S. Watt c
+a Scion, 49 Sala Street, Private Bag 3020, Rotorua, 3046, New Zealand
+b Scion, Level 6, 17-21 Whitmore Street, Wellington Central 6011, New Zealand
+c Scion, 10 Kyle St, Christchurch, 8011, New Zealand
+A R T I C L E  I N F O
+Keywords:
+DBH
+Tree height
+Lidar
+SfM
+Radiata pine
+Random forests
+A B S T R A C T
+The use of unmanned aerial vehicles (UAVs), particularly with high-density point clouds obtained through UAV 
+laser scanning (ULS) and UAV structure from motion (UAV-SfM) techniques, offer cost-effective alternatives for 
+forest inventory. However, the literature lacks comprehensive assessments of their limitations across diverse 
+ranges of age classes and site conditions. This study addressed this gap by evaluating the estimation accuracy of 
+crucial tree attributes, diameter at breast height (DBH) and tree height, in a range of age classes within forest 
+plantations. In addition, this study thoroughly evaluated the performance of ULS and UAV-SfM in diverse site 
+conditions using point clouds obtained from Pinus radiata D. Don plantations, a widely planted commercial 
+timber species worldwide. To achieve this, UAV and field data were gathered from twelve sites, including 
+multitemporal data for four sites. By employing an automated data processing pipeline, individual trees were 
+segmented and structural metrics extracted from tree segments to estimate DBH and tree height at an individual 
+tree level. Results indicated that UAV-SfM and ULS performed comparably in estimating DBH over the entire 
+dataset, with R2 values of 0.67 and 0.74 and RMSE values of 2.05 cm (11 %) and 2.13 cm (11 %) respectively. 
+However, ULS generally outperformed UAV-SfM at the site level, achieving higher R2 values (0.46–0.90 vs 
+0.21–0.85) and RMSE values (0.33–7.24 cm at 7–24 % vs. 0.35–6.15 cm at 8–17 %). ULS also consistently 
+outperformed UAV-SfM in tree height measurements across sites, with an average per site RMSE of 0.68 m (5.4 
+%) compared with 1.21 m (11.59 %), demonstrating its robustness in diverse conditions. Site-specific factors 
+such as stand maturity and logging debris affected measurement reliability in both datasets, with accuracy 
+improving for younger sites, sites with a more open canopy and more favourable site conditions (less logging 
+debris and weed cover). The study also indicated a moderate relationship between ground sampling distance 
+(GSD) of the imagery and UAV-SfM accuracy. The findings highlight the significance of considering site-specific 
+variables when choosing UAV technologies for conducting forest inventory, ensuring informed decisions in UAV- 
+based forest inventory practices. Consequently, the insights gained from this research hold significant importance 
+for practical forestry applications.
+1. Introduction
+Pinus radiata D Don (P. radiata) is a key coniferous species widely 
+planted globally for timber production (Lavery and Mead, 1998), 
+particularly in the Southern Hemisphere (Yan et al., 2006). Monitoring 
+its growth is essential for optimising productivity and determining the 
+appropriate timing for management interventions like thinning and 
+pruning.
+In forest monitoring, different inventories demand specific mea­
+surements: height is generally used to plan silvicultural interventions 
+(Maclaren, 2000), while diameter at breast height (DBH) is crucial for 
+stand valuations, such as pre-harvest inventories. Other tree attributes, 
+like stem straightness and branch characteristics, are also recorded at 
+various stages. Among these, tree height and DBH are the most 
+* Corresponding author.
+E-mail addresses: robin.hartley@scionresearch.com (R.J.L. Hartley), sadeepa.jayathunga@scionresearch.com (S. Jayathunga), joane.elleouet@scionresearch.com
+(J.S. Elleouet), bensteer1997@gmail.com (B.S.C. Steer), michael.watt@scionresearch.com (M.S. Watt). 
+Contents lists available at ScienceDirect
+Science of Remote Sensing
+journal homepage: www.sciencedirect.com/journal/science-of-remote-sensing
+https://doi.org/10.1016/j.srs.2025.100245
+Received 18 January 2025; Received in revised form 17 April 2025; Accepted 4 June 2025  
+Science of Remote Sensing 12 (2025) 100245 
+Available online 6 June 2025 
+2666-0172/© 2025 New Zealand Forest Research Institute Limited, trading as Scion. Published by Elsevier B.V. This is an open access article under the CC BY license 
+( http://creativecommons.org/licenses/by/4.0/ ). 
+
+
+commonly used tree attributes in forest stand assessments (Maclaren, 
+2000; Popescu, 2007). Historically, DBH has been preferred for its ease 
+of measurement, serving as a growth proxy and facilitating calculations 
+of volume, biomass and carbon (Clark et al., 2000). Together, DBH and 
+tree height provide quantitative assessments of timber production, and 
+when paired with branching patterns and stem straightness, offer a 
+comprehensive appraisal of timber value in forest stands.
+Traditionally, DBH is measured with callipers or a diameter tape, 
+while tree height is measured using a height pole or a hypsometer, 
+depending on tree age (McGlade et al., 2022). These methods are 
+time-consuming, costly and prone to bias, especially for height mea­
+surements (Hartley et al., 2020; Hyypp¨a et al., 2020; Larjavaara and 
+Muller-Landau, 2013; Wang et al., 2019). Moreover, ground-based 
+measurements require trained technicians to navigate through the for­
+est, raising health and safety concerns, especially in steep terrain (Bayne 
+and Parker, 2012). This reliance on skilled labour can also result in 
+delays and data integrity issues, particularly during labour shortages.
+To overcome these limitations, remote and proximal sensing tech­
+niques provide more efficient ways for measuring tree structural attri­
+butes, 
+predominantly by deriving 
+measurements from three- 
+dimensional (3D) point clouds. Below-canopy laser scanning tech­
+niques, such as terrestrial laser scanning (TLS) and personal mobile laser 
+scanning (PLS), can accurately measure DBH by reconstructing tree 
+stems within the 3D point clouds. TLS is generally superior due to its 
+advanced technology and precision (Levick et al., 2021; Liang et al., 
+2018, 2019). However, both methods still require technicians to navi­
+gate through the forest (Dalla Corte et al., 2020), and face challenges 
+with height measurements due to occlusion from dense canopy foliage 
+(Cabo et al., 2018; Liang et al., 2018). Additionally, the 
+resource-intensive nature of these methods and the need for forest 
+accessibility limit their scalability in larger forest stands.
+Airborne laser scanning (ALS), on the other hand, allows 3D struc­
+tural data to be captured from forest stands at large scales. ALS is highly 
+accurate for measuring tree heights, and prior research has demon­
+strated its ability to derive additional tree metrics, such as crown di­
+mensions and shape from individual tree point clouds (Erikson and 
+Olofsson, 2005; Zhen et al., 2016a). The strong correlation observed 
+between crown dimensions and DBH (Balenovi´c et al., 2015; Popescu, 
+2007) highlights that ALS could also be used to remotely assess crucial 
+tree measurements, such as DBH and stem volume, using point 
+cloud-derived tree metrics as proxies. Although ALS provides a scalable 
+solution for measuring individual tree attributes, its accuracy can vary 
+significantly depending on point cloud specifications, such as point 
+density and the laser footprint size (Jakubowski et al., 2013; Liu et al., 
+2018; Manuri et al., 2017). Moreover, ALS can be expensive for 
+small-scale stands due to costs associated with the aircraft and other 
+operational expenses (Bruggisser et al., 2019).
+An emerging technology in the forestry industry is the use of un­
+manned aerial vehicles (UAVs), which offer affordability, flexibility and 
+resource efficiency (Dainelli et al., 2021; Torresan et al., 2016). Ad­
+vances in UAV technology have significantly improved the 
+cost-effectiveness and efficiency of airborne data collection. UAVs pro­
+vide greater flexibility in both data acquisition timing and the types of 
+data captured, making them an increasingly valuable tool for foresters. 
+(Hartley, 2017; Heaphy et al., 2017). One notable advancement is UAV 
+laser scanning (ULS), which generates high-density point clouds by 
+flying at lower altitudes and speeds compared to traditional ALS 
+methods. ULS combines higher capture speed with increased viewpoint 
+angles and thus effectively addresses occlusion issues. Further, ULS is 
+not constrained by the mobility issues faced by terrestrial mobile plat­
+forms like PLS (Liang et al., 2019). Nevertheless, the costs associated 
+with deploying ULS systems and the specialised expertise required for 
+data processing have posed barriers to their widespread adoption by 
+forest managers. An alternative and cost-effective approach to ULS is the 
+use of high-resolution Red-Green-Blue (RGB) imagery captured by 
+UAV-mounted camera sensors, which can be processed into point clouds 
+using photogrammetric techniques like structure from motion (Dandois 
+and Ellis, 2013).
+Previous studies have extensively explored the use of ULS and UAV- 
+SfM point clouds in various forestry applications, including inventory 
+(Jayathunga et al., 2019; Puliti et al., 2017), and specifically for pre­
+dicting tree height (Hartley et al., 2020; Rodríguez-Puerta et al., 2021). 
+Some studies also attempted to directly measure DBH from UAV point 
+clouds, attaining relatively good results with relative root mean square 
+error (RMSE) values ranging from 19 % to 36 % (Kuˇzelka et al., 2020; 
+Puliti et al., 2020). The latter study also proposing a novel method to 
+develop models from the DBH and crown measurement of the most 
+accurately characterised individual tree point clouds, which can then be 
+applied to the tree point clouds with fewer stem returns. However, both 
+of these methods rely on having stem returns, making them unsuitable 
+for young trees with heavy branching and foliar occlusion of the stem, 
+forest environments with heavy understory, tree species with retained 
+branches on the lower stems, or UAV-SfM data, all of which are unlikely 
+to yield tree point clouds with satisfactory coverage of stem returns. 
+Machine learning methods have been used to model forestry metrics 
+from UAV-SfM point cloud-derived measurements, achieving strong 
+results for predicting stand density, basal area and above ground 
+biomass (R2 = 0.91, 0.79 and 0.92, respectively; (Alonzo et al., 2018)). 
+In a previous study, machine learning methods were applied to crown 
+metrics derived from ULS to model DBH effectively in a recently thin­
+ned, mid-rotation stand of P. radiata, with a relative RMSE of ~7 % 
+(Watt et al., 2024).
+Despite numerous studies examining the accuracy of DBH and height 
+measurement from UAVs, a comprehensive assessment of the limitations 
+of these technologies across different age classes and site conditions is 
+still lacking. Notably, there is limited understanding of how factors such 
+as terrain conditions, the prevalence of weeds, and the presence of non- 
+vegetation obstacles (e.g., logging debris, thinned trees, pruning res­
+idue) affect the performance of point cloud-based measurements when 
+estimating tree attributes at various stages of the plantation lifecycle 
+using UAVs. For instance, a previous study by the authors evaluated the 
+accuracy of height measurements for young P. radiata trees (aged five 
+months to three years) using ULS and SfM techniques (Hartley et al., 
+2020). While strong correlations between UAV-SfM-derived and 
+field-measured tree heights were observed, the study also noted that site 
+conditions, such as harvest residue and weeds, affected the performance 
+of UAV point clouds, though this was not thoroughly explored.
+Since these site conditions are often typical of real-world forestry 
+plantations and cannot always be mitigated through proper planning or 
+improving data processing methods, understanding their impact on the 
+accuracy of key tree attribute estimations is crucial for forest managers 
+to make informed decisions. Therefore, further research is needed to 
+address this gap and establish a more comprehensive understanding of 
+the capabilities and limitations of UAV point clouds in real-world 
+forestry settings.
+Using point clouds captured across a range of P. radiata plantations, 
+this study explores the utility of ULS and UAV-SfM point clouds by (i) 
+comparing the accuracy of each sensor type for predicting DBH and 
+measuring tree height in stands with diverse age classes and site con­
+ditions, and (ii) identifying the optimal site conditions in which each 
+technology can be used.
+2. Materials and methods
+2.1. Study site
+To conduct a comprehensive evaluation of ULS and UAV-SfM tech­
+nologies in characterising P. radiata, this study aggregated UAV point 
+cloud datasets collected by Scion over a number of years across various 
+different projects and studies (Fig. 1, Table 1).
+Management regime and site conditions, including slope (Saremi 
+et al., 2014a, 2014b), amount of logging debris (Ballard and Will, 1981; 
+R.J.L. Hartley et al.                                                                                                                                                                                                                            
+Science of Remote Sensing 12 (2025) 100245 
+2 
+
+
+Harrington et al., 2013), and prevalence and composition of weed 
+growth (Richardson et al., 1996), can significantly impact on the growth 
+and form of trees in plantation forests. These factors, combined with age, 
+and consequently tree size, also affect the accuracy of remotely sensed 
+individual tree detection and measurement (Dash et al., 2019b; 
+Hirschmugl et al., 2007; Ke and Quackenbush, 2011). For this reason, 
+this study included a range of sites that represent a wide array of these 
+different conditions (Table 1).
+All sites constituted forestry trials (breeding or genetic trials), except 
+Kinleith Schnapper Road and Kaki Road, which consisted of plots within 
+production forest stands. In addition, three sites– Rangipo, Kaingaroa 
+861 and Kaingaroa 127–are part of the Accelerator Trials series, estab­
+lished between 2015 and 2018 by Scion to explore methods for opti­
+mising growth rates of P. radiata in plantation forestry (Smaill et al., 
+2023). The sites represented a range of age classes including early 
+establishment (<4 years), pre-thinning (age 4–6), recently thinned and 
+mid-rotation (age 7–10) and late rotation (age 17+) stands.
+2.2. Field data
+Ground truth for remote sensing measurements was captured in the 
+field using traditional tools. The DBH of all the trees were measured 
+directly utilising a diameter tape with a precision of 1 mm. Heights were 
+measured using two methods: for smaller trials, trees were generally 
+measured with a height pole with a precision of 1 cm; for taller trees 
+(over 5 m tall), a Vertex 4 hypsometer (Hagl¨of, Langsele, Sweden) with a 
+precision of 0.1 m was utilised. With the exception of Block 16, all Scion 
+sites were measured using a height pole with a precision of 10 cm. De­
+tails of tree size for each site can be found in Table 2. As all of the sites 
+studied were either forestry or breeding trials, the trees were laid out in 
+systematic grids, with corner pegs to facilitate identification of plots in 
+the field, and numbers painted onto the trees for regular re- 
+measurement (Fig. 2). The regular layout and pegs demarcating plot 
+boundaries also enabled effective individual tree identification within 
+the remotely sensed data (See Section 2.3 and Fig. 2).
+The matching of field and remotely sensed measurements is often a 
+Fig. 1. Site map showing the location of all study sites within NZ. Insets show orthomosaic site maps of each of the study sites: A) and B) Kinleith Forest sites, C) 
+Scion sites, D) Tarawera, E) Kaingaroa BC55_2, F) Kaingaroa 127, G) Kaingaroa 861, and H) Rangipo.
+R.J.L. Hartley et al.                                                                                                                                                                                                                            
+Science of Remote Sensing 12 (2025) 100245 
+3 
+
+
+difficult task in forest remote sensing studies due to the unreliable per­
+formance of global navigational satellite system (GNSS) signals under 
+dense forest canopies (Murgaˇs et al., 2018). To precisely match field and 
+remotely sensed measurements in this study, the trial layouts were 
+digitised and georeferenced, and the tree numbers were accurately 
+assigned to individual tree point clouds. This was carried out using a 
+pipeline developed using the R programming language (R Core Team, 
+2022). The pipeline generated four spatial layouts for each trial: a trial 
+boundary polygon layer, a grid/block polygon layout, peg location 
+points and individual tree location points. The process involved the 
+following steps: (i) Input the basic trial layout specifications as per the 
+trial establishment reports, such as the number of rows of grids, number 
+of columns of grids, number of tree rows per grid, number of trees per 
+row, planting spacing, numbering origin point (e.g., bottom right, bot­
+tom left, top right, top left), and numbering orientation (e.g., left to 
+right, right to left, top to bottom, bottom to top); (ii) Generate trial 
+layouts in Cartesian coordinates utilising the user inputs and basic 
+geometric principles: create a digitised layout of the trial and label its 
+components, including grids, trees, and pegs; (iii) Georeference the 
+spatial layouts, allowing them to be combined with remotely sensed data 
+and used to label individual tree point clouds (see section 2.6). A point 
+vector file or a spreadsheet was input, containing a minimum of four peg 
+locations with their IDs and XY coordinates in the desired coordinate 
+system (in this case New Zealand Geodatum, 2000; NZGD, 2000 and 
+New Zealand Transverse Mercator–NZTM; EPSG 2193). These peg lo­
+cations served as ground control points (GCPs) to geo-reference the 
+created layouts, i.e., converting the local Cartesian coordinates of the 
+created layouts to the same coordinate system as the point cloud data. 
+GCP peg locations can be identified and extracted from the point cloud 
+data, since the pegs were topped with highly reflective material prior to 
+data capture (Fig. 2).
+2.3. UAV data acquisition
+UAV data was collected from each site using two different sensors: a 
+ULS sensor and either an RGB or multispectral camera. Although site set- 
+up methodology varied slightly at each site, the first step involved 
+establishing ground control. A minimum of five GCPs were established 
+at each site utilising high contrast targets in accordance with the best 
+practice guidelines outlined by Pix4D (2020). GCPs were surveyed using 
+a handheld Trimble Geo7X global navigation satellite system (GNSS) 
+unit (Trimble Inc., Sunnyvale, CA, USA), combined with a Trimble 
+Zephyr Model 2 external aerial. The accuracy of GCP measurements, as 
+measured by the RMSE, ranged from 0.01 to 0.15 m (Table 3). At 
+recently captured sites, where highly reflective high-contrast targets 
+were deployed (Hartley et al., 2022), GCP target centres were extracted 
+from the ULS point cloud data. This approach aimed to increase the 
+accuracy of co-registration between UAV-SfM and ULS datasets. Rec­
+ognising the inherent difficulty in aligning ground-based and remotely 
+sensed measurements in mature forest stands, a methodology referred to 
+as CloudReg was developed to align tree-level field and remote sensing 
+measurements at the two mature Kinleith Forest sites and the Scion 
+Block 16 trial (Hartley et al., 2022, 2024). CloudReg uses highly 
+reflective ground control targets that are established in the field prior to 
+remotely sensed captures to enable alignment between ULS and 
+sub-canopy mobile laser scanning (MLS). This enables more accurate 
+location of the areas of interest (AOI, e.g., stand or plot) and stem maps 
+that can be used to precisely align field and remotely sensed measure­
+ments, particularly in forests that are not planted on a regular grid like 
+breeding trials, and where plot limits are not demarcated with pegs. 
+These targets, located at the centre and boundary of the AOI at two or 
+more cardinal points, are constructed from 1 m2 coreflute plastic panels 
+coated in retroreflective material to give them a uniquely high intensity 
+return in the lidar point clouds to facilitate point filtering. This system 
+enables the effective identification of the AOIs in dense forest point 
+clouds, the co-registration of the MLS data, which can often only be 
+Table 1 
+Site characteristics of each study site, including area, stand density, terrain, weed cover and logging debris occurrence. The year of data capture and establishment year are shown for each site to indicate how old the sites 
+were at time of UAV data capture. For more details on the study site, please refer to the cited studies. For debris, θ denotes thinned trees, as opposed to logging debris.
+Site
+Previous study
+2018
+2019
+2020
+2021
+2022
+2023
+2024
+Establishment 
+Year
+Area
+Established stand 
+density
+Established 
+spacing
+Terrain
+Weed Cover
+Debris
+Kaingaroa 127
+(Hartley et al., 2020; 
+Jayathunga et al., 2023)
+​
+X
+​
+​
+​
+​
+​
+2016
+5.9
+1000
+3.0 x 3.0
+Gently 
+rolling
+Moderate
+Significant
+Kaingaroa 861
+​
+X
+​
+​
+​
+​
+​
+2015
+9.6
+1000
+3.0 x 3.0
+Rolling
+Moderate
+Significant
+Kaingaroa 
+BC55_2
+Watt et al. (2024)
+​
+​
+​
+​
+​
+X
+X
+2014
+3
+1040
+3.1 x 3.1
+Rolling
+Moderate understorey
+Significant 
+(θ)
+Kinleith BC52_1
+NA
+​
+X
+​
+​
+​
+​
+​
+2013
+4.5
+800
+5 x 2.5
+Gently 
+rolling
+Minor
+Minor
+Kinleith BC66_1
+NA
+​
+​
+​
+​
+​
+X
+​
+2018
+2
+1040
+3.1 x 3.1
+Flat
+Minor
+Minor
+Kinleith Kaki 
+Road
+Hartley et al. (2024)
+​
+​
+X
+​
+​
+​
+​
+2003
+66
+667
+5.0 x 3.0
+Steep in 
+some plots
+Heavy understorey
+Minor
+Kinleith 
+Schnapper 
+Road
+​
+​
+X
+X
+​
+​
+​
+2000
+66
+667
+5.0 x 3.0
+Rolling
+Heavy understorey
+Minor
+Rangipo
+(Hartley et al., 2020; 
+Jayathunga et al., 2023)
+X
+X
+​
+​
+X
+​
+​
+2015
+13.4
+833
+3.0 x 4.0
+Gently 
+rolling
+Minor
+None
+​
+1282
+3.0 x 2.6
+Scion South
+(Hartley et al., 2020; 
+Jayathunga et al., 2023)
+​
+X
+​
+​
+​
+​
+​
+2016
+0.75
+1282
+3.0 x 2.6
+Flat
+Regularly mowed
+None
+Scion North
+​
+X
+X
+​
+​
+​
+​
+2015
+0.75
+1240
+3.1 x 2.6
+Flat
+Regularly mowed
+None
+Scion Block 16
+Hartley et al. (2022)
+​
+​
+​
+X
+​
+​
+​
+2001–2002
+2
+1538
+1.5 x 5.0
+Flat
+Regularly mowed/ 
+minor understorey
+None
+Tarawera
+Dash et al. (2019a)
+​
+X
+​
+​
+​
+​
+​
+1993
+4.5
+625
+4.0 x 4.0
+Flat
+Heavy understorey
+None
+R.J.L. Hartley et al.                                                                                                                                                                                                                            
+Science of Remote Sensing 12 (2025) 100245 
+4 
+
+
+captured in Cartesian coordinates, and co-registration of other remotely 
+sensed datasets like UAV-SfM, or imagery. More information on the 
+CloudReg system can be found in (Hartley et al., 2022).
+The majority of the UAV-SfM datasets were collected using a DJI 
+Phantom 4 Pro UAV (P4 pro; Fig. 3d; DJI Ltd., Shenzhen, China), 
+comprising a 1-inch 20 MP RGB camera, with one site (Kinleith BC66_1) 
+being captured by the DJI L1 RGB sensor (Fig. 3c; DJI Ltd., Shenzhen, 
+China), which features a 20 MP camera analogous to the P4 Pro. A full- 
+frame 45 MP DJI P1 camera (Fig. 3e; DJI Ltd., Shenzhen, China) with a 
+35 mm lens, mounted on a DJI Matrice 300 RTK (M300; DJI Ltd., 
+Shenzhen, China), was used to capture data at Kaingaroa BC55_2 and 
+Rangipo (2022) sites. Data from Kinleith Forest plots were acquired 
+using a 1.2 MP MicaSense RedEdge-MX Dual multispectral sensor 
+(MicaSense Inc., Seattle, WA, USA; Fig. 3f). Earlier flights with the P4 
+pro were conducted at an altitude of 120 m. However, more recent P4 
+pro flights were carried out at altitudes ranging from 60 to 80 m to 
+ensure a ground sampling distance (GSD) of approximately 1.5–2 cm. 
+DJI P1 flights were carried out at approximately 80 m above ground 
+level (AGL) to achieve a GSD of approximately 1.5 cm. For flights 
+employing the MicaSense sensor over the mature canopies, altitudes of 
+160–170 m AGL were maintained, with a corresponding GSD of 
+approximately 10 cm, which was determined to be optimal for gener­
+ating photogrammetric products without artefacts. Forward overlap of 
+datasets ranged from 75 to 90 %, while the side overlap ranged from 75 
+to 80 %. General data collection guidelines were adhered to in most data 
+captures, which included collecting data only under clear sky condi­
+tions, with wind speeds of less than 20 kph (Dandois et al., 2015) and 
+maintaining at least 80 % forward overlap (Frey et al., 2018). However, 
+Table 2 
+Distribution of field-measured tree attributes at each study site.
+Site
+Measurement 
+year
+Height (m)
+DBH (cm)
+Number of 
+trees
+Minimum
+Maximum
+Average
+Standard 
+deviation
+Number of 
+trees
+Minimum
+Maximum
+Average
+Standard 
+deviation
+Kaingaroa 127
+2019
+938
+0.7
+4.3
+2.5
+0.6
+3299
+0.1
+7.3
+2.9
+1.2
+Kaingaroa 861
+2019
+1385
+0.4
+5.5
+2.9
+0.7
+5238
+0.1
+9.1
+3.8
+1.5
+Kaingaroa BC55_2
+2023
+NA
+NA
+NA
+NA
+NA
+1786
+7.5
+36.9
+23.3
+3.6
+Kaingaroa BC55_2
+2024
+1780
+4.8
+23.6
+19.2
+1.8
+1781
+7.8
+37.8
+25.4
+4.2
+Kinleith BC52_1
+2019
+NA
+NA
+NA
+NA
+NA
+3011
+10.0
+29.5
+18.8
+3.5
+Kinleith BC66_1
+2023
+50
+4.5
+12.1
+9.3
+1.6
+1982
+9.0
+23.1
+15.7
+3.0
+Kinleith Kaki Road
+2020
+288
+21.4
+35.5
+28.4
+2.6
+659
+14.2
+56.0
+35.7
+6.2
+Kinleith Schnapper Road
+2020
+288
+23.2
+35.9
+30.4
+1.9
+515
+25.2
+62.2
+44.3
+7.0
+Kinleith Schnapper Road
+2021
+288
+25.6
+37.0
+32.1
+2.0
+512
+24.5
+63.2
+45.4
+7.2
+Rangipo
+2018
+7005
+0.4
+3.3
+2.1
+0.4
+7017
+0.1
+5.5
+2.0
+0.9
+Rangipo
+2019
+1941
+0.6
+5.6
+3.3
+0.8
+7016
+0.1
+8.8
+4.7
+1.5
+Rangipo
+2022
+1797
+1.0
+13.4
+9.8
+1.5
+7006
+0.1
+23.9
+15.9
+3.2
+Scion South
+2019
+602
+1.4
+6.1
+4.3
+0.8
+602
+2.9
+110.0
+9.9
+4.6
+Scion North
+2019
+875
+0.3
+3.1
+1.8
+0.4
+875
+0.8
+6.8
+3.7
+0.9
+Scion North
+2020
+0
+NA
+NA
+NA
+NA
+875
+0.0
+12.5
+7.0
+2.1
+Scion Block 16
+2020
+0
+NA
+NA
+NA
+NA
+883
+2.2
+99.6
+30.6
+12.8
+Tarawera
+2019
+1045
+20.4
+50.8
+41.4
+3.6
+1051
+26.7
+72.7
+49.0
+7.6
+Fig. 2. Example of trial layouts. Trials were laid out in regular grid patterns with numbering on trees to facilitate effective identification of individuals for regular 
+measurement (a); The regular layout of trials is obvious in the UAV data – ULS point cloud of Kinleith BC66_1 trial coloured by RGB values (b). The trees are typically 
+numbered systematically, enabling digitisation based on geographic location (c). By affixing brightly coloured or retroreflective plastic targets (peg toppers) to the 
+tops of trial pegs in the field (d), the trial layout can be digitised by identifying the trial pegs in the point clouds. Figure (e) shows a filtered point cloud of Kinleith 
+BC66_1 trial, where points were coloured by intensity to highlight peg toppers. Figure (f) shows an example of the digitised trial layout created by the R pipeline.
+R.J.L. Hartley et al.                                                                                                                                                                                                                            
+Science of Remote Sensing 12 (2025) 100245 
+5 
+
+
+exceptions were made for the 2018 campaign and the MicaSense cam­
+paigns, which required higher flying-altitudes to maintain visual line of 
+sight (VLOS) with the UAV, and to obtain the larger pixel resolution 
+required for that specific project.
+UAV-SfM data collection was planned using the Map Pilot Pro app 
+(Drones Made Easy, San Diego, CA, USA), except for the DJI P1 captures, 
+which was implemented in DJI Pilot2 flight control software (DJI, 
+Shenzhen, China), and the MicaSense flights, which were planned using 
+UgCS (SPH Engineering, Riga, Latvia).
+ULS data collection was mainly conducted using LidarUSA Snoopy V- 
+Series, equipped with an integrated Riegl MiniVUX1-UAV (MiniVUX) 
+laser scanner (Fig. 3b; Fagerman Technologies, INC., Somerville, AL, 
+USA), mounted on a DJI Matrice 600 Pro hexacopter UAV (M600pro; 
+DJI Ltd., Shenzhen, China). For the remaining sites, two different sen­
+sors were employed: a LidarUSA Snoopy A-series (Fig. 3a; Fagerman 
+Technologies, INC., Somerville, AL, USA) with its integrated Velodyne 
+HDL32E scanner (Velodyne, San Jose, CA, USA), mounted on an Altus 
+ORC2 UAV (Altus UAS International Ltd., Hamilton, NZ); and a DJI L1 
+laser scanner (Fig. 3c; DJI Ltd., Shenzhen, China), mounted a DJI M300. 
+All data sets were acquired at an altitude of 45 m AGL to ensure high 
+point density. However, ULS data from Kinleith Forest plots were 
+collected at 100 m AGL to maintain VLOS over the canopy. Further flight 
+setting parameters and point cloud specifications for ULS captures can 
+be found in Table 3.
+ULS data collection for the DJI L1 was planned using the DJI Pilot2 
+flight control software (DJI, Shenzhen, China), and the MiniVUX flights, 
+which were planned using UgCS (SPH Engineering, Riga, Latvia).
+2.4. Raw point cloud generation
+2.4.1. UAV-SfM photogrammetric point cloud generation
+Generating SfM point clouds from RGB UAV imagery involved 
+following standard procedures in the Pix4DMapper software package 
+(Pix4D, Lausanne, Switzerland). For each site, the imagery was im­
+ported, and tie points were detected, leading to key feature extraction 
+and the generation of a sparse point cloud. Subsequently, point cloud 
+densification was carried out to produce a dense point cloud with 
+detailed and precise reconstruction of objects within the 3D space. The 
+optimal processing parameters were determined for each site through a 
+trial-and-error approach that the Scion Autonomous Systems team has 
+refined over the years. An example of the processing steps can be found 
+in Hartley et al. (2020). The point cloud was georeferenced to the NZGD 
+2000 New Zealand Transverse Mercator (NZTM) coordinate system 
+(EPSG 2193) using the spatial coordinates of the GCPs collected in the 
+field. The resulting point cloud that had XYZ and RGB attributes 
+attached to each point was exported as a single file in compressed LAS 
+(LAZ) file format.
+2.4.2. ULS point cloud generation
+The raw lidar data captured by the ULS sensors were processed in the 
+proprietary software packages of the sensor manufacturers, adhering to 
+the standard processing steps recommended by the manufacturer. For 
+more information please refer to Hartley et al. (2020) and Watt et al. 
+(2024). Subsequently, the processed data was exported as a single LAZ 
+file for each site. All the ULS datasets were georeferenced to the NZGD 
+Table 3 
+UAV flight parameters, sensor utilised, basic image and cloud specifications and ground control RMSE, by each site and year of capture.
+UAV-SfM site
+Capture 
+year
+Ground control 
+RMSE (m)
+Altitude 
+(m)
+Overlap % 
+(fw:sd)
+Native point 
+density (ppm2)
+Point density 
+(ppm2)
+Speed 
+(m/s)
+GSD (cm)
+Sensor
+Kaingaroa 127
+2019
+0.01–0.11
+74
+90:80
+480
+410
+3.5
+1.9
+DJI P4 pro
+Kaingaroa 861
+2019
+0.01–0.11
+74
+90:80
+740
+405
+3.5
+1.9
+DJI P4 pro
+Kaingaroa BC55_2
+2023
+NA
+120
+80:80
+2340
+480
+7
+1.41
+DJI P1
+Kaingaroa BC55_2
+2024
+NA
+120
+80:80
+1805
+440
+7
+1.34
+DJI P1
+Kinleith BC52_1
+2019
+NA
+74
+80:80
+435
+395
+3.5
+1.83
+DJI P4 pro
+Kinleith BC66_1
+2023
+NA
+55
+85:85
+420
+375
+3
+1.65
+DJI L1 
+RGB
+Kinleith Schnapper 
+Road
+2020
+NA
+160
+75:80
+365
+20
+5
+11.16
+MicaSense
+Kinleith Schnapper 
+Road
+2021
+NA
+170
+75:80
+210
+20
+8
+9.61
+MicaSense
+Rangipo
+2018
+NA
+120
+75:75
+435
+405
+6.5
+3.05
+DJI P4 pro
+Rangipo
+2019
+0.01–0.11
+74
+90:80
+765
+425
+3.5
+1.9
+DJI P4 pro
+Rangipo
+2022
+NA
+120
+85:85
+895
+435
+7
+1.5
+DJI P1
+Scion Nursery North 
+and South
+2019
+NA
+60
+85:80
+610
+375
+3
+1.6
+DJI P4 pro
+Scion Nursery North
+2020
+NA
+74
+90:80
+230
+225
+3.5
+2
+DJI P4 pro
+Tarawera
+2019
+0.05–0.15
+230
+90:80
+995
+460
+8
+6.07
+DJI P4 pro
+ULS site
+Capture 
+year
+Max RMSE of ULS 
+data (m)
+Altitude 
+(m)
+Line spacing 
+(m)
+Native point 
+density (ppm2)
+Point density 
+(ppm2)
+Speed 
+(m/s)
+Gridded?
+Sensor
+Kaingaroa 127
+2019
+0.01–0.03
+45
+16
+720
+435
+5
+No
+MiniVUX
+Kaingaroa 861
+2019
+0.01–0.03
+45
+16
+820
+415
+5
+No
+MiniVUX
+Kaingaroa 1190
+2023
+NA
+45
+16
+2815
+475
+5
+Yes
+DJI L1
+Kaingaroa 1190
+2024
+NA
+55
+10
+2260
+480
+3
+No
+DJIL1
+Kinleith BC52_1
+2019
+NA
+45
+16
+790
+410
+5
+No
+MiniVUX
+Kinleith BC66_1
+2023
+NA
+55
+10
+1530
+470
+3
+Yes
+DJI L1
+Kinleith Kaki Road
+2020
+NA
+100
+25
+440
+290
+5
+No
+MiniVUX
+Kinleith Schnapper 
+Road
+2020
+NA
+100
+25
+865
+305
+5
+No
+MiniVUX
+Kinleith Schnapper 
+Road
+2021
+NA
+100
+21
+220
+165
+5
+No
+MiniVUX
+Rangipo
+2018
+NA
+45
+20
+2185
+445
+8
+No
+HDL32E
+Rangipo
+2019
+0.01–0.03
+45
+16
+1240
+445
+5
+No
+MiniVUX
+Rangipo
+2022
+NA
+45
+16
+1025
+390
+5
+No
+MiniVUX
+Scion Nursery North 
+and South
+2019
+0.01–0.03
+45
+21
+295
+270
+5
+No
+MiniVUX
+Scion Nursery North
+2020
+0.01–0.03
+45
+10
+335
+290
+5
+No
+MiniVUX
+Scion Block16
+2021
+0.15
+55
+10
+2080
+430
+5
+Yes
+MiniVUX
+Tarawera
+2019
+0.05–0.15
+80
+10
+850
+425
+4
+No
+MiniVUX
+R.J.L. Hartley et al.                                                                                                                                                                                                                            
+Science of Remote Sensing 12 (2025) 100245 
+6 
+
+
+2000 NZTM coordinate system (EPSG 2193) and rectified to the base 
+station. Within the data file, each point in the point cloud was associated 
+with standard point attributes such as XYZ coordinates, intensity, scan 
+angle, number of returns and return number.
+2.5. Point cloud pre-processing
+Pre-processing of ULS and UAV-SfM point clouds followed the same 
+steps to ensure consistency, enabling meaningful comparison between 
+the two data sources. Due to the differences in sensor configurations and 
+flight plan settings, there were noticeable disparities in point density 
+among the datasets. Consequently, the standardisation of point density 
+was necessary to facilitate meaningful comparisons between different 
+datasets, thereby preventing differences in accuracy solely attributable 
+to variations in point densities. In addition, it was essential to normalise 
+variations in point density within individual datasets, including elimi­
+nating areas with exceptionally high point densities caused by over­
+lapping flight lines. This standardisation approach is vital for individual- 
+tree-level studies, ensuring that variations in point density do not 
+disproportionately influence metrics derived from individual tree point 
+clouds.
+To address these tasks, a homogenisation process was applied to all 
+point clouds to ensure uniform point densities within and across data­
+sets. Initially, a density raster with a resolution of 1 m was generated 
+from each dataset to understand the spatial distribution of point density 
+across the site. From this, the average and standard deviation of point 
+density per dataset were computed. Following this analysis, a density of 
+~400 ppm2 was determined as appropriate for most sites, except for 
+small sites with very young trees (e.g., Scion sites). Consequently, all 
+point clouds were homogenised using the "sample_homogenise" function 
+within the lidR library (Roussel et al., 2020) in the R programming 
+language. This function employs an algorithm to create a grid with a 
+defined resolution and randomly selects points to be retained within 
+each grid cell. The proportion of retained points within each grid cell is 
+determined by comparing the local density to the desired density; if the 
+desired density exceeds the local density, the points remain unchanged.
+Following homogenisation, the point cloud underwent standard pre- 
+processing steps, which included denoising, ground point classification, 
+digital terrain model (DTM) generation, and ground normalisation. 
+Generating an accurate high-resolution DTM from UAV-SfM point 
+clouds is often challenging in forest stands, particularly where SfM 
+techniques failed to detect the ground due to occlusion caused by tree 
+canopy. Therefore, in this study, DTMs derived from ULS and UAV-SfM 
+point clouds were compared, revealing that the UAV-SfM-derived DTM 
+becomes highly unreliable once canopy closure occurs. As a result, for all 
+sites, UAV-SfM point clouds were ground normalised using ULS-derived 
+DTMs. The pre-processing steps were conducted by implementing an 
+automated pipeline formulated using the LASTools software package 
+(Isenburg, 2019).
+2.6. Individual tree segmentation
+A canopy height model (CHM) with a resolution of 25 cm was 
+generated by applying the pit-free algorithm developed by Khosravipour 
+et al. (2014) on the ground-normalised point cloud. Subsequently, the 
+CHM underwent smoothing using a 3 x 3 pixel moving window. Indi­
+vidual tree peaks were then detected using a local maxima algorithm 
+with a fixed window size corresponding to the initial planting spacing of 
+the site. To align point cloud measurements with field measurements, 
+individual trees were labelled according to the tree maps created in the 
+trial digitisation process (see section 2.2). To do this, tree peaks detected 
+on both the CHM and point clouds, along with the digitised and geore­
+ferenced tree map were matched. The matching process involved 
+calculating the Euclidean distance and orientation from each detected 
+tree peak to the corresponding tree location on the digitised tree location 
+layout. Any unmatched tree peaks were discarded, while those having 
+Fig. 3. Different sensors and crafts used in this study, including the ULS systems: (a). Preparation of Altus Orc2 UAV carrying LidarUSA Snoopy A-series sensor; (b) 
+DJI M600 pro UAV with LidarUSA Snoopy V-series sensor; (c) DJI M300 UAV with DJI L1 sensor; and UAV-SfM systems: (d) DJI P4 pro; DJI M300 with (e) DJI P1 
+sensor and (f) MicaSense MX-dual camera.
+R.J.L. Hartley et al.                                                                                                                                                                                                                            
+Science of Remote Sensing 12 (2025) 100245 
+7 
+
+
+significant uncertainties were flagged for manual verification. The ac­
+curacy of the detected tree peaks was evaluated against the field-verified 
+stem maps of the study sites. Given the predominantly homogeneous 
+nature of plantation sites, an accuracy greater than 93 % was achieved 
+for all the sites, necessitating minimal manual rectifications. Any dis­
+crepancies were rectified accordingly. Subsequently, the rectified tree 
+peaks were utilised as markers for individual tree crown delineation 
+(Fig. 4).
+The crown delineation process was conducted on the smoothed CHM 
+using the "mcws" function within the ForestTools library (Plowright and 
+Roussel, 2021) in R, which employs a watershed algorithm for crown 
+delineation. To ensure that the delineated crowns of individual trees do 
+not merge into neighbouring tree crowns and to prevent the inclusion of 
+low vegetation within the identified tree crowns, the crown delineation 
+was restricted to the upper 90 % of the CHM. The polygons resulting 
+from the crown delineation process underwent visual assessment to 
+verify their accuracy. Any polygons that were inaccurately detected 
+were rectified where possible or excluded from subsequent analysis if 
+rectification proved to be unfeasible. Finally, the accurately delineated 
+crown polygons were used to segment the ground-normalised point 
+cloud into discrete segments representing individual trees. A selection of 
+trees representing the height deciles from across the entire dataset can 
+be found in Fig. 5.
+2.7. Metric extraction
+A comprehensive list of individual tree metrics, encompassing 
+various aspects of tree structure, was compiled based on existing liter­
+ature (Coops et al., 2007; du Toit et al., 2022; du Toit et al., 2023; du Toit 
+et al., 2020; Plowright and Roussel, 2021; Popescu and Wynne, 2004). 
+This compilation included metrics representing both the vertical and 
+horizontal variations of individual tree foliage, as well as metrics 
+capturing the two-dimensional (2D) and 3D structural characteristics of 
+trees. The selected metrics were computed for each individual tree point 
+cloud segment using packages within R.
+Point-based metrics, such as standard height, intensity, and crown 
+density, were calculated utilising the "stdmetric" function within the lidR 
+package. A convex hull was fitted to each individual tree segment using 
+the cxhull package (Barber and Laurent, 2023), estimating both the 2D 
+area of the individual crown convex hull and the 3D surface area and 
+volume of the individual tree convex hull. Please refer to Watt et al. 
+(2024) for the comprehensive list of metrics investigated in this study. 
+The metrics included can be categorised into the following four broad 
+groups: (i) standard height, (ii) standard intensity–only for lidar metrics, 
+(iii) standard crown density, and (iv) 2D and 3D convex hull measure­
+ments. The metric zmax (maximum height within each convex hull) was 
+used for comparison with field-based heights.
+The workflow described within sections 2.5 to 2.7 have been sub­
+sequently compiled into an R package called treenotypR, which can be 
+Fig. 4. Individual tree crown delineation examples for ULS (solid line) and UAV-SfM (dashed line) point clouds. Top row shows both crown delineation layers 
+overlaid on their associated orthomosaics; middle and bottom rows show the same scenes with ULS and UAV-SfM crown delineations, respectively, overlaid on their 
+associated CHMs. Columns (from left) show data from: an early establishment site (Scion North, 2019), a pre-thinned site (Kaingaroa 861), a mid-rotation site 
+(Kaingaroa BC55_2 2023), and a mature site (Tarawera). All images have a scale of 1:100.
+R.J.L. Hartley et al.                                                                                                                                                                                                                            
+Science of Remote Sensing 12 (2025) 100245 
+8 
+
+
+accessed online from https://github.com/ScionResearch/treenotypR. 
+git.
+2.8. Prediction of DBH
+Within each trial dataset, the following observations as reported in 
+the field data were filtered out prior to modelling: trees reported to be 
+dead or dying, suppressed, malformed, leaning or split trees, trees with 
+one leader dead or broken, trees affected by windthrow, trees with 
+forked stems (codominant leaders), and observations that had no DBH 
+measurement. In addition, any observation that had no corresponding 
+lidar point cloud metrics associated with them was removed. For each 
+trial dataset, DBH was modelled using all non-intensity related point 
+cloud metric variables as predictors, that had <20 % missing values.
+The following three statistical methods were tested for predicting 
+DBH, chosen to encompass a representative range of statistical methods 
+with different strengths and weaknesses: polynomial ordinary least 
+squares (OLS) regression with backwards variable selection, partial least 
+squares (PLS), and random forest (RF). OLS linear regression is the 
+simplest method and performs best with uncorrelated variables that 
+have a linear relationship to the response. Backward variable selection 
+starts with a model where all available independent variables are 
+included and sequentially drops variables that do not improve the fit and 
+predictive ability of the model until an optimal subset of explanatory 
+variables is found. PLS is also a linear regression technique, but instead 
+of using the original predictor variables in the model, it reorganises the 
+data into orthogonal components that are linear combinations of orig­
+inal predictors and finds the optimal number of components. This 
+method is suited to highly correlated data and the presence of linear 
+relationships with the response variable. RF is an ensemble method that 
+uses regression trees and bootstrap aggregating to predict the response 
+variable. It is suited to complex data with non-linear relationships.
+Each regression method was implemented using the caret package in 
+R (Kuhn, 2008). Hyperparameter tuning was performed using 10-fold 
+cross-validation with five repeats on a training set that included 80 % 
+of the data, through selecting optimal parameters that minimised RMSE. 
+The fitted model was used to test model performance on the remaining 
+20 % of the data. The RMSE and R2 were calculated in the training and 
+testing process using the following formulae: 
+RMSE =
+∑
+n
+i=1
+(̂yi −yi)2
+n
+(1) 
+R2 = 1 −
+∑
+n
+i=1
+(yi −
+̂yi)2
+∑
+n
+i=1
+(yi −y)2
+(2) 
+where n is the number of observations in the dataset, y is the vector of 
+observed responses, ̂y is the vector of predicted responses and y is the 
+response mean. Relative RMSE was computed as a percentage of the 
+average observed value, expressed as RMSE% using the following for­
+mula: 
+RMSE% =
+(RMSE
+y
+)
+× 100
+(3) 
+The RMSE and R2 from the testing process were compared against 
+RMSE and R2 from the cross-validation process. In addition, mean bias 
+error (MBE) was calculated as follows: 
+MBE = 1
+n
+∑
+n
+i=1
+yi −̂yi
+(4) 
+where yi represents field measurements, ̂yi represents the point cloud- 
+derived measurements, and n represents the sample size.
+For linear regression, after preliminary performance tests on 
+sequential, forward and backward variable selection, backward variable 
+selection was implemented and highly correlated variables were 
+removed using a cut-off of 0.99 for Pearson’s correlation coefficient. For 
+all methods, point cloud metrics were centred and scaled prior to model 
+fitting.
+The optimal set of hyperparameters was selected based on R2 and 
+RMSE and used for the final model, which was then applied to the test 
+dataset.
+2.9. Statistical analysis of model performance
+To assess the effect of sample size on model performance for DBH 
+predictions, an increasing number of observations were randomly 
+sampled to include in the training dataset, up to 80 % of the full dataset. 
+The model was fitted every time and RMSE and R2 metrics were 
+extracted from the cross-validation process.
+To assess the effect of trial characteristics and capture type on model 
+performance a linear regression was fitted using R2 as the response 
+variable and three predictor variables: stand age at the time of UAV data 
+capture (continuous variable), data type (two categories: ULS and UAV- 
+SfM), and amount of weed cover on the ground. The weed cover cate­
+gories in Table 1 were grouped into two categories: “none to little” 
+(merging “regularly mowed” and “minor”) and “moderate to heavy” 
+(merging “moderate” and “heavy”). The interaction between stand age 
+at the time of UAV data capture and amount of weed cover was also 
+included. Variable selection was performed using a custom assessment 
+of model estimates and Akaike information criteria (AIC).
+2.10. Statistical analysis of heights
+For statistical analysis of heights, the standard statistical measures of 
+RMSE, R2 and MBE, that are commonly used for assessing tree height 
+accuracy in remote sensing studies, were calculated. In addition, to 
+Fig. 5. The range of tree height deciles in the entire dataset, with the ULS 
+(upper) and UAV-SfM (lower) point clouds that are closest to the decile values. 
+As some UAV-SfM tree point clouds did not have ground points, ground points 
+from the ULS were included to better demonstrate tree heights.
+R.J.L. Hartley et al.                                                                                                                                                                                                                            
+Science of Remote Sensing 12 (2025) 100245 
+9 
+
+
+assess height error across the height range, the absolute height error and 
+percentage height errors were calculated at the tree level. Absolute 
+height error (AE) was calculated for each tree from yi−
+̂yi , from which 
+the percentage height error was determined per tree from 100 × AE /̂yi. 
+Absolute height error and percentage height error were then plotted 
+against heights categorised into 5 m height bins across the full data set to 
+examine the effect of height on error.
+3. Results
+3.1. DBH estimation results
+Despite their differences, the three statistical methods chosen to 
+model DBH yielded remarkably similar model performance measured by 
+R2 and RMSE (Fig. 6). Therefore, all subsequent results and analyses of 
+model performance were assessed using RF models.
+When averaged over all sites, the RF model was able to predict DBH 
+with a moderately strong correlation between UAV predictions and field 
+measurements of DBH, with a mean R2 of 0.74 for ULS and 0.67 for UAV- 
+SfM (Table 4). However, the correlation across sites varied considerably, 
+with a range of R2 = 0.46–0.90 for ULS and R2 = 0.21–0.85 for UAV-SfM 
+(Table 4). Similarly, the mean accuracy of RMSE values were moder­
+ately high, with a mean RMSE of 2.13 cm (11 %) for ULS and 2.05 (11 %) 
+for UAV-SfM, and a range of 0.33–7.24 cm (7–24 %) for ULS, and 
+0.35–6.15 cm (8–17 %) for UAV-SfM (Table 4). Predictions were least 
+accurate at Tarawera (R2 = 0.46 for ULS, 0.21 for UAV-SfM, RMSE =
+4.79 cm (10 %) for ULS, 6.15 cm (12 %) for UAV-SfM; Table 4). These 
+results demonstrate similar performance of predictions from both data 
+types (Table 4, Fig. 6). There was also a general trend for the sites with 
+the lowest predictive accuracy to be more mature, whilst the sites with 
+highest predictive accuracy were generally young (<7 years old) with no 
+or little weed cover.
+Table 4 shows crown metrics with the highest variable importance 
+from the RF estimation process for each dataset. Crown area 
+(cnx3D_area, cvx2D_vol) and crown volume (cnx3D_vol) metrics as well 
+as the total number of points within each individual tree point cloud 
+consistently appeared as the most important predictor variables. It is 
+notable that 3D crown area was a more important variable for the 
+models from UAV-SfM data at younger sites, such as Scion South, Scion 
+North, and Rangipo, whereas 2D crown metrics were more important for 
+the mature sites, Schnapper Road, Kaki Road and Tarawera (Table 4).
+Through examination of the influence of site characteristics on the 
+model performance, several distinct relationships can be identified. 
+Model performance generally declined with the age of the trees being 
+captured, with strong correlations of R2 = 0.71 and 0.69 for UAV-SfM 
+and ULS datasets, respectively (Fig. 7a). Modest correlations were also 
+observed between model performance and canopy gap area (R2 = 0.28 
+for UAV-SfM and R2 = 0.26 for ULS; Fig. 7b). Site conditions (logging 
+debris and weed cover), initially assessed subjectively (Table 1), were 
+objectively characterised using point height distributions analysed 
+through histograms. The skewness of these histograms served as a 
+suitable proxy for site conditions, showing a moderate relationship with 
+subjective assessments (R2 = 0.50). This proxy also demonstrated 
+modest to moderate correlations with model performance (R2 = 0.45 
+and R2 = 0.32 for UAV-SfM and ULS respectively; Fig. 7c). It is also 
+notable that ULS was less impacted by deteriorating site conditions than 
+SfM (Fig. 7c.) and to a lesser extent stand age (Fig. 7a) and canopy 
+openness (Fig. 7b).
+The number of observations used in the DBH prediction training 
+process did not have a strong effect on model performance (Fig. 8). The 
+model performance measures R2 and RMSE did not change when fewer 
+than the total available number of trees were used in the training 
+Fig. 6. Mean and standard deviation of two model performance metrics from different modelling techniques for each UAV-SfM and ULS dataset, estimated from 10- 
+fold cross-validation.
+R.J.L. Hartley et al.                                                                                                                                                                                                                            
+Science of Remote Sensing 12 (2025) 100245 
+10 
+
+
+process. For most datasets, model runs with 200 individual trees yielded 
+similar results to model runs with all available trees. Only when 100 
+observations were used (the minimum tested) was a slight drop in per­
+formance observed for some datasets.
+To assess the impact that trees with codominant leaders (hereafter 
+referred to as “forked trees”) would have on DBH predictions, data from 
+three sites, where trees were identified as being forked were selected. 
+These sites, which were 6–8 years old, were selected as this is the age 
+when assessments of tree form and quality are performed by breeders, 
+and also an age where thinning is planned to open up the canopy. 
+Knowing the extent and location of forked trees would be useful infor­
+mation for forest managers, particularly as forest operations become 
+more automated, as they are generally removed to increase growing 
+space for trees with better form. The selected sites that included Rangipo 
+(2022), Kaingaroa BC55_2 (2023), and Kinleith BC52_1 (2019) had 28 
+%, 21 %, and 24 % forked trees, respectively. Random forest models 
+were developed for these datasets without filtering out forked trees, 
+following the same procedure as for the filtered datasets. It was found 
+that including these forked trees reduced the R2 by between 0.01 
+(BC52_1 UAV-SfM), to 0.10 (Rangipo) and that similar reductions in 
+accuracy were noted between UAV-SfM and ULS within each site 
+(Table 5). It is interesting to note that the filtering of forked trees also 
+significantly increased the MBE, with the increase ranging from 0.19 cm 
+(BC52_1 ULS) to 2.31 cm (Kaingaroa BC55_2; Table 5). Fig. 9 shows 
+predicted vs. observed DBH values for RF models at Kinleith BC52_1 (a) 
+and Kaingaroa BC55_2 (b) and Rangipo (c) with forked tree observations 
+coloured. Many predictions with high errors correspond to forked trees, 
+especially at the Kaingaroa BC55_2 and Rangipo sites.
+3.2. Height estimation results
+Strong correlations were observed between both ULS- and UAV-SfM- 
+derived heights with field heights (Fig. 10).
+Table 6 shows statistics for models of tree height derived from UAV- 
+SfM and ULS measurements across the study sites. Overall, the results 
+indicated that models of height constructed from ULS measurements 
+Table 4 
+Trial characteristics with RF performance metrics and variable importance. Important predictors are defined as predictors with a variable importance above 50 (scaled 
+to 100) as output by the caret package when using the “ranger” RF method. These variables are shown in descending order of importance.
+Site
+Data 
+type
+Capture 
+year
+Age at 
+capture
+Weed cover
+R2
+RMSE 
+(cm)
+RMSE %
+Important predictors
+Scion South
+ULS
+2019
+3
+No or little
+0.9
+0.7
+7
+cnx3D_vol,cnx3D_area
+Rangipo
+ULS
+2022
+7
+No or little
+0.89
+1.08
+7
+cnx3D_area, zmax,cnx3D_vol,itot
+Scion North
+ULS
+2020
+5
+No or little
+0.88
+0.6
+8
+cnx3D_area,cnx3D_vol,zmax
+Rangipo
+ULS
+2019
+4
+No or little
+0.87
+0.52
+11
+Zmax
+Kaingaroa 861
+ULS
+2019
+5
+Moderate or 
+heavy
+0.87
+0.51
+13
+zmax,zq95,pzabove2,zq90,zq85, zsd,zq80, 
+zmean
+Kaingaroa 127
+ULS
+2019
+3
+Moderate or 
+heavy
+0.87
+0.41
+14
+zmax,zq95
+Scion North
+ULS
+2019
+4
+No or little
+0.85
+0.33
+9
+zmax,cnx3D_vol,cnx3D_area
+Rangipo
+SfM
+2019
+4
+No or little
+0.85
+0.58
+12
+zq90,pzabove2,zq95,zq85
+Scion North
+SfM
+2019
+4
+No or little
+0.83
+0.35
+9
+cnx3D_area,cnx3D_vol
+Kaingaroa 861
+SfM
+2019
+5
+Moderate or 
+heavy
+0.83
+0.58
+15
+pzabove2,zq85,zq90,zq95, zq80,zsd,zmax
+Scion South
+SfM
+2019
+3
+No or little
+0.82
+0.9
+9
+cnx3D_area, cnx3D_vol
+Kinleith BC66_1
+ULS
+2023
+5
+No or little
+0.82
+1.27
+8
+itot,cnx3D_area,cnx3D_vol,n
+Rangipo
+SfM
+2022
+7
+No or little
+0.8
+1.32
+8
+cnx3D_vol,cnx3D_area,n, zmax,zq95,zq90
+Scion North
+SfM
+2020
+5
+No or little
+0.79
+0.77
+11
+cnx3D_vol,cnx3D_area,n
+Kaingaroa 127
+SfM
+2019
+3
+Moderate or 
+heavy
+0.79
+0.52
+17
+zmax,zq95
+Rangipo
+ULS
+2018
+3
+No or little
+0.7
+0.44
+20
+zmax, pzabove2,zq95, zq90,zsd
+Kinleith BC52_1
+ULS
+2019
+6
+No or little
+0.69
+1.91
+10
+itot,n,cnx3D_vol
+Kaingaroa BC55_2
+ULS
+2024
+10
+Moderate or 
+heavy
+0.67
+2.24
+9
+zmax,zq95,pzabove2,zq90,zq85, zsd,zq80, 
+zmean
+Kaingaroa BC55_2
+ULS
+2023
+9
+Moderate or 
+heavy
+0.67
+1.98
+8
+n
+Kaingaroa BC55_2
+SfM
+2023
+9
+Moderate or 
+heavy
+0.66
+1.97
+8
+n,zq95
+Kinleith Kaki Road
+ULS
+2020
+17
+Moderate or 
+heavy
+0.65
+3.57
+10
+itot,n,cnx3D_vol,cnx3D_area
+Scion Block16
+ULS
+2021
+20
+No or little
+0.64
+7.24
+24
+itot,cnx3D_vol,cnx3D_area,n
+Kinleith Schnapper 
+Road
+ULS
+2020
+20
+Moderate or 
+heavy
+0.61
+4.13
+9
+n,cvx2D_area, area
+Kinleith Schnapper 
+Road
+SfM
+2020
+20
+Moderate or 
+heavy
+0.59
+4.28
+9
+n,cvx2D_area
+Kinleith BC52_1
+SfM
+2019
+6
+No or little
+0.58
+2.22
+12
+n,cnx3D_vol,cnx3D_area
+Kinleith BC66_1
+SfM
+2023
+5
+No or little
+0.58
+1.96
+12
+n,zq95
+Kaingaroa BC55_2
+SfM
+2024
+10
+Moderate or 
+heavy
+0.54
+2.65
+10
+cnx3D_area, itot,cnx3D_vol,n
+Kinleith Schnapper 
+Road
+SfM
+2021
+21
+Moderate or 
+heavy
+0.53
+4.44
+10
+n
+Kinleith Schnapper 
+Road
+ULS
+2021
+21
+Moderate or 
+heavy
+0.51
+4.53
+10
+cvx2D_area, area
+Tarawera
+ULS
+2019
+26
+Moderate or 
+heavy
+0.46
+4.79
+10
+itot,n
+Tarawera
+SfM
+2019
+26
+Moderate or 
+heavy
+0.21
+6.15
+12
+n,cvx2D_area
+Average
+SfM
+NA
+9.1
+NA
+0.67
+2.05
+11
+NA
+ULS
+9.9
+0.74
+2.13
+11
+Both
+9.5
+0.71
+2.09
+11
+R.J.L. Hartley et al.                                                                                                                                                                                                                            
+Science of Remote Sensing 12 (2025) 100245 
+11 
+
+
+consistently outperformed those developed from UAV-SfM measure­
+ments. The relative RMSE values averaged 5.4 % (range 3–8.9 %) for 
+ULS, which contrasted with the mean of 11.6 % (range of 5.3–19.9 %) 
+for UAV-SfM. Similarly, models developed from ULS data also exhibited 
+higher R2 values, with mean R2 of 0.84 (range of 0.48–0.97), while UAV- 
+SfM had a mean R2 of 0.66 (range of 0.25–0.86). It is also worth noting 
+that, on average, UAV-SfM under-estimated the tree height (MBE = 0.26 
+m) with this underestimation occurring at 82 % of sites. In contrast, ULS 
+overpredicted height by a small amount at 77 % of sites, but when 
+averaged across all sites, predictions showed no bias (average MBE = 0). 
+This comparison shows that height predictions from ULS data are more 
+accurate and less biased than those using UAV-SfM data across all age 
+classes and site conditions.
+In general, the stands characterised by juvenile trees and minimal 
+logging debris or weed cover had the lowest RMSE values, e.g., the Scion 
+Nursery sites that exhibited some of the lowest RMSE values in the re­
+sults. The opposite was reflected in the relative RMSE, where results 
+from mature sites demonstrated the lowest values. Interestingly, a 
+negative trend was observed in the data from Rangipo that had multi­
+temporal data, where relative RMSE values for ULS data decreased by 
+3.1 % over a four-year period, despite RMSE values increasing by 0.27 m 
+over the same period. A similar trend was observed in the photogram­
+metry with a decrease in RMSE% of 4.1 % and an increase in RMSE of 
+0.47 m over a three-year period.
+To further explore this trend, all data were pooled and the absolute 
+and percentage errors were calculated for different height categories 
+(Fig. 11). There was a definite positive trend for the absolute error of 
+both data types to increase with size, along with the variation in height 
+accuracy. When error is expressed as a percentage, the ULS-measured 
+Fig. 7. Performance of DBH predictions (R2) plotted against (a) age at capture, (b) canopy gap area (%) and (c) skewness of the height histograms, representing site 
+conditions. Points are coloured by sensor type.
+Fig. 8. Model performance metrics for different dataset sizes in the RF training 
+process. X axis is on a log scale to better highlight changes in performance 
+below a size of 300.
+Table 5 
+Impact of forked tree filtering on diameter prediction accuracy metrics for a selection of trials.
+Dataset
+Method
+Unfiltered
+Filtered
+R2
+RMSE (cm)
+RMSE%
+MBE
+R2
+RMSE (cm)
+RMSE%
+MBE
+Rangipo (2022)
+ULS
+0.79
+1.59
+9.89
+−1.54
+0.89
+1.08
+6.76
+0.00
+UAV-SfM
+0.70
+1.72
+10.91
+−1.72
+0.80
+1.32
+8.18
+0.00
+BC55_2 (2023)
+ULS
+0.59
+2.29
+9.89
+−2.30
+0.67
+1.98
+8.47
+0.01
+USV-SfM
+0.59
+2.30
+9.88
+−2.30
+0.66
+1.97
+8.44
+0.01
+BC52_1 (2019)
+ULS
+0.66
+2.00
+10.61
+−0.20
+0.69
+1.91
+10.15
+−0.01
+UAV-SfM
+0.57
+2.26
+11.99
+−0.23
+0.58
+2.22
+11.80
+0.00
+R.J.L. Hartley et al.                                                                                                                                                                                                                            
+Science of Remote Sensing 12 (2025) 100245 
+12 
+
+
+height errors decrease from the first category to approximately mid- 
+rotation and then increase slightly, staying approximately the same 
+until the largest size category. The trend for UAV-SfM is similar, how­
+ever, the error increases from approximately 20 m–40 m, before 
+reducing again. A further observation that was noted from the UAV-SfM 
+data was that there was a moderately positive trend between the GSD of 
+the imagery and the RMSE of the height predictions (R2 = 0.38).
+4. Discussion
+4.1. DBH estimation
+Overall, the results of this study demonstrated that DBH can be 
+derived from UAV point clouds with a moderately strong precision 
+(mean R2 = 0.71) and accuracy (mean RMSE = 2.09 cm (11 %)) 
+compared to field-measured DBH (Fig. 6 and Table 4). The consistent 
+performance in R2 and RMSE by the model when using as few as 200 
+observations indicates that the model is robust to variations in the 
+number of trees used for training and does not require the whole dataset 
+to achieve a high level of prediction accuracy for most sites (Fig. 8). The 
+results of this study align with the general findings in existing literature, 
+which reported a range of R2 from 0.45 to 0.91 (Dalla Corte et al., 2020; 
+Guerra-Hern´andez et al., 2019; Guerra-Hern´andez et al., 2017; Hayashi 
+et al., 2014; Iizuka et al., 2017; Jakubowski et al., 2013; Liu et al., 2018; 
+Persson et al., 2002; Popescu, 2007; Yao et al., 2012; Yu et al., 2011) and 
+RMSE% values from 5 to 20 % (Cosenza et al., 2018; Dalla Corte et al., 
+2020; Guerra-Hern´andez et al., 2019; Guerra-Hern´andez et al., 2017; Liu 
+et al., 2018; Mao et al., 2023; Persson et al., 2002; Popescu, 2007; 
+Vauhkonen et al., 2010; Yao et al., 2012; Yu et al., 2011). In addition, it 
+is notable that the results of this study were not consistent across 
+different sites, with some falling within the upper range of results re­
+ported in the literature and others falling short of the lower end (R2 
+Fig. 9. Predicted vs. observed DBH using ULS data captures at three sites measured around selection age. Forked trees are highlighted in teal and the 1:1 diagonal 
+line is displayed. Note that several forked trees had more than one observation in BC55_2 and Rangipo datasets.
+Fig. 10. Correlation between field-measured and (a) UAV-SfM-derived heights and (b) ULS-derived heights. Dashed lines represent a 1:1 line and the teal lines 
+represent predictions from a linear line of best fit.
+R.J.L. Hartley et al.                                                                                                                                                                                                                            
+Science of Remote Sensing 12 (2025) 100245 
+13 
+
+
+ranging from 0.21 to 0.90 and RMSE% ranging from 7 to 24 %). While 
+ULS consistently outperformed UAV-SfM, on an ideal site such as Scion 
+North or Scion South, characterised by an open canopy and the absence 
+of tall objects that could introduce individual tree segmentation errors, 
+both UAV-SfM and ULS generally performed at a comparable and ac­
+curate level at most sites.
+Clear trends were observed between model performance at each site 
+and the age of the trees (Fig. 7a), as well as the extent of canopy closure 
+and site conditions (weed cover and logging debris) at each site (Fig. 7b 
+and 7c respectively). This aligns with the previous findings, where the 
+lowest reported RMSE% (5 %; (Guerra-Hern´andez et al., 2017)) was 
+observed in a study with the smallest trees (mean height per group of 
+9.16–10.04 m), and the highest RMSE% values reported by studies with 
+mean tree heights of 16.53 m (RMSE% = 20.35 %; (Yu et al., 2011)), and 
+19.72 m (RMSE% = 18 %; (Popescu, 2007)). To the best of the authors’ 
+knowledge, no other study has attempted to assess the performance of 
+DBH predictions across such a varied range of tree sizes at this scale 
+before, therefore, the findings of this study provide valuable insights for 
+foresters interested in applying these techniques across their forests at 
+different age classes. The novel technique of using point height histo­
+grams to predict site conditions could also be valuable for those wanting 
+to get an idea of how accurate DBH predictions could be for a given site. 
+Future research should further explore this method as it could have 
+additional uses for predicting weed cover, inferring site nutrient levels 
+based on weed cover, or measuring the amount of harvest residues.
+It was also notable that ULS was less impacted than UAV-SfM by site 
+conditions and stand age (Fig. 7). This could be due to the tree canopies 
+not being accurately resolved by the imagery, which has been attributed 
+to shadow causing issues in the 3D reconstruction of the SfM process 
+(Wallace et al., 2016). Unlike ULS, SfM is a passive technology and so 
+the reconstruction of tree canopies would be less detailed in more 
+complex forest conditions, such as closed canopies. This theory is sup­
+ported by our results which showed that key metrics for predicting DBH, 
+3D crown volume and area (Table 4), were more important in younger 
+stands, where the canopy would be more open and the reconstruction of 
+the overall tree structures would be more complete (Fig. 5), compared to 
+older stands where the canopy closure was greater and 2D crown area 
+became more important.
+When assessing the performance of the two sensor types, the average 
+results across all sites for each sensor produced comparable accuracies 
+(R2 = 0.67/RMSE = 2.05 cm (11 %) and R2 = 0.74/RMSE = 2.13 cm (11 
+%) for UAV-SfM and ULS, respectively). However, at each site, ULS 
+consistently provided the best results. It was interesting to note that, for 
+both sensor types, the best results were seen in sites that had little to no 
+weed cover (e.g., Rangipo, Scion North and Scion South), or had recently 
+been thinned, i.e. the canopy has been opened (e.g., Kaingaroa BC55_2). 
+The worst results for both sensor types were seen in mature sites (e.g., 
+Scion Block 16, Tarawera and Kinleith Schnapper Road). A clear trend 
+emerged in which the model performed better on younger sites with 
+minimal weed cover or logging debris, or in more mature sites where the 
+canopy was relatively open (Kaingaroa BC55_2). Model performance 
+was superior at young sites with higher levels of logging debris and weed 
+cover, than on mature sites, implying that age class had a stronger in­
+fluence on results (Fig. 7a and c). Canopy closure is noted as a major 
+challenge for individual tree detection in forests (Zhen et al., 2016b), 
+which could explain these results. In this study, canopy openness was 
+demonstrated to have a moderate level of correlation with model per­
+formance (Fig. 7b), implying that a clear view of the extent of each tree 
+crown was crucial to accurate crown delineation. This was supported by 
+the predictor variables of importance included in the RF models, which 
+Table 6 
+Summary of tree height estimation statistics for all study sites with field validation, ordered by R2 values for ULS-derived heights. Also shown are the average results 
+and the results when all datasets are combined.
+Site
+Data capture year
+UAV-SfM
+ULS
+R2
+RMSE (m)
+RMSE %
+MBE (m)
+R2
+RMSE (m)
+RMSE%
+MBE (m)
+Scion Nursery South
+2019
+0.80
+0.53
+12.4
+0.26
+0.97
+0.17
+4.0
+−0.06
+Rangipo
+2019
+0.86
+0.44
+13.2
+0.34
+0.96
+0.15
+4.5
+−0.03
+Rangipo
+2022
+0.71
+0.91
+9.1
+0.56
+0.95
+0.42
+4.3
+−0.25
+Kaingaroa 861
+2019
+0.85
+0.35
+11.8
+0.18
+0.93
+0.21
+7.2
+−0.09
+Kaingaroa 127
+2019
+0.78
+0.43
+16.9
+0.33
+0.93
+0.17
+6.5
+−0.05
+Scion Nursery North
+2019
+0.74
+0.29
+16.7
+0.21
+0.93
+0.16
+8.9
+−0.11
+Kinleith BC66_1
+2023
+0.84
+1.91
+19.9
+1.83
+0.92
+0.57
+5.9
+0.41
+Rangipo
+2018
+NA
+NA
+NA
+NA
+0.89
+0.15
+7.4
+−0.05
+Kaingaroa BC55_2
+2024
+0.60
+1.4
+7.2
+0.93
+0.88
+0.58
+3.0
+−0.13
+Kinleith Kaki Road
+2020
+NA
+NA
+NA
+NA
+0.82
+1.14
+4.0
+−0.27
+Kinleith Schnapper Road
+2021
+0.38
+2.51
+8.3
+−2.02
+0.64
+1.68
+5.2
+0.44
+Tarawera
+2019
+0.25
+2.88
+6.8
+−0.47
+0.56
+1.78
+4.2
+−0.53
+Kinleith Schnapper Road
+2020
+0.48
+1.62
+5.3
+0.75
+0.48
+1.62
+5.3
+0.74
+Average
+NA
+0.66
+1.21
+11.59
+0.26
+0.84
+0.68
+5.4
+0
+Combined dataset
+NA
+0.99
+1.23
+10.93
+0.99
+~1
+0.55
+7.42
+0
+Fig. 11. Variation in height across different height categories displayed as 
+absolute and percentage height errors between field- and point cloud-measured 
+heights. Box plots display median error and confidence intervals for each 
+category, with sample size represented by box width.
+R.J.L. Hartley et al.                                                                                                                                                                                                                            
+Science of Remote Sensing 12 (2025) 100245 
+14 
+
+
+consistently included 2D and 3D crown area, and 3D crown volume 
+(cnx2D_area, cnx3D_area and cnx3D_vol respectively).
+The results of this study indicated that the model accuracy was 
+reduced and bias (MBE) increased through the inclusion of forked trees 
+in the dataset (Fig. 9). This was likely due to the irregular and larger 
+crown size of a forked tree falsely inflating the predicted value of the 
+DBH for those trees. This would be a greater mismatch for trees that 
+forked below 1.4 m, where the field-measured DBH for one of the forked 
+stems would typically be smaller than the DBH measured on a tree of a 
+similar size that forked above 1.4 m. It is possible that the irregularity of 
+these tree crowns could be exploited to develop a model capable of 
+predicting the presence of codominant leaders, something the authors 
+believe has not previously been attempted using remote sensing. Aside 
+from the potential for increasing the accuracy of DBH predictions for a 
+given site, this method could also be useful for the digitalisation and 
+mechanisation of forestry operations (Stewart and Hartley, 2022). The 
+pre-selection of trees for removal can reduce the possibility of errors in 
+the field, and laser technologies have been highlighted as a means of 
+expediting the process (Gomide et al., 2014). Developing a model to 
+predict codominant leaders would facilitate a remotely-sensed pre-­
+thinning assessment, enabling the automation of thinning operations, 
+and removing the requirement for real-time, in-situ computations (da 
+Silva et al., 2023). Future research should further explore methods for 
+predicting codominant leader trees to improve detection capabilities.
+Despite the encouraging results observed in this study, it is worth 
+considering whether remote and proximal sensing tools will still be used 
+in the future to estimate DBH when more holistic and representative 
+metrics, such as crown volume, are so accessible (Åkerblom and Kaita­
+niemi, 2021). Although useful for standardising measurement, DBH was 
+a practical measurement in the past when it was not possible to measure 
+whole tree crowns or conduct 100 % samples during inventory, how­
+ever, UAV technologies have now enabled these measurements. Future 
+research should be focused on how these new UAV-derived metrics 
+perform in predicting the metrics that foresters are truly interested, such 
+as stem volume and carbon content.
+4.2. Height measurement
+The height measurements derived from both ULS and UAV-SfM 
+methodologies align with previous studies employing these technolo­
+gies for tree height measurement across diverse forest environments and 
+age classes, including P. radiata plantations. Previous research has 
+indicated that ULS outperforms UAV-SfM in measuring tree heights in 
+young plantations (Hartley et al., 2020). The results of the current study 
+support that study, extending its findings to mature plantations, as it was 
+observed that, a model developed from the combined UAV-SfM dataset 
+had lower accuracy (RMSE = 1.23 m (10.93 %); Table 6), than ULS 
+(RMSE = 0.55 m (7.42 %); Table 6). This trend was even more pro­
+nounced for predictions averaged across all sites (R2 = 0.66, RMSE =
+1.21 m (11.59 %); and R2 = 0.84, RMSE = 0.68 m (5.4 %) for UAV-SfM 
+and ULS, respectively; Table 6). This aligns with the literature and the 
+reported range in the coefficient of determination (R2 = 0.85–0.99; 
+(Dalla Corte et al., 2020; Gyawali et al., 2022; Hartley et al., 2020; Hu 
+et al., 2020; Jaakkola et al., 2017; Liu et al., 2018)) and accuracy (RMSE 
+% = 2.83–7.97 %; (Dalla Corte et al., 2020; Dash et al., 2019a; Hartley 
+et al., 2020; Hu et al., 2020; Jaakkola et al., 2017; Liu et al., 2018; 
+Rodríguez-Puerta et al., 2021; Wallace et al., 2014)) for heights 
+measured by ULS, compared to the coefficient of determination and 
+accuracy of UAV-SfM (R2 = 0.21–0.99 and RMSE% = 1.89–19.4 %; 
+(Birdal et al., 2017; Brieger et al., 2019; Dandois and Ellis, 2013; Dan­
+dois et al., 2015; Fankhauser et al., 2018; Fawcett et al., 2019; Guer­
+ra-Hern´andez et al., 2017; Gyawali et al., 2022; Hentz et al., 2018; 
+Huang et al., 2019; Iizuka et al., 2017; Karpina et al., 2016; Krause et al., 
+2019; Lin et al., 2018; Lisein et al., 2014; Lisein et al., 2013; Moe et al., 
+2020; Ni et al., 2015; Ota et al., 2017; Puliti et al., 2015; Shin et al., 
+2018; Surový et al., 2018; Yurtseven et al., 2019; Zainuddin et al., 
+2016)).
+When assessing the sensor types individually, ULS generally fell 
+within the range for accuracy and coefficient of determination reported 
+in the literature, aside from the lower values observed at the four mature 
+sites (Table 6). As observed with the DBH prediction results, age and site 
+conditions can impact on the quality of results, with mature sites 
+exhibiting higher RMSE and lower R2 values. An increase in absolute 
+height error with height categories was observed to be contrary to the 
+decrease in percentage height error with height categories (Fig. 11). This 
+relationship was observed in previous studies of the same species 
+(Hartley et al., 2020; Rodríguez-Puerta et al., 2021), especially the 
+decrease of relative RMSE with age, although this is the first time that 
+this trend has been observed over the entire rotation age of a forestry 
+species, such as P. radiata. While there could be several reasons for this 
+observation, the most plausible explanation is the dense understory of 
+ferns present at these mature sites, which could contribute to the 
+elevated RMSE values through errors within the DTM. Another study 
+also noted a correlation between increasing flight altitude and RMSE 
+(Chen et al., 2022), which could be another explanation for this lower 
+performance as the mature sites in this study were captured at approx­
+imately double the altitude of the other sites (Table 3). The apex of trees 
+of this form (i.e., conical and apically dominant), is often very slender 
+too, depending on the growth status of the current year’s flush at the 
+time of capture. This small target would likely contribute to height er­
+rors because objects smaller than the beam footprint of the lidar lead to 
+inaccuracies in the location of the return (Wilkes et al., 2021), poten­
+tially explaining why the difference between shorter and taller height 
+categories was more pronounced for the absolute than the percentage 
+error.
+Trends for the precision of UAV-SfM data are more pronounced, 
+however, there is a modest correlation (R2 = 0.38) between the absolute 
+RMSE of height measurements and the GSD of the imagery of the UAV- 
+SfM data. Previous research has found a strong correlation (R2 = 0.97) 
+between point cloud density and altitude (Dandois et al., 2015), which 
+has a positive relationship with point cloud completeness (Frey et al., 
+2018). This potential for incompleteness in the upper canopy of the 
+UAV-SfM point clouds could explain the discrepancy between field- and 
+UAV-SfM-measured heights. The two lowest observed absolute RMSE 
+values for height (Tarawera and Kinleith Schnapper Road, 2021) were 
+also both for the mature sites, which as with other sites, both used a ULS 
+DTM, therefore it is highly likely that any error impacting on the ULS 
+heights caused by understory, would be translated to the UAV-SfM 
+heights through the use of the same DTM.
+5. Conclusions
+This study evaluated the effectiveness of two UAV technologies, ULS 
+and UAV-SfM, for inventory of a major global plantation forestry spe­
+cies, Pinus radiata. ULS consistently outperformed UAV-SfM in tree 
+height measurements, suggesting its robustness in diverse conditions 
+and age classes. Both methods were more accurate for predicting DBH in 
+younger stands and stands with a higher percentage of canopy gaps; 
+however, UAV-SfM was more sensitive to age and site conditions. Stand 
+maturity influenced measurement reliability in both data sources, with 
+measurement error noticeably improving over time as trees matured and 
+crown structures evolved. These findings underscore the importance of 
+accounting for site-specific variables when selecting UAV technologies 
+for forest inventory and making forest management decisions based on 
+UAV-derived forest inventory data.
+By employing a fully automated data processing pipeline with min­
+imal manual input, this study demonstrated that UAV-based forest in­
+ventory is nearing operational readiness for large-scale use by foresters. 
+Its strengths are most apparent in early rotation stages that are crucial 
+for silvicultural operations, site productivity assessments, and yield 
+forecasting. As the cost of UAV sensors continues to decline, foresters 
+can better assess the trade-offs between measurement accuracy and 
+R.J.L. Hartley et al.                                                                                                                                                                                                                            
+Science of Remote Sensing 12 (2025) 100245 
+15 
+
+
+sensor cost.
+It is also important to consider the ability of UAVs to operate at scale 
+and provide wall-to-wall forest information. Although UAV-derived 
+DBH had a lower accuracy than field measurements, UAV remote 
+sensing facilitated tree-level data capture across entire stands, capturing 
+variability within the stand, in contrast to traditional field measure­
+ments, which are typically limited to plot-level sampling.
+In conclusion, UAV-based forest inventory is reaching a robust stage 
+where foresters should consider its benefits for accurate, large-scale, 
+individual tree measurement and it is hoped that this study, through 
+its in-depth evaluation of accuracies and limitations, will encourage 
+more adoption of these tools in operational forestry.
+CRediT authorship contribution statement
+Robin J.L. Hartley: Writing – review & editing, Writing – original 
+draft, Supervision, Resources, Project administration, Methodology, 
+Investigation, Funding acquisition, Data curation, Conceptualization. 
+Sadeepa Jayathunga: Writing – review & editing, Writing – original 
+draft, Visualization, Methodology, Investigation, Formal analysis, 
+Conceptualization. Joane S. Elleouet: Writing – review & editing, 
+Writing – original draft, Visualization, Methodology, Investigation, 
+Formal analysis, Data curation. Benjamin S.C. Steer: Visualization, 
+Data curation. Michael S. Watt: Writing – review & editing, Method­
+ology, Funding acquisition, Data curation.
+Availability of data and code
+The data used in this study cannot be made publicly available due to 
+IP restrictions and privacy restrictions imposed by some of the forest 
+owners and managers. The code used for the analysis in this study, 
+however, was subsequently compiled into an R package called treeno­
+typR, which can be accessed from https://github.com/ScionResearch/ 
+treenotypR.git. A sample dataset, derived from one of the sites used in 
+this study, can be downloaded along with the package.
+Funding
+This research was funded by the Ministry of Business Innovation and 
+Employment (MBIE) programme entitled “Seeing the forest for the trees: 
+Transforming tree phenotyping for future forests” (programme grant 
+number C04X2101), and the Resilient Forests Research Programme, 
+funded by Scion’s Strategic Science Investment Funding (SSIF) provided 
+by MBIE with additional co-funding from the Forest Growers Levy Trust.
+Declaration of competing interest
+The authors declare the following financial interests/personal re­
+lationships which may be considered as potential competing interests: 
+Robin JL Hartley reports financial support and article publishing charges 
+were provided by Ministry of Business Innovation and Employment. 
+Robin JL Hartley reports financial support was provided by Forest 
+Growers Levy Trust Inc. If there are other authors, they declare that they 
+have no known competing financial interests or personal relationships 
+that could have appeared to influence the work reported in this paper.
+Acknowledgements
+The authors extend their sincere gratitude to various collaborators 
+who assisted in gathering previous remote sensing and field datasets and 
+provided clarifications regarding data collected for different projects, 
+including Honey Jane Estarija, Heather Flint, Stuart Fraser, John Henry, 
+David Lane, Peter Massam, Liam Wright, David Cajes, David Pont, 
+Damien Sellier, and Glen Thorlby. We also would like to acknowledge 
+the Accelerator Trials team at Scion: Simeon Smaill, and Lorretta Garret. 
+We also acknowledge Interpine Innovation and Scion’s Tree Biometrics 
+team for collection of inventory data, and Pilbrow Surveying Ltd for 
+collection of ULS datasets with the LidarUSA Snoopy A-series scanner. 
+The authors would like to thank the anonymous reviewers whose 
+feedback helped significantly improve the readability of the manuscript.
+References
+Åkerblom, M., Kaitaniemi, P., 2021. Terrestrial laser scanning: a new standard of forest 
+measuring and modelling? Ann. Bot. 128 (6), 653–662. https://doi.org/10.1093/ 
+aob/mcab111 [Article]. 
+Alonzo, M., Andersen, H.-E., Morton, D.C., Cook, B.D., 2018. Quantifying boreal forest 
+structure and composition using UAV structure from motion. Forests 9 (3), 119.
+Balenovi´c, I., Jazbec, A., Marjanovi´c, H., Paladini´c, E., Vuleti´c, D., 2015. Modeling tree 
+characteristics of individual black pine (Pinus nigra Arn.) trees for use in remote 
+sensing-based inventory. Forests 6 (2), 492–509. https://doi.org/10.3390/f6020492 
+[Article]. 
+Ballard, R., Will, G., 1981. Removal of logging waste, thinning debris, and litter from a 
+Pinus radiata pumice soil site. N. Z. J. For. Sci. 11 (2), 152–163.
+Barber, C.B., Laurent, S., 2023. The geometry center. In: .
+Bayne, K.M., Parker, R.J., 2012. The introduction of robotics for New Zealand Forestry 
+operations: Forest sector employee perceptions and implications. Technology in 
+Society 34 (2), 138–148.
+Birdal, A.C., Avdan, U., Türk, T., 2017. Estimating tree heights with images from an 
+unmanned aerial vehicle. Geomat. Nat. Hazards Risk 8 (2), 1144–1156. https://doi. 
+org/10.1080/19475705.2017.1300608 [Article]. 
+Brieger, F., Herzschuh, U., Pestryakova, L.A., Bookhagen, B., Zakharov, E.S., Kruse, S., 
+2019. Advances in the derivation of Northeast Siberian forest metrics using high- 
+resolution UAV-based photogrammetric point clouds. Remote Sens. 11 (12), 1447. 
+https://doi.org/10.3390/rs11121447 [Article]. 
+Bruggisser, M., Hollaus, M., Kükenbrink, D., Pfeifer, N., 2019. Comparison of forest 
+structure metrics derived from UAV lidar and ALS data. ISPRS Annals of the 
+Photogrammetry, Remote Sensing and Spatial Information Sciences 4, 325–332.
+Cabo, C., Del Pozo, S., Rodríguez-Gonz´alvez, P., Ord´o˜nez, C., Gonz´alez-Aguilera, D., 
+2018. Comparing terrestrial laser scanning (TLS) and wearable laser scanning (WLS) 
+for individual tree modeling at plot level. Remote Sens. 10 (4). https://doi.org/ 
+10.3390/rs10040540.
+Chen, S., Nian, Y., He, Z., Che, M., 2022. Measuring the tree height of picea crassifolia in 
+alpine mountain forests in northwest China based on UAV-LiDAR. Forests 13 (8), 
+1163.
+Clark, N.A., Wynne, R., Schmoldt, D., Winn, M., 2000. An assessment of the utility of a 
+non-metric digital camera for measuring standing trees. Comput. Electron. Agric. 28 
+(2), 151–169.
+Coops, N.C., Hilker, T., Wulder, M.A., St-Onge, B., Newnham, G., Siggins, A., 
+Trofymow, J.T., 2007. Estimating canopy structure of Douglas-fir forest stands from 
+discrete-return LiDAR. Trees (Berl.) 21 (3), 295.
+Cosenza, D.N., Soares, V.P., Leite, H.G., Gleriani, J.M., Amaral, C.H.d., Gripp Júnior, J., 
+Silva, A.A. L.d., Soares, P., Tom´e, M., 2018. Airborne laser scanning applied to 
+eucalyptus stand inventory at individual tree level. Pesqui. Agropecu´aria Bras. 53, 
+1373–1382.
+da Silva, D.Q., Rodrigues, T.F., Sousa, A.J., dos Santos, F.N., Filipe, V., 2023. Deep 
+Learning-Based Tree Stem Segmentation for Robotic Eucalyptus Selective Thinning 
+Operations. EPIA Conference on Artificial Intelligence.
+Dainelli, R., Toscano, P., Di Gennaro, S.F., Matese, A., 2021. Recent advances in 
+unmanned aerial vehicles forest remote sensing—a systematic review. Part II: 
+research applications. Forests 12 (4). https://doi.org/10.3390/f12040397.
+Dalla Corte, A.P., Rex, F.E., Almeida, D.R. A.d., Sanquetta, C.R., Silva, C.A., Moura, M. 
+M., Wilkinson, B., Zambrano, A.M.A., Cunha Neto, E.M.d., Veras, H.F., 2020. 
+Measuring individual tree diameter and height using GatorEye High-Density UAV- 
+Lidar in an integrated crop-livestock-forest system. Remote Sens. 12 (5), 863.
+Dandois, J.P., Ellis, E.C., 2013. High spatial resolution three-dimensional mapping of 
+vegetation spectral dynamics using computer vision. Rem. Sens. Environ. 136, 
+259–276. https://doi.org/10.1016/j.rse.2013.04.005.
+Dandois, J.P., Olano, M., Ellis, E.C., 2015. Optimal altitude, overlap, and weather 
+conditions for computer vision uav estimates of forest structure. Remote Sens. 7 (10), 
+13895–13920. https://doi.org/10.3390/rs71013895 [Article]. 
+Dash, J.P., Watt, M.S., Hartley, R.J.L., 2019a. Testing UAV-Borne Riegl Mini VUX-1 
+Scanner for Phenotyping a Mature Genetics Trial [Tech Note]. Technical Notes from 
+the Growing Confidence in Forestry’s Future Research Programme. TN-023, Article 
+GCFF TN023. Retrieved 1 May 2020, from. 
+Dash, J.P., Watt, M.S., Paul, T.S., Morgenroth, J., Pearse, G.D., 2019b. Early detection of 
+invasive exotic trees using UAV and manned aircraft multispectral and LiDAR Data. 
+Remote Sens. 11 (15), 1812.
+du Toit, F., Coops, N.C., Ratcliffe, B., El-Kassaby, Y.A., 2022. Generating douglas-fir 
+breeding value estimates using airborne laser scanning derived height and crown 
+metrics. Front. Plant Sci. 13, 893017.
+du Toit, F., Coops, N.C., Ratcliffe, B., El-Kassaby, Y.A., Lucieer, A., 2023. Modelling 
+internal tree attributes for breeding applications in Douglas-fir progeny trials using 
+RPAS-ALS. Science of Remote Sensing 7, 100072.
+du Toit, F., Coops, N.C., Tompalski, P., Goodbody, T.R., El-Kassaby, Y.A., Stoehr, M., 
+Turner, D., Lucieer, A., 2020. Characterizing variations in growth characteristics 
+between Douglas-fir with different genetic gain levels using airborne laser scanning. 
+Trees (Berl.) 34, 649–664.
+R.J.L. Hartley et al.                                                                                                                                                                                                                            
+Science of Remote Sensing 12 (2025) 100245 
+16 
+
+
+Erikson, M., Olofsson, K., 2005. Comparison of three individual tree crown detection 
+methods. Mach. Vis. Appl. 16 (4), 258–265. https://doi.org/10.1007/s00138-005- 
+0180-y.
+Fankhauser, K.E., Strigul, N.S., Gatziolis, D., 2018. Augmentation of traditional forest 
+inventory and Airborne laser scanning with unmanned aerial systems and 
+photogrammetry for forest monitoring. Remote Sens. 10 (10), 1562. https://doi.org/ 
+10.3390/rs10101562 [Article]. 
+Fawcett, D., Azlan, B., Hill, T.C., Kho, L.K., Bennie, J., Anderson, K., 2019. Unmanned 
+aerial vehicle (UAV) derived structure-from-motion photogrammetry point clouds 
+for oil palm (Elaeis guineensis) canopy segmentation and height estimation. Int. J. 
+Rem. Sens. 40 (19), 7538–7560. https://doi.org/10.1080/01431161.2019.1591651 
+[Article]. 
+Frey, J., Kovach, K., Stemmler, S., Koch, B., 2018. UAV photogrammetry of forests as a 
+vulnerable process. A sensitivity analysis for a structure from motion RGB-image 
+pipeline. Remote Sens. 10 (6), 912. https://doi.org/10.3390/rs10060912, 912. 
+Gomide, L.R., Mello, J.d., Acerbi Junior, F.W., Scolforo, J., 2014. Automated Selective 
+Thinning via Multicriteria Maetaheuristic Procedure.
+Guerra-Hern´andez, J., Cosenza, D.N., Cardil, A., Silva, C.A., Botequim, B., Soares, P., 
+Silva, M., Gonz´alez-Ferreiro, E., Díaz-Varela, R.A., 2019. Predicting growing stock 
+volume of eucalyptus plantations using 3-D point clouds derived from UAV imagery 
+and ALS data. Forests 10 (10), 905.
+Guerra-Hern´andez, J., Gonz´alez-Ferreiro, E., Monle´on, V.J., Faias, S.P., Tom´e, M., Díaz- 
+Varela, R.A., 2017. Use of multi-temporal UAV-derived imagery for estimating 
+individual tree growth in Pinus pinea stands. Forests 8 (8), 300.
+Gyawali, A., Aalto, M., Peuhkurinen, J., Villikka, M., Ranta, T., 2022. Comparison of 
+individual tree height estimated from LiDAR and digital aerial photogrammetry in 
+young forests. Sustainability (Basel) 14 (7), 3720.
+Harrington, T.B., Slesak, R.A., Schoenholtz, S.H., 2013. Variation in logging debris cover 
+influences competitor abundance, resource availability, and early growth of planted 
+Douglas-fir. For. Ecol. Manag. 296, 41–52.
+Hartley, R., 2017. Unmanned aerial vehicles in forestry-reaching for a new perspective. 
+NZ Journal of Forestry 62 (1), 31–39.
+Hartley, R.J., Jayathunga, S., Massam, P.D., De Silva, D., Estarija, H.J., Davidson, S.J., 
+Wuraola, A., Pearse, G.D., 2022. Assessing the potential of backpack-mounted 
+mobile laser scanning systems for tree phenotyping. Remote Sens. 14 (14), 3344.
+Hartley, R.J., Jayathunga, S., Pont, D., Massam, P.D., Wright, L., 2024. Optimising 
+Precision: Exploring Optimal Techniques for Stem Volume Estimation Using P-MLS 
+Data – Does Quantity Enhance Accuracy? Scion, Research (Manuscript in 
+preparation). 
+Hartley, R.J., Leonardo, E.M., Massam, P., Watt, M.S., Estarija, H.J., Wright, L., Melia, N., 
+Pearse, G.D., 2020. An assessment of high-density UAV point clouds for the 
+measurement of young forestry trials. Remote Sens. 12 (24), 4039.
+Hayashi, R., Weiskittel, A., Sader, S., 2014. Assessing the feasibility of low-density LiDAR 
+for stand inventory attribute predictions in complex and managed forests of northern 
+Maine, USA. Forests 5 (2), 363–383.
+Heaphy, M., Watt, M.S., Dash, J.P., Pearse, G.D., 2017. UAVs for data collection-plugging 
+the gap. NZJ For 62, 23–30.
+Hentz, ˆA.M.K., Silva, C.A., Dalla Corte, A.P., Netto, S.P., Strager, M.P., Klauberg, C., 
+2018. Estimating forest uniformity in Eucalyptus spp. and Pinus taeda L. stands using 
+field measurements and structure from motion point clouds generated from 
+unmanned aerial vehicle (UAV) data collection. Forest Systems 27 (2), e005. https:// 
+doi.org/10.5424/fs/2018272-11713 e005. 
+Hirschmugl, M., Ofner, M., Raggam, J., Schardt, M., 2007. Single tree detection in very 
+high resolution remote sensing data. Rem. Sens. Environ. 110 (4), 533–544.
+Hu, T., Sun, X., Su, Y., Guan, H., Sun, Q., Kelly, M., Guo, Q., 2020. Development and 
+performance evaluation of a very low-cost UAV-LiDAR system for forestry 
+applications. Remote Sens. 13 (1), 77.
+Huang, H., He, S., Chen, C., 2019. Leaf abundance affects tree height estimation derived 
+from UAV images. Forests 10 (10), 931. https://doi.org/10.3390/f10100931 
+[Article]. 
+Hyypp¨a, E., Yu, X., Kaartinen, H., Hakala, T., Kukko, A., Vastaranta, M., Hyypp¨a, J., 
+2020. Comparison of backpack, handheld, under-canopy UAV, and above-canopy 
+UAV laser scanning for field reference data collection in boreal forests. Remote Sens. 
+12 (20), 3327.
+Iizuka, K., Yonehara, T., Itoh, M., Kosugi, Y., 2017. Estimating tree height and diameter 
+at breast height (DBH) from digital surface models and orthophotos obtained with an 
+unmanned aerial system for a Japanese cypress (Chamaecyparis obtusa) forest. 
+Remote Sens. 10 (1), 13.
+Isenburg, M., 2019. LAStools - efficient LiDAR processing software. http://rapidlasso. 
+com/LAStools.
+Jaakkola, A., Hyypp¨a, J., Yu, X., Kukko, A., Kaartinen, H., Liang, X., Hyypp¨a, H., 
+Wang, Y., 2017. Autonomous collection of forest field reference—the outlook and a 
+first step with UAV laser scanning. Remote Sens. 9 (8), 785. https://doi.org/ 
+10.3390/rs9080785 [Article]. 
+Jakubowski, M.K., Guo, Q., Kelly, M., 2013. Tradeoffs between lidar pulse density and 
+forest measurement accuracy. Rem. Sens. Environ. 130, 245–253. https://doi.org/ 
+10.1016/j.rse.2012.11.024 [Article]. 
+Jayathunga, S., Owari, T., Tsuyuki, S., 2019. Digital aerial photogrammetry for uneven- 
+aged forest management: assessing the potential to reconstruct canopy structure and 
+estimate living biomass. Remote Sens. 11 (3), 338.
+Jayathunga, S., Pearse, G.D., Watt, M.S., 2023. Unsupervised methodology for large- 
+scale tree seedling mapping in diverse forestry settings using UAV-based RGB 
+imagery. Remote Sens. 15 (22), 5276.
+Karpina, M., Jarząbek-Rychard, M., Tymk´ow, P., Borkowski, A., 2016. UAV-based 
+automatic tree growth measurement for biomass estimation. Int. Arch. Photogram. 
+Rem. Sens. Spatial Inf. Sci. 8.
+Ke, Y., Quackenbush, L.J., 2011. A review of methods for automatic individual tree- 
+crown detection and delineation from passive remote sensing. Int. J. Rem. Sens. 32 
+(17), 4725–4747.
+Khosravipour, A., Skidmore, A.K., Isenburg, M., Wang, T., Hussin, Y.A., 2014. Generating 
+pit-free canopy height models from airborne lidar. Photogramm. Eng. Rem. Sens. 80 
+(9), 863–872.
+Krause, S., Sanders, T.G.M., Mund, J.P., Greve, K., 2019. UAV-based photogrammetric 
+tree height measurement for intensive forest monitoring. Remote Sens. 11 (7), 758. 
+https://doi.org/10.3390/rs11070758 [Article]. 
+Kuhn, M., 2008. Building predictive models in R using the caret package. J. Stat. 
+Software 28, 1–26.
+Kuˇzelka, K., Slavík, M., Surový, P., 2020. Very high density point clouds from UAV laser 
+scanning for automatic tree stem detection and direct diameter measurement. 
+Remote Sens. 12 (8), 1236.
+Larjavaara, M., Muller-Landau, H.C., 2013. Measuring tree height: a quantitative 
+comparison of two common field methods in a moist tropical forest. Methods Ecol. 
+Evol. 4 (9), 793–801. https://doi.org/10.1111/2041-210x.12071.
+Lavery, P.B., Mead, D.J., 1998. Pinus Radiata Takes on the World. Cambridge University 
+Press, Cambridge, UK. 
+Levick, S.R., Whiteside, T., Loewensteiner, D.A., Rudge, M., Bartolo, R., 2021. Leveraging 
+TLS as a calibration and validation tool for MLS and ULS mapping of savanna 
+structure and biomass at landscape-scales. Remote Sens. 13 (2), 257.
+Liang, X., Hyypp¨a, J., Kaartinen, H., Lehtom¨aki, M., Py¨or¨al¨a, J., Pfeifer, N., 
+Holopainen, M., Brolly, G., Francesco, P., Hackenberg, J., Huang, H., Jo, H.W., 
+Katoh, M., Liu, L., Mokroˇs, M., Morel, J., Olofsson, K., Poveda-Lopez, J., Trochta, J., 
+Wang, Y., 2018. International benchmarking of terrestrial laser scanning approaches 
+for forest inventories. ISPRS J. Photogrammetry Remote Sens. 144, 137–179. 
+https://doi.org/10.1016/j.isprsjprs.2018.06.021 [Article]. 
+Liang, X., Wang, Y., Py¨or¨al¨a, J., Lehtom¨aki, M., Yu, X., Kaartinen, H., Kukko, A., 
+Honkavaara, E., Issaoui, A.E.I., Nevalainen, O., Vaaja, M., Virtanen, J.P., Katoh, M., 
+Deng, S., 2019. Forest in situ observations using unmanned aerial vehicle as an 
+alternative of terrestrial measurements. Forest Ecosystems 6 (1), 20. https://doi.org/ 
+10.1186/s40663-019-0173-3 [Article]. 
+Lin, J., Wang, M., Ma, M., Lin, Y., 2018. Aboveground tree biomass estimation of sparse 
+subalpine coniferous forest with UAV oblique photography. Remote Sens. 10 (11), 
+1849. https://doi.org/10.3390/rs10111849, 1849. 
+Lisein, J., Bonnet, S., Lejeune, P., Pierrot-Deseilligny, M., 2014. Modeling of the forest 
+canopy by photogrammetry from the images acquired by drone. Rev. Fr. 
+Photogramm´etrie T´el´ed´etection 206 (206), 45–54 [Article]. https://www.scopus. 
+com/inward/record.uri?eid=2-s2.0-84949143580&partnerID=40&md5=52f6 
+77b7ee3564873038b9c584bc4a23.
+Lisein, J., Pierrot-Deseilligny, M., Bonnet, S., Lejeune, P., 2013. A photogrammetric 
+workflow for the creation of a forest canopy height model from small unmanned 
+aerial system imagery. Forests 4 (4), 922–944. https://doi.org/10.3390/f4040922 
+[Article]. 
+Liu, K., Shen, X., Cao, L., Wang, G., Cao, F., 2018. Estimating forest structural attributes 
+using UAV-LiDAR data in Ginkgo plantations. ISPRS J. Photogrammetry Remote 
+Sens. 146, 465–482.
+Maclaren, J.P., 2000. How much wood has your woodlot got? A Practical Guide To 
+Estimating The Volume And Value Of Planted Trees. New Zealand Forest Research 
+Institute.
+Manuri, S., Andersen, H.-E., McGaughey, R.J., Brack, C., 2017. Assessing the influence of 
+return density on estimation of lidar-based aboveground biomass in tropical peat 
+swamp forests of Kalimantan, Indonesia. Int. J. Appl. Earth Obs. Geoinf. 56, 24–35. 
+https://doi.org/10.1016/j.jag.2016.11.002.
+Mao, Z., Lu, Z., Wu, Y., Deng, L., 2023. DBH estimation for individual tree: two- 
+dimensional images or three-dimensional point clouds? Remote Sens. 15 (16), 4116.
+McGlade, J., Wallace, L., Reinke, K., Jones, S., 2022. The potential of low-cost 3D 
+imaging technologies for forestry applications: setting a research agenda for low-cost 
+remote sensing inventory tasks. Forests 13 (2), 204.
+Moe, K.T., Owari, T., Furuya, N., Hiroshima, T., 2020. Comparing individual tree height 
+information derived from field surveys, LiDAR and UAV-DAP for high-value timber 
+species in northern Japan. Forests 11 (2), 223.
+Murgaˇs, V., Saˇckov, I., Sedliak, M., Tun´ak, D., Chudý, F., 2018. Assessing Horizontal 
+Accuracy of Inventory Plots in Forests with Different Mix of Tree Species 
+Composition and Development Stage.
+Ni, W., Liu, J., Zhang, Z., Sun, G., Yang, A., 2015. Evaluation of UAV-Based Forest 
+Inventory System Compared with LiDAR Data.
+Ota, T., Ogawa, M., Mizoue, N., Fukumoto, K., Yoshida, S., 2017. Forest structure 
+estimation from a UAV-based photogrammetric point cloud in managed temperate 
+coniferous forests. Forests 8 (9), 343. https://doi.org/10.3390/f8090343 [Article]. 
+Persson, A., Holmgren, J., Soderman, U., 2002. Detecting and measuring individual trees 
+using an airborne laser scanner. Photogramm. Eng. Rem. Sens. 68 (9), 925–932.
+Pix4D, 2020. Support Pix4Dmapper manual: menu process > processing options... > 1. Initial 
+processing > matching. Pix4D. In: https://support.pix4d.com/hc/en-us/articles/20 
+5433155-Menu-Process-Processing-Options-1-Initial-Processing-Matching.
+Plowright, A., Roussel, J., 2021. Tools for analyzing remote sensing forest data. In: .
+Popescu, S.C., 2007. Estimating biomass of individual pine trees using airborne lidar. 
+Biomass and Bioenergy 31 (9), 646–655.
+Popescu, S.C., Wynne, R.H., 2004. Seeing the trees in the forest. Photogramm. Eng. Rem. 
+Sens. 70 (5), 589–604. https://doi.org/10.14358/PERS.70.5.589.
+Puliti, S., Breidenbach, J., Astrup, R., 2020. Estimation of forest growing stock volume 
+with UAV laser scanning data: can it be done without field data? Remote Sens. 12 
+(8), 1245.
+Puliti, S., Ene, L.T., Gobakken, T., Næsset, E., 2017. Use of partial-coverage UAV data in 
+sampling for large scale forest inventories. Rem. Sens. Environ. 194, 115–126.
+R.J.L. Hartley et al.                                                                                                                                                                                                                            
+Science of Remote Sensing 12 (2025) 100245 
+17 
+
+
+Puliti, S., Ørka, H.O., Gobakken, T., Næsset, E., 2015. Inventory of small forest areas 
+using an unmanned aerial system. Remote Sens. 7 (8), 9632–9654. https://doi.org/ 
+10.3390/rs70809632 [Article]. 
+R Core Team, 2022. R: A Language and Environment for Statistical Computing. R 
+Foundation for Statistical Computing, Vienna, Austria, Version 4.2.1. https://www. 
+R-project.org/. 
+Richardson, B., Vanner, A., Ray, J., Davenhill, N., Coker, G., 1996. Mechanisms of Pinus 
+radiata growth suppression by some common forest weed species. N. Z. J. For. Sci. 26 
+(3), 421–437.
+Rodríguez-Puerta, F., G´omez-García, E., Martín-García, S., P´erez-Rodríguez, F., Prada, E., 
+2021. UAV-based LiDAR scanning for individual tree detection and height 
+measurement in young forest permanent trials. Remote Sens. 14 (1), 170.
+Roussel, J.-R., Auty, D., Coops, N.C., Tompalski, P., Goodbody, T.R., Meador, A.S., 
+Bourdon, J.-F., De Boissieu, F., Achim, A., 2020. lidR: an R package for analysis of 
+Airborne Laser Scanning (ALS) data. Rem. Sens. Environ. 251, 112061.
+Saremi, H., Kumar, L., Turner, R., Stone, C., 2014a. Airborne LiDAR derived canopy 
+height model reveals a significant difference in radiata pine (Pinus radiata D. Don) 
+heights based on slope and aspect of sites. Trees (Berl.) 28, 733–744.
+Saremi, H., Kumar, L., Turner, R., Stone, C., Melville, G., 2014b. Impact of local slope and 
+aspect assessed from LiDAR records on tree diameter in radiata pine (Pinus radiata 
+D. Don) plantations. Ann. For. Sci. 71 (7), 771–780.
+Shin, P., Sankey, T., Moore, M., Thode, A., 2018. Evaluating unmanned aerial vehicle 
+images for estimating forest canopy fuels in a ponderosa pine stand. Remote Sens. 10 
+(8), 1266.
+Smaill, S.J., Garrett, L.G., Addison, S.L., 2023. Accelerator trial series in Pinus radiata 
+stands in New Zealand: trial establishment, site description and initial soil, forest 
+floor and tree data. Data Brief 47, 108991.
+Stewart, C., Hartley, R.J.L., 2022. A digital future for New Zealand forestry. N. Z. J. For. 
+66 (4), 7–13. http://nzjf.org.nz/abstract.php?volume_issue=j66_4&first_page=7.
+Surový, P., Almeida Ribeiro, N., Panagiotidis, D., 2018. Estimation of positions and 
+heights from UAV-sensed imagery in tree plantations in agrosilvopastoral systems. 
+Int. J. Rem. Sens. 39 (14), 4786–4800. https://doi.org/10.1080/ 
+01431161.2018.1434329 [Article]. 
+Torresan, C., Berton, A., Carotenuto, F., Di Gennaro, S.F., Gioli, B., Matese, A., 
+Miglietta, F., Vagnoli, C., Zaldei, A., Wallace, L., 2016. Forestry applications of UAVs 
+in Europe: a review. Int. J. Rem. Sens. 38 (8–10), 2427–2447. https://doi.org/ 
+10.1080/01431161.2016.1252477.
+Vauhkonen, J., Korpela, I., Maltamo, M., Tokola, T., 2010. Imputation of single-tree 
+attributes using airborne laser scanning-based height, intensity, and alpha shape 
+metrics. Rem. Sens. Environ. 114 (6), 1263–1276. https://doi.org/10.1016/j. 
+rse.2010.01.016 [Article]. 
+Wallace, L., Lucieer, A., Malenovský, Z., Turner, D., Vopˇenka, P., 2016. Assessment of 
+forest structure using two UAV techniques: a comparison of airborne laser scanning 
+and structure from motion (SfM) point clouds. Forests 7 (3), 62.
+Wallace, L., Musk, R., Lucieer, A., 2014. An assessment of the repeatability of automatic 
+forest inventory metrics derived from UAV-borne laser scanning data. IEEE Trans. 
+Geosci. Rem. Sens. 52 (11), 7160–7169. https://doi.org/10.1109/ 
+TGRS.2014.2308208, 6782747. 
+Wang, Y., Lehtom¨aki, M., Liang, X., Py¨or¨al¨a, J., Kukko, A., Jaakkola, A., Liu, J., Feng, Z., 
+Chen, R., Hyypp¨a, J., 2019. Is field-measured tree height as reliable as believed – a 
+comparison study of tree height estimates from field measurement, airborne laser 
+scanning and terrestrial laser scanning in a boreal forest. ISPRS J. Photogrammetry 
+Remote Sens. 147, 132–145. https://doi.org/10.1016/j.isprsjprs.2018.11.008 
+[Article]. 
+Watt, M.S., Jayathunga, S., Hartley, R.J., Pearse, G.D., Massam, P.D., Cajes, D., Steer, B. 
+S., Estarija, H.J.C., 2024. Use of a consumer-grade UAV laser scanner to identify 
+trees and estimate key tree attributes across a point density range. Forests 15 (6), 
+899.
+Wilkes, P., Shenkin, A., Disney, M., Malhi, Y., Bentley, L.P., Vicari, M.B., 2021. 
+Terrestrial laser scanning to reconstruct branch architecture from harvested 
+branches. Methods Ecol. Evol. 12 (12), 2487–2500. https://doi.org/10.1111/2041- 
+210X.13709 [Article]. 
+Yan, H., Bi, H., Li, R., Eldridge, R., Wu, Z., Li, Y., Simpson, J., 2006. Assessing climatic 
+suitability of Pinus radiata (D. Don) for summer rainfall environment of southwest 
+China. For. Ecol. Manag. 234 (1–3), 199–208.
+Yao, W., Krzystek, P., Heurich, M., 2012. Tree species classification and estimation of 
+stem volume and DBH based on single tree extraction by exploiting airborne full- 
+waveform LiDAR data. Rem. Sens. Environ. 123, 368–380. https://doi.org/10.1016/ 
+j.rse.2012.03.027 [Article]. 
+Yu, X., Hyypp¨a, J., Vastaranta, M., Holopainen, M., Viitala, R., 2011. Predicting 
+individual tree attributes from airborne laser point clouds based on the random 
+forests technique. ISPRS J. Photogrammetry Remote Sens. 66 (1), 28–37.
+Yurtseven, H., Akgul, M., Coban, S., Gulci, S., 2019. Determination and accuracy analysis 
+of individual tree crown parameters using UAV based imagery and OBIA techniques. 
+Measurement: Journal of the International Measurement Confederation 145, 
+651–664. https://doi.org/10.1016/j.measurement.2019.05.092 [Article]. 
+Zainuddin, K., Jaffri, M.H., Zainal, M.Z., Ghazali, N., Samad, A.M., 2016. Verification 
+Test on Ability to Use Low-Cost UAV for Quantifying Tree Height.
+Zhen, Z., Quackenbush, L., Zhang, L., 2016a. Trends in automatic individual tree crown 
+detection and delineation—evolution of LiDAR data. Remote Sens. 8 (4). https://doi. 
+org/10.3390/rs8040333.
+Zhen, Z., Quackenbush, L.J., Zhang, L., 2016b. Trends in automatic individual tree crown 
+detection and delineation—evolution of LiDAR data. Remote Sens. 8 (4), 333.
+R.J.L. Hartley et al.                                                                                                                                                                                                                            
+Science of Remote Sensing 12 (2025) 100245 
+18

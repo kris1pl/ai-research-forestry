@@ -4,10 +4,10 @@ type: Method
 description: "Detect tree tops from a 3D surface or CHM using local maximum (LM) filtering with a sliding / variable-size window to estimate height and support tree detection."
 tags: [detection, height, 3d, local-maxima]
 status: stable
-updated: 2026-10-23
+updated: 2026-10-26
 generated:
   by: agent:conifervision-wiki
-  at: 2026-10-23T12:00:00Z
+  at: 2026-10-26T12:00:00Z
 related_methods:
   - methods/chm-detection
   - methods/merge-detections
@@ -25,6 +25,14 @@ sources:
   - sources/paper-extraction_of_individual_tree_attributes_using_ultra-high-density_point_clouds_acquired_by_low-cost uav-lidar_in_eucalyptus_plantations
   - sources/paper-mean_height_or_dominant_height_–_what_to_prefer_for_modelling_the_site_index_of_estonian_forests
   - sources/paper-site index models for main forest-forming tree species in poland_forests-11-00301
+  - sources/paper-drone imaging-based wall-to-wall processing pipelines for individual tree level inventory in boreal forest plots
+  - sources/paper-flygburen laserskanning för skogliga skattningar-faktaskog_04_2014
+  - sources/paper-löv och lövblandbestånd - ekologi och skötsel-rytter_1998_redogorelse_8_100dpi
+  - sources/paper-predicting_crown_width_using_nonlinear_mixed-effec
+  - sources/paper-quality_description_lidar
+  - sources/paper-skoglig fjärranalys-ljungbergs_sv_20180824
+  - sources/paper-skogsinventering med flygburen laserskanning-appel_lucas
+  - sources/paper-uav-enabled evaluation of forestry plantations_a comprehensive assessment of laser scanning and photogrammetric approa-1-s2-0-s2666017225000513-main
   - sources/popescu-wynne-2004-seeing-the-trees
 ---
 # Local maxima
@@ -83,7 +91,34 @@ Full step-by-step pseudocode: [[sources/popescu-wynne-2004-seeing-the-trees#Repl
 | 0.75 m cylinder pseudo-waveform height refinement | not used |
 | Sample dominant/codominant trees (100 thickest/tallest per ha) | Aligned (LM picks local maxima in upper canopy layer) |
 | Evaluate dynamic GADA height curve at base age 100 | TBD (not yet implemented in pipeline post-processing) |
+| CanopyMaxima sliding window CHM detection | aligned |
+| Ground classification via FUSION groundfilter and LAStools lasnoise | not used (CSF ground filter in production) |
+| Watershed segmentation benchmark parity test | TBD |
+| Detect peaks on rasterized surface model / template correlation surface | Aligned (variable sliding-window LM precomputed GeoJSON) |
+| Extract segment morphology (width, height, width-to-height ratio) to model stem multiplicity | Not used (candidate for crown ownership and dense clumping logic) |
+| Fit baseline power function CW = a * DBH^b | not used |
+| Incorporate competition index (Hegyi or sum of relative DBH) and tree height into CW equation | TBD |
+| Parameterize species-level random effects on exponent and crown base | not used |
+| CHM rasterization (<0.5 m GSD) | Aligned |
+| Local maxima crown apex identification | Aligned |
+| Identify local canopy maxima on CHM | aligned |
+| Watershed / morphological crown boundary delineation around peaks | not used (replaced by DEIMv2 bboxes and geometric merge) |
+| CHM 3x3 moving-window mean smoothing | aligned |
+| Local maxima detection parameterized by stand planting spacing | aligned |
+| Filtering codominant leaders / forked stems prior to allometric extraction | not used |
 
+
+Pseudocode: [[sources/paper-uav-enabled evaluation of forestry plantations_a comprehensive assessment of laser scanning and photogrammetric approa-1-s2-0-s2666017225000513-main#Replication pseudocode]].
+
+Pseudocode: [[sources/paper-skogsinventering med flygburen laserskanning-appel_lucas#Replication pseudocode]].
+
+Pseudocode: [[sources/paper-skoglig fjärranalys-ljungbergs_sv_20180824#Replication pseudocode]].
+
+Pseudocode: [[sources/paper-predicting_crown_width_using_nonlinear_mixed-effec#Replication pseudocode]].
+
+Pseudocode: [[sources/paper-flygburen laserskanning för skogliga skattningar-faktaskog_04_2014#Replication pseudocode]].
+
+Pseudocode: [[sources/paper-drone imaging-based wall-to-wall processing pipelines for individual tree level inventory in boreal forest plots#Replication pseudocode]].
 
 Pseudocode: [[sources/paper-site index models for main forest-forming tree species in poland_forests-11-00301#Replication pseudocode]].
 
@@ -127,6 +162,10 @@ _(fill in: window size, resolution, thresholds, circular vs square, variable-win
 - How does the multi-attribute energy function for treetop detection compare in commission/omission rates against variable-window local maxima on CHMs in dense conifer stands?
 - What are the optimal sliding window sizes and maximum crown radius parameters for the DalPonte algorithm across different canopy density classes?
 - In dense stands on steep terrain, does horizontal displacement between local maxima apex candidates and bottom-up stem locations introduce systematic crown misattribution?
+- Does variable-window local maxima on high-density RGB CHMs produce significantly different omission patterns compared to marker-controlled watershed segmentation when evaluating dominant normal-forest cohorts?
+- Can segment width-to-height ratios be applied to local maxima clusters to flag multi-stem fused crowns before merge and CVAT ownership audits?
+- Can competition indices estimated directly from initial CHM peak density serve as non-spatial surrogates to dynamically bound variable search windows in local maxima detection?
+- Can automated geometric eccentricity or multi-peak clustering reliably identify and merge codominant leaders before crown metric extraction?
 ## Related
 
 - [[concepts/canopy-height-model]]

@@ -1,0 +1,536 @@
+Pine Crown and Trunk Diameter Dependence Research 
+Alexey S. Pyataev1,2, Andrey A. Vais1 
+ 
+1Reshetnev Siberian State University of Science and Technology, Krasnoyarsky Rabochy Av 31, Krasnoyarsk, Russia, 
+660037 
+2Branch of FBI «Russian Centre of Forest Health» – «Centre of Forest Health of Krasnoyarsk Krai», Akademgorodok 
+50A  building 2, Krasnoyarsk, Russia, 660036 
+ 
+Abstract. In this paper, we propose a method for estimating crown diameters from the 
+trunk diameters of Scots pine in high-full stands. In such conditions, computer vision 
+methods are not able to clearly distinguish the boundaries of the tree crown  under study 
+due to the significant mutual penetration of the crowns of trees. For this approximating 
+functions based on the diameters of the crowns of the steps in the thickness of the tree trunk 
+are built. 
+ 
+Keywords: tree crown, approximation, Pinus sylvestris. 
+1 
+Introduction 
+The tree crown plays a very important role in the various characteristics of forest stands determining process. Such 
+crown parameters as density and color characterize the health state of the tree, crown density affects species 
+competition between trees [1-3], canopy density influences on woodland canopy characteristics and crown fire potential 
+[4], even wood quality can depend on crown characteristics [5]. The crown of the tree is formed under the influence of 
+various indicators and factors, such as distance between crowns and degree of their mutual penetration, crown 
+illumination degree[6], winds speed and force [7,8], etc. 
+One of the automatic crown estimation problem solving variant is the analysis of visual data, for example, when 
+determining the category of a tree's sanitary condition. Using computer vision methods, it is often difficult to identify 
+the crown  boundaries of a particular tree in high-density plantation, as the crowns of trees penetrate significantly into 
+each other. Nowadays the tree crown evaluation  and conclusions could be made empirically by using a human 
+resource, therefore, the task of automatically evaluating the shape of a crown is relevant. Evaluation of the characteristic 
+diameters of the crown projections, for certain conditions of the growing areas of forest areas, can be performed using 
+static data depending on the diameter of the trunk [9]. A similar problem for Larix principis-rupprechtii was solved in 
+[10]. The proposed methods establish changes of the tree crown width and heights and tree trunk size dependence of 
+age and dominance of the tree in the plantation. In addition, in this work, a rough tree  model was constructed, 
+represented by geometric  primitives: two cones and a cylinder (Fig. 1) 
+ 
+ 
+Figure 1. Representation of Larix principis-rupprechtii model. 
+                                                          
+Copyright © 2019 for this paper by its authors. Use permitted under Creative Commons License Attribution 4.0 
+International (CC BY 4.0). 
+
+
+Parameters in Figure 1: H - tree height; D is the diameter of the tree trunk at chest level; CW - maximum crown 
+width; CL - total crown height; CH - height to the widest part of the crown; h1 is the height of the lower part of the 
+barrel; h2 is the height of the upper cone; h3 is the height of the lower cone; h4 is the height of the cylinder; R2 is the 
+radius of the base of the upper cone; R3 and R4 are the radii of the bases of the lower cone. In [11], researchers 
+searched for an allometric relationship between trunk diameter at chest height  and crown diameter of healthy trees from 
+young to aged stages of their growth. In this study the authors included only detached urban trees, that allows to obtain 
+data of the species growth potential in typical urban conditions, linking them with the estimated age of the trees. 
+In [12], the inverse problem is considered. The authors predict the diameter of the tree trunk, depending of its crown 
+size, by the materials obtained using aerial vehicle laser scanning. The authors of [13] evaluated models for predicting 
+tree heights depending on their diameters. 
+Thus, the crown diameters due to trunk diameters dependence assessment , specific for a certain completeness of a 
+plantation, will help to increase the reliability of determining the crown boundaries using computer vision methods from 
+images in high-density plantations. 
+2 
+Pine crown dependence due to trunk  
+In  paper [14] an fuzzy logic based approach was proposed to determine the category of tree state. Such an approach 
+allows to formalize the subjective representations of a specialist, on the basis of which decisions are made. The 
+following variables such as the degree of density of the crown, growth, the degree of drying of the branches, the decay 
+of the bark, and the color of the needles were used as linguistic variables. A spline approximation of piecewise linear 
+membership functions using Gauss functions was performed at work [15]. The crown state determination by specialist 
+is rather difficult in a wild because of complication of the crown boundaries visual determination for a particular tree 
+due to the high density of the forest canopy (Fig. 2).  
+ 
+ 
+ 
+Figure 2. High-density pine plantations. 
+As well, for the one health state category it could be large variability of crown density within the class: the crown 
+density difference can reach 30%. Therefore, the paper proposed using methods for assessing the dependence of the size 
+of the tree’s crown on the diameter of its trunk to estimate crown density and form. This will increase the accuracy of 
+living trees differentiation by categories of health state, especially since measuring trunk diameters is one of the 
+mandatory requirements when forest taxation or forest pathological surveys are conducted. 
+The close proximity of the growing trees affects the mutual crowns penetration, that affects their diameter, it will be 
+different from the average crown diameter of free-standing trees. The scientists of the Reshetnev Siberian State 
+University of Science and Technology measured the diameters of crowns and trunks in forest stands with high density 
+from plantations growing near the Kuragino in the Krasnoyarsk Krai. The data measurements were obtained about 400 
+pine trees of different diameters, ages, and health conditions. 
+Using a statistical analysis of the data measurements, the average dimensions of the pine crowns were derived, 
+grouped by the thickness steps of the trunks. In addition, statistical indicators were calculated, such as standard 
+deviation and standard error, showing a measure of the difference between the average crown diameters and the crown 
+diameters of the sample. Table 1 presents the calculated statistical indicators, grouped by trunk diameters, as well as the 
+number of trees in the calculations involved. 
+ 
+Table 1. The pine crowns average diameters distribution 
+ 
+Trunk 
+diameter 
+step,cm 
+Crown avg 
+diameter 
+Standard 
+deviation 
+Standard 
+error 
+Trees count 
+
+
+4 
+1,08 
+0,24 
+0,08 
+10 
+8 
+1,44 
+0,48 
+0,12 
+17 
+12 
+1,88 
+0,64 
+0,1 
+39 
+16 
+2,95 
+1,48 
+0,26 
+32 
+20 
+3,44 
+0,9 
+0,22 
+17 
+24 
+4,16 
+1,58 
+0,25 
+41 
+28 
+4,45 
+1,78 
+0,32 
+30 
+32 
+4,64 
+1,96 
+0,41 
+23 
+36 
+4,86 
+2,04 
+0,33 
+38 
+40 
+6,02 
+2,13 
+0,39 
+30 
+44 
+5,95 
+2,28 
+0,72 
+10 
+56 
+6,38 
+1,03 
+0,52 
+4 
+ 
+Figure 3 shows the original and averaged statistic data. A function based on averaged statistic data and describing 
+the dependence the pine crown diameter  from the trunk diameter is piecewise linear. 
+ 
+ 
+Figure 3. Regression line reflects crown diameter and thickness stage dependence. 
+3 
+Approximation by Gauss functions 
+For the convenience of calculations, the constructed piecewise linear function was approximated by Gauss 
+functions. Two approaches were considered: approximation by one function and approximation by several Gauss 
+functions. The first approach is presented by formula 1. 
+𝑔(𝑥) = 11𝑒
+−(𝑥−80)2
+2380
++ 0.5, 𝑥≤52 
+ 
+ 
+ 
+ 
+(1) 
+0 
+1 
+2 
+3 
+4 
+5 
+6 
+7 
+8 
+9 
+10 
+0 
+4 
+8 
+12 
+16 
+20 
+24 
+28 
+32 
+36 
+40 
+44 
+48 
+52 
+56 
+Pine crown diameters, m 
+Trunk thickness, cm. 
+Average pine crown diameters 
+Original data 
+
+
+ 
+Comparative graphs of the initial and approximated functions are presented in Figure 4.  
+ 
+ 
+Figure 4. The average crown diameters function by the Gauss function approximation.  
+Despite the visual difference, the calculations show that the average approximation error is 13%, which fits into the 
+acceptable limits. 
+Table 2. Approximation error of one function used. 
+ 
+Trunk 
+diameter 
+step,cm 
+Crown avg 
+diameter 
+g(x) 
+Error, % 
+Avg error, %  
+4 
+1,08 
+1,47 
+36,29 
+13,11 
+8 
+1,44 
+1,75 
+21,27 
+12 
+1,88 
+2,08 
+10,47 
+16 
+2,95 
+2,47 
+16,32 
+20 
+3,44 
+2,92 
+14,99 
+24 
+4,16 
+3,45 
+17,16 
+28 
+4,45 
+4,03 
+9,38 
+32 
+4,64 
+4,68 
+0,84 
+36 
+4,86 
+5,38 
+10,65 
+40 
+6,02 
+6,12 
+1,61 
+0 
+1 
+2 
+3 
+4 
+5 
+6 
+7 
+8 
+9 
+0 
+4 
+8 
+12 
+16 
+20 
+24 
+28 
+32 
+36 
+40 
+44 
+48 
+52 
+56 
+Pine crown diameters, m 
+Trunk thickness, cm. 
+Average pine crown 
+diameters 
+g(x) 
+
+
+44 
+5,95 
+6,88 
+15,67 
+52 
+8,19 
+8,41 
+2,73 
+ 
+The second variant of approximation by several Gauss functions is represented by formula 2.  
+ 
+𝑔(𝑥) = {
+3,9𝑒
+−(𝑥−30)2
+327,68 + 0,6, 𝑥≤28
+3.7𝑒
+−(𝑥−52)2
+112,5
++ 4,5, 𝑥∈(28,52]
+  
+ 
+ 
+ 
+(2) 
+ 
+The graphs of these functions are presented in Figure 5.  
+ 
+ 
+Figure 5. The average crown diameters function by the two Gauss function approximation. 
+The graphs show that the discrepancy between the values of the initial and approximated functions is insignificant. 
+This is confirmed by the calculations of approximation errors, which are shown in table 3. The average error value 
+indicates well-chosen approximating functions. 
+ 
+Table 3. Approximation error of two function used. 
+ 
+Trunk diameter 
+step,cm 
+Crown avg 
+diameter 
+g(x) 
+Error, % 
+Avg error, %  
+4 
+1,08 
+1,1 
+1,44 
+3,38 
+8 
+1,44 
+1,49 
+3,5 
+12 
+1,88 
+2,05 
+9,09 
+0 
+1 
+2 
+3 
+4 
+5 
+6 
+7 
+8 
+9 
+0 
+4 
+8 
+12 
+16 
+20 
+24 
+28 
+32 
+36 
+40 
+44 
+48 
+52 
+56 
+Pine crown diameters, m 
+Trunk thickness, cm. 
+Average pine crown diameters 
+g1 
+g2 
+
+
+16 
+2,95 
+2,74 
+6,97 
+20 
+3,44 
+3,47 
+1 
+24 
+4,16 
+4,09 
+1,58 
+28 
+4,45 
+4,45 
+0,06 
+32 
+4,64 
+4,61 
+0,74 
+4,05 
+36 
+4,86 
+4,88 
+0,41 
+40 
+6,02 
+5,53 
+8,16 
+44 
+5,95 
+6,59 
+10,84 
+52 
+8,19 
+8,2 
+0,12 
+ 
+Thus, using one-function approximation of the function describing the dependence the pine crown diameter  from 
+the trunk diameter shows an average approximation error of 13%, at the same time using of two-function  
+approximation gives an average error of 4%. 
+Table 4 shows the scattering of the pine crown diameters in steps of trunk thickness relative to the average value and 
+the values obtained by approximation. 
+ 
+Table 4. Comparative deviations of calculated pine crown diameters from the real ones. 
+ 
+Trunk diameter 
+step,cm 
+Standard 
+deviation 
+Deviation from 1 function 
+Deviation from 2 
+functions 
+4 
+0,2372 
+0,4805 
+0,2382 
+8 
+0,4803 
+0,5738 
+0,483 
+12 
+0,6435 
+0,674 
+0,6668 
+16 
+1,4817 
+1,5616 
+1,4968 
+20 
+0,8993 
+1,0456 
+0,9 
+24 
+1,5789 
+1,7362 
+1,5803 
+28 
+1,778 
+1,8282 
+1,778 
+32 
+1,9581 
+1,9585 
+1,9585 
+36 
+2,0398 
+2,1071 
+2,04 
+40 
+2,1273 
+2,1297 
+2,1845 
+44 
+2,2785 
+2,481 
+2,3777 
+52 
+4,13 
+4,1382 
+4,1301 
+ 
+By the results presented in tables 3 and 4, we can see that the two function approximation is most preferable, since it 
+is the most accurate. 
+4 
+Conclusion  
+In the study of high-density plantations using computer vision methods, difficulties arises in pine crown boundaries 
+determination, therefore, the approache proposed in this paper could be a pine crown parameters correcting factor in 
+case of contentious situations. 
+References 
+[1] Russell D.Kramer, Stephen C.Sillett, Robert Van Pelt, Jerry F.Franklin Neighborhood competition mediates crown 
+development of Picea sitchensis in Olympic rainforests: Implications for restoration management // Forest Ecology 
+and Management. 2019. Vol. 441 P. 127-143. 
+[2] Stephan Getzin, Kerstin Wiegand, Jens Schumacher, Francois A.Gougeon Scale-dependent competition at the 
+stand level assessed from crown areas // Forest Ecology and Management. 2008. Vol. 255 P. 2478-2485. 
+
+
+[3] Noriyuki Osada, Ryunosuke Tateno, Fujio Hyodo, Hiroshi Takeda Changes in crown architecture with tree height 
+in two deciduous tree species: developmental constraints or plastic response to the competition for light? // // 
+Forest Ecology and Management. 2004. Vol. 255 P. 337-347. 
+[4] Jonathan A.Thomas, Joseph D.White, Darrel B.Murray Tree species influence woodland canopy characteristics 
+and crown fire potential // Forest Ecology and Management. 2016. Vol. 362 P. 169-176. 
+[5] Luka Krajnc, Niall Farrelly, Annette M.Harte The influence of crown and stem characteristics on timber quality in 
+softwoods // Forest Ecology and Management. 2019. Vol. 435 P. 8-17. 
+[6] Ethan J.Coonen, Stephen C.Sillett Separating effects of crown structure and competition for light on trunk growth 
+of Sequoia sempervirens // Forest Ecology and Management. 2015. Vol. 358 P. 26-40. 
+[7] Shawn X.Meng, Shongming Huang, Victor J.Lieffers, Thompson Nunifu, Yuqing Yang Wind speed and crown 
+class influence the height–diameter relationship of lodgepole pine: Nonlinear mixed effects modeling // Forest 
+Ecology and Management. 2008. Vol. 256 P. 570-577. 
+[8] Vincent A. Webb, Mark Rudnicki, Shravan Kumar Muppa Analysis of tree sway and crown collisions for 
+managed Pinus resinosa in southern Maine // Forest Ecology and Management. 2013. Vol. 302 P. 193-199. 
+[9] Vais A.A. Form of tree crowns pine (pinus silvestris l.) in pure plantations high dense minusinsk basin of the 
+krasnoyarsk region // Conifers of the boreal area. 2017. Vol. XXXV, No. 3–4, P. 14–20. 
+[10] [9_1] Yan-yun Han, Bao-guo Wu, Kai-yi Wang, En-ying Guo, Chen Dong, Zhi-bin Wang Individual-tree form 
+growth models of visualization simulation for managed Larix principis rupprechtii plantation. // Computers and 
+Electronics in Agriculture. 2016. Vol. 123. P. 341–350. 
+[11] [9_2] Andrew Coombes, Jaime Martin, Duncan Slater Defining the allometry of stem and crown diameter of urban 
+trees. // Urban Forestry & Urban Greening. 2019. Vol.44. 
+[12] [9_3] Qing Xu, Bo Li, Matti Maltamo, Timo Tokola, Zhengyang Hou Predicting tree diameter using allometry 
+described by non-parametric locally-estimated copulas from tree dimensions derived from airborne laser scanning. 
+// Forest Ecology and Management. 2019. Vol.434 P. 205–212. 
+[13] [9_4] Ramazan Ozcelik, Quang V.Cao, Guillermo Trincado, Nilsun Gocer Predicting tree height from tree 
+diameter and dominant height using mixed-effects and quantile regression models for two species in Turkey // 
+Forest Ecology and Management. 2018. Vol. 419-420. P. 240-248. 
+[14] Pyataev A.S. The pine trees health state categories definition  by visual data on fuzzy logic. // Proceedings of the 
+International Scientific Conference «Regional Problems of Earth Remote Sensing» RPERS 2018, Krasnoyarsk, 
+Russia, 2018, P. 184–187. 
+[15] Pyataev A.S.,Redkin A.Y.,Pyataeva A.V. Tree state category identification for boreal area conifers using global 
+features estimation by fuzzy logic approach // CEUR Workshop Proceedings. 2019. Vol. 2391 P. 211–215.

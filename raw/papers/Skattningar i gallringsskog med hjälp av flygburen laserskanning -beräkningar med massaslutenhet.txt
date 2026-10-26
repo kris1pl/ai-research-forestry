@@ -1,0 +1,1453 @@
+Sveriges lantbruksuniversitet 
+ 
+ 
+ 
+ 
+ 
+ISSN 1401–1204 
+Institutionen för skoglig resurshushållning 
+  
+ISRN SLU–SRG–AR–304–SE 
+901 83  UMEÅ 
+ 
+www.srh.slu.se 
+Tfn: 090-786 81 00 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Skattningar i gallringsskog med hjälp av 
+flygburen laserskanning 
+-beräkningar med massaslutenhet 
+ 
+Airborne laser scanning data estimates for forests 
+that are candidates for thinning cuttings 
+- calculations of volume density 
+ 
+ 
+ 
+ 
+Martin Sjödin 
+ 
+ 
+Arbetsrapport 304 2010  
+ 
+ 
+ 
+ 
+Handledare: 
+Examensarbete 30hp D  
+ 
+ 
+ 
+ 
+Johan Holmgren  
+Jägmästarprogrammet 
+
+
+ 
+
+
+Sveriges lantbruksuniversitet 
+ 
+ 
+ 
+ISSN 1401–1204 
+Institutionen för skoglig resurshushållning 
+  
+ISRN SLU–SRG–AR–304–SE 
+Utgivningsort: Umeå 
+ 
+Utgivningsår: 2010 
+ 
+ 
+ 
+Skattningar i gallringsskog med hjälp av 
+flygburen laserskanning 
+-beräkningar med massaslutenhet 
+ 
+Airborne laser scanning data estimates for forests 
+that are candidates for thinning cuttings 
+- calculations of volume density 
+ 
+ 
+Martin Sjödin 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Examensarbete i skogshushållning med inriktning mot fjärranalys, 30hp 
+Jägmästarprogrammet 
+EX0628 
+Handledare: Johan Holmgren, SLU, Institutionen för skoglig resurshushållning, fjärranalys 
+Examinator: Håkan Olsson, SLU, Institutionen för skoglig resurshushållning, fjärranalys 
+
+
+2 
+ 
+Förord 
+ 
+Den här studien är ett examensarbete på D-nivå, omfattande 30 ETCS, och är en del av 
+Jägmästarprogrammet vid Sveriges Lantbruksuniversitet, Umeå. Studien har genomförts i 
+samarbete med Svenska Cellulosa Aktiebolaget, fortsättningsvis förkortat till SCA. 
+Studiens grundläggande syfte var att undersöka ett sätt att använda Lantmäteriets 
+nationella laserskanning till skogsbruksändamål i Norrland. 
+ 
+Under studiens gång har många personer kontaktats i olika sammanhang. Till alla er som 
+på det minsta sätt har varit i kontakt med mig i samband med examensarbetet vill jag som 
+student rikta stor erkänsla. Varje konversation har varit lärorik för mig och därmed bidragit 
+till den grund som studien vilar på. 
+Jag nämner särskilt följande personer: 
+Håkan Olsson 
+Håkan har varit examinator för examensarbetet. Håkan har 
+öppnat möjligheten till studien genom att sammanföra mig med 
+andra och tilldela resurser utifrån sin ledarposition. 
+Johan Holmgren 
+Johan har varit min handledare i examensarbetet. Johan har 
+varit tillgänglig över förväntan och visat ett stort engagemang, 
+både i själva studien och i att förmedla sin kunskap om 
+laserskanning samt dess tillämpning. Utan Johan hade studien 
+inte uppnått den kvalitet som den nu har. 
+Magnus Larsson 
+Magnus har varit min kontaktperson på SCA. Magnus öppenhet 
+att från SCA:s sida samarbeta med studien har tillgängliggjort 
+nödvändiga resurser och format inriktningen på praktisk 
+tillämpning.  
+Ola Lindgren 
+Ola har tillhandahållit utrustning för fältinventering. Stödet som 
+Ola gav i samband med fältinventeringen var enastående bra. 
+Olas erfarenhet av fältarbete och behandling av fältdata har 
+medfört hög kvalitet på hela fältinventeringen. 
+Sören Holm 
+Sörens kunskap i regressionsanalys och statistik har 
+tillsammans med hans engagemang utgjort en viktig del i 
+studien. 
+ 
+
+
+3 
+ 
+Sammanfattning 
+ 
+Lantmäteriets produktion av en ny nationell höjdmodell medför att laserdata, som också 
+kan användas för skattningar av skogliga variabler, blir tillgängligt över nästan hela 
+Sveriges landyta. Skogsbruket har behov av att använda en fjärranalysmetod för att bland 
+annat kunna identifiera den skog som ska gallras. I studien kombineras laserdata från 
+Lantmäteriets höjdmodell tillsammans med georefererade provytor i fält för att skatta 
+massaslutenhet och höjd i skog som kan vara aktuell för gallring. Dessa variabler används 
+också för att skatta volym och grundyta. Provytorna i fält utgör referens i bildandet av 
+regressionsfunktioner som används i beräkningar över större områden. I de beräknade 
+områdena domineras trädslagsfördelningen av tall eller contorta. Beräkningarna utförs i 
+rasterformat där varje rastercell får ett värde som motsvarar skattat värde på grundyta, 
+höjd, massaslutenhet och volym. Rastren kan sedan användas för att identifiera områden 
+som kan vara lämpliga för gallring utifrån skogsägarens kriterier. Resultaten visar på hög 
+noggrannhet i skattningarna. Den relativa standardavvikelsen för skattningarna inom 
+provytorna var 5,2 % för grundytevägd höjd, 5,5 % för skogens höjd samt mellan 15 – 16 
+% för grundyta, massaslutenhet och volym. Med anledning av den höga noggrannhet som 
+skattningar med hjälp av laserdata kan ge bör denna fjärranalysmetod vara till mycket stor 
+nytta inom skogsbruket. 
+ 
+Nyckelord: Fjärranalys, Gallring, Lantmäteriet, LiDAR, NNH. 
+ 
+
+
+4 
+ 
+Summary 
+ 
+This master’s thesis is a remote sensing study of an area-based method used to detect forest 
+in need of thinning by use of laser data and field samples. Only pine-dominated forest has 
+been included in the study and height limits were set to match empirical restrictions. The 
+study area was in the municipality of Älvsbyn (Latitude 65° 40´ N, Longitude 21° 00´ E), 
+in northern Sweden. 
+The Swedish authority Lantmäteriet is currently laser scanning most parts of Sweden, 
+providing new opportunities and applications. The primary aim of the national laser 
+scanning is to create a new elevation model, useful in consequence analysis of climate 
+changes. The laser data are, therefore, small footprint with 0.5 – 1 returns m-2 and classed 
+into ground, water or unknown. However the opportunity in question is that the same laser 
+data may also be useful for measuring forest, as shown in this study. The use of these laser 
+data may be advantageous for forestry since the data are provided to the public at a low 
+cost. 
+The direction of this study that differs from other laser studies is the use of volume density 
+(in Swedish, “massaslutenhet” ;Skogsord 1983) as a variable to describe the forest. If 
+volume density and height of the forest are known, the basal area and volume can be 
+calculated as well. These connections were founded by Jonsson (1914) and have been used 
+for forest estimation based on aerial photos (Åge 1983). Volume density index may also be 
+a useful variable in deciding whether to thin the forest or not. 
+Raster images of basal area, height, volume density, and volume were created over the 
+study area using estimations based on regression analysis. The accuracy was high inside 
+the field samples and over fitting could be rejected by cross validation. A model using the 
+raster images were created in the program ArcGIS to enable a user to decide what kind of 
+forest to identify for thinning operations. The output from this model was compared and 
+evaluated with an existing stand registry. 
+To summarize, this study manifests that low pulse density laser data can be used 
+successfully to find and measure pine-dominated forest in need of thinning operations. The 
+procedure described in this study may also be useful for detecting thinning for other types 
+of forests as well. 
+ 
+
+
+5 
+ 
+Innehållsförteckning 
+FÖRORD 
+2 
+SAMMANFATTNING 
+3 
+SUMMARY 
+4 
+INLEDNING 
+6 
+Bakgrund 
+6 
+Mål 
+8 
+MATERIAL & METODER 
+9 
+Studieområde 
+9 
+Fältdata 
+9 
+Inventeringsmetod 
+9 
+Positionsbestämning 
+9 
+Utläggning och inventering 
+10 
+Databehandling 
+11 
+Urval av provytor 
+12 
+Datas karaktär 
+12 
+Laserdata 
+15 
+Ingångsdata i studien 
+15 
+Databearbetning 
+15 
+Framtagning av funktioner 
+17 
+Regressionsanalys 
+17 
+Korsvalidering 
+18 
+Volym och grundyta 
+18 
+Beräkning av möjliga områden för gallring 
+18 
+Beräkningar med massaslutenhet 
+19 
+RESULTAT 
+20 
+Skattningar i provytorna 
+20 
+De beräknade områdena jämfört med beståndsregistret 
+23 
+DISKUSSION 
+25 
+REFERENSER 
+28 
+
+
+6 
+ 
+Inledning 
+Bakgrund 
+ 
+Lantmäteriet har fått uppdrag av Regeringen att skapa en ny nationell höjdmodell, efter ett 
+betänkande av Klimat och sårbarhetsutredningen (2007), för att underlätta 
+konsekvensanalyser av klimatvariationer i Sverige. Höjdmodellen, nedan benämnd NNH, 
+skapas med hjälp av flygburen laserskanning vars huvudsakliga syfte är att identifiera 
+marken, utan hänsyn till vegetationen (Lysell 2010). Dock är det även möjligt att använda 
+laserdata för fjärranalys av skog. Laserdata kan därför ses som en för skogsbruket 
+användbar biprodukt från NNH. I takt med att laserdata tillgängliggörs för allmänheten 
+skapas därmed ett unikt tillfälle för skogsägare att få en bättre bild av sitt skogsinnehav. 
+Detta förutsatt kännedom om samband mellan laserdata och den skog som ska analyseras. 
+Laserdata till NNH består av en stor mängd punkter med attributdata, punkterna är 
+positionerade i plan och höjd. Varje punkts position utgår från en laserstråles reflektion på 
+mark, vegetation eller annat föremål (Anon 2010). Laserdata avbildar på så sätt ett skannat 
+område inklusive vegetation vilken ofta är skog. Sedan mitten av 1990-talet har olika 
+studier genomförts i Norden för att undersöka möjligheten att med hjälp av laserskanning 
+skatta skogliga variabler som exempelvis medelhöjd, grundyta, volym, diameter och 
+grönkrongräns. Standardavvikelserna för dessa skattningar har ofta varit relativt låga, i 
+klass med objektiv fältinventering, speciellt för olika höjdmått (Næsset m.fl. 2004). 
+Principen för skattningarna är att karaktären på laserdata jämförs med känd skog för att 
+påvisa samband däremellan. Vanligtvis används data från fältinventerade provytor som 
+referens för skogens egenskaper, men data från skördare har också studerats (Larsson 
+2009). 
+Generellt sett finns det två inriktningar på flygburen laserskanning. Vid ”single tree – 
+metoden” används i regel laserdata med hög täthet, ungefär 10 laserpulser m-2 vilket 
+medför att enskilda träd kan identifieras (Hyyppä mfl. 2001). För varje enskilt träd kan 
+variabler som höjd, volym och krondiameter skattas för att sedan summeras på 
+beståndsnivå. Vid tillgång till glesare laserdata blir enskilda träd svåra att identifiera 
+(Holmgren 2004), då kan istället ”area – metoden” tillämpas. I den baseras beräkningarna 
+på skogens egenskaper inom hela provytor som inventeras och georefereras i fält. Utifrån 
+provytorna som vanligen tillhör ett visst stratum används empiriska samband mellan 
+fältdata och laserdata till den önskade skattningen. Sambanden kan därefter appliceras 
+inom en behandlingsenhet (Næsset 2002). En variant på ”area – metoden” är att inte 
+använda empiriska samband mellan fältdata och laserdata. I stället kopplas laserdata till ett 
+större antal provytor i fält och tillsammans med spektralt data från flygbilder väljs de 
+provytor som mest liknar den aktuella ytan. Metoden som kallas k-MSN möjliggör att även 
+trädslagsspecifika data skattas (Packalén mfl. 2007). För att metoden ska vara användbar 
+
+
+7 
+ 
+krävs ett stort antal provytor i fält, 400 – 500 stycken inom ett beräkningsområde1
+Det svenska skogsbruket har utifrån gällande lagstiftning ingen gräns för hur tät en skog 
+får vara eller att den måste avverkas före en viss ålder (SFS 1979:429). Skogsstyrelsen som 
+är förvaltningsmyndighet för frågor om skogsbruket (SFS 2009:1393) ställer därmed inget 
+krav på att röjning, gallring eller någon annan form av avverkning måste utföras. Därför 
+ligger beslut om gallring är lämpligt helt hos skogsägaren. 
+, och att 
+laserdata kompletteras med spektralt data från flygbilder. 
+Gallringsförsök i Sverige har visat att gallring inte är en given åtgärd i all typ av skog. I 
+vissa fall kan ogallrad skog producera högre värde på gagnvirket jämfört med gallrad skog. 
+Dock påpekas att självgallring kan leda till lägre andel gagnvirke i ogallrad skog när 
+tidpunkten för slutavverkning närmar sig. Försöken visar också att virkesuttag kan ske utan 
+att beståndets volymtillväxt minskas nämnvärt (Nilsson mfl. 2010). En av anledningarna 
+till att gallra skog är att skörda en del av träden innan de självgallras (Wallentin, 2007; 
+Agenstam, 2009). Med gallring kan också en del av skogsproduktionen utnyttjas långt före 
+skogens slutavverkningstidpunkt. 
+Åldersklassfördelningen i SCA:s skogsinnehav är ojämn med en stor andel skog i 
+ålderskategorin 21 – 50 år. För att i framtiden kunna leverera ett jämnt virkesflöde måste 
+skörden av dessa skogar spridas över tiden. Därför behöver en viss andel av skogen gallras 
+så att tiden för slutavverkning kan senareläggas utan att riskera hög självgallring och så att 
+en del av virkesutfallet sker i nutid2. Om målet med skogsskötseln är hög volymproduktion 
+ska skogsägarens eventuella gallringsbehov alltid utföras med början i den tätaste skogen. I 
+en tät skog kan virkesuttag ske utan att riskera betydande tillväxtförluster3
+För att få ett beslutsunderlag till gallring behöver data om skogsinnehavet insamlas. En 
+vanligt förkommande insamlingsmetod har varit den så kallade LMV-metoden (Åge 1983). 
+Med den sker beståndsindelning och preliminär skattning av skogens beskaffenhet med 
+hjälp av flygfoton, skogens höjd mäts med stereoteknik och tillsammans med visuellt 
+bedömd massaslutenhet skattas även grundyta och volym. I ett senare steg besöks 
+bestånden i fält där uppgifterna kontrolleras och justeras subjektivt. Kombinationen av 
+flygbildstolkning och markbesök ger ofta bra resultat men det är starkt beroende av hur väl 
+förrättningsmannen utför arbetet (Ståhl 1992). Data från inventeringen med LMV-metoden 
+har sedan använts för att rangordna bestånd efter skattad grundyta och höjd. Potentiella 
+gallringsobjekt väljs för ytterligare inventering, ibland med hjälp av helikopter. Från luften 
+kontrolleras trädslag, grundyta och stamantal ytterligare en gång. Vid behov kan även 
+landstigning ske för extra kontrollmätningar på marknivå (Johansson 2008). 
+. Dock ökar 
+risken för vindskador om gallring utförs sent (Persson 1975) vilket innebär att en maximal 
+höjd för förstagallring bör antas. 
+Eftersom efterfrågat beslutsunderlag gällande gallring syftar till att beskriva skogens täthet 
+och höjd kan laserdata från NNH vara en utmärkt alternativ informationskälla. Detta 
+                                                 
+1 Aasland, T. Business Area Director, Forestry. Blom Geomatics AS. Oslo, Norge. 
+  Personligt möte. 2010-12-01. 
+2 Larsson, M. Skogshushållningschef, Stab skogsvård. SCA Skog AB. Sundsvall. 
+  Telefonsamtal. Augusti 2010. 
+3 Nilsson, U. Professor, Institutionen för sydsvensk skogsvetenskap, Sveriges Lantbruksuniversitet. 
+  Telefonsamtal. September 2010. 
+
+
+8 
+ 
+grundat på att laserdata från NNH består av höjdpositionerade punkter som fördelas olika 
+beroende på vegetationens täthet och höjd. En skogs täthet och höjd behöver dock relateras 
+till ett eller flera kända mått för att kunna beskrivas. Ett vanligt mått att beskriva skogens 
+täthet med är grundyta, vilken tillsammans med skogens höjd och ålder är ingångsvariabel 
+i skogsstyrelsens gallringsmallar. Skogsstyrelsens gallringsmallar rekommenderar en viss 
+grundyta i skogen före och efter gallring beroende på dess höjd samt ståndortsindex (Anon 
+1985). Underlaget till rekommenderad grundyta är dock okänt eftersom det PM som 
+gallringsmallarna refererar till inte har blivit skrivet4. För tillämpning med laserskanning 
+uppkommer ytterligare en nackdel eftersom det är svårt att skatta skogens ålder och 
+därmed ståndortsindex med laserdata5
+ 
+Målet med studien är att med hjälp av laserdata från Lantmäteriets nationella laserskanning 
+tillämpa ”area-metoden” för att skatta höjd och massaslutenhet i gallringsskog. Samt att 
+utifrån dessa variabler beräkna grundyta och volym i samma område. 
+. Därtill är gallringsmallarna framtagna för att vara 
+ett stöd till subjektiv gallringsinventering (Anon 1985) och därmed inte ett beslutsunderlag 
+vid enbart fjärranalys. Hursomhelst är det tänkbart att avgöra gallring enbart utifrån 
+grundyta tillsammans med höjd, men för att jämföra relativ täthet i skog med olika höjd 
+måste också olika grundyta antas vilket gör saken mer komplex. Ett alternativ är att 
+använda variabeln höjdkvadratsumma, vilken skrivs ∑H2 och är den kvadrerade övre 
+höjden multiplicerad med stamantalet. Dess tillämpning med laserdata har studerats av 
+Halvarsson (2008). Studien visade samband mellan ∑H2 och bedömt gallringsbehov, men 
+tillämpningen kan ifrågasättas. Eftersom variabeln är kvadratsumman av alla enskilda träds 
+höjder är den logiskt sett beroende av stamantalet. Just stamantalet har visat sig vara en 
+variabel som är svår att skatta med laserdata (Næsset 2002, 2004). Troligen beror det på att 
+från en vertikal vinkel är sällan själva stammen exponerad, istället är det grenarna som 
+syns och de kan täcka en viss yta oberoende av stamantal. En variabel som varken är 
+beroende av stamantal, bonitet eller ålder är massaslutenhet. Massaslutenhet är en kvot 
+som speglar befintlig volym i en skog jämfört med den volym som en fullsluten skog hade 
+hållit vid samma höjd (Jonsson 1914). En fördel med variabeln är att skogens höjd 
+påverkar hur stor volym som ger en viss massaslutenhet. Volymen är i sig beroende av 
+grundytan vilket innebär att en högre skog också behöver ha en högre grundyta för en viss 
+massaslutenhet. Därför kan massaslutenhet vara ett bra mått för att avgöra beslut om 
+gallring när skogens slutenhet eller täthet är i fokus och olika områden ska jämföras. Vid 
+kännedom om skogens massaslutenhet tillsammans med dess höjd kan även variabler som 
+grundyta och volym beräknas. Dessa samband är de som tillämpats i den tidigare nämnda 
+LMV-metoden. 
+ 
+Mål 
+ 
+ 
+                                                 
+4 Bäcke, J-O. Skoglig handläggare, Enheten för skogspolicy och analys, Skogsstyrelsen. 
+  Telefonsamtal. September 2010. 
+5 Heimdal - Iversen, E. Tjänsteman, COWI AS. Kongsberg, Norge. 
+  Personligt möte. 2010-12-01. 
+
+
+9 
+ 
+Material & Metoder 
+Studieområde 
+ 
+Det geografiska läget för det studerade området är SCA:s skogsinnehav i trakterna öster 
+om Älvsbyn (Latitud 65° 40´ N, Longitud 21° 00´ E), Norrbotten. Studieområdet omfattar 
+drygt 20 000 ha varav nära 6 000 ha består av skog i åldersintervallet 21 – 50 år, vilken i 
+medeltal har en trädslagsfördelning på 56 % tall (Pinus sylvestris), 24 % contorta (Pinus 
+contorta), 11 % gran (Picea abies) samt 9 % lövträd (Anon). Rådande skogsbruksmetoder 
+har medfört att i stort sett alla bestånd uppkomna efter mitten av 1900-talet är likåldriga 
+och i huvudsak enskiktade (Hagner 2005). Detta gäller också för de skogsområden som 
+denna studie avser. Enbart skog vars grundyta till minst 70 % består av tall eller contorta 
+har inkluderats i studien. 
+ 
+Fältdata 
+ 
+Inventeringsmetod 
+Inventeringen av referensytor i fält har genomförts enligt Indelningpaketets (Jonsson mfl. 
+1993) standardinstruktion för fältinventering (Lindgren 2009). På provytor med 8 meters 
+radie registrerades brösthöjdsdiameter och trädslag för alla levande träd grövre än 5 cm i 
+brösthöjd. Även klenare träd inkluderades om de av inventeraren bedömdes vara vitala, 
+fristående och kunna växa till massavedsdimension. Bland de levande träden slumpades 
+provträd ut för vilka även höjd och ålder registrerades, i medeltal 3,8 träd per provyta. För 
+de två grövsta träden inom 10 meter från provytecentrum registrerades höjd för beräkning 
+av skogens övre höjd. Datainsamlingen genomfördes med hjälp av Juniper Allegro CE 
+handdator som var kopplad till Haglöf Mantax Digitech dataklave. I handdatorn användes 
+ett standardprogram för Indelningspaketets inventeringsrutin. För mätning av trädhöjd och 
+provyteradie användes Vertex III från Haglöf. Åldern mättes genom att räkna årsringar 
+med hjälp av tillväxtborr. Inom provytan bestämdes också ståndortsboniterat 
+ståndortsindex (Hägglund mfl. 1982). 
+ 
+Positionsbestämning 
+Positionsdata för efterbearbetning av typen L1 1s loggades under minst 20 minuter på varje 
+provyta med Magellan Mobile Mapper CX eller Thales Mobile Mapper Pro. Under denna 
+tid var enheten placerad på ett stativ cirka två meter över marken. Efterbearbetningen 
+gjordes med Mobile Mapper Office v. 3.40 mot Swepos referensstation i Älvsbyn som låg i 
+intervallet 6 – 23 km från provytorna. För att upptäcka eventuella förväxlingar av 
+provytornas identitet har realtidskoordinater för varje provyta registrerats i fält och sedan 
+jämförts med de efterbearbetade positionsberäkningarna. 
+ 
+ 
+ 
+
+
+10 
+ 
+Utläggning och inventering 
+Utläggning och inventering av provytorna har genomförts vid två tillfällen med olika 
+stratifieringar och utläggningsmetoder men med samma inventeringsmetod. Sammanlagt 
+har 110 provytor inventerats. 
+Den första inventeringen genomfördes i början av oktober 2009 oberoende av denna studie 
+och i regi av SCA. Stratum för inventeringen var skog med en registrerad ålder av 21 – 50 
+år enligt beståndsregistret (Anon). Ett kvadratförband på 1850 meter bestående av 
+klustercentrum lades ut över hela studieområdet. Utifrån varje klustercentrum placerades 4 
+provytor ut med ett kvadratförband på 150 meter. De provytor som hamnade i bestånd vars 
+registerålder var inom stratumet valdes för inventering, vilket resulterade i 56 provytor 
+fördelade på 21 kluster. Navigering i fält till provytorna gjordes med hjälp av Magellan 
+Mobile Mapper CX eller Thales Mobile Mapper Pro. Vid ankomstlarm i GPS-mottagaren 
+som var inställt på 10 meter från provytecentrum stannade inventeraren i minst 30 
+sekunder för att få en god positionsbestämning. Därefter mättes det kvarvarande avståndet 
+till provytan med måttband och magnetkompass utifrån GPS-mottagarens position 
+(Lindgren 2009). 
+Den andra inventeringen genomfördes i mitten av augusti 2010. Stratifieringen till denna 
+omgång utfördes genom utsökning i beståndsregistret (Anon) utifrån olika kriterier till 20 
+stycken stratum varav det tjugonde tilldelades gallrad skog. För samtliga stratum var 
+kriterierna att registrerad ålder skulle vara 21 – 50 år och att grundytevägd medelhöjd var 8 
+– 16 m. Stratum 1 – 19 hade också kriteriet att bestånden skulle vara ungskogstaxerade år 
+2008 eller senare. De 19 stratum gällande dessa bestånd bestämdes i ett första steg utifrån 
+registrerad grundyta där indelning skedde i 2 m2 intervall från en grundyta på 10 m2/ha till 
+grundytan 26 m2/ha. Bestånd med grundyta under 10 m2/ha respektive över 26 m2/ha 
+utgjorde begränsningen för indelningen. Inom intervallen gjordes sedan ytterligare en 
+indelning efter höjd där beståndens medelhöjd utgjorde indelningsgräns, undantaget 
+intervallet grundyta över 26 m2/ha där bestånden ansågs vara för få för ytterligare 
+indelning. För stratum 20 sattes förutom nämnda kriterier också att beståndet skulle vara 
+registrerat i utvecklingsklass 60 vilket innebär utförd gallring enligt beståndsregistret samt 
+att det sammanföll med registret över utförda gallringar (Anon2). Det senare för att 
+försäkra sig om att inventeringen verkligen planerades till gallrad skog. Stratifieringen till 
+20 olika stratum gav en god spridning i skogar med olika grundyta och även i höjd för 
+olika grundytevärden, vilket visas i tabell 1. I medeltal fanns närmare 12 bestånd inom 
+varje stratum varav endast ett fåtal inte hade ståndortsindex angivet med tall eller contorta. 
+Av de 56 provytorna från den första inventeringen kunde 37 av dessa inkluderas efter 
+samma kriterier som bestånden i de olika stratumen med tillägget att det boniterade 
+trädslaget var tall. De stratum där fler än fyra av de befintliga provytorna inkluderades 
+undantogs från denna inventeringsomgång, vilket var tre stycken. Provyteutläggning 
+gjordes genom att bestånden i de kvarvarande 17 stratumen tilldelades ett slumptal för 
+uttagning till område för provyteutläggning. De bestånd i respektive stratum med lägst 
+slumptal och med angivet ståndortsindex tall eller contorta valdes till område för 
+utläggning av provytorna. 
+ 
+
+
+11 
+ 
+ 
+Figur 1. Inventerade provytor från första omgången och bestånd till den andra omgången. 
+Figure 1. Field samples from the first sample set and selected stands for the second sample set. 
+ 
+I den centrala delen av de utvalda bestånden placerades en punkt ut med hjälp programmet 
+ArcGIS. Punkten utgjorde sedan ett klustercentrum för fyra potentiella provytor vilket 
+sammanlagt medförde totalt 68 potentiella provytor för den andra inventeringsomgången. 
+Provytornas belägenhet sattes till 50 meter från klustercentrum i vardera av de fyra 
+väderstrecken med början åt norr därefter söder, väster och slutligen öster. I fält 
+lokaliserades klustercentrum med hjälp av Magellan Mobile Mapper CX och punkten 
+markerades i terrängen. Utifrån denna punkt utmättes sedan centrum för provytorna med 
+hjälp av magnetkompass. En yta inventerades inte om den hamnade utanför beståndet som 
+utgjorde område för provytorna, eller om det var uppenbart att trädslagsfördelningen inte 
+dominerades av tall eller contorta, eller att provytan saknade träd med brösthöjdsdiameter 
+över 50 millimeter. Om inte minst två ytor kunde inventeras användes klustercentrum som 
+potentiellt provytecentrum för en extra yta. I de fall då det ändå saknades inventeringsbara 
+ytor valdes ett nytt bestånd till att utgöra provyteområde, dock inte om inventeraren kunde 
+finna avsedd skog för ytorna i närområdet i vilken minst två ytor kunde placeras subjektivt. 
+Resultatet av den andra fältinventeringen var att 54 av de 68 potentiella provytorna kunde 
+inventeras. 
+ 
+Databehandling 
+Fältinventerade data behandlades av OL-Skog i ett rutinprogram för indelningspaketet och 
+följer därmed indelningspaketets generella standard6
+                                                 
+6 Lindgren, O. Tjänsteman, OL Skogsinventering AB. Östersund. 
+  Personligt möte, augusti 2010. 
+. Under databehandlingen 
+tillväxtjusterades provytorna som inventerades under år 2010 med - 0,9 
+vegetationsperioder. Från de båda inventeringsomgångarna levererade OL-skog 
+behandlade fältdata i .dbf-format. 
+5
+7
+9
+11
+13
+15
+17
+0
+5
+10
+15
+20
+25
+30
+35
+40
+Höjd
+Grundyta
+Ytor från första omgången
+Bestånd för utläggning i andra omgången
+
+
+12 
+ 
+Urval av provytor 
+Efter genomförd inventering exkluderades en del av de 110 inventerade provytorna från 
+användning i studien. Dessa var de vars grundyta inte utgjordes av minst 70 % tall eller 
+contorta. Trädslagen kunde utgöra denna andel var för sig eller tillsammans. Ytor där 
+gallring utförts exkluderades också. Resultatet var att 85 av de 110 ytorna återstod. 
+ 
+Datas karaktär 
+De variabler från utvalda provytor som har använts i studien var grundytevägd medelhöjd, 
+övre höjd, volym samt grundyta. Därtill har massaslutenheten beräknats utifrån provytans 
+grundytevägda höjd och volym. Provytornas altitud var mellan 28 – 256 meter över havet. 
+Nedan behandlas enbart de utvalda provytorna. 
+ 
+Lådagram visar spridningen i data. Den vertikala linjen i centrum är medianvärde för 
+provytorna och tillsammans med de andra två vertikala linjerna avgränsas kvartilerna i 
+data. De horisontella linjernas yttre gräns på respektive sida är datas minimum och 
+maximum. Eventuellt stjärntecken visar data med stor avvikelse, även kallad uteliggare 
+eller outlier. 
+ 
+ 
+Figur 2. Lådagram som visar grundytevägd höjd i decimeter för provytorna. 
+Figure 2. Box plot that shows the basal area weighted height in decimeters, for the field samples. 
+ 
+
+
+13 
+ 
+Den grundytevägda medelhöjden för träden i provytorna hade ett medelvärde på 99 
+decimeter och en standardavvikelse på 21 decimeter. 
+ 
+ 
+Figur 3. Lådagram som som visar övre höjd i decimeter för provytorna. 
+Figure 3. Box plot that shows the dominant height in decimeters, for the field samples. 
+ 
+Övre höjd för träden i provytorna hade ett medelvärde på 116 decimeter och en 
+standardavvikelse på 23 decimeter. 
+ 
+ 
+Figur 4. Lådagram som visar volym i m3
+sk ha-1 för provytorna. 
+Figure 4. Box plot that shows the volume in m3
+sk ha-1, for the field samples. 
+ 
+
+
+14 
+ 
+Volymen i provytorna hade ett medelvärde på 84 m3sk ha-1 och en standardavvikelse på 
+51 m3sk ha-1. 
+ 
+Figur 5. Lådagram som visar grundytan i m2 ha-1 för provytorna. 
+Figure 5. Box plot that shows the basal area in m2 ha-1, for the field samples. 
+ 
+Grundytan i provytorna hade ett medelvärde på 15 m2 ha-1 och en standardavvikelse på  
+7 m2 ha-1. 
+ 
+Figur 6. Lådagram som visar massaslutenheten i provytorna. 
+Figure 6. Box plot that shows the volume density, for the field samples. 
+ 
+Massaslutenheten i provytorna hade ett medelvärde på 0,6 och en standardavvikelse på 0,2. 
+
+
+15 
+ 
+Laserdata 
+ 
+Ingångsdata i studien 
+De laserdata som har använts i studien är producerat till den nya nationella höjdmodell som 
+Lantmäteriet skapar. Data täcker ett område på 50 kilometer i nordlig riktning och 25 
+kilometer i östlig riktning utifrån koordinaterna E 790 000 N 7 280 000 i SWEREF 99 TM. 
+ 
+Tabell 1. Information om laserdata 
+Table 1. Laser data information 
+Datum för skanning 
+21, 22 och 24 Augusti 2009, 10 September 2009 
+Flyghöjd 
+2300 meter 
+Träffyta på mark 
+0,5 - 1 meter 
+ 
+Höjdnoggrannhet 
+0,056 meter 
+Kontrollyteantal i höjd 
+ 9 
+Kontrollyteantal i plan 
+ 6 
+Klassificering av punkter 
+01=Oklassificerade, 02=Mark, 09=Vatten 
+Klassifikationsprogramvara TerraScan 009. 006 
+Leveransform 
+.las-filer 
+Operatör 
+Blom 
+Punkttäthet 
+0,5 - 1 punkt per kvadratmeter 
+Referenssystem 
+Plan:  SWEREF 99TM 
+Höjd: RH 2000 
+Returantal 
+ 4 
+Skanner 
+Leica ALS 60 
+Skanningsvinkel 
+± 20° 
+Stråkövertäckning 
+20 % 
+Övrigt attributdata 
+Intensitet, Skanningsvinkel 
+ 
+Lantmäteriet utför inte skanningen i egen regi, skanningen upphandlas istället av firmorna 
+Blom, COWI och Finnmap. De tillgängliga laserskannrarna är av fabrikat och modell; 
+Leica ALS 50 – ІІ, Leica ALS 60, Leica ALS 60 – ІІ, Optech ALTM Gemini (Anon 2010). 
+Databearbetning 
+I databearbetningen har olika program skapade i C# och C++ använts. Programmen har 
+varit tillgängliga inom avdelningen för fjärranalys på institutionen för skoglig 
+resurshushållning, Sveriges Lantbruksuniversitet i Umeå. 
+ 
+I det första steget med bearbetningen sorterades las-filerna (Anon 2009) utifrån geografisk 
+position i en kilometer stora kvadrater. Till vare kvadrat skapades en indexfil med 
+koordinater som sedan kunde läsas av andra program för snabb tillgång till data för ett 
+specifikt geografiskt område. 
+Utifrån provytornas positioner beräknades 51 olika laservariabler inom 8 meters radie så 
+att dessa kunde appliceras till varje provyta. 
+För det område som sammanföll med SCA:s innehav beräknades sedan samma 
+laservariabler i ett 10 meters raster. Från centrum av varje rasterpixel användes laserdata 
+inom 8 meters radie för att bestämma pixelns värde. 
+
+
+16 
+ 
+Som markhöjdmodell användes ytan mellan de tre närmsta markklassade laserpunkterna 
+för varje position. I övrigt har alla returer använts om inte annat är angivet i laservariabelns 
+definition. 
+ 
+Tabell 2. Definition och kommentar till de beräknade laservariablerna 
+Table 2. Calculated variables from laser data, definitions and comments 
+Variabel 
+Definition 
+Kommentar 
+Intensitetskvot 
+Kvot mellan den summerade intensiteten 
+inom ett intervall av relativ höjd och summan 
+av intensitet från alla laserpunkter. 
+Beräknades för höjderna 10 
+– 90 % med 10 % intervall. 
+Intervallkvot 
+Kvot mellan antalet oklassificerade punkter i 
+ett intervall mellan en relativ höjd till en 10 
+% högre höjd och det totala antalet.  
+Beräknades för höjderna 10 
+– 90 % med 10 % intervall. 
+Medelhöjd 
+Medelhöjd över mark för de oklassificerade 
+laserpunkterna. 
+ 
+Percentiler 
+Den höjd över mark som en viss 
+procentandel av antalet oklassificerade 
+laserpunkter var belägna under.  
+Beräknades i intervall om 10 
+% samt för 95 %. 
+Proportionskvot 
+Kvot mellan antalet oklassificerade 
+laserpunkter över en viss relativ höjd över 
+mark och det totala antalet.  
+Beräknades med höjderna 10 
+– 60 % med 10 % intervall. 
+Proportionskvot 1 
+Proportionskvot med enbart laserpunkter från 
+första returer. 
+Beräknades med höjderna 10 
+– 60 % med 10 % intervall. 
+Skanningsvinkel 
+Medeltalet för laserpunkternas registrerade 
+skanningsvinkel i absolut tal. 
+ 
+Standardavvikelse Standardavvikelse i höjd mellan 
+laserpunkterna. 
+ 
+Tröskelkvot 
+Kvot mellan antalet oklassificerade 
+laserpunkter över en viss höjd och det totala 
+antalet.  
+Beräknades för höjderna 2, 3 
+och 5 meter. 
+Tröskelkvot 1 
+Tröskelkvot med enbart laserpunkter från 
+första returer. 
+Beräknades för höjderna 2, 3 
+och 5 meter. 
+Vegetationskvot 
+Kvot mellan antalet oklassificerade 
+laserpunkter och det totala antalet. 
+  
+ 
+ 
+ 
+ 
+
+
+17 
+ 
+Framtagning av funktioner 
+Regressionsanalys 
+I programmet Minitab 16 användes regressionsanalys för att bilda funktioner som med 
+hjälp av laserdata kunde skatta massaslutenhet, grundytevägd höjd och övre höjd. De data 
+som användes var de utvalda provytorna tillsammans med de beräknade laservariablerna 
+för dessa. Samtliga laservariabler testades mot provytornas fältdata men endast ett fåtal 
+valdes ut för att användas i de slutliga funktionerna. Vid användning av fler laservariabler i 
+funktionerna kunde bättre anpassning till fältdata uppnås. Flertalet laservariabler 
+inkluderades dock inte på grund av risk för överanpassning. Dessutom eftersträvades att 
+inkluderade variabler skulle ha en logisk förklaring till respektive skattad variabel. 
+Regressionsanalysen skedde med manuella metoder där empiriska samband påvisades 
+grafiskt och statistiskt. 
+De ingående variablernas betydelse för skattningen kunde påvisas utifrån respektive P-
+värde (Samuels mfl. 2003). Sinus skanningsvinkel i funktionen för massaslutenhet hade ett 
+P-värde som var 0,001, övriga P-värden för inkluderade variabler var 0,000. 
+ 
+Tabell 3. Funktioner framtagna med regressionsanalys 
+Table 3. Functions from the regression analys 
+Skattad variabel 
+Funktion 
+Massaslutenhet 
+- 0,244 + 0,0383 * percentil 90 + 1,32 * Proportinskvot 40  
+- 0,231 * ( Sinus (( Skanningsvinkel * Π) / 180)) 
+Grundytevägd höjd 
+16,3 + 5,23 * percentil 70 + 4,50 * percentil 95 
+Övre höjd 
+21,1 + 4,49 * percentil 90 + 4,83 * percentil 100 
+ 
+I tabell 3 framgår att laservariabler som var beroende av skogens höjd hade stor betydelse 
+för samtliga skattningar. Funktionen för massaslutenhet innehöll därutöver proportionskvot 
+40 som speglade vegetationens densitet samt sinus absolutbeloppet av skanningsvinkeln. 
+För att beskriva funktionernas anpassning till data från provytorna användes den i 
+regressionsanalysen skattade standardavvikelsen benämnd S, multipla 
+korrelationskoefficienten benämnd R2 samt residualkvadratsumman benämnd SSres. Dessa 
+visas i tabell 4. 
+ 
+Tabell 4. Beskrivning av funktionernas anpassning till data från provytorna 
+Table 4. Description of the regression equations adaption to the field samples 
+Funktion 
+S 
+R2 
+SSres 
+Massaslutenhet 
+0,09597 
+82,8 % 
+0,7460 
+Grundytevägd höjd 
+5,22654 
+92,2 % 
+3415 
+Övre höjd 
+6,45315 
+94,1 % 
+2240 
+ 
+ 
+ 
+
+
+18 
+ 
+Korsvalidering 
+För att bekräfta att ingen överanpassning hade skett i regressionsanalysen korsvaliderades 
+de framtagna funktionerna genom att beräkna kvoten Q. I Minitab kan Q beräknas genom 
+att dividera PRESS-värdet med residualkvadratsumman. En simuleringsstudie av Holm 
+(2008) har visat hur stort medelvärde Q har då överanpassning med säkerhet kan uteslutas. 
+Utifrån detta medelvärde på Q rekommenderas ett maximalt värde för att utesluta 
+överanpassning vilket benämndes G. Värdet på G interpolerades utifrån studiens resultat 
+och jämfördes med värdet på Q för de framtagna regressionsfunktionerna. 
+ 
+Tabell 5. Lägre värde på Q jämfört med G visar att överanpassning kunde uteslutas 
+Table 5. Smaller value of Q than G rejects over fitting in the regression equation 
+Testad funktion 
+PRESS 
+Q 
+G 
+Massaslutenhet 
+0,8386 
+1,12 
+1,20 
+Grundytevägd höjd 
+3685 
+1,08 
+1,15 
+Övre höjd 
+2472 
+1,10 
+1,15 
+ 
+Volym och grundyta 
+Volym och grundyta beräknades utifrån skattningarna av grundytevägd höjd och 
+massaslutenhet. För dessa antogs att skogen enbart bestod av tall eller contorta. Sambanden 
+mellan grundytevägd höjd, massaslutenhet, volym och grundyta redovisas under rubriken –
+Beräkningar med massaslutenhet. 
+ 
+Beräkning av möjliga områden för gallring 
+ 
+Utifrån rastret med variablerna framtagna i C# och C++ tillämpades funktionerna från 
+regressionsanalysen så att raster med grundytevägd höjd, övre höjd och massaslutenhet 
+kunde beräknas, därmed också volym samt grundyta. Detta gjordes i programmet Erdas 
+Imagine. 
+De områden i rastren som inte överensstämde med beståndsregistret (Anon) där registrerad 
+grundyta var minst 70 % tall eller contorta, var för sig eller tillsammans, maskerades bort i 
+programvaran ArcGIS. I samma program skapades sedan binära raster utifrån kriterier mot 
+rastren med de skogliga variablerna. Ställda kriterier var ekvivalenta med de som av 
+förrättningsmannen ansågs indikera skog för förstagallring. Därefter multiplicerades de 
+binära rastren med varandra och där samtliga kriterier sammanföll fick den nya rastercellen 
+värdet 1, annars 0 och rastercellen raderades. De kvarvarande rastercellerna med värde 1 
+omvandlades till polygoner som aggregerades om avståndet mellan dem var kortade än 50 
+meter och det aggregerade området blev minst 1 hektar. Slutligen användes ett verktyg för 
+att jämna ut de nya polygonernas gränser och inom dessa beräknades medelvärden av 
+rastren som visade de skattade skogliga variablerna, medelvärdena adderades till 
+respektive attributtabell. 
+ 
+
+
+19 
+ 
+Beräkningar med massaslutenhet 
+ 
+Definitionen av massaslutenhet är enligt Jonsson (1914) kvoten mellan skogens befintliga 
+volym i förhållande till volymen i en fullsluten skog med samma grundytevägda höjd. Den 
+fullslutna skogens volym utgår från försöksytor där skogen har ansetts vara fullsluten och 
+beräknas enligt nedan. 
+ 
+VF = T * 6 * Hgy
+4/3 + G * 4,2 * Hgy
+3/2 + L * 5,7 * Hgy
+4/3 
+ 
+VF = Volym per hektar i fullsluten skog 
+Hgy = Grundytevägd medelhöjd i meter 
+T = Andel tall 
+G = Andel gran 
+L = Andel löv 
+ 
+I studien inkluderades andelen contorta tillsammans tall. 
+ 
+Definitionen av massaslutenhet är följande. 
+ 
+M = VB / VF 
+ 
+M = Massaslutenhet 
+VB = Befintlig volym per hektar 
+ 
+Vid känd massaslutenhet, grundytevägd höjd och trädslagsfördelning kan således skogens 
+volym beräknas genom att multiplicera massaslutenheten med den fullslutna skogens 
+volym. 
+ 
+VB = M * VF 
+ 
+Med samma kända variabler har också skogens grundyta beräknats genom att dividera 
+volymen genom grundytevägd höjd multiplicerat med ett formtal. Formtalet bestäms enligt 
+Jonsson utifrån grundytevägd höjd tillsammans med konstanter och absolut formtal för 
+antagen formklass (Jonsson 1911). Inom studien användes formklass 0,65. 
+ 
+G = V / (Hgy*ƒ) 
+ 
+G = Grundyta (m2/ha) 
+ƒ = Formtal (enligt Jonsson) 
+ 
+
+
+20 
+ 
+Resultat 
+Skattningar i provytorna 
+ 
+Till provytorna tillämpades formlerna från regressionsanalysen tillsammans med 
+beräkningar med massaslutenhet för att skatta de skogliga variablerna utifrån laserdata. 
+Sedan jämfördes skattningarna med fältdata till respektive provyta. Skattningarnas 
+noggrannhet beskrevs med multipla korrelationskoefficienten, medelfel, medelfelens 
+standardavvikelse, medelfelens relativa standardavvikelse, root mean square error och 
+relativ root mean square error. 
+ 
+Tabell 6. Definition av använda mått för beskrivning av skattningarna 
+Table 6. Definition of variables used to describe the measurements 
+Beskrivning 
+Benämning 
+Förklaring 
+Multipel korrelationskoefficient 
+R2 % 
+1 – ቌ∑
+(𝑦𝑖−ŷi)2
+𝑛
+𝑖=1
+∑
+(𝑦𝑖−𝑦ത)2
+𝑛
+𝑖=1
+൘
+ቍ 
+Avvikelse 
+E 
+𝑦𝑖− ŷ𝑖 
+Medelavvikelse 
+ME 
+1
+𝑛∑
+(𝑦𝑖− ŷ𝑖)
+𝑛
+𝑖=1
+  
+Medelfelens standardavvikelse 
+SD 
+ට
+1
+(𝑛−1) ෌
+(𝐸𝑖−Ē)2
+𝑛
+𝑖=1
+  
+Relativ standardavvikelse 
+SD % 
+ቀ𝑆𝐷𝑦ത
+ൗቁ∗100 
+Root mean square error 
+RMSE 
+ට
+1
+𝑛∑
+(𝑦𝑖− ŷ𝑖)2
+𝑛
+𝑖=1
+  
+Relativ root mean square error 
+RMSE % 
+ቀ𝑅𝑀𝑆𝐸𝑦ത
+ൗቁ * 100 
+ 
+ 
+Tabell 7. Beskrivning av skattningarnas noggrannhet i provytorna 
+Table 7. Description of the measurements adaption to the field samples 
+Skattad variabel 
+R2 % 
+ME 
+SD 
+SD % 
+RMSE 
+RMSE % 
+Grundytevägd höjd (dm) 
+93,7 
+0,08 
+5,16 
+5,2 
+5,13 
+5,2 
+Övre höjd (dm) 
+91,5 
+-0,09 
+6,34 
+5,5 
+6,34 
+5,5 
+Massaslutenhet 
+79,2 
+0,00 
+0,09 
+15,6 
+0,09 
+15,5 
+Grundyta (m2/ha) 
+87,9 
+-0,48 
+2,23 
+15,1 
+2,27 
+15,4 
+Volym (m3
+sk / ha) 
+92,6 
+0,35 
+13,4 
+16,0 
+13,3 
+15,9 
+ 
+ 
+Värdena i tabell 7 visar att samtliga skattningar är tillförlitliga inom provytorna, särskilt 
+skattningarna av skogens höjd. 
+
+
+21 
+ 
+En direkt jämförelse gjordes med skattade värden och motsvarande värden från provytorna 
+i fält. Jämförelsen visualiseras nedan i figurerna 7 – 11 där linjen har förhållandet ett till ett 
+mellan X och Y – axeln. Syftet med jämförelsen var att visuellt kontrollera om 
+skattningarna kunde antas vara fria från systematiska fel. 
+ 
+ 
+Figur 7. Grundytevägd höjd i decimeter, jämförelse mellan fältvärden och skattningar med laser. 
+Figure 7. Basal area weighted height, field samples versus measurements by laser. 
+ 
+ 
+ 
+Figur 8. Övre höjd i decimeter, jämförelse mellan fältvärden och skattningar med laser. 
+Figure 8. Dominant height, field samples versus measurements by laser.
+50
+75
+100
+125
+150
+175
+50
+75
+100
+125
+150
+175
+Fältvärde
+Skattat värde
+50
+75
+100
+125
+150
+175
+50
+75
+100
+125
+150
+175
+Fältvärde
+Skattat värde
+
+
+22 
+ 
+ 
+Figur 9. Volym i m3
+sk ha-1, jämförelse mellan fältvärden och skattningar med laser. 
+Figure 9. Volume in m3
+sk  ha-1, field samples versus measurements by laser. 
+ 
+ 
+Figur 10. Grundyta i m2 ha-1, jämförelse mellan fältvärden och skattningar med laser. 
+Figure 10. Basal area in m2 ha-1, field samples versus measurements by laser. 
+0
+50
+100
+150
+200
+250
+300
+0
+50
+100
+150
+200
+250
+300
+Fältvärde
+Skattat värde
+0
+5
+10
+15
+20
+25
+30
+35
+0
+5
+10
+15
+20
+25
+30
+35
+Fältvärde
+Skattat värde
+
+
+23 
+ 
+ 
+Figur 11. Massaslutenhet, jämförelse mellan fältvärden och skattningar med laser. 
+Figure 11. Volume density, field samples versus measurements by laser. 
+ 
+Det visuella intrycket av figur 6 – 10 visar att samtliga skattningar låg i linje med fältdata och 
+någon trend mot systematiska fel kunde inte påvisas. Med detta som grund har skattningarna 
+antagits vara fria från systematiska fel. 
+ 
+De beräknade områdena jämfört med beståndsregistret 
+ 
+Polygonerna som indikerade lämpliga områden för gallring var skapade efter 
+förrättningsmannens kriterier. Kriterierna som utgjordes av gränsvärden för de skattade 
+variablerna kunde enkelt ändras efter önskemål. I nedan angivna exempel visas områden 
+med gränsvärden för övre höjd i intervallet 10 – 16 meter och massaslutenhet lägst 0,8. 
+Gränsvärdet för massaslutenheten grundas i en rekommenderad lägsta slutenhet efter 
+gallring på 0,7 enligt fältinstruktion för riksinventeringen av skog (Anon2. 2010). Till detta 
+adderades 0,1 för att motsvara ett volymuttag lägst ~ 20 m3
+sk ha-1, exklusive uttag i 
+stickvägar. 
+ 
+På grund av variationer inom beståndsregistret förkom det ytor med en annan 
+trädslagsblandning i de beräknade områdena än den som skattningarna avsåg. Fel i 
+skattningarna och därmed felaktigt indikerade gallringsområden kunde misstänkas vid en 
+jämförelse med en satellitbild som innehöll IR-band, främst kunde lövdominerad skog 
+urskiljas. Exemplen i figur 12 har på detta sätt kontrollerats så att områden som indikerade 
+gallring hade rätt trädslagsblandning. 
+ 
+I figur 12 visas rastret med den skattade massaslutenheten tillsammans med avdelningar 
+från beståndsregistret och fyra exempel på beräknade områden för gallring. De beräknade 
+områdena för gallring har skapats oberoende av beståndsregistrets avdelningar vilket gjort 
+att variationer inom dessa avspeglas. De fyra exemplen har i tabell 8 jämförts med 
+0
+0,2
+0,4
+0,6
+0,8
+1
+1,2
+0
+0,2
+0,4
+0,6
+0,8
+1
+1,2
+Fältvärde
+Skattat värde
+
+
+24 
+ 
+motsvarande data från beståndsregistret som uppdaterades i samband med en 
+ungskogstaxering 2008. 
+ 
+Figur 12. Vänster bild, skattad massaslutenhet inom avdelningar i beståndsregistret. Ljusa områden 
+visar hög massaslutenhet. Höger bild, områden lämpliga för gallring enligt angivna kriterier. 
+Figure 12. Left: Measured volume density inside stands in the stand index. Bright areas indicates 
+high volume density. Right: Areas suitable for thinning due to used criteria. 
+ 
+Tabell 8. Jämförelse mellan beräknade områden för gallring och beståndsregistret 
+Table 8. Areas suiteable for thinning compered to the standindex 
+Område 
+Skattningar inom område 
+Överlappande beståndsregister 
+Areal 
+Övre höjd 
+Grundyta ha-1 
+Grundyta ha-1 
+Övre höjd 
+1 
+3,8 ha 
+12 m 
+21 m2 
+20 m2 
+11 m 
+2 
+3,7 ha 
+12 m 
+23 m2 
+20 m2, 14 m2 
+11 m, 8 m 
+3 
+2,5 ha 
+12 m 
+23 m2 
+13 m2 
+11 m 
+4 
+19,3 ha 
+13 m 
+23 m2 
+20 m2, 18 m2 
+11 m, 11 m 
+ 
+Område nummer 1 och 2 låg i huvudsak inom en avdelning vars kommentar från 
+beståndsregistret var ”Sämre nere mot väg. Gallring inom 5-8 år.”. Uppenbarligen visar det 
+beräknade områdena för gallring de delar av beståndet som redan nu kan vara lämpliga att 
+gallra. Kommentaren till den avdelning som överlappade område 3 var ”Ojämnt”, detta 
+syns också i figur 11 där bilden över massaslutenhet har stor variation. Beståndsregistrets 
+registrerade grundyta var 13 m2 ha-1, vilket sällan anses vara lämpligt för gallring. Trots 
+detta har ett område på 2,5 ha kunnat identifieras där grundytan skattas till 23 m2 ha-1. 
+Område 4 stämmer bra överens med överlappande avdelning från beståndsregistret men 
+delar med gles skog har exkluderats och en bit av angränsande bestånd har inkluderats. 
+
+
+25 
+ 
+Diskussion 
+ 
+Den här studien har visat att laserdata avsett för NNH tillsammans med georefererade 
+provytor i fält kan användas för att skatta skogliga variabler inom ytor med en storlek på 
+cirka 200 kvadratmeter, över hela studieområdet. De skogliga variabler som har skattats 
+direkt med laserdata är övre höjd, grundytevägd höjd och massaslutenhet. Sedan har volym 
+och grundyta beräknats utifrån skattningarna av massaslutenhet och grundytevägd höjd. 
+Resultaten blev mycket bra men studien är avgränsad till tall och contortadominerad 
+gallringsskog i Norrbotten, närmare bestämt Älvsbyn. Gallringsskog har i studien 
+definierats till att vara maximalt 16 meter hög och ha en ålder mellan 21 – 50 år. 
+Antalet använda fältprovytor kunde ha varit fler om den första inventeringen hade 
+stratifieras likadant som den andra inventeringen. Att det inte är så beror på att de första 
+ytorna inventerades i ett annat sammanhang, före planeringen av denna studie. Dock verkar 
+det som att de 85 använda provytorna har varit tillräckligt många för att möjliggöra bra 
+skattningar. Studiens begränsning till att enbart behandla tall och contortadominerad skog 
+inom givet höjdintervall samt åldersintervall har till stor del sin grund i att ett bredare 
+studieområde inte rymts inom tidsramen för examensarbetet. Därutöver är motsvarande 
+skog dominerad av andra trädslag sällsynt i aktuellt geografiskt område. 
+Användningen av skanningsvinkeln i funktionen för att beräkna massaslutenhet gav ett 
+tydligt förbättrat resultat. I teorin kan variabelns påverkan bero på att trädens grenar täcker 
+större del av marken om den betraktas med en vidare vinkel från flygplanet. Om det är just 
+det som har påverkat i detta fall lämnar den här studien inget svar på. Skanningsvinkeln har 
+dock medfört felaktiga skattningar i smala linjer i överlappens slut mellan de olika 
+skanningsstråken. Detta syns i rasterbilden med massaslutenhet men har knappast någon 
+påverkan på resultatet i stort. Vanligen används inte skanningsvinkeln i skattningar av 
+skogliga variabler med laserdata. Anledningen till det kan vara att skanningsvinkeln 
+normalt är ± 15° istället för ± 20°, som i den här studien, vilket minskar skillnaderna i 
+laserdata. 
+Att använda laserdata från NNH är i skrivande stund ett aktuellt ämne eftersom skanning 
+av i stort sett hela Sveriges landyta pågår fram till 2013 (Anon 2010). Det huvudsakliga 
+syftet med NNH är att skapa en markmodell, utan hänsyn till vegetationen. Laserdata för 
+skogsbruksändamål kan därför ses som en biprodukt. Denna biprodukt finns tillgänglig för 
+allmänheten och kan tillsammans med fältdata användas för skattningar av skog. I takt med 
+att laserdata tillgängliggörs skapas därmed ett unikt tillfälle för skogsägare att få en bättre 
+bild av sitt skogsinnehav. Arbetsinsatsen i fält blir betydligt mindre tillsammans med 
+laserskanning än enbart fältinventering för motsvarande resultat. Exempelvis användes 
+endast 85 provytor i denna studie för att med hög precision skatta cirka 6000 hektar skog 
+vilket knappast är möjligt med enbart fältinventering. Därtill bör antalet provytor kunna 
+reduceras betydligt med tanke på att möjlig skattad areal begränsades av SCA:s 
+markinnehav istället för det skannade området. 
+Studiens inriktning på att skatta skog med massaslutenhet som nyckelvariabel är i sig ingen 
+nyhet. Det har ofta tillämpats i fjärranalys med flygbilder (Åge 1983). Dock har 
+
+
+26 
+ 
+undertecknad ingen kännedom om kombinationen med laserdata. Principen i 
+flygbildstolkning är att visuellt bedöma massaslutenheten och manuellt mäta trädens höjd 
+på representativa ställen i stereobilder. För kombinationen med laserdata gäller dock att 
+massaslutenheten till stor del skattas utifrån andelen laserreturer i vegetationen och höjden 
+med returernas höjd över marken. En viktig skillnad är också att beräkningarna med 
+laserdata görs datoriserat medan nämnd flygbildstolkning kan medföra fel som beror på 
+tolkaren. I studien är antalet laserreturer 0,5 – 1 m-2 vilket innebär att antalet mätpunkter 
+naturligtvis blir oerhört många fler än i flygbildstolkning. Med denna kontext är resultaten 
+i denna studie inte speciellt förvånande, det vore snarare märkligt om kombinationen med 
+laserskanning inte skulle ge minst lika bra resultat som flygbildstolkning. 
+Flera studier har visat att laserskanning framgångsrikt kan användas för att skatta skogliga 
+variabler som höjd, volym och grundyta (Næsset mfl. 2004). Förutom beräkningar med 
+massaslutenhet skiljer sig denna studie från dessa i tillgången av laserdata. Detta eftersom 
+laserdata till NNH kommer att finnas över nästan hela Sverige utan att primärt vara ämnat 
+för skogsbruksändamål. Dessutom kunde karaktären på laserdata inte påverkas inför 
+studien. I studien har fokus varit att resultatet ska vara praktiskt tillämpbart för 
+skogsbruksändamål i Sverige. 
+Eftersom gallring är en åtgärd som kan utföras på olika sätt med hänsyn till målet med 
+skogsbruket är det viktigt att beakta detta i tal om vad som är lämplig skog att gallra. De 
+skogsbrukare som har hög volymproduktion och jämnt virkesflöde i fokus kan därför ha 
+stor nytta av att efter egna önskemål kunna identifiera just den typ av skog som är aktuell 
+för gallring vid en viss tid. En sådan identifiering möjliggörs med hjälp av data som inte 
+har generaliserats inom de bestånd som gällde vid inventeringstillfället. Denna studie visar 
+hur data om skogen kan hanteras helt oberoende av beståndsgränser. 
+En svårighet i användningen av laserdata är att få information om skogens 
+trädslagsfördelning. I studien har beräkningar utförts med antagandet att all skog består av 
+tall. Om den exakta trädslagsfördelningen hade varit känd skulle det inneburit ännu bättre 
+förutsättningar för ett bra resultat. Detta genom att använda trädslagsfördelningen som 
+variabel i regressionsfunktionerna. Hursomhelst har studiens resultat fallit väl ut och även 
+om en viss skattning skulle ha låg precision på provytenivå borde felet gå mot noll på 
+beståndsnivå om systematiska fel kan uteslutas. Tyvärr går det inte att bevisa med 
+tillgängligt data eftersom skogen i studieområdet inte har en slumpmässig variation. För att 
+minska problemet med trädslagsfördelningen och möjliggöra trädslagsspecifika skattningar 
+kan laserdata kombineras med flygbilder (Packalén mfl. 2007). Dock behövs det då ett 
+betydligt större antal provytor.  
+ 
+Teknik som exempelvis flygburen laserskanning medför helt andra möjligheter till 
+datainsamling för skogsbruksändamål jämfört med att enbart använda olika typer av 
+fältinventering. En markant skillnad är att laserskanning i princip mäter alla träd i det 
+inventerade området medan fältinventering oftast begränsas till provytor. I praktiken 
+innebär det att skogen inte behöver indelas i bestånd för att hantera data och att data inte 
+blir beräknat efter beståndets medelvärde. Den heltäckande bild som laserskanningen ger 
+är istället möjlig att använda som källa till att söka skog med en specifik beskaffenhet och 
+
+
+27 
+ 
+efter aktuellt behov bilda tillfälliga behandlingsenheter som är väl avgränsade. Med ett 
+sådant arbetssätt borde det vara möjligt att väsentligt höja effektiviteten i skogsbruket. 
+Detta genom att exempelvis gallringar alltid sker i den skog där det är mest lönsamt. 
+Utfallsberäkningarna kan förbättras vilket innebär högre precision i transport till industri, 
+vilket i sin tur leder till lägre lagernivå och högre försörjningssäkerhet till industri, ändrat 
+sortimentsbehov kan mötas – ”just in time”. 
+Även om skattningarna av höjd, grundyta etc. blir högst tillförlitliga och 
+behandlingsenheter går att skapa är sannolikt en viss fältkontroll ändå nödvändig. 
+Fältkontrollen kan innebära att skador uppmärksammas och att skogen har en kvalitet som 
+möjliggör en bra skog efter gallring. Vidare kan markens bärighet kontrolleras tillsammans 
+med vägens kvalitet och plats för avlägg med mera i samband med fältkontrollen. 
+ 
+Slutsatser 
+• Laserskanning kan vara en mycket bra metod för att identifiera gallringsskog. 
+• Skattningar med hjälp av laserdata ger hög tillförlitlighet. 
+• Trädslagsfördelningen är svår att hantera. 
+• En viss fältkontroll är nödvändig. 
+ 
+ 
+
+
+28 
+ 
+Referenser 
+ 
+Anon. Del av SCA:s beståndsregister. avd_beskriv_alvsbyn.shp. Elektroniskt document. Shp-fil. 
+Tillgängligt: Stab skogsvård, SCA Skog AB. Sundsvall. 
+Anon2. Del av registrerade utförda gallringar. utf_gallringar(hf1,7)_alvsbyn.shp Elektroniskt 
+document. Shp-fil. Tillgängligt: Stab skogsvård, SCA Skog AB. Sundsvall. 
+Anon. 1983. Skogsord. Skogsvårdsförbundets Engelsk – Svensk ordlista. 1983. 
+Anon. 1985. Gallringsmallar, Norra Sverige. Skogsstyrelsen 1985. 
+Anon. 2009. Common Lidar Data Exchange Format - .LAS Industry Initiative. American Society 
+for Photogrammetry and Remote Sensing. Hemsida. [online] (2009). Tillgänglig: 
+http://www.asprs.org/society/committees/lidar/lidar_format.html 
+Anon. 2010. Produktbeskrivning: Laserdata. Dokumentversion 1.2. 2010-04-28. Lantmäteriet. 
+Anon2. 2010. Fältinstruktion 2010 RIS. Riksinventeringen av skog. Kapitel 6:3. Institutionen för 
+skoglig resurshushållning. Sveriges Lantbruksuniversitet. Umeå. 
+Agenstam, E. 2009. Gallring. Skogsskötselserien, nr 7. Skogsstyrelsen. 2009-01-16. 
+Hagner, S. 2005. Skog i förändring – Vägen mot ett rationellt och hållbart skogsbruk i Norrland ca 
+1940 – 1990. Kapitel 4. Kungliga Skogs- och Lantbruksakademien. Skogs- och lantbrukshistoriska 
+meddelanden nr 34. ISBN 91-89379-99-3. 
+Halvarsson, J. 2008. Identifiering av gallringsbehov med hjälp av flygburen laserskanning. 
+Institutionen för skoglig resurshushållning. Sveriges Lantbruksuniversitet. Umeå. Examensarbete. 
+Arbetsrapport 235 2008. ISSN 1401-1204 
+Holm, S. 2008. Korsvalidering. Kompendium av Universitetslektor Sören Holm. Institutionen för 
+skoglig resurshushållning. Sveriges Lantbruksuniversitet. Umeå. 
+Holmgren, J. 2004. Prediction of tree height, basal area and stem volume in forest stands using 
+airborne laser scanning. Scandinavian Journal of Forest Research, Vol. 19, No. 6.  
+s. 543 – 553. 
+Hyyppä, J., Kelle, O., Lehikoinen, M., Inkinen, M. 2001. A segmentation-based method to retrieve 
+stem volume estimates from 3-D tree height models produced by laser scanners. IEEE Trans. 
+GEOSCI. Remote Sensing 39: 969 – 975. 
+Hägglund, B., Lundmark, J-E. 1982. Handledning i Bonitering med Skogshögskolans 
+boniteringssystem. Del 3, Markvegetationstyper-skogsmarksflora. Skogsstyrelsen. 
+Johansson, H. 2008. Ajourhållning av ungskogsdata med hjälp av digitala flygbilder. Institutionen 
+för skoglig resurshushållning. Sveriges Lantbruksuniversitet. Umeå. Examensarbete. Arbetsrapport 
+240 2008. ISSN 1401-1204. 
+Jonson, T. 1911. Taxatoriska undersökningar öfver skogsträdens form. Skogsvårdsföreningens 
+tidsskrift, fackafdelningen, 1911, H. 9 – 10. s. 285 – 329. 
+Jonson, T. 1914. Om bonitering av skogsmark. Skogsvårdsföreningens tidskrift, tolfte årgången. s. 
+369 – 392 
+Jonsson, B., Jacobsson, J., Kallur, H. 1993. The Forest Management Planning Package. Theory 
+and application. Studia Forestalia Suecica 189: 56. 
+Klimat och sårbarhetsutredningen. 2007. Sverige inför klimatförändringarna – Hot och 
+möjligheter. Miljödepartementet. (Statens offentliga utredningar 2007:60) 
+Larsson, H. 2009. Flygburen laserskanning kopplat till skördarmätning för datainsamling till 
+operativ planering. Institutionen för skoglig resurshushållning. Sveriges Lantbruksuniversitet. 
+Umeå. Examensarbete. Arbetsrapport 260 2009. ISSN 1401-1204. 
+
+
+29 
+ 
+Lidgren, O.  2009. Provyteinventering för laserreferens SCA Älvsbyn 2009. 
+OL Skogsinventering AB. 
+Lysell, G. 2010. Ny nationell höjdmodell. Lantmäteriet. Lasermätning av skog. 
+Konferens. Högbo Bruk, 3 november 2010. 
+Næsset, E. 2002. Predicting forest stand characteristics with airborne laser scanning using a 
+practical two-stage procedure and field data. Remote Sensing of Environment. 80: 88 – 99. 
+Næsset, E. 2004. Accuracy of forest inventory using airborne laser scanning: Evaluating the first 
+Nordic full-scale operational project. Scandinavian Journal of Forest Research, Vol 19, No. 6. s. 
+554-557. 
+Næsset, E., Gobakken, T., Holmgren, J., Hyyppä H., Hyyppä J., Maltamo M., Nilsson M., Olsson 
+H., Persson Å., Söderman U. 2004. Laser Scanning of Forest Resources: The Nordic Experience. 
+Scandinavian Journal of Forest Research, Vol. 19, No. 6. 2004. s. 433-442. 
+Nilsson, U., Agestam, E., Ekö, P-M., Elfving, B., Fahlvik, N., Johansson, U., Karlsson, K., 
+Lundmark, T. and Wallentin, C. 2010. Thinning of Scots pine and Norway spruce monocultures in 
+Sweden – Effects of different thinning programs on stand level gross- and net stem volume 
+production. Studia Forestalia Suecia, No. 219. 2010. 
+ISSN 0039-3150, ISBN 978-91-86197-76-6. 
+Packalén, P., Maltamo, M. 2007. The k-MSN method in the prediction of species specific stand 
+attributes using airborne laser scanning and aerial photographs. 
+Remote Sensing of Environment 109, s. 328 – 341. 
+Persson, P. 1975. Stormskador på skog: Uppkomstbetingelser och inverkan av skogliga åtgärder. 
+Skogshögskolan. Institutionen för Skogsproduktion.  
+Rapporter och Uppsatser Nr 36. 
+Samuels, M., Witmer, J. 2003. Statistics for the Life Sciences. Third edition.  
+Pearson Education, Inc. New Jersey. ISBN 0-13-041316-X 
+SFS 1979:429. Skogsvårdslag. Svensk författningssamling 1979:429. Jordbruksdepartementet. 
+SFS 2009:1393. Förordning med instruktion för Skogsstyrelsen. Svensk författningssamling 
+2009:1393. Jordbruksdepartementet. 
+Ståhl, G. 1992. En studie av kvalitet i skogliga avdelningsdata som insamlats med subjektiva 
+inventeringsmetoder. Sveriges Lantbruksuniversitet. Institutionen för biometri och skogsindelning. 
+Avdelningen för skogsuppskattning och skogsindelning. Rappot 24. 
+Umeå 1992. ISSN 0349-2133 
+Walentin, C. 2007. Thinning of Norway spruce. Acta Universitatis Agriculturae Sueciae. 
+Doctorsavhandling, 2007:29. Sveriges Lantbruksuniversitet. Fakulteten för skogsvetenskap. 
+Institutionen för sydsvensk skogsvetenskap. Alnarp. ISSN 1652-6880, ISBN 978-91-576-7328-2 
+Åge, P-J. 1983. Mätning och tolkning i flygbilder för skogsinventering. Lantmäteriverket. LMV-
+rapport 1983:5. ISSN 0280-5731.

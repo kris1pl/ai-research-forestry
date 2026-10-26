@@ -4,10 +4,10 @@ type: Method
 description: "1. Object detection with DINOv3, crops, feature vectors."
 tags: [dinov3, classification, weak-labels, orthophoto, species]
 status: stable
-updated: 2026-10-23
+updated: 2026-10-26
 generated:
   by: agent:conifervision-wiki
-  at: 2026-10-23T12:00:00Z
+  at: 2026-10-26T12:00:00Z
 related_methods:
   - methods/merge-detections
 sources:
@@ -25,6 +25,19 @@ sources:
   - sources/paper-alder_allometry_cpi023
   - sources/paper-beech allometry_bgc4810s1
   - sources/paper-biomass and stem volume_951-40-1984-9
+  - sources/paper-dbh vs height 1-s2-0-s0378112725008801-main
+  - sources/paper-drone imaging-based wall-to-wall processing pipelines for individual tree level inventory in boreal forest plots
+  - sources/paper-flygburen laserskanning för skogliga skattningar-faktaskog_04_2014
+  - sources/paper-funktioner och tabeller för kubering av staende träd-medd_statens_skogsforskningsinst_036_03
+  - sources/paper-löv och lövblandbestånd - ekologi och skötsel-rytter_1998_redogorelse_8_100dpi
+  - sources/paper-nya volymfunktioner för tall, gran och björk-brandel
+  - sources/paper-quercus robur allometry_1-s2-0-s2215016122001807-main
+  - sources/paper-revised-biomass-equations-27jan2014
+  - sources/paper-robust height-diameter allometries for 41 european tree species - supplementary data-2025-09-29-679156v2_media-1
+  - sources/paper-sitka_spruce ias-2023-6-l-heidarsson-k-nystrom-a-snorrason-69-80
+  - sources/paper-skoglig fjärranalys-ljungbergs_sv_20180824
+  - sources/paper-skoglig_fjarranalys_v1_0_161211
+  - sources/paper-taper curve and volume functions for pine, spruce and birch-951-40-0589-9
   - sources/paper-linguistic_guided_image_diffusion_model_for_tree_species_generation
 ---
 # DINOv3 classification
@@ -81,7 +94,12 @@ Stage 3 in [[project/pipeline-overview]] — runs on per-tree crops after detect
 | Seed-cluster selection via debiased cross-image similarity | TBD |
 | Cluster aggregation using original and debiased prototypes | TBD |
 | Species attribution for parameter selection | Aligned (DINOv3 patch classification separates spruce and pine) |
+| Crown delineation mask extraction (variable radius vs segmented polygon) | TBD |
+| Feature extraction (band statistics, vegetation indices, GLCM texture) | not used (DINOv3 embeddings) |
+| Random Forest species classification | not used (DINOv3 backbone) |
 
+
+Pseudocode: [[sources/paper-drone imaging-based wall-to-wall processing pipelines for individual tree level inventory in boreal forest plots#Replication pseudocode]].
 
 Pseudocode: [[sources/paper-appiahmensah_et _al-2022_yield capacity#Replication pseudocode]].
 
@@ -128,3 +146,9 @@ _(model version, crop size, augmentations — link when code repo integrated)_
 - Can the SVD-based debiasing projection from INSID3 be applied to DINOv3 feature extraction in our species classification pipeline to improve cross-orthophoto matching and reduce spatial coordinate bias?
 - Can DINOv3 crown-level confidence scores be propagated to weight mixed-species parameter sets when predicting plot-level basal area and yield capacity?
 - Can crown morphology or vertical crown base height extracted from photogrammetric point clouds complement RGB patch features in distinguishing *Alnus incana* from *Alnus glutinosa*?
+- Should DINOv3 output hierarchical genus/group fallback probabilities to prevent severe DBH estimation error when fine-grained conifer species confidence is low?
+- Does masking input crops to the estimated crown contour or variable-radius buffer reduce background noise and improve DINOv3 feature separation compared to unmasked square bounding crops?
+- How do seasonal phenological differences (leaf-on vs leaf-off) between deciduous broadleaves and evergreen conifers influence feature embedding stability in DINOv3 species classification?
+- Can crown diameter or height metrics from CHM segmentation reliably substitute for direct DBH when applying the Shupe et al. quadratic oak carbon model without compounding variance on mature stems (DBH > 70 cm)?
+- Can taxonomy crosswalk tables reliably map fine-grained DINOv3 species classifications onto Forestry Commission biomass equation groups without systematic bias?
+- Can shadow masking or illumination normalization on single-tree orthophoto crops reduce intra-species feature variance in DINOv3 embeddings under low solar elevation angles?

@@ -1,0 +1,1553 @@
+© Crown copyright 2021.
+391
+Forestry An International Journal of Forest Research
+Forestry 2022; 95, 391–404, https://doi.org/10.1093/foresj/cpab049
+Advance Access publication 13 November 2021
+Diameter, height and volume increment single tree models
+for improved Sitka spruce in Great Britain
+Rubén Manso1,*, Rachael Davidson1 and J. Paul McLean1,2
+1Forest Research, Forest Resources and Product Development Group, Northern Research Station, Roslin, Midlothian EH25 9SY, UK
+2Norwegian Institute of Bioeconomy Research, Division of Forest and Forest Resources, Høgskoleveien 8, 1433 Ås, Norway
+*Corresponding author. Tel: +44 (0)300 067 5979; E-mail: Ruben.Manso@ForestResearch.gov.uk, rmgforestal@hotmail.com
+Received 2 June 2021
+The British forestry sector lacks reliable dynamic growth models for stands of improved Sitka spruce, the most
+important commercial forest type in Great Britain. The aim of this study is to ﬁll this gap by trialling a new
+modelling framework and to lay the foundations of a future dynamic growth simulator for that forest type. First,
+we present single tree diameter and height increment models that are climate sensitive and include explicit
+competition effects. The predictions from the increment models are pooled to project diameter and height at a
+given age. These projections are then used as inputs to an integrated taper model from which stochastic tree
+volume predictions are obtained. Retrospective data from over 1400 trees collected in two extensive genetic
+trials in Scotland and Wales were used for the purposes of this study. Diameter increment and height increment
+predictions were highly accurate and diameter and height projections proved consistent. The predicted volume
+at the time of harvesting also exhibited a high degree of accuracy, which shows the robustness of our approach.
+Further data will be needed in the future to recalibrate the present models and extend their range of validity to
+the whole of Great Britain.
+Introduction
+Sitka spruce (Picea sitchensis (Bong.) Carr.) is the most important
+commercial species in Great Britain, amounting to 50 per cent
+of the total conifer area in the country and supplying 60 per
+cent of the national timber production (Forestry Commission,
+2020). Much of the research around forest biometrics and timber
+properties carried out in the last decade in Great Britain has
+focused on Sitka spruce (Achim et al., 2006, Auty et al., 2012,
+Butler et al., 2010, Fonweban et al., 2011, Hale et al., 2009, Manso
+et al., 2020, Minunno et al., 2010).
+Sitka spruce has also been a focus of breeding programmes
+conducted by the Forestry Commission, the British forest service,
+since the 1950s. As a result, signiﬁcant genetic gains in terms of
+growth have already been achieved for the species in the earlier
+cycle of tree breeding (Hubert and Lee, 2005), and further gains
+are expected as the improved material obtained from controlled
+crosses (i.e. both parents are known and deliberately paired, as
+opposed to the less selective seed orchard material) is being
+increasingly used. These gains have been so substantial that
+there is concern that the old yield models developed by the
+Forestry Commission (Edwards and Christie, 1981, Matthews et
+al., 2016) might not accurately model improved stands. This
+could pose a considerable challenge for forecasting timber pro-
+duction, as most of the Sitka spruce forests planted in the past
+20 years originate from improved material.
+One solution would have been to build dedicated growth
+models for improved Sitka spruce with repeated measurements
+data from permanent sample plots (PSP). However, this is not
+yet possible because the network of PSP monitored by Forest
+Research does not yet contain enough repeated measurements
+of improved Sitka spruce. An alternative to obtain more data
+in the short term whilst a strategy is set to extend the PSP
+would be to use a retrospective analysis of existing trees, such as
+measuring ring widths and inter-whorl distances to infer diam-
+eter increments and height increments, respectively. These are
+common techniques in the ﬁeld of forest ecology (e.g. Calama
+and Montero, 2005), timber properties (Bergsten et al., 2001) and,
+obviously, dendrochronology (e.g. Martín-Benito et al., 2010).
+Although this kind of analysis has limitations, particularly in the
+absence of mortality records, the data generated could prove
+useful to set the basis of a modelling framework for improved
+Sitka spruce, which could be revisited and updated when and if
+more complete data are provided. Further, the timing of silvicul-
+tural thinnings to promote stand stability is not dependent on
+mortality, but rather on individual tree size. Models constructed
+in this way can immediately be used to guide mid-rotation for-
+est management and to examine volume production from any
+operations.
+Another advantage of using retrospective analysis is that
+diameter and height increments are systematically obtained on
+a yearly basis. Besides the obvious gain in precision, this can help
+Downloaded from academic.oup.com/forestry/article/95/3/391/6427502 by guest on 15 October 2026
+
+
+Forestry
+to efﬁciently capture climatic signals, as dendrochronological
+studies have extensively shown (e.g. Martín-Benito et al., 2010),
+in the form of climatic covariates, which can enter the models
+in a more signiﬁcant way than when only longer time intervals
+are available (e.g. Manso et al., 2015). This is an aspect that
+can no longer be ignored in view of the current climate change
+projections, and it is increasingly attracting attention amongst
+empirical growth modellers (e.g. Dios-García et al., 2018, Girard
+et al., 2014).
+In 2017, a large scale project was launched, which aims to
+develop genomic prediction techniques for further improvements
+of British Sitka spruce (Tumas et al., 2021). The project extensively
+sampled two large genetic trials established in 1996 by Forest
+Research. These trials were originally aimed at selecting the most
+promising genotypes resulting from controlled crosses of the
+British breeding population of elite trees. These trials included a
+range of genotypes that are characteristic of the improved mate-
+rial that has been widely planted. During that project, approxi-
+mately 1400 trees were felled and phenotyped for both volume
+yield and wood property traits. An additional opportunity was
+taken to conduct retrospective analysis on the stems, which pro-
+vided tens of thousands of diameter and height growth records.
+The main objective of the present study was to develop single
+tree diameter and height increment models for improved Sitka
+spruce in Great Britain using the aforementioned data to inform
+and test a new modelling framework for improved stands that
+can be implemented in growth simulators. Because simulators
+are ultimately aimed to project volume into the future, the diam-
+eter and height increment models were used to dynamically
+predict diameter and height over time. These predictions were
+subsequently used to estimate volume statically through an inte-
+grated stem taper model. Secondarily, we used this opportunity
+to strengthen the notion of uncertainty in the British forestry
+sector by making the models fully stochastic and to explore
+the role of climate in Sitka spruce growth by including climatic
+predictors in the models.
+Materials and methods
+Data
+The data were obtained from two Sitka spruce full sibling progeny
+trials established in 1996 by Forest Research. The sites were
+located at Kintyre (Scotland; Lat: 55.36◦, Lon: −5.64◦; 60 m
+above sea level) and Brecon (Wales; Lat: 51.89◦, Lon: −3.33◦;
+375 m above sea level). Both sites are representative of typical
+Atlantic climatic conditions such as an absence of severe summer
+droughts and mild temperatures across the year. Despite
+this pattern, the Brecon site tends to exhibit more extreme
+temperature values than the Kintyre site as a consequence
+of its greater altitude and continentality (Pyatt et al., 2001).
+Additionally, the trees at Brecon were relatively more exposed
+to wind than those from Kintyre according to the detailed aspect
+method of scoring (DAMS, Quine and White, 1994). DAMS can
+be accessed at http://www.forestdss.org.uk/geoforestdss/. A
+summary of several climatic variables for both sites is shown in
+Table 1. These climatic data were gathered through the software
+ClimateEU v4.63 (Wang and Hamann, 2012). The soils types
+and soil cultivation methods were, respectively, mineral gley
+and shallow double-mouldboard ploughing in Kintyre; and forest
+brown earth and scariﬁcation in Brecon.
+A total of 50 full siblings obtained from controlled crosses
+from selected Sitka spruce trees were trialled across both sites.
+We will refer to each of these full siblings as ‘families’ hereafter.
+An additional non-improved specimen was included as a control
+family, which was excluded from the analysis for the purposes
+of this study. These 51 families (i.e. 50 full siblings plus control)
+were replicated at least 60 times at each site by means of 60
+square adjoining blocks. Each block consisted of a 64 tree array
+that included all the families at least once. The individuals were
+planted following a completely randomized scheme within each
+block. The initial square-spacing was 1.8 m in Kintyre and 2 m in
+Brecon.
+All trees were harvested in August 2017 in Brecon and in
+September 2017 in Kintyre. A random sample of 14 trees from
+each family was initially selected for analysis, which amounted
+to a total of 700 trees per site, although a few individuals were
+lost due to mistakes at harvesting (20 in Kintyre and 17 in Brecon).
+Stem height, stump height and diameter at breast height (DBH,
+1.30 m) were measured for all the selected and successfully
+retrieved trees with a measuring tape. Height increments were
+also obtained by tape-measuring the inter-whorl distances, from
+top to bottom. Additionally, two perpendicular diameter mea-
+surements were taken along the stem at 1 m intervals with a
+caliper. The taper of the trees was assessed as the series of the
+mean diameter at each of these cross-sections.
+A 1 m log that included the breast height cross-section was
+chainsawed from each of the selected trees and taken to the
+laboratory for further analysis. A 15 cm thick disc at breast
+height (i.e. upper side 1.30 m off the ground) was then extracted
+from each log and then processed into 2 cm slices. The internal
+structure of these slices was captured through X-ray computed
+tomography (CT) scanning at 0.1 cm resolution, using the equip-
+ment and services of Scotland’s Rural College. These images were
+analysed with the software WinDENDROTM v.2012b to obtain ring
+widths.
+Height increment chronologies were straightforwardly gener-
+ated, as the year of the last height increment (2017) was known
+and could be used as the reference. Trees with missing tops were
+discarded from the analysis (9 and 36 trees in Kintyre and Brecon,
+respectively). In addition, height increments at the base of all
+trees (i.e. below breast height) were also disregarded as they
+were not fully reliable. This is because the scars left by the whorls
+are less evident as the scar itself ages. We do not expect that
+omitting early height information will have any signiﬁcant impact
+in practice, as growth models are typically initialized with data
+from trees with non-zero merchantable volume (i.e. breast height
+and have been reached and DBH is larger than some predeﬁned
+value).
+Ring-width chronologies posed more issues because (1) the
+outermost rings from many trees were not distinguishable in
+the CT images, and (2) there was some uncertainty about the
+actual age at which trees reached 1.30 m in height (‘DBH age’
+hereafter), which impedes the ability to reliably assign a year to
+the innermost ring. This uncertainty is due to the lack of accuracy
+of the early height increments mentioned above. Consequently,
+we lacked a clear reference to correctly date the rings in many
+cases.
+392
+Downloaded from academic.oup.com/forestry/article/95/3/391/6427502 by guest on 15 October 2026
+
+
+DBH, height and volume increment models for improved Sitka spruce
+Table 1 Values of some key climatic variables tested in the present paper over the period 1996–2017: mean (standard deviation) minimum:maximum.
+T is temperature (◦C), P is precipitation (mm) and SPEI.1 is the standardized precipitation evapotranspiration index calculated at 1-month scale.
+Site
+Mean
+annual T
+Min T spring
+Max T summer
+Min SPEI.1
+Annual P
+Kintyre
+8.91 (0.36)
+7.91:9.34
+3.79 (1.00)
+2.20:5.20
+18.19 (1.03)
+16.80:20.80
+−1.58 (0.40)
+−2.50:−0.85
+1495 (182.2)
+1178:1748
+Brecon
+8.66 (0.43)
+7.51:9.21
+3.93 (0.84)
+2.40:5.40
+19.84 (1.19)
+18.30:22.60
+−1.49 (0.36)
+−2.16:−0.87
+1446 (212.1)
+1120:1904
+Table 2 Summary of the responses modelled in the present paper, where DBH is given in cm and H in m, and N is the number of observations.
+Site
+Response
+Mean
+Standard deviation
+Minimum
+Maximum
+N
+Kintyre
+DBH
+1.07
+0.54
+0.16
+3.25
+9206
+H
+0.83
+0.29
+−0.1
+2.27
+12759
+Brecon
+DBH
+1.12
+0.44
+0.22
+2.94
+9986
+H
+0.69
+0.29
+−2.3
+3.58
+11601
+In order to generate reliable ring-width chronologies, we ﬁrst
+selected all complete ring series (i.e. the outermost rings were
+distinguishable) to create a master series for each site. Each
+incomplete series was then cross-dated against its respective
+master series. To do this, the Spearman’s rank correlation coef-
+ﬁcient (ρ) was calculated for each pair incomplete series-master
+series. This was done considering 0, −1, 1, 2 and 3 years lags,
+i.e. we assumed that the DBH age of the incomplete series could
+be the same, 2 years less, or 1–3 years more than that of the
+master series, respectively. The lags corresponding to the two
+larger ρ were retained and their chronosequences were visually
+checked. As a ﬁnal check, the series were compared against our
+own assessment of DBH age based on the aforementioned height
+increment records and against an early tree height assessment
+carried out in 1999, where available. Trees with very poor CT
+imaging were discarded from the analysis.
+The cross-dated ring-width chronologies and the height
+increment chronologies were then compiled to create DBH
+increment and height increment datasets with 1-year non-
+overlapping growth intervals. The last growth interval was
+removed from the Brecon site, given that the growing season was
+not complete. The ﬁnal dataset included more than 20 000 DBH
+and height increments from 1292 and 1249 trees, respectively,
+excluding the control family. At the time of harvesting, the mean
+and standard deviation of the DBH and height of the selected
+trees were, respectively, 17.75 (3.60) cm and 17.51 (1.67) m in
+Kintyre, and 20.76 (4.21) cm and 14.06 (1.40) m in Brecon. Further
+details can be found in Table 2. The DBH increment dataset is
+annexed to this paper as Supplementary material.
+Modelling developments
+Modelling approach
+We chose to model DBH and height increments on individual
+trees using difference growth equations, which are derived
+from static growth equations in integral form. Those difference
+equations can be arranged so that the current growth rate or
+increment be a function of the current age and the current size
+of a given organism (Zeide, 1993, Zeide, 1993) also found that
+most of the resulting equations are particular cases of either of
+these two general equations:
+y = α1yβ1tγ1
+(1)
+y = α2yβ2eγ2t
+(2)
+where y is current increment, y is current size, t is current total
+age, and α1,2, β1,2 and γ1,2 are generic estimable parameters
+that result from the rearrangement of the parameters from the
+original functions. Note that β > 0 and γ < 0.
+These forms are convenient as growth is decomposed into
+an expansion component, which is a power function of current
+size (i.e. yβ1), and a decline component, which is either a power
+function of age (i.e. tγ1) or an exponential function of age (i.e.
+eγ2t).
+We used these equations for the purposes of this study.
+DBH increment models. Model speciﬁcation
+After some preliminary tests, we concluded that Equation 1
+represented DBH increment better than Equation 2. This basic
+form could not, however, capture all the variability in DBH incre-
+ment, with competition and climatic effects being likely over-
+looked. These effects can be considered by expanding some of
+the parameters of Equation 1. Because early growth is mostly
+controlled by genetic and site characteristics in planted forests
+and competition and climate act as limiting factors, it makes
+sense to expand parameter γ1, in the decline component, to take
+these limiting factors into account.
+393
+Downloaded from academic.oup.com/forestry/article/95/3/391/6427502 by guest on 15 October 2026
+
+
+Forestry
+Figure 1 DBH increment data for Kintyre (left) and Brecon (right).
+Given the fact that our trees were selected at random and
+attention was not paid to all the neighbouring individuals, vari-
+ables such as basal area or the basal area of trees larger than
+the current tree, which are typically used to take competition into
+account, make little sense here. We used the quadratic mean
+diameter (dg) of all the studied trees (included the control) as
+a proxy instead. One additional advantage of dg is that it can be
+interpreted in the context of the self-thinning theory. Concerning
+climate, we tested a range of annual variables, as the time step
+in our data was 1 year. We focused on those covariates that
+could be used as proxies for known limiting factors in Sitka spruce
+DBH growth such as summer drought and late frost (Cannell and
+Smith, 1984, Mason et al., 2012, Meason and Mason, 2014, Mur-
+ray et al., 1994). The following covariates were speciﬁcally trialled:
+mean maximum temperature in summer and the standardized
+precipitation evapotranspiration index (SPEI; Vicente-Serrano et
+al., 2010) (drought), mean minimum temperature in spring (late
+frost), and other variables informing more general characteristics
+of the growing year, like the mean annual temperature or total
+annual precipitation. The variables from each group of proxies
+were sequentially tested.
+Additionally, we took into consideration the effect of the lag to
+reach DBH age with respect to the earliest DBH age in both sites (3
+years). This basically tests whether a delayed early growth has an
+effect on late growth. We assumed that this effect could affect
+any of the parameters in Equation 1.
+We would ideally have ﬁtted a single DBH increment model
+for both sites, with some site speciﬁc parameters in it. However,
+the DBH growth pattern of the Brecon site exhibited an unusual
+behaviour until 2004 (t = 8, see Figure 1), with a very slow and
+constant growth rate apparently not dominated by age. After this
+time, growth adopts the pattern that would have been expected
+from the beginning. This behaviour is likely due to the type of
+soil cultivation in this site and could not be accommodated by
+the functional forms of the selected models, where increments
+steadily increase to a maximum in the ﬁrst few years. As a
+consequence, we ﬁtted independent models for each site. We
+used a form of segmented regression for the Brecon site to
+accommodate the pattern described earlier. Before deﬁning the
+preliminary formulation of our models, let i, j and k be the indexes
+for the tree, the family, and the time interval, respectively. Let
+also d be the index for ‘DBH’ and h for ‘height’. To distinguish
+between sites, an apostrophe is added to all estimable terms for
+the Brecon site.
+After a series of tests (see section Model calibration and eval-
+uation), the provisional models for Kintyre and Brecon were,
+respectively,
+DBHijk = (αd,1 + αd,2lagij)DBH
+(βd,1+βd,2lagij)
+ijk
+t
+γd,1+γd,2lagij+γd,3exp(γd,4dgk)
+k
+t
+γd,5min.spei.1k+γd,6min.temp.spk+γd,7mean.temp.yrk
+k
++
++ ϵd,ijk
+(3)
+and
+DBHijk = (α′
+d,1 + α′
+d,2lagij + α′
+d,3rk)DBH
+(β′
+d,1+β′
+d,2rk)
+ijk
+(tk −7)
+(1−rk)(γ ′
+d,1+γ ′
+d,2exp(γ ′
+d,3dgk)
+(tk −7)
+(1−rk)(γ ′
+d,4min.spei.1k+γ ′
+d,5min.temp.spk+γ ′
+d,6mean.temp.yrk)
++ ϵ′
+d,r,ijk
+(4)
+where lagij is the lag effect such that lagij ∈[0, 3], rk is a dummy
+variable that adopts the value 1 if t <= 8 and 0 otherwise (Brecon
+only), tk is age, min.spei.1k is the minimum annual SPEI calculated
+at a 1-month scale, min.temp.spk is the minimum spring tem-
+perature, mean.temp.yrk is the mean annual temperature; αd,1−2,
+βd,1−2, γd,1−7, α′
+d,1−2, β′
+d,1−2 and γ ′
+d,1−6 are estimable parameters; ϵd
+is the vector of errors for Kintyre such that ϵd
+iid∼N(0, d), where
+d = σ 2
+d,ϵI, σ 2
+d,ϵ is the residual variance and I is a suitable identity
+matrix; ϵ′
+d is the vector of errors for Brecon such that ϵ′
+d
+iid∼N(0, ′
+d),
+where ′
+d = σ
+′2
+d,ϵφ′rI. This formulation of ′
+d allowed us to take the
+different residual variances in the two segments into account. σ
+′2
+d,ϵ
+is the residual variance, I is a suitable identity matrix and φ′ is an
+additional parameter to estimate.
+On top of adding rk as an effect in the expansion component
+of the model for Brecon, some changes, where also needed in the
+age-related limiting component of this model. In the ﬁrst place,
+this component will only have an effect when rk = 0 (i.e. t > 8), as
+the ﬁrst segment seems unaffected by age. Because the second
+segment followed the typical pattern of earlier years, the age had
+to be adjusted as if the tree were younger to avoid an excess of
+growth reduction. We heuristically set the age in 2005 (t = 9) to
+2 years (t −7), as this seemed to yield a better ﬁtting.
+Height increment models. Model speciﬁcation
+The functional form in Equation 2 was better suited to model
+height increments than that of Equation 1. Again, we ﬁtted inde-
+pendent height increment models for the Kintyre and Brecon sites
+despite the fact that height increment did follow a signiﬁcantly
+similar pattern across sites. This was only made for practical
+reasons, such as the computation of joint simulations with the
+DBH increment models. In this case, competition effects were
+discarded after some preliminary tests and only climatic effects
+were considered in the age-related limiting component of the
+models. The same group of covariates as in the DBH increment
+models were used here.
+394
+Downloaded from academic.oup.com/forestry/article/95/3/391/6427502 by guest on 15 October 2026
+
+
+DBH, height and volume increment models for improved Sitka spruce
+The provisional height increment models for Kintyre and Bre-
+con were, respectively,
+Hijk = αhH
+βh
+ijk eγh,0tk+γh,1min.spei.1k−1+γh,2min.temp.spk+
++ ϵh,ijk
+(5)
+and
+Hijk = α′
+hH
+β′
+h
+ijk e
+γ ′
+h,0tk+γ ′
+h,1min.spei.1k+γ ′
+h,2min.temp.spk+
++ ϵ′
+h,ijk
+(6)
+where tk is age, min.spei.1k−1 and min.spei.1k are the minimum
+annual SPEI calculated at 1-month scale from the previous and
+current year, respectively, and min.temp.spk is the minimum
+annual temperature in spring; αh, βh, γh,1−2, α,h, β,h and γ ′
+h,1−2 are
+estimable parameters; ϵh and ϵ′
+h are vectors of errors such that
+ϵh
+iid∼N(0, h) and ϵ′
+h
+iid∼N(0, ′
+h), where h = σ 2
+h,ϵI and ′
+h = σ
+′2
+h,ϵI,
+σ 2
+h,ϵ and σ
+′2
+h,ϵ are the residual variances and I are suitable identity
+matrices.
+Model calibration and autocorrelation issues
+The previous preliminary models were ﬁtted sequentially by ﬁrst
+testing the lag effect and the structure of the segmented regres-
+sion where appropriate. Next, the competition effect was con-
+sidered. Last, the climatic effects were added. At each iteration,
+the normalized residuals were visually checked against the ﬁtted
+values and the different covariates in use or to be tested. Het-
+eroscedasticy issues were also checked in this step. The variables
+were kept according to their improvement in the Akaike Informa-
+tion Criterion (AIC).
+Once a satisfactory parameterization was reached, we
+addressed the issue of autocorrelation. Given the hierarchical
+structure of our data, it could reasonably be expected that the
+assumption of independence between errors does not hold. This
+is speciﬁcally the case for the repeated measurements taken
+within a given tree. Correlation could also be expected at the
+family level. Because trees were selected at random across
+the experiment, correlation at the block level should not be an
+issue. In order to relax the assumption of independence, we
+ﬁrst implemented a continuous-time autoregressive correlation
+(CAR) structure in the variance covariance matrices of the errors
+at the tree level. This structure is deﬁned such that  = σ 2
+ϵ C,
+where σ 2
+ϵ is a generic term for the residual variance and C is
+a correlation diagonal block matrix with non-zero elements
+equal to θ t, with θ an estimable parameter and t the time
+interval between observations within the same tree. We also
+included random effects at the family level associated with
+different model parameters. Although the number of families is
+theoretically ﬁnite, the potential number of controlled crosses
+is large enough as to treat the family as a random effect.
+Random effects were assumed to be normally distributed such
+as b ∼N(0, ), where b is a generic vector of random effects
+and  is the variance covariance matrix of the random effects,
+with diagonal elements σ 2
+b and off-diagonal elements σbb′. The
+relevance of using these techniques was evaluated by comparing
+the AICs of the models with and without the CAR structure
+and random effects. The normalized (Cholesky) residuals and
+the signiﬁcance of all variables were checked again once a
+satisfactory correlation structure was in place.
+All parameters were estimated through the maximization of
+their likelihood function. All models were ﬁtted with package
+nlme (Pinheiro et al., 2019) in R (R Core Team, 2020).
+Model evaluation
+The models were evaluated by comparing the expected values
+with their respective observations through the estimation bias (E),
+root mean square error (RMSE) and estimation efﬁciency (EF):
+E =
+m
+j=1
+nj
+i=1
+li
+k=1
+
+yijk −ˆyijk
+
+)
+N
+RMSE =
+
+
+
+
+m
+j=1
+ni
+i=1
+li
+k=1
+
+yijk −ˆyijk
+2
+N −p
+EF = 1 −
+m
+j=1
+nj
+i=1
+li
+k=1
+
+yijk −ˆyijk
+2
+m
+j=1
+nj
+i=1
+li
+k=1
+
+yijk −¯y
+2
+where yijk is any of the responses, N is the total number of
+observations, p is the number of model parameters, m is the
+number of families, nj is the number of trees in the family j and li
+is the number of intervals measured in tree i.
+Further, a 10-fold cross-validation was carried out on each of
+the four models. This process consists of four steps. First, the
+dataset is split into 10 random subsets of roughly the same
+size. Second, the model is ﬁtted 10 times, sequentially omitting
+one of the subsets at each time. Then, each of the re-calibrated
+models is used to produce pseudo-independent predictions on
+the omitted subset. These predictions were marginalized over
+the random effects by means of Monte Carlo procedures. Finally,
+E, RMSE and EF are computed again using these marginalized
+pseudo-independent predictions.
+In addition, the empirical autocorrelation of the residuals at
+different time lags (i.e. t) (Pinheiro and Bates, 2000, p. 227) at
+tree level was assessed to test for any persistent within-group
+correlation. For a given t, this metric was calculated as
+ˆρ(t) =
+m
+j=1
+nj
+i=1
+li−t
+k=1 ˆrijkˆrijk+t/N(t)
+m
+j=1
+nj
+i=1
+ni
+k=1 ˆr2
+ijk/N(t = 0)
+DBH, height and volume estimation
+We also studied the behaviour of the models when used to
+forecast DBH, height and tree volume over time, given that the
+ultimate aim of these models, or future reﬁned versions of them,
+is to be part of growth simulators. To this aim, we simulated the
+growth of our trees from some initial state up to the time when
+they were harvested and measured, which would allow for com-
+parison between observations and predictions. We expect some
+minor overestimation in the case of Brecon, particularly in DBH, as
+395
+Downloaded from academic.oup.com/forestry/article/95/3/391/6427502 by guest on 15 October 2026
+
+
+Forestry
+Figure 2 Observed volume against estimated volume through the integration of the taper function at tree level in Kintyre (left) and Brecon (right). The
+solid line represents the regression line for these values and the dashed line is the line of unity.
+the 2017 growing season was not completed. We chose t = 10
+(year 2006) as the initial state, since all rings were distinguishable
+at that age and some differentiation between trees had already
+occurred. Then, predictions for DBHij,k=10 and Hij,k=10 were
+computed for each tree into the next year (t = 11), using current
+DBHijk, Hijk, dgk and the pertinent climatic variables. Next, DBHijk
+and Hijk were updated with 
+DBHij,k=10 and 
+Hij,k=10 and dgk was
+recalculated using the updated DBHs. This constituted the new
+state at t = 11. These steps were repeated until t = 22, which
+corresponds with the end of the 2017 growing season, where
+the trees were harvested and measured. This age was chosen
+because 2017 is the only growing season, where real data of tree
+volume were available. We computed this process stochastically
+through 1000 Monte Carlo simulations of the stand, where all
+uncertainty sources considered in the modelling exercise were
+taken into account. This was done through the matrices ˆ and
+ˆ, already introduced, and ˆ, the variance covariance matrix of
+the ﬁxed effects.
+Further, 
+DBHij,k=22 and 	Hij,k=22 were used as explanatory vari-
+ables in the taper function for non-improved Sitka spruce in
+Great Britain developed by Fonweban et al., (2011) to generate
+a predicted taper for each tree. These predicted tapers were
+then numerically integrated to obtain stochastic estimates of
+tree volume at the time of harvesting (	Vij,k=22). Previous tests with
+actual DBH and height of the selected trees showed that using
+this taper function with improved individuals yields unbiased
+volume estimates (Figure 2). All error terms in the taper function
+were considered in the Monte Carlo process as well.
+
+DBHijk=22, 	Hijk=22 and 	Vijk=22 were evaluated by computing the
+empirical coverage of their conﬁdence intervals. Conﬁdence inter-
+vals for each of these three variables were calculated through
+the percentile rank method from the Monte Carlo simulations.
+The empirical coverage was assessed as the proportion of the
+DBH, height, and volume observations at t = 22 that fell within
+those conﬁdence intervals for different levels of 1 −α, as known
+as ‘nominal coverage’. As an example, if α
+= 0.05, 95% of
+the conﬁdence intervals should roughly include the observed
+value for a given variable at that signiﬁcance level. Nominal
+and empirical coverage should coincide when the predictions are
+unbiased and if the uncertainty linked to the process has properly
+being captured. The ‘observed’ volume was obtained from the
+actual taper measured from each tree (see section Data). The
+geometry of each stem segment between two adjoining cross-
+sections was assimilated to a truncated cone, from which volume
+can be calculated analytically. Stem volume was then assessed
+as the sum of those segment volumes.
+Additionally, E, RMSE and EF were calculated for each of the
+three studied variables.
+Results
+No major pattern was visually apparent in the normalized resid-
+uals of any of the models, and no heteroscedasticity issues were
+detected. The ﬁt of the models notably improved in terms of AIC
+with the inclusion of the autocorrelation structure. Additionally,
+random effects at the family level were included and linked to
+parameters βd,1-β′
+d,1 and γd,1-γ ′
+d,1 in the diameter increment mod-
+els, and βh,1-β′
+h,1 in the height increment models. This formulation
+further improved the AIC of the models albeit only up to a modest
+extend
+The parameter estimates of the diameter increment mod-
+els and height increment models are shown in Tables 3 and 4,
+respectively. In the light of the parameter values, it is possible
+to interpret that the growth rate increases with the size of the
+individual, both in DBH and height until extrinsic factors reduce
+this growth later in time. The positive lag effect in the DBH incre-
+ment models indicates that trees that reach breast height with
+some delay with respect to others tend to compensate the initial
+disadvantage to some extent. The effect of competition in DBH
+increment is parameterized in such a way that small dg values
+make the term γd,3eγd,4dg (positive) big, counteracting the ‘pure’
+effect of age γd,1 (negative) for a given set of climatic effects. This
+means that growth decline only starts after a critical value of dg
+has been reached. When it comes to the climatic effects, higher
+396
+Downloaded from academic.oup.com/forestry/article/95/3/391/6427502 by guest on 15 October 2026
+
+
+DBH, height and volume increment models for improved Sitka spruce
+Table 3 Maximum likelihood parameter estimates and standard errors for the DBH increment models for Kintyre and Brecon, where σb1, σb2, σb1,b2,
+σ ′
+b1, σ ′
+b2 and σ ′
+b1,b2 are the variance components of the random effects, θ and θ′ are the correlation parameters in the CAR structures, and all other
+parameters are as speciﬁed in Equations 3 and 4.
+Kintyre
+Brecon
+Parameter
+Estimate
+Standard error
+Parameters
+Estimate
+Standard error
+αd,1
+0.0564
+0.0065
+α′
+d,1
+0.5410
+0.0277
+αd,2
+0.0096
+0.0024
+α′
+d,2
+0.0282
+0.0038
+βd,1
+0.1820
+0.0269
+α′
+d,3
+0.5258
+0.0280
+βd,2
+0.1170
+0.0122
+β′
+d,1
+0.4518
+0.0229
+γd,1
+−0.0078
+0.0727
+β′
+d,2
+−0.3598
+0.0229
+γd,2
+−0.1272
+0.0194
+γ ′
+d,1
+−2.1021
+0.3821
+γd,3
+3.1062
+0.0925
+γ ′
+d,2
+2.1702
+0.2287
+γd,4
+−0.0551
+0.0024
+γ ′
+d,3
+−0.0416
+0.0120
+γd,5
+0.0313
+0.0019
+γ ′
+d,4
+0.1135
+0.0052
+γd,6
+0.0294
+0.0012
+γ ′
+d,5
+0.0238
+0.0032
+γd,7
+−0.0839
+0.0036
+γ ′
+d,6
+0.0756
+0.0064
+σb1 (βd,1)
+0.0500
+–
+σ ′
+b1 (β′
+d,1)
+0.0310
+–
+σb2 (βd,2)
+0.0409
+–
+σ ′
+b2 (β′
+d,2)
+0.044
+–
+σb1,b2
+−0.7850
+–
+σ ′
+b1,b2
+−0.559
+−
+σϵd
+0.2512
+–
+σ ′
+ϵ′
+d
+0.3200
+−
+θ
+0.6303
+–
+θ′
+0.5767
+–
+φ
+0.7881
+–
+minimum SPEIs (i.e. less dry) and higher minimum temperatures
+in spring (i.e. less late frost) reduce the negative effect of age
+on both DBH and height increment models. Higher mean annual
+temperatures hinder DBH growth in Kintyre but favour it in Brecon.
+All models were functionally unbiased, with E being below 0.5
+mm (DBH increment) and 2 mm (height increment) across sites.
+The EF was higher for the diameter increment models (EF > 0.5)
+than for the height increment models (EF < 0.5) as a result of the
+ﬂatter pattern of the latter in respect to the former. All evaluation
+metrics were consistent when calculated using the predictions
+from the cross-validation exercise. Although cross-validation is
+not a validation tool sensu stricto, this indicates a certain robust-
+ness in our models within the range of the ﬁtting data. Both sets
+of evaluation metrics are shown in Table 5. No evident correlation
+between the residuals remained, as demonstrated by the non-
+signiﬁcant values of ˆρ(t) over different time intervals.
+The stochastic simulations iteratively computed to project
+DBH and height over time led to biases of around ±0.5 cm and
+±0.5 m, respectively, at age 22. These biases are small in relative
+terms (∼2 per cent), although one order of magnitude higher
+than those of the increments predicted by the models. The EF
+in both cases is in line with that of the predicted increments.
+Volume predictions and their empirical coverage probability were
+practically unbiased for both sites (note that the unit here is m3).
+The variability explained in this case is around 40 per cent. To
+provide a more illustrative picture of the accuracy of these vol-
+ume projections, the predicted volume for all trees in Kintyre and
+Brecon was 137.2 m3 and 141.3 m3, respectively, whereas the
+measured values were 144.2 m3 and 146.7 m3. The evaluation
+metrics for 
+DBHijk=22 and 	Hijk=22 and 	Vijk=22 are summarized in
+Table 6. Computing the expected projection of each tree from the
+stochastic simulations allows identifying the long-term result of
+the different parameterizations of Equations 3 to 6. As it can be
+seen in Figure 3, the trees from Kintyre tend to be slenderer than
+those from Brecon, despite the lower DBH increment of the ﬁrst
+years.
+The uncertainty of the processes was properly captured in
+most cases. In this respect, the empirical coverage probability
+closely matched the nominal coverage in all variables for the
+two sites except the DBH projection for Kintyre, where the empir-
+ical coverage was less than the nominal coverage (Figure 4).
+Although this departure is relatively small, it may be indicating
+that the predicted conﬁdence intervals tend to underestimate
+the actual conﬁdence intervals. It seems less likely that the
+mismatch is related to the aforementioned minor biases, as the
+DBH projection in Kintyre is actually the least biased of the two.
+In order to illustrate how uncertainty is propagated from the
+increment models to the projection of the different variables
+of interest, we plotted these projections and their conﬁdence
+intervals over time. Figure 5 shows DBH and height predictions
+for two real trees in Kintyre and Brecon from 2007 to the time
+of harvesting. These trees were selected as they were in the
+central range of DBH and height in 2006. These initial values were
+obtained by summing the actual DBH and height increments up
+to that year. The same ﬁgure includes the prediction of dg for
+the two sites considering all the studied trees. It is evident that
+the predicted uncertainty was larger for the DBH estimates in
+Brecon than in Kintyre. Volume predictions and their conﬁdence
+intervals for the same two trees at harvesting are shown in
+Figure 6 together with volume predictions for the whole lot of
+397
+Downloaded from academic.oup.com/forestry/article/95/3/391/6427502 by guest on 15 October 2026
+
+
+Forestry
+Table 4 Maximum likelihood parameter estimates and standard errors for the height increment models for Kintyre and Brecon, where σb1 and σ ′
+b1
+are the variance components of the random effects, θ and θ′ are the correlation parameters in the CAR structures, and all other parameters are as
+speciﬁed in Equations. 5 and 6.
+Kintyre
+Brecon
+Parameter
+Estimate
+Standard error
+Parameter
+Estimate
+Standard error
+αh
+0.8115
+0.0123
+α′
+h
+0.4601
+0.0119
+βh
+0.4883
+0.0094
+β′
+h
+0.3860
+0.014
+γh,1
+−0.0619
+0.0015
+γ ′
+h,1
+−0.0273
+0.0021
+γh,2
+0.0768
+0.0052
+γ ′
+h,2
+0.0391
+0.0088
+γh,3
+0.0088
+0.0022
+γ ′
+h,3
+0.0454
+0.0035
+σb1 (βh)
+0.0140
+–
+σ ′
+b1 (β′
+h)
+0.0096
+–
+σϵh
+0.2272
+–
+σ ′
+ϵ′
+h
+0.2509
+–
+θ
+0.2182
+–
+θ′
+0.1060
+–
+Figure 3 DBH (cm) and height (m) predicted values for all studied trees at the Kintyre and Brecon sites over time, taking the observed values at 2007 as
+a reference (grey lines). The solid black line represents the mean of those predictions, each of which is in turn the mean of 1000 stochastic realizations.
+trees harvested. Again, the volume estimate in Brecon appeared
+to be more uncertain than that of Kintyre. Note that we only
+predict volume for the last year of the simulation because we are
+not able to prove that the taper function is adequate for early
+ages.
+Discussion
+In this paper, we presented and tested a new modelling
+framework to dynamically predict volume in improved Sitka
+spruce trees obtained from controlled crosses in Great Britain. The
+398
+Downloaded from academic.oup.com/forestry/article/95/3/391/6427502 by guest on 15 October 2026
+
+
+DBH, height and volume increment models for improved Sitka spruce
+Figure 4 Empirical coverage probability and nominal coverage for 
+DBHijk=22, 	Hijk=22	Vijk=22 at the Kintyre and Brecon sites. The empirical coverage is
+based on 1000 stochastic realizations.
+approach includes the ﬁrst DBH increment and height increment
+models developed for improved Sitka spruce. The relevance of
+this work lies with the commercial importance of this forest
+typology in the UK, for which no forecasting system exists as
+yet. The inclusion of climatic effects and the stochastic approach
+adopted contribute to the originality of this work in the context
+of forest modelling in Great Britain.
+The increment models introduced here constitute the ﬁrst
+stage to build a fully functional dynamic growth model for
+improved Sitka spruce in Great Britain. In order to work towards
+399
+Downloaded from academic.oup.com/forestry/article/95/3/391/6427502 by guest on 15 October 2026
+
+
+Forestry
+Table 5 Evaluation metrics for the diameter increment and height increment for Kintyre (K) and Brecon (B), where E is the estimation bias, RMSE is
+the RMSE, and EF is the estimation efﬁciency.
+Fitting
+Cross-validation
+Model
+E
+RMSE
+EF
+E
+RMSE
+EF
+DBHK
+0.0136
+0.0687
+0.7667
+0.0187
+0.0669
+0.7732
+DBHB
+−0.0468
+0.0851
+0.5511
+−0.0419
+0.0829
+0.5707
+HK
+0.0008
+0.0524
+0.3733
+−0.0001
+0.0524
+0.3730
+HB
+0.0016
+0.0632
+0.2531
+0.0019
+0.0632
+0.2523
+Figure 5 DBH (cm) and height (m) predictions for two average trees in Kintyre and Brecon, and quadratic mean diameter (dg) predictions for all
+considered trees (thick line) at both sites. The thin lines are the 95% percentile rank conﬁdence intervals based on 1000 realizations.
+this aim, some of the limitations of our data would need to
+be addressed in the future. In the ﬁrst place, only two sites
+were sampled, which cannot be representative of the whole
+country. Secondly, the trees were felled at age 22, which is
+less than the typical rotation time (at least for unimproved
+material: ∼40 years) and, consequently, predictions at late ages
+400
+Downloaded from academic.oup.com/forestry/article/95/3/391/6427502 by guest on 15 October 2026
+
+
+DBH, height and volume increment models for improved Sitka spruce
+Figure 6 Volume (m3) predictions for two average trees in Kintyre and
+Brecon and volume predictions for all considered trees at both sites, with
+their 95% percentile rank conﬁdence intervals based on 1000 realizations.
+Table 6 Evaluation metrics for 
+DBHijk=22, 	Hijk=22 and 	Vijk=22 for the
+Kintyre (K) and Brecon (B) sites, where E is the estimation bias, RMSE
+is the RMSE, and EF is the estimation efﬁciency.
+Predicted variable
+E
+RMSE
+EF
+
+DBHij,k=22,K
+−0.3452
+7.1341
+0.4364
+
+DBHij,k=22,B
+0.7531
+9.1886
+0.4738
+	Hij,k=22,K
+0.6596
+2.4326
+0.1293
+	Hij,k=22,B
+−0.2756
+1.4965
+0.1857
+	Vij,k=22,K
+0.0111
+0.0061
+0.4282
+	Vij,k=22,B
+0.0088
+0.0088
+0.3642
+with our models may not be fully reliable. Third, the data did
+not include any mortality records, which is essential to obtain
+accurate volume estimates at the stand level. Forth, the trees
+were effectively selected at random across the experiment, and
+so it was impossible to reconstruct the competition environment
+of those trees. In this respect, most growth simulators are backed
+by data from large geographical areas and better age range
+coverage, include a mortality module and take competition into
+account (e.g. Fortin and Langevin, 2010, Hasenauer et al., 2006,
+Pretzsch et al., 2002, Salminen and Hynynen, 2001, Soares and
+Tomé, 2003, amongst many others). All these problems need
+to be addressed to upscale, complete and update the current
+models.
+From a functional standpoint, the developments presented
+here can be seen as a simulator consisting of a set of two dynamic
+submodels that predict DBH and height increments from an initial
+list of trees plus a static submodel that takes DBH and height
+projections to predict tree volume. Ideally, the DBH and height
+increment submodels should have been ﬁtted simultaneously
+to better capture the uncertainty of the two processes, as the
+errors of these models are likely to be correlated. This could have
+been done through Seemingly Unrelated Regression (SUR Gal-
+lant, 1987). A requirement of this technique is that the datasets
+containing each of the responses have the same number of
+records. Due to the relatively large number of non-overlapping
+missing data in both datasets, using SUR would have meant
+discarding a lot of valuable information to ﬁt the models (some
+20 000 records), and therefore we chose the non-simultaneous
+approach developed in this paper. The SUR approach is not to be
+overlooked in the future though should enough data be available.
+We developed our dynamic models through difference equa-
+tions, i.e. we modelled discrete increments in DBH or height. This
+approach has been widely used in growth models within forestry,
+and it produces dynamic outcomes by deﬁnition (e.g. Fortin et al.,
+2008). A different line of research has alternatively focused on
+creating dynamic models by integrating differential growth equa-
+tions (García, 1983, Ochi and Cao, 2003). These models directly
+predict the variable of interest (and not its increment) from
+an given observation. Similar functional forms can be achieved
+through the so-called generalized algebraic differential approach
+(GADA, Cieszewski and Bailey, 2000). Regardless of the approach,
+projecting a variable into the future implies that a prediction error
+is generated at each time step. These errors need to be propa-
+gated if an accurate notion of the uncertainty of the predictions
+is to be obtained. Working out analytical expressions for the prop-
+agated errors at the end of the simulation for these integrated
+dynamic models is not a simple task. García, (1983) and Rennolls,
+(1995) deducted such error term after arduous calculations and
+only for a very basic version of their stand-level models. To the
+best of our knowledge, no GADA modelling exercise has ever
+taken error propagation into account. In contrast, our approach
+allowed us to efﬁciently propagate errors from all sources (resid-
+uals, random effects, parameter estimates) through the whole
+projection of the variables of interest by means of stochastic
+simulations. The expected uncertainty only departed from the
+observed uncertainty in the case of the DBH projection in Kintyre.
+This could be due to the occurrence of very high DBH increments
+in the early stages, which the model may not have been able
+to capture, leading to a slight underestimation of the actual
+conﬁdence intervals.
+An additional advantage of our modelling approach is that
+the functional form of the models could easily be rearranged
+in terms of growth expansion and growth decline components
+(Crecente-Campo et al., 2010, Nunes et al., 2011, Schröder et al.,
+2002, Zeide, 1993), which allows making ecologically sensible
+choices when expanding the model parameters to include dif-
+ferent effects. This is in contrast to other more empirical incre-
+ment models where competition and climatic variables enter the
+models in a less meaningful way (Girard et al., 2014, Manso et al.,
+2015).
+Focusing on competition, we used the quadratic mean diam-
+eter of the selected trees, dg, as a proxy. This is because it was
+not possible to calculate a true competition index, as the trees
+had been selected at random. The closer we could have got
+to a true competition index was to use the mean dg of the
+selected trees in each block, which is a common approach when
+data come from typical forest inventory plots (e.g. Calama and
+401
+Downloaded from academic.oup.com/forestry/article/95/3/391/6427502 by guest on 15 October 2026
+
+
+Forestry
+Montero, 2005). However, our blocks were adjacent and we felt
+they could not be seen as plots in that classical sense (e.g. the
+quadratic mean diameters of two contiguous blocks could be
+equally representative for a tree in the limit of the two blocks).
+The speciﬁc functional form for the competition term is such
+that the growth decline component of the model becomes less
+than one—i.e. growth is less than the maximum potential for
+a given size and age—when some dg is reached given a set of
+climatic conditions. If we take the example of Kintyre and use
+the mean value of each of the climatic variables involved, it is
+possible to see that growth decrease would roughly take place
+when dg ∼12 −13 cm. This corresponds to an age of 12 or
+13 years. Our data clearly shows that canopy closure must have
+occurred at age 11–12 at that site, which suggests that this event
+can successfully be approximated by our model. Another way to
+think of this is that the self-thinning line was being approached at
+these ages as a result of a fast initial DBH increment in a context
+of low mortality.
+In terms of climate, we used proxies for summer drought
+(minimum SPEI) and late frost (mean minimum temperature in
+spring), as these are factors known to negatively affect Sitka
+spruce in Great Britain (Cannell and Smith, 1984, Mason et al.,
+2012, Meason and Mason, 2014, Murray et al., 1994). These
+factors can be seen as age-dependent and limiting for growth,
+hence they were included in the decline component of the model.
+Our ﬁndings using the above-mentioned proxies suggest that
+these factors have a negative effect on growth and are consistent
+across sites and the studied response. The mean annual tem-
+perature only has a signiﬁcant effect in DBH increment. Inter-
+estingly, warmer years hindered DBH growth in Kintyre whilst
+they favoured it in Brecon. A possible explanation could be that
+Kintyre is a less extreme location than Brecon. We interpret that
+warm years may imply a certain strain on water resources in
+Kintyre, whereas they may reduce the negative effect of altitude
+in Brecon. It is important to note though that our time series are
+relatively short when considering our limited geographical scope
+and therefore caution needs to be observed when interpreting
+these results.
+Site effects were evident when looking at the data and the
+model predictions but could not be taken into account in the
+model directly. Technically, it would have been possible to include
+any site effects by expanding the constants αd and αh but the
+inference would have not been valid as we only had two sites.
+For example, the delayed DBH growth observed in Brecon with
+respect to Kintyre was potentially related to soil cultivation where
+the less intrusive scariﬁcation may have led the root system of
+trees in Brecon to take longer to develop than in Kintyre. However,
+a dummy variable ‘soil cultivation’ would have amount to ‘site’.
+Another example is the effect of wind in the taper of trees. It
+is well known that trees exposed to frequent gusts above the
+average wind background tend to be more tapered than more
+sheltered trees (Bonnesoeur et al., 2016). In this respect, the
+Kintyre site was relatively less exposed than the Brecon site and
+their trees were also slenderer. Although the wind hypothesis
+makes sense, our ﬁndings cannot be conclusive as other site
+factors such as the slightly different spacing between sites may
+have had a role in shaping the form of the trees.
+Most studies do not consider tree effects other than the cur-
+rent size in growth models. One legitimate reason for this is that
+there are usually not many variables that are measured at the
+tree level. In contrast, we had the genetic family as individual
+tree information. Our aim in this study was to model the general
+growth trend of controlled crosses improved individuals and not
+differences between families, which will form part of a dedicated
+study. However, the possible correlation caused by this unac-
+counted effect had to be dealt with. We then considered the
+family as a random effect in contrast to studies that focus on
+genetic gains (e.g. Zas et al., 2004). This was done through the
+expansion component of the models as the genetic origin is inde-
+pendent of time. The low share of the total variance attributable
+to the random effects at the family level showed that most of
+this variability was accounted for by the current size of the tree,
+which means that measuring DBH or height at a given age should
+give already a good estimate of tree DBH or height in the future
+regardless of the family.
+This simpliﬁes the way the model can be used for the two dif-
+ferent modalities of genetic improvement in British Sitka spruce,
+which depend on the reproductive material used (Hubert and
+Lee, 2005). On the one hand, seeds originating from clonal seed
+orchards through open pollination (half siblings) lead to moder-
+ate gains in volume and have widely been used as a result of
+their relatively low production cost. On the other hand, individuals
+originating from controlled crosses (full siblings), like those used
+in this study, present the advantage that the top families can
+be selected, which results in even greater genetic gains. This
+approach is increasingly being used in new plantations. Given that
+most of the family effect is implicit in the current size of the tree
+(DBH or height) at a given age in our models, the information
+about the genetic origin should be of lesser importance and the
+models would be safely applicable with both genetic types.
+Most growth models ultimately aim at predicting timber vol-
+ume. Volume is often assessed statically in single tree models,
+usually by feeding DBH predictions into volume tariffs (e.g. Fortin
+and Langevin, 2010). We also resorted to a static approach when
+we used our DBH and height predictions to estimate the taper
+of the trees and then to estimate the volume by integrating the
+taper, like in Fortin et al., (2013). This volume was slightly under-
+estimated at both sites, although the bias was not signiﬁcant and
+therefore this apparent consistency across sites may be spurious.
+It seems nevertheless important to highlight that there was a
+trend to overestimate small DBHs and to underestimate large
+DBHs at both sites. Although these over and underestimations
+nearly cancelled out to yield virtually unbiased DBH predictions
+overall, the trend may have had some impact on volume predic-
+tions, as positive errors in DBH would result in positive errors in
+volume that may not be compensated by their negative coun-
+terparts due to the non-linearity of the taper function (Fortin
+and Langevin, 2012). This is an aspect that needs to be revisited
+when more data are available and the models are used to project
+volume over later ages.
+A seeming drawback with our models from a practical point
+of view is the difﬁculty to measure individual heights at any
+given age to initialize the simulations. Manual height assessment
+is expensive and the accuracy could be low, particularly at the
+typical high stand densities for the species in Great Britain [over
+2000 stems ha−1; (Matthews et al., 2016)]. Airborne LiDAR is a
+precise and more affordable alternative, at least when scanning
+relatively large areas. Although the identiﬁcation of individual
+402
+Downloaded from academic.oup.com/forestry/article/95/3/391/6427502 by guest on 15 October 2026
+
+
+DBH, height and volume increment models for improved Sitka spruce
+trees in point clouds is still imperfect (Guerra-Hernández et al.,
+2018), reliable methods to estimate stand mean height without
+individual delineation have been available for some time (Næs-
+set, 1997). This stand mean height estimate could be used to
+calibrate height-diameter models (Arcangeli et al., 2014), which
+would in turn allow obtaining an estimate of the individual initial
+heights from measured DBHs.
+Conclusions
+We set in this paper the methodological bases to accurately
+model tree-level growth in improved British Sitka spruce. Given
+the high commercial value of improved stands of the species in
+Great Britain, these developments were most needed and are
+likely to make an signiﬁcant impact on the British timber sector
+once more data are available to upscale the model predictions.
+The biological basis of our increment models, the aggregation
+of these increments into volume through a sensible simulator
+structure, the consideration of climatic effects and the use of ret-
+rospective data makes the approach presented here speciﬁcally
+suitable to predict, after calibration, tree growth in fast growth
+planted forests of any species and under any conditions.
+Supplementary data
+Supplementary data are available at Forestry online.
+Acknowledgements
+We wish to express our gratitude to Adam Ash, Leona Baillei, David Gil-
+Moreno, Sam Henderson, Colin McEvoy, Andy Price and the TSU staff of FR
+for their commitment and endurance in the challenging ﬁeldwork days
+that led to the data used in the present paper. Special thanks are due to
+Thomas Baer for his work in data preparation and Georgios Xenakis for
+advice around growth modelling in Sitka spruce. We are also grateful to
+Toni Clarke and Sophie Hale for thoroughly reviewing an earlier version of
+this paper, and to Gustavo López, Emily Brennan and Chris Quine for their
+helpful comments.
+Conﬂict of interest statement
+None declared.
+Funding
+Biotechnology and Biological Sciences Research Council through the Sitka
+spruced project (BBSRC BB/PZ020488/1), a partnership between the Uni-
+versity of Oxford, the University of Edinburgh and Forest Research; BSW
+Timber Ltd; Maelor Forest Nurseries Ltd; Forestart Ltd; The Conifer Breed-
+ing Cooperative Ltd; Scottish Woodlands Ltd. Harvesting trees was made
+possible by support additionally provided by Natural Resources Wales and
+Scottish Forestry to the Sitka spruced project. Total tree height, DBH and
+volume are data collected as part of the Sitka spruced project.
+Data availability
+Part of the data underlying this article (DBH increments) can be
+found as Supplementary material. The rest of the data (height
+increments) will be shared on request to the corresponding
+author with permission of the partners of the Sitka spruced
+project.
+References
+Achim, A., Gardiner, B., Leban, J.-M. and Daquitaine, R. 2006 Predicting the
+branching properties of Sitka spruce grown in Great Britain. N. Z. J. For. Sci.
+36, 246–264.
+Arcangeli, C., Klopf, M., Hale, S.E., Jenkins, T.A.R. and Hasenauer,
+H.
+2014
+The
+uniform
+height
+curve
+method
+for
+height-diameter
+modelling: an application to Sitka spruce in Britain. Forestry 87,
+177–186.
+Auty, D., Weiskittel, A.R., Achim, A., Moore, J.R. and Gardiner, B.A. 2012
+Inﬂuence of early re-spacing on Sitka spruce branch structure. Ann. For.
+Sci. 69, 93–104.
+Bergsten, U., Lindeberg, J., Rindby, A. and Evans, R. 2001 Batch mea-
+surements of wood density on intact or prepared drill cores using x-ray
+microdensitometry. Wood Sci. Technol. 35, 435–452.
+Bonnesoeur, V., Constant, T., Moulia, B. and Fournier, M. 2016 Forest trees
+ﬁlter chronic wind-signals to acclimate to high winds. New Phytol. 210,
+850–860.
+Butler, A.J., Barbier, N., Cermak, J., Koller, J., Thornily, C., McEvoy, C. et
+al. 2010 Estimates and relationships between aboveground and below-
+ground resource exchange surface areas in a Sitka spruce managed
+forest. Tree Physiol. 30, 705–714.
+Calama, R. and Montero, G. 2005 Multilevel linear mixed model for tree
+diameter increment in stone pine (Pinus pinea): a calibrating approach.
+Silva Fennica 39, 37–54.
+Cannell, M. and Smith, R. 1984 Spring frost damage on young Picea
+sitchensis. predicted dates of budburst and probability of frost damage.
+Forestry 57, 177–197.
+Cieszewski, C. and Bailey, R. 2000 Generalized algebraic difference
+approach: theory based derivation of dynamic site equations with poly-
+morphism and variable asymptotes. For. Sci. 46, 116–126.
+Crecente-Campo, F., Soares, P., Tomé, M. and Diéguez-Aranda, U. 2010
+Modelling annual individual-tree growth and mortality of Scots pine with
+data obtained at irregular measurement intervals and containing missing
+observations. For. Ecol. Manag. 260, 1965–1974.
+de Dios-García, J., Manso, R., Calama, R., Fortin, M. and Pardos, M. 2018 A
+new multifactorial approach for studying intra-annual secondary growth
+dynamics in mediterranean mixed forests : Integrating biotic and abiotic
+interactions. Can. J. For. Res. 48, 333–344.
+Edwards, P. and Christie, J. (1981). The volume-basal area line. Forestry
+Commission Booklet no. 48. Her Majesty’s Stationary Ofﬁce, London.
+Fonweban, J., Gardiner, B., Macdonald, E. and Auty, D. 2011 Taper func-
+tions for Scots pine (Pinus sylvestris L.) and Sitka spruce (Picea sitchensis
+(Bong.) Carr.) in Northern Britain. Forestry 84, 49–60.
+Forestry Commission 2020 Forestry Statistics 2020-A compendium
+of statistics about woodland, forestry and primary wood process-
+ing in the United Kingdom. Technical report, Forestry Commission,
+Edinburgh.
+Fortin, M., Bédard, S., DeBlois, J. and Meunier, S. 2008 Accounting
+for error correlations in diameter increment modelling: a case study
+applied to northern hardwood stands in Quebec. Can. J. Forest Res. 38,
+2274–2286.
+Fortin, M. and Langevin, L. 2010 ARTÉMIS-2009 : un modèle de croissance
+basé sur une approche par tiges individuelles pour les forêts du québec.
+Mémoire de recherche forestière 156, Gouvernement du Québec. Direction
+de la recherche forestière, Québec.
+403
+Downloaded from academic.oup.com/forestry/article/95/3/391/6427502 by guest on 15 October 2026
+
+
+Forestry
+Fortin, M. and Langevin, L. 2012 Stochastic or deterministic single-tree
+models: is there any difference in growth predictions? Ann. For. Sci. 69,
+271–282.
+Fortin, M., Schneider, R. and Saucier, J.-P. 2013 Volume and error variance
+estimation using integrated stem taper models. For. Sci. 59, 345–358.
+Gallant, R. 1987 Nonlinear equation estimation. John Wiley & Sons, New
+York.
+García, O. 1983 A stochastic differential equation model for the height
+growth of forest stands. Biometrics 39, 1059.
+Girard, F., Beaudet, M., Mailly, D. and Messier, C. 2014 Integrating climatic
+response in competition dependent tree-level growth models for north-
+ern hardwoods. For. Ecol. Manag. 323, 138–147.
+Guerra-Hernández, J., Cosenza, D.N., Rodriguez, L.C.E., Silva, M., Tomé, M.,
+Díaz-Varela, R.A. et al. 2018 Comparison of ALS- and UAV(SfM)-derived
+high-density point clouds for individual tree detection in Eucalyptus plan-
+tations. Int. J. Remote Sens. 39, 5211–5235.
+Hale, S.E., Edwards, C., Mason, W.L., Price, M. and Peace, A. 2009 Rela-
+tionships between canopy transmittance and stand parameters in Sitka
+spruce and Scots pine stands in Britain. Forestry 82, 503–513.
+Hasenauer, H., Kindermann, G. and Steinmetz, P. 2006 The tree growth
+model MOSES 3.0. In Sustainable Forest Management. H., Hasenauer (ed.).
+Springer-Verlag, Berlin/Heidelberg, pp. 64–70.
+Hubert, J. and Lee, S. 2005 A review of the relative roles of silviculture and
+tree breeding in tree improvement: the example of Sitka spruce in Britain
+and possible lessons for hardwood breeding. Forestry 78, 109–120.
+Manso, R., McLean, J.P., Ash, A. and Achim, A. 2020 Estimation of individ-
+ual knot volumes by mixed-effects modelling. Can. J. For. Res. 50, 81–88.
+Manso, R., Morneau, F., Ningre, F. and Fortin, M. 2015 Effect of climate and
+intra- and inter-speciﬁc competition on diameter increment in beech and
+oak stands. Forestry 88, 540–551.
+Martín-Benito, D., Río, M. and Cañellas, I. 2010 Black pine (Pinus nigra Arn.)
+growth divergence along a latitudinal gradient in Western Mediterranean
+mountains. Ann. For. Sci. 67, 401–401.
+Mason, W., Petr, M. and Bathgate, S. 2012 Silvicultural strategies for
+adapting planted forests to climate change: from theory to practice. J.
+For. Sci. 58, 265–277.
+Matthews, R., Jenkins, T., Mackie, E. and Dick, E. 2016 Forest Yield. A
+Handbook on Forest Growth and Yield Tables for British Forestry. Forestry
+Commission, Edinburgh.
+Meason, D.F. and Mason, W.L. 2014 Evaluating the deployment of alterna-
+tive species in planted conifer forests as a means of adaptation to climate
+change case studies in New Zealand and Scotland. Ann. For. Sci. 71, 239–
+253.
+Minunno, F., Xenakis, G., Perks, M.P. and Mencuccini, M. 2010 Calibration
+and validation of a simpliﬁed process-based model for the prediction of
+the carbon balance of Scottish Sitka spruce (Picea sitchensis) plantations.
+Can. J. For. Res. 40, 2411–2426.
+Murray, M.B., Smith, R.I., Leith, I.D., Fowler, D., Lee, H.S.J., Friend, A.D. et
+al. 1994 Effects of elevated CO2, nutrition and climatic warming on bud
+phenology in Sitka spruce (Picea sitchensis) and their impact on the risk
+of frost damage. Tree Physiol. 14, 691–706.
+Næsset, E. 1997 Determination of mean tree height of forest stands using
+airborne laser scanner data. ISPRS J. Photogramm. Remote Sens. 52, 49–
+56.
+Nunes, L., Tomé, J. and Tomé, M. 2011 Prediction of annual tree growth
+and survival for thinned and unthinned even-aged maritime pine stands
+in Portugal from data with different time measurement intervals. For. Ecol.
+Manag. 262, 1491–1499.
+Ochi, N. and Cao, Q. 2003 A comparison of compatible and annual growth
+models. For. Sci. 49, 285–290.
+Pinheiro, J. and Bates, D. 2000 Mixed Effects Models in S and S-PLUS.
+Springer, New York.
+Pinheiro, J., Bates, D., DebRoy, S., Sarkar, D. and Core Team, R. 2019 nlme:
+linear and nonlinear mixed effects models. R package version 3, 1–143.
+Pretzsch, H., Biber, P. and ˇDurský, J. 2002 The single tree-based stand sim-
+ulator SILVA:construction, application and evaluation. For. Ecol. Manag.
+162, 3–21.
+Pyatt, G., Ray, D., and Fletcher, J. (2001). An ecological site classiﬁcation
+for forestry in Great Britain. Forestry Commission Bulletin no. 124. Her
+Majesty’s Stationary Ofﬁce, Edinburgh.
+Quine, C. and White, I. 1994 Using the relationship between rate o f tatter
+and topographic variables to predict site windiness in upland Britain.
+Forestry 67, 245–256.
+R Core Team 2020 R: A Language and Environment for Statistical Comput-
+ing. Austria, Vienna.
+Rennolls, K. 1995 Forest height growth modelling. For. Ecol. Manag. 71,
+217–225.
+Salminen, H. and Hynynen, J. 2001 Motti; a growth and yield simulation
+system. In Proceedings of the Conference on Forest Modelling for Ecosys-
+tem Management, Forest Certiﬁcation, and Sustainable Management. V.,
+LeMay, P., Marshall (eds.), Vancouver.
+Schröder, J., Soalleiro, R.R. and Alonso, G.V. 2002 An age-independent
+basal area increment model for maritime pine trees in northwestern
+Spain. For. Ecol. Manag. 157, 55–64.
+Soares, P. and Tomé, M. 2003 GLOBTREE: an individual tree growth model
+for Eucalyptus globulus in Portugal. In Modelling Forest Systems. Editors:
+A. Amaro, D. Reed, P. Soares. CAB International, pp. 97–110.
+Tumas, H.R., Souﬁ, Z., Woolliams, J.A., McLean, J.P., Lee, S., Cottrell, J.E.
+et al. 2021 Stranger in a strange land: genetic variation of native insect
+resistance biomarkers in UK Sitka spruce (Picea sitchensis [Bong.] Carr.).
+Forestry cpab013.
+Vicente-Serrano, S.M., Beguería, S. and López-Moreno, J.I. 2010 A mul-
+tiscalar drought index sensitive to global warming: the standardized
+precipitation evapotranspiration index. J. Clim. 23, 1696–1718.
+Wang, T. and Hamann, A. 2012 ClimateEU. A program to generate climate
+annual, seasonal and monthly data for Europe. https://sites.ualberta.ca/~a
+hamann/data/climateeu.html.
+Zas, R., Merlo, E. and Fernández-López, J. 2004 Genotype x environment
+interaction in maritime pine families in Galicia, Northwest Spain. Silvae
+Genetica 53, 175–182.
+Zeide, B. 1993 Analysis of Growth Equations. For. Sci. 39, 594–616.
+404
+Downloaded from academic.oup.com/forestry/article/95/3/391/6427502 by guest on 15 October 2026

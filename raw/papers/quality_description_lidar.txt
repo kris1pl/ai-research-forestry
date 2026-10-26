@@ -1,0 +1,531 @@
+2022-04-05 
+ 
+ 
+QUALITY DESCRIPTION 
+Laser data 
+DOCUMENT VERSION: 1.6 
+Figure 1. Example laser data. 
+ 
+ 
+
+
+LANTMÄTERIET 
+2(20) 
+Table of contents 
+1 
+INTRODUCTION 
+3 
+2 
+GENERAL INFORMATION ABOUT QUALITY 
+3 
+3 
+DATA CAPTURE 
+5 
+3.1 
+LINEAGE 
+5 
+4 
+QUALITY DESCRIPTION 
+6 
+4.1 
+COMPLETENESS (POINT DENSITY/COVERAGE) 
+6 
+4.2 
+CLASSIFICATION 
+8 
+4.2.1 
+CLASSIFY LASER POINTS 
+8 
+4.2.2 
+KNOWN DEFICIENCIES IN THE CLASSIFICATION 
+9 
+4.3 
+POSITIONAL ACCURACY 
+16 
+4.3.1 
+ABSOLUTE ACCURACY 
+16 
+4.3.2 
+RELATIVE ACCURACY 
+16 
+5 
+OTHER FACTORS AFFECTING QUALITY 
+16 
+5.1 
+SCANNING ON SEVERAL OCCASIONS/DURING DIFFERENT SEASONS 
+16 
+5.2 
+DIFFERENT TYPES OF SCANNER SYSTEM 
+19 
+6 
+LIST OF CHANGES 
+20 
+ 
+ 
+ 
+
+
+LANTMÄTERIET 
+3(20) 
+1 Introduction 
+This appendix describes the general quality of laser data and provides an 
+overview of deficiencies that may exist. 
+The quality is presented using the quality parameters described in the Stand-
+ard SS-EN ISO 19157:2013 Geographic information - Data quality. 
+The quality description applies to all product variants of laser data, Laser 
+data Download, NH and Laser data Download, forest. 
+Laser points classified as ground and water are also used to produce the Na-
+tional Elevation Model. 
+2 General information about quality 
+The measured or estimated quality applies to the entirety of the surface 
+scanned. It is therefore important to, for the area in question, refer to 
+metadata such as survey technique, time of scanning and point density. 
+Good knowledge of the local terrain conditions is also valuable in the inter-
+pretation of data. 
+In order to achieve the best ground presentation, scanning needs to be done 
+when as many laser pulses as possible have a chance of reaching the ground. 
+Scanning in the summer means that leaves and undergrowth prevent laser 
+pulses from reaching the ground. In the autumn, high-growing plants can 
+prevent the laser pulses from reaching the ground, even if the leaves have 
+fallen from the trees. In wintertime, a blanket of snow thicker than a few 
+centimetres provides an inaccurate picture of the ground surface contours. In 
+spring, large quantities of melted snow and ice can constitute an obstacle to 
+scanning, as the water conceals the ground surface. This means that the time 
+window in which a good scan can be achieved is not so wide. The best con-
+ditions for scanning occur outside of the growing season, i.e. in the spring 
+and late autumn. 
+Those parts of Sweden that are mainly covered by deciduous trees, i.e. 
+southern Sweden have with a few exceptions been scanned outside of the 
+growing season. The rest of the country has been scanned regardless of the 
+season and may therefore have areas with relatively dense vegetation. 
+More detailed description of lineage and quality can be found in the text be-
+low. 
+ 
+
+
+LANTMÄTERIET 
+4(20) 
+Table 1. Quality themes and quality parameters. 
+Data quality 
+element 
+Data quality 
+subelement 
+Quality 
+Completeness 
+(Point 
+density/coverage) 
+Omission 
+Point density, only the last return is counted. The 
+figure is a mean value of the point density in 
+cells of 10 x 10 metres in each scanning area. 
+Laser data Download, NH 
+At least 95% of the total scanned surface (water 
+excluded) achieves at least 0.5 points/m2, in 
+some bare mountains without infrastructure at 
+least 0.25 points/m2. 
+Laser data Download, forest 
+At least 95 % of the total scanned surface (water 
+excluded) achieves 1,0 points/m2. 
+Thematic accuracy 
+Classification accu-
+racy  
+The accuracy of the classification is generally 
+good, but some misclassification occurs. 
+Positional accuracy Absolute 
+On open flat hard surfaces, the standard error 
+< 0,1 m in height 
+< 0.3 m in plane 
+Positional accuracy Relative 
+Height difference between flight lines, standard 
+error 
+< 0.15 m 
+ 
+ 
+
+
+LANTMÄTERIET 
+5(20) 
+3 Data capture 
+3.1 Lineage 
+Laser data is captured through airborne laser scanning of the terrain. 
+All points are preserved throughout the entire production chain, including 
+incorrect points at high or low altitude. 
+Some facts about the scanning for Laser data Download, NH (approximate 
+values): 
+• Point density: 0.5-1 points per square metre (down to 0.25 points per 
+square metre in the bare mountains). 
+• Flying altitude: 1 700-2 300 metres (up to 4 000 metres in the bare 
+mountains). 
+• Scanning angle: maximum ± 20º. 
+• Side overlap: 10-20 %. 
+• Footprint on the ground: 0.4-0.9 metres, depending on flying altitude. 
+The laser scan is performed using instruments that can provide at least four 
+returns from the same laser pulse. In case of more than four returns, we have 
+chosen to store as many as technically permitted by the standard LAS 1.2., 
+i.e. up to 7. 
+Intensity (the strength of the reflected laser pulse) is recorded for the first 
+three returns. 
+Some facts about the scanning for Laser data Download, forest (approxi-
+mate values): 
+• Point density: 1-2 points per square metre 
+• Flying altitude: ca 3 000 metres 
+• Scanning angle: maximum ± 20º. 
+• Side overlap: at least 20 %. 
+• Footprint on the ground:< 0,75 metres, depending on flying altitude. 
+The laser scan is performed using instruments that can provide at least four 
+returns from the same laser pulse. Percentage transmitted laser pulse that 
+cause more relevant returns should in forest amount at least 30 %. 
+In case of more than four returns, we have chosen to store as many as tech-
+nically permitted by the standard LAS 1.2., i.e. up to 7. 
+ 
+
+
+LANTMÄTERIET 
+6(20) 
+4 Quality description 
+4.1 Completeness (point density/coverage) 
+The point density on ground varies with terrain type, type of vegetation, the 
+season during which laser scanning was performed and a number of other 
+factors. This variation means that in some areas there are deficiencies in the 
+point density, while in other places the point density is high. 
+Open areas and overlap zones have the highest density of points on the 
+ground. Deficiencies in point density on the ground are mainly found in ar-
+eas with dense vegetation that have been scanned during growing season. 
+The dense vegetation has obstructed the path of the laser pulses to the 
+ground. In these cases, the point density may be good in the laser point 
+cloud but poor in the classified ground point layer: strikes on ground may be 
+entirely absent within a given area (see Figure 2 and under Section Vegeta-
+tion below). 
+In very hilly terrain, strikes on steep terrain forms (e.g. vertical rock faces) 
+can be completely absent. This depends on the scanning angle when the air-
+craft passed. Furthermore, if there is dense forest or other dense vegetation 
+in the steep terrain, the opportunities for strikes on ground are obviously di-
+minished (see Figure 3). 
+There may be a complete absence of returns from laser pulses that have 
+struck water, certain rooftops (se Figure 20), new asphalt or other objects 
+that reflect poorly. In this situation, holes appear in the laser point cloud. 
+Water absorbs most of the pulses, except when they hit the surface in such a 
+way that they can be reflected, as in a mirror. An irregular point density is 
+achieved over water. 
+Tall and narrow objects are not always complete depicted in the laser point 
+cloud, highest peak may be missing. This depends on the scanning angle 
+and point density. 
+ 
+
+
+LANTMÄTERIET 
+7(20) 
+Figure 2. Due to the dense vegetation, no laser points have reached the ground in the depression. The 
+classification was accurate, but there is a shortage of ground points. When the terrain model is cre-
+ated, this surface will be interpolated. White points are unclassified, orange points are ground. 
+ 
+Figure 3. In very rough terrain, the ground surface generally becomes difficult to define, especially 
+with low point density. As the terrain model is being produced based on laser points classified as 
+ground, this type of mountain slopes may entail major local errors in the terrain model. 
+Photo: Andreas Rönnberg 
+ 
+
+
+LANTMÄTERIET 
+8(20) 
+4.2 Classification 
+The classification levels used for scanning areas are described in the table 
+below. 
+Table 2. Explanation of classification level 
+Classification level 
+Explanation 
+1 
+Automatic classification of ground, water and other. 
+2 
+Classification of bridges and the refined ground 
+classification of dams. 
+3 
+Improved classification of water and smoothing of 
+water surfaces in the terrain model. 
+4.2.1 
+CLASSIFY LASER POINTS 
+In Laser data Download, NH laser points are classified in following clas-
+ses – point on ground, point on water, point on bridge or unclassified point. 
+In Laser data Download, forest laser points are classified in following 
+classes – point on ground, point on water, low point (noise), high noise 
+(point above ground, vegetation, building for example cloud), point on 
+bridge (only classification level 3) or unclassified point. 
+CLASSIFICATION LEVEL 1 
+Classification of laser points as ground, water or other is done using auto-
+matic methods. 
+Water polygons and building surfaces from the GGD (Lantmäteriet's basic 
+geographical databases) are among the elements that have been used as sup-
+port in Laser data Download, NH. Three different parameter sets are used 
+for different types of terrain, based on a rough division of the country. 
+Water polygons from the GGD (Lantmäteriet's basic geographical data-
+bases) are among the elements used as support in Laser data Download, 
+forest. 
+A limited manual review, based on error signals and employing random 
+sampling, is carried out following the automatic classification. It is difficult 
+to detect whether points have ended up in the wrong class, so a small 
+amount of incorrectly classified points may remain. 
+CLASSIFICATION LEVEL 2 
+The identification of bridges is achieved using Trafikverket’s (the Swedish 
+Transport Administration) databases BaTMan (Bridge and Tunnel Manage-
+ment), the NVDB (National Road Database) and the GGD, as well as auto-
+matic algorithms. The classification of bridges means that laser points on 
+the part of the road surface with air underneath is classified as bridge. 
+
+
+LANTMÄTERIET 
+9(20) 
+Bridges with a span less than three metres, as well as tunnels, are not classi-
+fied. 
+In connection with the classification of bridges, a refined ground classifica-
+tion of dams is carried out. This means that points are manually classified as 
+ground along the whole ridge of the dam. The identification of dams is 
+achieved using SMHI's database SVAR (Swedish Water Archive), as well 
+as GGD. 
+CLASSIFICATION LEVEL 3 
+In order to improve the classification of what was actually ground and water 
+it is necessary to have polygons consistent with the extent of the water sur-
+face at the time of scanning. The water polygons are also used as break lines 
+in the production of terrain models which gives smooth well defined water 
+surfaces. 
+Mainly due to different water level, existing water polygons from GGD can 
+not be used. In classification level 3 water polygons are newly mapped in 
+3D based on the laser point cloud. The original classification of water ac-
+cording to classification level 1 will then be updated in the entire scanning 
+area using the newly mapped water polygons. 
+In Laser data Download, NH produced before year 2017, water surfaces 
+have been mapped using manually methods. The water surface of seas, lakes 
+less than 0.25 km² and watercourses narrower than 6 metres are not in-
+cluded. 
+In Laser data Download, NH produced from year 2017 until 2019 as well 
+as Laser data Download, forest, water surfaces have been mapped using 
+automatic methods. Most of the sea, lakes and watercourses is included but 
+smaller watercourses are often missing. 
+4.2.2 
+KNOWN DEFICIENCIES IN THE CLASSIFICATION 
+VEGETATION 
+There are two reasons why vegetation can sometimes be wrongly classified 
+as ground. Firstly, technological limitations with laser scanning entail that 
+returns from a short distance (about 2 metres) following a preceding return 
+cannot be registered, and secondly, the vegetation is sometimes so dense, 
+e.g. cereals or shrubbery, that no laser pulses can penetrate to the ground 
+(see Figure 4-Figure 8). When one of these phenomena causes a total ab-
+sence of points on the surface of the ground, the overlying vegetation may 
+be classified as ground (see Figure 8-Figure 9). 
+
+
+LANTMÄTERIET 
+10(20) 
+Figure 4. (left) At this gravel pit, which is overgrown with dense deciduous brushwood, the terrain 
+model has registered 2-3 m above the actual ground surface. Photo: Andreas Rönnberg. 
+Figure 5. (right) Dense thickets of deciduous brushwood grow rapidly in many clearings. In this 
+clearing, the elevation model has in parts registered about 2 m above the actual ground surface. 
+Photo: Andreas Rönnberg. 
+ 
+Figure 6. (left) On open ground with dense crop growth, the elevation model may also register above 
+the actual ground surface. Photo: Andreas Rönnberg. 
+Figure 7. (right) In this sparse but damp pine forest, the ground is completely covered by relatively 
+high mixed herbaceous vegetation. Scanning does not penetrate to the ground when this vegetation is 
+thick, while scanning during spring and late autumn gives a better result. Photo: Andreas Rönnberg. 
+ 
+
+
+LANTMÄTERIET 
+11(20) 
+Figure 8. Dense low shrubbery, like juniper bushes on Öland's bare limestone, may register as land, 
+i.e. small hills in the terrain model. As no laser pulses have penetrated the shrubbery and reached the 
+ground, and as the bushes have a “smooth transition” to the ground, the bushes are perceived as 
+ground by the algorithm in the automatic classification. 
+ 
+
+
+LANTMÄTERIET 
+12(20) 
+Figure 9. There is often a lack of points on the ground or water in dense reeds, and the reeds have 
+been classified as ground in the automatic classification. Here, water is classified based on a water 
+polygon in the GGD (classification level 2). The red line is the profile in the image beneath. The dif-
+ference in elevation of a few metres between the ground and the reeds is clearly visible. 
+ 
+
+
+LANTMÄTERIET 
+13(20) 
+STEEP TERRAIN 
+In extremely hilly terrain with marked changes in elevation, the ground clas-
+sification may be incomplete. The reason is that the algorithm for ground 
+classification may perceive markedly divergent points as buildings or vege-
+tation (see Figure 10-Figure 14). 
+Gravel and rock quarries and similar variable environments are not adjusted 
+in the classification. 
+Figure 10. This type of terrain with steep slopes and boulders may be presented inadequately. Laser 
+points on the steep slopes may be unclassified, and the slopes thus become somewhat smoothed out in 
+the terrain model. Photo: Stig Lövborg. 
+ 
+Figure 11. Rock wall by a road that has not been classified as ground, probably due to the steep in-
+cline. The profile is drawn according to the red line in the image below. 
+ 
+
+
+LANTMÄTERIET 
+14(20) 
+Figure 12. Rock wall next to the road in the ground point layer is shown with terrain shading. Before 
+and after the correction of the classification. The profile in the image above is drawn at the red line. 
+ 
+Figure 13. Another example of a hill that has not been classified as ground. The profile is drawn at 
+the red line in the image below. 
+ 
+Figure 14. Shaded terrain image of the hill in the previous image. The left image shows how the ter-
+rain model looks after the automatic classification. The image to the right shows what the hill actu-
+ally looks like, i.e. after reclassification. 
+ 
+
+
+LANTMÄTERIET 
+15(20) 
+BUILDINGS 
+Buildings may be incorrectly classified as ground if they cover a large area 
+or if they have a smooth transition to the ground surface (see Figure 15-Fig-
+ure 16). To avoid this, building polygons from the GGD are used to dismiss 
+points on large buildings prior to the ground classification. In most cases, 
+other buildings are handled correctly, and any errors that still persist are 
+remedied following the ground classification using semi-automatic methods. 
+In densely built-up areas, elements such as elevated courtyards and parking 
+structures with low flat roofs may be classified as ground. It can be difficult, 
+both with automatic and manual methods, to determine what is actually 
+ground and where the ground level should actually be (see Figure 17). 
+Figure 15. Göransson Arena, Sandviken, was newly built and not registered in the GGD. The struc-
+ture did not have sufficiently defined edges to be perceived as a building in the automatic classifica-
+tion and was therefore classified as ground. This type of error is usually detected during quality con-
+trols and is corrected by the operators. The image shows laser data with terrain shading. 
+ 
+Figure 16. Another example of a building that has not been included in the building polygons from 
+the GGD, and which has not been perceived as a building in the automatic classification. 
+ 
+
+
+LANTMÄTERIET 
+16(20) 
+Figure 17. The roof of a parking structure has been classified as ground. The question is, however, 
+where the ground should be. 
+ 
+LOW POINTS 
+Low points usually occur due to reflections in reflective surfaces, which 
+means that they are commonly found adjacent to buildings. However, low 
+points can also be caused by temporary faults in the laser scanner's length 
+measurement. 
+4.3 Positional accuracy 
+4.3.1 
+ABSOLUTE ACCURACY 
+To ensure seamless elevation data with high accuracy across the country, a 
+fitting of the laser point cloud is performed. To support the fitting process, 
+points measured on the ground in both plane and height in SWEREF 99 
+TM/RH 2000 are used (control points). The accuracy in both plane and 
+height is then verified against measured check points. 
+The accuracy in plane of individual laser points is typically many times less 
+than in height. In fairly flat terrain, this is no problem, but in steeply sloping 
+terrain, this affects the accuracy in height, which deteriorates as the gradient 
+increases. 
+4.3.2 
+RELATIVE ACCURACY 
+To minimize internal contradictions between flight lines a flight line equali-
+zation is performed, where the position for all flight lines in a scanning area 
+is adjusted until they best match each other. Despite this, minor contradic-
+tions remain and can be visible on well define surface inside the zone where 
+flight lines overlap. If flight lines are scanned on different occasions may 
+also for example different water level cause contradictions. 
+5 Other factors affecting quality 
+5.1 Scanning on several occasions/during different seasons 
+One entire scanning area can rarely be completed on one single occasion. If 
+the time between scanning dates is long, vegetation and water level, for ex-
+ample, may have changed between the different flight lines. This means that 
+adjacent areas may differ in the data, even though in reality it is a homoge-
+neous landscape. Human influence can also be a factor changing the 
+
+
+LANTMÄTERIET 
+17(20) 
+appearance of the landscape from one time to another, such as the construc-
+tion of a road. 
+If a water surface has been scanned at different times may the water level 
+varied and elevation steps occur, see Figure 18. 
+It is therefore important to check in the metadata for the area in question to 
+see whether it has been scanned in more than one session or over long-time 
+intervals. If so, it is important to be particularly aware that differences in, 
+for example, vegetation and water level between the scanning sessions may 
+have affected the results. See Figure 19. 
+Figure 18. Running horizontally through the top image is a border between two scanning areas that 
+have been scanned on different occasions. The profile presented shows the difference in level of the 
+water in the laser point cloud, which results in elevation steps in the terrain model. 
+ 
+
+
+LANTMÄTERIET 
+18(20) 
+Figure 19. The upper image shows detail from a differential image between two scans conducted dur-
+ing different seasons. The lower image is an aerial photograph of the same section of terrain. The top 
+right is an area of reeds, the middle is arable land, and the bottom left is reeds and other low vegeta-
+tion. The differential image is green at 0 m difference and becomes totally red or blue at ±0.4 m dif-
+ference in height. 
+ 
+
+
+LANTMÄTERIET 
+19(20) 
+Figure 20. An example of the sparse nature of the laser strikes (all returns) and the actual laser foot-
+print. The image also gives an example of points being absent over a roof. 
+ 
+5.2 Different types of scanner system 
+Scanning is performed with several types of scanner system with some char-
+acteristic differences that one should be aware of. One of the differences is 
+that the various scanners use different scales for registering intensity, as 
+well as having differing scanning patterns. Some scanner system using two 
+separately laser channels which gives double point density. 
+In most applications these differences have no practical significance since 
+the geometric accuracy is similar in all used systems. The biggest difference 
+is rather in the point density that directly affects what details are visible in 
+the laser data. 
+Most systems store discrete points in real time, while some store the entire 
+waveform which is then processed to produce discrete points. 
+The metadata indicates which system has been used for the scan in question. 
+
+
+LANTMÄTERIET 
+20(20) 
+6 List of changes 
+Table 3. List of changes. 
+Version 
+Date 
+Reason and change from previous version 
+1.6 
+2022-04-05 
+New product name Laser data Download, 
+NH, previous Laser data NH 
+1.5 
+2021-03-01 
+Updated facts about tall and narrow objects 
+in the laser point cloud, section 4.1 
+1.4 
+2021-01-18 
+New product name Laser data Download, 
+forest, previous Laser data Forest (Laserdata 
+Skog) 
+1.3 
+2020-08-18 
+Updated facts about classification level 3, 
+section 4.2.1 
+1.2 
+2020-02-20 
+Updated facts about classify laser points 
+since Laser data NH is nationwide according 
+to classification level 3. 
+1.1 
+2019-10-01 
+A new point class for Laser data Download, 
+forest. 
+Updated facts about the scanning for Laser 
+data NH due to a new scanner from year 
+2019. 
+1.0 
+2019-05-28 
+New document. 
+ 
+Lantmäteriet, TELEFON 0771-63 63 63 E-POST lantmateriet@lm.se WEBBPLATS www.lantmateriet.se

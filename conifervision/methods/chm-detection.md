@@ -4,10 +4,10 @@ type: Method
 description: "CHM from photogrammetric point clouds (CSF ground filter). DEIMv2 detection on height-stratified CHM bands — lower, upper, and R-class."
 tags: [chm, photogrammetry, detection]
 status: stable
-updated: 2026-10-23
+updated: 2026-10-26
 generated:
   by: agent:conifervision-wiki
-  at: 2026-10-23T12:00:00Z
+  at: 2026-10-26T12:00:00Z
 related_methods:
   - methods/deimv2-canopy
   - methods/local-maxima
@@ -34,6 +34,24 @@ sources:
   - sources/paper-biomass and stem volume_951-40-1984-9
   - sources/paper-blanchard_tsaf_2016
   - sources/paper-crown_and_root_biomass_equations_fo
+  - sources/paper-drone imaging-based wall-to-wall processing pipelines for individual tree level inventory in boreal forest plots
+  - sources/paper-e_pb_laserdata_nedladdning_skog
+  - sources/paper-estimating tree diameter at breast height (dbh) from uav data-1-s2-0-s2666017225001373-main
+  - sources/paper-flygburen laserskanning för skogliga skattningar-faktaskog_04_2014
+  - sources/paper-löv och lövblandbestånd - ekologi och skötsel-rytter_1998_redogorelse_8_100dpi
+  - sources/paper-parameterization of height–diameter and crown radius-diameter relationship across the globe - rtae005
+  - sources/paper-pine crown and trunk diameter dependence research-27_short_paper
+  - sources/paper-predicting_crown_width_using_nonlinear_mixed-effec
+  - sources/paper-prediction of diameter using height and crown attributes - filipescu_etal2012wjafdbh_ht_model
+  - sources/paper-quality_description_lidar
+  - sources/paper-robust height-diameter allometries for 41 european tree species - stand characteristics and structure matter-2025-09-29-679156v2_full
+  - sources/paper-robust height-diameter allometries for 41 european tree species - supplementary data-2025-09-29-679156v2_media-1
+  - sources/paper-simplifying uav-based photogrammetry in forestry_how to generate accurate digital terrain model and assess flight mission settings-forests-13-00173
+  - sources/paper-skattningar i gallringsskog med hjälp av flygburen laserskanning -beräkningar med massaslutenhet
+  - sources/paper-skoglig fjärranalys-ljungbergs_sv_20180824
+  - sources/paper-skoglig_fjarranalys_v1_0_161211
+  - sources/paper-skogsinventering med flygburen laserskanning-appel_lucas
+  - sources/paper-uav-enabled evaluation of forestry plantations_a comprehensive assessment of laser scanning and photogrammetric approa-1-s2-0-s2666017225000513-main
   - sources/popescu-wynne-2004-seeing-the-trees
 ---
 # Canopy Height Model (CHM)
@@ -143,7 +161,81 @@ CHM build pseudocode: [[sources/popescu-wynne-2004-seeing-the-trees#Replication 
 | Compute Iterative Hegyi Index aboveground competition intensity within 10 m radius | TBD |
 | Fit component log-transformed power models with crown widths and competition | TBD |
 | Apply transformation ratio correction factor k = sum(Y) / sum(exp(ln_Y)) | TBD |
+| CHM rasterization from UAV SfM point clouds | aligned |
+| Multi-camera GSD comparison (RGB 1.3 cm vs MS 7 cm) | not used |
+| Filter ground points (class 2) from open ALS tiles | TBD |
+| TIN/rasterize ALS ground points to DTM raster (RH 2000) | TBD |
+| Normalize UAV DSM against ALS DTM (DSM - DTM) | TBD |
+| Classify ground points and generate DTM/DSM at 2 cm GSD | aligned |
+| Compute CHM = DSM - DTM | aligned |
+| Marker-controlled watershed tree crown delineation on CHM | TBD |
+| Isolate 1.2–1.4 m stem point slices for circle fitting | not used |
+| Generate CHM via highest return or 3D geometric crown ellipsoid fitting | Aligned (CSF ground filter + rasterized CHM in production; template fitting not used) |
+| Detect local maxima and segment crowns via watershed / region growing | Aligned (LM detection on CHM + height-banded DEIMv2) |
+| Extract top height HT from CHM peak and crown area CA from delineated polygon | aligned |
+| Compute cumulative crown area of larger trees (CAL = sum(CA_j) / Area for HT_j > HT_i) | TBD |
+| Predict DBH via inverted power equation modified with CAL | TBD |
+| Validate ALS return completeness (>= 1.0 pts/m2 in forest) | TBD |
+| Flag potential ground overestimation zones in dense brushwood (+0.5 to +3.0 m bias) | TBD |
+| Flight-line overlap vertical consistency check (< 0.15 m SE) | TBD |
+| Fixed-effect height prediction from DBH, Dg, BA, and stand structure | not used |
+| Local plot random effect recalibration (4 reference trees) | not used |
+| Initial ground filtering (SMRF slope=0.18, window=17, threshold=0.5) | Alternative used (CSF via chm_rasterizer.py) |
+| Ground points reclassification via median division & RANSAC plane fitting | Not used |
+| Ground extension / surrounded gap closing via planar synthetic point interpolation | Not used |
+| Bi-temporal selective logging detection (1/3 max canopy height threshold) | Not used |
+| Extract percentile metrics (p70, p90, p95, p100) and vegetation proportion (prop40) per 10 m cell | TBD |
+| Incorporate scan angle sine correction for canopy cover fraction | TBD |
+| Predict H_gy and dominant height via multi-linear regression | TBD |
+| Calculate standing volume and basal area via Jonsson form factors and volume density | TBD |
+| Delineate operational thinning units by thresholding and polygon aggregation (gap < 50 m, min area >= 1 ha) | TBD |
+| Photogrammetric SfM point matching | ODM / photogrammetry upstream |
+| Ground elevation normalization against ALS DTM or ground filter | Aligned (CSF ground filter in chm_rasterizer.py) |
+| Multi-scale ITD (<0.5 m pixel resolution) | Aligned (CHM rasterization at fine GSD) |
+| Triangulation and bundle block adjustment | Upstream (ODM) |
+| Dense 3D point cloud generation (SfM / dense matching) | Upstream (ODM) |
+| Ground filtering (DTM derivation) via morphological/CSF filter | CSF ground filter (`chm_rasterizer.py`) |
+| Digital surface model (DSM) calculation and CHM subtraction (DSM - DTM) | aligned (`preprocess_2d_raster_layer.py`) |
+| Orthorectification onto surface model | Upstream (ODM) |
+| Classify ground returns via TIN / progressive densification | aligned (CSF ground filter) |
+| Height stratify vegetation (0–0.3 m, 0.3–2.0 m, >2.0 m) | aligned (0.3–4 m, 4–30 m, R-class 0–7.77 m) |
+| Generate TIN DEM and DSM at 1.0 m grid resolution | aligned (chm_rasterizer.py) |
+| Compute CHM = DSM - DEM | aligned |
+| Filter candidate tree peaks at H >= 2.0 m and H > 8.0 m | aligned |
+| Point cloud spatial density homogenisation (~400 pts/m²) | TBD |
+| Pit-free CHM generation at 0.25 m resolution (Khosravipour et al.) | TBD |
+| Marker-controlled watershed restricted to upper 90% of CHM | TBD |
+| Initial SMRF/CSF ground filtering | aligned |
+| Median-partitioned RANSAC ground reclassification | not used |
+| Boundary-surrounded gap RANSAC planar synthesis | not used |
+| PDAL DTM/DSM interpolation and CHM derivation | aligned |
 
+
+Pseudocode: [[sources/paper-uav-enabled evaluation of forestry plantations_a comprehensive assessment of laser scanning and photogrammetric approa-1-s2-0-s2666017225000513-main#Replication pseudocode]].
+
+Pseudocode: [[sources/paper-skogsinventering med flygburen laserskanning-appel_lucas#Replication pseudocode]].
+
+Pseudocode: [[sources/paper-skoglig_fjarranalys_v1_0_161211#Replication pseudocode]].
+
+Pseudocode: [[sources/paper-skoglig fjärranalys-ljungbergs_sv_20180824#Replication pseudocode]].
+
+Pseudocode: [[sources/paper-skattningar i gallringsskog med hjälp av flygburen laserskanning -beräkningar med massaslutenhet#Replication pseudocode]].
+
+Pseudocode: [[sources/paper-simplifying uav-based photogrammetry in forestry_how to generate accurate digital terrain model and assess flight mission settings-forests-13-00173#Replication pseudocode]].
+
+Pseudocode: [[sources/paper-robust height-diameter allometries for 41 european tree species - supplementary data-2025-09-29-679156v2_media-1#Replication pseudocode]].
+
+Pseudocode: [[sources/paper-quality_description_lidar#Replication pseudocode]].
+
+Pseudocode: [[sources/paper-prediction of diameter using height and crown attributes - filipescu_etal2012wjafdbh_ht_model#Replication pseudocode]].
+
+Pseudocode: [[sources/paper-flygburen laserskanning för skogliga skattningar-faktaskog_04_2014#Replication pseudocode]].
+
+Pseudocode: [[sources/paper-estimating tree diameter at breast height (dbh) from uav data-1-s2-0-s2666017225001373-main#Replication pseudocode]].
+
+Pseudocode: [[sources/paper-e_pb_laserdata_nedladdning_skog#Replication pseudocode]].
+
+Pseudocode: [[sources/paper-drone imaging-based wall-to-wall processing pipelines for individual tree level inventory in boreal forest plots#Replication pseudocode]].
 
 Pseudocode: [[sources/paper-crown_and_root_biomass_equations_fo#Replication pseudocode]].
 
@@ -224,3 +316,17 @@ Pseudocode: [[sources/paper-treeflow#Replication pseudocode]].
 - Can species-specific asymptotic height caps in the inverted Mund allometric equations reliably handle CHM over-estimates without producing runaway DBH predictions?
 - Does the observed shift in crown-area vs. height allometric scaling at canopy emergence justify distinct allometric inversion models for lower vs. upper CHM height layers?
 - Can horizontal crown dimensions and spatial competition indices derived from 2D crown detections substitute for unreliable sub-canopy photogrammetric heights when estimating understory sapling biomass?
+- Can Lantmäteriet 1–2 pts/m² ALS class-2 ground points replace UAV photogrammetric CSF ground filtering for CHM generation across operational Swedish test sites?
+- Can 3D ellipsoid template correlation surfaces provide cleaner crown boundaries than raw maximum-return binning for height-stratified CHM rasterization in dense conifer stands?
+- Can height-stratified CHM slicing thresholds dynamically adapt to mixed broadleaf-conifer stands where overstory birch crowns exceed 30–40% closure and suppress understory spruce detection?
+- Can the piecewise Gaussian trunk-to-crown diameter prior from Pyataev & Vais be inverted to reliably regularize bounding box dimensions during height-stratified detection in dense Scots pine stands?
+- Can cumulative crown area of larger trees (CAL) computed directly over sliding spatial neighborhoods from CHM detections substitute for ground-measured basal area of larger trees without exacerbating edge effects?
+- When normalising photogrammetric DSMs with Lantmäteriet national DTMs, what automated heuristic can detect and correct 2–3 m ground elevation bias in young regeneration stands (R-class) where historical ALS failed to penetrate dense shrub layers?
+- Can the 4-tree local recalibration factor (lambda) be inverted against CHM-derived dominant heights to estimate stand basal area or diameter distributions without ground measurements?
+- Can RANSAC-based surrounded gap interpolation be adapted to post-process CSF ground classifications in dense conifer stands to prevent ground-mounding artifacts and height-slicing distortion?
+- Can the scan angle correction term (sin|theta|) used for off-nadir ALS penetration bias be adapted to wide-FOV UAV photogrammetry orthophotos or CHM canopy density rasters across swath edges?
+- In dense mature conifer stands where photogrammetric point clouds lack under-canopy ground penetration, what vertical error margin is introduced into CHM height-stratified detection bands when relying purely on CSF filtering rather than Lantmäteriet ALS DTM data?
+- How do residual terrain interpolation artifacts in photogrammetric DTMs affect height layer stratification boundaries in dense young conifer stands compared to ALS DTM baselines?
+- Should high-altitude outlier filtering (e.g. SOR or LAS class 7 exclusion) be formally hardened prior to rasterization to eliminate 20+ m canopy height spikes in low-density or noisy point clouds?
+- How severely does photogrammetric DTM drift degrade height-stratified layer slicing in closed-canopy conifer stands when LiDAR ground benchmarks are unavailable?
+- Can median-partitioned RANSAC plane reclassification and void gap filling be integrated into `chm_rasterizer.py` to prevent terrain floating and height underestimation in dense pre-thinning stands?

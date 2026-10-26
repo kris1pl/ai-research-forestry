@@ -1,0 +1,801 @@
+Prediction of Diameter Using Height and Crown
+Attributes: A Case Study
+Cosmin N. Filipescu, Arthur Groot, Dan A. MacIsaac, Mike G. Cruickshank, and
+James D. Stewart
+Recent advances in remote sensing provide increasingly detailed forest information in a timely and cost-effective manner. Individual tree stem diameter, an
+important variable for operational forest inventory, cannot be determined directly from remotely sensed data; stem diameter must be estimated from ancillary
+measures of tree crown, tree height, and/or measures related to stand structure. In this study, we developed predictive models of diameter as a function of
+height and crown attributes using a nonlinear mixed-effects approach. Long-term silvicultural experiments provided data for several species: black spruce,
+Douglas-ﬁr, and lodgepole pine. Addition of crown area and crown area of larger trees to diameter-height models signiﬁcantly improved predictive performance,
+resulting in low root mean squared error values between 0.9 and 1.8 cm (10–11% of mean diameter). Our models indicated the need to include additional
+explanatory variables at wider levels of spacing and thinning. This case study highlights several practical implications for developing and reﬁning individual
+tree diameter models based on variables that can be remotely sensed.
+KEYWORDS: diameter-height models, crown, nonlinear mixed-effects
+D
+iameter and height constitute fundamental information
+for the development of reliable growth and yield tools (Ass-
+mann 1970). Forest management relies on diameter and
+height to predict tree and stand volume, biomass, site index, and
+other important attributes that support the decisionmaking process.
+Traditionally, ﬁeld measurements of diameter at breast height (dbh)
+have been relatively easy, inexpensive, and more accurate compared
+with measurements of height; thus dbh is usually measured for all
+sample trees, whereas height is measured only for a subsample, fol-
+lowed by ﬁtting of graphical or statistical models between height and
+dbh (Calama and Montero 2004). Although forest biometricians
+have modeled height as a function of dbh for decades (e.g., Meyer
+1940), relationships between height and dbh for various species
+have only recently been explored using nonlinear mixed-effects
+models for better prediction and local calibration (e.g., Lynch et al.
+2005, Crecente-Campo et al. 2010).
+Recent developments in remote sensing have enabled collection
+of forest structure and terrain attributes using light detection and
+ranging (LiDAR) applications (e.g., Hudak et al. 2009, Sullivan et
+al. 2009). LiDAR-retrieved information has been used to estimate
+stand-level structural parameters (Lefsky et al. 2007, Næsset and
+Gobakken 2008, Goerndt et al. 2010), as well as attributes of indi-
+vidual trees (Popescu et al. 2003, Lefsky and McHale 2008). The
+estimation of stem diameter for individual trees has received rela-
+tively less attention, largely because of costs associated with acquir-
+ing high-density LiDAR information. However, some of these lim-
+itations may be overcome by combining LiDAR data with aerial
+photographs and high-resolution multispectral imagery to delineate
+the height and crown attributes of individual trees (Leckie et al.
+2003, Sua´rez et al. 2005). Simple linear relationships have been
+developed to predict dbh, typically using height and crown area or
+crown diameter (Zagalikis et al. 2005, Popescu 2007, Brandeis et al.
+2009). Although linear equations may appear suitable, the question
+remains whether these models would be generally applicable to a
+broader range of conditions and stand structures.
+Forest inventories require acquisition of increasingly detailed infor-
+mation for large areas in a timely and cost-effective manner. Forest
+inventories are currently facing several challenges to increase the level of
+detail, lower costs, and include information on the quality of ﬁber and
+value of products (Temesgen et al. 2007a, Pitt and Pineau 2009). The
+objective of our study was to evaluate the feasibility of predicting stem
+diameter using height and crown characteristics. In our case study, we
+used ground-based measurements; this allowed for efﬁcient testing of
+model forms, suitability of independent variables, and assessment of
+potential accuracy. Suitable models identiﬁed in this study can then be
+ﬁtted in subsequent work using ground-measured diameter and re-
+motely sensed independent variables.
+Materials and Methods
+Data Sources
+Data were obtained from several long-term silvicultural experi-
+ments (Table 1). These long-term studies provide detailed and pre-
+cise measurements of individual tree variables, such as diameter,
+height, and crown characteristics for a broad range of densities and
+Manuscript received May 27, 2011, accepted September 27, 2011.
+Cosmin N. Filipescu (cosmin.ﬁlipescu@nrcan.gc.ca), Natural Resources Canada, Canadian Forest Service, Canadian Wood Fibre Centre, 506 West Burnside Rd., Victoria, British Columbia
+V8Z 1M5, Canada. Arthur Groot, Natural Resources Canada, Sault Ste. Marie, Ontario P6A 2E5. Dan A. MacIsaac and James D. Stewart, Natural Resources Canada, Edmonton, Alberta
+T6H 3S5. Mike G. Cruickshank, Natural Resources Canada, Victoria, British Columbia V8Z 1M5. We thank Val LeMay and Sharma Mahadev for statistical advice in the initial stage of our
+study; Mike Wulder, Doug Pitt, and Steen Magnussen for reviewing earlier drafts; and three anonymous referees and the associate editor for their comments.
+This article uses metric units; the applicable conversion factors are: centimeters (cm): 1 cm  0.39 in.; meters (m): 1 m  3.3 ft; square meters (m2): 1 m2  10.8 ft2; hectares
+(ha): 1 ha  2.47 ac.
+© 2012 Her Majesty the Queen in Right of Canada
+30
+WEST. J. APPL. FOR. 27(1) 2012
+ABSTRACT
+
+
+conditions. In addition, these experiments consist of replicated plots
+with various silvicultural interventions (i.e., spacing, thinning, and
+fertilization). Several species were considered for this study: black
+spruce (Picea mariana [Mill.] B.S.P.), interior Douglas-ﬁr (Pseudo-
+tsuga menziesii var. glauca [Mirb.] Franco), and lodgepole pine (Pi-
+nus contorta Dougl.). The black spruce data were obtained from 26
+experimental plots representing seven initial spacings (ranging from
+1.25 to 4 m), with densities at age 25 ranging from 600 to 5,600
+stems ha1. Crown attributes of black spruce were measured on
+randomly selected trees. The Douglas-ﬁr data were obtained from
+98 plots in 4 locations established in planted stands of variable
+density to examine the effects of root disease on tree growth and
+survival (Cruickshank et al. 2009). The lodgepole pine data were
+obtained from a range of experiments examining the effects of thin-
+ning and fertilization and consist of 245 plots in 10 locations (Stew-
+art et al. 2006). Crown attributes for Douglas-ﬁr and lodgepole pine
+were measured for all trees in each plot.
+A detailed summary of the data is given in Table 2. These vari-
+ables (diameter, height, and crown dimensions) were measured di-
+rectly for all sampled trees. Crown projected area, referred to here-
+after as crown area, was based on mean crown radius calculated as
+the geometric average. Crown surface area and crown volume were
+also derived (assuming a conical crown). A surrogate of competition
+was calculated for each sample tree at the plot level as the sum of the
+crown area of larger trees (CAL), similar to basal area of larger trees
+(Wykoff et al. 1982).
+Statistical Analysis
+Existing literature on models of height and diameter identiﬁed
+several candidates of nonlinear base equations (Table 3). Inverted
+versions of these equations were compared to determine which pro-
+vide the best predictive ability and ﬁt to the diameter-height data.
+Models were compared using several criteria: pseudo R2, root mean
+squared error (RMSE), average bias (expressed as mean absolute
+deviation [MAD]), and Akaike’s information criterion (AIC), cal-
+culated as follows:
+ pseudo R2  1 
+
+i1
+n
+ yi  yˆi2
+
+i1
+n
+ yi  y¯2
+(1)
+RMSE 
+i1
+n
+ yi  yˆi2
+n  k
+(2)
+MAD 
+
+i1
+n
+yi  yˆi
+n  k
+(3)
+AIC  2lnL  2k
+(4)
+where yi  observed values, yˆi  predicted values, y¯  average, n 
+sample size, k  number of model parameters, and ln(L)  the
+logarithm of the likelihood function.
+In addition to the inverted versions of diameter-height models in
+Table 3, a simple and ﬂexible equation was also considered:
+dbh  0HT  1.312
+HT1.3
+(5)
+Equation 5 performed as well or better than other candidate
+equations, and it was chosen as the base model of height and diam-
+eter based on parsimony and predictive behavior. Allometric models
+were also developed separately for diameter as a function of crown
+attributes (radius, length, area, surface area, and volume). Predic-
+tions were similar across these crown attributes; for applicability to
+remote sensing data, only crown area was considered further:
+Table 1.
+Characteristics of study sites.
+Species
+Study location
+Latitude and longitude
+Stand age
+(years)
+Dominant
+height (m)
+Sample
+Treatment
+Reference
+Black spruce
+Kapuskasing,
+Ontario
+49° 01 °N 82° 09 °W
+25
+7.1–8.9
+26 plots, 352 trees
+Initial spacing
+Douglas-ﬁr
+Several sites in
+British
+Columbia
+50° 12 to 51° 36 °N
+117° 42 to 119° 48
+°W
+25–34
+12.3–18.3
+4 locations, 98 plots,
+3,089 trees
+Cruickshank et al. (2009)
+Lodgepole
+pine
+Several sites in
+Alberta
+50° 59 to 53° 32 °N
+115° 03 to 117° 22
+°W
+41–142
+8.3–27.1
+10 locations, 245 plots,
+11,802 trees
+Thinning and
+fertilization
+Stewart et al. (2006)
+Table 2.
+Summary statistics of data.
+Species
+Variable
+Minimum
+Mean
+Maximum
+Standard
+deviation
+Black spruce
+dbh (cm)
+0.6
+9.2
+16.8
+2.8
+HT (m)
+1.3
+6.7
+9.4
+1.3
+CA (m2)
+0.3
+3.2
+11.1
+1.9
+Douglas-ﬁr
+dbh (cm)
+3.4
+15.4
+30.5
+4.4
+HT (m)
+2.9
+12.8
+20.0
+2.9
+CA (m2)
+0.5
+10.3
+39.0
+4.8
+CAL (m2/ha)
+0.0
+6,643
+16,240
+3,573
+Lodgepole pine
+dbh (cm)
+0.3
+15.8
+43.9
+6.3
+HT (m)
+1.5
+14.6
+29.5
+4.6
+CA (m2)
+0.1
+4.3
+38.5
+3.8
+CAL (m2/ha)
+0.0
+3,614
+9,719
+2,242
+HT, stem height; CA, crown area; CAL, crown area of larger trees.
+Table 3.
+Base models for height-dbh equations.
+Model
+Equation
+Power (Stage 1975)
+HT  1.3  a  dbhb
+Von Bertalanffy (Meyer 1940)
+HT  1.3  a(1  eb  dbh)
+Chapman-Richards (Richards 1959,
+Chapman 1961)
+HT  1.3  a(1  ebdbh)c
+Weibull (Yang et al. 1978)
+HT  1.3  a(1  ebdbhc)
+Exponential (Ratkowsky 1990)
+HT  1.3  ae
+b
+dbhc
+Korf/Lunquist (Stage 1963, Zeide 1989)
+HT  1.3  aeb*dbhc
+HT, total stem height; a, b, c, model parameters.
+WEST. J. APPL. FOR. 27(1) 2012
+31
+
+
+dbh  0CA1
+(6)
+Height and crown area were combined into one model, followed
+by the addition of crown area of larger trees:
+dbh  0HT  1.312
+HT1.3CA3
+(7)
+dbh  0  4CALHT  1.312
+HT1.3CA3
+(8)
+The inﬂuence of silvicultural treatment (spacing for black spruce
+in Equation 9 and thinning and fertilization for lodgepole pine in
+Equation 10) was explored by including indicator variables:
+dbh  0  tidiHT  1.312
+HT1.3CA3
+(9)
+dbh  0  tidi  4CALHT  1.312
+HT1.3CA3
+(10)
+where ti  treatment parameter, di  indicator variable (1 if treat-
+ment, 0 otherwise).
+Analysis of ﬁxed-effects models of diameter as a function of
+height, crown area, crown area of larger trees, and treatment (where
+applicable) was expanded by including random parameters to cap-
+ture plot and site effects (e.g., Sharma and Parton 2007, Vargas-
+Larreta et al. 2009). A mixed-effects approach was used because of
+the hierarchical structure of data with multiple sample units (plots
+and locations); therefore, it is reasonable to expect both among-unit
+variability and correlation of measurements within a unit (Hall and
+Bailey 2001).
+Model parameters were estimated in R (R Development Core
+Team 2011). Validity of model assumptions was based on analysis
+of residuals for equality of variance and normality. Despite the ab-
+sence of independent data sets for validation, data were not split into
+estimation and cross-validation subsets. Several authors have argued
+that cross-validation provides little if any additional information
+compared with models developed using all of the available data, and
+there are clear disadvantages to ﬁtting models with split data sets
+(Hirsch 1991, Kozak and Kozak 2003, Yang et al. 2004).
+Results
+Relevant ﬁt statistics for diameter prediction models based on
+height only; crown area only; and height combined with crown area,
+crown area of larger trees, and treatment are listed in Table 4. All
+goodness criteria (R2, RMSE, MAD, and AIC) showed similar
+trends of goodness-of-ﬁt with different combinations of predictor
+variables. For models of diameter as a function of height, RMSE
+ranged between 1.65 and 3.43 cm, whereas for models of diameter
+as a function of crown area, RMSE ranged between 1.76 and 4.62
+cm. Height alone was a better predictor of diameter for black spruce
+and lodgepole pine, whereas crown area alone was a better predictor
+for Douglas-ﬁr compared with height alone. A considerable amount
+of unexplained variation (R2 as low as 0.619) remained with models
+predicting diameter from height alone (Table 4). Combining height
+with crown area resulted in models with more accurate predictions,
+whereas the addition of crown area of larger trees further improved
+predictions. Inclusion of treatment rendered signiﬁcant parameters
+for wide spacing levels (3 and 4 m) for black spruce; for lodgepole
+pine, treatment parameters were not signiﬁcant for fertilization, and
+only the high level of thinning was signiﬁcant. Treatment parame-
+ters provided a relatively small but signiﬁcant improvement of
+model ﬁt (Table 4).
+The preferred ﬁxed-effects models were Equation 9 for black
+spruce (height, crown area, and spacing), Equation 8 for Douglas-
+ﬁr, and Equation 10 for lodgepole pine (height, crown area, CAL,
+and thinning). These models were explored further by adding ran-
+dom parameters for plots (black spruce) and for plots and locations
+(Douglas-ﬁr and lodgepole pine). Best results (lowest AIC) were
+obtained with only one random parameter, as models with two or
+more random parameters failed to converge or provided inferior
+predictions (larger AIC).
+The mixed-effects models with most accurate predictions were as
+follows (Table 5):
+dbh  0  t3d3  t4d4HT  1.31
+2
+HT1.3CA3b3p for black spruce
+(11)
+dbh  0  4CALHT  1.31b1lb1p2
+HT1.3CA3
+for Douglas-ﬁr
+(12)
+dbh  0  thdh  b0l  b0p  4CALHT  1.312
+HT1.3CA3
+for lodgepole pine
+(13)
+where t3, t4  treatment parameters for the 3-m and 4-m spacings;
+th  treatment parameter for the high level of thinning; d3, d4, dh 
+treatment indicator variables; b0p, b1p, b3p  plot random parame-
+ters; and b0l, b1l  location random parameters.
+Evidence of heteroscedasticity indicated the need to model vari-
+Table 4.
+Fit statistics for dbh models (ﬁxed effects).
+Species
+Predictor variables
+(Pseudo) R2
+RMSE
+MAD
+AIC
+. . . . . . .(cm) . . . . . . .
+Black spruce
+HT, Equation 5
+0.666
+1.651
+1.256
+1,356.7
+CA, Equation 6
+0.617
+1.767
+1.396
+1,403.5
+HT, CA, Equation 7
+0.842
+1.136
+0.863
+1,094.8
+HT, CA, treatment, Equation 9
+0.859
+1.069
+0.821
+1,053.9
+Douglas-ﬁr
+HT, Equation 5
+0.619
+2.692
+2.141
+14,889
+CA, Equation 6
+0.633
+2.642
+2.088
+14,773
+HT, CA, Equation 7
+0.803
+1.936
+1.521
+12,854
+HT, CA, CAL, Equation 8
+0.813
+1.887
+1.477
+12,694
+Lodgepole pine
+HT, Equation 5
+0.704
+3.427
+2.676
+62,569
+CA, Equation 6
+0.462
+4.626
+3.721
+69,652
+HT, CA, Equation 7
+0.833
+2.574
+1.962
+55,818
+HT, CA, CAL, Equation 8
+0.842
+2.507
+1.899
+55,195
+HT, CA, CAL, treatment, Equation 10
+0.861
+2.349
+1.769
+53,660
+HT, total stem height; CA, crown area; CAL, crown area of larger trees; RMSE, root mean square error; MAD, mean absolute deviation; AIC, Akaike’s information criterion.
+32
+WEST. J. APPL. FOR. 27(1) 2012
+
+
+ance, and the best results were provided by the power variance
+function (Pinheiro and Bates 2000, p. 208):
+Var  res
+2 HT 2
+(14)
+where 2
+res  the residual variance and   the estimated variance
+parameter.
+The validity of regression assumptions (equality and normality)
+was conﬁrmed by analysis of residuals (example for Douglas-ﬁr in-
+cluded in Figure 1).
+Discussion
+Models developed in this study provide accurate predictions of
+stem diameter based on height and crown attributes for several
+species. Previous studies on predicting height from diameter have
+indicated a clear need for a nonlinear mixed effects approach
+(Sharma and Parton 2007, Temesgen et al. 2008). Our results sug-
+gest that nonlinear models are also needed for relationships predict-
+ing diameter from height, in agreement with other similar studies
+(e.g., Hall et al. 2001, Parker and Evans 2004). Moreover, recent
+ﬁndings indicate that mixed-effects models provide the best good-
+ness-of-ﬁt for predicting dbh from LiDAR-derived variables (Salas
+et al. 2010).
+Several base models of diameter and height were evaluated and
+tested in our study. Somewhat surprisingly, power functions seemed
+to perform as well as or better than sigmoidal-shaped equations. The
+latter models (e.g., Chapman-Richards) have been reported to ap-
+proach the asymptote too quickly when there is a weak relationship
+between the dependent and independent variables (Huang et al.
+1992); in addition, Temesgen et al. (2007b) have suggested that
+height-diameter models are more strongly asymptotic for individual
+stands than for regional models. This indicates that further valida-
+tion of these models may be needed for application at wide geo-
+graphical scales.
+Our results show that diameter models based solely on height
+performed better than models based solely on crown for black
+spruce and lodgepole pine, whereas crown area alone was a stronger
+predictor of diameter for Douglas-ﬁr. Our ﬁndings contradict those
+reported by Hall et al. (1989), who suggested that crown area is a
+better predictor of diameter than height for lodgepole pine in Al-
+berta. However, it is unclear whether these differences can be further
+Table 5.
+Parameter estimates, standard errors and ﬁt statistics for best dbh models by species.
+Species
+Fixed-effects parameter estimates (standard errors)
+Variance
+components
+(Pseudo)
+R2
+RMSE
+MAD
+AIC
+0
+1
+2
+3
+4
+ti
+. . . . . .(cm) . . . . . .
+Black spruce,
+Equation 11
+2.038
+(0.165)
+0.657
+(0.130)
+1.024
+(0.027)
+0.218
+(0.013)
+t3  0.230
+(0.040)
+t4  0.232
+(0.051)
+SD(b3p)  0.0002
+  0.678
+SD(res)  0.289
+0.861
+0.992 (10.7%)
+0.816
+1,045.4
+Douglas-ﬁr,
+Equation 12
+2.479
+(0.179)
+0.484
+(0.053)
+1.017
+(0.004)
+0.226
+(0.013)
+0.00026
+(0.00003)
+SD(b1l)  0.0028
+SD(b1p)  0.025
+  0.399
+SD(res)  0.623
+0.848
+1.556 (10.1%)
+1.323
+12,326
+Lodgepole pine,
+Equation 13
+2.622
+(0.078)
+0.458
+(0.014)
+1.028
+(0.001)
+0.159
+(0.003)
+0.0016
+(0.0002)
+th  0.250
+(0.027)
+SD(b0l)  0.153
+SD(b0p)  0.183
+  0.456
+SD(res)  0.556
+0.911
+1.791 (11.3%)
+1.399
+48,562
+t3, t4, treatment parameters for the 3-m and 4-m spacings; th, treatment parameter for the high level of thinning; b0p, b1p, b3p, random parameters for plot; b0l, b1l, random parameters for location;
+, variance parameter of the power variance function, as in Equation 14; value in parentheses for RMSE represents percentage of mean diameter. RMSE, root mean square error; MAD, mean absolute
+deviation; AIC, Akaike’s information criterion.
+Figure 1.
+Plots of prediction performance for dbh of Douglas-ﬁr (model in Table 5). a, Fitted against observed values; b, standardized
+residuals against ﬁtted values; c, q-q plot. Dashed line in b is smoothing spline, indicating no residual trend.
+WEST. J. APPL. FOR. 27(1) 2012
+33
+
+
+attributed to sample size, stand characteristics, or management his-
+tory of the studied stands.
+The addition of crown area and crown area of larger trees to base
+models of diameter and height signiﬁcantly improved predictive
+performance. Crown area of larger trees likely reﬂects the competi-
+tive status (i.e., social status) and access to resources of the subject
+tree (Purves et al. 2007). In turn, resource availability during the
+growing season affects stem diameter to a larger extent than tree
+height, accounting for the need to include additional explanatory
+variables. The improvement in performance obtained by adding
+measures of competitive status corresponds to the improvement in
+height-diameter model performance when stand density and basal
+area are included as predictors (Sharma and Parton 2007). More-
+over, the improvement in model ﬁt for wider spacing and thinning
+levels may indicate further the importance of resource access. Trees
+growing in a more open environment are able to access more light
+relative to their height and crown dimensions compared with trees
+of the same size in more closed stands, leading to larger stem diam-
+eter. The relationship between height and diameter, as expressed by
+the slenderness coefﬁcient, is related to crown length, stand density
+and site index for boreal conifers (Wang et al. 1998). For lodgepole
+pine, both stand-level variables (e.g., crown closure, Rudnicki et al.
+2004) and tree-level variables (e.g., crown radius and length, Fish et
+al. 2006) can inﬂuence height-diameter relationships. Depending
+on data available, diameter equations could include stand-level or
+tree-level variables to improve prediction of base models.
+Our best models provided low RMSE values between 0.99 and
+1.79 cm, which is between 10.1 and 11.3% of average diameter
+(Table 5). By comparison, other studies have reported RMSE be-
+tween 2.4 and 3.6 cm for nonlinear models for conifer species in
+Canada (Hall et al. 2001), 4.9 cm (18% of average) for linear models
+for pine stands in the southeastern United States (Popescu 2007),
+3.8 cm (10%) for spruce and pine in Sweden (Persson et al. 2002),
+and 4.6 to 5.9 cm (11.9 to 15.2%) for several conifers and broad-
+leaves in Germany (Heurich 2008), although the last study also
+reported prediction bias (i.e., over- or underprediction) for broad-
+leaves in certain diameter classes.
+Results presented in this case study are encouraging for the ap-
+plication of dbh models to a wider range of stands and conditions.
+However, further development and reﬁnement of diameter models
+is needed to determine the inﬂuence of regional variation, site, and
+climate by using data sets covering large areas. Moreover, remotely
+sensed proxies for crown area and height could include errors that
+may require further evaluation of diameter models.
+Conclusions
+Our study indicates that nonlinear mixed-effects prediction of
+individual stem diameter based on ground measurements of height,
+crown area, and crown area of larger trees provides reliable, unbiased
+models with low prediction error. For operational predictions of
+stem diameter, these models should be ﬁtted with ground-measured
+diameter, and tree height and crown dimensions determined by
+operational remote sensing methods currently under testing and
+development. Increasing application and operational use of remote
+sensing will help validate and reﬁne these models.
+Developing models that relate diameter to height and crown
+variables is an important step forward for forest inventories. Infor-
+mation on piece size distribution and product value will allow for
+better planning and optimization of decisionmaking in forest man-
+agement. Our results indicate the potential of these predictive mod-
+els and will help to inform further testing with remotely sensed
+height and crown data.
+Literature Cited
+ASSMANN, E. 1970. The principles of forest yield study: Studies in the organic
+production, structure, increment and yield of forest stands. Pergamon, Oxford,
+United Kingdom. 506 p.
+BRANDEIS, T.J., K.C. RANDOLPH, AND M.R. STRUB. 2009. Modelling Caribbean tree
+stem diameters from tree height and crown width measurements. Math. Comput.
+For. Nat.-Res. Sci. 1(2):78–85.
+CALAMA, R., AND G. MONTERO. 2004. Interregional nonlinear height-diameter
+model with random coefﬁcients for stone pine in Spain. Can. J. For. Res.
+34(1):150–163.
+CHAPMAN, D.G. 1961. Statistical problems in dynamics of exploited ﬁsheries
+populations. P. 153–168 in Neyman, J. (ed.). Proceedings of the 4th Berkeley Symp.
+on Mathematical statistics and probability, Vol. 4. University of California Press,
+Berkeley, CA.
+CRECENTE-CAMPO, F., M. TOM´E, P. SOARES, AND U. DI´EGUEZ-ARANDA. 2010. A
+generalized nonlinear mixed-effects height-diameter model for Eucalyptus
+globulus L. in northwestern Spain. For. Ecol. Manag. 259(5):943–952.
+CRUICKSHANK, M.G., D.J. MORRISON, AND A. LALUMI`ERE. 2009. The interaction
+between competition in interior Douglas-ﬁr plantations and disease caused by
+Armillaria ostoyae in British Columbia. For. Ecol. Manag. 257(2):443–452.
+FISH, H., V. J. LIEFFERS, U. SILINS, AND R.J. HALL. 2006. Crown shyness in lodgepole
+pine stands of varying stand height, density, and site index in the upper foothills
+of Alberta. Can. J. For. Res. 36(9):2104–2111.
+GOERNDT, M.E., V.J. MONLEON, AND H. TEMESGEN. 2010. Relating forest
+attributes with area- and tree-based light detection and ranging metrics for
+Western Oregon. West. J. Appl. For. 25(3):105–111.
+HALL, D.B., AND R.L. BAILEY. 2001. Modeling and prediction of forest growth
+variables based on multilevel nonlinear mixed models. For. Sci. 47(3):311–321.
+HALL, R.J., R.T. MORTON, AND R.N. NESBY. 1989. A comparison of existing models
+for DBH estimation from large-scale photos. For. Chron. 65(2):114–120.
+HALL, R.J., Y. WANG, AND D.J. MORGAN. 2001. Estimating tree diameter and
+volume with a taper model and large-scale photo measurements. North. J. Appl.
+For. 18(4):110–118.
+HEURICH, M. 2008. Automatic recognition and measurement of single trees based on
+data from airborne laser scanning over the richly structured natural forests of the
+Bavarian Forest National Park. For. Ecol. Manag. 255(7):2416–2433.
+HIRSCH, R.P. 1991. Validation samples. Biometrics. 47(3):1193–1194.
+HUANG, S., S.J. TITUS,
+AND D.P. WIENS. 1992. Comparison of nonlinear
+height-diameter functions for major Alberta tree species. Can. J. For. Res.
+22(9):1297–1304.
+HUDAK, A.T., J.S. EVANS, AND A.M.S. SMITH. 2009. LiDAR utility for natural
+resource managers. Remote Sensing 1(4):934–951.
+KOZAK, A., AND R. KOZAK. 2003. Does cross validation provide additional
+information in the evaluation of regression models? Can. J. For. Res.
+33(6):976–987.
+LECKIE, D., F. GOUGEON, D. HILL, R. QUINN, L. ARMSTRONG, AND R. SHREENAN.
+2003. Combined high-density lidar and multispectral imagery for individual tree
+crown analysis. Can. J. Remote Sens. 29(5):633–649.
+LEFSKY, M.A., M. KELLER, Y. PANG, P.B. CAMARGO, AND M.O. HUNTER. 2007.
+Revised method for forest canopy height estimation from Geoscience Laser
+Altimeter System waveforms. J. Appl. Remote Sens. 1:1–18.
+LEFSKY, M., AND M.R. MCHALE. 2008. Volume estimates of trees with complex
+architecture from terrestrial laser scanning. J. Appl. Remote Sens. 2:1–19.
+LYNCH, T.B., A.G. HOLLEY, AND D.J. STEVENSON. 2005. A random-parameter
+height-dbh model for cherrybark oak. South. J. Appl. For. 29(1):22–26.
+MEYER, H.A. 1940. A mathematical expression for height curves. J. For.
+38(5):415–420.
+NÆSSET, E., AND T. GOBAKKEN. 2008. Estimation of above- and below-ground
+biomass across regions of the boreal forest zone using airborne laser. Remote Sens.
+Environ. 112(6):3079–3090.
+PARKER, R.C., AND D.L. EVANS. 2004. An application of LiDAR in a double-sample
+forest inventory. West. J. Appl. For. 19(2):95–101.
+PERSSON, Å., J. HOLMGREN, AND U. S¨ODERMAN. 2002. Detecting and measuring
+individual trees using an airbone laser scanner. Photogr. Eng. Rem. Sens.
+68(9):925–932.
+PINHEIRO, J.C., AND D.M. BATES. 2000. Mixed-effects models in S and S-plus.
+Springer, New York. 528 p.
+PITT, D., AND J. PINEAU. 2009. Forest inventory research at the Canadian Wood
+Fibre Centre: Notes from a research coordination workshop, June 3–4, 2009,
+Pointe Claire, QC. For. Chron. 85(6):859–869.
+POPESCU, S.C., R.H. WYNNE, AND R.F. NELSON. 2003. Measuring individual tree
+crown diameter with lidar and assessing its inﬂuence on estimating forest volume
+and biomass. Can. J. Remote Sens. 29(5):564–577.
+34
+WEST. J. APPL. FOR. 27(1) 2012
+
+
+POPESCU, S.C. 2007. Estimating biomass of individual pine trees using airborne
+LiDAR. Biomass Bioenerg. 31(9):646–655.
+PURVES, D.W., J.W. LICHSTEIN, AND S.W. PACALA. 2007. Crown plasticity and
+competition for canopy space: A new spatially implicit model parameterized for
+250 North American tree species. PLoS ONE. 2(9):1–11.
+R DEVELOPMENT CORE TEAM. 2011. R: A language and environment for statistical
+computing. R Foundation for Statistical Computing, Vienna, Austria. Available
+online at www.R-project.org; last accessed Feb. 23, 2011.
+RATKOWSKY, D.A. 1990. Handbook of nonlinear regression models. Marcel Dekker,
+New York. 241 p.
+RICHARDS, F.J. 1959. A ﬂexible growth function for empirical use. J. Exp. Bot.
+10(2):290–301.
+RUDNICKI, M., U. SILINS, AND V.J. LIEFFERS. 2004. Crown cover is correlated with
+relative density, tree slenderness, and tree height in lodgepole pine. For. Sci.
+50(3):356–363.
+SALAS, C., L. ENE, T.C. GREGOIRE, E. NÆSSET, AND T. GOBAKKEN. 2010. Modelling
+tree diameter from airborne laser scanning derived variables: A comparison of
+spatial statistical models. Rem. Sens. Env. 114(6):1277–1285.
+SHARMA, M., AND J. PARTON. 2007. Height-diameter equations for boreal tree
+species in Ontario using a mixed-effects modeling approach. For. Ecol. Manag.
+249(3):187–198.
+SU´AREZ, J.C., C. ONTIVEROS, S. SMITH, AND S. SNAPE. 2005. Use of airborne LiDAR
+and aerial photography in the estimation of individual tree heights in forestry.
+Comput. Geosci. 31(2):253–262.
+SULLIVAN, A.A., R.J. MCGAUGHEY, H.-E. ANDERSEN, AND P. SCHIESS. 2009.
+Object-oriented classiﬁcation of forest structure from light detection and ranging
+data for stand mapping. West. J. Appl. For. 24(4):198–204.
+STAGE, A.R. 1963. A mathematical approach to polymorphic site index curves for
+grand ﬁr. For. Sci. 9(2):167–180.
+STAGE, A.R. 1975. Prediction of height increment for models of forest growth. US For.
+Serv. Res. Pap. INT-164.
+STEWART, J.D., T.N. JONES, AND R.C. NOBLE. 2006. Long-term lodgepole pine
+silviculture trials in Alberta: A history and current results. Canadian Forest Service,
+Northern Forestry Centre, Edmonton, Alberta, Canada. 184 p.
+TEMESGEN, H., M.E. GOERNDT, G.P. JOHNSON, D.M. ADAMS,
+AND R.A.
+MONSERUD. 2007a. Forest measurement and biometrics in forest management:
+Status and future needs of the Paciﬁc Northwest USA. J. For. 105(5):233–238.
+TEMESGEN, H., D.W. HANN, AND V.J. MONLEON. 2007b. Regional height-diameter
+equations for major tree species of southwest Oregon. West. J. Appl. For.
+22(3):213–219.
+TEMESGEN, H., V.J. MONLEON, AND D.W. HANN. 2008. Analysis and comparison of
+nonlinear tree height prediction strategies for Douglas-ﬁr forests. Can. J. For. Res.
+38(3):553–565.
+VARGAS-LARRETA, B., F. CASTEDO-DORADO, J.G.
+´ALVAREZ-GONZ´ALEZ, M.
+BARRIO-ANTA, AND F. CRUZ-COBOS. 2009. A generalized height-diameter model
+with random coefﬁcients for uneven-aged stands in El Salto, Durango (Mexico).
+Forestry 82(4):445–462.
+WANG, Y., S. J. TITUS, AND V.M. LEMAY. 1998. Relationships between tree
+slenderness coefﬁcients and tree or stand characteristics for major species in
+boreal mixedwood forests. Can. J. For. Res. 28(8):1171–1183.
+WYKOFF, W.R., N.L. CROOKSTON, AND A.R. STAGE. 1982. User’s guide to the stand
+prognosis model. US For. Serv. Gen. Tech. Rep. INT-122. 112 p.
+YANG, R.C., A. KOZAK, AND J.H.G. SMITH. 1978. The potential of Weibull-type
+functions as ﬂexible growth curves. Can. J. For. Res. 8(4):424–431.
+YANG, Y., R.A. MONSERUD, AND S. HUANG. 2004. An evaluation of diagnostic tests
+and their roles in validating forest biometric models. Can. J. For. Res.
+34(3):619–629.
+ZAGALIKIS, G., A.D. CAMERON, AND D.R. MILLER. 2005. The application of digital
+photogrammetry and image analysis techniques to derive tree and stand
+characteristics. Can. J. For. Res. 35(5):1224–1237.
+ZEIDE, B. 1989. Accuracy of equations describing diameter growth. Can. J. For. Res.
+19(10):1283–1286.
+WEST. J. APPL. FOR. 27(1) 2012
+35

@@ -1,0 +1,1387 @@
+ORIGINAL PAPER
+Tree allometry of Douglas ﬁr and Norway spruce
+on a nutrient-poor and a nutrient-rich site
+Josef Urban • Katerˇina Holusˇova´ • Ladislav Mensˇı´k •
+Jan Cˇ erma´k • Petr Kantor
+Received: 26 March 2012 / Revised: 27 August 2012 / Accepted: 31 August 2012
+ Springer-Verlag 2012
+Abstract
+Research related to the allometric relationships
+of tree height and projected tree crown area to diameter at
+breast height was conducted to look at the biological suit-
+ability and timber production potential of Douglas ﬁr under
+the conditions present in central Europe. The dependence of
+allometric relationships on soil nutrient conditions were
+described in forest stands of Douglas ﬁr and Norway spruce.
+The studied sites were climatically similar but differed in soil
+nutrient availability. A signiﬁcant difference was found in the
+allometric relationships of Norway spruce trees from the
+nutrient poor and nutrient rich site. In contrast to the Norway
+spruce, there was no signiﬁcant effect of site fertility on
+allometric relationships for Douglas ﬁr suggesting that its
+allocation patterns were less sensitive to site nutrient condi-
+tions. Stem growth increment, which was measured weekly
+during two consecutive seasons for both species, was related
+to the weather conditions and available soil moisture. Stem
+growth of Douglas ﬁr began about 2 weeks earlier than in the
+Norway spruce at both sites. At the nutrient rich site, most of
+the stem growth of both species occurred at the beginning of
+the season, while growth at the other site was more evenly
+distributed throughout the season. Data obtained in this study
+will be useful for modeling stem growth and analysis of water
+use efﬁciency of these two tree species.
+Keywords
+Allometry  Biometry  Douglas ﬁr 
+Norway spruce  Stem increment
+Introduction
+Allometry has a long history in plant studies, as scientists
+searched for interdependence among tree morphological
+characteristics. Allometry, in its broader sense, as will be
+considered in this study, is concerned with the size of
+organisms and its consequences for their shape and function
+(Niklas 1994; Pretzsch 2010). For this reason we decided to
+use tree allometry to describe differences among the tree
+species from two climatically similar sites which differed in
+soil nutrient availability. Tree biometric relationships vary
+considerably not only with species and geographic location
+but also with stand age, site quality, climate and stocking
+density of stands (Cannell 1982; Bartelink 1997; Poorter
+et al. 2012). In theory, allometric equations describing tree
+dimensions are affected by the physiological requirements
+of the tree; that is, form and function are related. The most
+important of these requirements are water transport, light
+interception, and mechanical support against gravity or
+wind (Niklas 1994). Consequently, allometry is an effective
+tool for evaluating differential plant responses to site con-
+ditions (Pretzsch 2010; Poorter et al. 2012).
+This allometric study will serve as a background for
+more detailed work on water relations of Douglas ﬁr and
+Norway spruce. From the hydraulic point of view, a tree
+may be viewed as a network of interconnected pipes
+(Zimmerman 1983). According to the ‘‘pipe model theory’’
+(Shinozaki et al. 1964), the quantity of absorbing roots
+should be proportional to the sapwood area of a tree and the
+sapwood area should be proportional to the quantity of
+foliage, although we should remember, such relationships
+could be non-linear, when sap ﬂow density is usually very
+different
+in
+different
+sapwood
+depths—Cˇ erma´k
+and
+Nadezhdina 1998; Cerma´k et al. 2004. Therefore, any
+disproportion in this balance should be projected into tree
+Communicated by T. Grams.
+J. Urban (&)  K. Holusˇova´  L. Mensˇı´k  J. Cˇ erma´k 
+P. Kantor
+Faculty of Forestry and Wood Technology, Mendel University
+in Brno, Zemeˇdeˇlska´ 3, Brno 613 00, Czech Republic
+e-mail: josef.urban@email.cz
+123
+Trees
+DOI 10.1007/s00468-012-0771-y
+
+
+function. For example, larger crowns relative to the stem
+diameter would (if other tree parameters remain unchan-
+ged) result in higher stem sap ﬂow rates, or lower needle
+water potentials would be needed in taller trees to manage
+higher ﬂow pathway resistances and to maintain the same
+transpiration rate (Ryan and Yoder 1997). Therefore,
+knowledge on the tree structure is necessary for the correct
+investigation of a particular tree function.
+Norway spruce is one of the most important commercial
+forest tree species in Europe (Michalak 2011). Global
+change, bringing increased temperatures and lack of pre-
+cipitation, may be a signiﬁcant threat to commercial plan-
+tations of Norway spruce (Ma¨kinen et al. 2001; Jo¨nsson
+et al. 2007; Ro¨tzer et al. 2008; Lindner et al. 2010). One
+possible substitute for Norway spruce may be Douglas ﬁr,
+especially at lower altitudes. Better growth on some sites
+and lower vulnerability to drought favors Douglas ﬁr over
+Norway spruce (Sˇika and Vinsˇ 1980; Keyes and Grier 1981;
+Kantor 2008). The timber production potential of Douglas
+ﬁr is often superior to that of Norway spruce. Better use of
+available soil nutrients (Ranger et al. 1995) favors Douglas
+ﬁr especially on nutrient-poor sites, where its productivity
+may be several times higher (Peric et al. 2006; Ma¨kinen and
+Hein 2006; Hein et al. 2008; Bartosˇ and Kaca´lek 2011).
+To further understand differences between these two
+conifers, we analyzed the rate of stem growth, ecological
+site conditions and their impact on allometric relationships
+of Douglas ﬁr and Norway spruce on two sites with similar
+climatic conditions but differing in nutrient availability.
+Our hypotheses state: (1) size relationships between a
+tree’s aboveground biometric parameters (i.e. tree height,
+crown projected area) to diameter at breast height (DBH or
+at 130 cm aboveground) differ between Norway spruce and
+Douglas ﬁr as well as between sites of contrasting soil
+quality and (2) relative patterns of a radial stem growth
+increment of the two species react differently to weather
+conditions. The information related to tree allometry will
+also be used as a background for assessment of a hydraulic
+architecture and water use of the trees. Information about
+sensitivity of the radial stem increment to different envi-
+ronmental conditions is necessary for tree growth modeling
+as well as for understanding how these two species grow in
+different ways.
+Materials and methods
+Research plots
+Research plots were located in two different forest stands.
+The nutrient poor stand (2,780 m2), referred to here as the
+‘‘poor site,’’ was situated at a forest site named ‘15 E 9’ and
+was part of the Hu˚rky Forest Training Enterprise managed
+by the Forest Technical School in Pı´sek, Czech Republic
+(491502800N, 140904300E, altitude 472 m). Mean annual
+precipitation was 575 mm and mean air temperature was
+7.3–7.5 C (Busˇina 2007). The forest study site was clas-
+siﬁed according to the Czech forest type classiﬁcation
+(Plı´va 1991) as the type 3K-Querceto-Fagetum acidophi-
+lum. This 89-year old mixed forest stand (in 2008) was
+composed of Scots pine (Pinus sylvestris, 30 %), Norway
+spruce (Picea abies, 29 %), Douglas ﬁr (Pseudotsuga
+menziesii, 25 %), with some European beech (Fagus
+sylvatica) and sessile oak (Quercus petraea). The total stem
+basal area for all tree species at the site, as calculated from
+the stem DBH, was 45 m2 ha-1.
+The nutrient rich research stand (2,220 m2), referred to
+as here as the ‘‘rich site,’’ was situated at a forest site named
+‘130 B 10’ and was part of the Training Forest Enterprise in
+Krˇtiny of the Mendel University in Brno (491901200N,
+164001600E, altitude 480 m). Mean annual precipitation
+was 634 mm and mean air temperature was 7.4 C (Vyskot
+1975). This 97-year old mixed forest was classiﬁed as type
+3H-Querceto-Fagetum illimerosum mesotrophicum. The
+main tree species were European larch (Larix decidua,
+33 %), Douglas ﬁr (Pseudotsuga menziesii, 25 %), Euro-
+pean beech (Fagus sylvatica, 20 %) and Norway spruce
+(Picea abies, 10 %), with some silver ﬁr (Abies alba) and
+Scots pine (Pinus sylvestris). The total basal area of all tree
+species was 54 m2 ha-1. While the sites were climatically
+similar they differed in soil nutrient availability. Biometri-
+cal parameters were collected for tree species from both
+plots (Fig. 1) and maps show tree distribution (Fig. 2).
+Soil analyses
+Humus forms were determined following Green et al.
+(1993) and Delft et al. (2006). Ten samples of each of the
+humus layers (L, F and H) and ﬁve samples of the or-
+ganomineral Ah horizon were collected after leaf fall in
+autumn 2006 (Mensˇı´k et al. 2009). Samples were dried
+at 60 C to a constant weight. Values of active and
+exchangeable soil acidity were determined by a potentio-
+metric method (Zbı´ral et al. 1997) using a digital pH-meter
+OP-208/1 (Radelkis Budapest, Hungary). Carbon and
+nitrogen content were determined from samples devoid of
+coarse particles after ﬁne grinding or comminution on a
+LECO TruSpec analyzer (Leco Corp., St. Joseph, MI,
+USA) following Zbı´ral et al. (1997).
+Based on the soil nutrient analyses we selected a
+nutrient-poor (‘‘poor site’’) forested site named ‘‘15 E 9’’
+which was part of the Forest Training Enterprise Hu˚rky
+(491502800N, 140904300E) and nutrient-rich forest site (‘‘rich
+site’’) named ‘‘130 B 10’’ which was part of the Training
+Forest Enterprise in Krˇtiny (491901200N, 164001600E). The
+humus form ‘‘moder’’ was typical at the poor site while the
+Trees
+123
+
+
+‘‘mull-moder’’ form was present at the rich site. A Camb-
+isol oligotrophic soil type was typical at the poor site and a
+Cambisol mesotrophic soil type was found at the rich site.
+Both actual and exchangeable pH decreased with soil depth
+and the pH values of both were lower at the poor than at the
+rich site (Table 1). Nitrogen content in the organic soil
+layers (L, F) was higher at the rich compared with the poor
+site by 43–75 % and by 16 % in organomineral soil hori-
+zon (Ah). The carbon to nitrogen (C/N) ratio was also more
+favorable for tree growth at the rich site (Table 1). Anal-
+yses of the other available soil nutrients (P, Mg, Ca, K)
+were done in the Ah soil horizons in neighboring forest
+stands with similar tree species composition on a same soil
+type (Kantor et al. 2009); the concentration was usually by
+about 20–30 % higher at the rich site. Speciﬁcally: phos-
+phorus was 52 mg kg-1 versus 34 mg kg-1; magnesium
+was 144 versus 140 mg kg-1; calcium was 1,476 versus
+1,029 mg kg-1,
+potassium
+was
+114 mg kg-1
+versus
+85 mg kg-1 at rich and poor site, respectively. The soil
+base saturation was 60 % at the rich site while only 20 % at
+the poor site (Kantor et al. 2009).
+Tree biometric measurements
+The aboveground structure of each forest stand was mea-
+sured using the Field-Map measuring system which con-
+tains both hardware and software tools for mapping forest
+stand structure (IFER Inc., Jı´love´ u Prahy, Czech Republic).
+This measuring system consists of an Impulse 200LR laser
+distance meter with a resolution of 1 cm (Laser Technology
+Inc., Englewood, CO, USA), a MapStar Module II elec-
+tronic compass (Laser Technology Inc.), a Hammerhead
+laptop and range poles with reﬂecting glass. The software
+allows in-ﬁeld map view of the measured parameters and
+export to GIS software (i.e. Arc View). GPS coordinates
+were measured with a Trimble Pro XH device (Trimble
+Navigation Ltd., Sunnyvale, CA, USA). Tree diameters
+were measured with calipers with a resolution of 1 cm from
+two perpendicular sides of each tree. Height was measured
+with a Vertex IV meter (Haglof, Sweden) with a resolution
+of 0.25 m. At the plot, we measured the number and posi-
+tion (with an accuracy of 3 cm) of each tree larger than
+10 cm, as well as its DBH (with accuracy of 1 cm), pro-
+jected crown area (Apro), and heights to treetop and crown
+base (with resolution of 0.25 m). Crown base was deﬁned as
+a height of the lowest living branch. Crown length (crown
+Fig. 1
+Biometric parameters of sample trees in the research stands.
+Bars inside the boxes are the median response, 75 % (edges of the
+boxes) and 90 % (the bars) percentiles of breast height diameter (a),
+height (b), crown length (c) and crown projected area (d). Table 1
+gives the assigned number for each tree studied
+b
+Trees
+123
+
+
+depth) was deﬁned as difference between the tree height and
+height of the crown base. Data were exported in the form of
+maps in a dBase format. Parameters of trees were then
+exported to a MS Access ﬁle.
+Stem increment measurements
+We measured stem increment on the same sites as the
+biometry using Vernier band dendrometers (EMS Brno,
+Inc., Brno, Czech Republic) with a resolution of 0.1 mm.
+Readings were taken weekly from 15 April 2008 to 15
+October 2008 and from 12 April 2009 to 29 October 2009
+on 12 trees—six Douglas ﬁr and six Norway spruce—at
+each of the sites. Sample trees covering the entire range of
+DBH (Table 2) were selected so that each could represent
+approximately the same fraction of stand basal area based
+on the quantile of the total statistical procedure (Cˇ erma´k
+and Micha´lek 1991). The relative week increment (RWI, %)
+was calculated according to the equation:
+RWI ¼ Cn  Cn1
+Ce
+ 100;
+where Cn and Cn - 1 (mm) are stem circumference of a
+given tree in the current week and in the previous reading,
+respectively; Ce is the circumference at the end of the
+growing season.
+Meteorological measurements
+Minikin therm-hygro and global radiation meters with radia-
+tion shelters (EMS Brno, Czech Republic) were situated
+150 m from the experimental plot in a rich site and 800 m
+from the poor site. Data were measured every minute and
+stored as 10-min averages. Soil water potential (SWP) was
+measured at three depths with three replications at each depth
+using calibrated gypsum blocks (Delmhorst Inc., USA;
+Table 1
+Soil properties within the stands
+Site
+Soil horizon
+C (%)
+N (%)
+C/N ratio
+pH
+nH2O
+nKCl
+Poor site
+L
+47.4
+1.54
+31
+5.0
+4.6
+F
+27.6
+1.20
+23
+4.5
+4.1
+H
+17.8
+0.85
+21
+4.0
+3.3
+Ah
+7.5
+0.33
+23
+3.9
+3.1
+Rich site
+L
+43.4
+2.20
+20
+5.4
+5.2
+F
+31.9
+2.10
+15
+5.5
+5.2
+H
+15.1
+0.92
+16
+4.7
+4.2
+Ah
+6.6
+0.38
+17
+4.3
+3.6
+Fig. 2
+Map of tree positions at the study site. Crown projected areas are provided for Douglas ﬁr and Norway spruce; only the stump position is
+drawn for other species. a nutrient rich site, b nutrient poor site
+Trees
+123
+
+
+datalogger SP3, EMS Brno, Czech Republic). Soil tempera-
+turewasmeasuredbyPt 100soiltemperature sensors(Delta-T
+Devices Ltd., Cambridge, UK) at 30 and 60 cm deep, and
+stored every hour. Daily means of SWP, air temperature, and
+global radiation were calculated for increment data analysis.
+Mean air temperature in the period 1 May to 30 September
+2008 was 15.6 and 15.5 C at the rich and poor site, respec-
+tively, and 15.8 C at both sites in the same period of 2009.
+Mean air temperature in 2009 was 8.0 C at the rich site and
+8.1 C at the poor site, which was more than 0.5 C above
+the long term average. Temperature of the year 2008 was
+apparently closer to the historic mean (given lower summer
+temperatures); however, no winter data were available. In
+both years, two or three periods of low temperatures occurred
+in the spring, the ﬁrst of them in the middle of May. Soil water
+was less available in the 2008 growing season, when periods
+of severe drought started in the end of June, while in 2009
+drought appeared in late August.
+Statistical analysis
+Statistical analysis was performed using Statistica 8.0
+software (StatSoft, Inc., Tulsa, OK, USA). Graphs were
+created in SigmaPlot software (Systat Software Inc., Chicago,
+IL, USA). To test the hypothesis and scale-up parameters at
+the stand-level, we used linear and non-linear regression
+analysis and analysis of variance (ANOVA). To estimate
+allometric relationships of tree height, length of crown and
+Apro to DBH, we used a one-dimensional, mostly non-linear
+regression analysis. Speciﬁcally for the calculation of
+allometric relationships of tree height, we used the Na¨slund
+equation (Na¨slund 1936):
+h ¼ 1:3 þ
+DBH2
+ða þ bDBHÞ2 ;
+where h is tree height (m), DBH (cm) and a, b are
+parameters in the equation. From the linear and several non-
+linear regression models we chose the one with the greatest
+r2. This gave a logarithmical equation for crown length
+(y = a 9 ln(DBH) ? y0), and a linear (y = a 9 DBH ?
+y0) or a power equation (y = a 9 DBHb) for projected
+crown area.
+All statistical tests were done at the 95 % conﬁdence
+level. The signiﬁcance of the r2 and of the model was
+tested by ANOVA (a = 0.05). If the calculated F value
+was greater than the threshold for F0.05, n - 2 we consid-
+ered the proposed model signiﬁcant. In linear models we
+also tested the signiﬁcance of the absolute coefﬁcient by a
+t test for t0.025, n - 2; if the calculated value was lower than
+the threshold value the coefﬁcient was excluded from the
+equation.
+To
+test
+the
+difference
+between
+individual
+parameters of selected plots, we used a one-way ANOVA.
+The a value was set to 0.05 and the P value to 95 %. A
+t test was used to test for signiﬁcant differences between
+RWI of the tree species within the same weeks. ANCOVA
+was used to compare the regression slopes of the models.
+Results
+Aboveground tree size relations and its dependence
+on site fertility
+There was signiﬁcant difference between allometric rela-
+tionships of Norway spruce and Douglas ﬁr at the poor site.
+Table 2
+Biometric parameters of 12 Norway spruce (SM) and 12 Douglas ﬁr (DG) trees selected for analysis of stem growth increment in the
+years 2008 and 2009 (Figs. 6, 7)
+Rich site
+Poor site
+DBH (cm)
+Height (m)
+Apro (m2)
+Map no.
+DBH (cm)
+Height (m)
+Apro (m2)
+Map no.
+DG
+66
+36.5
+77
+62
+70
+38.9
+75
+70
+51
+35.4
+33
+20
+61
+37.5
+51
+48
+45
+34.4
+21
+47
+54
+32.2
+26
+19
+41
+35.2
+27
+54
+39
+34.4
+34
+10
+40
+33.6
+19
+77
+30
+27.5
+17
+28
+30
+29.7
+16
+79
+17
+22.3
+12
+31
+SM
+67
+36.4
+47
+27
+48
+32.0
+39
+75
+51
+37.4
+39
+6
+39
+26.0
+28
+97
+44
+34.0
+23
+64
+34
+26.4
+24
+87
+40
+33.0
+22
+82
+28
+23.7
+15
+86
+31
+32.0
+7
+40
+25
+26.2
+12
+37
+25
+27.0
+7
+7
+16
+15.1
+10
+78
+Column ‘‘Map No.’’ refers to the tree number in Fig. 2
+DBH breast height diameter, Apro crown projected area
+Trees
+123
+
+
+Therefore, we accepted the ﬁrst hypothesis that the tree
+species affects aboveground tree size relationships. Allome-
+tric relationships of the Norway spruce also were affected by
+site nutrient availability. Therefore, we also accepted this
+point of the ﬁrst hypothesis. However, there was no effect of
+the nutrient availability on the Douglas ﬁr biometry (for the
+investigated nutrient range); therefore, this part of the ﬁrst
+hypothesis was rejected.
+Biometrical parameters, DBH, mean height, and crown
+projected area of the Norway spruce trees from the nutrient
+poor stand were signiﬁcantly lower than those from the
+nutrient rich stand (Fig. 1a, b, d). In contrast, site fertility
+had little effect on the biometry of Douglas ﬁr, where the
+mean crown length (as deﬁned above) was signiﬁcantly
+shorter in the nutrient-rich site (Fig. 1c). Biometry of the
+Douglas ﬁr and Norway spruce trees was rather similar at
+the nutrient rich site but there was a difference between the
+DBH, mean height, and crown-projected area between the
+two species at the poor site.
+Correlations between DBH and tree height were per-
+formed separately for each tree species and the location.
+Coefﬁcients of the Na¨slund height equations for Douglas ﬁr
+were statistically similar for both localities. In addition,
+equations for Norway spruce growing on the fertile forest
+site were similar to those for Douglas ﬁr. However, there
+was a statistically signiﬁcant difference between the height
+curve of Norway spruce at the poor site and at the rich site
+for DBH [ 31 cm and between Norway spruce from the
+poor site and Douglas ﬁrs at the both localities for
+DBH [20 cm (P \ 0.05; Fig. 3).
+Crowns of trees of the same size were longer at the
+poor site than those at the nutrient rich site. Crowns of
+Norway spruce in both localities were longer than those of
+Douglas ﬁr, though not signiﬁcantly (Fig. 4). Crown pro-
+jected area (Apro) of Douglas ﬁr was best approximated by
+a power function, whereas Apro of Norway spruce was best
+estimated by a linear function (Table 3; Fig. 5). While
+Apro models for Douglas ﬁr did not differ signiﬁcantly
+between the two stands, the models for Norway spruce
+differed between the two sites in both absolute parameter
+and slope.
+Stem growth increment
+Douglas ﬁr started to grow when soil temperature was 6 C
+at 30 cm deep, earlier than Norway spruce. Norway spruce
+started growing about 2 weeks later when the soil warmed
+Fig. 3
+a Allometric
+relationships for tree height.
+Symbols represent individual
+trees (full symbols for Douglas
+ﬁr, open symbols for Norway
+spruce) from ‘‘rich’’ (circles)
+and ‘‘poor’’ (triangles) sites.
+Lines represent our models of
+the Na¨slund height curves for
+both species at both localities.
+b Allometric models for tree
+height from the literature
+Fig. 4
+Allometric relationships between crown length and DBH.
+Crown length (crown depth) is deﬁned as difference between tree
+height and height of the crown base (height of the lowest living
+branch). Full and open symbols represent individual Douglas ﬁr and
+Norway spruce trees, respectively, from ‘‘rich’’ (circles) and ‘‘poor’’
+(triangles) sites
+Trees
+123
+
+
+to about 7 C. At the beginning of the season, until June,
+Douglas ﬁr grew faster than the Norway spruce (Figs. 6, 7).
+The period of faster growth of Douglas ﬁr was also longer
+at the nutrient poor site. Douglas ﬁr seemed to grow better
+in cold or unfavorable weather conditions; however, the
+difference in the relative growth rate was signiﬁcant
+(P \ 0.05) only at the rich site on weeks preceding May 28
+and July 26 in 2008 and preceding May 13 and June 6 in
+2009. These data conﬁrm the validity of the second
+hypothesis that there were signiﬁcant differences in the
+relative growth rates of Douglas ﬁr and Norway spruce
+within the year.
+Spring of 200i8 (Fig. 6), had two periods of unfavorable
+(i.e. cold) weather conditions (Fig. 6c, d). Three consecu-
+tive cloudy and rainy days around May 20, with air tem-
+perature around 7 C and mean global radiation less than
+100 W m-2 suppressed a week of growth (Fig. 6e, f). The
+second cold period in mid-June lasted for almost 2 weeks
+and suppressed growth for three-weeks. This second period
+of growth suppression was prolonged into the beginning of
+July by a short episode of drought which was stronger at
+the poor site. Two longer episodes of drought at the
+beginning of both August and September (Fig. 6a, b)
+resulted in the cessation of growth and stem shrinkage
+(Fig. 6e, f). In 2009, we identiﬁed ﬁve periods of unfa-
+vorable weather at each of the sites (Fig. 7). Four of them
+(three at the poor site) were related to air temperature and
+the availability of solar radiation and lasted from May until
+the end of June (mid July at the rich site), when soil water
+was not a limiting factor (Fig. 7c, d). Soil water availability
+became a limiting factor to growth in August (Fig. 7a, b).
+Similar to 2008 conditions, the poor site was more drought
+Table 3 Allometric equations of DBH and tree height, and crown
+properties of Norway spruce (SM) and Douglas ﬁr (DG) at two study
+sites, listing the corresponding coefﬁcients of determination, number
+of investigated trees (n), standard errors (SE) of the parameter
+estimates, and P values of the parameters
+Site
+Species
+R2
+n
+Coef.
+Coef. value
+SE
+P
+Height (m)
+Rich
+DG
+0.79
+27
+a
+1.35
+0.160
+\0.0001
+b
+0.15
+0.004
+\0.0001
+SM
+0.64
+11
+a
+1.44
+0.358
+0.003
+b
+0.14
+0.009
+\0.0001
+Poor
+DG
+0.87
+45
+a
+1.32
+0.084
+\0.0001
+b
+0.15
+0.002
+\0.0001
+SM
+0.83
+44
+a
+1.39
+0.100
+\0.0001
+b
+0.16
+0.004
+\0.0001
+Crown length (m)
+Rich
+DG
+0.65
+27
+y0
+13.85
+3.646
+0.0008
+a
+6.74
+0.992
+\0.0001
+SM
+0.76
+11
+y0
+40.79
+9.984
+0.0027
+a
+14.36
+2.680
+0.0005
+Poor
+DG
+0.77
+45
+y0
+15.40
+2.410
+\0.0001
+a
+7.92
+0.663
+\0.0001
+SM
+0.73
+44
+y0
+10.70
+2.184
+\0.0001
+a
+6.95
+0.660
+\0.0001
+Crown projected area (m2)
+Poor
+DG
+0.86
+27
+a
+0.0005
+0.005
+0.35
+b
+2.83
+0.260
+\0.0001
+SM
+0.76
+11
+y0
+22.01
+8.861
+0.0348
+a
+1.09
+0.203
+0.0005
+Rich
+DG
+0.69
+45
+a
+0.083
+0.065
+0.20
+b
+1.55
+0.19
+\0.0001
+SM
+0.76
+44
+y0
+-6.13
+2.093
+0.0055
+a
+0.79
+0.068
+\0.0001
+Model equations are: (1) height h ¼ 1:3 þ
+DBH2
+ðaþbDBHÞ2, (2) crown length y = a 9 ln(DBH) ? y0, (3) crown projected area y = a 9 DBH ? y0 for
+Norway spruce and y = a 9 DBHb for Douglas ﬁr
+Trees
+123
+
+
+stressed. A short rain event at the end of August was
+reﬂected in a relatively high stem increment at this site,
+even though soil water potential was still quite low. At both
+sites in 2009, the end of the vegetative growing season was
+extremely dry, which resulted in an earlier cessation of
+growth than in 2008.
+Absolute values of the stem growth increment were
+positively correlated with a tree diameter; this dependence
+was linear and no signiﬁcant intercept of the regression was
+found (P \ 0.05 %; Fig. 8). Regression slopes were sta-
+tistically similar for both tree species on the rich site, as
+well as for Douglas ﬁr at the poor site. However, the
+coefﬁcient of the regression was signiﬁcantly smaller for
+Norway spruce at the poor site.
+Discussion
+Effects of site fertility on aboveground biometric
+relations
+As the introduction stated the absolute growth rate is
+strongly affected by availability of a particular environ-
+mental limiting factor. Optimal site conditions ensure
+optimal growth of a certain tree species and deviation on
+either side of the optimum results in a decrease in the
+absolute growth rate. Growth of an organism follows a
+unimodal dose–effect-curve in response to an increase in a
+particular growth factor. Both high and low levels of a
+certain factor may limit tree growth (Loehle 1998, 2000;
+Ma¨kipa¨a¨ 1999; Pretzsch 2009). Optimal dose of the growth
+factor differs not only among species but also within a
+certain species for the different plant organs. Trees appear
+to allocate resources preferentially to the organs function-
+ally connected with the deﬁcient growth factor. For
+example, as levels of soil nutrients decrease the proportion
+of roots to the aboveground mass of a tree increases (Keyes
+and Grier 1981; Reich 2002; Leuschner et al. 2004; Ta-
+tarinov et al. 2008). There are even changes in allocation
+patterns within the aboveground part itself; leaf mass
+increases at a different rate than tree structural components
+if the nutrients become more readily available (King et al.
+1999; Poorter et al. 2012). However, there is no simple
+objective way to characterize the level of the nutrient
+availability, since trees react to nutrients in complex ways
+(Poorter et al. 2012). Nutrient availability in forest trees is
+usually positively correlated with growth, although acid-
+ophilous species may have a unimodal growth pattern
+(Ma¨kipa¨a¨ 1999). In this study, stand fertility had a large
+impact on biometry, allometry and stem growth increment
+of Norway spruce (Figs. 1, 3, 4, 5, 8) while it had little
+effect on Douglas ﬁr. Our results conﬁrm previous research
+showing that Douglas ﬁr exhibited a better use of soil-
+available nutrients than other tree species, especially on
+nutrient-poor sites (Ranger et al. 1995; Peric et al. 2006;
+Ma¨kinen and Hein 2006; Hein et al. 2008; Bartosˇ and
+Kaca´lek 2011), although saplings of Douglas ﬁr in the
+experiment of Sicard et al. (2006) were more sensitive to
+initial fertilization than those of Norway spruce. However,
+the stage of a development may affect allometric respon-
+ses; thus saplings can behave differently from mature trees.
+Our allometric models of height growth yielded higher
+values than those found in the literature for both species
+(Fig. 3). Models calibrated for Norway spruce in Finland
+using Na¨slund’s height curves (Siipilehto 2000) were
+closest to ours. Smaller trees were observed in a 95-year-
+old spruce stand in Austria (Kindermann 1998). A possible
+reason for the lower growth in tree height in the literature
+might be that other models were generally obtained on
+extremely nutrient-poor sites, at higher altitudes, or high
+latitudes (i.e. podsolic soil—Bartelink 1996; Siipilehto
+2000), that affected allocation patterns and, consequently,
+the DBH to height ratio (Urban et al. 2010). Both of our
+sites were closer to more favorable conditions—a combi-
+nation of latitude 49 and an altitude of less than 500 m
+assured satisfactory growth of Norway spruce. The major
+limiting factor at our sites would be drought (Ma¨kinen
+et al. 2001; Jo¨nsson et al. 2007; Lindner et al. 2010), which
+actually appeared at the end of both investigated growing
+seasons (Figs. 6, 7). Another possibility for the height
+differences might be that different forest management
+techniques used in the Czech Republic would theoretically
+Fig. 5
+Allometric relationship for crown projected area to DBH in
+sample trees. Full and open symbols represent individual Douglas ﬁr
+and Norway spruce trees, respectively, from ‘‘rich’’ (circles) and
+‘‘poor’’ (triangles) sites
+Trees
+123
+
+
+favor higher density forest stands; increased competition
+would induce faster height growth. But this seems unlikely,
+since Czech silviculture historically follows German and
+Austrian forestry schools; i.e. all three use a similar initial
+number of the trees in a forest stand, recommended
+stocking density and thinning intensity (including ways of
+selecting a certain tree for felling) for a stand of a particular
+age, and also use similar rotation periods for a given tree
+species). Therefore, at least Kindermann’s (1998) rela-
+tionships (Fig. 3b) should be similar. Another possibility is
+the age of the other stands was lower and perhaps allometry
+was affected by the stage of ontogeny, as was found for
+some biometrical parameters (i.e. crown biomass) in
+Douglas ﬁr by Bartelink (1996). Nevertheless, given the
+similar tree age, Kindermann’s (1998) model should have
+produced similar results. Unlike Norway spruce, Douglas
+ﬁr was insensitive to the relatively small differences in soil
+nutrient content in our study (still within the range of
+Cambisols); the allometry would have probably shifted
+only when soil changed to a podsol type (Bartelink 1996).
+This suggests a wider range of optimal soil nutrient con-
+ditions and a better use of available nutrients exist for
+Douglas ﬁr than for Norway spruce (Ranger et al. 1995).
+Crowns of same-sized Douglas ﬁr on the nutrient-poor
+site were taller (i.e. the distance from the tree top to the
+lowest living branch was larger) than at the rich site
+(Fig. 4), similar to the ﬁndings of Spathelf (2003). Dif-
+ferences in crown height may be explained by a higher
+stand density at the rich site (stem basal area was
+54 m2 ha-1 at the rich site vs. 45 m2 ha-1 at poor site)
+Fig. 6
+Seasonal course of soil water potential at two depths (a, b),
+daily means of a global radiation together with air temperature (c,
+d) and relative stem growth increment at individual weeks (e,
+f) during the growing season 2008 at the nutrient rich (a, c, e) and
+nutrient poor sites (b, d, f). Symbols at e and f represent means of six
+trees per species (see Table 1) ±standard deviation. Grey strips in the
+background highlight periods of unfavorable conditions
+Trees
+123
+
+
+resulting in lower illumination in the lower branches, thus
+triggering the death of some trees (Ma¨kinen et al. 2003).
+For both species Apro was within the range given by Nagel
+et al. (2002) and Pretzsch et al. (2002). Best ﬁtting models to
+DBH were a power function for Douglas ﬁr and a linear
+function for Norway spruce (Fig. 5). The smallest crown
+projected areas were similar at both sites, about 5 m2.
+However, the size of the smallest tree was strongly site-
+dependent, especially for Norway spruce. While the small-
+est DBH of a Norway spruce was 29 cm at the rich site, there
+were many spruces with a diameter smaller than 20 cm at
+the poor site. Thus the slopes of the linear regressions
+between Apro and DBH became different. One possible
+reason may be more solar radiation was available in the
+rather sparse and diverse canopy of the nutrient poor stand
+which allowed for the survival of smaller trees. In other
+words, the point where the curve of the linear model crosses
+the x axis in Norway spruce may suggest a theoretical DBH
+of the smallest trees, which can survive in this forest stand,
+when reaching the light compensation point at the entire
+crown level (Cˇ erma´k 1989, 1998; Lewis et al. 2000).
+Sensitivity of stem growth increment to weather
+conditions and site fertility
+On the rich site, most of the growth occurred at the
+beginning of the growing season while on the poor site,
+growth was more evenly distributed. This discrepancy
+between sites of contrasting fertility is normally reﬂected in
+a higher proportion of latewood to earlywood, and higher
+Fig. 7
+Seasonal course of soil water potential at two depths (a, b),
+daily means of a global radiation together with air temperature (c,
+d) and relative stem growth increment at individual weeks (e,
+f) during the growing season 2009 at the nutrient rich (a, c, e) and
+nutrient poor sites (b, d, f). Symbols at e and f represent means of six
+trees per species (see Table 1) ±standard deviation. Grey strips in the
+background highlight periods of unfavorable conditions
+Trees
+123
+
+
+tree ring density at nutrient poor sites (Lindstrom 1997;
+Beets and Gilchrist 2001; Kantavichai et al. 2010). Dom-
+inant trees at both sites grew better than suppressed trees
+during periods of unfavorable weather (cold or drought);
+however, this difference was not statistically signiﬁcant at
+either site.
+In the spring, when soil water is not a limiting factor,
+tree growth is affected mostly by changes in temperature
+and the amount of photosynthetically active radiation
+(Tryon and Chapin 1983; Teskey et al. 1987; Briffa et al.
+1998; Kirdyanov et al. 2003). It is still unclear to what
+extent soil and air temperature participate in triggering
+cambial activity. The classical approach favors the effect of
+the soil temperature (Van Cleve et al. 1990; Rossi et al.
+2007), based on evidence that cambial reactivation and cell
+production would be inhibited at soil temperatures \6 C
+(Alvarez-Uria and Ko¨rner 2007), although a recent mani-
+pulation experiment indicated the importance of air tem-
+perature (Lupi et al. 2012). Soil temperatures of 6 and 7 C
+initiated growth of Douglas ﬁr and Norway spruce,
+respectively. This corresponded to the above mentioned
+minimal temperature of 6 C (Alvarez-Uria and Ko¨rner
+2007). The relationship between soil temperature and the
+beginning of stem growth was the same in both years of our
+study. The earlier growth activation of the Douglas ﬁr
+(Figs. 6, 7) may result in greater sensitivity of this tree
+species to late-spring frost than in Norway spruce (Day and
+Chrystal 1928; Vinsˇ and Sˇika 1981; Timmis et al. 1994;
+Hawkins et al. 1995). Warm weather from March to May
+usually enhances growth and positively affects xylogenesis
+in Douglas ﬁr (Kantavichai et al. 2010). In our sites, no
+spring frost occurred, but the air temperatures dropped to
+5 C in late May 2008 (Fig. 6c, d). Even though this
+temperature cannot damage non-acclimated newly grown
+cells, the low temperature coupled with lack of a solar
+radiation was sufﬁcient to stop stem growth. Both spruce
+and Douglas ﬁr responded to the low temperatures nega-
+tively (i.e. stem increment decreased), but spruce recovered
+faster and in the subsequent week yielded higher growth.
+Recovery
+with
+warmer
+temperatures
+occurred
+more
+quickly at the nutrient rich site than at the nutrient poor site
+for both species (Fig. 6e, f), conﬁrming the results of
+Hawkins et al. (1995).
+Decreasing
+soil
+water
+availability
+suppressed
+tree
+growth of both species at both sites (Figs. 6, 7). A small
+decline in soil water potential (i.e. to -0.5 MPa) reduced
+the stem increment of both species (Fig. 6 in the beginning
+of July, especially at the poor site). Douglas ﬁr grew better
+than Norway spruce during the mild drought; however the
+difference was not signiﬁcant (P \ 0.05). However, when-
+ever soil water potential approached the wilting point
+(-1.5 MPa), stem growth ceased at both sites for both
+species and stems even shrunk.
+There are several reasons for this growth reduction and
+stem shrinkage. First, an initial response of trees to drought
+is to conserve water by closing stomata, which limits the
+uptake of atmospheric carbon dioxide and curtails photo-
+synthesis and growth (Naidu and DeLucia 1997; Kobe
+2006). Additionally, insufﬁcient turgor of the living cam-
+bium cells cannot facilitate their enlargement during dry
+periods (Gryc et al. 2012). Stem shrinkage occurred when
+water for transpiration was supplied from internal storage
+in extensible stem tissues, i.e. living bark, phloem and
+cambium (Hinckley and Bruckerhoff 1975; Waring and
+Running 1978; Waring et al. 1979; Tyree and Zimmerman
+2002; Cˇ erma´k et al. 2007). Stem water storage plays an
+important role as an important source of water for both
+diurnal and longer-time tree transpiration (Goldstein et al.
+1984, 1998; Zweifel et al. 2000; Cˇ erma´k et al. 2007), when
+the daily change in stem radius can reach more than
+0.1 mm depending on the size of the tree (Phillips et al.
+2003) and sometimes even effects seasonal transpiration
+(Borchert 1994).
+In summary, this paper presents a set of equations
+describing tree structure based on aboveground stem and
+crown biometrical parameters for two coniferous tree
+species at sites differing in nutrient availability. These
+biometric data provide a set of necessary tools for model-
+ing tree biometry with respect to site conditions. Analysis
+of the stem growth increment related to weather conditions
+provides background data for modeling and for under-
+standing of differences in the growth of those two
+Fig. 8
+Dependence of the mean DBH increment (cm year-1) on a
+tree diameter. Regression equations are: rich site, Norway spruce
+y = 0.0107DBH (R2 = 0.69); rich site, Douglas ﬁr y = 0.0137DBH
+(R2 = 0.75); poor site, Norway spruce y = 0.0047DBH (R2 = 0.71);
+rich site, Douglas ﬁr y = 0.0117DBH (R2 = 0.82)
+Trees
+123
+
+
+coniferous species. Climate change is a signiﬁcant threat to
+current Norway spruce-based silviculture, especially at
+lower altitudes. Modeling of the differences in the allo-
+metric parameters, timber production and their dependence
+on climatic conditions provides a management tool for
+effective substitution of Norway spruce trees in the forest
+with a less vulnerable and still commercially viable alter-
+native species.
+Conclusions
+1.
+Signiﬁcant differences were found in aboveground
+allocation patterns of Norway spruce trees growing at
+sites with different nutrient availability. Both tree
+height and crown projected area were affected.
+2.
+Conversely, there were no signiﬁcant effects of site
+fertility on allometric relationships of Douglas ﬁr,
+suggesting a higher range of optimal soil-nutrient
+conditions exist for this species.
+3.
+Growth increment in both species followed a unimodal
+lognormal curve with its peak at the beginning of the
+season. Douglas ﬁr started its growth 2 weeks earlier
+and grew more intensively at the beginning of the
+season than Norway spruce.
+4.
+Low spring temperatures and the limited amount of
+available solar radiation in spring stops the growth of
+both species in the ﬁeld, even when temperatures are
+not low enough to damage living tissues. Norway
+spruce is more tolerant of unfavorable spring condi-
+tions than Douglas ﬁr.
+5.
+Mild drought suppresses stem growth increment while
+strong drought (i.e. less than -1.5 MPa soil water
+potential) entirely stops incremental stem growth.
+While Douglas ﬁr is better able to grow during mild
+drought conditions than Norway spruce; both species
+at both sites stopped growing during the episode of
+strong drought.
+6.
+During dry periods trees used available water from the
+stem storage compartments for transpiration. There
+was no difference in the rate of stem shrinkage
+between tree species.
+Acknowledgments
+The authors wish to thank the director of Forest
+Enterprise of the Secondary Forestry School of Pı´sek in Hu˚rky,
+Mr. Koptı´k, for his valuable help and very positive approach to our
+measurements and to Mrs. Dasa Prochazkova and Ing. Stanislav
+Klima, CSc. for reading the stem growth data. We are grateful to
+Prof. Jirˇı´ Kulhavy´ for his versatile support during soil analyses and to
+Ing. Daniel Volarˇı´k, Ph.D. for his valuable comments on statistics.
+This research was supported by projects NAZV-QI-112-A172, IGA
+9/2011 and OPVK CZ.1.07/2.3.00/30.0017–Investments in Education
+Development co-ﬁnanced by the European Social Fund and the state
+budget of the Czech Republic.
+References
+Alvarez-Uria P, Ko¨rner C (2007) Low temperature limits of root
+growth in deciduous and evergreen temperate tree species. Funct
+Ecol 21:211–218
+Bartelink HH (1996) Allometric relationships on biomass and needle
+area of Douglas-ﬁr. For Ecol Manage 86:193–203
+Bartelink HH (1997) Allometric relationship for biomass and leaf
+area of beech (Fagus sylvatica, L.). Ann For Sci 54:39–50
+Bartosˇ J, Kaca´lek D (2011) Wood production of young ﬁrst-
+generation stands on former agricultural land. Zpra´vy Les-
+nicke´ho Vy´zkumu 56:118–124
+Beets P, Gilchrist K (2001) Wood density of radiata pine: effect of
+nitrogen supply. For Ecol Manage 145:173–180
+Borchert R (1994) Soil and stem water storage determine phenology
+and distribution of tropical dry forest trees. Ecology 75:1437–
+1449
+Briffa KR, Schweingruber FH, Jones PD, Osborn TJ, Shiyatov SG,
+Vaganov EA (1998) Reduced sensitivity of recent tree-growth to
+temperature at high northern latitudes. Nature 391:678–682
+Busˇina F (2007) Natural regeneration of Douglas ﬁr (Pseudotsuga
+menziesii [Mirb.] Franco) in forest stands of Hurky Training
+Forest District, Higher Forestry School and Secondary Forestry
+School in Pı´sek. J For Sci 53:20–34
+Cannell MGR (1982) World forest biomass and primary production
+data. Academic Press, London
+Cˇ erma´k J (1989) A practical functional parameter of assimilation
+organs of trees and forest stands—solar equivalent leaf area (in
+Czech). Lesnictvı´ 35(8):695–707
+Cˇ erma´k J (1998) Leaf distribution in large trees and stands of the
+ﬂoodplain forests in southern Moravia. Tree Physiol 18:727–737
+Cˇ erma´k J, Micha´lek J (1991) Selection of sample trees in forest stands
+using the ‘‘quantiles of total’’ (in Czech). Lesnictvi (Forestry)
+37:49–60
+Cˇ erma´k J, Nadezhdina N (1998) Sapwood as the scaling parameter—
+deﬁning according to xylem water content or radial pattern of
+sap ﬂow? Ann Sci For 55:509–521
+Cˇ erma´k J, Kucˇera J, Nadezhdina N (2004) Sap ﬂow measurements
+with two thermodynamic methods, ﬂow integration within trees
+and scaling up from sample trees to entire forest stands. Trees
+Struct Funct 18:529–546
+Cˇ erma´k J, Kucˇera J, Bauerle WL, Phillips N, Hinckley TM (2007)
+Tree water storage and its diurnal dynamics related to sap ﬂow
+and changes in stem volume in old-growth Douglas-ﬁr trees.
+Tree Physiol 27:181–198
+Day W, Chrystal R (1928) Damage by late frost on Douglas ﬁr, Sitka
+spruce, and other conifers. Forestry 2:19
+Delft BV, Wall RD, Kemmers R, Mekkink P, Sevink J (2006) Field
+guide humus forms, description and classiﬁcation of humus
+forms for ecological applications. Research Institute for the
+Green Environment, Wageningen: Alterra, p 92
+Goldstein G, Meinzer F, Monasterio M (1984) The role of capaci-
+tance in the water balance of Andean giant rose species. Plant
+Cell Environ 6:649–656
+Goldstein G, Andrade JL, Meinzer FC, Holbrook NM, Cavelier J,
+Jackson P, Celis A (1998) Stem water storage and diurnal
+patterns of water use in tropical forest canopy trees. Plant Cell
+Environ 21:397–406
+Green RN, Trowbridge RL, Klinka K (1993) Towards a taxonomic
+classiﬁcation of humus forms. For Sci Monogr 29(39):1–49
+Gryc V, Hacura J, Vavrcˇı´k H, Urban J, Gebauer R (2012) Monitoring
+of xylem formation in Picea abies under drought stress
+inﬂuence. Dendrobiology 67:15–24
+Hawkins BJ, Davradou M, Pier D, Shortt R (1995) Frost hardiness
+and winter photosynthesis of Thuja plicata and Pseudotsuga
+Trees
+123
+
+
+menziesii seedlings grown at three rates of nitrogen and
+phosphorus supply. Can J For Res 25:18–28
+Hein S, Weiskittel AR, Kohnle U (2008) Effect of wide spacing on
+tree growth, branch and sapwood properties of young Douglas-ﬁr
+[Pseudotsuga menziesii (Mirb.) Franco] in southwestern Ger-
+many. Eur J Forest Res 127:481–493
+Hinckley TM, Bruckerhoff DN (1975) The effect of drought on water
+relations and stem shrinkage of Quercus alba. Can J Bot
+53:62–72
+Jo¨nsson AM, Harding S, Ba¨rring L, Ravn HP (2007) Impact of
+climate change on the population dynamics of Ips typographus
+in southern Sweden. Agric For Meteorol 146:70–81
+Kantavichai R, Briggs DG, Turnblom EC (2010) Effect of thinning,
+fertilization with biosolids, and weather on interannual ring
+speciﬁc gravity and carbon accumulation of a 55-year-old
+Douglas-ﬁr stand in western Washington. Can J For Res
+40:72–85
+Kantor P (2008) Production potential of Douglas ﬁr at mesotrophic sites
+of Krˇtiny Training Forest Enterprise. J For Sci 54(7):321–332
+Kantor P, Kulhavy´ J, Nadeˇzˇdina N, Knott R, Klı´ma S, Urban J,
+Mensˇı´k L (2009) Douglas ﬁr—the most important introduced
+tree species in the multifunctional and sustainable forest
+management (in Czech). Final report of the research project.
+Brno, 2009
+Keyes MR, Grier CC (1981) Above- and belowground net production
+in 40-year-old Douglas ﬁr stands on low and high productivity
+sites. Can J For Res 11:599–605
+Kindermann GE (1998) Die ﬂachenanteile der baumarten. Institut fur
+Waldwachstumsforschung, Universitat fur Bodenkultur, Perch-
+tolsdorf, Deutschland, Diplomaarbeit
+King JS, Albaugh TJ, Allen HL, Kress LW (1999) Stand-level
+allometry in Pinus taeda as affected by irrigation and fertiliza-
+tion. Tree Physiol 19:769–778
+Kirdyanov A, Hughes M, Vaganov E, Schweingruber F, Silkin P
+(2003) The importance of early summer temperature and date of
+snow melt for tree growth in the Siberian Subarctic. Trees Struct
+Funct 17(1):61–69
+Kobe R (2006) Sapling growth as a function of light and landscape-
+level variation in soil water and foliar nitrogen in northern
+Michigan. Oecologia 147(1):119–133
+Leuschner C, Hertel D, Schmid I, Koch O, Muhs A, Ho¨lscher D
+(2004) Stand ﬁne root biomass and ﬁne root morphology in old-
+growth beech forests as a function of precipitation and soil
+fertility. Plant Soil 258:43–56
+Lewis JD, McKane RB, Tingey DT, Beedlow PA (2000) Vertical
+gradients in photosynthetic light response within an old-growth
+Douglas ﬁr and western hemlock canopy. Tree Physiol 20:447–456
+Lindner M, Maroschek M, Netherer S, Kremer A, Barbati A, Garcia-
+Gonzalo J, Seidl R, Delzon S, Corona P, Kolstro¨m M (2010)
+Climate change impacts, adaptive capacity, and vulnerability of
+European forest ecosystems. For Ecol Manage 259:698–709
+Lindstrom H (1997) Fiber length, tracheid diameter, and latewood
+percentage in Norway spruce: development from pith outward.
+Wood Fiber Sci 29:21–34
+Loehle C (1998) Height growth rate tradeoffs determine northern and
+southern range limits for trees. J Biogeogr 25:735–742
+Loehle C (2000) Forest ecotone response to climate change:
+sensitivity to temperature response functional forms. Can J For
+Res 30:1632–1645
+Lupi C, Morin H, Deslauriers A, Rossi S (2012) Xylogenesis in black
+spruce: does soil temperature matter? Tree Physiol 32:74–82
+Ma¨kinen H, Hein S (2006) Effect of wide spacing on increment and
+branch properties of young Norway spruce. Eur J For Res
+125:239–248
+Ma¨kinen H, No¨jd P, Mielika¨inen K (2001) Climatic signal in annual
+growth variation in damaged and healthy stands of Norway
+spruce [Picea abies (L.) Karst.] in southern Finland. Trees
+15:177–185
+Ma¨kinen H, Ojansuu R, Sairanen P, Yli-Kojola H (2003) Predicting
+branch characteristics of Norway spruce (Picea abies (L.) Karst.)
+from simple stand and tree measurements. Forestry 76(5):525–546
+Ma¨kipa¨a¨ R (1999) Response patterns of Vaccinium myrtillus and V.
+vitis-idaea along nutrient gradients in boreal forest. J Veg Sci
+17–26
+Mensˇı´k L, Kulhavy´ J, Kantor P, Remesˇ M (2009) Humus conditions
+of stands with the different proportion of Douglas ﬁr in training
+forest district Hu˚rky and the Krˇtiny Forest Training Enterprise.
+J For Sci 55:345–356
+Michalak R (2011) FOREST EUROPE, UNECE and FAO 2011:
+State of Europe’s Forests 2011. Status and trends in sustainable
+forest management in Europe. Forest Europe, Oslo
+Nagel J, Albert M, Schmidt M (2002) Das waldbauliche Prognose-
+und
+Entscheidungsmodell
+BWINPro6.1.
+Forst
+und
+Holz
+57:486–493
+Naidu S, deLucia E (1997) Growth, allocation and water relations of
+shade-grown Quercus rubra L. saplings exposed to a late-season
+canopy gap. Ann Bot 80:335–344
+Na¨slund M (1936) Skogsfo¨rso¨ksanstaltens gallringsfo¨rso¨k i tallskog.
+Meddelanden fra˚n Statens Skogsfo¨rso¨ksanstalt 29:169 p
+Niklas KJ (1994) Plant allometry. The scaling of form and process.
+The University of Chicago Press, Chicago, p 1994
+Oinas S, Sikanen L (2000) Discrete event simulation model for
+purchasing of marked stands, timber harvesting and transporta-
+tion. Forestry 73:283–301
+Peric S, Seletkovic I, Medak J, Pilasˇ I, Topic V (2006) Research of
+thriving of six coniferous species in ecologically characteristic
+regions of Croatia. Rad Sˇumar inst Izvanredno izdanje 9:99–108
+Phillips NG, Ryan MG, Bond BJ, Dowell NGMC, Hinckley TM,
+Cˇ erma´k J (2003) Reliance on stored water increases with tree
+size in three species in the Paciﬁc Northwest. Tree Physiol
+23:237–245
+Plı´va J (1991) Functionally integrated forest management I. Forest
+site condition classiﬁcation (in Czech). UHUL Brandys nad
+Labem
+Poorter H, Niklas KJ, Reich PB, Oleksyn J, Poot P, Mommer L (2012)
+Biomass allocation to leaves, stems and roots: meta-analyses of
+interspeciﬁc variation and environmental control. New Phytol
+193:30–50
+Pretzsch H (2009) Forest dynamics, growth and yield. Springer,
+Berlin
+Pretzsch H (2010) Re-evaluation of allometry: state-of-the-art and
+perspective regarding individuals and stands of woody plants. In:
+Lu¨ttge UE, Beyschlag W, Bu¨del B, Francis D (eds) Progress in
+Botany 71, vol 71. Springer, Berlin, pp 339–370
+Pretzsch H, Biber P, Dˇ ursky´ J (2002) The single tree based stand
+simulator SILVA: construction, application and evaluation. For
+Ecol Manage 162:3–21
+Ranger J, Marques R, Colin-Belgrand M, Flammang N, Gelhaye D
+(1995) The dynamics of biomass and nutrient accumulation in a
+Douglas-ﬁr (Pseudotsuga menziesii Franco) stand studied using a
+chronosequence approach. For Ecol Manage 72:167–183
+Reich PB (2002) Root–shoot relations: optimality in acclimation and
+adaptation or the ‘‘Emperor’s new clothes’’? In: Waisel Y, Eshel
+A (eds.) Plant roots: the hidden half, pp 205–220
+Rossi S, Deslauriers A, Anfodillo T, Carraro V (2007) Evidence of
+threshold temperatures for xylogenesis in conifers at high
+altitudes. Oecologia 152:1–12
+Ro¨tzer T, Seifert T, Pretzsch H (2008) Modeling above and below
+ground carbon dynamics in a mixed beech and spruce stand
+inﬂuenced by climate. Eur J Forest Res 128:171–182
+Ryan M, Yoder B (1997) Hydraulic limits to tree height and tree
+growth. Bioscience 47(4):235–242
+Trees
+123
+
+
+Shinozaki KK, Yoda K, Hozumi L, Kira T (1964) A quantitative
+analysis of plant form—the pipe model theory. I. Basic analysis.
+Jpn J Ecol 14:97–105
+Sicard C, Sain-Andre L, Gelhaye D, Ranger J (2006) Effect of initial
+fertilization on biomass and nutrient content of Norway spruce
+and Douglas-ﬁr plantations at the same site. Trees 20:229–246
+Siipilehto J (2000) A comparison of two parameter prediction
+methods for stand structure in Finland. Silva Fennica 34(4):331–
+349
+Sˇika A, Vinsˇ B (1980) Growth of Douglas ﬁr in the forest stands of
+Czechoslovakia (in Czech). Pra´ce VU´ LHM 57:73–95
+Spathelf P (2003) Reconstruction of crown length of Norway spruce
+(Picea abies (L.) Karst.) and Silver ﬁr (Abies alba Mill.)—
+technique, establishment of sample methods and application in
+forest growth analysis. Ann For Sci 60:833–842
+Tatarinov F, Urban J, Cˇ erma´k J (2008) Application of ‘‘clump
+technique’’ for root system studies of Quercus robur and
+Fraxinus excelsior. For Ecol Manage 255:495–505
+Teskey RO, Bongarten BC, Cregg BM, Dougherty PM, Hennessey
+TC (1987) Physiology and genetics of tree growth response to
+moisture and temperature stress: an examination of the charac-
+teristics of loblolly pine (Pinus taeda L.). Tree Physiol
+3(1):41–61
+Timmis R, Flewelling J, Talbert C (1994) Frost injury prediction
+model for Douglas-ﬁr seedlings in the Paciﬁc Northwest. Tree
+Physiol 14:855–869
+Tryon PR, Chapin FS (1983) Temperature control over root growth
+and root biomass in taiga forest trees. Can J For Res
+13(5):827–833
+Tyree M, Zimmerman MH (2002) Xylem structure and the ascent of
+sap. Springer, Berlin
+Urban J, Rebrosˇova´ K, Dobrovolny´ L, Schneider J (2010) Allometry
+of four European beech stands growing at the contrasting
+localities in small-scale area. Folia Oecologica 37:103–112
+Van Cleve K, Oechel WC, Hom JL (1990) Response of black spruce
+(Picea mariana) ecosystems to soil-temperature modiﬁcation in
+interior Alaska. Can J For Res 20:1530–1535
+Vinsˇ B, Sˇika A (1981) Comparison of the growth reaction of Douglas
+ﬁr and Norway spruce on site factors in the conditions of the
+CSR. Prace VULHM 58:7–33
+Vyskot M (1975) Results of a 25 years provenance experiment with
+larch (Larix decidua Mill.). Yield Science, Vienna, October 3–7
+Waring RH, Running SW (1978) Sapwood water storage: its
+contribution to transpiration and effect upon water conductance
+through the stems of old-growth Douglas-ﬁr. Plant Cell Environ
+1:131–140
+Waring RH, Whitehead D, Jarvis PG (1979) The contribution of
+stored water to transpiration in Scots pine. Plant Cell Environ
+2:309–317
+Zbı´ral J, Honsa I, Maly´ S (1997): Soil analysis III. Uniform working
+processes. U´ KZU´ Z, Brno (in Czech)
+Zimmerman MH (1983) Xylem structure and the ascent of sap.
+Springer, Berlin
+Zweifel R, Item H, Ha¨sler R (2000) Stem radius changes and their
+relation to stored water in stems of young Norway spruce trees.
+Trees 15:50–75
+Trees
+123

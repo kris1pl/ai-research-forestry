@@ -1,0 +1,5530 @@
+Skogsinventering med  
+flygburen laserskanning 
+ 
+Laserskanning och fotogrammetri inom skogsbruket 
+ 
+ 
+Nils Lucas Appel 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Examensarbete för ingenjör (YH)-examen   
+Utbildningen lantmäteriteknik 
+Vaasa   2017
+
+
+EXAMENSARBETE 
+ 
+Författare: Nils Lucas Appel 
+Utbildning och ort: Lantmäteriteknik,Vasa 
+Inriktningsalternativ: Lantmäteriteknik 
+Handledare: Sem Timmerbacka 
+ 
+Titel: Skogsinventering med flygburen laserskanning 
+_________________________________________________________________________ 
+Datum 20.4.2017                  Sidantal 34 
+Bilagor 1 
+_________________________________________________________________________ 
+Abstrakt 
+Syftet med detta examensarbete har varit att beskriva grunderna inom skoglig datainsamling, 
+dess möjligheter och användningsområden. Examensarbetet inkluderar skogsinventeringar 
+utförda med kombination av laserskanning, fotogrammetri och fältdatainsamling. I arbetet 
+ingår även en analys på en 2,5 ha stor provyta i Sibbo skannat av Lantmäteriverket och 
+utgivet som fri data. För en jämförelse av statens punkmoln används ett separat punktmoln 
+över samma område skannat med en drönare och innehar en betydligt högre punkttäthet.  
+ 
+Mjukvaran som använts för att utföra analysen heter Liforest. Programmet använder sig utav 
+enskilda-träd-metoden, vilket innebär att varje träd som observeras tilldelas ett eget unikt 
+ID. Detta innebär även att man får fram specifik information om samtliga träd som blivit 
+identifierade, som attributdata ges trädens koordinater, höjd, krondiameter och kronarea. 
+Enbart analys med denna metod ger sämre skattningar på beståndsnivå på till exempel 
+trädens stamdiameter jämfört med väl beprövade arealbaserade skattningar. Samtliga 
+stammar som redovisas i den utförda analysen är över två meter, vilket innebär en risk för 
+sly och buskar. Insamlingen av laserdatat är dock utfört under våren innan gräs och annan 
+undervegetation växt allt för högt. 
+ 
+Resultatet visar att informationen som samlats in med drönare endast identifierar 69 stammar 
+fler än Lantmäteriverkets punktmoln på samma provyta, trots skillnaden i antal punkter per 
+m². Medelhöjden skiljer endast elva centimeter mellan de två separata punktmolnen, 
+analysen visar även att vid stammar över åtta meter ges en skillnad på 2,90 m. Reflektioner 
+över de resultat som kommit fram genom analysen beskrivs i slutet av detta arbete. 
+ 
+________________________________________________________________________ 
+Språk: svenska 
+Nyckelord: laserskanning, skogsinventering, punktmoln,  
+ 
+ 
+ 
+  kronhöjd, enskilda-träd-metoden 
+_________________________________________________________________________ 
+ 
+ 
+
+
+OPINNÄYTETYÖ 
+ 
+Tekijä: Nils Lucas Appel 
+Koulutus ja paikkakunta: Maanmittaustekniikka, Vaasa 
+Ohjaaja: Sem Timmerbacka 
+ 
+Nimike: Metsäinventointi lentolaserkeilauksella 
+_________________________________________________________________________ 
+Päivämäärä 20.4.2017               Sivumäärä 34 
+Liitteet 1 
+_________________________________________________________________________ 
+Tiivistelmä 
+Tämän opinnäytetyön tarkoitus on ollut esittää perusasiat metsien datakeräyksestä, 
+mahdollisuuksista ja käyttöaloista. Opinnäytetyö sisältää metsäinventointeja jotka on tehty 
+laserkeilauksen, fotogrammetrian ja maastotietoinventoinnin yhdistelmänä. Työ sisältää 
+myös 2,5 ha ison koealueen analyysin, jonka Maanmittauslaitos on keilattu Sipoossa. 
+Valtion pistepilvi on verrattu toiseen pistepilveen. Toinen pistepilvi on skannattu UAV:llä 
+ja sisältää korkeamman pistetiheyden. 
+Analyysissa käytetty ohjelmisto on nimeltään Liforest. Ohjelma käyttää yksittäisen puun 
+tulkintamenetelmää mikä tarkoittaa että jokaiselle huomioidulle puulle annetaan oma 
+ainutlaatuinen ID. Tämä tarkoittaa myös että saa erityistä tietoa kaikista puista, jotka on 
+identifioitu. Atribuuttidatana annetaan puiden koordinaatit, korkeudet, latvaläpimitat ja 
+latvapinta-alat. Pelkkä analyysi tällä menetelmällä antaa huonomman arvion metsiköstä 
+esimerkiksi puiden runkoläpimitasta, verrattuna muihin enemmän käytettyihin pinta-alaan 
+perustuviin menetelmiin. Kaikki rungot, jotka on esitetty analyysissä ovat yli kaksi metriä, 
+mikä tarkoittaa että vesakkojen ja puskien riski kasvaa. Laserdatan keräys on suoritettu 
+keväällä ennen kuin ruoho ja muu aluskasvillisuus ovat kasvaneet liian korkeaksi. 
+Tulos näyttää, että UAV:llä kerätyn tiedon avulla löydetään vain 69 runkoa enemmän kuin 
+Maanmittauslaitoksen pistepilvi samalla koealueella, huolimatta pisteiden määrästä 
+jokaista m² kohden. Keskikorkeuden ero on ainoastaan yksitoista senttimetriä pistepilvien 
+välillä ja analyysi näyttää myös, että yli kahdeksan metriset rungot antavat 2,90 metrin 
+eron. Ajatukset analyysistä saaduista tuloksista on esitetty tämän työn lopussa. 
+______________________________________________________________________ 
+Kieli: ruotsi 
+Avainsanat: laserkeilaus, metsäinventointi , pistepilvi                                                   
+                                                                               latvakorkeus, yksittäisen puuntulkintamenetelmää 
+ _________________________________________________________________________ 
+
+
+BACHELOR’S THESIS  
+Author: Nils Lucas Appel  
+Degree Programme: Land Surveying, Vaasa                      
+Supervisor: Sem Timmerbacka  
+  
+Title: Forest Inventory with Airborne Laser Scanning  
+ _________________________________________________________________________  
+Date 20.4.2017           Number of pages 34                      Appendices 1  
+_________________________________________________________________________  
+Abstract  
+The purpose of this bachelor's thesis is to describe the principles within data collection for 
+forest inventory, its possibilities and its range of use. This bachelor's thesis includes forest 
+inventories done with a combination of laser scanning, photogrammetry and field collected 
+data. The study also includes an analysis of a 2,5 hectare test area in Sibbo scanned by the 
+National 
+Land 
+Survey 
+Of 
+Finland. 
+The pointcloud has been 
+compared 
+with 
+another pointcloud within the same area scanned with a UAV.  
+The software used for the analysis is called Liforest. The software uses a method called the 
+single-tree-method which implies that all the observed trees assign their own unique 
+identity. This also implies that specific information about all the identified trees can be 
+acquired. The attribute data describes the coordinates, tree height, crown diameter and crown 
+area. Analysis with the single-tree-method gives inadequate assumed means on a smaller 
+area, for example average tree diameter compared with well-tried area-based methods. All 
+the stems that are reported in the analysis are over two meters which implies a risk for low 
+vegetation and bushes. The data have been collected under the spring to reduce this factor 
+before grass and other vegetation becoming a problem.  
+The results show that the information collected with UAV just identifies 69 stems more than 
+the NLS pointcloud on the same test area even though the difference in the point density is 
+high. The difference in average high between the separate pointclouds is only 11 centimeters 
+and in the analysis on trees higher than eight meters, the difference is as high as 2,9 meters. 
+More reflections over the results are given in the end of this study.  
+_________________________________________________________________________  
+Language: swedish           Key words: laser scanning, forest inventory, point cloud,  
+                                                                        crown height, single-tree-method  
+_________________________________________________________________________ 
+
+
+ 
+Innehållsförteckning 
+1 
+Inledning ............................................................................................................................................ 1 
+ 
+Syfte ............................................................................................................................................... 1 
+ 
+Metodik och genomförande ................................................................................................. 2 
+ 
+Tidigare forskning .................................................................................................................... 2 
+ 
+Problematik ................................................................................................................................ 3 
+2 
+Utgångsläge ....................................................................................................................................... 4 
+3 
+Laserskanning ................................................................................................................................. 4 
+ 
+Positionering .............................................................................................................................. 5 
+ 
+Punkttäthet ................................................................................................................................. 7 
+ 
+Footprint ...................................................................................................................................... 9 
+ 
+Interaktion med mark och vegetation ........................................................................... 10 
+ 
+Lowpoints ................................................................................................................................. 11 
+4 
+Fotogrammetri & fjärranalys ............................................................................................... 12 
+5 
+Stråk och stödplan ..................................................................................................................... 13 
+ 
+Stråkplanering ........................................................................................................................ 14 
+6 
+Markhöjdmodell .......................................................................................................................... 15 
+7 
+Arealbaserade beräkningar .................................................................................................. 17 
+ 
+Enskilda träd metoden ........................................................................................................ 18 
+ 
+Kronhöjdsfördelning ............................................................................................................ 19 
+8 
+Inventering i fält .......................................................................................................................... 21 
+9 
+Minskog.fi ....................................................................................................................................... 22 
+ 
+Beståndsdata från minskog.fi ........................................................................................... 23 
+10 Egna analyser ................................................................................................................................ 25 
+ 
+Klassificering ...................................................................................................................... 26 
+ 
+Modellering ......................................................................................................................... 27 
+ 
+Identifiering ........................................................................................................................ 28 
+11 Resultat ............................................................................................................................................ 28 
+12 Slutdiskussion .............................................................................................................................. 29 
+13 Källförteckning ............................................................................................................................ 32 
+ 
+Bilagor 
+Bilaga 1   
+Beräkningar 
+ 
+ 
+
+
+ 
+1 
+1 Inledning 
+Tillgången på litteratur om själva insamlingen av skogsdata har varit god. Skogen är en 
+betydande naturresurs och den stora marknaden styr även framtiden och forskningen. 
+Tillgången på olika punktmoln har inte heller varit några större problem att få tag på, under 
+tiden med detta arbete har laserdata från både Vasa, Kristinestad och Sibbo jämförts mot 
+Lantmäteriverkets fria punktmoln för aktuella områden. Det största problemet har däremot 
+varit att få tillgång till program som är anpassade att utföra analyser inom skogen. 
+Behovet av skogsinventering är i dagens läge stort, att välja rätt skogsbruksåtgärd vid rätt 
+tidpunkt är viktiga beslut som skogsägare är tvingade att ta, för att få maximal tillväxt på 
+diverse bestånd och därefter bidra med en större ekonomisk vinst. Med hjälp av dagens 
+teknik underlättas dessa beslut och värderingar i olika stadier blir mera tillförlitliga. Att man 
+dessutom kan använda tekniken för att få extra information som omöjligt kan samlas in i 
+terrängen är till en stor fördel. 
+Skogen är en stor naturresurs för oss i norden och naturlig del av våra liv, detta bidrar till att 
+det finns även en mängd forskning och analyser av olika kvalitet inom området utförda i 
+norden. Under arbetets gång har jag stött på många användningsområden för laserdata, allt 
+från älgskadeanalyser till laserskanning av möbelvirke och korkekar. Att avgränsa arbetet 
+och få en röd tråd från sida ett var ett problem, som ständigt återkom. 
+ Syfte 
+Hur används laserdata inom skogsbruket i dagens Finland? Hur fungerar insamlingen och 
+vilka begränsningar har ett punktmoln? Detta är frågor jag försökt få svar på under arbetet 
+med detta examensarbete. Målsättningen med arbetet är att beskriva insamlingen av 
+flygburen laserdata och dess användningsområden samt utföra lättare analyser och få fram 
+information från olika laserskannade trädbestånd. 
+Problemet med dagens punktmoln för skogliga ändamål är ofta glesa och används till stora 
+arealer för analyser. Med tätare punktmoln kan analyserna göras noggrannare och användas 
+till betydligt flera uppdrag än i dag.  
+
+
+ 
+2 
+ Metodik och genomförande 
+De metoder som används, är intervjuer av två ansvariga för insamlingen av skogsdata vid 
+Finlands skogscentral och telefonkontakt med Mikael Holm som har bred erfarenhet inom 
+området. Olika forskningsrapporter, tidigare gjorda examensarbeten och internationell 
+litteratur om laserskanning och fotogrammetri. Beräkningar och testerna är gjorda i 
+Cloudcompare som är en fri mjukvara för behandling av laserdata samt en testversion på 15 
+dagar av programmet Liforest som är tillämpat för skogliga inventeringar. 
+ Tidigare forskning 
+Redan på 1930-talet rapporterade Skogsforskaren Risto Sarvas om flygfotografins 
+möjligheter inom skogsbruket. Då hade redan finska försvarsmakten flygfotograferings-
+utrustning i sin ägo. 
+Den första användbara lasern introducerades år 1960, och på slutet av 1970-talet började 
+dåvarande Sovjetunionen, med de första försöken att inventera trädhöjder med hjälp av 
+LiDAR(Light Detection and Ranging). Den infraröda filmen började användas i Finland på 
+1970-talet och stereotolkningen av analoga bilder på 1980-talet. 
+Den digitala tekniken har gett oss betydligt fler möjligheter inom skogsbruket, framförallt 
+efter att finska staten vid millenniumskiftet började uppgöra en heltäckande laserskanning 
+över Finland. Marknaden har i dagens läge ett omättat behov av nyuppdaterad data samlat 
+via flygburen laserskanning inom skogsbruket. Otaliga mängder metoder och forskning har 
+testats och laserskannad data är idag en ovärderlig informationskälla inom skogsinventering. 
+Professor Erik Næsset fick år 2011 Wallenbergpriset i Sverige (det skogliga Nobelpriset) för 
+Areabaserade metoden som beskrivs i kap 8 i detta arbete1. 
+Laserskanning kan vara till nytta inom många områden för skogliga ändamål på alla plan. 
+De statliga beslutsfattarna vill att Finlands skogar används effektivt, medan de privata 
+skogsägarna vill få information om avverkningsmöjligheter, ekonomisk lönsamhet och 
+skogsbruksåtgärder.  
+På marknaden inom skogsnäringen vill olika aktörer få information om virkesmängden som 
+finns till förfogande inom olika områden för att få en bättre ekonomi, genom att till exempel 
+                                                        
+1 Nordqvist & Olsson 2013. Laserskanning och digital fotogrammetri i skogsbruket, Umeå arbetsrapport 388 
+2013 Sveriges Lantbruksuniversitet 
+ 
+
+
+ 
+3 
+avverka intilliggande fastigheter. Men också för att spara på transporter och miljöpåverkan 
+eller varför inte uppföljningar om vad som hänt i Finlands skogar, för att få en bild av vad 
+som komma skall.   
+Olika nationers framgång inom inventering av skog är varierande, saker som efterfrågan på 
+virke, lagstiftning, stöd och skattepolitik inom skogsbruk är saker som reglerar detta. Finland 
+har länge hört till de marknadsledande länderna inom området. 
+ Problematik 
+Problemen med dagens punktmoln inom skogsbruket är ofta den låga punkttätheten. 
+Punkttäthet går naturligtvis hand i hand med den ekonomiska lönsamheten när det handlar 
+om stora arealer och eftersom punkttätheten ofta är låg får man inte alltid fram vissa 
+intressanta variabler. När det däremot är fråga om skog behövs kanske inte alltid den exakta 
+noggrannheten i många fall utan svaren man söker fås ofta ur större områden med ett mera 
+heltäckande och övergripande resultat, som till exempel fås genom rastrering. 
+Vilken slags information söker man i ett punktmoln och vilken information behöver 
+punktmoln innehålla är en frågeställning jag har funderat på under arbetet med detta 
+examensarbete. Nästa intressanta frågeställning är var man hittar jämnvikt mellan tillräckligt 
+bra data och fortfarande ekonomisk lönsamhet. 
+I samband med behandlingen av punktmoln för skogliga ändamål används ofta dyra 
+specialmjukvaror endast för detta. Dessa program är ofta dyra och kräver en viss 
+användarerfarenhet för att uppnå noggranna resultat. Testversionen på 15-dagar i 
+programmet Liforest räckte till för en grundlig inventering, men för noggrannare analyser 
+behövs ytterligare uppgifter om insamlingen, samt en mjukvara som är uppbyggt med hög- 
+och lågfilter för punktmoln.  
+Jag beslutade att skriva kapitlet om fotogrammetrin så kort som möjligt, för att sätta mer 
+fokus på laserskaningen och dess möjligheter, eftersom marknaden just nu sprutar ut nya 
+programvaror och skannrar av olika modeller och användningsområden. Jag har valt att 
+endast ta med granskade källor som har hög trovärdighet, och som även överensstämmer 
+med egna erfarenheter och uppfattningar. 
+
+
+ 
+4 
+2 Utgångsläge 
+Inom skogsnäringen finns behov av att snabbt och enkelt få fram uppgifter om olika 
+skogsbestånd, dess produktivitet och åtgärdsbehov. 
+Lantmäteriverkets laserskanning täcker hela landet med ca 0,5-3 punkter per kvadratmeter 
+och detta räcker i viss mån till fullvuxna timmerskogar där laserpulserna lätt träffar stammar 
+och trädkronor. Däremot är det väldigt osäkert i ungskogar, såsom planteringar i 
+utvecklingsklasserna T1 och T2, det vill säga yngre och äldre plantbestånd där behovet av 
+röjning är stort för att få en välmående producerande ekonomiskog. 
+I detta arbete beskrivs grunderna inom laserskanning samt olika metoder som ofta används 
+för skogsdatainventering och nyttan av att utföra en inventering av skogsbruksfastigheter. 
+Kombinationen av de ämnen som tas upp verkar vara ett vinnande koncept, det vill säga 
+fältinventering, mänsklig erfarenhet och fjärranalys. 
+ 
+3 Laserskanning 
+LIDAR är tekniken alla nu diskuterar om, det är ingen ny fjärranalysmetod, men den har 
+utvecklats oerhört och är en effektiv metod för skoglig datafångst. Laserskanning samlar in 
+data i tre dimensioner (X,Y,Z) och med hjälp av olika dataprogram kan man sedan importera 
+laserdatan som ett punktmoln och utföra noggrannhetskontroller och analyser.2 
+ 
+Tekniken använder sig av aktiva sensorer som sänder ut laserpulser mot markytan, träden 
+eller trädkronorna. Där reflekteras den och ett avstånd kan beräknas ut med hjälp av tiden 
+från att pulsen skickats ut tills den kommer tillbaka. I och med att aktiva sensorer används, 
+är laserskanning även möjligt i mörker och inte beroende av solljus som till exempel optiska 
+metoder som fotografering. För att kunna positionsbestämma punkterna, behöver man även 
+veta laserns position som sker med en GNSS3 mottagare, samt riktningen på hur pulserna 
+sänds ut.4  
+                                                        
+2 Monnet Jean-Matthieu 2012. Airborne Laser scanning for forest applications  
+3 Global Navigation Satellite System 
+4 Nordqvist & Olsson 2013. Laserskanning och digital fotogrammetri i skogsbruket, Umeå arbetsrapport 388 
+2013 Sveriges Lantbruksuniversitet 
+
+
+ 
+5 
+Avståndet kan beräknas med formeln 
+ 
+𝑠= 𝑣∗𝑡
+2 
+ 
+där s är avståndet till objektet och n är ljusets hastighet (ca 300 000 km/s). t är den uppmätta 
+tiden, och eftersom ljuset har färdats samma sträcka två gånger delas t med två. Denna metod 
+används för mätning av stora avstånd >99m, där lasern sänder ut en kort men intensiv 
+ljuspuls (ca 4-10 ns).5  
+Våglängden (λ), dvs den sträcka mellan två repeterande delar på en vågrörelse som används 
+inom laserskanning, ses i figur 1 vid flyghöjden 800-1500m. Vågformslasern lagrar 
+provtagna amplituder, medan ekolasrar lagrar distansobservationer.6 
+ 
+Figur 1: Ljusspektrum.7 
+  
+ Positionering 
+Drönaren, alternativt flygplanet får sin position genom GPS-teknik, X, Y, Z koordinater 
+sätter drönaren i ett koordinatsystem. Den kan alltså flyga till exakta positioner i både 
+                                                        
+5 Nordqvist & Olsson 2013. Laserskanning och digital fotogrammetri i skogsbruket, Umeå arbetsrapport 388 
+2013 Sveriges Lantbruksuniversitet 
+6 Ilkka Korpela 2012. ’’Senaste’’ inom fjärranalys. Institutionen för skogsvetenskaper vid Helsingfors 
+universitet 
+7 Harrie 2015. Laserskanning, Lunds Universitet, powerpoint 
+
+
+ 
+6 
+longitud, latitud och höjd, men kan också stanna vid en given position även om 
+vindförhållandena ställer till problem för flygningen.  
+För att hålla koll på vridningen är den utrustad med IMU-teknik (Inertial Measurement Unit), 
+ett tröghetsnavigeringssystem som består av en 3-axlad accelerometer och ett 3axlat-
+gyroskåp, 
+men 
+innehåller 
+ofta 
+även 
+en 
+magnetometer 
+och 
+en 
+barometer.  
+Accelerometern mäter hastighetsförändringen i en viss riktning, medan ett gyroskåp känner 
+av ändringarna i tipp, rull och gir (figur 2). 8 
+ 
+ 
+ 
+ 
+Figur 2: IMU och dess innehåll.9 
+ 
+Gimbal är en upphängningsmekanism, som motverkar rotationen på drönaren genom att 
+rotera utrustningen den bär på i motsatt riktning. Olika typer av Gimbals finns på marknaden, 
+men den vanligaste har tre axlar som därmed stabiliserar vridningarna , ,  (figur 3).10 
+                                                        
+8 Olsson, Per-Ola 2009. Digitala Höjdmodeller och höjdsystem. Insamling av höjddata med fokus på 
+flygburen laserskanning. Kandidatuppsats i naturgeografi. Lunds universitet 
+9 Hemsida Wikipedia [online] https://en.wikipedia.org/wiki/Inertial_measurement_unit 2007 (hämtat 
+19.01.2017) 
+10 Aber, Marzolff, Ries 2010. Small-Format Aerial Photography. Principles, techniques and geoscience 
+applications  
+
+
+ 
+7 
+ 
+Figur 3: Figuren visar rullning , tippning , girning .11 
+ Punkttäthet 
+Avståndet mellan laserpulserna kallas för punkttäthet vilket påverkas av bland annat valet 
+av flyghöjd och gör att punkttätheten givetvis är en kostnadsfråga vid insamlingen av 
+skogsdata. En flygning på högre höjd sprider laserstrålarna på ett större område och gör att 
+punkttätheten minskar, även energin som återvänder till sensorn minskar kvadratiskt mot 
+ökad flyghöjd.12 
+På ytor med låg reflektans i laserns våglängd såsom vattenytor, våta objekt eller mörka ytor 
+såsom ny asfalt kan bidra till att punkttätheten blir lägre.13 En högre punkttäthet ger oftast 
+bättre noggrannhet och gynnar identifieringen av olika trädslag, generellt gäller att ju lägre 
+flyghöjd desto högre kvalitet. Punkttätheten påverkar mängden tid som själva skanningen 
+behöver men även datamängden ökar och kostnaderna stiger givetvis i samband med detta. 
+Valet på själva spegeln i skannern har också en inverkan i detta avseende. Det finns i regel 
+tre olika system som används för att styra laserstrålens riktning: oscillerande spegel, 
+roterande spegel och fiberskanner.¹² 
+                                                        
+11 Robert 2014. A few flight related terms [online] http://norunway.com/wp/flight-related-terms/ 2014 
+(hämtat 19.01.2017) 
+12 Nordqvist & Olsson 2013. Laserskanning och digital fotogrammetri i skogsbruket, Umeå arbetsrapport 388 
+2013 Sveriges Lantbruksuniversitet 
+13 HMK, Handbok i mät och kartfrågor 2014. Laserdata Luleå 
+
+
+ 
+8 
+ 
+ 
+ 
+Figur 4: Olika skanningsmekanismer och skanningsmönster.14 
+ 
+Oscillerande och roterande spegel är de vanligaste systemen och ger olika skanningsmönster, 
+punkttätheten påverkas även den vid de olika positioner spegeln står i.  
+En oscillerande spegel (figur 4 a), ger ett sicksackmönster när spegeln vickar fram och 
+tillbaka, vändningen sker långsammare och pulstätheten ökar vid svängningen. Den 
+roterande spegeln (figur 4b), träffar marken i ett cirkelmönster och ger en jämnare 
+pulstäthet.¹⁴ 
+ En fiberskanner (figur 4c), är uppbyggd av en rad med optiska fibrer vilka bildar en rad med 
+pulser där antalet pulser är samma som antalet fibrer. Även här används en mindre roterande 
+spegel som fördelar pulserna mellan fibrerna. ¹⁴ 
+Det finns fortfarande en mängd faktorer, som påverkar punkttätheten och resultatet av 
+skanningen. Förutom flyghöjden påverkar även valet öppningsvinkel, det vill säga den 
+maximala vinkeln mellan laserstrålen och lodlinjen. För skogliga ändamål bör 
+skanningsvinkeln ligga kring ± 15º (figur 5).  Enligt detta bestäms sedan stråkbredden och 
+flyghastigheten som avgör hur stor yta som kan skannas per tidsenhet.15 
+                                                        
+14 Nordqvist & Olsson 2013. Laserskanning och digital fotogrammetri i skogsbruket, Umeå arbetsrapport 
+388 2013 Sveriges Lantbruksuniversitet 
+15 Åhman Mikael 2014. Laserdata i skogsbruket. Examensarbete Linneuniversitetet Kalmar 
+
+
+ 
+9 
+ 
+Figur 5: En öppningsvinkel på ± 15º används vid laserskanning av skogsbestånd.16 
+ 
+ Footprint 
+En utsänd laserpuls växer och sprids genom avståndet den färdas i atmosfären och kallas 
+footprint. Laserpulsen blir större och stöter därför ofta på flera objekt på vägen som delvis 
+reflekteras tillbaka, medan resten av pulsen fortsätter sin väg.  
+Footprint är diametern hos den belysta träffytan mot plan mark när den träffar marken rakt 
+uppifrån. Vanligtvis från någon decimeter till meternivå, beroende på situation och flyghöjd. 
+En tumregel är att vid dubbelt så hög flyghöjd fås dubbel så stor diameter, det vill säga 
+linjärt, även instrumentegenskaperna reglerar detta i viss mån.  
+Denna spridning anges som divergens i milliradianer (mrad) och är vanligen i 
+storleksordningen 0,1-1mrad för LiDAR-instrument. En divergens på 0,1mrad motsvarar en 
+tvärsnittsdiameter på 0,1 meter vid tusen meters flyghöjd (figur 6).17  
+                                                        
+16 Harrie 2015: Laserskanning, Lunds Universitet, powerpoint 
+17 Benedict, Jansson, Söderman 2009. Laserskanning från flyg och fornlämningar i skog, Rapport 2009:09 
+Länsstyrelsen Dalarna 
+
+
+ 
+10
+ 
+Figur 6: Laserpulsens divergens.18 
+ Interaktion med mark och vegetation 
+Med en stor diameter, kan den utsända laserpulsen reflekteras av marken eller flera andra 
+objekt på sin väg ner mot marken såsom trädkronor, kvistar, buskar, gräs osv. 
+En hård och kompakt yta resulterar i en enda skarp returpuls, träffar däremot pulsen en 
+trädkrona kan en del av pulsen reflekteras medan resten av pulsen fortsätter.19 Detta gör att 
+man med hjälp av kronans samt markens retur kan beräkna höjden på en stam, även om den 
+verkliga höjden är högre än den reflekterade pulsen i trädkronan på grund av att laserpulsen 
+tränger ner en bit i trädkronan innan den reflekteras (figur 7). 
+ 
+Laserskannern registrerar ofta intensiteten vid returerna och eftersom olika materia eller 
+ljusa/ mörka färger har olika intensitet är detta värdefull information. Många laserskannrar 
+använder när-infrarött ljus och ytor med hög reflektans i detta våglängdsområde såsom 
+levande vegetation ger returer med hög intensitet.20 Trädens blad och barryta har visat sig ge 
+skillnad på skanningens resultat. Därför bör ändamålet samt valet av årstid övervägas 
+noggrant, innan skogsdata insamlas. 
+Eftersom den laservåglängd som de flesta laserskannrar använder inte tränger igenom vatten 
+uppstår ofta ingen reflektans. 
+                                                        
+18 Harrie 2015. Laserskanning, Lunds Universitet, powerpoint 
+19 Nordqvist & Olsson 2013. Laserskanning och digital fotogrammetri i skogsbruket, Umeå arbetsrapport 
+388 2013 Sveriges Lantbruksuniversitet 
+20 Enskär Magnus 2015. Undersökning av SCA Skogs gallrade skogar med hjälp av laserskanning. 
+Examensarbete SLU-skogsmästarskolan 
+
+
+ 
+11
+ 
+Figur 7: Laserpulsens väg ner mot marken. Flera returer genereras genom trädet och busken innan 
+pulsen reflekteras helt vid marken kallad ground. Kurvan visar hur de olika objeken orsakar toppar på 
+kurvan som visar returpulsens intensitet i funktion av tid. Oftast kommer första returen från 
+trädkronan och sista från marken.21 
+ 
+ 
+ Lowpoints 
+Ett klassiskt problem som uppstår är så kallade lowpoints (figur 8). Låga punkter som 
+behöver elimineras i ett senare skede och innebär att laserpulsen reflekteras flera gånger. 
+Den första reflektionen ändrar riktningen, medan den andra sänder tillbaka pulsen till 
+mottagaren längs samma väg den kommit. Lasersystemet beräknar tiden och ger den totala 
+sträckan längs en uppfattad rät linje.  
+En felaktig punkt uppstår och ligger ofta under alla andra punkter, dessa punkter är däremot 
+relativt lätta att känna igen och eliminera, så länge de inte ligger väldigt nära liknande 
+punkter och kan antas som ett objekt i marken såsom en spricka eller ett djupt dike. 
+                                                        
+21 Nordqvist & Olsson 2013. Laserskanning och digital fotogrammetri i skogsbruket, Umeå arbetsrapport 
+388 2013 Sveriges Lantbruksuniversitet 
+
+
+ 
+12
+ 
+ 
+Figur 8: Animering av problemet med lowpoints.22 
+ 
+ 
+4 Fotogrammetri & fjärranalys 
+Digital fotogrammetri ger chansen att med överlappande bilder, skapa tre-dimensionella 
+punktmoln och därefter mäta på bilderna. 
+Fotogrammetrin används ofta för att arbeta med kartering av större områden där lite högre 
+mätosäkerhet accepteras och har använts länge inom skogsbruket där helhetsbilden oftast 
+ger mer information än andra mätmetoder. Dessutom handlar det ofta om stora områden och 
+då är fjärranalysmetoder antingen från satellit eller flygfotografering en kostnads- och 
+produktionseffektiv metod. 
+Två stora skillnader jämfört med laserskanning, är att fotogrammetri även samlar 
+information om färg, ofta grönt, blått rött och när-infrarött, som ofta är värdefull information. 
+Kameran skickar däremot inte ut pulser som en laserskanner vilket innebär att bilden sällan 
+tränger igenom trädkronorna vilket resulterar i att buskar och stammar kan vara svåra att se, 
+även om foton tagits från olika vinklar. Som komplement borde man även ta bilder från 
+marken, och därefter matcha ihop bilderna för en fullständig bild.23 
+                                                        
+22 Benedict, Jansson, Söderman 2009. Laserskanning från från flyg och fornlämningar i skog, Rapport 
+2009:09 Länsstyrelsen Dalarna 
+23 Nordqvist & Olsson 2013. Laserskanning och digital fotogrammetri i skogsbruket, Umeå arbetsrapport 
+388 2013 Sveriges Lantbruksuniversitet 
+
+
+ 
+13
+ 
+Att man numera monterar kameror även på drönare har öppnat marknaden och möjligheterna 
+ytterligare. I kombination med laserskannern fotograferas området samtidigt som det 
+skannas för att få ytterligare data såsom RGB-kod till punktmoln. Flygbilder lämpar sig väl 
+för vissa ändamål och fotogrammetriska datainsamlingar används i stor skala även utan 
+skanningsutrustning som ofta är dyr.  
+Satellitbilder innebär oftast stora rasterpixlar, och är bättre lämpade för analyser av t.ex miljö 
+och klimatfrågor, men stora områden kan efter rasteranalyser ibland ge den information man 
+för tillfället söker efter även inom skogsbruket. 
+ 
+5 Stråk och stödplan 
+I samband med flygburen datainsamling används ofta signalmarkeringar av olika typ, för att 
+kunna behandla och passa ihop de överlappande bilderna. Dessa signaler bör ha kända 
+koordinater mätt med diverse mätmetod enligt de noggrannhetskrav som krävs. 
+Behovet av signalering har minskat en aning på senare år på grund av GPS/INS-styrd 
+fotografering (INS = Inertial Navigation System) det vill säga tröghetsnavigering. Det är 
+naturliga stödpunkter såsom gathörn, stenar, vägmarkeringar, samt andra naturliga objekt 
+som lätt kan hittas och matchas med övriga bilder. Vid hög punkttäthet används tätare 
+signalering medan naturliga markstöd används flitigare när punkttätheten är låg. 
+Det kan däremot vara en nackdel att inte använda signalering då medelfelet växer betydligt 
+jämfört med utsatta fotostödpunkter där mittpunkten är lättare att pricka ut. 
+ 
+Innan flygning skall en signalplan uppgöras, och beroende på omständigheterna skall 
+signalerna placeras mer eller mindre omsorgsfullt. Olika form, färg och storlek kan användas 
+på de signaler som placeras ut men det rekommenderas däremot att färgen på signalens yta 
+är matt, för blanka ljusa ytor ökar risken för systematiska mätfel i höjd på grund av 
+överstrålningseffekten i bilderna.24 
+                                                        
+24 Statens Lantmäteriverk 1994 HMK. Handbok till mätningskungörelsen 
+
+
+ 
+14
+Ett signalerat stöd bör även vara symmetriskt och av rätt storlek, en alltför liten signal kan 
+vara svår att lokalisera, och en stor signal svår att bestämma centrum på. Det viktigaste med 
+ett signalstöd är ändå att mitten skall vara lätt att hitta, figur 9 visar ett bra exempel av 
+signalstöd. 25 
+ 
+Figur 9: Signalform av modellen diamant.   
+ Stråkplanering 
+Inpassningen av signalerna regleras av området, noggrannhet och stråkplanen för 
+flygningen. Stråkplanen beskrivs i första hand av beställaren på projektet och där bestäms 
+även antalet tvärstråk och krav på överlappning av slutproduktens krav och kvalité.  
+Efter att flygstråken planerats bestäms signalernas mängd och placering. Ett bra exempel att 
+sträva efter, se (figur 10), är att med lämpliga avstånd längs kanterna på området placera 
+                                                        
+25 HMK, Handbok i mät och kartfrågor 2014. Laserdata Luleå 
+
+
+ 
+15
+markeringarna så synligt som möjligt. Att även få ett antal signaler i mittzonen av området 
+är att sträva till. 
+ 
+ 
+ 
+ 
+Figur 10: Planering av flygstråk och signalering för två olika ytor.26 
+ 
+6 Markhöjdmodell 
+En grundläggande beräkning av punktmolnet för att få relativt goda resultat på stammarnas 
+höjder, är uppgörande av en markhöjdmodell.  Detta innebär att man gör en modell av de 
+punkter som ligger lägst i punktmolnet, förutsatt att eventuella felaktiga punkter är 
+                                                        
+26  HMK, Handbok i mät och kartfrågor 2014. Laserdata Luleå 
+
+
+ 
+16
+eliminerade. Felaktiga punkter är till exempel lowpoints (kap 3.5), samt andra typer felaktiga 
+punkter som bildats av t.ex dimma. 
+Problemet vid skogsdataanalyser är ofta gräs och sly, där sista returen gett svar och därmed 
+inte trängt enda ner till markbotten. Med färdigklassat data raderas lätt trädbestånd, 
+byggnader och andra objekt som inte direkt hör till markhöjdmodellen. Klassningen sker 
+ofta redan innan man beställer sitt punktmoln och beskriver 3 typer av träffar; 
+oklassificerade, mark och vatten.27  
+Lantmäteriverkets markhöjdmodell med rutstorleken 2m x2m lovar en höjdnoggrannhet på 
+0,3m. Punkttätheten ligger på >0,5 punkter per m² och täcker stora områden i Finland, dock 
+inte hela landet i dagens läge. Enligt Lantmäteriverket utvidgas denna höjdmodell med 
+30 000 km² per år.  
+Markhöjdsmodellen på 10x10 m täcker hela Finland med en noggrannhet på 1,4 m. Den fås 
+enligt höjdsystemet N2000 enligt Lantmäteriverkets direktiv för avgiftsfri data.28  2017 års 
+planerade statliga Laserskanning ses i figur 11. Årstiden för uppgörande av markhöjdmodell 
+är mellan snösmältning och lövsprickning, den tid då marken varken täcks av snö eller 
+vegetation. 
+                                                        
+27 Nilsson Mats, Olsson Håkan 2008. Fjärranalysmetoder för datainsamling vid skogsbruksplanering i 
+privatskogsbruket, Arbetsrapport 226 2008 Sveriges lantbruksuniversitet Umeå 
+28 Lantmäteriverket Produktbeskrivningar (u.å), [online] 
+http://www.maanmittauslaitos.fi/sv/digituotteet/hojdmodell-2-m, (hämtat 02.02.2017) 
+
+
+ 
+17
+ 
+ 
+Figur 11: De inringade områdena visar Lantmäteriverkets planerade laserskanning 2017.29 
+ 
+ 
+7 Arealbaserade beräkningar 
+Areabaserade metoden introducerades så sent som år 2002 som verktyg för norska 
+skogsbruksplanerare. Med till exempel regressionsanalys överförs skoglig data från provytor 
+till rasterrutor som täcker all skogsmark inom den aktuella skanningen.30 
+                                                        
+29 Hemsida Lantmäteriverket [online] 
+http://hkp.maanmittauslaitos.fi/hkp/published/fi/4343c1b4-7d8f-4473-896a-70f930f36be1 (hämtat 
+20.02.2017) 
+30 Nordqvist & Olsson 2013. Laserskanning och digital fotogrammetri i skogsbruket, Umeå arbetsrapport 
+388 2013 Sveriges Lantbruksuniversitet 
+
+
+ 
+18
+Areabaserade metoder, används ofta vid beräkningar när punkttätheten ligger runt ca 1 
+returnerade pulser per kvadratmeter.31 Punkttätheten är ändå så pass hög, att genomsnittliga 
+värden på höjd, volym, grundyta och medeldiameter kan utföras på beståndsnivå och större 
+arealer.32  Om däremot enskilda träd ska analyseras behövs ett betydligt tätare punktmoln, 
+eftersom speciellt de dominerande stammarna ger flera returer per puls. Vid enskilda 
+trädmetoden och vid mätningar av kronform, behöver punkttätheten vara> 10 pulser per 
+kvadratmeter för att uppnå bra resultat.  
+Storleken på areabaserade skattningar brukar ligga runt 100-500 m² och det laserskannade 
+materialet delas in samt konverteras till rasterceller. Fältinventering av samma area görs och 
+informationen man oftast vill åt är grundytevägd medelhöjd, stamvolym, grundyta, 
+stamantal och medeldiameter.  
+Laserdatat och fältinventeringarna på de gemensamma provytorna kopplas sedan ihop, så 
+man kan skatta skogliga variabler för rasterpixlarna inom det skannade området. Genom att 
+beräkna medelvärdet på alla rasterceller kan sedan resultatet klumpas ihop till 
+beståndsnivå.33 
+De grundläggande skattningarna sker via en regressionsanalys, som är en statistisk metod 
+för att få reda på sambandet mellan två eller flera stokastiska variabler. 
+ 
+ Enskilda träd metoden 
+Som tidigare nämnts kan man beräkna enskilda träd om pulstätheten är tillräckligt hög med 
+flera returer per trädkrona, >10 punkter per m². En undersökning gjord vid Finlands 
+Geodetiska Institut (FGI) visade dock att max 5 % av träden missades när skanningstätheten 
+minskades från 8 till 2 pulser per kvadratmeter. 
+Förbearbetningen för enskilda träd likt de andra metoderna, innebär först och främst en 
+utförd stråkutjämning och inpassande mot kontrollpunkter. Felaktiga mätningar och punkter 
+skall elimineras och klassificering utav mark, vatten och vegetation bör utföras. Därefter 
+                                                        
+31 Åhman Mikael 2014: Laserdata i skogsbruket, Linneuniversitetet Kalmar, Examensarbete 
+32 Viklund Erik 2013. Identifiering av röjningsbestånd med hjälp av flygburen laserskanning. 
+Examensarbete i skogshushållning skogsmästarskolan, Skinnskatteberg 
+33  Nordqvist & Olsson 2013. Laserskanning och digital fotogrammetri i skogsbruket, Umeå arbetsrapport 
+388 2013 Sveriges Lantbruksuniversitet 
+
+
+ 
+19
+bildas en markmodell som beskrivs i kap 7. Förbearbetningen är inte specifik för 
+skogsdataidentifiering och görs oftast av dataleverantören.  
+Efter att laserreturerna höjdsatts över markmodellen segmenteras trädkronan. Enligt tidigare 
+forskning kan höjd, position och krondiameter mätas med en noggrannhet på 0,6m och då 
+behövs en tätare skanning än 10 punkter /m².  Fördelen med denna metod, är att man med 
+hjälp av kronformen får information om vilket trädslag det handlar om34. 
+Regressionsanalyser körs, och ger därefter möjligheten att få mått från de enskilda träden 
+som behandlas, sedan kan träd som inventerats och koordinatsatts i fält kopplas samman, se 
+kap 10 Fältdata. 
+Vid sammankoppling med fältdata behöver man förutom känd position för provytan mätt 
+med GNSS även känna till de enskilda trädens placering relativt provytecentrum som oftast 
+mäts med ultraljud kopplad till en diameterklave, som bland annat används i samband med 
+att kontrollera kvaliteten på skogsmaskins skördares mätningar. 35 
+ 
+ Kronhöjdsfördelning 
+Digital Canopy Model (DCM), är en vanlig metod för att detektera olika träd med hjälp av 
+träden eller vegetationens maximala toppar som i idealfallet högst skall ha ett maximum per 
+träd. Detta uppfylls sällan pga att träd som har yvig krona ofta kan tolkas som flera träd, eller 
+vice versa när två nära intilliggande träd lätt tolkas som ett enda.  
+En rasterbaserad kronhöjdsmodell som följer de högsta punkterna i varje rastercell, följer 
+ofta inte heller detta, eftersom lokala höjdvariationer inom trädkronorna förekommer. Det 
+finns olika filter för att utjämna detta problem såsom hög och lågfilter för vegetationen som 
+anpassats för att ta bort höjdskillnaderna mellan trädkronorna utan att eliminera hela träd. 36 
+Höjden över marken beräknas utifrån de punkter som intresserar, mot den framtagna 
+markmodellen, dvs höjden = Zpunkt – Zmarkmodell.  
+                                                        
+34 Nilsson Mats, Olsson Håkan 2008. Fjärranalysmetoder för datainsamling vid skogsbruksplanering i 
+privatskogsbruket, Arbetsrapport 226 2008 Sveriges lantbruksuniversitet Umeå 
+35 Nordqvist & Olsson 2013. Laserskanning och digital fotogrammetri i skogsbruket, Umeå arbetsrapport 
+388 2013 Sveriges Lantbruksuniversitet 
+36 Nordqvist & Olsson 2013. Laserskanning och digital fotogrammetri i skogsbruket, Umeå arbetsrapport 
+388 2013 Sveriges Lantbruksuniversitet 
+
+
+ 
+20
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+I praktiken fungerar det genom att separera punktmolnet till två olika punktmoln enligt 
+klassificering. Ett som innehåller marken, och det andra som skall innehålla den aktuella 
+vegetation som skall analyseras. Detta innebär, att det bör finnas antalet fler klasser än i 
+Lantmäteriverkets laserskanning, som har buntat ihop all vegetation i en klass. För ett bättre 
+resultat bör även vegetationsklasserna low, medium, och high vegetation vara klassificerade. 
+Därefter rastreras punktmolnen så att man får ett värde för vegetationshöjden i varje cell, se 
+figur 937.  
+För beräkning av vegetationsvolymen bör ett antal ytor modelleras, där av 
+vegetationshöjden, markhöjd samt stamhöjden, figur 13. 
+                                                        
+37 Johansson, Lindberg, Thorsson (u.å). Träden i staden, användningen av lidar-data för att identifiera urban 
+vegetation, rapport Göteborgs universitet 
+LiDAR 
+Mark 
+Kronhöjd  
+Första returerna 
+Separering av 
+punktmoln 
+Markhöjd 
+Kronhöjd 
+Kronhöjd - mark 
+Kronhöjd över mark 
+Figur 12: Behandling av punktmoln till vegetationshöjd över mark. 
+
+
+ 
+21
+ 
+Figur 13: Beräkning av vegetationsmodell/kronhöjdsfördelning. 
+ 
+8 Inventering i fält 
+För att upptäcka större felberäkningar och tolkningsfel görs i regel alltid även 
+fältundersökningar för att få en egen uppskattning innan beräkningarna görs. 
+Uppgifterna man söker efter är medeldiameter på beståndet som oftast tas med 
+diameterklave, medelhöjden med höjdmätare, marktyp och grundyta.38 
+Beståndets ålder är ofta svår att bedöma och inte alltid så viktigt men bedöms i stort sätt 
+alltid. Olika metoder finns såsom att räkna kvistvarv, gamla handlingar när beståndet 
+planterats, eller använda en åldersborr om beståndet är tillräckligt grovt. 
+ För grundytan används ofta ett klassiskt relaskop, som är ett instrument för att beräkna 
+grundytan och med hjälp av höjden och kuberingstabeller för diverse områden och trädslag, 
+fås virkesmängden per hektar, se figur 14. Antalet provytor per hektar bör ligga runt 5-15 st.  
+                                                        
+38 Tidningen Skogsbruket nr 4, 2003 
+https://www.skogsbruket.fi/sites/default/files/arkiv/Skogsbruket_4-2003.pdf (hämtat 18.01.2017) 
+
+
+ 
+22
+ 
+Figur 14: Användning av relaskop för att beräkna grundytan. Endast de träd som fyller klykan skall 
+räknas, vid osäkra fall brukar man räkna vartannat träd.39 
+ 
+Insamlandet av fältdata skall helst utföras samma år som resten av skogsdatainventeringen. 
+Däremot är det en fördel att vänta med fältinventeringen till efter att laserskanningen gjorts. 
+Eventuellt har man upptäckt brister och områden som blivit sämre täckta utav skanningen 
+kan kompletteras med information från fältinventeringen. Om provytornas läge inte stämmer 
+överens med skanningen, kan beräkningarna försämras betydligt. För att få koordinater på 
+provytan används GNSS och noggrannheten bör ligga < 1m för ett användbart material enligt 
+forskning och analyser.40  
+ 
+9 Minskog.fi 
+Skogscentralen erbjuder numera en gratis tjänst både för företag och privata skogsägare 
+runtom i Finland. Från denna tjänst, kan skogsägarna lätt få basuppgifter om sina ägor. 
+Arealer, figurgränser och utvecklingsklasser finns dokumenterade, men även volymmängd 
+och fördelning mellan olika trädslag samt tidpunkter för motkommande åtgärder.  
+I denna tjänst kan skogsägarna lätt hantera sina skogsegendomar. Oberoende av hur många 
+fastigheter det handlar om eller var de är belägna, även samtliga bestånds förväntade 
+                                                        
+39 Hemsida Eskog. Beräkna virkesförråd (u.å) [online]http://eskog.se/berakna-virkesforrad (hämtat 
+27.02.2017) 
+40 Nordqvist & Olsson 2013. Laserskanning och digital fotogrammetri i skogsbruket, Umeå arbetsrapport 
+388 2013 Sveriges Lantbruksuniversitet 
+
+
+ 
+23
+inkomster och utgifter finns tillgängliga i denna tjänst. Informationen är insamlad som 
+figurvis inventering, där investeringsobjektet är en beståndsfigur.  
+Framställningen av figurerna är avgränsade från flygbilder och kartor oftast mellan 1-3 ha 
+stora. Den rekommenderade minimistorleken är 0,5 ha och även särskilt viktiga livsmiljöer 
+för skogens mångfald enligt 10§ i Skogslagen41 är visualiserade på kartan som egna figurer, 
+oberörda av areal och annan figurindelning.⁴² 
+Exaktheten för totalbeståndet per figur är ± 3m²/ha för grundytan, ± 3cm för medeldiametern, 
+± 2m för medelhöjden och ± 20% för volymen i åtta fall av tio där utvecklingsklasserna är 
+02 (klenare gallringsbestånd), 03 (grövre gallringsbestånd), samt 04 (förnyelsemogna 
+bestånd).  
+För plantbestånd som är det mest intressanta, lovar skogscentralen en noggrannhet på 50% i 
+stamantal. Plantbestånden T1 och T2 inventeras ej med relaskop (se kap 9), utan 
+stammantalet är uppskattade på en halv ar stora cirkelformade provytor. Fjärranalyser har 
+inte använts för bestånd <2m. Där fält och fjärranalysmetoder kopplats samman, används 
+rasterrutor på ca 16 x 16 m, som motsvarar storleken på de fältinventerade provytorna, och 
+klumpas ihop figursvis.  
+För figuren beräknas alla relevanta beståndsvariabler såsom mängden tall, gran och lövträd.  
+Dessutom skriver skogscentralen i sin kvalitetsbeskrivning, att de områden som misslyckats 
+vid insamling av data eller saknar tidigare information, samlas ny data om beståndet med 
+inventering i fält.42 
+ Beståndsdata från minskog.fi 
+Materialet som visas antingen på grundkartan eller flygbild, är sammankopplat data mellan 
+fältinventeringar, flygfotograferingar, laserskannad data och statistiska metoder, se figur 15. 
+Skanningen är gjord på ca 2 kilometers höjd och flygfotograferingen på 6-7 km höjd.43 
+                                                        
+41 Skogslagen 10§ (20.02.2013/1085) www.finlex.fi 
+42 Metsäkeskus. Kvalitetsbeskrivning av Finlands skogscentrals information om skogstillgångar (u.å), 
+(hämtat 01.03.2017) 
+43 Metsäkeskus. Kvalitetsbeskrivning av Finlands skogscentrals information om skogstillgångar (u.å), 
+(hämtat 28.02.2017) 
+
+
+ 
+24
+ 
+Figur 15: Skogscentralens testversion på minskog.fi44 De bruna figurerna (2,3,4) visar områden 
+aktuella för avverkning, de blå (1,5,6,19) visar områden för naturhänsyn medan nr 18 visar behov av 
+brådskande skogsskötsel, fastighetsgränserna som används är från Lantmäteriverket och uppdateras 
+regelbundet. 
+ 
+För att titta närmare på vad tjänsten erbjuder, koncentrerar vi oss på figur 2. Den är 2,8 ha 
+av utvecklingsklass 03, det vill säga grövre gallringsbestånd med 75 % gran, 16% tall och 
+5% inslag av lövträd.  
+ 
+ 
+Figur 16: Tabell över skogsdata i figur 2.45 
+ 
+                                                        
+44 Hemsida Skogscentralen minskog.fi (u.å), [online] 
+https://www.minskog.fi/group/metsanomistaja_private/omat-kartat/-/metsanomistaja-omat-kartat-
+actionbox/sessionKey/4517581035825837740?p_p_auth=q18rkRxM&p_p_lifecycle=0&p_p_state=normal 
+(hämtat 28.02.2017) 
+45 Hemsida Skogscentralen minskog.fi (u.å), [online] 
+https://www.minskog.fi/group/metsanomistaja_private/omat-kartat-kuvioluettelo/-/metsanomistaja-omat-
+kartat-kartta/sessionKey/4517581035825837740 (hämtat 28.02.2017) 
+
+
+ 
+25
+Materialet som ses ovan är en rikedom och en ypperligt lönsam metod för offerter av olika 
+företag som köper virke, utför avverkningar och vill få sig en bild utav olika bestånd, utan 
+att själv utföra en inventering.  
+Skogsägaren själv kan ge sitt godkännande för utlämnade av skogsdata och kan även själv 
+sätta ut respektive bestånd på marknaden. Detta gör även att användandet av 
+skogsbruksplaner som minskat på senare år, antagligen kommer minska ytterligare. Om man 
+däremot upprättat en skogsbruksplan efter 2004 och skogscentralen hunnit överföra dessa 
+uppgifter på skogstillgångarna till databasen rekommenderas användning av dessa, tills de 
+ersätts med nyare uppgifter.  
+På minskog.fi loggar respektive användare in med mobil-id eller nätbankskoder. Minskog 
+använder befolkningsdataregistret och för till exempel ett gammalt dödsbo kan 
+informationen om samtliga ägare vara till stor nytta. 
+10 Egna analyser 
+Området jag valt är ca 2,5 ha och beläget i Sibbo, två olika punktmoln har använts i min 
+analys. Lantmäteriverkets fria punktmoln med ca 0,43 punkter/ m² och har blivit skannat 
+14.05.2008. Samma område har även skannats med drönare och har en betydligt högre 
+punkttäthet, tidpunkten för denna skanning är 16.04.2016, denna skanning benämns som 
+sibbo2 i beskrivningen. 
+Med hjälp av den fria mjukvaran Cloudcompare46 har jag förutom de två ovannämnda 
+punktmolnen behandlat flera antal punktmoln från olika håll för att få en översikt om kvalitet 
+och noggrannheter. Cloudcompare tillåter ett stort antal av format och är lätt att använda för 
+att behandla punktmoln. Segmenteringen är speciellt bra och denna har jag använt mig av 
+för att få grunden i klassificeringen av sibbo2.  
+Jag fick även tag på 15-dagars testversion på programmet Liforest47 som är utvecklat av 
+företagen Greenwalley. Liforest är anpassat för skogliga inventeringar och analyser som ger 
+ett unikt ID för vartenda träd som tas med i analysen. Detta program har jag utfört analyserna 
+och beräkningarna i som visas nedan. 
+                                                        
+46 Hemsida Cloudcompare [online], http://www.cloudcompare.org (hämtat 06.04.2017) 
+47 Hemsida Liforest [online], http://www.liforest.com (hämtat 04.04.2016) 
+
+
+ 
+26
+ Klassificering 
+Punktmolnet från Lantmäteriverket är klassificerat från enligt LAS-standarden i grupperna 
+1, Oklassificerade punkter, 2, Ground, och 4, Low vegetation, se figur 17. LAS är ett 
+standarsformat som de flesta GIS-program kan använda. 
+ 
+Figur 17: Klassificering av punkter enligt LAS-standarden.48 
+ 
+Det andra punktmolnet som använts är betydligt tätare än Lantmäteriverkets, men saknade 
+klassning, I Liforest har klassningen skett via höjd och även höjdnivåerna på medium och 
+high vegetation har begränsats enligt föreskrifter från ISCM49, där low vegetation är 0-0,3m, 
+medium vegetation 0,3-2m och high vegetation >2m, se figur 18. 
+                                                        
+48 ASPRS The American Society for Photogrammetry and Remote Sensing Board 2008. LAS specification 
+Version 1.2 
+49 Intergovermental commite of surveying and mapping 2008. ICSM LiDAR Acquisition Specifications and 
+Tender Template NZ Version 
+
+
+ 
+27
+ 
+Figur 18: Klassningen i Liforest har gjorts enligt beskrivning från ISCM. 50 
+ 
+ Modellering 
+Efter att punktmolnet klassats uppgörs en digital markmodell DEM (digital elevation model) 
+med hjälp av triangulering (TIN) och parametrarna Xsize =1m Ysize=1m, se kap 6 
+Markhöjdmodell. 
+ 
+När markmodellen är klar görs en ytmodell DSM (digital surface model) som inkuderar alla 
+objekt som syns dvs medium, low och high vegetation samt markpunkter, figur 19. 
+ 
+ 
+ 
+Figur 19: Skillnaden mellan DSM, DTM och CHM.51 
+                                                        
+50 True Reality Geospatial solutions. LiForst 2.1. User Guide (u.å), [online] 
+http://www.liforest.com/wp-content/uploads/2016/07/LiForest2.1-Whitepaper.pdf (hämtat 06.04.2017) 
+51 André, Eriksson, Larsson, Lysell, Nilsson L, Nilsson M, Olsson, Persson, SLU 2016. Skogliga skattningar 
+från laserdata. Skogsstyrelsen Meddelande 4:2016 
+
+
+ 
+28
+ 
+I Figur 20 ses de olika stegen där det tätare punktmolnet i Sibbo modellerats. I figur 
+20 c) ses kronhöjdsmodellen CHM som är en kombination av figur 20 b) – 20 a) dvs 
+ytmodellen minus markmodellen.  
+ 
+ 
+Figur 20 a) Markmodell  
+b) Ytmodell 
+ 
+ 
+c) Kronhöjdsmodell 
+ 
+ 
+ Identifiering 
+Efter att kronhöjdsmodellen uppgjorts, (figur 20c) kan enskilda träd identifieras och enskilda 
+träd får X, Y koordinater se figur 21. Som attributdata ges även trädhöjd, krondiameter och 
+kronarea (se bilaga XX) 
+ 
+Figur 21: Träden har identifierats och får eget ID, med information om plats, höjd, krondiameter och 
+area. 
+ 
+11 Resultat 
+Från Lantmäteriverkets fria data identifierades totalt 322 stammar jämfört med sibbo2 som 
+totalt gav 391 identifierade stammar. Som gräns för vad som inkluderas i beräkningarna är 
+minimi 2 meter och ingen gräns i övre höjd, som naturligtvis resulterar i ett antal buskar och 
+sly som räknats som stammar och därefter gett lägre medelhöjd på beståndet i programmet 
+
+
+ 
+29
+Liforest. Resultatet är förvånande lika med tanke på skillnaden i punkttäthet. Sibbo2 
+identifierade endast 69 stammar fler > 2.0 m, däremot ligger trädhöjden 11 cm högre på 
+Lantmäteriverkets modell som är skannat tidigare än sibbo2. Sibbo2 borde ligga högre på 
+grund av högre punkttäthet och flera år mera tillväxt, däremot hittas i attributen i från LMV 
+punktmoln flera träd uppemot 26-27 m vilket är orimligt för detta bestånd. Förklaringen är 
+att det fortfarande har funnits punkter som inte eliminerats i luften ovanför träden och 
+antagligen uppkommit på grund av dimma, fåglar eller dylikt. Misstanken av detta förstärks 
+ytterligare vid nya beräkningar på samma attribut, fast med höjden >8 m, skillnaden blev då 
+2,90 m högre på LMV punktmoln. Antalet stammar över 8 meter blev 340 st för sibbo2 
+jämfört med 227 st för LMV punktmoln. De stora kronareorna beror antagligen på att flera 
+intilliggande kronor har tolkats som en enda stor trädkrona av Liforest. 
+Exempel på attributen som getts ut ses nedan i figur 22. I bilaga finns samtliga resultat. 
+ 
+ 
+ 
+Figur 22: Till vänster visas resultatet från sibbo2, till höger resultatet från Lantmäteriverkets 
+punktmoln. 
+ 
+12 Slutdiskussion 
+Laserskanning var ett relativt nytt ämne för mig under påbörjandet av arbetet, att komma in 
+i denna djungel var inte det lättaste, men nytt uppdaterat material finns att läsa i mängd och 
+massor för er som finner detta intressant. Laserskanningstekniken hittar jämt och ständigt 
+nya områden att erövra och passar i många fall bättre än traditionella mätmetoder. Speciellt 
+inom skogsbruket finns fortfarande nya möjligheter, en tät laserskanning skulle ge 
+möjligheter att till exempel vid en gallring föreslå olika träd för skördaren att gallra bort. 
+Laserteknik på själva skördaren är även det ett alternativ, men eftersom den redan nu är 
+utrustad med GNSS tekniken skulle en koordinatsättning på träden räcka gott och väl. Om 
+vi bortser från den ekonomiska biten är det fullt möjligt att utrusta skördaren med ett antal 
+
+
+ 
+30
+laserskannrar. Detta skulle ge möjligheten till att kunna bedöma virkets kvalitet på 
+millimeternivå och därefter kunna optimera timmerlängder efter trädets unika form med 
+krokar och sprötkvistar. Ännu ett tillägg för att minska miljontals euro i förlust för 
+skogsbruket är att använda mikrovågsteknik för att upptäcka rotröta. 
+Ur miljösynpunkt och glädje för markägarna skulle körstråken även kunna planeras med 
+hjälp av laserskanning för att undvika körskador. Körskador i humuslagret leder ofta till att 
+rötter körs av och risken för vindskador och röta ökar, som leder till produktionsförlust. 
+Miljön påverkas även den speciellt på områden nära vattendrag där det leder till mindre 
+syrgashalt i vattnet och igenslamning av bottnar. Om spåren efter skördaren kontinuerligt 
+skulle skannas skulle en riskanalys vara möjlig att utföras.  
+Möjligheten när tillräckligt med data samlats ihop är att eventuellt varna både skördaren och 
+skotaren att undvika detta körstråk och om möjligt planera huvudkörstråken på hållbarare 
+marker. Även möjligheten att upptäcka fornlämningar skulle öka. 
+Försök för självkörande skogsmaskiner och röjningsrobotar har även det testats, men är för 
+tillfället ännu inte ekonomiskt lönsamt. 
+Beståndsdata används redan idag utav våra olika organisationer och virkesuppköpare, att 
+informationen skulle användas mera av privata skogsägare vore ett stort steg framåt. Inom 
+tio år tror jag personligen att situationen ser helt annorlunda ut. Punktmolnen blir allt tätare, 
+lagstiftning förnyas och den gamla stammen av skogsägare byts ut mot den allt mera 
+datoriserade generationen som använder tekniken på ett annorlunda sätt. Speciellt viktigt tror 
+jag informationen är för mindre aktiva skogsbrukare som kanske inte bor på samma ort som 
+skogen de äger eller bara okunskap ställer frågor runt vad deras ägor innehåller. Ett stort plus 
+till skogscentralen och minskog.fi som redan utnyttjar Lidardata och en sådan tjänst för 
+skogsägare. Som utveckling för landets skogsbruk borde Lantmäteriverkets fria punktmoln 
+göras tätare, för tillfället finns inte information om detta men det finns åsikter om att så också 
+är fallet. Att också efter större stormar snabbt skanna stormdrabbade områden skulle ge 
+möjligheten för skogsägare att både upptäcka vindfällen och dessutom för virkesuppköpare 
+att få större mängder från samma område. Dessutom skulle onödiga körstråk undvikas och 
+det mänskliga inventeringarna minska. I ett större sammanhang finns flera aktörer som skulle 
+ha nytta av detta, som exempel elbolag som efter det akuta röjningsarbetet fortfarande har 
+riskområden där ledningarna är utsatta inom snar framtid.  
+
+
+ 
+31
+Jag hoppas detta arbete ger en inblick i hur skogsinventering fungerar i Finland idag. Men 
+även möjligheterna för framtiden och nya lösningar som ger oss ett lätt, effektivt och lönsamt 
+skogsbruk. 
+ 
+ 
+ 
+ 
+
+
+ 
+32
+13 Källförteckning 
+ 
+Aber, Marzolff, Ries 2010. Small-Format Aerial Photography. Principles, techniques 
+and geoscience applications 
+ 
+André, Eriksson, Larsson, Lysell, Nilsson L, Nilsson M, Olsson, Persson, SLU 2016. 
+Skogliga skattningar från laserdata. Skogsstyrelsen Meddelande 4:2016 
+ 
+ASPRS The American Society for Photogrammetry and Remote Sensing Board 2008. 
+LAS specification Version 1.2 
+ 
+Benedict, Jansson, Söderman 2009. Laserskanning från flyg och fornlämningar i skog, 
+Rapport 2009:09 Länsstyrelsen Dalarna 
+ 
+Enskär Magnus 2015. Undersökning av SCA Skogs gallrade skogar med hjälp av 
+laserskanning. Examensarbete SLU-skogsmästarskolan 
+ 
+Hemsida Eskog. Beräkna virkesförråd (u.å) [online] 
+http://eskog.se/berakna-virkesforrad (hämtat 27.02.2017) 
+ 
+Harrie 2015. Laserskanning, Lunds Universitet, powerpoint 
+ 
+Hemsida Cloudcompare [online] 
+http://www.cloudcompare.org (hämtat 06.04.2017) 
+ 
+Hemsida Eskog. Beräkna virkesförråd (u.å) [online] 
+http://eskog.se/berakna-virkesforrad (hämtat 27.02.2017) 
+ 
+Hemsida Lantmäteriverket [online] 
+http://hkp.maanmittauslaitos.fi/hkp/published/fi/4343c1b4-7d8f-4473-896a-
+70f930f36be1 (hämtat 20.02.2017) 
+ 
+Hemsida Liforest [online] 
+http://www.liforest.com (hämtat 04.04.2016) 
+ 
+Hemsida Skogscentralen minskog.fi (u.å), [online] 
+https://www.minskog.fi/group/metsanomistaja_private/omat-kartat/-/metsanomistaja-
+omat-kartat-
+actionbox/sessionKey/4517581035825837740?p_p_auth=q18rkRxM&p_p_lifecycle=0&
+p_p_state=normal (hämtat 28.02.2017) 
+ 
+Hemsida Skogscentralen minskog.fi (u.å), [online] 
+https://www.minskog.fi/group/metsanomistaja_private/omat-kartat-kuvioluettelo/-
+/metsanomistaja-omat-kartat-kartta/sessionKey/4517581035825837740 (hämtat 
+28.02.2017) 
+ 
+Hemsida Wikipedia [online] 
+https://en.wikipedia.org/wiki/Inertial_measurement_unit 2007 (hämtat 19.01.2017) 
+ 
+
+
+ 
+33
+HMK, Handbok i mät och kartfrågor 2014. Laserdata Luleå 
+ 
+Ilkka Korpela 2012. ’’Senaste’’ inom fjärranalys. Institutionen för skogsvetenskaper vid 
+Helsingfors universitet 
+ 
+Intergovermental commite of surveying and mapping 2008. ICSM LiDAR Acquisition 
+Specifications and Tender Template NZ Version 
+ 
+Johansson, Lindberg, Thorsson (u.å). Träden i staden, användningen av lidar-data för att 
+identifiera urban vegetation, rapport Göteborgs universitet 
+ 
+Lantmäteriverket Produktbeskrivningar (u.å) [online] 
+http://www.maanmittauslaitos.fi/sv/digituotteet/hojdmodell-2-m (hämtat 02.02.2017) 
+ 
+Metsäkeskus. Kvalitetsbeskrivning av Finlands skogscentrals information om 
+skogstillgångar (u.å), (hämtat 01.03.2017) 
+ 
+Metsäkeskus. Kvalitetsbeskrivning av Finlands skogscentrals information om 
+skogstillgångar (u.å), (hämtat 28.02.2017) 
+ 
+Monnet Jean-Matthieu 2012. Airborne Laser scanning for forest applications 
+ 
+Nilsson Mats, Olsson Håkan 2008. Fjärranalysmetoder för datainsamling vid 
+skogsbruksplanering i privatskogsbruket, Arbetsrapport 226 2008 Sveriges 
+lantbruksuniversitet Umeå 
+ 
+Nordqvist & Olsson 2013. Laserskanning och digital fotogrammetri i skogsbruket, 
+Umeå arbetsrapport 388 2013 Sveriges Lantbruksuniversitet 
+ 
+Olsson, Per-Ola 2009. Digitala Höjdmodeller och höjdsystem. Insamling av höjddata 
+med fokus på flygburen laserskanning. Kandidatuppsats i naturgeografi. Lunds 
+universitet 
+ 
+Robert 2014. A few flight related terms [online] 
+http://norunway.com/wp/flight-related-terms/ 2014 (hämtat 19.01.2017) 
+ 
+Statens Lantmäteriverk 1994 HMK. Handbok till mätningskungörelsen 
+ 
+Tidningen Skogsbruket nr 4, 2003 
+https://www.skogsbruket.fi/sites/default/files/arkiv/Skogsbruket_4-2003.pdf (hämtat 
+18.01.2017) 
+ 
+True Reality Geospatial solutions. LiForst 2.1. User Guide (u.å), [online] 
+http://www.liforest.com/wp-content/uploads/2016/07/LiForest2.1-Whitepaper.pdf 
+(hämtat 06.04.2017) 
+ 
+Viklund Erik 2013. Identifiering av röjningsbestånd med hjälp av flygburen 
+laserskanning. Examensarbete i skogshushållning skogsmästarskolan, Skinnskatteberg 
+ 
+Åhman Mikael 2014. Laserdata i skogsbruket. Examensarbete Linneuniversitetet 
+Kalmar 
+
+
+ 
+34
+ 
+ 
+Finlands författningssamling 
+ 
+Skogslagen 10§ (20.02.2013/1085)  
+www.finlex.fi 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+ 
+1 
+Bilagor 
+ 
+SIBBO2 
+  
+  
+  
+  
+Xkoordsibbo2 
+Ykoordsibbo2 Trädhöjd 
+Krondiameter 
+Kronarea 
+25511006.500 
+6694403.000 
+9,301 
+5,642 
+25,00 
+25510959.500 
+6694403.000 
+24,155 
+5,528 
+24,00 
+25510964.500 
+6694402.000 
+4,428 
+3,192 
+8,00 
+25510981.500 
+6694399.000 
+6,658 
+2,523 
+5,00 
+25510925.500 
+6694396.000 
+6,538 
+7,225 
+41,00 
+25510910.500 
+6694395.000 
+11,897 
+2,523 
+5,00 
+25510994.500 
+6694397.000 
+6,969 
+3,192 
+8,00 
+25510905.500 
+6694399.000 
+14,823 
+5,642 
+25,00 
+25510919.500 
+6694395.000 
+5,983 
+2,523 
+5,00 
+25510953.500 
+6694395.000 
+5,162 
+2,523 
+5,00 
+25510985.500 
+6694394.000 
+9,437 
+6,864 
+37,00 
+25511009.500 
+6694393.000 
+19,264 
+3,742 
+11,00 
+25510862.500 
+6694394.000 
+20,075 
+3,192 
+8,00 
+25510973.500 
+6694390.000 
+11,896 
+4,787 
+18,00 
+25510850.500 
+6694392.000 
+21,872 
+5,046 
+20,00 
+25510984.500 
+6694389.000 
+10,234 
+3,742 
+11,00 
+25510991.500 
+6694390.000 
+5,539 
+4,222 
+14,00 
+25510883.500 
+6694391.000 
+7,853 
+6,482 
+33,00 
+25510941.500 
+6694391.000 
+25,073 
+4,068 
+13,00 
+25510833.500 
+6694390.000 
+21,708 
+4,514 
+16,00 
+25510930.500 
+6694388.000 
+25,722 
+5,754 
+26,00 
+25510975.500 
+6694389.000 
+14,585 
+3,192 
+8,00 
+25510896.500 
+6694388.000 
+24,336 
+2,523 
+5,00 
+25510826.500 
+6694387.000 
+20,139 
+2,523 
+5,00 
+25510970.500 
+6694387.000 
+9,485 
+2,523 
+5,00 
+25510879.500 
+6694386.000 
+9,828 
+2,523 
+5,00 
+25510980.500 
+6694385.000 
+10,049 
+3,192 
+8,00 
+25511000.500 
+6694386.000 
+8,384 
+4,787 
+18,00 
+25510892.500 
+6694384.000 
+26,279 
+8,215 
+53,00 
+25511010.500 
+6694387.000 
+18,987 
+3,742 
+11,00 
+25510831.500 
+6694386.000 
+21,412 
+3,909 
+12,00 
+25510989.500 
+6694386.000 
+9,686 
+5,528 
+24,00 
+25510993.500 
+6694385.000 
+10,84 
+4,068 
+13,00 
+25510823.500 
+6694386.000 
+18,46 
+3,192 
+8,00 
+25510935.500 
+6694389.000 
+15,102 
+9,901 
+77,00 
+25510847.500 
+6694384.000 
+12,277 
+4,918 
+19,00 
+25510870.500 
+6694382.000 
+10,346 
+4,652 
+17,00 
+25510909.500 
+6694384.000 
+21,028 
+4,222 
+14,00 
+25510817.500 
+6694383.000 
+17,933 
+3,742 
+11,00 
+25510834.500 
+6694381.000 
+16,472 
+6,676 
+35,00 
+25511003.500 
+6694383.000 
+11,311 
+4,514 
+16,00 
+
+
+ 
+2 
+25510840.500 
+6694384.000 
+22,895 
+3,568 
+10,00 
+25510942.500 
+6694383.000 
+20,815 
+4,222 
+14,00 
+25510823.500 
+6694381.000 
+11,028 
+2,523 
+5,00 
+25510858.500 
+6694381.000 
+22,992 
+4,652 
+17,00 
+25510965.500 
+6694380.000 
+18,835 
+4,514 
+16,00 
+25510991.500 
+6694381.000 
+8,884 
+4,652 
+17,00 
+25510826.500 
+6694380.000 
+3,915 
+2,523 
+5,00 
+25510854.500 
+6694379.000 
+21,744 
+4,068 
+13,00 
+25510996.500 
+6694380.000 
+12,139 
+3,568 
+10,00 
+25511006.500 
+6694380.000 
+9,643 
+2,523 
+5,00 
+25510869.500 
+6694380.000 
+26,694 
+4,514 
+16,00 
+25510998.500 
+6694378.000 
+12,049 
+2,523 
+5,00 
+25510882.500 
+6694381.000 
+9,625 
+7,485 
+44,00 
+25510907.500 
+6694378.000 
+10,958 
+3,909 
+12,00 
+25510925.500 
+6694385.000 
+10,202 
+11,617 
+106,00 
+25510843.500 
+6694381.000 
+22,804 
+7,047 
+39,00 
+25510897.500 
+6694379.000 
+19,85 
+4,652 
+17,00 
+25510814.500 
+6694377.000 
+12,234 
+5,293 
+22,00 
+25510838.500 
+6694380.000 
+20,571 
+4,918 
+19,00 
+25510947.500 
+6694375.000 
+20,649 
+5,863 
+27,00 
+25510970.500 
+6694378.000 
+5,643 
+2,523 
+5,00 
+25510988.500 
+6694380.000 
+9,127 
+8,813 
+61,00 
+25511009.500 
+6694378.000 
+13,288 
+5,293 
+22,00 
+25510901.500 
+6694391.000 
+22,451 
+12,616 
+125,00 
+25510811.500 
+6694374.000 
+24,621 
+7,399 
+43,00 
+25510821.500 
+6694375.000 
+4,023 
+2,523 
+5,00 
+25510831.500 
+6694375.000 
+14,03 
+3,385 
+9,00 
+25510872.500 
+6694372.000 
+14,865 
+12,361 
+120,00 
+25510888.500 
+6694374.000 
+23,326 
+3,192 
+8,00 
+25511004.500 
+6694375.000 
+7,354 
+2,523 
+5,00 
+25510856.500 
+6694375.000 
+7,739 
+3,568 
+10,00 
+25510882.500 
+6694374.000 
+13,516 
+2,523 
+5,00 
+25510930.500 
+6694373.000 
+4,557 
+2,523 
+5,00 
+25510977.500 
+6694375.000 
+19,424 
+3,568 
+10,00 
+25510806.500 
+6694373.000 
+11,911 
+4,222 
+14,00 
+25510965.500 
+6694372.000 
+21,969 
+6,383 
+32,00 
+25510982.500 
+6694373.000 
+4,639 
+2,523 
+5,00 
+25510998.500 
+6694372.000 
+10,481 
+3,192 
+8,00 
+25510842.500 
+6694372.000 
+22,117 
+6,482 
+33,00 
+25510928.500 
+6694371.000 
+3,532 
+2,523 
+5,00 
+25510945.500 
+6694371.000 
+16,119 
+2,523 
+5,00 
+25510916.500 
+6694372.000 
+5,877 
+7,047 
+39,00 
+25510888.500 
+6694370.000 
+18,933 
+3,192 
+8,00 
+25510953.500 
+6694370.000 
+22,779 
+4,37 
+15,00 
+25510875.500 
+6694369.000 
+27,187 
+3,568 
+10,00 
+25510881.500 
+6694369.000 
+22,886 
+7,136 
+40,00 
+25510899.500 
+6694368.000 
+10,727 
+11,396 
+102,00 
+
+
+ 
+3 
+25510988.500 
+6694371.000 
+9,919 
+3,909 
+12,00 
+25511009.500 
+6694368.000 
+11,727 
+3,192 
+8,00 
+25510826.500 
+6694368.000 
+6,473 
+2,523 
+5,00 
+25510926.500 
+6694368.000 
+9,87 
+2,523 
+5,00 
+25510895.500 
+6694366.000 
+16,94 
+5,863 
+27,00 
+25510934.500 
+6694386.000 
+13,187 
+11,396 
+102,00 
+25510814.500 
+6694367.000 
+8,872 
+5,171 
+21,00 
+25510870.500 
+6694366.000 
+8,192 
+3,742 
+11,00 
+25510960.500 
+6694366.000 
+17,085 
+2,523 
+5,00 
+25510981.500 
+6694368.000 
+8,942 
+9,441 
+70,00 
+25510850.500 
+6694365.000 
+5,684 
+2,523 
+5,00 
+25510875.500 
+6694365.000 
+24,46 
+3,192 
+8,00 
+25510948.500 
+6694365.000 
+20,859 
+5,754 
+26,00 
+25510951.500 
+6694365.000 
+7,858 
+2,523 
+5,00 
+25510927.500 
+6694365.000 
+6,178 
+2,523 
+5,00 
+25510957.500 
+6694363.000 
+4,569 
+2,523 
+5,00 
+25510886.500 
+6694362.000 
+24,149 
+3,909 
+12,00 
+25510907.500 
+6694362.000 
+21,034 
+5,754 
+26,00 
+25510917.500 
+6694364.000 
+8,434 
+10,525 
+87,00 
+25510965.500 
+6694362.000 
+5,77 
+4,918 
+19,00 
+25510926.500 
+6694359.000 
+5,078 
+5,754 
+26,00 
+25510985.500 
+6694361.000 
+18,94 
+2,523 
+5,00 
+25510990.500 
+6694376.000 
+11,313 
+12,412 
+121,00 
+25510802.500 
+6694358.000 
+16,807 
+5,642 
+25,00 
+25510814.500 
+6694359.000 
+7,574 
+2,523 
+5,00 
+25510822.500 
+6694358.000 
+10,109 
+2,523 
+5,00 
+25510934.500 
+6694359.000 
+9,377 
+2,523 
+5,00 
+25510942.500 
+6694357.000 
+11,959 
+3,192 
+8,00 
+25510956.500 
+6694355.000 
+7,376 
+7,485 
+44,00 
+25510969.500 
+6694359.000 
+17,004 
+6,676 
+35,00 
+25510980.500 
+6694358.000 
+14,639 
+9,236 
+67,00 
+25510866.500 
+6694358.000 
+15,756 
+8,215 
+53,00 
+25510810.500 
+6694356.000 
+5,247 
+2,523 
+5,00 
+25510842.500 
+6694368.000 
+8,849 
+11,617 
+106,00 
+25510887.500 
+6694359.000 
+16,613 
+5,642 
+25,00 
+25510918.500 
+6694356.000 
+11,937 
+2,523 
+5,00 
+25511004.500 
+6694356.000 
+11,3 
+2,523 
+5,00 
+25510889.500 
+6694361.000 
+17,588 
+11,452 
+103,00 
+25510941.500 
+6694356.000 
+9,368 
+6,482 
+33,00 
+25510945.500 
+6694356.000 
+19,807 
+5,293 
+22,00 
+25510976.500 
+6694357.000 
+20,664 
+5,528 
+24,00 
+25511009.500 
+6694356.000 
+7,879 
+4,222 
+14,00 
+25510857.500 
+6694355.000 
+8,66 
+3,192 
+8,00 
+25510863.500 
+6694356.000 
+23,795 
+6,077 
+29,00 
+25510883.500 
+6694359.000 
+15,385 
+7,818 
+48,00 
+25510922.500 
+6694354.000 
+12,078 
+9,441 
+70,00 
+25510819.500 
+6694356.000 
+7,42 
+7,047 
+39,00 
+
+
+ 
+4 
+25510894.500 
+6694354.000 
+20,263 
+3,192 
+8,00 
+25510902.500 
+6694355.000 
+11,707 
+3,192 
+8,00 
+25510956.500 
+6694352.000 
+19,528 
+5,754 
+26,00 
+25510995.500 
+6694353.000 
+11,005 
+3,192 
+8,00 
+25511003.500 
+6694353.000 
+9,068 
+3,192 
+8,00 
+25510792.500 
+6694352.000 
+17,995 
+2,523 
+5,00 
+25510843.500 
+6694351.000 
+5,804 
+2,523 
+5,00 
+25510873.500 
+6694351.000 
+16,696 
+2,523 
+5,00 
+25510963.500 
+6694352.000 
+23,016 
+4,514 
+16,00 
+25510943.500 
+6694349.000 
+18,106 
+5,642 
+25,00 
+25511001.500 
+6694351.000 
+6,239 
+2,523 
+5,00 
+25510864.500 
+6694348.000 
+17,496 
+3,909 
+12,00 
+25510886.500 
+6694348.000 
+8,564 
+3,568 
+10,00 
+25510914.500 
+6694349.000 
+12,9 
+4,37 
+15,00 
+25511013.500 
+6694350.000 
+9,007 
+8,956 
+63,00 
+25510953.500 
+6694349.000 
+20,103 
+3,192 
+8,00 
+25510987.500 
+6694348.000 
+10,464 
+4,068 
+13,00 
+25511004.500 
+6694348.000 
+9,415 
+2,523 
+5,00 
+25510847.500 
+6694348.000 
+2,736 
+2,523 
+5,00 
+25510874.500 
+6694348.000 
+15,463 
+2,523 
+5,00 
+25510983.500 
+6694346.000 
+7,614 
+2,523 
+5,00 
+25510991.500 
+6694346.000 
+10,497 
+4,37 
+15,00 
+25510819.500 
+6694346.000 
+5,576 
+4,37 
+15,00 
+25510870.500 
+6694347.000 
+15,957 
+3,192 
+8,00 
+25510870.500 
+6694354.000 
+16,654 
+7,225 
+41,00 
+25510977.500 
+6694354.000 
+15,184 
+9,167 
+66,00 
+25511003.500 
+6694346.000 
+11,88 
+2,523 
+5,00 
+25510967.500 
+6694349.000 
+10,459 
+7,979 
+50,00 
+25510836.500 
+6694342.000 
+8,312 
+11,34 
+101,00 
+25510837.500 
+6694345.000 
+7,281 
+7,225 
+41,00 
+25510929.500 
+6694347.000 
+11,045 
+9,027 
+64,00 
+25510802.500 
+6694346.000 
+22,226 
+6,77 
+36,00 
+25510912.500 
+6694345.000 
+14,12 
+2,523 
+5,00 
+25510986.500 
+6694344.000 
+11,86 
+5,863 
+27,00 
+25511011.500 
+6694346.000 
+21,42 
+3,742 
+11,00 
+25510864.500 
+6694345.000 
+18,245 
+3,568 
+10,00 
+25510824.500 
+6694346.000 
+5,277 
+5,528 
+24,00 
+25510884.500 
+6694343.000 
+8,492 
+2,523 
+5,00 
+25510976.500 
+6694341.000 
+9,455 
+6,077 
+29,00 
+25510914.500 
+6694346.000 
+12,049 
+7,136 
+40,00 
+25510792.500 
+6694343.000 
+23,001 
+6,482 
+33,00 
+25510860.500 
+6694341.000 
+17,287 
+5,171 
+21,00 
+25510890.500 
+6694341.000 
+10,443 
+3,909 
+12,00 
+25510894.500 
+6694341.000 
+6,658 
+2,523 
+5,00 
+25510924.500 
+6694339.000 
+11,639 
+8,215 
+53,00 
+25510934.500 
+6694340.000 
+10,713 
+4,222 
+14,00 
+25510829.500 
+6694340.000 
+21,9 
+3,568 
+10,00 
+
+
+ 
+5 
+25510851.500 
+6694340.000 
+13,378 
+4,652 
+17,00 
+25510876.500 
+6694341.000 
+12,496 
+2,523 
+5,00 
+25510929.500 
+6694340.000 
+8,832 
+2,523 
+5,00 
+25511015.500 
+6694340.000 
+10,388 
+2,523 
+5,00 
+25510813.500 
+6694339.000 
+9,467 
+2,523 
+5,00 
+25510821.500 
+6694339.000 
+8,749 
+3,568 
+10,00 
+25510961.500 
+6694349.000 
+13,818 
+10,218 
+82,00 
+25510975.500 
+6694339.000 
+10,539 
+2,523 
+5,00 
+25510978.500 
+6694339.000 
+10,703 
+3,568 
+10,00 
+25510984.500 
+6694339.000 
+10,35 
+3,192 
+8,00 
+25510922.500 
+6694339.000 
+12,225 
+2,523 
+5,00 
+25510937.500 
+6694339.000 
+19,282 
+3,742 
+11,00 
+25511013.500 
+6694337.000 
+11,45 
+13,399 
+141,00 
+25510940.500 
+6694342.000 
+11,239 
+12,866 
+130,00 
+25510800.500 
+6694337.000 
+18,36 
+6,77 
+36,00 
+25510893.500 
+6694338.000 
+15,555 
+3,568 
+10,00 
+25510786.500 
+6694337.000 
+27,157 
+2,523 
+5,00 
+25510831.500 
+6694334.000 
+19,193 
+7,569 
+45,00 
+25510854.500 
+6694338.000 
+19,626 
+5,754 
+26,00 
+25510867.500 
+6694336.000 
+19,761 
+5,293 
+22,00 
+25510872.500 
+6694338.000 
+17,019 
+2,523 
+5,00 
+25510870.500 
+6694339.000 
+13,42 
+11,672 
+107,00 
+25510912.500 
+6694339.000 
+12,913 
+5,293 
+22,00 
+25510963.500 
+6694333.000 
+11,559 
+4,652 
+17,00 
+25510965.500 
+6694337.000 
+11,74 
+8,137 
+52,00 
+25510847.500 
+6694336.000 
+19,603 
+2,523 
+5,00 
+25510947.500 
+6694338.000 
+10,284 
+7,736 
+47,00 
+25510998.500 
+6694335.000 
+11,009 
+9,027 
+64,00 
+25510782.500 
+6694336.000 
+24,342 
+4,068 
+13,00 
+25510824.500 
+6694336.000 
+5,514 
+2,523 
+5,00 
+25510841.500 
+6694340.000 
+16,277 
+7,047 
+39,00 
+25510860.500 
+6694335.000 
+9,74 
+2,523 
+5,00 
+25510875.500 
+6694336.000 
+11,775 
+5,528 
+24,00 
+25510957.500 
+6694336.000 
+10,284 
+3,192 
+8,00 
+25510791.500 
+6694335.000 
+20,785 
+4,222 
+14,00 
+25510794.500 
+6694334.000 
+20,335 
+3,742 
+11,00 
+25510801.500 
+6694330.000 
+19,119 
+5,046 
+20,00 
+25510820.500 
+6694336.000 
+8,298 
+3,909 
+12,00 
+25510839.500 
+6694333.000 
+16,069 
+5,971 
+28,00 
+25510951.500 
+6694333.000 
+9,307 
+2,523 
+5,00 
+25510857.500 
+6694333.000 
+22,717 
+4,37 
+15,00 
+25510887.500 
+6694333.000 
+23,374 
+5,046 
+20,00 
+25510913.500 
+6694333.000 
+12,444 
+7,136 
+40,00 
+25510929.500 
+6694333.000 
+11,04 
+8,292 
+54,00 
+25510975.500 
+6694331.000 
+11,694 
+4,068 
+13,00 
+25510990.500 
+6694335.000 
+10,744 
+6,383 
+32,00 
+25510996.500 
+6694334.000 
+10,495 
+2,523 
+5,00 
+
+
+ 
+6 
+25510784.500 
+6694331.000 
+26,163 
+3,192 
+8,00 
+25510844.500 
+6694333.000 
+18,719 
+2,523 
+5,00 
+25510937.500 
+6694333.000 
+9,629 
+2,523 
+5,00 
+25510980.500 
+6694336.000 
+11,028 
+6,283 
+31,00 
+25511009.500 
+6694331.000 
+10,404 
+3,192 
+8,00 
+25511016.500 
+6694333.000 
+10,904 
+4,222 
+14,00 
+25510872.500 
+6694330.000 
+5,385 
+3,192 
+8,00 
+25510778.500 
+6694331.000 
+24,71 
+5,754 
+26,00 
+25510793.500 
+6694330.000 
+20,369 
+5,171 
+21,00 
+25510816.500 
+6694334.000 
+7,272 
+9,236 
+67,00 
+25510882.500 
+6694331.000 
+22,674 
+5,642 
+25,00 
+25510909.500 
+6694329.000 
+10,584 
+6,58 
+34,00 
+25510917.500 
+6694331.000 
+12,924 
+4,37 
+15,00 
+25510925.500 
+6694331.000 
+11,972 
+5,754 
+26,00 
+25510835.500 
+6694327.000 
+11,5 
+3,192 
+8,00 
+25510941.500 
+6694331.000 
+13,255 
+5,171 
+21,00 
+25510950.500 
+6694332.000 
+11,67 
+6,864 
+37,00 
+25510994.500 
+6694329.000 
+11,024 
+2,523 
+5,00 
+25510812.500 
+6694324.000 
+8,074 
+5,293 
+22,00 
+25510914.500 
+6694328.000 
+11,806 
+2,523 
+5,00 
+25510976.500 
+6694329.000 
+7,421 
+2,523 
+5,00 
+25510982.500 
+6694328.000 
+11,073 
+3,192 
+8,00 
+25510787.500 
+6694327.000 
+24,486 
+3,192 
+8,00 
+25510795.500 
+6694326.000 
+23,595 
+3,909 
+12,00 
+25510993.500 
+6694328.000 
+9,298 
+2,523 
+5,00 
+25510776.500 
+6694328.000 
+24,62 
+5,293 
+22,00 
+25510928.500 
+6694328.000 
+12,487 
+4,068 
+13,00 
+25510935.500 
+6694326.000 
+7,988 
+3,192 
+8,00 
+25510968.500 
+6694328.000 
+12,95 
+4,37 
+15,00 
+25510996.500 
+6694326.000 
+9,981 
+3,192 
+8,00 
+25511008.500 
+6694327.000 
+10,842 
+3,192 
+8,00 
+25511017.500 
+6694324.000 
+11,041 
+7,569 
+45,00 
+25510782.500 
+6694325.000 
+27,597 
+3,742 
+11,00 
+25510824.500 
+6694329.000 
+6,957 
+6,283 
+31,00 
+25510886.500 
+6694329.000 
+8,638 
+5,171 
+21,00 
+25510964.500 
+6694326.000 
+12,233 
+6,383 
+32,00 
+25510847.500 
+6694331.000 
+12,974 
+10,029 
+79,00 
+25510798.500 
+6694324.000 
+22,629 
+5,171 
+21,00 
+25510866.500 
+6694323.000 
+20,873 
+4,37 
+15,00 
+25510772.500 
+6694324.000 
+24,997 
+4,514 
+16,00 
+25510787.500 
+6694322.000 
+24,446 
+4,222 
+14,00 
+25510917.500 
+6694320.000 
+11,507 
+8,292 
+54,00 
+25510907.500 
+6694324.000 
+9,973 
+4,37 
+15,00 
+25510958.500 
+6694323.000 
+11,812 
+5,293 
+22,00 
+25510933.500 
+6694323.000 
+12,612 
+6,18 
+30,00 
+25510943.500 
+6694323.000 
+12,366 
+6,18 
+30,00 
+25510945.500 
+6694321.000 
+11,467 
+5,528 
+24,00 
+
+
+ 
+7 
+25510836.500 
+6694322.000 
+14,536 
+2,523 
+5,00 
+25510957.500 
+6694319.000 
+13,079 
+5,863 
+27,00 
+25510792.500 
+6694322.000 
+21,257 
+5,528 
+24,00 
+25510796.500 
+6694318.000 
+16,739 
+4,222 
+14,00 
+25510809.500 
+6694320.000 
+13,451 
+3,192 
+8,00 
+25510823.500 
+6694318.000 
+9,251 
+6,482 
+33,00 
+25510911.500 
+6694321.000 
+10,869 
+3,909 
+12,00 
+25510829.500 
+6694319.000 
+12,7 
+3,909 
+12,00 
+25510847.500 
+6694319.000 
+8,783 
+2,523 
+5,00 
+25510864.500 
+6694319.000 
+23,191 
+3,909 
+12,00 
+25510876.500 
+6694317.000 
+7,273 
+2,523 
+5,00 
+25510916.500 
+6694318.000 
+11,441 
+2,523 
+5,00 
+25510926.500 
+6694318.000 
+12,171 
+3,568 
+10,00 
+25510933.500 
+6694318.000 
+11,362 
+3,568 
+10,00 
+25510806.500 
+6694317.000 
+25,434 
+5,046 
+20,00 
+25510815.500 
+6694317.000 
+9,358 
+3,568 
+10,00 
+25510841.500 
+6694320.000 
+10,022 
+5,642 
+25,00 
+25510779.500 
+6694316.000 
+26,527 
+6,956 
+38,00 
+25510842.500 
+6694314.000 
+10,699 
+3,909 
+12,00 
+25510847.500 
+6694317.000 
+13,765 
+3,568 
+10,00 
+25510860.500 
+6694318.000 
+12,982 
+3,568 
+10,00 
+25510881.500 
+6694320.000 
+7,303 
+6,77 
+36,00 
+25510950.500 
+6694315.000 
+13,069 
+3,568 
+10,00 
+25510786.500 
+6694315.000 
+26,905 
+2,523 
+5,00 
+25510831.500 
+6694314.000 
+16,989 
+3,192 
+8,00 
+25510913.500 
+6694314.000 
+10,946 
+2,523 
+5,00 
+25510925.500 
+6694316.000 
+11,796 
+2,523 
+5,00 
+25510827.500 
+6694314.000 
+15,295 
+2,523 
+5,00 
+25510877.500 
+6694314.000 
+7,282 
+2,523 
+5,00 
+25510931.500 
+6694313.000 
+11,499 
+2,523 
+5,00 
+25510944.500 
+6694309.000 
+12,776 
+7,136 
+40,00 
+25510772.500 
+6694315.000 
+24,094 
+4,787 
+18,00 
+25510920.500 
+6694317.000 
+10,946 
+6,58 
+34,00 
+25510948.500 
+6694312.000 
+12,597 
+5,412 
+23,00 
+25510797.500 
+6694312.000 
+22,699 
+4,787 
+18,00 
+25510809.500 
+6694315.000 
+16,83 
+3,192 
+8,00 
+25510887.500 
+6694314.000 
+9,327 
+7,818 
+48,00 
+25510910.500 
+6694316.000 
+11,416 
+3,909 
+12,00 
+25510777.500 
+6694313.000 
+25,877 
+3,192 
+8,00 
+25510847.500 
+6694311.000 
+13,496 
+3,192 
+8,00 
+25510765.500 
+6694313.000 
+25,158 
+4,37 
+15,00 
+25510795.500 
+6694316.000 
+22,872 
+7,047 
+39,00 
+25510840.500 
+6694312.000 
+12,902 
+2,523 
+5,00 
+25510816.500 
+6694307.000 
+12,192 
+9,373 
+69,00 
+25510916.500 
+6694314.000 
+11,137 
+6,077 
+29,00 
+25510936.500 
+6694309.000 
+12,724 
+4,787 
+18,00 
+25510796.500 
+6694310.000 
+25,397 
+5,528 
+24,00 
+
+
+ 
+8 
+25510865.500 
+6694309.000 
+18,362 
+10,403 
+85,00 
+25510888.500 
+6694310.000 
+6,704 
+2,523 
+5,00 
+25510810.500 
+6694309.000 
+10,359 
+2,523 
+5,00 
+25510842.500 
+6694309.000 
+13,685 
+3,742 
+11,00 
+25510763.500 
+6694308.000 
+26,337 
+4,787 
+18,00 
+25510910.500 
+6694307.000 
+11,971 
+4,918 
+19,00 
+25510924.500 
+6694310.000 
+11,794 
+7,047 
+39,00 
+25510929.500 
+6694307.000 
+12,18 
+2,523 
+5,00 
+25510878.500 
+6694307.000 
+11,248 
+3,742 
+11,00 
+25510784.500 
+6694309.000 
+22,57 
+10,585 
+88,00 
+25510791.500 
+6694308.000 
+25,876 
+6,58 
+34,00 
+25510906.500 
+6694305.000 
+9,626 
+4,514 
+16,00 
+25510807.500 
+6694306.000 
+16,359 
+4,652 
+17,00 
+25510818.500 
+6694305.000 
+16,322 
+4,222 
+14,00 
+25510869.500 
+6694305.000 
+24,621 
+6,18 
+30,00 
+25510822.500 
+6694304.000 
+16,316 
+2,523 
+5,00 
+25510830.500 
+6694312.000 
+12,865 
+9,966 
+78,00 
+25510850.500 
+6694308.000 
+14,582 
+5,863 
+27,00 
+25510853.500 
+6694317.000 
+10,423 
+10,403 
+85,00 
+25510804.500 
+6694303.000 
+21,728 
+4,514 
+16,00 
+25510827.500 
+6694303.000 
+14,195 
+3,568 
+10,00 
+25510877.500 
+6694303.000 
+10,381 
+2,523 
+5,00 
+25510882.500 
+6694304.000 
+9,231 
+2,523 
+5,00 
+25510761.500 
+6694302.000 
+19,477 
+4,514 
+16,00 
+25510787.500 
+6694303.000 
+24,539 
+3,192 
+8,00 
+25510815.500 
+6694302.000 
+15,429 
+3,192 
+8,00 
+25510845.500 
+6694298.000 
+9,195 
+7,485 
+44,00 
+25510851.500 
+6694302.000 
+8,524 
+3,568 
+10,00 
+25510863.500 
+6694302.000 
+8,847 
+4,787 
+18,00 
+25510873.500 
+6694304.000 
+7,436 
+3,192 
+8,00 
+25510773.500 
+6694303.000 
+23,651 
+6,58 
+34,00 
+25510837.500 
+6694301.000 
+13,691 
+3,568 
+10,00 
+25510767.500 
+6694300.000 
+21,674 
+3,192 
+8,00 
+25510778.500 
+6694301.000 
+23,915 
+2,523 
+5,00 
+25510791.500 
+6694301.000 
+26,224 
+5,863 
+27,00 
+25510797.500 
+6694300.000 
+23,626 
+2,523 
+5,00 
+25510825.500 
+6694299.000 
+17,667 
+2,523 
+5,00 
+25510783.500 
+6694299.000 
+20,275 
+3,192 
+8,00 
+25510835.500 
+6694297.000 
+12,49 
+4,787 
+18,00 
+25510839.500 
+6694297.000 
+10,55 
+3,192 
+8,00 
+25510769.500 
+6694297.000 
+22,606 
+2,523 
+5,00 
+25510814.500 
+6694297.000 
+18,168 
+3,192 
+8,00 
+25510810.500 
+6694296.000 
+17,824 
+3,192 
+8,00 
+25510819.500 
+6694293.000 
+15,733 
+3,742 
+11,00 
+25510763.500 
+6694296.000 
+18,228 
+4,787 
+18,00 
+25510797.500 
+6694293.000 
+21,065 
+6,077 
+29,00 
+25510812.500 
+6694293.000 
+14,405 
+3,192 
+8,00 
+
+
+ 
+9 
+25510763.500 
+6694292.000 
+6,086 
+2,523 
+5,00 
+25510780.500 
+6694292.000 
+7,798 
+2,523 
+5,00 
+25510822.500 
+6694292.000 
+5,006 
+2,523 
+5,00 
+25510775.500 
+6694296.000 
+22,884 
+10,823 
+92,00 
+25510783.500 
+6694290.000 
+25,966 
+6,383 
+32,00 
+25510753.500 
+6694290.000 
+23,744 
+4,222 
+14,00 
+25510757.500 
+6694290.000 
+25,645 
+5,293 
+22,00 
+25510810.500 
+6694291.000 
+10,858 
+5,971 
+28,00 
+25510767.500 
+6694288.000 
+27,069 
+5,046 
+20,00 
+25510798.500 
+6694287.000 
+19,249 
+5,171 
+21,00 
+25510750.500 
+6694285.000 
+22,114 
+6,676 
+35,00 
+25510763.500 
+6694284.000 
+25,655 
+5,754 
+26,00 
+25510783.500 
+6694283.000 
+25,598 
+5,863 
+27,00 
+25510776.500 
+6694285.000 
+24,18 
+6,77 
+36,00 
+25510748.500 
+6694281.000 
+22,107 
+6,283 
+31,00 
+25510770.500 
+6694284.000 
+27,166 
+4,514 
+16,00 
+25510760.500 
+6694279.000 
+22,12 
+3,909 
+12,00 
+25510750.500 
+6694276.000 
+21,778 
+5,863 
+27,00 
+25510741.500 
+6694277.000 
+25,859 
+4,918 
+19,00 
+25510756.500 
+6694275.000 
+20,778 
+2,523 
+5,00 
+25510740.500 
+6694273.000 
+21,169 
+4,37 
+15,00 
+  
+SIBBO2 
+  
+  
+Antal 
+Medeltal 
+höjd 
+Medeltal 
+Krondiam 
+Medeltal 
+Kronarea 
+391 
+14,599 
+4,818 
+22,44 
+  
+MML 
+  
+  
+  
+XkoordMML 
+YkoordMML 
+TrädhöjdMML KrondiameterMML KronareaMML 
+400659.344 
+6693066.50 
+5,81 
+2,523 
+5,00 
+400628.344 
+6693064.50 
+22,68 
+3,742 
+11,00 
+400675.344 
+6693064.50 
+9,026 
+3,568 
+10,00 
+400673.344 
+6693061.50 
+12,262 
+2,523 
+5,00 
+400518.344 
+6693060.50 
+22,172 
+3,192 
+8,00 
+400569.344 
+6693059.50 
+8,077 
+5,046 
+20,00 
+400569.344 
+6693056.50 
+21,823 
+3,909 
+12,00 
+400501.344 
+6693055.50 
+19,058 
+4,514 
+16,00 
+400495.344 
+6693054.50 
+18,219 
+4,514 
+16,00 
+400578.344 
+6693053.50 
+21,641 
+3,192 
+8,00 
+400621.344 
+6693054.50 
+2,892 
+2,523 
+5,00 
+400639.344 
+6693055.50 
+3,87 
+2,523 
+5,00 
+400678.344 
+6693055.50 
+18,794 
+3,742 
+11,00 
+400486.344 
+6693055.50 
+6,705 
+4,514 
+16,00 
+400575.344 
+6693054.50 
+19,338 
+4,787 
+18,00 
+
+
+ 
+10
+400610.344 
+6693054.50 
+24,249 
+2,523 
+5,00 
+400492.344 
+6693057.50 
+16,404 
+4,514 
+16,00 
+400559.344 
+6693050.50 
+25,383 
+5,293 
+22,00 
+400565.344 
+6693053.50 
+26,587 
+3,192 
+8,00 
+400500.344 
+6693052.50 
+18,935 
+3,192 
+8,00 
+400505.344 
+6693052.50 
+6,207 
+2,523 
+5,00 
+400599.344 
+6693052.50 
+24,287 
+3,192 
+8,00 
+400503.344 
+6693051.50 
+5,362 
+2,523 
+5,00 
+400508.344 
+6693049.50 
+19,691 
+3,568 
+10,00 
+400578.344 
+6693048.50 
+18,868 
+4,514 
+16,00 
+400485.344 
+6693050.50 
+15,171 
+3,385 
+9,00 
+400501.344 
+6693048.50 
+14,526 
+2,523 
+5,00 
+400511.344 
+6693048.50 
+20,873 
+4,222 
+14,00 
+400490.344 
+6693047.50 
+9,232 
+4,787 
+18,00 
+400526.344 
+6693045.50 
+22,158 
+4,787 
+18,00 
+400662.344 
+6693046.50 
+3,443 
+2,523 
+5,00 
+400487.344 
+6693044.50 
+18,221 
+5,046 
+20,00 
+400505.344 
+6693043.50 
+17,939 
+3,568 
+10,00 
+400536.344 
+6693045.50 
+23,756 
+2,523 
+5,00 
+400479.344 
+6693044.50 
+19,1 
+6,18 
+30,00 
+400509.344 
+6693044.50 
+18,462 
+2,523 
+5,00 
+400513.344 
+6693043.50 
+11,087 
+2,523 
+5,00 
+400610.344 
+6693047.50 
+19,449 
+5,754 
+26,00 
+400633.344 
+6693043.50 
+17,432 
+4,514 
+16,00 
+400521.344 
+6693041.50 
+20,663 
+4,918 
+19,00 
+400504.344 
+6693040.50 
+18,893 
+3,909 
+12,00 
+400491.344 
+6693041.50 
+17,892 
+3,742 
+11,00 
+400549.344 
+6693040.50 
+6,772 
+2,523 
+5,00 
+400478.344 
+6693041.50 
+23,138 
+6,077 
+29,00 
+400509.344 
+6693040.50 
+20,611 
+3,742 
+11,00 
+400514.344 
+6693039.50 
+21,057 
+3,568 
+10,00 
+400616.344 
+6693039.50 
+18,034 
+5,293 
+22,00 
+400677.344 
+6693039.50 
+4,504 
+4,37 
+15,00 
+400556.344 
+6693038.50 
+20,881 
+4,222 
+14,00 
+400648.344 
+6693039.50 
+5,818 
+2,523 
+5,00 
+400474.344 
+6693035.50 
+18,256 
+4,787 
+18,00 
+400512.344 
+6693038.50 
+19,145 
+1,128 
+1,00 
+400637.344 
+6693037.50 
+10,737 
+2,523 
+5,00 
+400505.344 
+6693038.50 
+20,01 
+3,909 
+12,00 
+400645.344 
+6693037.50 
+17,668 
+4,222 
+14,00 
+400503.344 
+6693032.50 
+18,008 
+4,918 
+19,00 
+400523.344 
+6693037.50 
+22,862 
+2,523 
+5,00 
+400534.344 
+6693036.50 
+24,059 
+2,523 
+5,00 
+400549.344 
+6693035.50 
+20,14 
+3,192 
+8,00 
+400561.344 
+6693040.50 
+19,585 
+7,399 
+43,00 
+400680.344 
+6693035.50 
+3,008 
+2,523 
+5,00 
+400633.344 
+6693035.50 
+20,497 
+4,918 
+19,00 
+
+
+ 
+11
+400512.344 
+6693034.50 
+18,949 
+5,171 
+21,00 
+400537.344 
+6693034.50 
+24,703 
+3,192 
+8,00 
+400542.344 
+6693034.50 
+23,626 
+3,192 
+8,00 
+400471.344 
+6693031.50 
+9,648 
+3,192 
+8,00 
+400496.344 
+6693033.50 
+17,807 
+2,523 
+5,00 
+400506.344 
+6693033.50 
+23,254 
+3,568 
+10,00 
+400527.344 
+6693033.50 
+24,107 
+3,909 
+12,00 
+400547.344 
+6693033.50 
+16,817 
+3,568 
+10,00 
+400621.344 
+6693033.50 
+21,21 
+3,192 
+8,00 
+400504.344 
+6693031.50 
+21,034 
+1,128 
+1,00 
+400562.344 
+6693034.50 
+13,674 
+4,918 
+19,00 
+400540.344 
+6693029.50 
+24,197 
+4,787 
+18,00 
+400551.344 
+6693030.50 
+7,598 
+2,523 
+5,00 
+400504.344 
+6693030.50 
+22,507 
+3,568 
+10,00 
+400514.344 
+6693029.50 
+22,301 
+6,77 
+36,00 
+400677.344 
+6693031.50 
+3,786 
+5,863 
+27,00 
+400470.344 
+6693030.50 
+9,793 
+2,523 
+5,00 
+400534.344 
+6693029.50 
+23,28 
+5,528 
+24,00 
+400554.344 
+6693027.50 
+22,148 
+4,37 
+15,00 
+400615.344 
+6693028.50 
+19,998 
+4,787 
+18,00 
+400668.344 
+6693028.50 
+5,89 
+2,523 
+5,00 
+400548.344 
+6693028.50 
+22,376 
+3,742 
+11,00 
+400561.344 
+6693027.50 
+16,943 
+4,222 
+14,00 
+400567.344 
+6693027.50 
+4,778 
+2,523 
+5,00 
+400574.344 
+6693026.50 
+19,209 
+3,192 
+8,00 
+400548.344 
+6693024.50 
+24,344 
+3,385 
+9,00 
+400525.344 
+6693023.50 
+19,137 
+5,171 
+21,00 
+400531.344 
+6693022.50 
+22,057 
+5,754 
+26,00 
+400556.344 
+6693021.50 
+11,593 
+3,568 
+10,00 
+400651.344 
+6693023.50 
+17,007 
+2,523 
+5,00 
+400545.344 
+6693024.50 
+13,627 
+7,485 
+44,00 
+400636.344 
+6693022.50 
+16,138 
+5,863 
+27,00 
+400551.344 
+6693024.50 
+22,959 
+5,971 
+28,00 
+400561.344 
+6693019.50 
+18,571 
+4,918 
+19,00 
+400573.344 
+6693021.50 
+3,341 
+2,523 
+5,00 
+400587.344 
+6693018.50 
+4,862 
+8,444 
+56,00 
+400614.344 
+6693020.50 
+17,169 
+4,787 
+18,00 
+400644.344 
+6693020.50 
+19,752 
+6,383 
+32,00 
+400568.344 
+6693018.50 
+4,875 
+2,523 
+5,00 
+400532.344 
+6693018.50 
+14,869 
+4,068 
+13,00 
+400491.344 
+6693015.50 
+22,364 
+4,787 
+18,00 
+400483.344 
+6693016.50 
+22,806 
+3,568 
+10,00 
+400468.344 
+6693014.50 
+19,035 
+4,37 
+15,00 
+400564.344 
+6693015.50 
+19,508 
+6,58 
+34,00 
+400581.344 
+6693015.50 
+4,534 
+3,192 
+8,00 
+400610.344 
+6693014.50 
+16,402 
+4,514 
+16,00 
+400624.344 
+6693014.50 
+17,671 
+5,528 
+24,00 
+
+
+ 
+12
+400555.344 
+6693014.50 
+15,643 
+4,222 
+14,00 
+400631.344 
+6693014.50 
+21,618 
+3,192 
+8,00 
+400660.344 
+6693013.50 
+19,38 
+3,909 
+12,00 
+400465.344 
+6693011.50 
+18,811 
+3,192 
+8,00 
+400521.344 
+6693011.50 
+16,899 
+4,222 
+14,00 
+400535.344 
+6693011.50 
+10,962 
+8,292 
+54,00 
+400587.344 
+6693012.50 
+3,938 
+3,742 
+11,00 
+400556.344 
+6693009.50 
+18,167 
+6,18 
+30,00 
+400585.344 
+6693009.50 
+4,818 
+3,909 
+12,00 
+400652.344 
+6693010.50 
+20,672 
+3,568 
+10,00 
+400528.344 
+6693011.50 
+19,008 
+5,863 
+27,00 
+400581.344 
+6693010.50 
+5,132 
+2,523 
+5,00 
+400450.344 
+6693009.50 
+9,042 
+2,523 
+5,00 
+400459.344 
+6693011.50 
+20,006 
+4,514 
+16,00 
+400467.344 
+6693008.50 
+15,805 
+2,523 
+5,00 
+400524.344 
+6693010.50 
+11,301 
+2,523 
+5,00 
+400483.344 
+6693011.50 
+20,079 
+5,171 
+21,00 
+400518.344 
+6693006.50 
+11,049 
+5,171 
+21,00 
+400508.344 
+6693007.50 
+15,897 
+4,514 
+16,00 
+400590.344 
+6693005.50 
+5,209 
+4,222 
+14,00 
+400461.344 
+6693007.50 
+16,506 
+5,863 
+27,00 
+400678.344 
+6693007.50 
+19,292 
+2,523 
+5,00 
+400452.344 
+6693005.50 
+24,022 
+3,568 
+10,00 
+400496.344 
+6693006.50 
+20,463 
+2,523 
+5,00 
+400587.344 
+6693002.50 
+5,048 
+7,047 
+39,00 
+400594.344 
+6693006.50 
+4,644 
+3,742 
+11,00 
+400483.344 
+6693005.50 
+20,227 
+3,192 
+8,00 
+400633.344 
+6693004.50 
+19,411 
+5,171 
+21,00 
+400520.344 
+6693004.50 
+17,07 
+3,909 
+12,00 
+400526.344 
+6693004.50 
+9,607 
+2,523 
+5,00 
+400538.344 
+6693003.50 
+13,104 
+3,909 
+12,00 
+400448.344 
+6693003.50 
+21,182 
+3,568 
+10,00 
+400467.344 
+6693004.50 
+14,318 
+2,523 
+5,00 
+400604.344 
+6693002.50 
+17,496 
+3,568 
+10,00 
+400682.344 
+6693002.50 
+7,514 
+3,909 
+12,00 
+400461.344 
+6693001.50 
+18,172 
+4,068 
+13,00 
+400509.344 
+6693002.50 
+9,093 
+2,523 
+5,00 
+400514.344 
+6693003.50 
+18,226 
+2,523 
+5,00 
+400535.344 
+6693002.50 
+12,957 
+4,787 
+18,00 
+400601.344 
+6693004.50 
+5,117 
+5,754 
+26,00 
+400645.344 
+6693002.50 
+3,355 
+2,523 
+5,00 
+400498.344 
+6693000.50 
+16,936 
+5,528 
+24,00 
+400511.344 
+6693000.50 
+15,194 
+2,523 
+5,00 
+400673.344 
+6693000.50 
+3,625 
+3,192 
+8,00 
+400451.344 
+6692999.50 
+22,927 
+2,523 
+5,00 
+400474.344 
+6693001.50 
+21,351 
+4,787 
+18,00 
+400548.344 
+6693000.50 
+12,112 
+8,292 
+54,00 
+
+
+ 
+13
+400577.344 
+6693003.50 
+5,344 
+7,736 
+47,00 
+400606.344 
+6693000.50 
+7,952 
+4,37 
+15,00 
+400633.344 
+6693001.50 
+5,216 
+3,192 
+8,00 
+400654.344 
+6692999.50 
+3,821 
+2,523 
+5,00 
+400664.344 
+6692998.50 
+4,792 
+4,222 
+14,00 
+400677.344 
+6692998.50 
+22,862 
+5,293 
+22,00 
+400494.344 
+6692999.50 
+6,207 
+2,523 
+5,00 
+400524.344 
+6692999.50 
+21,085 
+4,918 
+19,00 
+400553.344 
+6692998.50 
+21,201 
+4,652 
+17,00 
+400443.344 
+6692996.50 
+21,951 
+3,568 
+10,00 
+400459.344 
+6692998.50 
+17,892 
+5,754 
+26,00 
+400549.344 
+6692996.50 
+20,682 
+4,514 
+16,00 
+400630.344 
+6692997.50 
+2,607 
+2,523 
+5,00 
+400649.344 
+6692994.50 
+4,048 
+5,754 
+26,00 
+400656.344 
+6692996.50 
+3,581 
+2,523 
+5,00 
+400661.344 
+6692993.50 
+19 
+4,787 
+18,00 
+400453.344 
+6692995.50 
+22,269 
+4,068 
+13,00 
+400462.344 
+6692994.50 
+20,617 
+3,192 
+8,00 
+400506.344 
+6692995.50 
+3,806 
+2,523 
+5,00 
+400525.344 
+6692995.50 
+21,242 
+4,37 
+15,00 
+400542.344 
+6692995.50 
+17,089 
+3,568 
+10,00 
+400578.344 
+6692994.50 
+4,723 
+2,523 
+5,00 
+400680.344 
+6692994.50 
+23,702 
+6,18 
+30,00 
+400476.344 
+6692993.50 
+8,145 
+3,192 
+8,00 
+400587.344 
+6692996.50 
+5,458 
+5,971 
+28,00 
+400641.344 
+6692992.50 
+5,209 
+5,412 
+23,00 
+400439.344 
+6692993.50 
+22,321 
+2,523 
+5,00 
+400443.344 
+6692992.50 
+21,798 
+3,192 
+8,00 
+400465.344 
+6692992.50 
+20,168 
+3,742 
+11,00 
+400546.344 
+6692992.50 
+11,019 
+2,523 
+5,00 
+400448.344 
+6692992.50 
+25,134 
+4,37 
+15,00 
+400574.344 
+6692991.50 
+4,295 
+5,412 
+23,00 
+400616.344 
+6692990.50 
+4,893 
+3,742 
+11,00 
+400479.344 
+6692991.50 
+21,942 
+3,568 
+10,00 
+400453.344 
+6692990.50 
+21,268 
+3,192 
+8,00 
+400504.344 
+6692991.50 
+5,188 
+3,192 
+8,00 
+400538.344 
+6692991.50 
+20,119 
+4,222 
+14,00 
+400671.344 
+6692990.50 
+4,128 
+3,568 
+10,00 
+400458.344 
+6692990.50 
+18,768 
+3,909 
+12,00 
+400544.344 
+6692990.50 
+20,05 
+2,523 
+5,00 
+400607.344 
+6692990.50 
+5,368 
+2,523 
+5,00 
+400612.344 
+6692992.50 
+4,399 
+4,222 
+14,00 
+400620.344 
+6692993.50 
+3,642 
+3,568 
+10,00 
+400632.344 
+6692990.50 
+3,282 
+2,523 
+5,00 
+400437.344 
+6692990.50 
+12,446 
+2,523 
+5,00 
+400502.344 
+6692988.50 
+7,141 
+2,523 
+5,00 
+400516.344 
+6692989.50 
+4,387 
+2,523 
+5,00 
+
+
+ 
+14
+400585.344 
+6692986.50 
+4,589 
+4,514 
+16,00 
+400595.344 
+6692990.50 
+5,457 
+11,617 
+10,00 
+400637.344 
+6692988.50 
+5,156 
+6,283 
+31,00 
+400684.344 
+6692989.50 
+4,179 
+2,523 
+5,00 
+400533.344 
+6692989.50 
+19,763 
+4,514 
+16,00 
+400542.344 
+6692988.50 
+23,805 
+2,523 
+5,00 
+400606.344 
+6692988.50 
+5,044 
+4,918 
+19,00 
+400634.344 
+6692984.50 
+7,38 
+5,528 
+24,00 
+400663.344 
+6692987.50 
+3,414 
+2,523 
+5,00 
+400439.344 
+6692986.50 
+22,416 
+3,385 
+9,00 
+400494.344 
+6692986.50 
+5,763 
+3,742 
+11,00 
+400549.344 
+6692986.50 
+21,413 
+2,523 
+5,00 
+400460.344 
+6692984.50 
+20,626 
+4,068 
+13,00 
+400473.344 
+6692985.50 
+23,735 
+3,909 
+12,00 
+400528.344 
+6692985.50 
+9,269 
+2,523 
+5,00 
+400589.344 
+6692985.50 
+4,132 
+3,192 
+8,00 
+400612.344 
+6692985.50 
+4,571 
+3,909 
+12,00 
+400654.344 
+6692984.50 
+6,931 
+5,046 
+20,00 
+400531.344 
+6692984.50 
+21,725 
+2,523 
+5,00 
+400535.344 
+6692985.50 
+3,561 
+2,523 
+5,00 
+400577.344 
+6692984.50 
+4,025 
+2,523 
+5,00 
+400508.344 
+6692989.50 
+6,844 
+7,313 
+42,00 
+400500.344 
+6692984.50 
+6,439 
+6,077 
+29,00 
+400624.344 
+6692982.50 
+12,613 
+5,863 
+27,00 
+400445.344 
+6692984.50 
+22,902 
+4,787 
+18,00 
+400649.344 
+6692983.50 
+8,542 
+4,514 
+16,00 
+400645.344 
+6692982.50 
+9,638 
+3,568 
+10,00 
+400452.344 
+6692983.50 
+22,466 
+2,523 
+5,00 
+400522.344 
+6692983.50 
+6,064 
+2,523 
+5,00 
+400607.344 
+6692983.50 
+3,915 
+2,523 
+5,00 
+400443.344 
+6692982.50 
+23,437 
+1,128 
+1,00 
+400462.344 
+6692981.50 
+18,802 
+4,514 
+16,00 
+400499.344 
+6692981.50 
+9,134 
+3,192 
+8,00 
+400581.344 
+6692982.50 
+3,506 
+3,742 
+11,00 
+400637.344 
+6692983.50 
+16,378 
+4,222 
+14,00 
+400443.344 
+6692981.50 
+23,615 
+2,523 
+5,00 
+400519.344 
+6692981.50 
+6,442 
+3,192 
+8,00 
+400605.344 
+6692981.50 
+5,515 
+2,523 
+5,00 
+400620.344 
+6692982.50 
+5,187 
+5,754 
+26,00 
+400633.344 
+6692982.50 
+18,082 
+4,222 
+14,00 
+400493.344 
+6692981.50 
+6,976 
+3,192 
+8,00 
+400524.344 
+6692980.50 
+23,258 
+5,171 
+21,00 
+400577.344 
+6692980.50 
+3,835 
+3,742 
+11,00 
+400477.344 
+6692979.50 
+18,185 
+2,523 
+5,00 
+400428.344 
+6692977.50 
+20,167 
+4,37 
+15,00 
+400450.344 
+6692976.50 
+18,337 
+5,412 
+23,00 
+400462.344 
+6692976.50 
+23,607 
+3,568 
+10,00 
+
+
+ 
+15
+400537.344 
+6692976.50 
+6,718 
+3,192 
+8,00 
+400582.344 
+6692978.50 
+4,193 
+3,385 
+9,00 
+400438.344 
+6692983.50 
+20,749 
+9,236 
+67,00 
+400569.344 
+6692976.50 
+4,855 
+2,523 
+5,00 
+400625.344 
+6692980.50 
+21,076 
+7,399 
+43,00 
+400618.344 
+6692975.50 
+12,28 
+7,313 
+42,00 
+400595.344 
+6692980.50 
+6,536 
+8,137 
+52,00 
+400457.344 
+6692975.50 
+23,628 
+5,971 
+28,00 
+400597.344 
+6692975.50 
+4,29 
+2,523 
+5,00 
+400438.344 
+6692974.50 
+19,178 
+4,918 
+19,00 
+400462.344 
+6692974.50 
+23,048 
+3,568 
+10,00 
+400498.344 
+6692976.50 
+4,232 
+4,068 
+13,00 
+400502.344 
+6692977.50 
+4,248 
+4,652 
+17,00 
+400513.344 
+6692974.50 
+5,409 
+2,523 
+5,00 
+400603.344 
+6692977.50 
+6,068 
+7,047 
+39,00 
+400615.344 
+6692973.50 
+8,516 
+5,754 
+26,00 
+400427.344 
+6692971.50 
+15,482 
+6,956 
+38,00 
+400487.344 
+6692971.50 
+9,753 
+4,222 
+14,00 
+400518.344 
+6692971.50 
+22,132 
+5,754 
+26,00 
+400535.344 
+6692971.50 
+23,549 
+6,18 
+30,00 
+400456.344 
+6692969.50 
+22,559 
+5,754 
+26,00 
+400469.344 
+6692971.50 
+19,751 
+3,192 
+8,00 
+400443.344 
+6692969.50 
+20,672 
+3,909 
+12,00 
+400462.344 
+6692969.50 
+19,523 
+4,787 
+18,00 
+400477.344 
+6692974.50 
+7,487 
+5,863 
+27,00 
+400589.344 
+6692968.50 
+5,876 
+5,642 
+25,00 
+400422.344 
+6692968.50 
+13,399 
+2,523 
+5,00 
+400484.344 
+6692969.50 
+5,119 
+2,523 
+5,00 
+400580.344 
+6692969.50 
+3,559 
+2,523 
+5,00 
+400493.344 
+6692967.50 
+8,432 
+7,899 
+49,00 
+400434.344 
+6692966.50 
+20,896 
+4,652 
+17,00 
+400480.344 
+6692966.50 
+11,432 
+3,192 
+8,00 
+400447.344 
+6692967.50 
+17,411 
+3,192 
+8,00 
+400529.344 
+6692966.50 
+3,825 
+2,523 
+5,00 
+400532.344 
+6692967.50 
+3,118 
+2,523 
+5,00 
+400461.344 
+6692966.50 
+7,559 
+2,523 
+5,00 
+400440.344 
+6692964.50 
+18,075 
+4,068 
+13,00 
+400515.344 
+6692962.50 
+7,776 
+4,652 
+17,00 
+400429.344 
+6692965.50 
+16,838 
+4,918 
+19,00 
+400489.344 
+6692963.50 
+6,936 
+2,523 
+5,00 
+400506.344 
+6692963.50 
+3,569 
+3,192 
+8,00 
+400523.344 
+6692962.50 
+10,388 
+4,652 
+17,00 
+400463.344 
+6692961.50 
+19,278 
+4,222 
+14,00 
+400422.344 
+6692959.50 
+22,949 
+7,736 
+47,00 
+400448.344 
+6692959.50 
+23,719 
+4,222 
+14,00 
+400443.344 
+6692957.50 
+13,582 
+6,58 
+34,00 
+400453.344 
+6692958.50 
+21,453 
+3,909 
+12,00 
+
+
+ 
+16
+400476.344 
+6692962.50 
+14,547 
+9,837 
+76,00 
+400432.344 
+6692956.50 
+24,796 
+5,171 
+21,00 
+400416.344 
+6692954.50 
+20,027 
+4,787 
+18,00 
+400418.344 
+6692955.50 
+12,947 
+2,523 
+5,00 
+400425.344 
+6692955.50 
+11,368 
+2,523 
+5,00 
+400463.344 
+6692955.50 
+17,511 
+4,068 
+13,00 
+400474.344 
+6692954.50 
+22,245 
+3,192 
+8,00 
+400480.344 
+6692955.50 
+21,174 
+4,222 
+14,00 
+400435.344 
+6692952.50 
+25,35 
+3,568 
+10,00 
+400461.344 
+6692953.50 
+13,022 
+1,128 
+1,00 
+400467.344 
+6692953.50 
+23,679 
+4,222 
+14,00 
+400461.344 
+6692952.50 
+23,919 
+2,523 
+5,00 
+400428.344 
+6692952.50 
+23,199 
+5,863 
+27,00 
+400442.344 
+6692953.50 
+22,572 
+5,642 
+25,00 
+400413.344 
+6692950.50 
+20,458 
+3,192 
+8,00 
+400455.344 
+6692951.50 
+24,157 
+3,192 
+8,00 
+400447.344 
+6692951.50 
+23,405 
+5,046 
+20,00 
+400451.344 
+6692950.50 
+20,828 
+2,523 
+5,00 
+400439.344 
+6692948.50 
+22,897 
+4,514 
+16,00 
+400406.344 
+6692946.50 
+24,034 
+3,192 
+8,00 
+400414.344 
+6692945.50 
+19,236 
+3,192 
+8,00 
+400435.344 
+6692946.50 
+7,074 
+3,568 
+10,00 
+400422.344 
+6692944.50 
+20,999 
+5,642 
+25,00 
+400412.344 
+6692941.50 
+14,529 
+2,523 
+5,00 
+400409.344 
+6692941.50 
+22,685 
+4,918 
+19,00 
+LMV 
+Antal 
+medel höjd 
+Medel krondiam 
+Medel kron 
+area 
+  
+322 
+14,71 
+4,08 
+14,58 
+SIBBO2 
+  
+  
+  
+  
+  
+Antal 
+Medel höjd 
+Medel krondiam 
+Medel kron 
+area 
+  
+391 
+14,60 
+4,81 
+22,44 
+SKILLNAD 
+Antal 
+Höjd 
+Krondiam 
+Kronarea 
+  
+69 
+0,11 
+0,74 
+7,85 
+
+
+ 
+17
+  
+STAMMAR > 8m 
+sibbo2 
+  
+MML 
+28,336 
+26,587 
+27,157 
+25,35 
+27,166 
+25,134 
+27,069 
+25,383 
+27,187 
+24,157 
+27,597 
+24,022 
+26,905 
+24,287 
+26,155 
+24,197 
+26,694 
+24,107 
+26,163 
+24,344 
+26,279 
+24,249 
+26,224 
+24,796 
+26,337 
+24,703 
+26,527 
+24,034 
+25,877 
+24,059 
+25,158 
+23,258 
+25,434 
+23,607 
+25,876 
+23,254 
+25,966 
+23,805 
+25,645 
+23,199 
+25,859 
+23,919 
+25,655 
+23,679 
+25,073 
+23,615 
+25,598 
+23,719 
+25,722 
+23,048 
+25,397 
+23,756 
+24,149 
+23,628 
+24,46 
+23,702 
+24,621 
+23,138 
+24,342 
+23,626 
+24,997 
+23,28 
+24,621 
+23,437 
+24,094 
+23,549 
+24,539 
+23,735 
+24,446 
+23,405 
+24,18 
+22,572 
+24,62 
+22,927 
+
+
+ 
+18
+24,71 
+22,949 
+24,486 
+22,902 
+23,744 
+22,269 
+23,016 
+22,959 
+23,651 
+22,057 
+23,001 
+22,862 
+23,915 
+22,364 
+23,374 
+22,321 
+23,595 
+22,559 
+23,626 
+22,685 
+23,795 
+22,416 
+23,326 
+22,158 
+23,191 
+22,245 
+22,779 
+22,132 
+22,886 
+22,68 
+22,717 
+22,466 
+22,107 
+22,376 
+22,114 
+22,507 
+22,606 
+22,806 
+22,884 
+22,862 
+22,57 
+22,172 
+22,895 
+22,148 
+22,992 
+22,897 
+22,699 
+22,301 
+22,804 
+21,951 
+22,12 
+21,618 
+22,451 
+21,201 
+22,226 
+21,057 
+22,629 
+21,351 
+22,872 
+21,942 
+22,117 
+21,268 
+22,674 
+21,21 
+21,744 
+21,034 
+21,9 
+21,725 
+21,065 
+21,413 
+21,969 
+21,798 
+21,778 
+21,182 
+21,034 
+21,242 
+21,728 
+21,076 
+21,257 
+21,453 
+21,412 
+21,174 
+21,028 
+21,823 
+21,169 
+21,641 
+21,708 
+21,085 
+21,674 
+20,611 
+21,42 
+20,672 
+21,872 
+20,896 
+20,873 
+20,01 
+
+
+ 
+19
+20,649 
+20,463 
+20,664 
+20,119 
+20,275 
+20,617 
+20,571 
+20,227 
+20,785 
+20,672 
+20,103 
+20,006 
+20,815 
+20,14 
+20,778 
+20,027 
+20,859 
+20,749 
+20,369 
+20,663 
+20,335 
+20,167 
+20,139 
+20,458 
+20,263 
+20,079 
+20,075 
+20,999 
+19,193 
+20,682 
+19,807 
+20,168 
+19,528 
+20,626 
+19,85 
+20,828 
+19,282 
+20,881 
+19,119 
+20,497 
+19,249 
+20,873 
+19,761 
+20,05 
+19,603 
+19,763 
+19,477 
+19,752 
+19,264 
+19,38 
+19,424 
+19,411 
+19,626 
+19,585 
+18,106 
+19,998 
+18,719 
+19,449 
+18,933 
+19 
+18,987 
+19,035 
+18,245 
+19,1 
+18,228 
+19,178 
+18,46 
+19,292 
+18,835 
+19,508 
+18,168 
+19,523 
+18,94 
+19,209 
+18,36 
+19,058 
+18,362 
+19,751 
+17,004 
+19,278 
+17,588 
+19,691 
+17,995 
+19,145 
+17,933 
+19,008 
+17,496 
+19,137 
+17,287 
+19,236 
+17,085 
+19,338 
+17,019 
+18,868 
+17,667 
+18,075 
+
+
+ 
+20
+17,824 
+18,172 
+16,277 
+18,221 
+16,696 
+18,226 
+16,989 
+18,462 
+16,316 
+18,893 
+16,807 
+18,034 
+16,94 
+18,802 
+16,069 
+18,008 
+16,654 
+18,949 
+16,613 
+18,571 
+16,119 
+18,256 
+16,83 
+18,768 
+16,359 
+18,811 
+16,322 
+18,167 
+16,739 
+18,219 
+16,472 
+18,337 
+15,385 
+18,794 
+15,429 
+18,185 
+15,555 
+18,935 
+15,463 
+18,082 
+15,733 
+17,892 
+15,184 
+17,668 
+15,756 
+17,169 
+15,102 
+17,671 
+15,957 
+17,511 
+15,295 
+17,432 
+14,195 
+17,892 
+14,536 
+17,939 
+14,582 
+17,089 
+14,823 
+17,496 
+14,03 
+17,007 
+14,639 
+17,07 
+14,865 
+17,411 
+14,12 
+17,807 
+14,405 
+16,378 
+14,585 
+16,943 
+13,496 
+16,936 
+13,079 
+16,402 
+13,288 
+16,506 
+13,069 
+16,404 
+13,765 
+16,138 
+13,255 
+16,838 
+13,451 
+16,899 
+13,378 
+16,817 
+13,42 
+15,897 
+13,685 
+15,643 
+13,818 
+15,171 
+13,691 
+15,805 
+
+
+ 
+21
+13,187 
+15,194 
+13,516 
+15,482 
+12,724 
+14,869 
+12,192 
+14,318 
+12,902 
+14,526 
+12,496 
+14,547 
+12,444 
+14,529 
+12,366 
+13,582 
+12,9 
+13,104 
+12,924 
+13,399 
+12,171 
+13,022 
+12,049 
+13,674 
+12,049 
+13,627 
+12,487 
+12,613 
+12,95 
+12,28 
+12,225 
+12,112 
+12,49 
+12,446 
+12,7 
+12,262 
+12,865 
+12,947 
+12,982 
+12,957 
+12,612 
+11,087 
+12,078 
+11,593 
+12,234 
+11,368 
+12,913 
+11,301 
+12,974 
+11,049 
+12,277 
+11,432 
+12,139 
+11,019 
+12,776 
+10,737 
+12,233 
+10,962 
+12,597 
+10,388 
+12,18 
+9,042 
+11,67 
+9,026 
+11,024 
+9,753 
+11,806 
+9,793 
+11,897 
+9,269 
+11,073 
+9,648 
+11,041 
+9,093 
+11,86 
+9,638 
+11,639 
+9,134 
+11,896 
+9,232 
+11,045 
+9,607 
+11,507 
+8,516 
+11,812 
+8,542 
+11,467 
+8,432 
+11,88 
+8,077 
+11,441 
+8,145 
+11,362 
+11,796 
+
+
+ 
+22
+11,499 
+11,416 
+11,311 
+11,028 
+11,137 
+11,971 
+11,794 
+11,248 
+11,239 
+11,5 
+11,005 
+11,707 
+11,3 
+11,937 
+11,959 
+11,911 
+11,313 
+11,727 
+11,45 
+11,559 
+11,74 
+11,009 
+11,775 
+11,04 
+11,694 
+11,028 
+11,972 
+10,958 
+10,022 
+10,443 
+10,481 
+10,464 
+10,35 
+10,359 
+10,234 
+10,904 
+10,284 
+10,404 
+10,946 
+10,049 
+10,842 
+10,284 
+10,84 
+10,346 
+10,539 
+10,703 
+10,713 
+10,497 
+
+
+ 
+23
+10,202 
+10,946 
+10,495 
+10,423 
+10,744 
+10,459 
+10,381 
+10,699 
+10,55 
+10,869 
+10,727 
+10,584 
+10,858 
+10,388 
+10,109 
+9,368 
+9,919 
+9,626 
+9,251 
+9,87 
+9,437 
+9,127 
+9,307 
+9,485 
+9,828 
+9,301 
+9,686 
+9,068 
+9,415 
+9,643 
+9,625 
+9,455 
+9,231 
+9,358 
+9,467 
+9,195 
+9,629 
+9,007 
+9,973 
+9,327 
+9,981 
+9,377 
+9,74 
+9,298 
+8,942 
+8,847 
+8,524 
+8,298 
+
+
+ 
+24
+8,872 
+8,66 
+8,192 
+8,638 
+8,492 
+8,074 
+8,832 
+8,749 
+8,849 
+8,564 
+8,312 SIBBO2 
+  
+LMV 
+  
+8,884 Antal 
+340 Antal 
+227 
+8,384 Medel höjd 
+15,86 Medel höjd 
+18,76 
+8,783 
+8,434 
+Skillnad 
+2,90

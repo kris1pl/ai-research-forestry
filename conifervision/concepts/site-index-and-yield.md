@@ -4,10 +4,10 @@ type: Concept
 description: "Dominant height at a reference age, then stand volume and yield capacity. Tree-level stem allometry stays on the source pages."
 tags: [site-index, dominant-height, basal-area, yield, allometry]
 status: stable
-updated: 2026-10-23
+updated: 2026-10-26
 generated:
   by: agent:conifervision-wiki
-  at: 2026-10-23T12:00:00Z
+  at: 2026-10-26T12:00:00Z
 related_methods:
   - methods/chm-detection
   - methods/local-maxima
@@ -20,6 +20,10 @@ sources:
   - sources/paper-a rapid method for estimating the median diameter of the stem profile of norway spruce trees-iforest_ifor1945-009_vasilescu
   - sources/paper-alder_allometry_cpi023
   - sources/paper-allometric relationships of selected european tree-gp_eudor_pdfa1b_euna20855enc_001
+  - sources/paper-diameter, height and volume increment single tree models for improved sitka spruce in great britain-cpab049
+  - sources/paper-nya volymfunktioner för tall, gran och björk-brandel
+  - sources/paper-robust height-diameter allometries for 41 european tree species - stand characteristics and structure matter-2025-09-29-679156v2_full
+  - sources/paper-skattningar i gallringsskog med hjälp av flygburen laserskanning -beräkningar med massaslutenhet
   - sources/paper-evaluation of growth functions used in the swedish forest planning system heureka_article1013
 ---
 # Site index and stand yield
@@ -74,6 +78,7 @@ Equations and fitted coefficients stay on the source pages. Nothing here is impl
 - Can the Estonian dominant-height regression be inverted to recover registry mean height from a UAV top height and a stem count ([[sources/paper-mean_height_or_dominant_height_–_what_to_prefer_for_modelling_the_site_index_of_estonian_forests]])?
 - Can the Polish GADA height curves, run backwards from a CHM dominant height, bound stand age and expected crown size during segmentation ([[sources/paper-site index models for main forest-forming tree species in poland_forests-11-00301]])?
 - Can the invariant $0.3 \times H$ height rule and linear DBH-$D_M$ taper relationship from Vasilescu et al. (2017) be reliably combined with drone-derived CHM heights and crown-allometry DBH estimates to compute individual stem volume in mature spruce stands?
+- Can stand-level volume density (Jonsson 1914) serve as an area-level conservation constraint to bound total basal area and stem density when individual crown detection degrades in dense young stands?
 ## Related
 
 - [[concepts/canopy-height-model]] — height surface these numbers read from

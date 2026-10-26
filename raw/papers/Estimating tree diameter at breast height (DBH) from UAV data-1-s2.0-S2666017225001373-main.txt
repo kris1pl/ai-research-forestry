@@ -1,0 +1,1300 @@
+Estimating tree diameter at breast height (DBH) from UAV data: A 
+comparison of oblique–Vertical imagery fusion and allometric modeling
+Yousef Erfanifard a,b,*
+, Ali Hosingholizade a, Verena C. Griess c,**
+,  
+Virginia Elena Garcia Millan d
+, Saied Pirasteh e,f
+a Department of Remote Sensing and GIS, Faculty of Geography, University of Tehran, Tehran, 1417853933, Iran
+b IDEAS NCBR Sp. z o.o., Ul. Chmielna 69, 00-801, Warsaw, Poland
+c Department of Environmental Systems Science, Institute of Terrestrial Ecosystems, ETH Zurich, Universit¨at Strasse 16, Zurich, 8092, Switzerland
+d Department of Computer Science and Programming Languages, School of Computer Science and Engineering, University of M´alaga, 29071, M´alaga, Spain
+e Institute of Artificial Intelligence, School of Mechanical and Electrical Engineering, Shaoxing University, Shaoxing, 312000, China
+f Department of Geotechnics and Geomatics, Saveetha School of Engineering, Saveetha Institute of Medical and Technical Sciences, Chennai, 602105, Tamil Nadu, India
+A R T I C L E  I N F O
+Keywords:
+Multi-angle imaging
+Pinus eldarica
+Photogrammetry
+Random Forest regression
+Structure-from-Motion
+A B S T R A C T
+Accurate estimation of tree diameter at breast height (DBH) is essential for forest inventory, biomass assessment, 
+and ecological monitoring. Unmanned aerial vehicles (UAVs) have emerged as powerful tools for remote DBH 
+estimation, yet challenges remain in accurately capturing stem dimensions from aerial perspectives. This study 
+compares two approaches for estimating the DBH of pine trees: (I) a data fusion method that combines vertical 
+and oblique UAV imagery to generate high-density point clouds, and (II) a Random Forest-based allometric 
+modeling approach based on metrics derived from vertical UAV data. The first approach evaluated three fusion 
+configurations combining vertical (90◦) and oblique (30◦, 60◦) imagery: S1 (30◦/90◦), S2 (60◦/90◦), and S3 
+(30◦/60◦/90◦). The second approach (S4) employed a Random Forest regression model using features derived 
+from vertical UAV data, including tree height and crown size metrics to estimate DBH. Results demonstrate that 
+the geometric approach using all three viewing angles (S3) achieved the highest accuracy (R2 = 0.985, RMSE =
+2.47 cm), followed closely by S2 (R2 = 0.949), indicating the effectiveness of multi-angle image integration in 
+improving DBH prediction. S4, while less accurate (R2 = 0.824), provided moderately reliable estimates, offering 
+a simpler and more scalable alternative in operational settings. In contrast, S1 significantly overestimated DBH, 
+especially for larger trees, with a high positive bias and the largest RMSE. When evaluated across DBH size 
+classes, S3 consistently outperformed other methods, with strong agreement across small, medium, and large 
+trees. These findings highlight the value of oblique–vertical image fusion in enhancing DBH estimation accuracy, 
+particularly when multiple viewing angles are used. While this study focuses on open-canopy pine stands, future 
+research should assess these methods in denser forests and explore deep learning algorithms for DBH estimation 
+from complex point clouds.
+1. Introduction
+Tree diameter at breast height (DBH) is a fundamental metric in 
+forest science, serving as a primary input for estimating tree volume, 
+aboveground biomass, carbon storage, and for modeling forest growth 
+and stand dynamics (Shao et al., 2022; Wang et al., 2024a). It is also a 
+critical variable in national forest inventories, forest health assessments, 
+and climate change mitigation strategies (Woodall et al., 2005). In field 
+surveys, DBH is typically measured manually at 1.3 m above ground 
+using either a diameter tape or calipers. While this method is straight­
+forward, it is labor-intensive, time-consuming, and logistically chal­
+lenging, particularly in dense, mountainous, or remote forest 
+environments. Moreover, manual measurements are susceptible to 
+human error and inconsistencies, especially in sloped terrain, 
+multi-stemmed trees, or when determining the exact breast height. 
+Studies have shown that DBH measurement errors can affect subsequent 
+* Corresponding author. Department of Remote Sensing and GIS, Faculty of Geography, University of Tehran, Tehran, 1417853933, Iran.
+** Corresponding author.
+E-mail addresses: erfanifard@ut.ac.ir (Y. Erfanifard), a.hosingholizade@ut.ac.ir (A. Hosingholizade), verena.griess@usys.ethz.ch (V.C. Griess), ve.garciamillan@ 
+gmail.com (V.E.G. Millan), spirasteh71@gmail.com (S. Pirasteh). 
+Contents lists available at ScienceDirect
+Science of Remote Sensing
+journal homepage: www.sciencedirect.com/journal/science-of-remote-sensing
+https://doi.org/10.1016/j.srs.2025.100331
+Received 8 July 2025; Received in revised form 3 November 2025; Accepted 5 November 2025  
+Science of Remote Sensing 12 (2025) 100331 
+Available online 6 November 2025 
+2666-0172/© 2025 The Authors. Published by Elsevier B.V. This is an open access article under the CC BY-NC-ND license ( http://creativecommons.org/licenses/by- 
+nc-nd/4.0/ ). 
+
+
+estimates of biomass and carbon by up to 10–20 % depending on the 
+allometric models used (Chave et al., 2005; Clark and Kellner, 2012). 
+Given these limitations, there is a growing need for scalable and efficient 
+alternatives that can provide consistent and accurate DBH estimates 
+across large areas, especially in the context of modern forest monitoring 
+and precision forestry.
+Unmanned aerial vehicles (UAVs) have emerged as powerful tools 
+for forest monitoring, offering high-resolution spatial data, operational 
+flexibility, and cost-effectiveness compared to traditional ground-based 
+surveys and airborne LiDAR (Anderson and Gaston, 2013; Dandois and 
+Ellis, 2013). Although ground-based LiDAR systems such as terrestrial or 
+backpack scanners can provide near-perfect DBH estimates with 
+centimeter-level precision, their application is often constrained by cost 
+(Dassot et al., 2011), labor intensity and time demands (Brede et al., 
+2017), limited mobility in complex terrain (Xie et al., 2020), and 
+reduced efficiency for large-area surveys. Notably, Brede et al. (2017)
+demonstrated that UAV data can achieve DBH estimates comparable to 
+terrestrial LiDAR, highlighting UAVs as a promising, less labor-intensive 
+alternative for DBH estimation in situations where ground-based LiDAR 
+or traditional field measurements are impractical. UAV-based digital 
+aerial photogrammetry (DAP), in particular, has become a widely used 
+method for generating three-dimensional (3D) point clouds that repre­
+sent forest structure. Most UAV surveys rely on vertical (nadir) imagery, 
+which is effective for capturing canopy features and generating canopy 
+height models (CHMs). However, vertical imagery provides limited 
+visibility of the lower stem and forest floor, resulting in sparse or 
+incomplete point cloud data derived from UAV-DAP at breast height 
+(Zhang et al., 2025). UAV-derived point clouds therefore face challenges 
+due to canopy occlusion and reduced point density near the stem base, 
+which complicates direct DBH extraction. These trade-offs highlight the 
+need to explore whether multi-angle UAV imagery, such as 
+oblique-vertical fusion, can mitigate some of these limitations and 
+improve DBH estimation accuracy and reliability across different forest 
+conditions.
+One of the most widely used methods for estimating DBH from 
+remotely sensed data is allometric modeling, which predicts stem 
+diameter based on measurable tree attributes such as height, crown 
+width, crown area, and crown volume (Yao et al., 2012; Iizuka et al., 
+2022). These models are grounded in empirical relationships that link 
+aboveground tree structure to stem dimensions and are especially 
+valuable when direct observation of the stem is not possible. However, 
+the effectiveness of allometric models is often limited by their sensitivity 
+to site-specific and species-specific factors. Applying generalized equa­
+tions across diverse forest types or ecological zones can result in sig­
+nificant estimation errors. As noted by Maltamo et al. (2014), one of the 
+key limitations of height-based DBH prediction is its reduced reliability 
+for larger or mature trees. While tree height tends to plateau as trees 
+reach maturity, stem diameter may continue to increase, leading to 
+greater variability in DBH for trees of similar height. Additionally, the 
+relationship between DBH and height can vary notably between forest 
+stands, further complicating the use of uniform allometric equations.
+In UAV-based studies, allometric models commonly rely on features 
+extracted from vertical imagery, such as tree height from CHMs and 
+crown attributes derived through segmentation techniques (Jia et al., 
+2024; Kwon et al., 2024; Tinkham et al., 2022; Xu et al., 2025). How­
+ever, vertical imagery offers limited visibility of the lower stem, 
+resulting in sparse point cloud data near breast height and making most 
+UAV-derived DBH estimates indirect and potentially less accurate. To 
+overcome this limitation, oblique imagery has been increasingly com­
+bined with vertical views to enhance 3D reconstruction of tree stems. 
+Oblique images provide side perspectives of tree stems, significantly 
+improving point density around the lower stem and enabling more 
+precise geometry-based estimation of DBH and other tree attributes (Ye 
+et al., 2019; Zhou and Zhang, 2020; Lin et al., 2015, 2018, 2021). This 
+fusion of vertical and oblique imagery has shown strong potential for 
+producing detailed, high-resolution 3D models of tree structures from 
+crown to base, thus improving the accuracy and completeness of DBH 
+estimation. Previous UAV-based studies using oblique imagery have 
+mainly focused on parameters such as tree height, crown dimensions, 
+aboveground biomass, or canopy indices rather than DBH itself. For 
+example, Zhou and Zhang (2020) and Lin et al. (2018) used UAV oblique 
+photography to estimate tree height and biomass in plantation and 
+subalpine forests, while Lin et al. (2015) applied it for tree detection in 
+urban environments, and Lin et al. (2021) for leaf area index (LAI) 
+estimation. Although these studies demonstrate the utility of oblique 
+views for improving structural characterization, they did not specifically 
+address DBH estimation through oblique-vertical fusion.
+Despite the growing use of UAVs in forest measurement, relatively 
+few studies have conducted a direct comparison between allometric 
+modeling and data fusion approaches for DBH estimation. While allo­
+metric models using vertical UAV data are well established (Kwon et al., 
+2024; Brede et al., 2022; Liao et al., 2022; Rudge et al., 2021; Khan et al., 
+2025), the integration of oblique imagery with vertical views remains 
+less explored, particularly for estimating DBH directly from point 
+clouds. Oblique–vertical fusion offers the potential to improve stem 
+visibility and 3D reconstruction at breast height, yet the accuracy 
+trade-offs, data processing demands, and practical implications of this 
+approach are not well understood. Moreover, the specific impact of 
+different image acquisition angles on the quality and completeness of 
+tree-level point clouds has received limited attention. Varying angles 
+can influence shadowing, occlusion, and stem detail, all of which affect 
+the fidelity of the 3D reconstruction and, consequently, the reliability of 
+DBH estimates. In contrast to the prior studies, which relied on oblique 
+imagery to improve crown delineation, height accuracy, or canopy 
+structural metrics, our approach explicitly evaluates DBH estimation 
+from fused oblique and vertical point clouds. This distinction is impor­
+tant because DBH has been only indirectly linked to UAV-derived met­
+rics (e.g., through height-biomass allometries (Zhou and Zhang, 2020; 
+Lin et al., 2018)), leaving a gap in direct geometric assessment of stem 
+diameters using multi-angle imagery. Therefore, there is a need to sys­
+tematically evaluate how these two approaches compare in terms of 
+accuracy and operational feasibility, particularly in the context of 
+single-tree modeling in coniferous forest stands.
+While UAV-based DBH estimation has advanced in recent years, 
+relatively few studies have investigated the potential of oblique-vertical 
+image fusion for improving stem reconstruction and diameter mea­
+surement. Furthermore, the specific influence of image acquisition an­
+gles on 3D reconstruction quality and DBH accuracy is still not well 
+understood. Previous studies have demonstrated the benefits of 
+including oblique imagery for stem recognition, but most efforts relied 
+on single-angle acquisitions or indirect inference rather than systematic 
+multi-angle fusion. For instance, Fritz et al. (2013) showed that oblique 
+UAV imagery could reconstruct stems and approximate DBH in open 
+stands, but their design used only a single 45◦tilt without combining 
+vertical and oblique views. More recently, Swayze et al. (2021)
+compared vertical and oblique flights and reported that oblique imagery 
+improved DBH extraction rates. These studies indicate that UAV-based 
+DBH extraction using angled cameras is feasible, yet most prior work 
+has emphasized partial angle settings or indirect inference rather than 
+systematic fusion across multiple angles. By contrast, few studies have 
+explicitly contrasted direct geometric oblique-vertical fusion with con­
+ventional allometric models derived from vertical UAV imagery. To 
+address these gaps, this study compares two methods for estimating DBH 
+from UAV-DAP point clouds in a pine open forest: (1) a data fusion 
+approach that combines vertical and oblique imagery to generate 
+high-density 3D models with enhanced stem visibility, and (2) a Random 
+Forest-based allometric model based on structural features extracted 
+from vertical imagery alone. We hypothesize that (H1) the obli­
+que–vertical fusion approach will yield significantly higher DBH esti­
+mation accuracy than the allometric model, and (H2) increasing the 
+diversity of viewing angles (e.g., combining 30◦, 60◦, and 90◦imagery) 
+will improve the geometric quality of 3D reconstructions and reduce 
+Y. Erfanifard et al.                                                                                                                                                                                                                             
+Science of Remote Sensing 12 (2025) 100331 
+2 
+
+
+DBH estimation error. By positioning our study in this context, we 
+extend the literature beyond earlier UAV oblique application (Zhou and 
+Zhang, 2020; Lin et al., 2015, 2018, 2021; Fritz et al., 2013; Swayze 
+et al., 2021) by systematically testing multi-angle fusion for DBH esti­
+mation. This direct evaluation of angle diversity represents a method­
+ological step forward from prior work, which has primarily focused on 
+DBH allometric modeling from vertical UAV imagery or single-angle 
+oblique acquisitions. The findings also provide practical guidance for 
+designing efficient UAV flight plans that balance accuracy, processing 
+demands, and cost efficiency.
+2. Materials and methods
+2.1. Study area
+North Khorasan Pardisan Park is located roughly 8 km from Bojnord 
+city (Zone 40 -37◦28ʹ 57 ʺ N-57◦25ʹ 49ʺ E) with an average elevation of 
+1,080 m above sea level (Fig. 1). The park is managed by North Khor­
+asan’s General Department of Environmental Protection. It is fenced on 
+two sides and predominantly consists of Eldar pine (Pinus eldarica 
+Medw). The trees within this park were planted in 2004 and 2010 
+roughly following a 3 × 3m grid. The region has a cold semi-arid climate 
+based on the Koppen climate classification. According to Bojnord air­
+port’s meteorological station (the closest station to the study area), 
+Pardisan Park experienced an average annual rainfall of 260 mm and an 
+average temperature of 15 ◦C over a period of ten years (2011–2021). 
+The primary soil type found in this park is silty clay and silty loam. The 
+park’s total area measures approximately 351 ha, with about 21 ha 
+consisting of a pine forest, where the stand density was 46.3 trees per 
+hectare. Due to the restrictions on permits for flying over and staying in 
+this area, a 8-ha section was selected for investigation.
+2.2. Field data collection
+All pine trees located in open stands of the study area were surveyed 
+during a five-day field campaign. DBH was measured at 1.3 m above 
+ground using a standard metal caliper with a precision of ±1 mm. To 
+ensure measurement consistency and accuracy across all trees, a fixed 
+vertical staff was employed to consistently mark the DBH point on each 
+stem. Tree locations were captured with a Raymand iRoG3B dual- 
+frequency global positioning device integrating within the Shamim na­
+tional positing network. The device provided high-precision positioning, 
+with horizontal and vertical accuracies of 0.45 cm and 0.8 cm, respec­
+tively. During measurements, horizontal accuracy was maintained 
+below 0.5 cm and vertical accuracy below 1 cm to remain within 
+operational limits of the device. A built-in tilt sensor was activated for 
+each tree to ensure correct alignment, minimizing potential errors 
+caused by stem inclination or operator misalignment. Crown diameter 
+was recorded using a metal measuring tape by projecting the outermost 
+edges of the crown vertically onto the ground and measuring the large 
+and its perpendicular crown diameters (i.e., CD1 and CD2). Tree height 
+and height to crown base (HCB) were measured from the base of the 
+stem to the top of the crown and to the point where the crown begins, 
+respectively, using a Leica TS02 total station. Additionally, the 
+geographic coordinates of each tree were recorded using a Raymand 
+iRoG3B dual-frequency GPS receiver (Raymand, Tehran, Iran) (Fig. 1).
+2.3. UAV imaging
+A DJI Phantom 4 Pro UAV (DJI, Shenzhen, China), equipped with 
+vertical take-off and landing (VTOL) capabilities, was utilized for aerial 
+imaging. This drone features a 20-megapixel camera and a lightweight 
+design (1,380 g), offering cost-effectiveness alongside advanced imaging 
+functionality, including adjustable shutter speed and viewing angle. The 
+Phantom 4 Pro captures images in the red, blue, and green spectral 
+bands in JPEG format. The integrated three-axis gimbal ensures image 
+stability by minimizing deviation and vibration during flight. Addi­
+tionally, the combined use of GPS and GLONASS satellite navigation 
+systems enhances flight stability and enables rapid positioning and 
+connectivity during image acquisition.
+Aerial images were captured on March 4, 2021, at 14:30 local time 
+(UTC 11:00). To generate an accurate 3D model and establish a ground 
+reference, 14 ground control points (GCPs) were surveyed using dual- 
+frequency GPS receivers under the Shamim system (Property Posi­
+tioning Network), ensuring adequate spatial distribution across the 
+study area. Images were acquired at a flight altitude of 40 m above 
+ground level, with 80 % longitudinal and 40 % lateral overlap. The flight 
+path was planned in the longitudinal direction and executed automati­
+cally to maximize efficiency and ensure continuous coverage. A total of 
+2,034 vertical or nadir (90◦) and oblique images were captured at two 
+crossing angles (30◦and 60◦) along the same preplanned flight path, 
+achieving a Ground Sampling Distance (GSD) of 2 cm over the 8-ha 
+study area (Fig. 1). Specifications of the camera and digital aerial im­
+ages are detailed in Table 1.
+2.4. Preprocessing and point cloud extraction
+Following image acquisition, each UAV image was inspected for 
+quality issues such as motion blur, excessive tilt, and lighting distortions 
+caused by strong sunlight. A total of 39 images that did not meet the 
+Fig. 1. Location of Pardisan Park, the study area, in North Khorasan Province, Iran. Green points represent the locations of individual trees, while red points indicate 
+the 14 ground control points overlaid on the orthophoto of the study area.
+Y. Erfanifard et al.                                                                                                                                                                                                                             
+Science of Remote Sensing 12 (2025) 100331 
+3 
+
+
+required quality criteria were excluded from further processing. To 
+georeference the imagery accurately, 14 ground control points (GCPs) 
+(Fig. 1) were used, each with a horizontal and vertical error of less than 
+1 cm. The remaining high-quality images were then processed in 
+Pix4Dmapper Pro v4.5.6 (Pix4D SA, Lausanne, Switzerland) to generate 
+an initial 3D model using the Structure from Motion (SfM) method. SfM 
+is a photogrammetric technique that reconstructs three-dimensional 
+(3D) structures from two-dimensional (2D) image sequences. It works 
+by detecting common features across multiple overlapping images and 
+analyzing their parallax from different viewpoints to estimate camera 
+positions and 3D geometry (Fritz et al., 2013; Swayze et al., 2021; Mao 
+et al., 2023; Li et al., 2022; Wallace et al., 2016). This method, widely 
+used in remote sensing, forestry, archaeology, and computer vision, was 
+further applied for advanced processing steps.
+To ensure comprehensive tree canopy reconstruction, UAV images 
+were collected at three different view angles: vertical (nadir, 90◦), and 
+two oblique angles (30◦and 60◦). The vertical images yielded a point 
+cloud density of approximately 0.6 points/cm2, while the 30◦and 60◦
+oblique images resulted in point cloud densities of 0.8 and 0.9 points/ 
+cm2, respectively. Each dataset (90◦, 30◦, 60◦) was processed indepen­
+dently using a combination of SfM and Multi-View Stereo (MVS) algo­
+rithms. The processing pipeline included feature detection, image 
+alignment, camera calibration, sparse point cloud generation, dense 
+reconstruction, and final point cloud densification.
+To enhance structural completeness and reduce occlusion effects, 
+especially in complex forest canopies, multi-angle image datasets were 
+fused into three higher-density composite point clouds, i.e., S1: fusion of 
+90◦(vertical) and 30◦(oblique) images (1.0 points/cm2); S2: fusion of 
+90◦
+and 60◦
+images (1.14 points/cm2); S3: fusion of all three 
+angles—90◦, 30◦, and 60◦(1.27 points/cm2). Each initial image set was 
+first processed independently using SfM_MVS to generate a dense point 
+cloud. Fusion was achieved by co-registering the respective point clouds 
+using shared tie points, followed by a unified bundle adjustment to 
+jointly optimize camera positions and intrinsic parameters across all 
+included images. A final dense point reconstruction step was then per­
+formed on the fused datasets to generate the final high-resolution 
+composite point cloud for each dataset. This workflow ensures that 
+the fusion considers complementary perspectives from multiple angles, 
+enhancing canopy completeness and reducing occlusion effects, rather 
+than simply stacking independent SfM outputs. To reduce high- 
+frequency noise and further improve spatial accuracy, a median filter 
+was applied to the resulting dense point clouds.
+Unlike LiDAR-derived point clouds, which contain discrete returns 
+(first, intermediate, last), UAV-DAP point clouds produced through SfM 
+lack return order information. Consequently, these point clouds repre­
+sent continuous surfaces without intrinsic classification into ground, 
+canopy, or understory layers. Previous studies (Cao et al., 2019; 
+Mielcarek et al., 2025; St-Onge et al., 2015; Rahlf et al., 2014) have used 
+Airborne Laser Scanning (ALS) data to normalize UAV-DAP point clouds 
+derived from SfM. However, because ALS data were not available in the 
+study area, ground points were removed using a custom algorithm 
+implemented in MATLAB R2024b (MathWorks, Natick, MA, USA) to 
+isolate individual trees and exclude ground interference. Ground surface 
+points were separated based on elevation and neighborhood topology, 
+allowing clean segmentation of above-ground tree structures and accu­
+rate identification of the 1.30 m height level required for DBH estima­
+tion. Using the classified point cloud from the vertical (90◦) imagery, a 
+Digital Terrain Model (DTM) and a Digital Surface Model (DSM) were 
+generated via Inverse Distance Weighting (IDW) interpolation. Sub­
+tracting the DTM from the DSM yielded a Canopy Height Model (CHM) 
+with a spatial resolution of 2 cm, consistent with the GSD of the imagery.
+2.5. DBH estimation from multi-angle UAV data (S1–S3)
+The DBH estimation for the three datasets (S1, S2, and S3) initially 
+employed a RANSAC (Random Sample Consensus)-based circle fitting 
+algorithm aimed at robustly fitting circles to noisy and incomplete point 
+cloud data. The CHM was segmented using a marker-controlled water­
+shed algorithm, identifying local maxima as tree tops and delineating 
+individual tree crowns with high spatial precision by partitioning the 
+canopy based on elevation gradients. Normalized point clouds, cor­
+rected for ground elevation, were spatially clipped by these crown 
+polygons to isolate points belonging to each tree.
+For DBH estimation, points within a vertical slice centered around 
+1.3 m above ground (specifically between 1.2 m and 1.4 m) were 
+extracted, consistent with standard forestry breast height measure­
+ments. Within this slice, only the two-dimensional horizontal co­
+ordinates (X and Y) of points were used for fitting. The RANSAC 
+algorithm was intended to robustly fit circles by iteratively sampling 
+triplets of points to estimate candidate circles, selecting the one with the 
+highest number of inliers within a 2 cm tolerance to handle noise and 
+outliers common in terrestrial, UAV LiDAR and UAV-DAP datasets. 
+However, it was found that for most trees, especially in the S1 dataset, 
+the number of points within the 1.2–1.4 m height band was too low for 
+RANSAC to perform effectively due to insufficient data density and oc­
+clusions, which limited the algorithm’s ability to identify a robust cir­
+cular consensus. Therefore, to maintain consistency and reliability 
+across all datasets and trees, a direct least-squares circle fitting method 
+within the 1.2–1.4 m height band without random sampling was used 
+exclusively. As successfully implemented in previous studies (Fritz et al., 
+2013; Swayze et al., 2021; Swayze and Tinkham, 2022; Michałowska 
+et al., 2023), this method fits a circle to all available points simulta­
+neously by solving the linear system for circle parameters (center co­
+ordinates and radius) via ordinary least squares.
+Implementation details include: the vertical slice for DBH estimation 
+was strictly between 1.2 and 1.4 m; the estimated radius from the best-fit 
+circle was then doubled to derive the DBH in centimeters. This approach 
+effectively accounted for partial occlusions and irregular point distri­
+butions by leveraging all available data points in the slice, ensuring 
+robust DBH estimation despite low point densities.
+2.6. Random Forest modeling (S4)
+Given the nonlinear relationships and potential interactions among 
+UAV-derived features, an allometric model based on the Random Forest 
+(RF) algorithm was selected as the most suitable modeling approach due 
+to its robustness, ability to handle multicollinearity, and high predictive 
+performance without requiring strict parametric assumptions. This 
+method is particularly effective with medium-sized datasets and can 
+capture complex patterns between remote-sensing variables and tree 
+dimensions (Xu et al., 2025; Mao et al., 2023; Dalla Corte et al., 2020; Ye 
+et al., 2025). An RF regression model was developed to estimate tree 
+DBH using UAV-derived metrics as predictors (S4).
+Table 1 
+UAV platform (DJI Phantom 4 Pro) camera specifications (FC6310) and flight/ 
+image acquisition parameters used in this study (www.dji.com, access date: 19 
+December 2021).
+Camera specifications (DJI 
+Phantom 4 Pro, FC6310)
+Flight and image acquisition parameters
+Sensor
+1-inch CMOS, 
+20 MP
+UAV flight altitude
+40 m above ground 
+level
+Image 
+resolution
+5472 × 3448 
+pixels
+Ground Sampling 
+Distance (GSD)
+~2 cm
+Focal length
+24 mm
+Overlap
+80 % longitudinal and 
+40 % lateral
+Pixel size
+~2.4 μm
+UAV speed
+4 m/s
+Image 
+format
+JPEG (RGB 
+bands)
+Camera tilt angles
+90◦(nadir), 30◦, 60◦
+(oblique)
+Shutter 
+speed
+1/160 s
+Number of images 
+acquired
+2,034
+Gimbal
+3-axis 
+stabilized
+Ground control 
+points (GCPs)
+14 (<1 cm accuracy)
+Y. Erfanifard et al.                                                                                                                                                                                                                             
+Science of Remote Sensing 12 (2025) 100331 
+4 
+
+
+The model utilized five explanatory variables, i.e., UAV-measured 
+tree crown area, the large and its perpendicular crown diameters (i.e., 
+CD1E and CD2E), height, and crown volume. All these attributes were 
+extracted from vertical (90◦) images. Crown area was obtained by 
+applying marker-controlled watershed segmentation to the CHM, 
+allowing precise delineation of individual tree crowns. The CD1E and 
+CD2E were measured directly from the segmented crown polygons, 
+representing the longest and the perpendicular widths of each crown, 
+respectively. Tree height was derived from the CHM by calculating the 
+maximum height value within each individual crown. Finally, crown 
+volume was estimated by first normalizing the point cloud so all height 
+values represent height above ground, ensuring a consistent vertical 
+reference. Points below the HCB were then excluded to isolate only the 
+crown. For each crown, volume was computed using a 3D alpha 
+shape—a generalization of the convex hull that captures concave ge­
+ometries. The alpha radius (α) controls the shape’s detail: smaller values 
+reveal fine structure, while larger ones yield smoother volumes. To 
+improve robustness across varying crown forms and point densities, the 
+script tests a range of alpha values (α = 0.5, 1, 2, 5, 10), selecting the first 
+that produces a valid volume (Colaço et al., 2017; Wang et al., 2024b; Di 
+Gennaro and Matese, 2020).
+Model training was conducted using the randomForest package in R, 
+with a holdout validation approach to assess model performance (Liaw 
+and Wiener, 2002). The dataset was randomly split, using 80 % for 
+training and 20 % for testing. A grid search was performed to tune three 
+key hyperparameters: mtry (ranging from 1 to 20 with a step of 1), ntree 
+(100, 500, 1000, 1500, 2000, 2500), and nodesize (1, 5, 10, 15, 20). For 
+each parameter combination, a model was trained on the training data 
+and evaluated on the test data using the root mean squared error (RMSE) 
+and coefficient of determination (R2). The combination that yielded the 
+lowest RMSE was selected as the final model. Variable importance scores 
+were calculated as part of the modeling process, and no additional data 
+preprocessing (e.g., scaling or normalization) was required, as RF is 
+inherently robust to different variable scales. The final model was then 
+applied to predict DBH for all trees with complete UAV-derived data.
+2.7. Accuracy assessment of DBH estimation
+To evaluate the performance of UAV-based DBH estimation, three 
+geometric and one allometric modeling were considered: S1 (DBH 
+estimated from point clouds generated by fusing 90◦and 30◦UAV im­
+ages), S2 (from point clouds of fused 90◦and 60◦images), S3 (from 
+fusion of all three viewing angles: 90◦, 30◦, and 60◦), and S4 (DBH 
+predicted using an RF-based allometric model trained on features 
+derived from point clouds of vertical UAV images). The accuracy of 
+these methods was assessed by comparing their estimated DBH values 
+against field-measured DBH for individual trees. Statistical evaluation 
+was carried out in several steps. First, the distribution of residuals (i.e., 
+the difference between field and estimated DBH) for each method was 
+assessed for normality using the Shapiro–Wilk test. Based on the result, 
+either a paired t-test or a Wilcoxon signed-rank test was applied to 
+determine whether the mean difference between the field and estimated 
+DBH was statistically significant.
+In addition to evaluating the DBH estimation methods, a correlation 
+analysis was conducted to compare the individual explanatory variables 
+used in the RF-based allometric model. These included crown area 
+(derived from segmented CHM), estimated crown diameters (CD1E and 
+CD2E), and tree height (measured both in the field and from vertical 
+UAV-derived CHM). The goal was to confirm the consistency between 
+UAV-based measurements and ground truth data, thereby validating the 
+accuracy of the input variables used in the RF-based allometric model 
+for DBH estimation.Next, five standard error metrics were calculated for 
+each method: Mean Absolute Error (MAE), RMSE, relative RMSE 
+(rRSME%) Coefficient of Determination (R2), and Bias. These metrics 
+provided a comprehensive view of the accuracy, precision, and sys­
+tematic deviation of the predictions. Based on the field-measured DBHs, 
+three DBH size classes (i.e., Small, Medium, and Large) were defined 
+using tertiles of the observed distribution to ensure roughly equal 
+sample sizes. To visualize and further interpret estimation performance 
+for all sample trees and across different size classes, two main plots were 
+generated. A correlation plot displayed the relationship between esti­
+mated and field DBHs, stratified by estimation method and tree size 
+class. Each subplot reported the R2 value to quantify goodness-of-fit. A 
+Bland–Altman plot was also created to illustrate the agreement between 
+field and estimated DBHs, with the mean difference (Bias) and Limits of 
+Agreement (LoA) (±1.96 SD) annotated on each subplot. Additionally, 
+the distribution of absolute errors across methods was visualized using 
+violin and box plots to reveal potential differences in variability and 
+error magnitude. Together, these statistical and visual analyses allowed 
+for a robust comparison of three geometric (S1-S3) and one allometric 
+(S4) DBH modeling in relation to field-measured DBHs.
+3. Results
+In this study, a total of 324 pine trees, representing a range of DBH 
+classes, were measured through fieldwork. A summary of the recorded 
+measurements is illustrated in Fig. 2. These violin plots, which combine 
+box plots with kernel density estimates, provide valuable insights into 
+the structural variability of the sampled trees. The DBH distribution is 
+moderately symmetrical, with most values concentrated around 30–50 
+cm and a few outliers, indicating a mix of younger and mature trees. The 
+Height variable shows a slightly right-skewed distribution, with most 
+trees between 6 and 10 m tall, reflecting some variation in age or growth 
+conditions. The Crown area shows a wider and more right-skewed dis­
+tribution, with several high-value outliers, suggesting substantial vari­
+ability in canopy spread, likely influenced by light avail-ability. Both 
+CD1 and CD2 have distributions centered around 5–6 m and 4–5 m 
+respectively, with relatively less skew, although CD1 has a few notable 
+outliers. The box plots within each violin plot further highlight the 
+interquartile range and median of each attribute, illustrating central 
+tendency and spread. Overall, the data highlight structural heteroge­
+neity within the study area, which is important for evaluating methods 
+of DBH estimation.
+To evaluate the correspondence between field-measured trees and 
+UAV-derived observations, high-precision tree locations were recorded 
+using a dual-frequency GPS device with horizontal and vertical accu­
+racies of less than 1 cm. UAV imagery had a GSD of 2 cm, and the 
+average spacing between trees was approximately 15 m, all facilitating 
+the identification of individual trees. These measures allowed reliable 
+matching of field trees to UAV-detected trees, particularly in the S3 and 
+S4 datasets, whereas S1 and S2 did not capture all trees. The correlation 
+analysis between field-based and UAV-derived explanatory variables 
+revealed significant correlations across all assessed variables. High 
+correlation coefficients were observed for height (0.98), large crown 
+diameter (CD1 vs. CD1E; 0.96), perpendicular crown diameter (CD2 vs. 
+CD2E; 0.92), and crown area (0.92), all of which were statistically sig­
+nificant (p < 0.05). These results suggest that the explanatory variables 
+estimated from vertical UAV images are sufficiently reliable to be 
+implemented in DBH estimation using S4 (RF-based allometric 
+modeling).
+The impact of various image fusion configurations on the 3D 
+reconstruction quality of a sample tree is shown in Fig. 3. As the number 
+and diversity of viewing angles increase, from two-angle combinations 
+(S1 and S2) to the full three-angle fusion in S3, the resulting point clouds 
+exhibit marked improvements in both structural completeness and point 
+density. The enhanced detail in the S3, especially in the stem, crown and 
+upper portions of the tree, suggests that combining vertical and oblique 
+imagery provides complementary geometric information that improves 
+surface coverage. These improvements probably contribute to more 
+accurate DBH estimation, approaching the field-measured value more 
+closely in the S3 case.
+The circle fitting of stem cross-sections reveals notable differences in 
+Y. Erfanifard et al.                                                                                                                                                                                                                             
+Science of Remote Sensing 12 (2025) 100331 
+5 
+
+
+reconstruction quality across the three image fusion configurations. 
+Using UAV-DAP point clouds at breast height (1.2–1.4 m) and applying 
+the least-squares circle fitting method, the fitted circles in the S3 align 
+most closely with the actual stem shape, indicating higher geometric 
+accuracy and a DBH estimate closest to the field-measured value for the 
+sample tree shown in Fig. 3. In contrast, the S1 and S2 exhibit greater 
+deviation, suggesting that limited viewing angles may reduce the pre­
+cision of DBH estimation (Fig. 4).
+The S4 demonstrated reliable predictive performance for estimating 
+field-measured DBH using UAV-derived variables. Among the 27 tested 
+combinations of hyperparameters, the best performance on the test 
+dataset was achieved with mtry = 3, ntree = 100, and nodesize = 5. The 
+model was trained on 80 % of the dataset (i.e., 259 trees) and validated 
+on the remaining 20 % (i.e., 65 trees), using a fixed random seed for 
+reproducibility and with variable importance enabled. The most influ­
+ential predictors based on the increase in MSE were tree height (62.06 
+%), crown volume (with the alpha value of 0.5 for all individuals) 
+(30.38 %), crown area (21.54 %), and the large and perpendicular crown 
+diameters (CD1E and CD2E) at 16.96 % and 14.04 %, respectively. 
+Overall, the final model achieved an RMSE of 2.21 cm and an R2 of 0.96, 
+indicating that it explains 96 % of the variance in field-measured DBH. 
+The low RMSE suggests that the model predictions are closely aligned 
+with actual measurements, demonstrating its reliability for estimating 
+tree structure based on UAV-derived data.
+The Shapiro–Wilk test was first applied to evaluate the normality of 
+the residuals, defined as the difference between field-measured DBH and 
+the DBH estimated by each method (S1–S4). In all cases, the test results 
+indicated a significant deviation from normality (p < 0.05), which 
+warranted the use of the non-parametric Wilcoxon signed-rank test for 
+subsequent pairwise comparisons. The Wilcoxon test revealed that for 
+methods S1 and S4, the differences between estimated and field- 
+measured DBH values were statistically significant (p < 2.2e−16). In 
+contrast, methods S2 and S3 showed no statistically significant differ­
+ence from the field-measured DBH values (p = 0.2463 and p = 0.7242, 
+respectively), indicating better alignment with ground truth.
+The accuracy evaluation of DBH estimation methods (S1–S4) based 
+on MAE, RMSE, R2, and Bias revealed notable differences in 
+performance. Method S3 demonstrated the highest accuracy, with an R2 
+of 0.98, the lowest RMSE (2.46 cm), rRMSE (6.7 %), and minimal bias 
+(0.21 cm), indicating a strong agreement with field measurements and 
+minimal systematic error. Similarly, S2 showed high predictive perfor­
+mance (R2 = 0.86) with low MAE and rRMSE values (4.68 cm and 12.7 
+%, respectively) and negligible bias, suggesting reliable estimates. In 
+contrast, S1 and S4 exhibited lower R2 values (0.79 and 0.82, respec­
+tively) and substantially higher errors and biases, particularly for S1, 
+which showed a mean bias of 11.40 cm. The error patterns align with the 
+statistical significance tests, where S2 and S3 did not differ significantly 
+from the ground truth, further supporting their superior reliability. It 
+should be noted that the S4 model internal validation during training 
+achieved a higher predictive accuracy (RMSE = 2.21 cm, R2 = 0.96) 
+when evaluated on the 20 % test subset, reflecting the model optimized 
+performance under controlled conditions. However, the values reported 
+in Table 2 (RMSE = 8.79 cm, R2 = 0.82) correspond to the model 
+application to the entire dataset for consistency with the comparative 
+evaluation of all methods (S1-S4), which naturally results in higher 
+overall errors and lower explained variance.
+Fig. 5 presents a comparative analysis of the DBH estimation 
+methods through scatter plots (upper panel) and Bland–Altman plots 
+(lower panel). The scatter plots display the relationship between esti­
+mated and field-measured DBH values for each method. Methods S2 and 
+S3 show strong linear agreement with the 1:1 line, indicating accurate 
+estimations across the range of DBH values. S4 also performs moderately 
+well, though with increased scatter at higher DBH values. In contrast, S1 
+consistently overestimates DBH, especially at larger sizes, as shown by 
+points above the 1:1 line. The Bland–Altman plots quantify the estima­
+tion error by plotting the difference between estimated and measured 
+DBH against their mean. S1 exhibits a clear positive bias (Bias = 11.40, 
+Table 2) and wide limits of agreement (LoA = −16.69 to 39.53), indi­
+cating increasing error with DBH and reduced accuracy. In contrast, S2 
+(Bias = −0.59, LoA = −9.70 to 8.52) and S3 (Bias = 0.21, LoA = −4.60 
+to 5.01) maintain differences near zero with narrow LoA and no clear 
+trend, suggesting better accuracy and minimal systematic bias. S4 shows 
+slightly more variability (LoA = −18.75 to 7.11) and a mild negative 
+bias (Bias =
+−5.82) at lower DBH values, indicating some 
+Fig. 2. Violin plots showing the distribution of five attributes (DBH, Height, Crown area, large and its perpendicular crown diameters, i.e., CD1 and CD2) measured 
+from 324 trees in the study area. The blue lines show three DBH size classes, i.e., small (≤30 cm, n = 112), medium (30–43 cm, n = 106), and large (>43 cm, n 
+= 106).
+Y. Erfanifard et al.                                                                                                                                                                                                                             
+Science of Remote Sensing 12 (2025) 100331 
+6 
+
+
+underestimation and less consistency.
+In the analysis of tree detection performance across methods S1 to 
+S4, it was found that S1 failed to detect 31 trees (Fig. 5, S1), accounting 
+for 9.6 % of the dataset, while S2 failed to detect 11 of those 31 trees, 
+representing 3.4 % of the total observations (Fig. 5, S2). The remaining 
+20 trees had DBH estimations in S2 despite being missed by S1. Trees 
+missed by S1 and S2 had DBH values ranging from 8.28 cm to 34.39 cm. 
+No missed detections were recorded for methods S3 and S4.
+The violin plot (Fig. 6) illustrates the absolute error in DBH estima­
+tion across four methods (S1–S4), combining box plots with kernel 
+density distributions to show both the central tendency and spread of 
+errors. Among the methods, S2 and S3 stand out as the most accurate 
+and consistent, with median errors below 5 cm and tightly clustered 
+distributions, indicating minimal variability and few outliers. S4 per­
+forms moderately well, with a higher median error (around 7–8 cm) and 
+a broader spread, suggesting greater variability in estimation. In 
+contrast, S1 demonstrates the poorest performance, exhibiting a high 
+median error (~14 cm), a wide interquartile range, and numerous 
+extreme outliers reflecting substantial inconsistency.
+A comparative analysis of three geometric (S1-S3) and one allometric 
+(S4) DBH modeling across three DBH classes is presented using scatter 
+plots of estimated versus field-measured DBH values, with R2 values 
+indicating the strength of the correlation. Method S3 consistently yields 
+the highest accuracy, with R2 values of 0.96 (small), 0.90 (medium), and 
+0.88 (large), suggesting strong agreement with field measurements. In 
+contrast, S1 and S4 show lower R2 values, particularly for medium DBH 
+trees (e.g., S1: R2 = 0.32, S4: R2 = 0.40) (Fig. 7, upper panel). The 
+Bland–Altman plots show the differences between estimated and field 
+DBH against their mean values. For S1, biases range from 0.68 to 22.9 
+cm, with wide LoA (e.g., large class: LoA = 4.6–41.2 cm), indicating 
+substantial overestimation and variability. S3 performs best, with low 
+biases (−1.68–2.53 cm) and narrow LoA (e.g., medium: −3.2 to 2.56 
+cm), suggesting accurate and consistent estimates. In contrast, S4 shows 
+the largest underestimation, especially for small DBH trees (bias =
+−7.95 cm, LoA = −20.09 to 4.19 cm) (Fig. 7, lower panel). Overall, S3 is 
+the most reliable method for DBH estimation across all size classes, 
+while S1 and S4 exhibit greater bias and variability, particularly in the 
+extremes of DBH distribution.
+Fig. 3. Visualization of a sample tree with a height of 11.6 m, diameter at 
+breast height (DBH) of 60.5 cm, and a crown area of 28.2 m2 based on field 
+measurements. Upper panel: Comparison of point density for this tree across 
+three image fusion configurations combining nadir (90◦) and oblique (30◦, 60◦) 
+imagery: S1 (30◦/90◦), S2 (60◦/90◦), and S3 (30◦/60◦/90◦). Lower panel: 
+Screen-shots from CloudCompare v2.13.0 (CloudCompare, Open Source Proj­
+ect, Telecom Paris, Paris, France) showing the 3D representation of the tree in 
+the S1 (Height: 10.7 m; point density: 0.13 points/cm2), S2 (Height: 10.8 m; 
+point density: 0.28 points/cm2), and S3 (Height: 11.2 m; point density: 0.76 
+points/cm2).
+Fig. 4. Circular fitting of stem cross-sections for a sample tree with a DBH of 60.5 cm (shown in Fig. 3), derived from UAV-DAP point clouds at breast height (1.2–1.4 
+m) across three datasets (S1, S2, S3). Blue points represent raw stem point cloud data, and red circles depict the fitted stem cross-section obtained via a least-squares 
+circle fitting method.
+Table 2 
+Error metrics (mean absolute error, MAE; root mean squared error, RMSE; co­
+efficient of determination, R2, Bias) for DBH estimates from methods S1–S4.
+Method
+MAE (cm)
+RMSE (cm)
+rRMSE (%)
+R2
+Bias
+S1
+15.70
+18.30
+49.8
+0.79
+11.40
+S2
+2.51
+4.68
+12.7
+0.86
+−0.59
+S3
+1.91
+2.46
+6.7
+0.98
+0.21
+S4
+7.18
+8.79
+23.9
+0.82
+−5.82
+Y. Erfanifard et al.                                                                                                                                                                                                                             
+Science of Remote Sensing 12 (2025) 100331 
+7 
+
+
+4. Discussion
+The structural diversity of the sampled pine trees provided a robust 
+basis for evaluating both hypotheses in this study (H1 and H2). With 324 
+individuals spanning a broad range of DBH classes from younger, 
+thinner stems to mature trees with large diameters (Fig. 2) the dataset 
+captured significant variability in tree morphology. This was further 
+reflected in the distribution of variables such as height, crown area, and 
+crown diameters, each exhibiting distinct patterns of skewness and 
+spread. The presence of both symmetrical and right-skewed distribu­
+tions, as well as high-value outliers in crown metrics, suggests hetero­
+geneity in growth conditions, canopy development, and spatial 
+competition. Such diversity is critical for testing H1, as it allows for a 
+meaningful comparison between the oblique–vertical fusion approach 
+and the allometric model across a range of tree forms. It also supports H2 
+by providing varied canopy structures and complexities where im­
+provements in 3D reconstruction quality achieved by integrating multi- 
+angle imagery can be reliably assessed. The variability in tree 
+Fig. 5. Comparison of estimated and field-measured DBH. Upper panel: Scatter plots with 1:1 Gy dashed line. Lower panel: Bland–Altman plots showing bias (blue 
+dashed line) and limits of agreement (red dotted lines) for each method (S1–S4).
+Y. Erfanifard et al.                                                                                                                                                                                                                             
+Science of Remote Sensing 12 (2025) 100331 
+8 
+
+
+dimensions ensured that the proposed modeling approaches were 
+challenged under realistic and heterogeneous conditions, strengthening 
+the generalizability of the findings.
+The structural characteristics of the point cloud data reveal signifi­
+cant differences in stem representation across the three acquisition 
+strategies (S1–S3). As illustrated in Fig. 4, the point cloud generated in 
+S1 exhibited a sparse and uneven distribution of points around the trunk 
+cross-section, with notable gaps likely caused by occlusions and limited 
+viewing angles inherent in purely vertical or shallow oblique imagery. In 
+contrast, S2 improved lateral surface coverage, albeit modestly, by 
+incorporating additional oblique perspectives. The most complete and 
+uniform stem reconstruction was achieved in S3, where the integration 
+of vertical and multiple oblique images (including up to 60◦) enabled 
+dense, continuous point distributions around the stem perimeter. This 
+multi-angle fusion effectively reduced occlusions and improved surface 
+realism, enhancing the accuracy of geometric reconstruction at breast 
+height. Analysis of tree detection performance across methods further 
+supports the importance of viewpoint diversity. In S1 and S2, 9.6 % and 
+3.4 % of trees, respectively, were not detected due to insufficient point 
+density at the critical DBH measurement height (1.2–1.4 m), preventing 
+successful circle fitting. These undetected cases were not confined to a 
+specific DBH class but were mostly associated with smaller stems (<30 
+cm), suggesting that detection failures were more likely driven by lim­
+itations in coverage, resolution, or algorithmic sensitivity rather than by 
+tree size alone. These findings align with observations by Swayze and 
+Tinkham (2022) and Swayze et al. (2021), who also reported that the 
+smallest trees exhibited the greatest DBH estimation errors and were 
+often underrepresented in UAV-derived vertical and oblique (20◦–35◦) 
+datasets. Similarly, Ye et al. (2019) combined vertical and oblique im­
+agery (35◦–50◦) to generate single point clouds for DBH estimation of 
+American sweetgum in an urban setting. However, they did not compare 
+different angle combinations, and their study included only 49–63 trees 
+(10–30 cm DBH), lacking analysis by DBH class. Notably, Ye et al. found 
+that lower oblique angles (e.g., 35◦) produced poorer feature detection 
+and lower point density due to greater camera-to-object distances and 
+broader fields of view. These observations support our findings that 
+wider oblique angles (e.g., 60◦) substantially improve stem visibility and 
+measurement reliability, particularly for small or partially occluded 
+trees. Moreover, previous studies have highlighted the advantages of 
+fusing vertical and oblique imagery for improving DBH and tree height 
+estimations. Swayze et al. (2021) reported detecting only 40 % of trees 
+in a 1-ha plot (890 trees) using fusion-based point clouds, whereas our 
+study achieved higher detection rates, even in S1 (90.4 %) and S2 (96.6 
+%), likely due to the lower canopy occlusion in our single-layer 
+coniferous stand and increased point density from multi-angle image 
+fusion. This aligns with Fritz et al. (2013), who successfully extracted 
+DBH values for 70 % of trees in a leaf-off broadleaved stand using 
+oblique imagery (45◦), though their analysis was limited to a single 
+angle. Collectively, these findings (Ye et al., 2019; Fritz et al., 2013; 
+Swayze et al., 2021; Swayze and Tinkham, 2022) support the conclusion 
+that combining vertical and a range of oblique image angles, particularly 
+higher obliques, is more effective than using narrow oblique ranges 
+alone.
+In addition to improved DBH estimation, visual evidence from Fig. 3
+and previous literature suggest that multi-angle fusion may also enhance 
+height estimation. Swayze et al. (2021) and Lei et al. (2022) noted that 
+UAV point clouds can be affected by factors such as platform vibration 
+and canopy shadows, leading to uncertain height estimation, issues that 
+appear mitigated by fusion in our study. Zhu and Zhang (Zhou and 
+Zhang, 2020) and Lin et al. (2018) used fused UAV imagery to extract 
+tree height and crown area for conifer species but did not report or 
+compare specific oblique angles, nor did they evaluate DBH. The 
+consistent improvement in our DBH results suggests that fusion is a 
+promising solution not only for trunk but also crown and vertical attri­
+butes. Unlike previous studies which highlighted UAV-DAP limitations 
+in canopy penetration (Cao et al., 2019), we did not experience major 
+occlusion challenges due to the relatively open canopy structure of our 
+site. However, as Lei et al. (2022) emphasized, results from SfM 
+photogrammetry may vary across forest types. Therefore, while our 
+approach was successful in this open, single-layer coniferous stand, 
+future research should test multi-angle fusion in denser, multilayer, or 
+mixed-species forests to evaluate its generalizability and robustness 
+under more complex structural conditions. As mentioned by Tomaˇstík 
+et al. (2017), canopy openness is a prerequisite for effective terrain and 
+stem modeling in photogrammetry, a condition met in our case but 
+which may limit results in more closed-canopy settings.
+The fitted circles in the stem point clouds appear slightly inside the 
+outermost points (Fig. 4) because they are generated using a least- 
+squares circle fitting method, which minimizes the total distance error 
+between the circle and all available points. In natural tree stem data, 
+particularly from UAV-DAP point clouds, variability arises from bark 
+irregularities, noise, occlusion gaps, and imperfect surface reconstruc­
+tion. Consequently, not all points align perfectly with the actual stem 
+surface. The fitting algorithm computes an average center and radius 
+that best represent the general shape of the stem rather than adhering to 
+its outermost boundary. This typically results in fitted circles that fall 
+within the point cloud rather than intersecting all edge points, which is 
+both expected and acceptable in practice. It provides a stable and robust 
+Fig. 6. Violin plots showing the distribution of absolute errors in DBH estimation across four methods (S1–S4).
+Y. Erfanifard et al.                                                                                                                                                                                                                             
+Science of Remote Sensing 12 (2025) 100331 
+9 
+
+
+estimate of stem diameter, especially when point density and quality 
+vary, as is common in multi-angle image-based reconstructions. While 
+earlier studies (Swayze et al., 2021; Swayze and Tinkham, 2022) 
+demonstrated the feasibility of applying least-squares circle fitting to 
+UAV-DAP point clouds, they were restricted to vertical and moderately 
+oblique viewing angles (20◦–35◦). Our results extend this by showing 
+that a broader range of oblique angles significantly enhances fitting 
+success. Specifically, DBH could not be measured for several trees in S1 
+and S2 due to insufficient point density at 1.2–1.4 m height, whereas in 
+S3, where vertical and wide oblique images were combined, all trees 
+yielded valid circle fits. This indicates that multi-angle image fusion not 
+only increases the likelihood of successful DBH measurement but also 
+improves the reliability of geometric fitting through enhanced point 
+coverage at breast height.
+The results of the RF-based allometric modeling highlight that 
+relying solely on vertical UAV imagery (S4) for DBH estimation has 
+Fig. 7. Comparison of estimated and field-measured DBH across three DBH classes, i.e., small (≤30 cm, n = 112), medium (30–43 cm, n = 106), and large (>43 cm, 
+n = 106). Upper panel: Scatter plots showing estimated vs. field DBH with 1:1 Gy dashed lines and corresponding R2 values for each method (S1–S4). Lower panel: 
+Bland–Altman plots illustrating bias (blue dashed lines) and limits of agreement (red dotted lines) for each method and DBH class.
+Y. Erfanifard et al.                                                                                                                                                                                                                             
+Science of Remote Sensing 12 (2025) 100331 
+10 
+
+
+notable limitations. The S4 exhibited lower predictive performance (R2 
+= 0.82), a mild negative bias and greater variability, particularly 
+underestimating smaller DBH values, compared with multi-view ap­
+proaches (Table 2). The internally validated S4 model achieved higher 
+accuracy on the 20 % test subset during hyperparameter tuning. Table 2
+reports performance on the full dataset, which naturally yields larger 
+errors when compared with S1-S3. Statistical tests support these find­
+ings: the Wilcoxon signed-rank test revealed significant differences be­
+tween S4 estimates and field-measured DBH, whereas S2 and S3 showed 
+no significant deviation. Similarly, Bland–Altman analyses indicated 
+that S3 achieved the most reliable performance across all DBH size 
+classes, with low biases and narrow limits of agreement, while S4 
+showed substantial over- or underestimation and higher variability 
+(Fig. 5). Among the predictor variables, tree height emerged as the most 
+influential, reflecting the well-established allometric relationship be­
+tween vertical growth and stem thickening. It is important to note that 
+this relationship is influenced by stand development: younger (or 
+smaller) trees may exhibit more variable height–DBH ratios, which can 
+reduce the predictive performance of models relying solely on height 
+(Swayze et al., 2021; Swayze and Tinkham, 2022). Crown volume 
+derived from 3D alpha shapes, as validated by previous studies (Colaço 
+et al., 2017; Wang et al., 2024b; Di Gennaro and Matese, 2020), showed 
+the second-highest importance, indicating that integrating both vertical 
+(height) and lateral (crown spread) metrics enhances model perfor­
+mance. By combining height with structural information from the 
+crown, RF-based models can partially compensate for variability 
+induced by stand developmental stage. For future RF-based allometric 
+studies, especially in operational or resource-constrained contexts, 
+prioritizing accurate extraction of height and volume-related variables 
+remains important, as these attributes are feasibly estimated from 
+high-resolution orthomosaics and digital surface models. These results 
+emphasize that the primary contribution of this study lies in integrating 
+multi-angle data (S2 and S3), which consistently improves DBH esti­
+mation compared with single-view vertical imagery. This highlights the 
+value of data fusion and multi-perspective modeling over reliance on a 
+single data source, particularly in heterogeneous or developing stands 
+where height–DBH relationships are less uniform.The comparative 
+analysis of DBH estimation methods (S1–S4) reveals critical in-sights 
+into the role of image fusion strategies and modeling approaches in 
+enhancing prediction accuracy. Among the four methods, S3 emerged as 
+the most accurate and reliable, achieving the highest performance 
+(Table 2, Figs. 3 and 4). These results underscore the value of 
+multi-angle imagery fusion, which appears to capture tree structure 
+more comprehensively by integrating complementary geometric per­
+spectives, thus supporting hypothesis H2. Similarly, S2 also delivered 
+strong performance, with low errors and negligible bias, indicating that 
+even partial angular diversity can substantially improve DBH estimation 
+accuracy compared to single or limited-view approaches. The error 
+trend in both scatter and Bland-Altman plots highlights systematic in­
+accuracy of S1, which may be attributed to insufficient depth informa­
+tion or distortion in crown boundaries when only steep and vertical 
+views are fused. This demonstrates the risk of relying on suboptimal 
+viewing angles, which may inadequately capture stem geometry or 
+occlude relevant features. The accuracy assessment of S4 suggests that 
+while vertical UAV-derived features (e.g., height, crown area, volume) 
+are informative, they may not fully capture the variation in stem 
+diameter, especially in mature pine trees (Fig. 5). For instance, Iizuka 
+et al. (2022) reported R2 values of 0.824 and 0.834 for coniferous forests 
+using SVR, highlighting how accuracy varies by species and forest 
+structure. Similarly, Xu et al. (2025) achieved an R2 of 0.78 and RMSE of 
+1.58 cm (rRMSE = 6.15 %) for fir plantations using UAV-LiDAR-derived 
+canopy structure, height, density, and intensity, while our RF model 
+using SfM (S4) yielded R2 = 0.82, RMSE = 8.79 cm, and rRMSE = 23.90 
+% for pine plantations (Table 2), underlining the influence of data type 
+and forest context. Moreover, Dalla Corte et al. (Dalla Corte et al., 2020) 
+reported rRMSE = 13.3 %, R2 = 0.41, and MAE = 3.02 cm for DBH 
+estimation in dense eucalyptus stands (>350 trees/ha) using height and 
+crown metrics from UAV-LiDAR in a RF model (mtry = 6). Compared to 
+the results of the current study (Table 2), the lower rRMSE and MAE 
+reported in (Dalla Corte et al., 2020) suggest that UAV-LiDAR-derived 
+metrics may better correlate with DBH. However, the lower R2 
+observed in (Dalla Corte et al., 2020) might indicate either model 
+instability or potential overfitting, possibly influenced by the higher 
+mtry value (6 in (Dalla Corte et al., 2020) vs. 3 in this study), which can 
+re-duce model generalization if not properly tuned. In comparison, Ye 
+et al. (2025) used over 90 UAV-LiDAR-derived metrics to predict DBH 
+with RF, achieving RMSE = 4.21 cm, rRMSE = 26.6 %, and R2 = 0.77, 
+suggesting that the complexity of RF model and input diversity can 
+significantly affect accuracy. These findings are consistent with our 
+observed performance trends across methods and forest types. 
+Furthermore, our S4 findings resonate with those of Tinkham et al. 
+(2022), who noted reduced accuracy for trees under 20 cm DBH and 
+advocated for hybrid approaches using terrestrial LiDAR or SfM to fill 
+data gaps. Our DBH range and stratification into three DBH classes also 
+mirrors their approach, further validating our framework. Additional 
+limitations as-sociated with UAV-DAP are also evident. As noted by Zhu 
+and Zhang (Zhou and Zhang, 2020), shadows, occlusions, and foliage 
+motion (e.g., due to wind) degrade CHM quality and crown detection 
+accuracy. In our study, these issues were mitigated to some extent 
+through vertical–oblique image fusion, improving structural complete­
+ness and reducing under-segmentation.
+Further analysis of DBH estimation performance across tree size 
+classes (small, medium, and large DBH) reinforces the overall superi­
+ority of S3 and highlights important trends in method reliability. S3 
+consistently achieved the highest accuracy across all DBH classes, 
+indicating strong linear agreement between estimated and field- 
+measured DBH regardless of tree size. The Bland–Altman plots further 
+support this reliability, showing narrow limits of agreement and mini­
+mal bias across all classes (Fig. 5). These results confirm that multi- 
+angular fusion not only improves overall DBH estimation accuracy but 
+also maintains performance consistency across the structural spectrum 
+of the forest, making S3 the most dependable method under varying tree 
+sizes. S2 demonstrated accuracy metrics closely aligned with S3, sug­
+gesting that even partial multi-angle fusion can capture sufficient 3D 
+structural detail for reliable DBH estimation. The similarity in perfor­
+mance between S2 and S3, particularly for small and medium trees, 
+points to the critical role of oblique imagery (especially around 60◦) in 
+enhancing stem visibility and geometric fidelity in the resulting point 
+clouds. S4 exhibited lower R2 values and greater variability across DBH 
+classes. Its largest weakness was observed for small DBH trees, where 
+underestimation was evident along with wider limits of agreement, 
+suggesting that the model is less sensitive to subtle structural differences 
+in younger or smaller trees when relying only on canopy features. 
+However, for medium and large DBH classes, its bias and error metrics 
+improved, reinforcing its potential utility in forest inventory applica­
+tions where resource constraints preclude multi-angle imaging. S1, on 
+the other hand, consistently underperformed, particularly for medium- 
+sized trees, and showed severe overestimation across all classes, as re­
+flected in its high positive bias and broad error ranges (Fig. 5). This 
+again illustrates that combining 90◦and 30◦imagery may be suboptimal 
+for accurate DBH reconstruction, likely due to occlusion and geometric 
+distortion effects from insufficient angular diversity. In summary, these 
+findings not only reinforce robustness and generalizability of S3 across 
+DBH classes but also highlight close comparative performance of S2, 
+which may offer a practical compromise when full-angle acquisition is 
+limited. While S4 underperforms relative to geometric approaches, its 
+consistency and simplicity make it a viable alternative, especially in 
+settings where vertical UAV imagery is more accessible or where time 
+and budget constraints restrict data collection.
+This study builds on earlier work using oblique UAV imagery for tree 
+stem reconstruction but extends it in two important ways. First, we 
+systematically tested the effect of combining multiple acquisition angles 
+Y. Erfanifard et al.                                                                                                                                                                                                                             
+Science of Remote Sensing 12 (2025) 100331 
+11 
+
+
+(30◦, 60◦, 90◦) on point cloud quality and DBH accuracy (S1-S3), 
+demonstrating clear benefits of multi-angle fusion. Second, we directly 
+contrasted this geometric approach with an allometric RF model derived 
+from vertical imagery (S4), highlighting trade-offs between accuracy 
+and operational simplicity. These contributions clarify the specific ad­
+vantages of oblique-vertical fusion for UAV-based DBH estimation in 
+pine plantations and distinguish our approach from prior oblique- 
+imagery applications. Overall, these findings confirm both hypotheses: 
+H1 is supported by the superior performance of geometric methods (S2, 
+S3) over the allometric model (S4), and H2 is validated by the clear 
+performance gains observed with increased diversity of viewing angles. 
+For future applications, these results advocate for multi-angular UAV 
+acquisition in forest inventory workflows and suggest that image fusion 
+strategies significantly influence UAV-DAP point cloud quality and DBH 
+estimation accuracy. It is important to acknowledge, however, that 
+UAV-based photogrammetry cannot yet match the centimeter-level 
+precision of terrestrial LiDAR for DBH estimation, particularly in 
+dense or multi-layered forests. Nevertheless, it can fill the gap airborne 
+and terrestrial LiDAR as noted by Fritz et al. (2013). The present study 
+demonstrates that methodological innovations such as oblique-vertical 
+image fusion can mitigate some of these known limitations by 
+improving stem visibility and circle-fitting success in pine plantations. 
+Rather than positioning UAV approaches as a replacement for 
+ground-based LiDAR, our results highlight their value as a comple­
+mentary tool, capable of delivering sufficiently accurate DBH estimates 
+in operational contexts where ground-based LiDAR deployment is 
+impractical due to scale, terrain, or cost. In this sense, oblique-vertical 
+fusion represents a step forward in narrowing the performance gap for 
+direct DBH estimation from UAV imagery.
+5. Conclusion
+This study comprehensively evaluated four UAV-based methods for 
+estimating DBH in a structurally diverse population of open-stand pine 
+trees. Among the methods tested, S3, which utilized fused point clouds 
+from three viewing angles (90◦, 60◦, and 30◦), consistently out­
+performed others, achieving the highest overall accuracy and reliable 
+performance across all DBH classes. S2 showed nearly equivalent per­
+formance to S3, confirming that oblique imagery (particularly from 60◦) 
+significantly enhances point cloud fidelity and DBH estimation accu­
+racy, even when full-angle coverage is not feasible. These findings un­
+derscore the effectiveness of multi-angular fusion in capturing tree 
+structure comprehensively and validate both study hypotheses (H1 and 
+H2). In contrast, S4, the RF-based allometric model trained on vertical 
+UAV-derived structural features exhibited moderate accuracy but 
+demonstrated consistent underestimation, particularly for small trees. 
+The importance of height and crown volume in this model suggests that 
+future RF-based allometric approaches should prioritize the accurate 
+extraction of these attributes, especially when relying solely on vertical 
+imagery.
+While these results provide clear guidance on UAV data collection 
+and modeling strategies, some limitations must be noted. The analysis 
+focused exclusively on pine trees in open stands, where individual crown 
+delineation and stem visibility are relatively high. Therefore, the 
+generalizability of these findings to denser, mixed-species forests re­
+mains limited. Future research should extend these evaluations to more 
+complex environments, where occlusion and overlapping canopies may 
+diminish the effectiveness of current methods. In such settings, the 
+application of deep learning-based algorithms for DBH estimation in 
+denser and more intricate point clouds warrants exploration, potentially 
+offering improved robustness and feature abstraction compared to 
+traditional models. In summary, multi-angular UAV image fusion, 
+particularly involving 60◦oblique views, offers the most accurate and 
+consistent method for DBH estimation. These insights provide practical 
+recommendations for forest inventory workflows, balancing accuracy, 
+data availability, and resource constraints.
+CRediT authorship contribution statement
+Yousef Erfanifard: Writing – original draft, Supervision, Method­
+ology, Formal analysis, Conceptualization. Ali Hosingholizade: Meth­
+odology, Formal analysis. Verena C. Griess: Writing – review & editing, 
+Methodology. Virginia Elena Garcia Millan: Writing – review & edit­
+ing, Methodology. Saied Pirasteh: Writing – review & editing.
+Funding
+Part of the costs of this research was provided by the Iran National 
+Science Foundation (INSF), Iran (Project number 4003393).
+Declaration of competing interest
+The authors declare that they have no known competing financial 
+interests or personal relationships that could have appeared to influence 
+the work reported in this paper.
+Acknowledgments
+The authors express their sincere gratitude to the General Directorate 
+of Environmental Protection of North Khorasan Province for their sup­
+port. This research was also financially supported by the Iran National 
+Science Foundation (INSF) under project number 400 3393.
+Data availability
+Data will be made available on request.
+References
+Anderson, K., Gaston, K.J., 2013. Lightweight unmanned aerial vehicles will 
+revolutionize spatial ecology. Front. Ecol. Environ. 11, 138–146. https://doi.org/ 
+10.1890/120150.
+Brede, B., Lau, A., Bartholomeus, H.M., Kooistra, L., 2017. Comparing RIEGL RiCOPTER 
+UAV LiDAR derived canopy height and DBH with terrestrial LiDAR. Sensors 17, 
+2371. https://doi.org/10.3390/s17102371.
+Brede, B., Terryn, L., Barbier, N., Bartholomeus, H.M., Bartolo, R., Calders, K., 
+Derroire, G., Krishna Moorthy, S.M., Lau, A., Levick, S.R., Raumonen, P., 
+Verbeeck, H., Wang, D., Whiteside, T., van der Zee, J., Herold, M., 2022. Non- 
+Destructive estimation of individual tree biomass: Allometric models, terrestrial and 
+UAV laser scanning. Remote Sens. Environ. 280, 113180. https://doi.org/10.1016/j. 
+rse.2022.113180.
+Cao, L., Liu, H., Fu, X., Zhang, Z., Shen, X., Ruan, H., 2019. Comparison of UAV LiDAR 
+and digital aerial photogrammetry point clouds for estimating Forest structural 
+attributes in subtropical planted forests. Forests 10, 145. https://doi.org/10.3390/ 
+f10020145.
+Chave, J., Andalo, C., Brown, S., Cairns, M.A., Chambers, J.Q., Eamus, D., F¨olster, H., 
+Fromard, F., Higuchi, N., Kira, T., Lescure, J.P., Nelson, B.W., Ogawa, H., Puig, H., 
+Ri´era, B., Yamakura, T., 2005. Tree allometry and improved estimation of carbon 
+stocks and balance in tropical forests. Oecologia 145, 87–99. https://doi.org/ 
+10.1007/s00442-005-0100-x.
+Clark, D.B., Kellner, J.R., 2012. Tropical Forest biomass estimation and the fallacy of 
+misplaced concreteness. J. Veg. Sci. 23, 1191–1196. https://doi.org/10.1111/ 
+j.1654-1103.2012.01471.x.
+Colaço, A.F., Trevisan, R.G., Molin, J.P., Rosell-Polo, J.R., Escol`a, A., 2017. A method to 
+obtain Orange crop geometry information using a Mobile terrestrial laser scanner 
+and 3D modeling. Remote Sens. 9, 763. https://doi.org/10.3390/rs9080763.
+Dalla Corte, A.P., Souza, D.V., Rex, F.E., Sanquetta, C.R., Mohan, M., Silva, C.A., 
+Almeyda Zambrano, A.M., Prata, G., Roberti Alves de Almeida, D., Trautenmüller, J. 
+W., Klaubergh, C., de Moraes, A., Sanquetta, M.N., Wilkinson, B., Broadbent, E.N., 
+2020. Forest inventory with high-density UAV-Lidar: machine learning approaches 
+for predicting individual tree attributes. Comput. Electron. Agric. 179, 105815. 
+https://doi.org/10.1016/j.compag.2020.105815.
+Dandois, J.P., Ellis, E.C., 2013. High spatial resolution three-dimensional mapping of 
+vegetation spectral dynamics using computer vision. Remote Sens. Environ. 136, 
+259–276. https://doi.org/10.1016/j.rse.2013.04.005.
+Dassot, M., Constant, T., Fournier, M., 2011. The use of terrestrial LiDAR technology in 
+Forest science: application fields, benefits and challenges. Ann. For. Sci 68, 959–974. 
+https://doi.org/10.1007/s13595-011-0102-2.
+Di Gennaro, S.F., Matese, A., 2020. Evaluation of novel precision viticulture tool for 
+canopy biomass estimation and missing plant detection based on 2.5D and 3D 
+approaches using RGB images acquired by UAV platform. Plant Methods 16, 91. 
+https://doi.org/10.1186/s13007-020-00632-2.
+Y. Erfanifard et al.                                                                                                                                                                                                                             
+Science of Remote Sensing 12 (2025) 100331 
+12 
+
+
+Fritz, A., Kattenhorn, T., Koch, B., 2013. UAV-Based photogrammetric point 
+Clouds—Tree stem mapping in open stands in comparison to terrestrial laser scanner 
+point clouds. Int. Arch. Photogram. Rem. Sens. Spatial Inf. Sci. 141–146. https://doi. 
+org/10.5194/isprsarchives-XL-1-W2-141-2013. XL-1/W2. 
+Iizuka, K., Kosugi, Y., Noguchi, S., Iwagami, S., 2022. Toward a comprehensive model for 
+estimating diameter at breast height of Japanese cypress (Chamaecyparis obtusa) 
+using crown size derived from unmanned aerial systems. Comput. Electron. Agric. 
+192, 106579. https://doi.org/10.1016/j.compag.2021.106579.
+Jia, X., Wang, C., Da, Y., Tian, X., Ge, W., 2024. Tree-Level biomass estimation using 
+Unmanned Aerial Vehicle (UAV) imagery and allometric equation. Biomass 
+Bioenergy 190, 107420. https://doi.org/10.1016/j.biombioe.2024.107420.
+Khan, M.N., Tan, Y., He, L., Dong, W., Dong, S., 2025. From air to space: a 
+comprehensive approach to optimizing aboveground biomass estimation on UAV- 
+Based datasets. Forests 16, 214. https://doi.org/10.3390/f16020214.
+Kwon, K., Im, S.-k., Kim, S.Y., Lee, Y.-e., Kwon, C.G., 2024. Estimation of tree diameter at 
+breast height from aerial photographs using a mask R-CNN and Bayesian regression. 
+Forests 15, 1881. https://doi.org/10.3390/f15111881.
+Lei, L., Chai, G., Wang, Y., Jia, X., Yin, T., Zhang, X., 2022. Estimating individual tree 
+above-ground biomass of Chinese fir plantation: exploring the combination of multi- 
+dimensional features from UAV oblique photos. Remote Sens. 14, 504. https://doi. 
+org/10.3390/rs14030504.
+Li, L., Mu, X., Chianucci, F., Qi, J., Jiang, J., Zhou, J., Chen, L., Huang, H., Yan, G., 
+Liu, S., 2022. Ultra-high-Resolution boreal Forest canopy mapping: combining UAV 
+imagery and photogrammetric point clouds in a deep-learning-based approach. Int. 
+J. Appl. Earth Obs. Geoinf. 107, 102686. https://doi.org/10.1016/j. 
+jag.2022.102686.
+Liao, K., Li, Y., Zou, B., Li, D., Lu, D., 2022. Examining the role of UAV lidar data in 
+improving tree volume calculation accuracy. Remote Sens. 14, 4410. https://doi. 
+org/10.3390/rs14174410.
+Liaw, A., Wiener, M., 2002. Classification and regression by random Forest. R. News 2, 
+18–22.
+Lin, Y., Jiang, M., Yao, Y., Zhang, L., Lin, J., 2015. Use of UAV oblique imaging for 
+detection of individual trees in residential environments. Urban For. Urban Green. 
+14, 404–412. https://doi.org/10.1016/j.ufug.2015.03.003.
+Lin, J., Wang, M., Ma, M., Lin, Y., 2018. Aboveground tree biomass estimation of Sparse 
+Subalpine coniferous Forest with UAV oblique photography. Remote Sens. 10, 1849. 
+https://doi.org/10.3390/rs10111849.
+Lin, L., Yu, K., Yao, X., Deng, Y., Hao, Z., Chen, Y., Wu, N., Liu, J., 2021. UAV based 
+estimation of Forest Leaf Area Index (LAI) through oblique photogrammetry. Remote 
+Sens. 13, 803. https://doi.org/10.3390/rs13040803.
+Maltamo, M., Næsset, E., Vauhkonen, J. (Eds.), 2014. Forestry Applications of Airborne 
+Laser Scanning: Concepts and Case Studies; Managing Forest Ecosystems, vol. 27. 
+Springer, Dordrecht, The Netherlands. https://doi.org/10.1007/978-94-017-8663-8. 
+Mao, Z., Lu, Z., Wu, Y., Deng, L., 2023. DBH estimation for individual tree: Two- 
+Dimensional images or three-dimensional point clouds? Remote Sens. 15, 4116. 
+https://doi.org/10.3390/rs15164116.
+Michałowska, M., Rapi´nski, J., Janicka, J., 2023. Tree position estimation from TLS data 
+using hough transform and robust least-squares circle Fitting. Remote Sens. Appl. 
+Soc. Environ. 29, 100863. https://doi.org/10.1016/j.rsase.2022.100863.
+Mielcarek, M., Kurpiewska, S., Guderski, K., Dobrowolska, D., Zin, E., Kuberski, Ł., 
+Erfanifard, Y., Stere´nczak, K., 2025. Remote sensing of Forest gap dynamics in the 
+białowie˙za Forest: comparison of multitemporal airborne laser scanning and high- 
+resolution aerial imagery point clouds. Remote Sens. 17, 1149. https://doi.org/ 
+10.3390/rs17071149.
+Rahlf, J., Breidenbach, J., Solberg, S., Næsset, E., Astrup, R., 2014. Comparison of four 
+types of 3D data for timber volume estimation. Remote Sens. Environ. 155, 325–333. 
+https://doi.org/10.1016/j.rse.2014.08.036.
+Rudge, M.L.M., Levick, S.R., Bartolo, R.E., Erskine, P.D., 2021. Modelling the diameter 
+distribution of savanna trees with drone-based LiDAR. Remote Sens. 13, 1266. 
+https://doi.org/10.3390/rs13071266.
+Shao, T., Qu, Y., Du, J., 2022. A low-cost integrated sensor for measuring tree diameter at 
+breast height (DBH). Comput. Electron. Agric. 200, 107140. https://doi.org/ 
+10.1016/j.compag.2022.107140.
+St-Onge, B., Audet, F.-A., B´egin, J., 2015. Characterizing the height structure and 
+composition of a boreal Forest using an individual tree crown approach applied to 
+photogrammetric point clouds. Forests 6, 3899–3922. https://doi.org/10.3390/ 
+f6113899.
+Swayze, N.C., Tinkham, W.T., 2022. Application of unmanned aerial System structure 
+from motion point cloud detected tree heights and stem diameters to model missing 
+stem diameters. MethodsX 9, 101729. https://doi.org/10.1016/j.mex.2022.101729.
+Swayze, N.C., Tinkham, W.T., Vogeler, J.C., Hudak, A.T., 2021. Influence of flight 
+parameters on UAS-Based monitoring of tree height, diameter, and density. Remote 
+Sens. Environ. 263, 112540. https://doi.org/10.1016/j.rse.2021.112540.
+Tinkham, W.T., Swayze, N.C., Hoffman, C.M., Lad, L.E., Battaglia, M.A., 2022. Modeling 
+the missing DBHs: influence of model form on UAV DBH characterization. Forests 
+13, 2077. https://doi.org/10.3390/f13122077.
+Tomaˇstík, J., Mokroˇs, M., Saloˇn, ˇS., Chudý, F., Tun´ak, D., 2017. Accuracy of 
+photogrammetric UAV-Based point clouds under conditions of partially-open Forest 
+canopy. Forests 8, 151. https://doi.org/10.3390/f8050151.
+Wallace, L., Lucieer, A., Malenovský, Z., Turner, D., Vopˇenka, P., 2016. Assessment of 
+Forest structure using two UAV techniques: a comparison of airborne laser scanning 
+and structure from motion (SfM) point clouds. Forests 7, 62. https://doi.org/ 
+10.3390/f7030062.
+Wang, Y., Wang, D., Zhang, D., Liu, Q., Li, Y., 2024a. Predicting carbon storage of mixed 
+broadleaf forests based on the finite mixture model incorporating stand factors, site 
+quality, and aridity index. Forest Ecosyst 11, 100189. https://doi.org/10.1016/j. 
+fecs.2024.100189.
+Wang, F., Jia, W., Guo, H., Zhang, X., Li, D., Li, Z., Sun, Y., 2024b. Point cloud-based 
+crown volume improves tree biomass estimation: evaluating different crown volume 
+extraction algorithms. Comput. Electron. Agric. 225, 109288. https://doi.org/ 
+10.1016/j.compag.2024.109288.
+Woodall, C.W., Grambsch, P.L., Thomas, W.D.B.H., 2005. Survival analysis: a new 
+methodology for assessing Forest inventory mortality. In: McRoberts, R.E., Reams, G. 
+A., Van Deusen, P.C., McWilliams, W.H., Cieszewski, C.J. (Eds.), Proc. Fourth Annu. 
+For. Invent. Anal. Symp.; Gen. Tech. Rep. NC-252. U.S. Department of Agriculture, 
+Forest Service, North Central Research Station: St. Paul, MN, USA, pp. 65–69.
+Xie, Y., Zhang, J., Chen, X., Pang, S., Zeng, H., Shen, Z., 2020. Accuracy assessment and 
+error analysis for diameter at breast height measurement of trees obtained using a 
+novel backpack LiDAR System. Forest Ecosyst 7, 33. https://doi.org/10.1186/ 
+s40663-020-00237-0.
+Xu, J., Zhao, Y., Li, X., Lv, L., Yu, J., Song, M., Huang, L., Mao, F., Du, H., 2025. 
+Improving Chinese fir plantations DBH inversion accuracy using ensemble learning 
+models based on UAV-LiDAR. IEEE J. Sel. Top. Appl. Earth Obs. Rem. Sens. 18. 
+https://doi.org/10.1109/JSTARS.2025.3560704.
+Yao, W., Krzystek, P., Heurich, M., 2012. Tree species classification and estimation of 
+stem volume and DBH based on single tree extraction by exploiting airborne full- 
+waveform LiDAR data. Remote Sens. Environ. 123, 368–380. https://doi.org/ 
+10.1016/j.rse.2012.03.027.
+Ye, N., van Leeuwen, L., Nyktas, P., 2019. Analysing the potential of UAV point cloud as 
+input in quantitative structure modelling for assessment of woody biomass of single 
+trees. Int. J. Appl. Earth Obs. Geoinf. 81, 47–57. https://doi.org/10.1016/j. 
+jag.2019.05.010.
+Ye, N., Mason, E., Xu, C., Morgenroth, J., 2025. Estimating individual tree DBH and 
+biomass of durable eucalyptus using UAV LiDAR. Ecol. Inform. 89, 103169. https:// 
+doi.org/10.1016/j.ecoinf.2025.103169.
+Zhang, T., Shen, X., Cao, L., 2025. Terrain and individual tree vertical structure-based 
+approach for point clouds Co-Registration by UAV and backpack LiDAR. Int. J. Appl. 
+Earth Obs. Geoinf. 139, 104544. https://doi.org/10.1016/j.jag.2024.104544.
+Zhou, X., Zhang, X., 2020. Individual tree parameters estimation for plantation forests 
+based on UAV oblique photography. IEEE Access 8, 96184–96198. https://doi.org/ 
+10.1109/ACCESS.2020.2994911.
+Y. Erfanifard et al.                                                                                                                                                                                                                             
+Science of Remote Sensing 12 (2025) 100331 
+13
