@@ -7,9 +7,9 @@ Compiled team knowledge for **individual tree detection and segmentation** from 
 
 ## Current focus
 
-1. **Proposed program:** [[project/research-normal-forest]] — one crown box per tree in normal forest, then outlines. Condensed path for discussion: [[project/normal-forest-flow]] (draft). ADR-003 is **proposed**. Next smoke: [[experiments/normal-forest/exp-005-normal-forest-ownership-smoke]] (draft; no training). The previous north star [[project/research-tree-detection-ensemble]] stays as history.
+1. **Proposed program:** [[project/research-normal-forest]] — one crown box per tree in normal forest, then outlines. Condensed path for discussion: [[project/normal-forest-flow]] (draft). ADR-003 is **proposed**. [[experiments/normal-forest/exp-005-normal-forest-ownership-smoke]] is closed. Its product is the golden folder for stand 17568 (8701 crowns, 168 tiles). The procedure for a later folder is [[methods/golden-training-set]] (draft). Next: [[experiments/normal-forest/exp-006-training-labels-backbone]] (opened; stands named on image 670; layers named, including crowns from 2 m up to 7 m; no training). The previous north star [[project/research-tree-detection-ensemble]] stays as history.
 2. **Hypothesis loop:** [[project/hypothesis-validation-loop]] — propose → Experiment page → human gate → GPU module → validate/reject.
-3. **Experiments by domain:** [[project/domains]]. Active queue: [[experiments/normal-forest/index]] (exp-005 smoke). R-class history: [[experiments/r-class-itd/index]]. H1 / H2 / H3 ids are unchanged ([[project/decisions]]).
+3. **Experiments by domain:** [[project/domains]]. Active queue: [[experiments/normal-forest/index]] (exp-005 closed, golden folder delivered; exp-006 next, stands named on image 670). R-class history: [[experiments/r-class-itd/index]]. H1 / H2 / H3 ids are unchanged ([[project/decisions]]).
 4. **Literature map (dense ITD):** [[concepts/literature-map-dense-itd]] — background reading for the previous dense-stand program.
 
 Production baseline (what ships today): [[project/pipeline-overview]]. Success structure for the previous ensemble: ADR-001 in [[project/decisions]] (proposed until eval numbers are locked). ADR-003 is a separate proposal and is not accepted.
@@ -18,7 +18,7 @@ Production baseline (what ships today): [[project/pipeline-overview]]. Success s
 
 - [[project/domains]] — catalog of programs and the recipe for the next one
 - [[project/research-normal-forest]] — **proposed current program** (ADR-003 proposed; one crown per tree, then outlines)
-- [[project/normal-forest-flow]] — condensed discussion sheet for that path; draft; does not number experiments after exp-005
+- [[project/normal-forest-flow]] — condensed discussion sheet for that path; draft; exp-006 has named stands and has not started labeling
 - [[project/research-tree-detection-ensemble]] — previous north star; not the current priority as of 2026-10-21
 - [[project/hypothesis-validation-loop]] — scientist ↔ engineer handoff for experiments
 - [[project/pipeline-overview]] — current production AREA pipeline
@@ -52,7 +52,7 @@ Production baseline (what ships today): [[project/pipeline-overview]]. Success s
 
 - [[project/domains]] — which program is active, and how to add the next one
 - [[experiments/index]] — program catalog
-- [[experiments/normal-forest/index]] — **current** — exp-005 ownership smoke (draft; no training)
+- [[experiments/normal-forest/index]] — **current** — exp-005 is closed, golden folder delivered; exp-006 is next (stands named; no training)
 - [[experiments/r-class-itd/index]] — history; H1 exp-001, H3 exp-002, H2 exp-003, exp-004 closed without training
 
 ## Literature sources

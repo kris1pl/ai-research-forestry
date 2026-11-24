@@ -2,6 +2,96 @@
 
 Chronological record of ingest, query, hypothesis, and lint operations.
 
+## [2026-11-24] hypothesis | exp-006 names layers and keeps object metadata
+
+- The first training step stays treetops of at least 7 m. The next step is crowns from 2 m up to 7 m after a person keeps them. Later steps are `box`, `peak_new`, `proposal_ai`, `chm_lower`, and `chm_upper`, each on its own. A kept object stores its layer, its step, and the person's decision
+- Stand 17568 stays the score set, one closed version at a time. Test trainings that compare the steps are not started
+
+## [2026-11-23] hypothesis | exp-005 working view marks the golden crowns
+
+- `box_and_peak_work.json` draws the 8701 golden crowns as the small squares. The other layers stay, except 98 boxes a person already kept. Those open marks are still not crowns
+
+## [2026-11-23] hypothesis | exp-005 clue layers stay for a person
+
+- The golden folder of 8701 crowns stays the product. The other marks in `box_and_peak.json` are not crowns yet: `box`, `peak_new`, `proposal_ai`, `chm_lower`, `chm_upper`, and `peak_low` (56 peaks from 2 m up to 7 m). A person may confirm them later
+
+## [2026-11-23] hypothesis | exp-006 names stands and keeps the 7 m label
+
+- Image 670, Brännvattsliden, same region as area 663. Eval stays stand 17568. Test is 17555 and 17556. Train is 17659, 17646, and 17647. No photo-box run on the new stands. No training
+- A grown-tree label stays a treetop of at least 7 m. Shorter trees in the same stand, including trees of about 4 or 5 m, are noted and are not labels. The closed set for 17568 is not reopened
+
+## [2026-11-19] hypothesis | exp-005 product is the golden folder
+
+- Stand 17568 is closed. The product is `golden-663-17568`: 168 tiles and 8701 crowns (8601 from the samples, 100 a person kept where several clues agreed). The sample files and the 8601 copy are not overwritten
+- The steps are on the experiment page. The same steps, for a later stand, are [[methods/golden-training-set]]. No area is named. No training
+
+## [2026-11-10] hypothesis | exp-005 closes as the reference set
+
+- Stand 17568 stays the reference. The two samples stay closed. A copy of 8601 boxes is what a person corrects. Eight boxes from an earlier mask cut are not in that copy. The 6043 and 2719 files stay
+- A round touches one gap: a crown with no box, two crowns in one box, or a box that is not a crown. Empty ground stays empty. A second person reads a sample of the edits. The dark seam on eight pairs is not a label. No training
+- [[experiments/normal-forest/exp-006-training-labels-backbone]] is opened. No area is named. The same rule, then a new human sample. Outliers wait until that sample exists
+
+## [2026-11-06] hypothesis | five-window outlines are withdrawn
+
+- The run prompted SAM with the old boxes. Eight pairs still had a large box around two crowns, so the masks repeated that box. Those masks are deleted
+- Outlines wait on a copy of the labels. A box inside another box does not stay. One crown keeps the larger box. Eight pairs marked as two crowns drop the larger box. The smaller box stays, and the other crown gets a new box from a mask prompted only outside the smaller one. The 6043 and 2719 files stay as the gate record. No training
+
+## [2026-11-04] hypothesis | tile_03 miss count is five crowns
+
+- A review of `tile_03` with both owned layers drawn marks five crowns that have neither an 800 px box nor a 400 px box
+- Those five are not added as labels. The two samples stay closed. Gaps that are not those crowns can be background on this window. No training
+
+## [2026-11-04] hypothesis | tile_03 miss count of zero is withdrawn
+
+- The zero followed 17 peaks outside owned boxes and judged them gaps or shoulders. It did not look at every bright crown
+- The photo of `tile_03` shows crowns with no 800 px box. Fifteen window-400 labels are centered on that window. Empty pixels there stay ignore
+
+## [2026-11-04] hypothesis | one window reports no missed crown
+
+- `tile_03` on stand 17568, about 29 m across. Peaks at least 7 m: 105. Inside an owned box: 87. Outside: 18, of which 17 sit in a gap or on a neighboring crown and one sits in the removed `accept_resize` box
+- Separate visible crowns with no owned box: 0. Empty pixels on this window can be background. The rest of the stand stays ignore. No training
+
+## [2026-11-04] hypothesis | window-400 proposal sample meets its bar
+
+- Stand 17568, list of 2724. Primary read: 145 accept, 5 accept_resize, 0 reject, unset 0. Precision 145/150 = 0.967. Wilson lower end 0.924, z = 1.96. Agreement 26/30 = 0.867
+- The lower end clears 0.85. Unread boxes on this list become labels. The five accept_resize stay out, leaving 2719. This does not reopen the window-800 labels
+- No training. ADR-003 stays proposed
+
+## [2026-11-03] hypothesis | window-400 proposals get their own promotion lock
+
+- Stand 17568 list is 2724 SAHI 400 boxes whose center lies outside every owned box. They do not inherit the window-800 pass
+- Signed for that list only: 150 boxes, agreement ≥ 0.80 on 30, precision = yes / (yes + no), Wilson lower end ≥ 0.85. Small-set path does not apply. Read cap 600. After 600, nobody on this list is promoted
+- Sample drawn, not read: 20 windows, 150 boxes, 30 for the second reader. exp-005 does not read this list. No training. ADR-003 stays proposed
+
+## [2026-11-02] hypothesis | exp-005 filter shown on one window
+
+- Two figures on the exp-005 page, both `tile_03` on stand 17568. Kept boxes with peaks, and photo-model boxes that have no peak in the core
+- The window illustrates the rule. It is not a second score. The sample numbers stay 0.973 and 0.80
+
+## [2026-11-02] hypothesis | exp-005 sample meets the signed bar
+
+- S2 on AREA 663-17568: precision 146/150 = 0.973. Wilson lower end 0.933, z = 1.96. Agreement 24/30 = 0.80. `unset` was 0. Shortfall 0
+- Both signed bars are met. Path 1 does not apply (6047 one-peak boxes). Path 2 does. Unread one-peak boxes on stand 17568 become labels. The 3 `accept_resize` and 1 reject from the primary read stay out
+- No training. ADR-003 stays proposed
+
+## [2026-10-29] hypothesis | exp-005 bar signed; tree height named apart from CHM
+
+- Signed bar: precision ≥ 0.85 and agreement ≥ 0.80. The precision gate stays the lower end of a 95% Wilson interval. A raw 0.85 on 150 boxes does not pass
+- Tree height is at least 7 m, read from the local-maxima peak Z. A CHM detection means a mark drawn on the CHM raster, and it is not this measurement
+- The reading sample is not drawn yet. ADR-003 stays proposed
+
+## [2026-10-29] hypothesis | exp-005 precision proposal moves to 0.85
+
+- Proposed bar, not signed: precision ≥ 0.85 and agreement ≥ 0.80. The gate stays the lower end of a 95% Wilson interval. A raw 0.85 on 150 boxes does not pass
+- On 150 boxes that lower end reaches 0.85 at 137 hits. About 1200 reads illustrates a ±2 point interval around 0.85. The read cap stays 600 candidate boxes
+- CVAT stays closed. ADR-003 stays proposed
+
+## [2026-10-29] hypothesis | exp-005 names the site and the height floor
+
+- AREA id is 663-17568. Height floor is 7 m. Small-set count stays 300. Read cap stays 600 candidate boxes
+- Precision ≥ 0.95 and agreement ≥ 0.80 stay proposed. CVAT stays closed. ADR-003 stays proposed
+- The S1 count on stand 17568 applied 7 m to local-maxima Z. The CHM raster was not the height source for that count. SAHI 400 and the CHM layer for this stand are still to confirm
+
 ## [2026-10-26] lint | Publish accepted concepts still marked draft
 
 - Set `status: stable` on [[concepts/area-based-approach]], [[concepts/foundation-model-tree-delineation]], [[concepts/direct-stem-dbh-point-cloud]], [[concepts/height-diameter-inversion]], [[concepts/stem-taper-curve]]

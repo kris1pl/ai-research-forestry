@@ -8,3 +8,4 @@ Implementation and supporting literature for each production stage. Overview: [P
 * [EdgeCrafter ECSeg](/methods/edgecrafter-ecseg.md) — instance segmentation layer for dense stands
 * [Detection merge](/methods/merge-detections.md) — fuse LM + CHM + DEIMv2 (stub)
 * [DINOv3 classification](/methods/dinov3-classification.md) — species classification, weak labels, clustering
+* [Golden training set](/methods/golden-training-set.md) — draft procedure for a crown-box folder; the worked example is stand 17568; no training

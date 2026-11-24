@@ -4,7 +4,7 @@ type: Project
 description: "Catalog of research programs and the recipe for adding the next one. Experiment ids stay global. This page does not authorize new work."
 tags: [research, domains, experiments]
 status: stable
-updated: 2026-10-21
+updated: 2026-11-23
 generated:
   by: agent:conifervision-wiki
   at: 2026-10-21T12:52:00Z
@@ -24,7 +24,7 @@ The active proposal is normal forest. The R-class detection program stays on fil
 flowchart LR
   row["Add a row\non this page"] --> start["Team starts the work"]
   start --> pair["Program page\nand experiment folder"]
-  pair --> next["Next free id\nafter exp-005"]
+  pair --> next["Next free id\nexp-007"]
 ```
 
 #### Takeaway
@@ -40,7 +40,7 @@ Two lines have pages today. Three names are reserved and have no experiment fold
 | Slug | Program page | Experiment folder | Status |
 |------|----------------|-------------------|--------|
 | r-class-itd | [[project/research-tree-detection-ensemble]] | [[experiments/r-class-itd/index]] | history; not the current priority |
-| normal-forest | [[project/research-normal-forest]] | [[experiments/normal-forest/index]] | proposed; ADR-003 proposed; next smoke is exp-005 |
+| normal-forest | [[project/research-normal-forest]] | [[experiments/normal-forest/index]] | proposed; ADR-003 proposed; exp-005 is closed, golden folder delivered; exp-006 is opened, stands named on image 670 |
 | species-classification | none yet; method already at [[methods/dinov3-classification]] | do not create yet | not started |
 | stand-segmentation | none yet | do not create yet | not started. This is a map of the stand, not a crown outline |
 | allometry | none yet; shared concept [[concepts/site-index-and-yield]] and [[concepts/tree-allometry]] | do not create yet | not started |
@@ -53,11 +53,11 @@ Read this table to see which line is active. An empty row is a name, not a proje
 
 #### For the board
 
-Write the name here first. Open a program page and a folder together only when people are actually going to run something. The first experiment in that folder uses the next number in the whole wiki. After exp-005, that number is exp-006, whichever line starts next. Shared tools stay in one place. The new page points at them.
+Write the name here first. Open a program page and a folder together only when people are actually going to run something. The first experiment in that folder uses the next number in the whole wiki. exp-006 is opened in normal forest and the stands are named on its page. The next free id is exp-007, whichever line starts next. Shared tools stay in one place. The new page points at them.
 
 1. Add one row here. Do not create a folder in the same step.
 2. When the team actually starts, add `project/research-<slug>.md` and `experiments/<slug>/index.md` together.
-3. The first experiment uses the next free global id. After exp-005 the next id is exp-006, in whichever domain starts next.
+3. The first experiment uses the next free global id. exp-006 is that id and is already opened. The next free id is exp-007, in whichever domain starts next.
 4. Link the program from [[index]] only when it is the current focus or a listed program. Current focus names one active program.
 5. Shared methods and concepts stay in `methods/` and `concepts/`. A domain page links to them. It does not copy them.
 

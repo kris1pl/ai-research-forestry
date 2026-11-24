@@ -4,7 +4,7 @@ type: Project
 description: "ADR format: Context → Decision → Consequences. The agent adds an entry after team agreement."
 tags: [adr]
 status: stable
-updated: 2026-10-21
+updated: 2026-10-29
 generated:
   by: agent:conifervision-wiki
   at: 2026-08-21T12:00:00Z
@@ -93,13 +93,13 @@ Proposed superseded by ADR-003 (2026-10-21).
 2. Park [[experiments/r-class-itd/exp-003-merge-fusion-v1]] (H2). It is parked because the cohort changed, not because it is the next step after a small-tree gate.
 3. The current program is [[project/research-normal-forest]]: detect one crown per tree in normal forest, then outline those crowns. The old north star stays in the wiki as history. It is not the current priority.
 4. `kaxen_197_1` and AREA 540 do not score this program.
-5. A DEIMv2 box at SAHI 800 becomes an ownership candidate only when one local-maxima peak lies in its core and CHM height is above the R-class floor. The height number is TBD and must be written before the CVAT task opens. CHM detections at slice 100 px are not a witness. A VLM may confirm a box the detector already drew. A VLM box is not a label, and a missing VLM box does not delete a detector box.
-6. Candidates become ground truth for the crowns they mark only after a fixed human sample of that frozen rule passes a bar written before CVAT. Proposed bar, not yet signed: precision ≥ 0.95 and two-reader agreement ≥ 0.80. Precision = accept / (accept + reject + accept_resize), same as [[concepts/pseudo-label-audit-cvat]]. `accept_resize` counts against. Rejected and resize boxes in the sample are removed. Unreviewed candidates from the same rule are promoted with the rule only by the small-set path or the Wilson lower-bound path, both still to lock before CVAT. Empty pixels are not “no tree”.
-7. Segmentation is out of the first experiment. Instance masks start only on owned boxes, after the ownership bar. SAM vit_h from [[experiments/r-class-itd/exp-002-rgb-seg-backend-ceiling]] is the existing mask path. ECSeg and StarDist stay deferred.
+5. A DEIMv2 box at SAHI 800 becomes an ownership candidate only when one local-maxima peak lies in its core and tree height is above 7 m. Tree height is the peak's Z. The exp-005 test AREA is 663-17568. A CHM detection, including one at slice 100 px, is not a witness. A VLM may confirm a box the detector already drew. A VLM box is not a label, and a missing VLM box does not delete a detector box.
+6. Candidates become ground truth for the crowns they mark only after a fixed human sample of that frozen rule passes a bar written before CVAT. Signed bar: precision ≥ 0.85 and two-reader agreement ≥ 0.80. Precision = accept / (accept + reject + accept_resize), same as [[concepts/pseudo-label-audit-cvat]]. `accept_resize` counts against. Rejected and resize boxes in the sample are removed. Unreviewed candidates from the same rule are promoted with the rule only by the small-set path or the Wilson lower-bound path. The small-set count is 300. The read cap is 600 candidate boxes. Empty pixels are not “no tree”.
+7. Segmentation is out of the first experiment. Instance masks start only on owned boxes, after the ownership bar, and only on a copy that does not leave one box inside another. SAM vit_h from [[experiments/r-class-itd/exp-002-rgb-seg-backend-ceiling]] is the existing mask path. ECSeg and StarDist stay deferred.
 8. The same rule may later mint weak labels for a new region. That is a later use. A new geography still needs its own small human check. Round 2 showed that more area with an unchanged teacher does not transfer.
 
 **Consequences:**
 
 - The experiments index queue changes. exp-004’s conclusion changes. exp-003 stays unstarted. A new north star, [[concepts/normal-forest]], [[concepts/crown-ownership]], and [[experiments/normal-forest/exp-005-normal-forest-ownership-smoke]] are added.
 - ADR-002 is not rewritten. The 2026-10-13 sequencing note is proposed superseded by this ADR.
-- Accepting ADR-003 still requires the team to lock the precision bar and the height floor before any CVAT import.
+- The exp-005 bar is signed: precision ≥ 0.85 and agreement ≥ 0.80. Tree height is at least 7 m. The test AREA id is 663-17568. ADR-003 itself stays proposed.

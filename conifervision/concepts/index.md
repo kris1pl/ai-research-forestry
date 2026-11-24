@@ -6,7 +6,7 @@ Cross-cutting ideas referenced by multiple pipeline methods.
 * [Dense stand detection (before clearing)](/concepts/dense-stand-detection.md) — evaluation concept for dense plots
 * [Understory tree detection](/concepts/understory-tree-detection.md) — a stem under another crown; a canopy-height surface does not show it
 * [Normal forest](/concepts/normal-forest.md) — merchantable crowns larger than R-class, with separable tops
-* [Crown ownership](/concepts/crown-ownership.md) — 800 box, one peak in the core, height floor TBD, then a fixed sample
+* [Crown ownership](/concepts/crown-ownership.md) — 800 box, one peak in the core, tree height 7 m, then a fixed sample
 * [Canopy height model (CHM)](/concepts/canopy-height-model.md) — DSM − DTM; LiDAR and satellite SSL links
 * [Site index and stand yield](/concepts/site-index-and-yield.md) — dominant height at a reference age, then stand volume; tree-level allometry stays on the source pages
 * [Stem Taper Curve](/concepts/stem-taper-curve.md) — Existing concept tree-allometry covers total stem volume and whole-tree scaling relations, leaving continuous longitudinal diameter profile functions along tree height unrepresented.
